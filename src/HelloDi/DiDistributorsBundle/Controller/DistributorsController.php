@@ -456,6 +456,7 @@ class DistributorsController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
             'items' => $items,
+            'Account' => $account,
         ));
     }
 }

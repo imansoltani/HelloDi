@@ -1,7 +1,20 @@
-    <div class="widget-header">
-        <h3>Add Users</h3>
-    </div> <!-- /widget-header --><br>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Add User</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Add User</h3>
+    </div> <!-- /widget-header -->
+    <br>
     <form class="form-horizontal" action="{{ path('DistRetailerUserAdd',{'id':Account.id}) }}" method="post" >
 
         <div class="control-group">
@@ -29,8 +42,13 @@
         </div>
 
         <div class="control-group">
-            {{ form_label(form.plainPassword) }}
-            {{ form_widget(form.plainPassword) }}
+            {{ form_label(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second) }}
         </div>
 
         <div class="control-group">
@@ -51,7 +69,10 @@
 
         <div class="form-actions" style="margin-bottom: 0" >
             <input class="btn btn-primary" type="submit"  value="Create">
-
+            <a href="{{ path('DistRetailerUser',{'id':Account.id}) }}" class="btn" >Back</a>
         </div>
 
     </form>
+
+
+{% endblock %}

@@ -366,7 +366,7 @@ class Transaction
     }
 
     /**
-     * @ORM\prePersist
+     * @ORM\PrePersist
      */
     public function updateAccountBalance()
     {

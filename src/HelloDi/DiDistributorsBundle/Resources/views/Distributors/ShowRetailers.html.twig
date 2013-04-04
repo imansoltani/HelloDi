@@ -26,7 +26,9 @@
         <div class="widget stacked ">
             <div class="widget-content">
 
-
+                <a class="btn-large button btn btn-primary " href="{{ path('DistNewRetailer') }}">
+                    New Retailer
+                </a>
 
                 <div class="form_search">
                     <h5 style="cursor:pointer;" class="TitleShow1">
@@ -41,10 +43,7 @@
                         <fieldset>
 
 
-                            <div class="control-group">
-                                {{ form_label(form_searchprov.retName) }}
-                                {{ form_widget(form_searchprov.retName) }}
-                            </div>
+
 
                             <div class="control-group">
                                 {{ form_label(form_searchprov.retCityName) }}
@@ -54,17 +53,12 @@
                             <div class="control-group">
 
                                 {{ form_label(form_searchprov.retBalance) }}
-                                {{ form_widget(form_searchprov.retBalance) }}
+                                <div class="controls">
+                                    {{ form_widget(form_searchprov.retBalance) }}
+                                    {{ form_widget(form_searchprov.retBalanceValue) }}
+                                </div>
                              </div>
-                            <div class="control-group">
 
-                                {{ form_label(form_searchprov.retBalanceValue) }}
-                                {{ form_widget(form_searchprov.retBalanceValue) }}
-                            </div>
-                             <div class="control-group">
-                               {{ form_label(form_searchprov.retcurency) }}
-                               {{ form_widget(form_searchprov.retcurency) }}
-                              </div>
 
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
@@ -98,17 +92,13 @@
                     </script>
 
                 </div>
-                <div>
-                    <a href="{{ path('DistNewRetailer') }}">New Retailer</a>
-                </div>
 
-                <div class="tablediv">
-                    <div class="contenttitle">
-                        <h4>Retailer</h4>
-                    </div>
+
+                <div style="margin-top: 5px" class="tablediv">
+
                     <form action="{{ path('ManageItemsProv') }}" method="post">
-                        <div class="tab-content">
-                            <table style="margin-top: 20px" class="table postsend">
+                        <div class="tab-content datatable">
+                            <table id="example" class="table postsend">
                                 <thead>
                                 <tr>
                                     <th  >Id</th>
@@ -116,7 +106,7 @@
                                     <th>Entity</th>
                                     <th>Balance</th>
                                     <th>Credit Limit</th>
-                                    <th></th>
+                                    <th>Operator</th>
                                 </tr>
                                 </thead>
 
@@ -129,7 +119,9 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>{{ myAccount.accCreditLimit }}</td>
-                                        <td><a href="{{ path('DistRetailerUser',{'id':myAccount.id}) }}">Open</a> </td>
+                                        <td class="td-actions" >
+                                            <a class="btn_actions" href="{{ path('DistRetailerUser',{'id':myAccount.id}) }}">Open</a>
+                                        </td>
 
                                     </tr>
                                 {% endfor %}
@@ -142,7 +134,15 @@
 
                     </form>
                 </div>
+                <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
 
+                <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        Fix_Size();
+                    } );
+
+                </script>
             </div>
         </div>
     </div>
