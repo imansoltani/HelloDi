@@ -15,7 +15,11 @@ class RetailersController extends Controller
 {
     public function dashboardAction()
     {
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig');
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig',array(
+            'Account' => $Account,
+        ));
     }
 
 
@@ -65,7 +69,7 @@ class RetailersController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $Account->getId())));
+                return $this->redirect($this->generateUrl('RetailerStaff', array('Account'=>$Account,'id' => $Account->getId())));
 
             }
 
@@ -91,7 +95,7 @@ class RetailersController extends Controller
                 else
                     $user->setStatus(1);
                 $em->flush();
-                return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));
+                return $this->redirect($this->generateUrl('RetailerStaff', array('Account' => $user->getAccount(),'id' => $user->getAccount()->getId())));
             }
 
         }
@@ -101,6 +105,7 @@ class RetailersController extends Controller
 
     public function RetailerChangeRoleAction(Request $req,$id)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
 
 
         $em = $this->getDoctrine()->getManager();

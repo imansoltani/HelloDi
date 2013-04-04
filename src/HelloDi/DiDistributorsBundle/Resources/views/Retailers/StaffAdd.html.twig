@@ -1,6 +1,29 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+
+{% block title %}
+    Add User
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="#">Account Setting</a>
+    <a class="link" href="{{ path('RetailerStaff') }}">Stuff</a>
+    <span class="link">Add User</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    New User
+{% endblock %}
 
 
+{% block Link_Footer %}
 
+{% endblock %}
+
+{% block Body %}
     <div class="span">
         <div class="widget-content" >
             <div class="widget-header">
@@ -34,8 +57,13 @@
                 </div>
 
                 <div class="control-group">
-                    {{ form_label(form.plainPassword) }}
-                    {{ form_widget(form.plainPassword) }}
+                    {{ form_label(form.plainPassword.first) }}
+                    {{ form_widget(form.plainPassword.first) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.plainPassword.second) }}
+                    {{ form_widget(form.plainPassword.second) }}
                 </div>
 
                 <div class="control-group">
@@ -59,4 +87,6 @@
                 </div>
 
             </form>
-
+        </div>
+    </div>
+{% endblock %}

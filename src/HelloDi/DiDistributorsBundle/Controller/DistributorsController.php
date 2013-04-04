@@ -21,7 +21,9 @@ class DistributorsController extends Controller
 {
     public function dashboardAction()
     {
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig');
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig' , array('Account'=>$Account) );
     }
 
     //Retailers
@@ -290,7 +292,10 @@ class DistributorsController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array('form_Relaited_New' => $form->createView()));
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account1 = $user->getAccount();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array('Account' => $Account1 ,'form_Relaited_New' => $form->createView()));
 
     }
 
@@ -342,8 +347,12 @@ class DistributorsController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             5/*limit per page*/
         );
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account1 = $user->getAccount();
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array
-        ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
+        ('Account' => $Account1,'pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
 
     }
 
@@ -371,7 +380,10 @@ class DistributorsController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account1 = $user->getAccount();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Account' => $Account1 ,'Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
 
     }
 
@@ -417,14 +429,23 @@ class DistributorsController extends Controller
             $this->get('request')->query->get('page', 1),
             10
         );
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account1 = $user->getAccount();
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:items.html.twig', array(
             'pagination' => $pagination,
             'form' => $form->createView(),
+            'Account' => $Account1,
         ));
     }
 
     public function ItemPerRetailerAction(Request $request, $id)
     {
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account1 = $user->getAccount();
+
         $form = $this->createFormBuilder()
             ->add('fff', 'collection', array(
                 'type'   => 'checkbox',
@@ -434,7 +455,10 @@ class DistributorsController extends Controller
             ))
             ->getForm();
 
+
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ItemsPerRetailer.html.twig', array(
+            'Account' => $Account1,
             'form' => $form->createView()
         ));
     }
@@ -453,6 +477,8 @@ class DistributorsController extends Controller
             ->setParameter('acc', $account);
 
         $items = $qb->getQuery()->getResult();
+
+
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
             'items' => $items,

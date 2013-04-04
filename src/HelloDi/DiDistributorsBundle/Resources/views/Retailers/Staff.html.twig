@@ -1,4 +1,31 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
+{% block title %}
+    Stuff
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="#">Account Setting</a>
+    <span class="link">Stuff</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-th-large"></i>
+    Account Stuff
+{% endblock %}
+
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span">
+        <div class="widget-content">
 
             <a class="btn-large button btn btn-primary " href="{{ path('RetailerStaffAdd',{'id':Account.id}) }}">Add New
                 user</a><br>
@@ -7,21 +34,20 @@
                 <div class="contenttitle">
                     <h4>Accounts</h4>
                 </div>
-
                 <form>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
-                                <tr>
-                                    <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Change Role' | trans ({}, "account") }}</th>
-                                </tr>
+                            <tr>
+                                <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
+                                <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
+                                <th>{{ 'Change Role' | trans ({}, "account") }}</th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for user in pagination %}
@@ -63,3 +89,6 @@
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
+        </div>
+    </div>
+{% endblock %}

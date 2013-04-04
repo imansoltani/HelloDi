@@ -1,5 +1,22 @@
 {% extends 'HelloDiDiDistributorsBundle::Main.html.twig' %}
 
+{% block Dist1 %}
+    <div class="pagedisc">
+        <i>Name :</i><span>{{ Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+    </div>
+{% endblock %}
+
+{% block Dist2 %}
+    <div class="pagedisc">
+        <i>Name :</i><span>{{ Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+    </div>
+{% endblock %}
+
+
 {% block Main_Menu %}
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
         <a href="{{ path('distributors_dashboard') }}">

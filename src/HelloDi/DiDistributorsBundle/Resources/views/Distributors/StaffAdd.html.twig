@@ -57,8 +57,13 @@
                 </div>
 
                 <div class="control-group">
-                    {{ form_label(form.plainPassword) }}
-                    {{ form_widget(form.plainPassword) }}
+                    {{ form_label(form.plainPassword.first) }}
+                    {{ form_widget(form.plainPassword.first) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.plainPassword.second) }}
+                    {{ form_widget(form.plainPassword.second) }}
                 </div>
 
                 <div class="control-group">
