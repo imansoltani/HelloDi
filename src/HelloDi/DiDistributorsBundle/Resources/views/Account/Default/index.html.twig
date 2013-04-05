@@ -1,0 +1,89 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Items
+{% endblock title %}
+
+{% set MU = 'item' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Item</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Items Management
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+    <div class="widget stacked">
+
+        <!-- /widget-header -->
+
+        <div class="widget-content">
+            <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
+                Add a new Item
+            </a>
+
+
+            <div style="margin-top: 5px" class="tablediv">
+
+                <form  action="{{ path('item_show') }}" method="post">
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Manage</th>
+                                <th>Name</th>
+                                <th>Face Value (Currency)</th>
+                                <th>Code</th>
+                                <th>Type</th>
+                                <th>Min Stock</th>
+                                <th>Stock</th>
+                                <th>Country</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in items %}
+                                <tr>
+
+                                    <td >{{ item.id }}</td>
+                                    <td class="td-actions" >
+                                        <input type="submit" value="Manage" onclick="$('#itemid').val('{{ item.id }}')"/>
+                                    </td>
+                                    <td>{{ item.itemName }}</td>
+                                    <td>{{ item.itemFaceValue }} {{ item.itemCurrency }}</td>
+                                    <td>{{ item.itemCode }}</td>
+                                    <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                                    <td>{{ item.alertMinStock }}</td>
+                                    <td>{{ item.Codes.count }}</td>
+                                    <td>{{ item.Country.iso }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                <input type="hidden" name="itemid" id="itemid" value=""/>
+                </form>
+            </div>
+
+
+
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                   Fix_Size();
+                } );
+
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}

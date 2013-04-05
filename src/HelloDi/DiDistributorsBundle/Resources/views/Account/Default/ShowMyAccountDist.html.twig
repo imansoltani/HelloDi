@@ -1,0 +1,192 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Distributor Accounts
+{% endblock title %}
+
+{% set MU = 'dist' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Distributor</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-briefcase"></i>
+    Distributor Management
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span">
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+
+
+                <a class="button btn btn-primary btn-large" href="{{ path('Ent_Main') }}">
+                    Create Distributor
+                </a>
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Distributor</p>
+                        </span>
+                    </h5>
+
+                    <form class="form-horizontal SearchForm" action="{{ path('ShowMyAccountDist',{}) }}" method="post">
+                        <fieldset>
+
+                            {#<div class="control-group">#}
+                                {#{{ form_label(form_searchdist.TypeSearch) }}#}
+                                {#<div class="controls">#}
+                                    {#{{ form_widget(form_searchdist.TypeSearch) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {##}
+
+                            <div class="control-group">
+                                {{ form_label(form_searchdist.accName) }}
+                                {{ form_widget(form_searchdist.accName) }}
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchdist.entName) }}
+                                {{ form_widget(form_searchdist.entName) }}
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchdist.accBalance) }}
+                                <div class="controls">
+                                    {{ form_widget(form_searchdist.accBalance) }}
+                                    {{ form_widget(form_searchdist.accBalanceValue) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchdist.accCurrency) }}
+                                <div class="controls">
+                                    {{ form_widget(form_searchdist.accCurrency) }}
+                                </div>
+                            </div>
+
+                            {#<div class="control-group">#}
+                                {#{{ form_label(form_searchdist.accStatus) }}#}
+                                {#<div class="controls">#}
+                                    {#{{ form_widget(form_searchdist.accStatus) }}#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            <div class="control-group">
+                                {{ form_label(form_searchdist.accCreditLimit) }}
+                                <div class="controls">
+                                    {{ form_widget(form_searchdist.accCreditLimit) }}
+                                </div>
+                            </div>
+                            {{ form_widget(form_searchdist._token) }}
+                            <hr>
+                            <input class="btn btn-primary" type="submit" value="Search">
+
+                        </fieldset>
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+                            $(".SearchForm").hide();
+                            $('.TitleShow1').click(function () {
+                                $('.SearchForm').slideToggle();
+                                $('#search_logo').removeAttr('class');
+
+                                if ($('.title_search').html() == 'Search Distributor') {
+                                    $('.title_search').html('Close Search');
+                                    $('#search_logo').attr('class', 'icon-remove');
+                                }
+                                else {
+                                    $('.title_search').html('Search Distributor');
+                                    $('#search_logo').attr('class', 'icon-search');
+                                }
+
+                                var x = $('.form_search').offset().top - 20;
+                                $('body,html').animate({
+                                    scrollTop: x
+                                }, 800);
+                            });
+
+                        });
+                    </script>
+
+                </div>
+
+                <div class="tablediv" >
+                    <div class="contenttitle">
+                        <h4>Distributors</h4>
+                    </div>
+                    <form action="{{ path('ManageItemsDist',{}) }}" method="post">
+                        <div class="tab-content">
+
+                            <table style="margin-top: 20px" class="table postsend">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Operation</th>
+                                    <th>Name</th>
+                                    <th>Entity Name</th>
+                                    <th>Balance</th>
+                                    <th>CreditLimit</th>
+
+
+                                    <th>Sub accounts</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for myAccount in pagination %}
+                                    {% set countchild=(myAccount.Childrens)|length %}
+                                    <tr>
+                                        <td >{{ myAccount.id }}</td>
+                                        <td class="td-actions" >
+                                            <input type="submit" value="Manage"
+                                                   onclick="$('.accountid').val('{{ myAccount.id }}');"/>
+                                        </td>
+                                        <td>{{ myAccount.accName }}</td>
+                                        <td>{{ myAccount.Entiti.entName }}</td>
+                                        <td>{{ myAccount.accBalance }}</td>
+                                        <td>
+                                            {% if myAccount.accCurrency =='USD' %}
+                                                USD|
+                                            {% elseif myAccount.accCurrency =='CHF' %}
+                                                CHF|
+                                            {% endif %}
+                                            {%  if myAccount.accCreditLimit=='' %}
+                                                000
+                                            {% else %}
+                                                {{  myAccount.accCreditLimit }}
+                                            {% endif %}
+
+
+                                        </td>
+
+                                        <td>{{ countchild }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {#{button pagination}#}
+
+                            <input type="hidden" name="id" class="accountid" value=""/>
+                        </div>
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock Body %}
+
+
+
