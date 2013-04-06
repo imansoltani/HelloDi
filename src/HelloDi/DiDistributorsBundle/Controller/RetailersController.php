@@ -223,7 +223,8 @@ class RetailersController extends Controller
                 'property' => 'itemName',
             ));
 
-  if($User->getRoles()[0]=='ROLE_RETAILER_ADMIN')
+  $roles = $User->getRoles() ;
+  if($roles[0]=='ROLE_RETAILER_ADMIN')
   {
       $form=$form->add('Staff', 'entity',
                 array(
