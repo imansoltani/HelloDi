@@ -1,157 +1,64 @@
 
-
-<div class="span" >
-    <div class="widget-content">
-        <div class="tab-content">
-            <div id="account" class="tab-pane active">
-                <div class="widget-header">
-                    <h3>Account</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Description</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="------------" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Credit Limit</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accCreditLimit }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Avilabel Balance</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accBalance }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Currency</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{%  if Account.accCurrency==0 %}USD{% elseif Account.accCurrency==1 %}CHF{% endif %}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Account Type</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="Retailer" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">TimeZone</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accTimeZone }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Account Condtion</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accTerms }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Notification Language</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accDefaultLanguage }}" />
-                        </div>
-                    </div>
+<a href="#{#{{ path('') }}#}">Recharge</a>
+<form action="{{ path('RetailerTransaction') }}" method="POST">
 
 
-                </form>
 
-                <div class="form-actions">
-                    <a class="btn btn-primary" href="#">Request Ticket</a>
-                </div>
-            </div>
-            <div id="company" class="tab-pane ">
 
-                <div class="widget-header">
-                    <h3>Company</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Description</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="------------" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Name</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entName }}" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Vat</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entVatNumber }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Tel1</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel1 }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Tel2</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel2 }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Fax</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entFax }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Website</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entWebsite }}" />
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-            <div id="address" class="tab-pane ">
-                <div class="widget-header">
-                    <h3>Address</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Np/City</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entNP }}/{{ Entiti.entCity }}" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Country Name</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.Country.name }}/Country Code:{{ Entiti.Country.iso }}" />
-                        </div>
-                    </div>
-                </form>
-
-                <div class="form-actions">
-                    <a class="btn btn-primary" href="#">Change Address Or Detail</a>
-                </div>
-            </div>
-        </div>
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Search">
     </div>
+</form>
+<form>
+    <div class="tab-content">
+        <table style="margin-top: 20px" class="table postsend">
+            <thead>
+            <tr>
+                <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for tran in pagination %}
+                <tr>
+                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
+
+                    <td>{{ tran.tranDescription}}</td>
+                    <td>{{ tran.tranCredit}}</td>
+                    <td>{{ tran.tranDebit }}</td>
+                    <td>{{ tran.Account.accBalance }}</td>
+                    <td>
+
+                        {% if tran.tranAction=='Sale' %}Sale
+                        {% elseif tran.tranAction=='Transfer' %}Transfer
+                        {% elseif tran.tranAction=='Payment' %}Payment
+                        {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                        {% endif %}</td>
+
+                    <td class="td-actions">
+
+
+                        <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+        {#{button pagination}#}
+    </div>
+</form>
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
 </div>
