@@ -370,8 +370,27 @@ class Transaction
      */
     public function updateAccountBalance()
     {
-        $amount = $this->getTranCredit();
-        $currentBalance= $this->getAccount()->getAccBalance();
-        $this->getAccount()->setAccBalance($currentBalance+$amount);
+        switch ($this->getTranAction()) {
+            case 'trans':
+                break;
+
+            case 'peym':
+                $amount = $this->getTranCredit();
+                $currentBalance = $this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance + $amount);
+                break;
+
+            case 'sale':
+                $amount = $this->getTranCredit();
+                $currentBalance = $this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance - $amount);
+                break;
+
+            case 'cred':
+                break;
+
+            case 'add':
+                break;
+        }
     }
 }

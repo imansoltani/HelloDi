@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
@@ -22,7 +23,8 @@ class RetailersController extends Controller
         ));
     }
 
-    //kazem
+    //-----startkazem--------//
+
     public function RetailerProfileAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -187,74 +189,94 @@ class RetailersController extends Controller
 
     }
 
+
+
+    ////function Report/Sale
     public  function SaleAction(Request $req)
     {
         $User= $this->get('security.context')->getToken()->getUser();
 
-
-        $Account=$User->getAccount();
         $em=$this->getDoctrine()->getManager();
-        $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account,'User'=>$User));
+         $query=null;
+        //load first list search
+
+        $qb=$em->createQueryBuilder();
+        $qb->select('Co')
+            ->from('HelloDiDiDistributorsBundle:Code','Co')
+            ->innerjoin('Co.Transactions','CoTr')
+            ->where('Co.status=:st')->setParameter('st',0)
+            ->andwhere('CoTr.User=:ur')->setParameter('ur',$User);
+             $query=$qb->getQuery();
+
+
 
         $form=$this->createFormBuilder()
 
-            ->add('Type','choice',array('choices'=>array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
+            ->add('ItemType','choice',
+            array('choices'=>
+            array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
 
-            ->add('Item', 'entity', array(
+            ->add('ItemName', 'entity',
+                  array(
+                 'empty_data' => 'All',
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-            ))
+            ));
 
-
-            ->add('Staff', 'entity', array(
+  if($User->getRoles()[0]=='ROLE_RETAILER_ADMIN')
+  {
+      $form=$form->add('Staff', 'entity',
+                array(
                 'class' => 'HelloDiDiDistributorsBundle:User',
-                'property' => 'firstName',
-                'query_builder' => function(EntityRepository $er)  {
-                    return $er->createQueryBuilder()
-                        ->select('u')
-                        ->from('HelloDiDiDistributorsBundle:User');
-                    if($User->getroles[0]=='ROLE_RETAILER_ADMIN')
-                        $er->where('u.Account= :Acc')->setParameter('Acc',$Account);
-                    else
-                        $er->where('u.id= :uid')->setParameter('uid',$User->getId());
+                'property' => 'username',
+                 'empty_data'=>$User->getUsername(),
+                'query_builder' => function(EntityRepository $er) use ($User) {
+                    return $er->createQueryBuilder('u')
+                           ->where('u.Account = :ua')
+                           ->orderBy('u.username', 'ASC')
+                           ->setParameter('ua',$User->getAccount());
+//                    die('as'.count($er));
                 }
-            ))
+                ));
+
+  }
 
 
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())->getForm();
+  $form=$form->add('DateStart','date',array())
+             ->add('DateEnd','date',array())->getForm();
 
         if($req->isMethod('POST'))
         {
             $form->bind($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
-            $qb->select('Tran')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tran');
-            if($data['TypeDate']==0)
-            {
+            $qb->select('Co')
+                ->from('HelloDiDiDistributorsBundle:Code','Co')
+                ->innerjoin('Co.Item','CoIt')
+                ->innerjoin('CoIt.Prices','CoItPr')
+                ->innerjoin('Co.Transactions','CoTr')
+                ->innerjoin('CoTr.User','CoTrUs')
+                ->where('Co.status= 0')
+                ->andwhere('CoTr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
+                ->andwhere('CoTr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd'])
+                ->andWhere($qb->expr()->like('CoTrUs.username',$qb->expr()->literal($data['Staff'].'%')));
 
-                $qb=$qb->where('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+            if($data['ItemType']!=3)
+            {
+                $qb=$qb->andwhere('CoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
             }
 
-            if($data['TypeDate']==1)
-            {
+            if($data['ItemName']!='All')
+                 $qb=$qb->andWhere($qb->expr()->like('CoIt.itemName',$qb->expr()->literal($data['ItemName'])));
 
-                $qb=$qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            }
-
-            if($data['Type']!='All')
-            {
-                $qb=$qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
-
-            }
 
             $query=$qb->getQuery();
+
         }
+
+        $count = count($query->getResult());
+        $query = $query->setHint('knp_paginator.count', $count);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -262,10 +284,18 @@ class RetailersController extends Controller
             5/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig', array('pagination'=>$pagination,'form'=>$form->createView(),'Account' =>$Account, 'Entiti' =>$User->getEntiti()));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ReportSales.html.twig',
+
+            array(
+            'pagination'=>$pagination,
+            'form'=>$form->createView(),
+             'User'=>$User,
+            'Account' =>$User->getAccount(),
+            'Entiti' =>$User->getEntiti()));
 
     }
-//endkazem
+
+//--------endkazem--------//
 
  // Start kamal
     public function ShopCallingAction(){
