@@ -9,11 +9,16 @@ body .navbar{
     position: absolute;
 }
 
+html{
+    height: 100%;
+}
+
 body{
 
 background-image: url('../img/summer.jpeg');
     background-repeat: no-repeat;
-    background-size:  100%;
+    background-size:  cover;
+    height: 100%;
 }
 
 .dist{
@@ -31,11 +36,13 @@ background-image: url('../img/summer.jpeg');
 
 .content_home
 {
+    position: absolute;
     width: auto;
     height:250px;
     padding-top: 150px;
     margin-bottom: auto;
-    color:#FFF
+    color:#FFF;
+    width: 100%;
 }
 
 .content_home h1{
