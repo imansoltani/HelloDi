@@ -1,0 +1,15 @@
+MasterStaff:
+    pattern:  /staff
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staff" }
+
+MasterStaffAdd:
+    pattern:  /staff/{id}/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staffadd" }
+
+MasterStaffEdit:
+    pattern:  /staff/{id}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staffedit" }
+
+MasterChangeRole:
+    pattern:  /staff/{id}/changerole
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:changerole" }

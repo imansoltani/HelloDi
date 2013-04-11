@@ -1,0 +1,67 @@
+
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                                  </div>
+
+                <div class="tablediv">
+
+                    <div class="contenttitle">
+                        <h4>Details</h4>
+                    </div>
+                    <form>
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+
+                                    <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
+                                    <td>{{ 'Transaction.ItemName' | trans ({}, "account") }}  </td>
+                                    <td>{{ 'Transaction.Code' | trans ({}, "account") }}  </td>
+                                    <td>{{ 'Transaction.Accountname' | trans ({}, "account") }} </td>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for tran in pagination %}
+                                    <tr>
+                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+
+                                        <td>{{ tran.tranDescription}}</td>
+                                        <td>{{ tran.tranAmount}}</td>
+                                        <td>{{ tran.Account.accBalance }}</td>
+                                        <td>
+                                            {% if tran.tranAction=='Sale' %}Sale
+                                            {% elseif tran.tranAction=='Tras' %}Transfer
+                                            {% elseif tran.tranAction=='Paym' %}Payment
+                                            {% elseif tran.tranAction=='Cred' %}CreditNote
+                                            {% elseif tran.tranAction=='Add' %} Add
+                                            {% endif %}
+                                        </td>
+
+                                        <td> {{ tran.User.username }} </td>
+                                        <td> {{ tran.Code.Item.itemName }} </td>
+                                        <td> {{ tran.Code.serialNumber }} </td>
+                                        <td> {{ tran.Account.accName }} </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -15,7 +15,8 @@
         <h3>Items</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('') }}" >Add New Item</a>
+    <a class="button btn btn-primary btn-large" href="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}"
+            >Add New Item</a>
     <div style="margin-top: 5px" class="tablediv">
         <form method="post">
             <div class="tab-content datatable">
@@ -31,18 +32,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for item in items %}
+                    {% for price in prices %}
                         <tr>
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.itemName }}</td>
-                            <td>{{ item.itemFaceValue }}</td>
-                            <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
-                            <td>{{ item.prices[0].price }}
-                                {{ item.prices[0].priceCurrency }}</td>
+                            <td>{{ price.item.id }}</td>
+                            <td>{{ price.item.itemName }}</td>
+                            <td>{{ price.item.itemFaceValue }}</td>
+                            <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                            <td>{{ price.price }}
+                                {{ price.priceCurrency }}</td>
                             <td>
-                                <a class="btn_actions" href="{{ path('items_item_per_retailers',{'id':item.id}) }}">See Price for retailers</a>
-                                <br/>
-                                <a class="btn_actions" href="#">details</a>
+                                <a class="btn_actions" href="{{ path('dist_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">Edit</a>
                             </td>
                         </tr>
                     {% endfor %}

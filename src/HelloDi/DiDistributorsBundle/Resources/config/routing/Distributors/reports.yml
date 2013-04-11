@@ -1,0 +1,3 @@
+DistSale:
+    pattern:  /sale
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:sale }

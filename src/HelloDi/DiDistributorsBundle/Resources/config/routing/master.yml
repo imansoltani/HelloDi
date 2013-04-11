@@ -17,6 +17,9 @@ master_items:
 master_codes:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
     prefix:   /codes
+master_settings:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/setting.yml"
+    prefix:   /settings
 
 test_index:
     pattern:  /test

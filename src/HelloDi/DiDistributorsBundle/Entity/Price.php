@@ -19,6 +19,7 @@ class Price
      * @ORM\Column(type="decimal", nullable=false, name="price")
      */
     private $price;
+
     /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
      */
@@ -258,5 +259,28 @@ class Price
     public function __toString()
     {
         return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
+    }
+
+    /**
+     * Set isFavourite
+     *
+     * @param boolean $isFavourite
+     * @return Price
+     */
+    public function setIsFavourite($isFavourite)
+    {
+        $this->isFavourite = $isFavourite;
+    
+        return $this;
+    }
+
+    /**
+     * Get isFavourite
+     *
+     * @return boolean 
+     */
+    public function getIsFavourite()
+    {
+        return $this->isFavourite;
     }
 }

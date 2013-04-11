@@ -137,14 +137,14 @@ class RetailersController extends Controller
         $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account,'User'=>$User));
 
         $form=$this->createFormBuilder()
-            ->add('Type','choice',array('choices'=>array('All'=>'All','Sale'=>'Sale','Payment'=>'Payment','CreditNotes'=>'CreditNotes','Transfer'=>'Transfer')))
+            ->add('Type','choice',array('choices'=>array('All'=>'All','Sale'=>'Sale','Paym'=>'Payment','Cred'=>'CreditNotes','Tras'=>'Transfer','Add'=>'Add')))
             ->add('DateStart','date',array())
             ->add('DateEnd','date',array())
             ->add('TypeDate','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
-                    0 => 'Inactive',
-                    1 => 'Active',
+                    0 => 'Trade Date',
+                    1 => 'Looking Date',
                 )
             ))->getForm();
 
