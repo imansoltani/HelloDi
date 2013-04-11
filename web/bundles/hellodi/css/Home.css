@@ -11,7 +11,7 @@ body .navbar{
 
 body{
 
-background-image: url('summer.jpeg');
+background-image: url('../img/summer.jpeg');
     background-repeat: no-repeat;
     background-size:  100%;
 }
