@@ -15,11 +15,11 @@
     <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
 
-    <link href="{{ asset('bundles/hellodi/css/Home.css') }}" rel="stylesheet">
+
     <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/Main.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('bundles/hellodi/css/Home.css') }}" rel="stylesheet">
 
 
 
@@ -112,6 +112,10 @@
 <h2>Hello Di</h2>
 
     <h3>website</h3>
+
+    <div class="dist" >
+        For Test
+    </div>
 </div>
 
 
@@ -124,7 +128,38 @@
 <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
 <script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
 <script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+    var x = 0 ;
+    $(function(){
+        $('.navbar-inner').hide();
+        $('.content_home').hide();
+        $('.dist').hide();
 
+        x = $(window).width();
+        x = x/3 ;
+
+        $('h1').css('margin-left',x);
+        $('h2').css('margin-left',x-100);
+        $('h3').css('margin-left',x);
+
+
+    })
+
+    $(document).ready(function(){
+        $('.navbar-inner').delay(100).fadeIn('slow',function(){
+
+            $('.content_home').slideToggle(function(){
+                $('h1').delay(100).animate({marginLeft:'40px'});
+                $('h2').delay(200).animate({marginLeft:'-60px'});
+                $('h3').delay(300).animate({marginLeft:'20px'},function(){
+                    $('.dist').fadeIn();
+                });
+
+            });
+
+        });
+    });
+</script>
 
 
 </body>
