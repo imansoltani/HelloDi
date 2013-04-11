@@ -11,7 +11,9 @@ body .navbar{
 
 body{
 
-
+background-image: url('summer.jpeg');
+    background-repeat: no-repeat;
+    background-size:  100%;
 }
 
 .dist{
