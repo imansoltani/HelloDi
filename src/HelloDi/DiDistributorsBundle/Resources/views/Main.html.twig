@@ -244,7 +244,7 @@
 
         {% endblock %}
 
-        <ul class="hornav" style="min-height:{% if hornav is defined  %}{{ hornav }};{% else %}0;{% endif %}" >
+        <ul class="hornav" {% if hornav is not defined  %}style="min-height:0;"{% endif %} >
             {% block Tabs %}{% endblock %}
         </ul>
 

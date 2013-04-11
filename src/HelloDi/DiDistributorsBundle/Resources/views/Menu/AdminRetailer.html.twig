@@ -7,17 +7,17 @@
 
 {% block Dist1 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 

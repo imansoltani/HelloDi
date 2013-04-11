@@ -639,7 +639,7 @@ color:#FFF;
 
     margin-top: 20px ;
     margin-left: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 
     color: #0c0e3c;
     font-weight: normal;
@@ -675,7 +675,7 @@ color:#FFF;
     width: 200px;
     float: right;
 
-    margin-top: 40px;
+    margin-top: 35px;
     margin-right: 20px;
 }
 
@@ -748,13 +748,26 @@ color:#FFF;
 
 /* Body Dashboard Shortcuts
                 -------------------------------------------------------- */
+.main{
+
+
+
+}
+
 .main .span{
     width: 95%;
     margin: 0 auto;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    background: #FFF;
+
+
 }
 
 .main .row{
-    margin-bottom: 20px;
+    margin-left: 0px;
+
+
 }
 
 .main .span .widget-content{
@@ -1041,6 +1054,7 @@ display: none;
     ------------------------------------------------ */
 .stacked {
     position: relative;
+    padding: 5px;
 }
 
 
@@ -1116,8 +1130,8 @@ h1, h2, h3, h4, h5, h6 {
 
 
     min-width: 130px;
-    padding: 3px 0px;
-    padding-bottom: 5px;
+    padding: 0px;
+
     list-style: none outside none;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -1131,23 +1145,18 @@ h1, h2, h3, h4, h5, h6 {
 .MenuBar .menubar_items ul.dropdown-menu li {
     line-height: 20px;
     margin: 0px;
-    width: 94%;
-    display: block;
-    margin-right: 3%;
-    margin-left: 3%;
+    width: 100%;
+
+
     padding: 0;
-
-}
-
-.MenuBar .menubar_items ul.dropdown-menu li:first-child a {
-    margin-top: 0;
+    float: none;
 }
 
 .MenuBar .menubar_items ul.dropdown-menu li a {
     font-size: 13px;
     padding-top: 5px;
     padding-bottom: 5px;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 0px ;
 
     display: block;
     clear: both;
@@ -1158,8 +1167,9 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
     font-family: 'Average Sans',sans-serif;
     display: block;
-    width: 90%;
+
 margin-top:5px ;
+    margin-bottom:5px ;
 
 }
 
