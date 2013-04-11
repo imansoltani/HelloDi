@@ -1,4 +1,29 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
+{% block title %}
+    Edit User
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="#">Account Setting</a>
+    <a class="link" href="{{ path('RetailerStaff') }}">Staff</a>
+    <span class="link">Edit User</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    Edit User
+{% endblock %}
+
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
     <div class="span">
         <div class="widget-content" >
             <div class="widget-header">
@@ -62,10 +87,11 @@
                 {{ form_widget(form._token) }}
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <input class="btn btn-primary" type="submit"  value="Create">
+                    <input class="btn btn-primary" type="submit"  value="Edit">
 
                 </div>
 
             </form>
         </div>
     </div>
+{% endblock %}
