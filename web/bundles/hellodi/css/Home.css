@@ -79,7 +79,7 @@ body{
 
     .content_home
     {
-        margin-top: 150px;
+        padding-top: 150px;
     }
 
     .content_home h1{
@@ -108,7 +108,7 @@ body{
 {
     .content_home
     {
-        margin-top: 150px;
+        padding-top: 150px;
     }
 
     .content_home h1{
@@ -119,7 +119,7 @@ body{
     .content_home h2{
         width: 500px;
         height: 80px;
-        font-size: 136px;
+        font-size: 100px;
         margin-top: 50px;
     }
 
