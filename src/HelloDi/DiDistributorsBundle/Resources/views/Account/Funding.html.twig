@@ -1,0 +1,69 @@
+<h3> Fund distributors balance </h3>
+    {#//----Form Applay----//#}
+
+    <form style="margin-top: 20px" action="#{#{{ path('ManageDistInfoEdit') }}#}" method="post" class="form-horizontal" >
+
+        <fieldset>
+
+            <div class="control-group">
+
+                {{ form_label(formapplay.Amount) }}
+
+                    {{ form_widget(formapplay.Amount)  }}
+
+            </div>
+
+            <div class="control-group">
+                {{ form_label(formapplay.As) }}
+                <div class="controls">
+                    {{ form_widget(formapplay.As)  }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                {{ form_label(formapplay.Description ) }}
+                <div class="controls">
+                    {{ form_widget(formapplay.Description )  }}
+            </div>
+            </div>
+
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">Applay</button>
+            </div>
+
+
+        </fieldset>
+
+    </form>
+
+
+{#//----Form update----//#}
+<h3> Update distributors Credit Limit </h3>
+    <form style="margin-top: 20px" action="#{#{{ path('ManageDistInfoEdit') }}#}" method="post" class="form-horizontal" >
+
+        <fieldset>
+
+            <div class="control-group">
+
+                {{ form_label(formupdate.Amount) }}
+
+                {{ form_widget(formupdate.Amount)  }}
+
+            </div>
+
+            <div class="control-group">
+                {{ form_label(formupdate.As) }}
+                <div class="controls">
+                    {{ form_widget(formupdate.As)  }}
+                </div>
+            </div>
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+
+
+        </fieldset>
+
+    </form>
