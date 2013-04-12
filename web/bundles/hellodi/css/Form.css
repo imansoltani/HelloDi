@@ -194,6 +194,36 @@ body .tablediv table.table tr td:last-child{
 .btn_edit_action:hover{
     color: rgb(251, 147, 55);
     text-decoration: none;
+
+}
+
+.favorite.unfav{
+    color:rgb(249, 249, 249);
+}
+
+.favorite.fav{
+    color:  #003399;
+}
+
+.favorite{
+    font-size: 20px;
+    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    text-shadow: 1px 1px 3px  #003399;
+    transition : font-size 0.2s ;
+    -webkit-transition : font-size 0.2s ;
+}
+
+.favorite:hover,.favorite:focus{
+    text-decoration: none;
+}
+
+.favorite:hover{
+
+    font-size: 30px;
 }
 
 .tablediv table.table tr td.td-actions input ,.btn_actions{
