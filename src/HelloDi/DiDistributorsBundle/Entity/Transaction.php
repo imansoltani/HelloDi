@@ -1,73 +1,82 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as CTRL;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="transaction")
  * @ORM\HasLifecycleCallbacks()
  */
 class Transaction
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+
+    private $entityManager;
+    /**
      * @ORM\Column(type="decimal", nullable=true)
      */
     private $tranBookingValue;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
-    private $tranAmount;
-    /** 
+    private $tranCredit;
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
+     */
+    private $tranDebit;
+
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
      */
     private $tranFees;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=3, nullable=false, name="tran_currency")
      */
     private $tranCurrency;
 
-    /** 
+    /**
      * @ORM\Column(type="date", nullable=false, name="tran_date")
      */
     private $tranDate;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=true, name="tran_insert")
      */
     private $tranInsert;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=true, name="tran_description")
      */
     private $tranDescription;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $tranAction;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Transactions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $User;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", inversedBy="Transactions")
      * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=false)
      */
@@ -76,7 +85,7 @@ class Transaction
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -92,14 +101,14 @@ class Transaction
     public function setTranBookingValue($tranBookingValue)
     {
         $this->tranBookingValue = $tranBookingValue;
-    
+
         return $this;
     }
 
     /**
      * Get tranBookingValue
      *
-     * @return float 
+     * @return float
      */
     public function getTranBookingValue()
     {
@@ -115,14 +124,14 @@ class Transaction
     public function setTranCredit($tranCredit)
     {
         $this->tranCredit = $tranCredit;
-    
+
         return $this;
     }
 
     /**
      * Get tranCredit
      *
-     * @return float 
+     * @return float
      */
     public function getTranCredit()
     {
@@ -138,14 +147,14 @@ class Transaction
     public function setTranDebit($tranDebit)
     {
         $this->tranDebit = $tranDebit;
-    
+
         return $this;
     }
 
     /**
      * Get tranDebit
      *
-     * @return float 
+     * @return float
      */
     public function getTranDebit()
     {
@@ -161,14 +170,14 @@ class Transaction
     public function setTranFees($tranFees)
     {
         $this->tranFees = $tranFees;
-    
+
         return $this;
     }
 
     /**
      * Get tranFees
      *
-     * @return float 
+     * @return float
      */
     public function getTranFees()
     {
@@ -184,14 +193,14 @@ class Transaction
     public function setTranCurrency($tranCurrency)
     {
         $this->tranCurrency = $tranCurrency;
-    
+
         return $this;
     }
 
     /**
      * Get tranCurrency
      *
-     * @return string 
+     * @return string
      */
     public function getTranCurrency()
     {
@@ -207,14 +216,14 @@ class Transaction
     public function setTranDate($tranDate)
     {
         $this->tranDate = $tranDate;
-    
+
         return $this;
     }
 
     /**
      * Get tranDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTranDate()
     {
@@ -230,14 +239,14 @@ class Transaction
     public function setTranInsert($tranInsert)
     {
         $this->tranInsert = $tranInsert;
-    
+
         return $this;
     }
 
     /**
      * Get tranInsert
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTranInsert()
     {
@@ -253,14 +262,14 @@ class Transaction
     public function setTranDescription($tranDescription)
     {
         $this->tranDescription = $tranDescription;
-    
+
         return $this;
     }
 
     /**
      * Get tranDescription
      *
-     * @return string 
+     * @return string
      */
     public function getTranDescription()
     {
@@ -276,14 +285,14 @@ class Transaction
     public function setTranAction($tranAction)
     {
         $this->tranAction = $tranAction;
-    
+
         return $this;
     }
 
     /**
      * Get tranAction
      *
-     * @return string 
+     * @return string
      */
     public function getTranAction()
     {
@@ -299,14 +308,14 @@ class Transaction
     public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
     {
         $this->Account = $account;
-    
+
         return $this;
     }
 
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Account
      */
     public function getAccount()
     {
@@ -322,14 +331,14 @@ class Transaction
     public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
     {
         $this->User = $user;
-    
+
         return $this;
     }
 
     /**
      * Get User
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
+     * @return \HelloDi\DiDistributorsBundle\Entity\User
      */
     public function getUser()
     {
@@ -345,14 +354,14 @@ class Transaction
     public function setCode(\HelloDi\DiDistributorsBundle\Entity\Code $code)
     {
         $this->Code = $code;
-    
+
         return $this;
     }
 
     /**
      * Get Code
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Code 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Code
      */
     public function getCode()
     {
@@ -378,6 +387,7 @@ class Transaction
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance - $amount);
+
                 break;
 
             case 'cred':
@@ -385,29 +395,23 @@ class Transaction
 
             case 'add':
                 break;
+            case 'Profit':
+                $acc = $this->getAccount();
+                $accParent = $this->getAccount()->getParent();
+                $accParentBalance = $this->getAccount()->getParent()->getAccBalance();
+                $item = $this->getCode()->getItem();
+
+                $prices = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$acc,'Item'=>$item));
+
+                $pricesParent = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accParent,'Item'=>$item));
+                $currentBalanceParent = $this->getAccount()->getParent()->getAccBalance();
+                $this->getAccount()->getParent()->setAccBalance($currentBalanceParent + ($prices->getprice() - $pricesParent->getprice()));
+                break;
         }
     }
 
-    /**
-     * Set tranAmount
-     *
-     * @param float $tranAmount
-     * @return Transaction
-     */
-    public function setTranAmount($tranAmount)
+    public function __construct($entityManager)
     {
-        $this->tranAmount = $tranAmount;
-    
-        return $this;
-    }
-
-    /**
-     * Get tranAmount
-     *
-     * @return float 
-     */
-    public function getTranAmount()
-    {
-        return $this->tranAmount;
+        $this->entityManager = $entityManager;
     }
 }

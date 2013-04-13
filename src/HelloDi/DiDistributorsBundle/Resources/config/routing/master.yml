@@ -14,9 +14,14 @@ master_items:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"
     prefix:   /items
 
+master_operators:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/operator.yml"
+    prefix:   /operators
+
 master_codes:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
     prefix:   /codes
+
 master_settings:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/setting.yml"
     prefix:   /settings
