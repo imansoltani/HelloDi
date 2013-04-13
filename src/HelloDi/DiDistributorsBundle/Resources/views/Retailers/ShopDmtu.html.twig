@@ -1,38 +1,154 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shop Dmtu</title>
-</head>
-<body>
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
-<p>Account Balance:{{ account.accBalance }}</p>
-{% for opr in operator %}
+{% block title %}
+    Shop Dmtu
+{% endblock title %}
 
-    <p style="background:#6b9311">{{  opr.name }}</p>
-    <table>
-    <tr>
-    <td width =30%>Neme</td>
-    <td width =30%>Face Value</td>
-    <td width =30%>Curncy</td>
-    <td width =30%>Link</td>
-    </tr>
-    {% for item in itemlist %}
-        {% if( item.name == opr.name) %}
-    <tr>
-        <td>{{ item.itemName }}</td>
-        <td>{{ item.itemFaceValue }}</td>
-        <td>{{ item.itemCurrency }}</td>
-        <td><td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
-                <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td></td>
-    </tr>
-            {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
-        {% endif %}
-    {% endfor %}
+{% set MU = 'mobile' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <span class="link">Shop Dmtu</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-mobile-phone"></i>
+    Shop Dmtu
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
 
 
-    </table>
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+            <h3 id="myModalLabel">By Card</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal"  action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST" >
+                <div class="control-group" >
+                    <label class="control-label" >
+                        Operator
+                    </label>
+                    <div class="controls" >
+                        <input type="text" value="Irancell" disabled class="input-large" >
+                    </div>
+                </div>
+                <div class="control-group" >
+                    <label class="control-label" >
+                        Item
+                    </label>
+                    <div class="controls" >
+                        <input type="text" value="2000 t" disabled class="input-large" >
+                    </div>
+                </div>
 
-{% endfor %}
+                <div class="control-group" >
+                    <label class="control-label" >
+                        Value
+                    </label>
+                    <div class="controls" >
+                        <input type="text" value="2100" id="facavalue" disabled class="input-large" >
+                    </div>
+                </div>
 
-</body>
-</html>
+                <div class="control-group" >
+                    <label class="control-label" >
+                        Count
+                    </label>
+                    <div class="controls" >
+                        <select onchange="count_value()" id="form-field-select-1">
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="control-group" >
+                    <label class="control-label" >
+                        Sum Values
+                    </label>
+                    <div class="controls" >
+                        <input id="showsum" type="text" value="2100" disabled class="input-large" >
+                    </div>
+                </div>
+
+                <input type="hidden" value="0" id="topscroll" >
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Buy</button>
+        </div>
+    </div>
+
+    <a href="#myModal" data-toggle="modal" ><span>card</span></a>
+
+    <script type="text/javascript">
+        function count_value()
+        {
+            var x = $('#form-field-select-1').val();
+            var y = $('#facavalue').val();
+            x *= y ;
+            $('#showsum').val(x);
+        }
+
+
+
+    </script>
+<div class="span">
+    <div class="widget stacked">
+
+        <div class="widget-content">
+            {% for opr in operator %}
+
+                <p style="background:#6b9311">{{  opr.name }}</p>
+                <table>
+                    <tr>
+                        <td width =30%>Neme</td>
+                        <td width =30%>Face Value</td>
+                        <td width =30%>Curncy</td>
+                        <td width =30%>Link</td>
+                    </tr>
+                    {% for item in itemlist %}
+                        {% if( item.name == opr.name) %}
+                            <tr>
+                                <td>{{ item.itemName }}</td>
+                                <td>{{ item.itemFaceValue }}</td>
+                                <td>{{ item.itemCurrency }}</td>
+                                <td><td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
+                                        <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td></td>
+                            </tr>
+                            {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
+                        {% endif %}
+                    {% endfor %}
+
+
+                </table>
+
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

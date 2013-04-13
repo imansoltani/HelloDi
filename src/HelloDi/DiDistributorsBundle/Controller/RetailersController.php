@@ -304,7 +304,7 @@ class RetailersController extends Controller
 
 // Start kamal
 
-    public function DmtuAction(){
+        public function DmtuAction(){
 
         $em = $this->getDoctrine()->getManager();
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
