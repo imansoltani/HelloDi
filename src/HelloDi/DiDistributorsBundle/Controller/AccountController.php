@@ -1489,8 +1489,6 @@ public function pdfAction(){
     {
         $em = $this->getDoctrine()->getManager();
 
-
-
         $accountid = $request->get('accountid');
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
 
