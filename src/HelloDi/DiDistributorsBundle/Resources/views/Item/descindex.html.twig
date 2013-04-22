@@ -19,17 +19,22 @@
     <div class="widget-header">
         <h3>Item Descriptions</h3>
     </div> <!-- /widget-header -->
-
+    <br>
+    <form method="post" action="{{ path('item_desc_new') }}">
+        <input type="hidden" name="itemid" value="{{ item.id }}"/>
+        <input class="button btn btn-large btn-primary" type="submit" value="Add new Item Description"/>
+    </form>
     <div style="margin-top: 5px" class="tablediv">
 
-        <form method="post" action="{{ path('item_desc_new') }}">
-            <input type="hidden" name="itemid" value="{{ item.id }}"/>
-            <input class="button btn btn-large btn-primary" type="submit" value="Add new Item Description"/>
-        </form>
+        <div class="contenttitle">
+            <h4>Descriptions</h4>
+        </div>
 
         <form  action="{{ path('item_desc_edit') }}" method="post">
-            <div class="tab-content datatable">
-                <table id="example" class="table postsend">
+
+            <div class="tab-content">
+                <table style="margin-top: 20px"
+                       class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
                         <th>Id</th>

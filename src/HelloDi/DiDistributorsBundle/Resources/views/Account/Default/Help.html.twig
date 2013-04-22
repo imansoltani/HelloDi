@@ -1,49 +1,24 @@
+<html>
+<head>
+    <title>ProvTransaction</title>
+    <body>
+    <form action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="POST">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <button>Search</button>
+    </form>
+    {% for trans in accProv %}
 
-<a href="#{#{{ path('') }}#}">Recharge</a>
-<form action="{{ path('RetailerSale') }}" method="POST">
-
-    <div class="control-group">
-        {{ form_label(form.DateStart) }}
-        {{ form_widget(form.DateStart) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form.DateEnd) }}
-        {{ form_widget(form.DateEnd) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.ItemType) }}
-        {{ form_widget(form.ItemType) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form.ItemName) }}
-        {{ form_widget(form.ItemName) }}
-    </div>
-
-    <div class="control-group">
-        {%   if(User.roles[0]=='ROLE_RETAILER_ADMIN') %}
-            {{ form_label(form.Staff) }}
-            {{ form_widget(form.Staff) }}
-        {% endif %}
-    </div>
-
-    <div class="form-actions" style="margin-bottom: 0" >
-        <input class="btn btn-primary" type="submit"  value="Search">
-    </div>
-</form>
-<form>
-    <div class="tab-content">
-        <table style="margin-top: 20px" class="table postsend">
-            <thead>
-            <tr>
+        {{ trans.Code.Item.itemName }}
+        {{ trans.Code.serialNumber }}
+        {{ trans.tranDescription }}
+        {{ trans.tranDescription }}
+        {{ trans.tranDate|date('Y/m/d') }}
+        <a href="#" >History</a>
 
 
-            </tr>
-            </thead>
+    {% endfor %}
 
-        </table>
-        {#{button pagination}#}
-    </div>
-</form>
-
-</div>
+    </body>
+</head>
+</html>

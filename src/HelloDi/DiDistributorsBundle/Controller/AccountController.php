@@ -364,8 +364,10 @@ class AccountController extends Controller
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $Account = $Tran->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
             array(
+                'Account'=>$Account,
                 'pagination'=>$Tran,
             ));
     }
@@ -606,7 +608,7 @@ class AccountController extends Controller
         $em=$this->getDoctrine()->getManager();
 
         $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
-
+        $Account = $tran->getAccount();
         $BuPrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
             'Account'=>$tran->getAccount()->getParent()
         ,'Item'=>$tran->getCode()->getItem()));
@@ -617,6 +619,7 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
             array(
+                'Account'=>$Account,
                 'tran'=>$tran,
                 'BuPrice'=>$BuPrice,
                 'SePrice'=>$SePrice
@@ -1548,9 +1551,11 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array('accprov'=>$accProv,'idTrans'=>$id,'form' => $searchForm   ->createView()));
     }
     public function MasterProvRemovedAction(Request $request,$id){
+
+
         $em = $this->getDoctrine()->getManager();
         $account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
-
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $searchForm = $this->createFormBuilder()
             ->add('FromDate', 'date',array('required'=>false ,'format' => 'yyyy/MM/dd','widget' => 'single_text'))
             ->add('ToDate', 'date',array('required'=>false,'format' => 'yyyy/MM/dd','widget' => 'single_text'))
@@ -1598,7 +1603,7 @@ class AccountController extends Controller
         }
         $qb = $qb->getQuery();
         $accProv = $qb->getResult();
-        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig',array('id'=>$id,'accProv'=>$accProv,'form' => $searchForm   ->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig',array('id'=>$id,'Account'=>$Account,'accProv'=>$accProv,'form' => $searchForm   ->createView()));
     }
 
     // kamal Prov End

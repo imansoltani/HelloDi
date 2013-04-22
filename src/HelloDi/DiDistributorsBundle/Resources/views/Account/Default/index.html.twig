@@ -1,89 +1,38 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
-
-{% block title %}
-    Items
-{% endblock title %}
-
-{% set MU = 'item' %}
-
-{% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Item</span>
-{% endblock Site_Map %}
-
-{% block PageTitle %}
-    <i class="icon-tags"></i>
-    Items Management
-{% endblock %}
-
-{% block Body %}
-    <div class="span">
-    <div class="widget stacked">
-
-        <!-- /widget-header -->
-
-        <div class="widget-content">
-            <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
-                Add a new Item
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                گروه فروریختنی شماره ۱
             </a>
-
-
-            <div style="margin-top: 5px" class="tablediv">
-
-                <form  action="{{ path('item_show') }}" method="post">
-                    <div class="tab-content datatable">
-                        <table id="example" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Manage</th>
-                                <th>Name</th>
-                                <th>Face Value (Currency)</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Min Stock</th>
-                                <th>Stock</th>
-                                <th>Country</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in items %}
-                                <tr>
-
-                                    <td >{{ item.id }}</td>
-                                    <td class="td-actions" >
-                                        <input type="submit" value="Manage" onclick="$('#itemid').val('{{ item.id }}')"/>
-                                    </td>
-                                    <td>{{ item.itemName }}</td>
-                                    <td>{{ item.itemFaceValue }} {{ item.itemCurrency }}</td>
-                                    <td>{{ item.itemCode }}</td>
-                                    <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
-                                    <td>{{ item.alertMinStock }}</td>
-                                    <td>{{ item.Codes.count }}</td>
-                                    <td>{{ item.Country.iso }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-                <input type="hidden" name="itemid" id="itemid" value=""/>
-                </form>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                قوانین مربوط به نحوه بسته‌بندی یک بسته تغییر یافته نیز در صورتیکه بطور عملی و قابل اجرا، آزادی شما برای انتشار نسخه تغییر یافته را منع نکنند، قابل قبول هستند. قوانینی مانند "«اگر شما برنامه را به این روش در دسترس قرار دادید، باید آن را به آن روش نیز در دست قرار دهید»" نیز، با همان شرایط قبلی می‌توانند قابل قبول باشند. (به خاطر داشته باشید که چنین قانونی آزادی شما برای انتخاب انتشار و یا عدم انتشار برنامه را باقی می‌گذارد.) همچنین این برای مجوز قابل قبول است تا لازم بدارد که اگر شما یک نسخه تغییر یافته از برنامه را توزیع کردید و توسعه‌دهنده قبلی یک کپی از آن را درخواست نمود، شما باید یک کپی برای او بفرستید یا مشخص کنید که این تغییرات را شما انجام داده‌اید.
             </div>
-
-
-
-
-            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
-
-            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
-            <script type="text/javascript">
-                $(document).ready(function() {
-                   Fix_Size();
-                } );
-
-            </script>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                گروه فروریختنی شماره ۲
+            </a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse">
+            <div class="accordion-inner">
+                اغلب مجوزهای نرم‌افزار آزاد بر اساس کپی‌رایت می‌باشند، ولی برای آن دسته از الزاماتی که بواسطه کپی‌رایت می‌توانند تحمیل شوند، محدودیت‌هایی وجود دارد. اگر یک مجوز مبتنی بر کپی‌رایت آزادی را به روش‌هایی که در بالا توضیح داده شد محترم بشمارد و رعایت کند، بعید به نظر می‌رسد که مشکلات دیگری که ما هرگز پیش‌بینی نمی‌کردیم بوجود بیاید (اگر چه گه گاه این اتفاق می‌افتد). اما بعضی از مجوزهای نرم‌افزار آزاد بر اساس قراردادها می‌باشند، و قردادها می‌توانند شمار بیشتری از محدودیت‌های ممکن را تحمیل کنند. این بدان معناست که راه‌های بیشماری وجود دارند تا چنین مجوزی به طرز غیر قابل قبولی محدودکننده و غیر آزاد باشد.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                گروه فروریختنی شماره ۳
+            </a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse">
+            <div class="accordion-inner">
+                در نهایت بخاطر داشته باشید که معیارها و ظوابطی مانند آنها که در تعریف نرم‌افزار آزاد ذکر شدند، برای تفسیر به تفکری دقیق نیاز دارند. برای تصمیم‌گیری در مورد اینکه آیا مجوز نرم‌افزار خاصی صلاحیت مجوز نرم‌افزار آزاد بودن را دارد، ما آن را بر مبنای همین ظوابط در نظر می‌گیریم تا تصمیم بگیریم که آیا معنی و مفهوم آن به خوبی کلمات و عبارات در آن، مناسب هست. اگر مجوز‌ی شامل موارد نامعقول باشد، ما آن را رد می‌کنیم، حتی اگر آن مورد را در این معیارها پیش‌بینی نکرده باشیم. بعضی اوقات درخواست‌های یک مجوز پی‌آمدی پیش می‌آورد که قبل از اینکه تصمیم بگیریم آیا این درخواست‌ها قابل قبول هستند، تفکر بسیاری شامل بحث و مذاکره با یک وکیل را مطالبه می‌کند. هنگامیکه ما درباره یک موضوع جدید به نتیجه می‌رسیم، غالبا این معیارها را به روز می‌کنیم تا راحت‌تر ببینید که چرا مجوز‌های خاص صلاحیت دارند و یا ندارند.
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}

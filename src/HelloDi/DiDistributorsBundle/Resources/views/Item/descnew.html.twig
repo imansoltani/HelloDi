@@ -20,7 +20,7 @@
         <h3>Item Descriptions</h3>
     </div> <!-- /widget-header -->
 
-    <div style="margin-top: 5px" class="tablediv">
+
         <form action="{{ path('item_desc_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
             {{ form_errors(form) }}
             <div class="control-group">
@@ -29,7 +29,9 @@
             </div>
             <div class="control-group">
                 {{ form_label(form.descdesc) }}
-                {{ form_widget(form.descdesc) }}
+                <div class="controls">
+                    {{ form_widget(form.descdesc) }}
+                </div>
             </div>
 
             {{ form_rest(form) }}
@@ -42,6 +44,6 @@
             </div>
 
         </form>
-    </div>
+
 
 {% endblock %}

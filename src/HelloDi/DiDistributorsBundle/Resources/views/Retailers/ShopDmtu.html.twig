@@ -24,131 +24,178 @@
 
 
     <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-            <h3 id="myModalLabel">By Card</h3>
+            <h3 id="myModalLabel">Buy Card</h3>
         </div>
-        <div class="modal-body">
-            <form class="form-horizontal"  action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST" >
-                <div class="control-group" >
-                    <label class="control-label" >
+        <form class="form-horizontal" action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST">
+            <div class="modal-body">
+
+                <div class="control-group">
+                    <label class="control-label">
                         Operator
                     </label>
-                    <div class="controls" >
-                        <input type="text" value="Irancell" disabled class="input-large" >
+
+                    <div class="controls">
+                        <input type="text" value="Irancell" id="operator" disabled class="input-large">
                     </div>
                 </div>
-                <div class="control-group" >
-                    <label class="control-label" >
+                <div class="control-group">
+                    <label class="control-label">
                         Item
                     </label>
-                    <div class="controls" >
-                        <input type="text" value="2000 t" disabled class="input-large" >
+
+                    <div class="controls">
+                        <input type="text" value="" id="itemname" disabled class="input-large">
                     </div>
                 </div>
 
-                <div class="control-group" >
-                    <label class="control-label" >
+                <div class="control-group">
+                    <label class="control-label">
                         Value
                     </label>
-                    <div class="controls" >
-                        <input type="text" value="2100" id="facavalue" disabled class="input-large" >
+
+                    <div class="controls">
+                        <input type="text" value="" id="facevalue" disabled class="input-large">
                     </div>
                 </div>
 
-                <div class="control-group" >
-                    <label class="control-label" >
+                <div class="control-group">
+                    <label class="control-label">
                         Count
                     </label>
-                    <div class="controls" >
-                        <select onchange="count_value()" id="form-field-select-1">
-                            <option selected value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                        </select>
+
+                    <div class="controls">
+                        <input type="text"
+                               onkeydown="return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )"
+                               name="numberOfsale" onchange="count_value()" id="itemcount">
                     </div>
 
                 </div>
 
-                <div class="control-group" >
-                    <label class="control-label" >
+                <div class="control-group">
+                    <label class="control-label">
                         Sum Values
                     </label>
-                    <div class="controls" >
-                        <input id="showsum" type="text" value="2100" disabled class="input-large" >
+
+                    <div class="controls">
+                        <input id="showsum" type="text" value="2100" disabled class="input-large">
                     </div>
                 </div>
 
-                <input type="hidden" value="0" id="topscroll" >
+                <input type="hidden" id="itemid" name="item_id" value="">
+                <input type="hidden" id="priceid" name="price_id" value="">
 
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary">Buy</button>
-        </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <input type="submit" class="btn btn-primary" value="Buy">
+            </div>
+        </form>
     </div>
 
-    <a href="#myModal" data-toggle="modal" ><span>card</span></a>
+
 
     <script type="text/javascript">
-        function count_value()
-        {
-            var x = $('#form-field-select-1').val();
-            var y = $('#facavalue').val();
-            x *= y ;
+        function count_value() {
+            var x = $('#itemcount').val();
+            var y = $('#facevalue').val();
+            x *= y;
             $('#showsum').val(x);
         }
 
 
-
     </script>
-<div class="span">
-    <div class="widget stacked">
+    <div class="span">
+        <div class="widget stacked">
+            <div class="widget-content itemshow">
+                <div class="accordion" id="accordion2">
+                    {% for opr in operator %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                               href="#{{ opr.name }}">
+                                {{ opr.name }}
+                            </a>
+                        </div>
+                        <div id="{{ opr.name }}" class="accordion-body collapse {% if loop.first %}in{% endif %}">
+                            <div class="accordion-inner">
+                                <ul class="itemulshow">
 
-        <div class="widget-content">
-            {% for opr in operator %}
+                                    {% for item in itemlist %}
+                                        {% if( item.name == opr.name) %}
 
-                <p style="background:#6b9311">{{  opr.name }}</p>
-                <table>
-                    <tr>
-                        <td width =30%>Neme</td>
-                        <td width =30%>Face Value</td>
-                        <td width =30%>Curncy</td>
-                        <td width =30%>Link</td>
-                    </tr>
-                    {% for item in itemlist %}
-                        {% if( item.name == opr.name) %}
-                            <tr>
-                                <td>{{ item.itemName }}</td>
-                                <td>{{ item.itemFaceValue }}</td>
-                                <td>{{ item.itemCurrency }}</td>
-                                <td><td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
-                                        <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td></td>
-                            </tr>
-                            {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
-                        {% endif %}
+
+                                            <li>
+                                                <a id="item_buy" href="#myModal" data-toggle="modal">
+                                                    <div class="item_show">
+                                                        <div class="header">{{ item.itemName }}</div>
+                                                        <div class="body">
+                                                            <div class="price">
+                                                                {{ item.itemFaceValue }}
+                                                            </div>
+                                                            <div class="type">
+                                                                {{ item.itemCurrency }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" id="item_name1" value="{{ item.itemName }}">
+                                                    <input type="hidden" id="face_value1"
+                                                           value="{{ item.itemFaceValue }}">
+                                                    <input type="hidden" id="currency1" value="{{ item.itemCurrency }}">
+                                                    <input type="hidden" id="operator1" value="{{ item.name }}">
+                                                    <input type="hidden" id="item_id1" value="{{ item.id }}">
+                                                    <input type="hidden" id="price_id1" value="{{ item.pid }}">
+
+                                                </a>
+                                            </li>
+
+
+
+
+                                            {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
+                                        {% endif %}
+                                    {% endfor %}
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $("* #item_buy").click(function () {
+
+                        $('#operator').val($(" #operator1", this).val());
+                        $('#itemname').val($(" #item_name1", this).val());
+                        $('#facevalue').val($(" #face_value1", this).val());
+                        $('#showsum').val($(" #face_value1", this).val());
+                        $('#itemcount').val(1);
+
+                        $('#itemid').val($(" #item_id1", this).val());
+                        $('#priceid').val($(" #price_id1", this).val());
 
 
-                </table>
+                    });
 
-            {% endfor %}
+
+                });
+            </script>
         </div>
-
     </div>
-</div>
+
 
 {% endblock %}
+

@@ -1,5 +1,7 @@
 
 
+
+
 /* Tab
         -------------------------------------------------------- */
 .tab-content{
@@ -657,4 +659,170 @@ form .control-group .controls > .controls{
     background: url("../img/sort/sort_asc.png") no-repeat scroll right center transparent;
 }
 
+/* Item Show */
 
+
+
+
+.item_show{
+    display: block;
+    width: 200px;
+    height: 128px;
+    background:#FFF;
+    position: absolute;
+    box-shadow: 0px 0px 3px #cfd7dc;
+    transition : width 0.3s , height 0.3s , margin-left 0.3s , margin-right 0.3s;
+    -webkit-transition : width 0.3s , height 0.3s , margin-left 0.3s , margin-right 0.3s;
+    z-index: 1000;
+}
+
+.item_show:hover{
+    z-index: 1100;
+}
+
+.itemulshow{
+    margin-left: 0px ;
+
+}
+
+.itemulshow li{
+    list-style: none;
+    float: left;
+    padding: 5px;
+    width: 200px;
+    display: inline-block;
+    height: 130px;
+}
+
+.itemulshow li a{
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.itemulshow li a:hover{
+    text-decoration: none;
+}
+
+.itemulshow li a:hover .item_show{
+    width: 220px;
+    height: 140px;
+    margin-left: -10px;
+    margin-top: -6px;
+
+}
+
+.itemulshow li a:hover .item_show .header{
+    font-size: 30px;
+}
+
+.itemulshow li a:hover .item_show .body .price{
+    font-size: 60px;
+}
+
+.itemulshow li a:hover .item_show .body .type{
+    font-size: 30px;
+    margin-top: 70px;
+    margin-left: 130px;
+
+    transition : margin-left 0.3s , font-size 0.3s ;
+    -webkit-transition : margin-left 0.3s , font-size 0.3s ;
+}
+
+body .accordion-heading > a.collapsed{
+    font-weight: normal;
+    text-shadow: none;
+    background: #59a0da;
+}
+
+body .accordion-heading:first-child > a{
+    margin-top: 0px;
+}
+
+body .accordion-heading > a{
+    margin-top: 10px;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    text-shadow: 0px 1px 2px #04365e;
+    color: #FFF;
+    /* IE10 Consumer Preview */
+    background-image: -ms-linear-gradient(right, #FFFFFF 0%, #0368bb 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(right, #FFFFFF 0%, #0368bb 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(right, #FFFFFF 0%, #0368bb 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #FFFFFF), color-stop(1, #0368bb));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(right, #FFFFFF 0%, #0368bb 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to left, #FFFFFF 0%, #0368bb 100%);
+
+    transition : font-size 0.3s , padding-top 0.3s , padding-bottom 0.3s ;
+    -webkit-transition : font-size 0.3s , padding-top 0.3s , padding-bottom 0.3s ;
+}
+
+body .accordion-heading > a:hover{
+
+
+    font-size : 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.item_show .header {
+    text-align: center;
+    font-size: 25px;
+    height: 27px;
+    padding-top: 10px;
+    color:#FFF;
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center bottom, 0, center bottom, 561, color-stop(0, #86C6EC), color-stop(1, #3986CE));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(ellipse farthest-corner at center bottom, #86C6EC 0%, #3986CE 100%);
+}
+
+.item_show .body{
+    display: block;
+    height: 90px;
+}
+
+.item_show .body .price{
+
+
+    display: inline-block;
+    padding-left: 20px;
+    font-size: 50px;
+    padding-top: 20px;
+    position: absolute;
+}
+
+.item_show .body .type{
+    width: 66px;
+    display: inline-block;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 60px;
+    margin-left: 20px;
+}

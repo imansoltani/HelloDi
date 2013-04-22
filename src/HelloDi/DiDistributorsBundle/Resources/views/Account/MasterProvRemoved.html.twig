@@ -1,24 +1,118 @@
-<html>
-<head>
-    <title>ProvTransaction</title>
-    <body>
-    <form action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="POST">
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-        <button>Search</button>
-    </form>
-    {% for trans in accProv %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
 
-        {{ trans.Code.Item.itemName }}
-        {{ trans.Code.serialNumber }}
-        {{ trans.tranDescription }}
-        {{ trans.tranDescription }}
-        {{ trans.tranDate|date('Y/m/d') }}
-        <a href="#" >History</a>
+{% set tab = '6' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Removed</span>
+{% endblock Site_Map %}
 
 
-    {% endfor %}
 
-    </body>
-</head>
-</html>
+{% block Tab %}
+
+    <div class="widget-header">
+        <h3>Removed List</h3>
+
+    </div> <!-- /widget-header -->
+
+
+
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i>
+                <p class="title_search">Search Removed File</p>
+            </span>
+        </h5>
+        <form class="form-horizontal SearchForm" action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="post">
+            <fieldset>
+                <div class="control-group">
+                    {{ form_label(form.FromDate) }}
+                    <div class="controls">
+                        {{ form_widget(form.FromDate) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.ToDate) }}
+                    <div class="controls">
+                        {{ form_widget(form.ToDate) }}
+                    </div>
+                </div>
+
+
+                <input type="hidden" name="accountid" value="{{ Account.id }}">
+
+                {{ form_rest(form) }}
+                <hr>
+                <input class="btn btn-large btn-primary" type="submit" value="Search">
+            </fieldset>
+        </form>
+        <script type="text/javascript">
+            $(function () {
+                $(".SearchForm").hide();
+                $('.TitleShow1').click(function () {
+                    $('.SearchForm').slideToggle();
+                    $('#search_logo').removeAttr('class') ;
+
+                    if($('.title_search').html() == 'Search Removed File')
+                    {
+                        $('.title_search').html('Close Search') ;
+                        $('#search_logo').attr('class','icon-remove') ;
+                    }
+                    else{
+                        $('.title_search').html('Search Removed File') ;
+                        $('#search_logo').attr('class','icon-search') ;
+                    }
+
+                    var x = $('.form_search').offset().top - 20;
+                    $('body,html').animate({
+                        scrollTop: x
+                    }, 800);
+                });
+
+            });
+        </script>
+    </div>
+
+
+
+
+
+    <div class="tablediv" >
+        <div class="contenttitle">
+            <h4>Removed List</h4>
+        </div>
+        <form>
+            <div class="tab-content" >
+                <table style="margin-top: 20px" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Serial Number</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Management</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for trans in accProv %}
+                        <tr>
+                            <td>{{ trans.Code.Item.itemName }}</td>
+                            <td>{{ trans.Code.serialNumber }}</td>
+                            <td>{{ trans.tranDescription }}</td>
+                            <td>{{ trans.tranDate|date('Y/m/d') }}</td>
+                            <td class="td-actions" >
+                                <a href="#" class="btn_actions" >History</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
