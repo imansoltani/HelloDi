@@ -1,47 +1,80 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
 
-    <div class="span" >
-        <div class="widget stacked ">
-            <div class="widget-content">
+{% set tab = '3' %}
 
-                <div class="form_search">
-                    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Filter List</p>
-                        </span>
-                    </h5>
-                                  </div>
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Transaction</span>
+{% endblock Site_Map %}
 
-                <div class="tablediv">
 
-                    <div class="contenttitle">
-                        <h4>History</h4>
-                    </div>
-                    <form>
-                        <div class="tab-content">
-
-                                    {{ 'id' | trans ({}, "account") }}:{{ tran.id}}</br>
-                                    {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
-                                    {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
-                                    {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
-                                    {{ 'Balance' | trans ({}, "account") }}: {{ tran.Account.accBalance }}</br>
-
-                            {{ 'Action' | trans ({}, "account") }}:
-                            {% if tran.tranAction=='Sale' %}Sale
-                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                            {% elseif tran.tranAction=='Payment' %}Payment
-                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                            {% endif %}</br>
-                             {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                            {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>
-                            {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
+{% block Tab %}
+    <div class="widget-header">
+        <h3>
+           Transaction Derails
+        </h3>
+    </div> <!-- /widget-header -->
+    <br>
+    <a class="btn-large button btn btn-primary " href="#">
+        Recharge
+    </a>
 
 
 
-                        </div>
-                    </form>
-                </div>
 
-            </div>
+    <div class="tablediv">
+
+        <div class="contenttitle">
+            <h4>History</h4>
         </div>
+        <form>
+            <div class="tab-content">
+                <table style="margin-top: 20px"
+                       class="table table-bordered table-striped table-highlight postsend">
+                    <thead>
+                    <tr>
+                        <th>{{ 'Transaction.id' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+
+                        <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Accountname' | trans ({}, "account") }} </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for tran in pagination %}
+                        <tr>
+                            <td>{{ tran.id}}</td>
+                            <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                            <td>{{ tran.tranDescription}}</td>
+                            <td>{{ tran.tarnAmount}}</td>
+                            <td>{{ tran.Account.accBalance }}</td>
+                            <td>
+                                {% if tran.tranAction=='Sale' %}Sale
+                                {% elseif tran.tranAction=='Transfer' %}Transfer
+                                {% elseif tran.tranAction=='Payment' %}Payment
+                                {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                                {% endif %}
+                            </td>
+
+                            <td> {{ tran.User.username }} </td>
+                            <td> {{ tran.Code.Item.itemName }} </td>
+                            <td> {{ tran.Account.accName }} </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </div>
+{% endblock %}

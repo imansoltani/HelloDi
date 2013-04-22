@@ -312,7 +312,8 @@ width:460px
  }  
  
 .span5{ 
-width:380px
+width:380px;
+    display: inline-block;
  }  
  
 .span4{ 
