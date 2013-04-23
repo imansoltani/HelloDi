@@ -1,79 +1,174 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
-<a href="#{#{{ path('') }}#}">Recharge</a>
-<form action="{{ path('DistSale',{'id':Account.id}) }}" method="POST">
+{% block title %}
+    Transactions
+{% endblock title %}
+
+{% set MU = 'report' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <a class="link" href="#">Reports</a>
+    <span class="link">Sales</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-list-alt"></i>
+    Sales Report
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span">
+        <div class="widget stacked">
+            <div class="widget-content">
+                <a class="btn btn-primary btn-large" href="#{#{{ path('') }}#}">Recharge</a>
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Sales Report</p>
+                        </span>
+                    </h5>
+                    <form class="form-horizontal SearchForm" action="{{ path('DistSale',{'id':Account.id}) }}"
+                          method="POST">
+                        <fieldset>
+
+                            <div class="control-group">
+                                {{ form_label(form.DateStart) }}
+                                <div class="controls">
+                                    {{ form_widget(form.DateStart) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.DateEnd) }}
+                                <div class="controls">
+                                    {{ form_widget(form.DateEnd) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.ItemType) }}
+                                <div class="controls">
+                                    {{ form_widget(form.ItemType) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.ItemName) }}
+                                <div class="controls">
+                                    {{ form_widget(form.ItemName) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.Account) }}
+                                <div class="controls">
+                                    {{ form_widget(form.Account) }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.GroupBy) }}
+                                <div class="controls">
+                                    {{ form_widget(form.GroupBy) }}
+                                </div>
+                            </div>
+
+                            <hr>
+                            <input class="btn btn-primary" type="submit" value="Search">
+
+                        </fieldset>
+
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+                            $(".SearchForm").hide();
+                            $('.TitleShow1').click(function () {
+                                $('.SearchForm').slideToggle();
+                                $('#search_logo').removeAttr('class');
+
+                                if ($('.title_search').html() == 'Search Sales Report') {
+                                    $('.title_search').html('Close Search');
+                                    $('#search_logo').attr('class', 'icon-remove');
+                                }
+                                else {
+                                    $('.title_search').html('Search Sales Report');
+                                    $('#search_logo').attr('class', 'icon-search');
+                                }
+
+                                var x = $('.form_search').offset().top - 20;
+                                $('body,html').animate({
+                                    scrollTop: x
+                                }, 800);
+                            });
+
+                        });
+                    </script>
+                </div>
 
 
-    <div class="control-group">
-        {{ form_label(form.DateStart) }}
-        {{ form_widget(form.DateStart) }}
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4>
+                            <a class="btn btn-info" href="#">Print To PDF</a>
+                        </h4>
+                    </div>
+                    <form>
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Retailers' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for Tr in pagination %}
+                                    <tr>
+                                        <td>{{ Tr.id}}</td>
+                                        <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                                        <td>{{ Tr.Code.Item.itemName}}</td>
+                                        <td>{{ Tr.tranAmount}}</td>
+                                        <td>{{ Tr.User.username }}</td>
+                                        <td>Taks</td>
+                                        <td class="td-actions" >
+                                            <a class="btn_actions" href="{{ path('DistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
+
+                                    </tr>
+
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            {#{button pagination}#}
+                        </div>
+                    </form>
+                </div>
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
+
+
+            </div>
+        </div>
     </div>
-    <div class="control-group">
-        {{ form_label(form.DateEnd) }}
-        {{ form_widget(form.DateEnd) }}
-    </div>
 
-    <div class="control-group">
-        {{ form_label(form.ItemType) }}
-        {{ form_widget(form.ItemType) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form.ItemName) }}
-        {{ form_widget(form.ItemName) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.Account) }}
-        {{ form_widget(form.Account) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.GroupBy) }}
-        {{ form_widget(form.GroupBy) }}
-    </div>
-
-
-    <div class="form-actions" style="margin-bottom: 0" >
-        <input class="btn btn-primary" type="submit"  value="Search">
-    </div>
-</form>
-<form>
-    <a href="#">Print To PDF</a>
-    <div class="tab-content">
-        <table style="margin-top: 20px" class="table postsend">
-            <thead>
-            <tr>
-                <th>id</th>
-                <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                <th>{{ 'Transaction.Retailers' | trans ({}, "account") }}</th>
-                <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
-                <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for Tr in pagination %}
-
-                <tr>
-                    <td>{{ Tr.id}}</td>
-                    <td>{{ Tr.tranDate|date('y-M-d') }}</td>
-                    <td>{{ Tr.Code.Item.itemName}}</td>
-                    <td>{{ Tr.tranAmount}}</td>
-                    <td>{{ Tr.User.username }}</td>
-                    <td>Taks</td>
-                    <td><a href="{{ path('DistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
-
-                </tr>
-
-            {% endfor %}
-
-            </tbody>
-        </table>
-        {#{button pagination}#}
-    </div>
-</form>
-<div class="navigation">
-    {{ knp_pagination_render(pagination) }}
-</div>
-</div>
+{% endblock %}

@@ -186,7 +186,7 @@ class DistributorsController extends Controller
         $em=$this->getDoctrine()->getManager();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
+        $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formapplay=$this->createFormBuilder()
             ->add('Amount',null,array('data'=>0))
             ->add('Description','textarea',array('required'=>false))
@@ -205,6 +205,7 @@ class DistributorsController extends Controller
                 'Account'=>$Account,
                 'formapplay'=>$formapplay->createView(),
                 'formupdate'=>$formupdate->createView(),
+                'retailerAccount'=>$retailerAccount,
 
             ));
     }
@@ -214,7 +215,7 @@ class DistributorsController extends Controller
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
-
+        $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formtransfer=$this->createFormBuilder()
             ->add('Amount')
@@ -421,7 +422,6 @@ class DistributorsController extends Controller
 
     }
 
-//---------click pn open list Retailers----------
     public function DistRetailerUserAction($id)
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();

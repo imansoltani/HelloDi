@@ -1,70 +1,94 @@
-<h3> Fund distributors balance </h3></br>
-Description 1: </br>
-Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
-Retailer Balance:{{ Account.accBalance }}|{{ Account.accCurrency }}</br>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
-    {#//----Form Applay----//#}
+{% set tab = '1' %}
 
-    <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
-
-        <fieldset>
-
-            <div class="control-group">
-
-                {{ form_label(formapplay.Amount) }}
-
-                    {{ form_widget(formapplay.Amount)  }}|{{ Account.Parent.accCurrency }}
-
-            </div>
-            <div class="control-group">
-                {{ form_label(formapplay.Description ) }}
-                <div class="controls">
-                    {{ form_widget(formapplay.Description )  }}
-            </div>
-            </div>
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Transactions</span>
+{% endblock Site_Map %}
 
 
-            <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">Transfer</button>
-            </div>
+{% block Tab %}
+    <div class="row">
+        <div class="span5">
+            <div class="widget-header">
+                <h3>
+                    Fund distributors balance
+                </h3>
+            </div> <!-- /widget-header -->
+            <br>
+
+            <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+                <fieldset>
+
+                    <div class="control-group">
+
+                        {{ form_label(formapplay.Amount) }}
 
 
-        </fieldset>
-
-    </form>
+                        {{ form_widget(formapplay.Amount)  }}|{{ Account.Parent.accCurrency }}
 
 
-{#//----Form update----//#}
-<h3> Update distributors Credit Limit </h3></br>
-Description 1: </br>
-Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
-Retailer Credit Limit:{{ Account.accCreditLimit }}|{{ Account.accCurrency }}</br>
+                    </div>
 
 
-    <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
-        <fieldset>
-
-            <div class="control-group">
-
-                {{ form_label(formupdate.Amount) }}
-
-                {{ form_widget(formupdate.Amount)  }}|{{ Account.Parent.accCurrency }}
-
-            </div>
-
-            <div class="control-group">
-                {{ form_label(formupdate.As) }}
-                <div class="controls">
-                    {{ form_widget(formupdate.As)  }}
-                </div>
-            </div>
-
-            <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">Update</button>
-            </div>
+                    <div class="control-group ">
+                        {{ form_label(formapplay.Description ) }}
+                        <div class="controls">
+                            {{ form_widget(formapplay.Description )  }}
+                        </div>
+                    </div>
 
 
-        </fieldset>
+                    <div class="form-actions" style="margin-bottom: 0" >
+                        <button class="btn btn-primary" type="submit">Transfer</button>
+                    </div>
 
-    </form>
+
+                </fieldset>
+
+            </form>
+        </div>
+        <div class="span5 LeftSpan">
+            {#//----Form update----//#}
+            <div class="widget-header">
+                <h3>
+                    Update distributors Credit Limit
+                </h3>
+            </div> <!-- /widget-header -->
+            <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+                <fieldset>
+
+                    <div class="control-group">
+
+                        {{ form_label(formupdate.Amount) }}
+
+
+                        {{ form_widget(formupdate.Amount)  }}
+
+
+                    </div>
+
+                    <div class="control-group">
+                        {{ form_label(formupdate.As) }}
+                        <div class="controls">
+                            {{ form_widget(formupdate.As)  }}
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="margin-bottom: 0" >
+                        <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

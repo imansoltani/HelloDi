@@ -142,7 +142,7 @@
 
                                     <td class="td-actions">
                                         {% if (tran.Code!='' and  tran.Code.id != 0) %}
-                                            <a href="{{ path('DistDetailsTransaction',{'id':tran.id}) }}">
+                                            <a class="btn_actions" href="{{ path('DistDetailsTransaction',{'id':tran.id}) }}">
 
                                                 Details</a>
                                         {% else %}

@@ -34,6 +34,14 @@
                 </div>
             </div>
 
+            <!---------------------------------------------------------------->
+           <div id="editor">
+
+           </div>
+
+
+
+
             {{ form_rest(form) }}
 
             <input type="hidden" name="itemid" value="{{ item.id }}"/>
@@ -45,5 +53,15 @@
 
         </form>
 
+
+{% endblock %}
+
+{% block Link_Footer %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/bootstrap-wysiwyg.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#editor').wysiwyg();
+        });
+    </script>
 
 {% endblock %}

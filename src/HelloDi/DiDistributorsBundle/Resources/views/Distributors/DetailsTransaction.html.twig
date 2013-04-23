@@ -1,48 +1,138 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Transactions
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <a class="link" href="{{ path('DistTransaction') }}">Transactions</a>
+    <span class="link">Details</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    Transaction Details
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
 
     <div class="span" >
         <div class="widget stacked ">
             <div class="widget-content">
 
+                <div class="widget-header">
+                    <h3>Details</h3>
+                </div> <!-- /widget-header -->
 
-                <div class="form_search">
-                    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Filter List</p>
-                        </span>
-                    </h5>
-                                  </div>
+                <form class="form-horizontal">
 
-                <div class="tablediv">
+                    <fieldset>
 
-                    <div class="contenttitle">
-                        <h4>History</h4>
-                    </div>
-                    <form>
-                        <div class="tab-content">
-
-                                    {{ 'id' | trans ({}, "account") }}:{{ tran.id}}</br>
-                                    {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
-                                    {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
-                                    {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
-                                    {{ 'Balance' | trans ({}, "account") }}: {{ tran.Account.accBalance }}</br>
-
-                            {{ 'Action' | trans ({}, "account") }}:
-                            {% if tran.tranAction=='Sale' %}Sale
-                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                            {% elseif tran.tranAction=='Payment' %}Payment
-                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                            {% endif %}</br>
-                             {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                            {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>
-                            {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
-
-
-
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'id' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.id}}" >
+                            </div>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Date' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d') }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Description' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.tranDescription}}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Amount' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.tranAmount}}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Balance' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.Account.accBalance }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Action' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{% if tran.tranAction=='Sale' %}Sale{% elseif tran.tranAction=='Transfer' %}Transfer{% elseif tran.tranAction=='Payment' %}Payment{% elseif tran.tranAction=='CreditNote' %}CreditNote{% endif %}" >
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'User' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.User.username }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'ItemName' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Accountname' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.Account.accName }}">
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <a href="{{ path('DistTransaction') }}" class="btn btn-primary">
+                            Return
+                        </a>
+                    </div>
+                </form>
+
+
+
+
 
             </div>
         </div>
     </div>
+
+
+{% endblock %}

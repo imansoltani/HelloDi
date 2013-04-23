@@ -1,24 +1,71 @@
-<html>
-<head>
-    <title>ProvTransaction</title>
-    <body>
-    <form action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="POST">
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-        <button>Search</button>
-    </form>
-    {% for trans in accProv %}
 
-        {{ trans.Code.Item.itemName }}
-        {{ trans.Code.serialNumber }}
-        {{ trans.tranDescription }}
-        {{ trans.tranDescription }}
-        {{ trans.tranDate|date('Y/m/d') }}
-        <a href="#" >History</a>
+<h3> Fund distributors balance </h3></br>
+Description 1: </br>
+Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
+Retailer Balance:{{ Account.accBalance }}|{{ Account.accCurrency }}</br>
+
+{#//----Form Applay----//#}
+
+<form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+    <fieldset>
+
+        <div class="control-group">
+
+            {{ form_label(formapplay.Amount) }}
+
+            {{ form_widget(formapplay.Amount)  }}|{{ Account.Parent.accCurrency }}
+
+        </div>
+        <div class="control-group">
+            {{ form_label(formapplay.Description ) }}
+            <div class="controls">
+                {{ form_widget(formapplay.Description )  }}
+            </div>
+        </div>
 
 
-    {% endfor %}
+        <div class="form-actions" style="margin-bottom: 0" >
+            <button class="btn btn-primary" type="submit">Transfer</button>
+        </div>
 
-    </body>
-</head>
-</html>
+
+    </fieldset>
+
+</form>
+
+
+{#//----Form update----//#}
+<h3> Update distributors Credit Limit </h3></br>
+Description 1: </br>
+Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
+Retailer Credit Limit:{{ Account.accCreditLimit }}|{{ Account.accCurrency }}</br>
+
+
+<form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+    <fieldset>
+
+        <div class="control-group">
+
+            {{ form_label(formupdate.Amount) }}
+
+            {{ form_widget(formupdate.Amount)  }}|{{ Account.Parent.accCurrency }}
+
+        </div>
+
+        <div class="control-group">
+            {{ form_label(formupdate.As) }}
+            <div class="controls">
+                {{ form_widget(formupdate.As)  }}
+            </div>
+        </div>
+
+        <div class="form-actions" style="margin-bottom: 0" >
+            <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+
+
+    </fieldset>
+
+</form>
