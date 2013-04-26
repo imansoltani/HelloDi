@@ -1,33 +1,41 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Make a Transfer</span>
+{% endblock Site_Map %}
 
 
-    <form style="margin-top: 20px" action="{{ path('ProvTranTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
-        <fieldset>
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Make a Transfer</h3>
+    </div> <!-- /widget-header -->
 
-            <div class="control-group">
+    <form action="{{ path('ProvTranTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+        <div class="control-group">
 
-                {{ form_label(form.Amount) }}
+            {{ form_label(form.Amount) }}
 
-                    {{ form_widget(form.Amount)  }}
+            {{ form_widget(form.Amount)  }}
 
-            </div>
+        </div>
 
-{% for Acc in form.Accounts %}
+        {% for Acc in form.Accounts %}
             <div class="control-group">
                 {{ form_label(Acc ) }}
                 <div class="controls">
                     {{ form_widget(Acc)  }}
+                </div>
             </div>
-            </div>
-{% endfor %}
+        {% endfor %}
 
-            <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">Transfer</button>
-            </div>
-
-
-        </fieldset>
-
+        <div class="form-actions" style="margin-bottom: 0" >
+            <button class="btn btn-primary" type="submit">Transfer</button>
+        </div>
     </form>
-
-
+{% endblock %}

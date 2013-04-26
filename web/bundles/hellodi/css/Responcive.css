@@ -112,6 +112,9 @@
         display: block;
     }
 
+    .main .span {
+        width: 95%;
+    }
     /* navbar
                 ------------------------------------------------ */
     .navbar #user_title_menu{
@@ -160,6 +163,7 @@
         -------------------------------------------------------- */
     .main .pagetop .hornav {
         min-height: 30px;
+        padding: 0px 30px;
     }
 
     .main .pagetop .hornav li {
@@ -170,6 +174,8 @@
     {
         height: 31px;
     }
+
+
 
     .main .pagetop .hornav li input[type="submit"] , .main .pagetop .hornav li a span{
         font-size: 10px;
@@ -234,17 +240,23 @@
     .MenuBar .menubar_items ul.dropdown-menu {
         min-width: 70px;
         padding: 0;
+        right: -5px;
     }
 
     .MenuBar .menubar_items ul.dropdown-menu li{
         padding: 0;
-        margin: 5px;
+
 
 
     }
 
     .MenuBar .menubar_items ul.dropdown-menu li a {
-        padding: 0;
+        font-size : 15px;
+        padding-top : 10px;
+        padding-bottom : 10px;
+        padding-left: 0px;
+        padding-right:0px ;
+
     }
 
     /* PopUp ------------------------------------ */
@@ -339,13 +351,24 @@ text-align: left;
         border-bottom:solid 2px #0075cc;
     }
 
+    .main .pagetop .tabbar{
+        height: auto;
+        padding: 0;
+    }
+
+    .main .pagetop .hornav li a{
+        display: block;
+    }
+
     .main .pagetop .hornav li input[type="submit"] , .main .pagetop .hornav li a span{
         font-size: 15px;
         padding: 2px 5px;
-        width: 100%;
+        width: 90%;
         text-align: center;
         border-radius: 0px;
-
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .main .pagetop .hornav li a span{

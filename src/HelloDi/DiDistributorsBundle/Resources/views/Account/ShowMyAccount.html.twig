@@ -37,7 +37,7 @@
 
                 <div style="margin-top: 5px" class="tablediv">
 
-                    <form action="{{ path('ManageItemsProv') }}" method="post">
+                    <form method="post">
                         <div class="tab-content datatable">
                             <table id="example" class="table postsend">
                                 <thead>
@@ -56,7 +56,9 @@
                                     <tr>
                                         <td style="font-weight: bold" >{{ myAccount.id }}</td>
                                         <td class="td-actions" >
-                                            <input type="submit" value="Manage" onclick="$('.accountid').val('{{ myAccount.id }}');" />
+                                            <a href="{{ path('MasterProvTransaction',{id:myAccount.id}) }}">
+                                                <input type="submit" value="Manage" >
+                                            </a>
                                         </td>
                                         <td>{{ myAccount.accName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
@@ -69,7 +71,6 @@
 
                             </table>
                         </div>
-                        <input type="hidden" name="accountid" class="accountid" value=""/>
 
                     </form>
                 </div>

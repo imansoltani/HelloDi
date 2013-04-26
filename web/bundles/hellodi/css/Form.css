@@ -350,15 +350,31 @@ form .control-group .controls > .controls{
 
 /* Tabs */
 
+.main .pagetop .tabbar{
+    margin-top: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    box-shadow: 0px 0px 10px #1b8ae0 inset;
+    /*height: 41px;
+    background: url('../img/my/123.png') repeat-x bottom;*/
+
+    background: #50a5de;
+}
+
 .main .pagetop .hornav{
-    padding: 0px 30px;
+
     list-style: none outside none;
-    margin-top: 15px;
-    border-bottom: 1px solid #8fd0fa /*rgb(204, 204, 204)*/;
+
+    /*border-bottom: 1px solid #8fd0fa /*rgb(204, 204, 204)*/;
     margin-left: 0px;
     margin-bottom: 0;
     min-height: 40px;
     display: block;
+
+}
+
+.main .pagetop .hornav .container{
 
 }
 
@@ -368,7 +384,7 @@ form .control-group .controls > .controls{
     margin-right: 5px;
     height: 41px;
 
-    border-bottom: solid thin #FFF;
+
 
 }
 
@@ -393,15 +409,7 @@ form .control-group .controls > .controls{
     color: #FFF;
     text-transform: uppercase;
     font-size: 14px;
-    border-radius: 2px 2px 0px 0px;
-    border-width: 1px 1px 0px;
-    border-style: solid solid none;
-    border-color: rgb(204, 204, 204) rgb(204, 204, 204) -moz-use-text-color;
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    border-image: none;
+
     transition: background-color 0.3s ;
     -webkit-transition: background-color 0.3s ;
 
@@ -416,15 +424,7 @@ form .control-group .controls > .controls{
     color: rgb(255, 255, 255);
     text-transform: uppercase;
     font-size: 14px;
-    border-radius: 2px 2px 0px 0px;
-    border-width: 1px 1px 0px;
-    border-style: solid solid none;
-    border-color: rgb(204, 204, 204) rgb(204, 204, 204) -moz-use-text-color;
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    border-image: none;
+
     height: 41px;
 
     transition: background-color 0.3s ;
@@ -434,26 +434,19 @@ form .control-group .controls > .controls{
 
 .main .pagetop .hornav li input[type="submit"] , .main .pagetop .hornav li a span{
     /* IE10 Consumer Preview */
-    background-image: -ms-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
 
-    /* Mozilla Firefox */
-    background-image: -moz-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
-
-    /* Opera */
-    background-image: -o-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(radial, left top, 0, left top, 973, color-stop(0, #9FC7E2), color-stop(1, #57A8DF));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: radial-gradient(circle farthest-side at left top, #9FC7E2 0%, #57A8DF 100%);
 
     text-shadow: 1px 2px 0px #34739c;
 
-    border-radius: 0px 10px 0px 0px;
+    background: #116bad;
+
+
+    border-top : solid 1px #50a5de;
+    border-bottom : solid 1px #50a5de;
+    border-right : solid 1px #50a5de;
+    border-left : solid 1px #50a5de;
+
+
 
 
 }
@@ -475,6 +468,8 @@ form .control-group .controls > .controls{
     font-weight: bold;
     color : #0058cc ;
     text-shadow: none;
+
+
 }
 
 .main .control-group ul li{

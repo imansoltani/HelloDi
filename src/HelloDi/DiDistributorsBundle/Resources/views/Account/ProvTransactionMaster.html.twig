@@ -1,27 +1,135 @@
-<html>
-<head>
-    <title>ProvTransaction</title>
-    <body>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
 
-<a href="{{ path('ProvTranRegister',{'id':3}) }}">Register transaction</a></br>
-<a href="{{ path('ProvTranTransfer',{'id':3}) }}">Make Transfer</a>
+{% set tab = '2' %}
 
-    <form method="POST" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" >
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-        <button>Search</button>
-    </form>
-    {% for Trans in accprov%}
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Transactions</span>
+{% endblock Site_Map %}
 
-        {{ Trans.tranDate|date('Y-m-d') }}
-        {{ Trans.tranDescription }}
-        {{ Trans.tranCredit }}
-        {{ Trans.tranDebit }}
-        {{ Trans.accBalance }}
-        <a href="#">Show</a>
-        <form method="post" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" ><input type="hidden" name="trans_id" value="{{ Trans.id }}"><button>Delet</button></form>
-    {% endfor %}
 
-    </body>
-</head>
-</html>
+
+{% block Tab %}
+
+    <div class="widget-header">
+        <h3>Provider Transactions</h3>
+    </div> <!-- /widget-header -->
+    <br>
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvTranRegister',{'id':3}) }}">Register transaction</a>
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvTranTransfer',{'id':3}) }}">Make Transfer</a>
+
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i>
+                <p class="title_search">Search Transactions</p>
+            </span>
+        </h5>
+        <form class="form-horizontal SearchForm" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}"
+              method="post">
+            <fieldset>
+                <div class="control-group">
+                    {{ form_label(form.FromDate) }}
+                    <div class="controls">
+                        {{ form_widget(form.FromDate) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.ToDate) }}
+                    <div class="controls">
+                        {{ form_widget(form.ToDate) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.type) }}
+                    <div class="controls">
+                        {{ form_widget(form.type) }}
+                    </div>
+                </div>
+                <hr>
+                <input class="btn btn-primary" type="submit" value="Search">
+            </fieldset>
+        </form>
+        <script type="text/javascript">
+            $(function () {
+                $(".SearchForm").hide();
+                $('.TitleShow1').click(function () {
+                    $('.SearchForm').slideToggle();
+                    $('#search_logo').removeAttr('class');
+
+                    if ($('.title_search').html() == 'Search Transactions') {
+                        $('.title_search').html('Close Search');
+                        $('#search_logo').attr('class', 'icon-remove');
+                    }
+                    else {
+                        $('.title_search').html('Search Transactions');
+                        $('#search_logo').attr('class', 'icon-search');
+                    }
+
+                    var x = $('.form_search').offset().top - 20;
+                    $('body,html').animate({
+                        scrollTop: x
+                    }, 800);
+                });
+
+            });
+        </script>
+    </div>
+
+
+    <div class="tablediv">
+        <div class="contenttitle">
+            <h4>History</h4>
+        </div>
+        <form>
+            <div class="tab-content">
+                <table style="margin-top: 20px"
+                       class="table table-bordered table-striped table-highlight postsend">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tran in accprov %}
+                        <tr>
+                            <td>{{ tran.tranDate|date('Y-m-d') }}</td>
+
+                            <td>{{ tran.tranDescription }}</td>
+                            <td>{{ tran.tranCredit }}</td>
+                            <td>{{ tran.tranDebit }}</td>
+                            <td>{{ tran.accBalance }}</td>
+
+
+                            <td class="td-actions">
+
+                                <a class="btn_actions">
+                                    <input type="submit" value="Show" >
+                                </a><br>
+                                <form method="post" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" >
+                                    <input type="hidden" name="trans_id" value="{{ tran.id }}">
+                                    <input type="submit" value="Delete" >
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock %}

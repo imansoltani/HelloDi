@@ -1771,9 +1771,10 @@ class AccountController extends Controller
     // kamal Prov Start
     public function MasterProvTransactionAction(Request $request,$id){
 
+
         $em = $this->getDoctrine()->getManager();
         $searchForm = $this->createForm(new searchProvTransType());
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($request->get('accountid'));
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $qb = $em->createQueryBuilder()
             ->select('trans.id','trans.tranDate','trans.tranDescription','trans.tranCredit','trans.tranDebit','acc.accBalance','trans.tranAction')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
@@ -1809,7 +1810,8 @@ class AccountController extends Controller
         $qb = $qb->getQuery();
         $accProv = $qb->getResult();
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array('accprov'=>$accProv,'idTrans'=>$id,'form' => $searchForm   ->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array(
+            'accprov'=>$accProv,'Account' => $account,'idTrans'=>$id,'form' => $searchForm   ->createView()));
     }
 
     public function MasterProvRemovedAction(Request $request,$id){

@@ -43,7 +43,7 @@ class RetailersController extends Controller
           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
           ->Where('Note.User != :usr')->setParameter('usr',$user)
           ->andWhere('Note.view = 0');
-      return new Response('<b>'.count($Countnote->getQuery()->getResult()).'</b>');
+      return new Response(count($Countnote->getQuery()->getResult()));
   }
     //-----startkazem--------//
 
@@ -480,12 +480,7 @@ public  function  ticketsnoteAction(Request $req,$id)
         ->andWhere('Note.view = 0')
         ->getQuery()->execute();
 
-    $paginator = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        array_reverse($noteslist),
-        $this->get('request')->query->get('page', 1) /*page number*/,
-        10/*limit per page*/
-    );
+
 
 
     return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNote.html.twig',array(
@@ -493,7 +488,7 @@ public  function  ticketsnoteAction(Request $req,$id)
         'Ticket'=>$ticket,
         'User'=>$User,
         'Account'=>$User->getAccount(),
-        'pagination'=>$pagination,
+        'pagination'=>array_reverse($noteslist),
     ));
 
 }

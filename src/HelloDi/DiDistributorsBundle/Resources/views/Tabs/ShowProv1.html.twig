@@ -30,9 +30,8 @@
 {% block Tabs %}
 
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('MasterProvTransaction',{id:Account.id}) }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+        <a href="{{ path('MasterProvTransaction',{id:Account.id}) }}" >
+            <form>
                 <input type="submit" value="Transaction"/>
             </form>
         </a>

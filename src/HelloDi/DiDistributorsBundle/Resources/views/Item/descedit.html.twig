@@ -20,28 +20,70 @@
         <h3>Edit Item Description</h3>
     </div> <!-- /widget-header -->
 
-    <div style="margin-top: 5px" class="tablediv">
-        <form action="{{ path('item_desc_update') }}" class="form-horizontal">
-            {{ form_errors(form) }}
-            <div class="control-group">
-                {{ form_label(form.desclang) }}
-                {{ form_widget(form.desclang) }}
-            </div>
-            <div class="control-group">
-                {{ form_label(form.descdesc) }}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists image charmap preview anchor",
+                "template paste textcolor",
+                "table "
+            ]
+            ,toolbar1: "insertfile undo redo | styleselect  | bold italic | alignleft aligncenter alignright alignjustify |  fontselect fontsizeselect",
+            toolbar2: "table | preview media | forecolor backcolor | bullist numlist outdent indent | link image",
+            menubar: false,
+            toolbar_items_size: 'small',
+
+            style_formats: [
+                {title: 'Bold text', inline: 'b'},
+                {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+                {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+                {title: 'Example 1', inline: 'span', classes: 'example1'},
+                {title: 'Example 2', inline: 'span', classes: 'example2'},
+                {title: 'Table styles'},
+                {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+            ],
+
+
+
+        });
+
+    </script>
+
+
+    <form id="editform" action="{{ path('item_desc_update') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_errors(form) }}
+        <div class="control-group">
+            {{ form_label(form.desclang) }}
+            {{ form_widget(form.desclang) }}
+        </div>
+        <div class="control-group">
+            {{ form_label(form.descdesc) }}
+            <div class="controls">
                 {{ form_widget(form.descdesc) }}
             </div>
+        </div>
 
-            {{ form_rest(form) }}
+        {{ form_rest(form) }}
 
-            <input type="hidden" name="itemdescid" value="{{ itemdescid }}"/>
+        <input type="hidden" name="itemdescid" value="{{ itemdescid }}"/>
 
-            <div class="form-actions" style="margin-bottom: 0">
-                <input type="submit" class="btn btn-primary" value="Edit Description"/>
-                <button type="reset" class="btn">Cancel</button>
-            </div>
+        <div class="form-actions" style="margin-bottom: 0">
+            <input type="submit" class="btn btn-primary" value="Save"/>
+            <button type="reset" class="btn">Cancel</button>
+        </div>
 
-        </form>
-    </div>
+    <script type="text/javascript">
+        $(function(){
+            /*var x = $("#editform body").html();
+            $("#editform").submit(function(e){
+                var x = $(".mce-content-body").html();
+                e.preventDefault();
+                alert(x);
+            });*/
+        });
+    </script>
+
+    </form>
 
 {% endblock %}

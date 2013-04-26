@@ -25,6 +25,7 @@
 
 
     <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/Main.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/Form.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
@@ -164,14 +165,16 @@
                     <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
                        data-toggle="dropdown">
                         <i class="icon-comment">
-                            {% block Ticket_Number %}{% endblock %}
+                            {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
+                            <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
+                            </span>
+                            {% endif %}
                         </i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:;">New Ticket</a></li>
-                        <li><a href="javascript:;">Inbox</a></li>
-                        <li><a href="javascript:;">Outbox</a></li>
-                        <li><a href="javascript:;">Trash</a></li>
+                        <li><a  href="#myModal0123" data-toggle="modal">New Ticket</a></li>
+                        <li><a href="{{ path('RetailerTickets') }}">Tickets</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -237,32 +240,52 @@
 <div class="main">
     <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%" >
         <div class="sitemappath">
-            <div>
+            <div class="container" >
                 {% block Site_Map %}{% endblock %}
             </div>
         </div>
-        <div class="pagetitle" >
-            {% block PageTitle %}{% endblock %}
+
+        <div class="container">
+            <div class="pagetitle" >
+                {% block PageTitle %}{% endblock %}
+            </div>
+
+
+            {% block Dist1 %}
+
+            {% endblock %}
+
+
+
         </div>
 
 
-        {% block Dist1 %}
+        {% if hornav is defined  %}
+                <div class="tabbar" >
+                    <div class="container">
+                        <ul class="hornav"  >
+                            {% block Tabs %}{% endblock %}
+                        </ul>
+                    </div>
+                </div>
+        {% endif %}
 
-        {% endblock %}
 
-        <ul class="hornav" {% if hornav is not defined  %}style="min-height:0;"{% endif %} >
-            {% block Tabs %}{% endblock %}
-        </ul>
+
 
     </div>
     <div class="pagetop second" style="background: none;display: block;position: absolute;z-index: 11;width:100%" >
-        {% block Dist2 %}
-        {% endblock %}
+        <div class="container">
+            {% block Dist2 %}
+            {% endblock %}
+        </div>
     </div>
 
 
-        <div class="row">
-            {% block Body %}{% endblock %}
+        <div class="row {% if hornav is not defined  %}bordertop{% endif %}">
+            <div class="container">
+                {% block Body %}{% endblock %}
+            </div>
         </div>
 
 </div>
@@ -295,6 +318,26 @@
         ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
+<!-- New Ticket Code -->
+<div id="myModal0123" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <h3 id="myModalLabel">New Ticket</h3>
+    </div>
+    <form class="form-horizontal"  action="{{ path('RetailerTicketsNew') }}" method="POST">
+        <div class="modal-body">
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" class="btn btn-primary" value="Send">
+        </div>
+    </form>
+</div>
 
 
 <script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>

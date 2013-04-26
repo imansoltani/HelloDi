@@ -20,6 +20,35 @@
         <h3>Item Descriptions</h3>
     </div> <!-- /widget-header -->
 
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists image charmap preview anchor",
+                "template paste textcolor",
+                "table "
+            ]
+            ,toolbar1: "insertfile undo redo | styleselect  | bold italic | alignleft aligncenter alignright alignjustify |  fontselect fontsizeselect",
+            toolbar2: "table | preview media | forecolor backcolor | bullist numlist outdent indent | link image",
+            menubar: false,
+            toolbar_items_size: 'small',
+
+            style_formats: [
+                {title: 'Bold text', inline: 'b'},
+                {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+                {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+                {title: 'Example 1', inline: 'span', classes: 'example1'},
+                {title: 'Example 2', inline: 'span', classes: 'example2'},
+                {title: 'Table styles'},
+                {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+            ],
+
+
+
+        });
+
+    </script>
 
         <form action="{{ path('item_desc_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
             {{ form_errors(form) }}
@@ -35,9 +64,7 @@
             </div>
 
             <!---------------------------------------------------------------->
-           <div id="editor">
 
-           </div>
 
 
 
@@ -56,12 +83,4 @@
 
 {% endblock %}
 
-{% block Link_Footer %}
-    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/bootstrap-wysiwyg.js') }}"></script>
-    <script type="text/javascript">
-        $(function(){
-            $('#editor').wysiwyg();
-        });
-    </script>
 
-{% endblock %}

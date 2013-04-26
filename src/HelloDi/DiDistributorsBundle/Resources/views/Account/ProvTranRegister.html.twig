@@ -1,82 +1,100 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Register Transaction</span>
+{% endblock Site_Map %}
 
 
-    <form style="margin-top: 20px" action="{{ path('ProvTranRegister',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
-        <fieldset>
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Register Transaction</h3>
+    </div> <!-- /widget-header -->
 
-            <div class="control-group">
+    <form action="{{ path('ProvTranRegister',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+        <div class="control-group">
 
-                {{ form_label(form.CreditDebit[0]) }}
+            {{ form_label(form.CreditDebit[0]) }}
 
-                    {{ form_widget(form.CreditDebit[0])  }}
-
+            <div class="controls">
+                {{ form_widget(form.CreditDebit[0])  }}
             </div>
 
-            <div class="control-group">
+        </div>
 
-                {{ form_label(form.CreditDebit[1]) }}
+        <div class="control-group">
 
+            {{ form_label(form.CreditDebit[1]) }}
+
+            <div class="controls">
                 {{ form_widget(form.CreditDebit[1])  }}
-
             </div>
 
+        </div>
 
-            <div class="control-group">
-                {{ form_label(form.Action ) }}
-                <div class="controls">
-                    {{ form_widget(form.Action)  }}
+
+        <div class="control-group">
+            {{ form_label(form.Action ) }}
+            <div class="controls">
+                {{ form_widget(form.Action)  }}
             </div>
-            </div>
+        </div>
 
 
 
-            <div class="control-group">
+        <div class="control-group">
 
-                {{ form_label(form.Amount) }}
+            {{ form_label(form.Amount) }}
+
 
                 {{ form_widget(form.Amount)  }}
 
-            </div>
+
+        </div>
 
 
 
-            <div class="control-group">
+        <div class="control-group">
 
-                {{ form_label(form.TradeDate) }}
+            {{ form_label(form.TradeDate) }}
 
+            <div class="controls">
                 {{ form_widget(form.TradeDate)  }}
-
             </div>
 
+        </div>
 
 
-            <div class="control-group">
 
-                {{ form_label(form.Description) }}
+        <div class="control-group">
 
+            {{ form_label(form.Description) }}
+
+            <div class="controls">
                 {{ form_widget(form.Description)  }}
-
             </div>
 
-
-
-            <div class="control-group">
-
-                {{ form_label(form.Fees) }}
-
-                {{ form_widget(form.Fees)  }}|{{ Account.accCurrency }}
-
-            </div>
+        </div>
 
 
 
-            <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">Register</button>
-            </div>
+        <div class="control-group">
+
+            {{ form_label(form.Fees) }}
+
+            <div class="controls" >{{ form_widget(form.Fees)  }} | {{ Account.accCurrency }}</div>
+
+        </div>
 
 
-        </fieldset>
 
+        <div class="form-actions" style="margin-bottom: 0" >
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
     </form>
-
-
+{% endblock %}

@@ -35,9 +35,7 @@
 
 
         <a  href="{{ path('MasterDistTransaction',{'id':Account.id}) }}">
-         <span>
-           Transaction
-         </span>
+            <input type="submit" value="Transactions" >
         </a>
     </li>
 
@@ -55,13 +53,21 @@
         <a href="{{ path('MasterDistSale',{'id':Account.id}) }}">
 
 
-               <span>Sales</span>
+            <input type="submit" value="Sales" >
 
 
         </a>
     </li>
 
+    <li {% if tab == '7' %}class="active"{% endif %} >
+        <a href="{{ path('MasterDistPurchases',{'id':Account.id}) }}">
 
+
+            <input type="submit" value="Purchases" >
+
+
+        </a>
+    </li>
 
 
 

@@ -12,7 +12,7 @@ class ItemDescType extends AbstractType
     {
         $builder
             ->add('desclang')
-            ->add('descdesc')
+            ->add('descdesc',null,array('required'=>false))
         ;
     }
 

@@ -1,71 +1,115 @@
 
-<h3> Fund distributors balance </h3></br>
-Description 1: </br>
-Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
-Retailer Balance:{{ Account.accBalance }}|{{ Account.accCurrency }}</br>
+<div class="span" >
+    <div class="widget stacked ">
+        <div class="widget-content">
 
-{#//----Form Applay----//#}
 
-<form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                    <span>
+                        <i id="search_logo" class="icon-search"></i>
+                        <p class="title_search">Filter List</p>
+                    </span>
+                </h5>
 
-    <fieldset>
+                <form class="form-horizontal SearchForm" action="{{ path('MasterDistPurchases',{'id':Account.id}) }}" method="POST" >
 
-        <div class="control-group">
 
-            {{ form_label(formapplay.Amount) }}
+                    <div class="control-group">
+                        {{ form_label(form.DateStart) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateStart) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.DateEnd) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateEnd) }}
+                        </div>
+                    </div>
 
-            {{ form_widget(formapplay.Amount)  }}|{{ Account.Parent.accCurrency }}
+                    <div class="control-group">
+                        {{ form_label(form.ItemType) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemType) }}
+                        </div>
+                    </div>
 
-        </div>
-        <div class="control-group">
-            {{ form_label(formapplay.Description ) }}
-            <div class="controls">
-                {{ form_widget(formapplay.Description )  }}
+
+                    <div class="control-group">
+                        {{ form_label(form.ItemName) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemName) }}
+                        </div>
+                    </div>
+
+                    <hr>
+                    <input class="btn btn-primary" type="submit" value="Search">
+
+                </form>
             </div>
-        </div>
+
+            <div class="tablediv">
+
+                <div class="contenttitle">
+                    <h4>History</h4>
+                </div>
+                <form>
+                    <a href="#">Print To PDF</a>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px"
+                               class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Date</th>
+                                <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
+                                {#<th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>#}
+                                <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
 
 
-        <div class="form-actions" style="margin-bottom: 0" >
-            <button class="btn btn-primary" type="submit">Transfer</button>
-        </div>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for Tr in pagination %}
+                                <tr>
+                                    <td>{{Tr.id }}</td>
+                                    <td>{{Tr.tranDate|date }}</td>
+                                    <td>{{ Tr.Code.Item.itemName}}</td>
+                                    {#<td>{{ Tr|length }}</td>#}
+                                    <td>
+
+                                        {% set Item=Tr.Code.Item %}
+                                        {% set Account=Tr.Account.Parent %}
+
+                                        {% for Acc in Account.Prices %}
+                                            {% for Itm in Item.Prices %}
+                                                {% if Acc.Price==Itm.Price  %}
+                                                    {{ Acc.price  }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
 
 
-    </fieldset>
+                                    </td>
+                                    <td>Task</td>
+                                </tr>
 
-</form>
+                            {% endfor %}
 
+                            </tbody>
+                        </table>
 
-{#//----Form update----//#}
-<h3> Update distributors Credit Limit </h3></br>
-Description 1: </br>
-Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
-Retailer Credit Limit:{{ Account.accCreditLimit }}|{{ Account.accCurrency }}</br>
+                    </div>
 
-
-<form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
-
-    <fieldset>
-
-        <div class="control-group">
-
-            {{ form_label(formupdate.Amount) }}
-
-            {{ form_widget(formupdate.Amount)  }}|{{ Account.Parent.accCurrency }}
-
-        </div>
-
-        <div class="control-group">
-            {{ form_label(formupdate.As) }}
-            <div class="controls">
-                {{ form_widget(formupdate.As)  }}
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </form>
             </div>
+
         </div>
-
-        <div class="form-actions" style="margin-bottom: 0" >
-            <button class="btn btn-primary" type="submit">Update</button>
-        </div>
-
-
-    </fieldset>
-
-</form>
+    </div>
+</div>

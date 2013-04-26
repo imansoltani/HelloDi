@@ -12,6 +12,24 @@ background: #FFF;
 
 }
 
+li.dropdown i > span{
+    z-index: 12;
+    position: absolute;
+    right: -5px;
+    top: -7px;
+    font-size: 12px;
+    background: none repeat scroll 0% 0%  #150360 ;
+    color:#FFF   ;
+    font-weight: bold;
+    padding: 1px;
+    border-radius: 5px 5px 5px 5px ;
+    box-shadow: 0px 0px 2px #d0e9fa  ;
+    border : solid 3px #d0e9fa ;
+    font-family: tahoma;
+    min-width: 15px;
+    text-align: center;
+}
+
 .span5.LeftSpan {
     margin-left: 40px;
     padding-left: 20px;
@@ -215,7 +233,12 @@ position: static;
     display: inline-block;
 }
 
-.navbar .navbar-inner{
+body .navbar-fixed-top{
+    margin: 0px;
+
+}
+
+body .navbar .navbar-inner{
 
     border-radius: 0px 0px 0px 0px;
 
@@ -228,6 +251,8 @@ position: static;
     display: block;
 
     border-color: rgb(80, 98, 127);
+
+    margin-bottom: 0px;
 
     /* ol
         background: url("../img/topheaderbg.png") repeat scroll 0% 0% rgb(52, 68, 94);
@@ -670,6 +695,8 @@ color:#FFF;
 
 }
 
+
+
 .main .pagetop{
     padding-top: 10px;
     position: relative;
@@ -719,8 +746,9 @@ color:#FFF;
 .main .pagetop.first .pagedisc{
 
     margin: 0px 20px;
+
     color: #1b206a;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 
 }
 
@@ -800,7 +828,7 @@ color:#FFF;
 .main .container{
     background: none repeat scroll 0% 0% transparent;
     border: 0px none;
-    margin: 0px;
+    margin: 0 auto;
     padding: 0px;
     vertical-align: baseline;
 }
@@ -825,7 +853,7 @@ color:#FFF;
 }
 
 .main .span{
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     padding-bottom: 20px;
     padding-top: 10px;
@@ -837,28 +865,34 @@ color:#FFF;
 .main .row{
     margin-left: 0px;
 
+}
 
+.main .row.bordertop{
+    border-top: solid 1px #50a5de ;
 }
 
 .main .span .widget-content{
-    padding: 20px;
-    padding-top: 5px;
+    padding: 0px;
+    margin-top: 15px;
 }
 
 .widget-content .widget-header{
 
+
     margin: 20px 0px;
+
     border-bottom: 2px solid rgb(251, 147, 55);
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     padding-right: 20px;
     display: inline-block;
     margin-top: 0px;
     vertical-align: baseline;
     background: none repeat scroll 0% 0% transparent;
+    margin-bottom: 40px;
 }
 
 .widget-content .widget-header h3{
-    font-size: 16px;
+    font-size: 20px;
     font-weight: normal;
     text-transform: uppercase;
     margin: 0;

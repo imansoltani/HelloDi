@@ -17,42 +17,32 @@
 
     <li {% if tab == '1' %}class="active"{% endif %} >
         <a href="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}"  >
-            <span>
-                Transactions
-            </span>
+            <input type="submit" value="Transactions" >
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %}  >
         <a href="{{ path('dist_RetailerItem',{'id':retailerAccount.id}) }}"  >
-            <span>
-                Items
-            </span>
+            <input type="submit" value="Items" >
         </a>
     </li>
 
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a href="{{ path('DistRetailerUser',{'id':retailerAccount.id}) }}"  >
-            <span>
-                Users
-            </span>
+            <input type="submit" value="Users" >
         </a>
     </li>
 
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a href="{{ path('DistRetailerSetting',{'id':retailerAccount.id}) }}"  >
-            <span>
-                Setting
-            </span>
+            <input type="submit" value="Setting" >
         </a>
     </li>
 
 <li {% if tab == '5' %}class="active"{% endif %} >
     <a>
         <a href="{{ path('Retailer_details',{'id':retailerAccount.id}) }}"  >
-            <span>
-                Details
-            </span>
+            <input type="submit" value="Details" >
         </a>
     </a>
 </li>

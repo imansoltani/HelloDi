@@ -20,8 +20,7 @@
             </div> <!-- /widget-header -->
             <br>
 
-            Available Balance:{{ Account.Parent.accBalance }}</br>
-            Retailer Balance:{{ Account.accBalance }}
+            Retailer Balance : <b>{{ Account.accBalance }}</b>
 <hr>
             <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
@@ -68,12 +67,12 @@
                 <h3>
                     Update retailer Credit Limit
                 </h3>
-                <br>
+            </div> <!-- /widget-header --><br>
 
-                Available Balance:{{ Account.Parent.accBalance }}</br>
-                Retailer accCreditLimit:{{ Account.accCreditLimit }}
-                <hr>
-            </div> <!-- /widget-header -->
+            Retailer Balance : <b>{{ Account.accBalance }}</b>
+            <hr>
+
+
             <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
                 <fieldset>
