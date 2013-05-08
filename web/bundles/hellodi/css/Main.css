@@ -860,6 +860,10 @@ color:#FFF;
 
 }
 
+.main .span:last-child{
+    margin-bottom: 20px;
+}
+
 .main .span{
     width: 100%;
     margin: 0 auto;
