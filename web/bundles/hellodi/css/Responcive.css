@@ -211,6 +211,7 @@
 
     .main .pagetop.first .pagedisc{
         display: block;
+        margin-bottom: 15px;
     }
 
     .main .pagetop.second .pagedisc{
