@@ -1,10 +1,6 @@
 <?php
 
 namespace HelloDi\DiDistributorsBundle\Form\Entiti;
-
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
-use HelloDi\DiDistributorsBundle\Form\AddressType;
-use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,7 +20,13 @@ class EntitiType extends AbstractType
             ->add('entAdrs2')
             ->add('entAdrs3')
             ->add('entNp')
-             ->add('entCity')
+            ->add('entCity')
+            ->add('Country','entity',
+                array(
+                    'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
+                    'property'=>'name'
+                )
+            )
         ;
     }
 

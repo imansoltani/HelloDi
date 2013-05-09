@@ -16,18 +16,18 @@
     </div> <!-- /widget-header --><br>
 
 
-{%  if (prov =='no') %}
 
-   {%   if  dist==1 %}
+   {% if  distprov==1 %}
     <a style="margin-bottom: 5px" class="btn btn-primary btn-large" href="{{path('AddDist',{'id':entity.id})  }}">
         {{'Account.New.Dist' | trans ({}, "account")}}
     </a>
+
        <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
            {{'Account.New.Prov' | trans ({}, "account")}}
        </a>
     {% endif %}
 
-{% endif %}
+
 
 
 
@@ -54,7 +54,8 @@
 
                 </thead>
                 <tbody>
-                {% for account in pagination %}
+
+                {% for account in entity.Accounts %}
                     <tr>
                         <td >{{ account.id }}</td>
 
@@ -74,7 +75,20 @@
                         <td class="td-actions">
 
 
-                            <a class="btn_actions" href="{#{{ path('ProvTransaction',{'id': account.id }) }}#}#">Show</a>
+                            <a class="btn_actions"
+                                    {% if account.accType == 0 %}
+
+                               href="{{ path('MasterDistTransaction',{'id': account.id }) }}"
+
+                                    {% elseif account.accType == 1 %}
+
+                               href="{{ path('MasterProvTransaction',{'id': account.id }) }}"
+
+                                    {% endif %}
+
+                                    >
+                                Show
+                            </a>
 
                         </td>
 

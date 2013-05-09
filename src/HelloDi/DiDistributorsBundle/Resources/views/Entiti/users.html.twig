@@ -14,12 +14,11 @@
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
 
-{#{% if en %}#}
-{% if Master=='false' %}
+
     <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
         {{ 'User.Add' | trans ({}, "user") }}
     </a>
-{% endif %}
+
     <div class="tablediv" >
         <div class="contenttitle">
             <h4>Users</h4>
@@ -39,8 +38,8 @@
                 </thead>
                 <tbody>
 
-                {% for Ent in pagination %}
-                    {% for User in Ent.Users %}
+                {% for User in pagination %}
+
                         <tr>
 
                             <td >{{ User.id }}</td>
@@ -67,7 +66,6 @@
                             </td>
                         </tr>
 
-                    {% endfor %}
                 {% endfor %}
                 </tbody>
             </table>

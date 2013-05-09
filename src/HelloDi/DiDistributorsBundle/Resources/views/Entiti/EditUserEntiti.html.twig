@@ -5,7 +5,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <a class="link" href="#">{{ entity.entName }}</a>
+    <a class="link" href="#">{{User.Entiti.entName }}</a>
     <span class="link">Users</span>
 {% endblock Site_Map %}
 
@@ -19,7 +19,7 @@
 
     <div class="control-group">
         {{ form_label(form_edit.firstname) }}
-
+        {{ form_widget(form_edit.firstname) }}
     </div>
 
     <div class="control-group">
@@ -48,17 +48,22 @@
     </div>
 
     <div class="control-group">
-    {{ form_label(form_edit.Account) }}
-    <div class="controls">
-        {{ form_widget(form_edit.Account) }}
-    </div>
-     </div>
+        {{ form_label(form_edit.enabled) }}
+        <div class="controls">
+            {{ form_widget(form_edit.enabled) }}
+        </div>
 
     <div class="control-group">
     {{ form_label(form_edit.language) }}
     <div class="controls">
         {{ form_widget(form_edit.language) }}
     </div>
+
+        <div class="control-group">
+            {{ form_label(form_edit.Account) }}
+            <div class="controls">
+                {{ form_widget(form_edit.Account) }}
+            </div>
 
     </div>
    {#// <input type="hidden" value="{{ entity.id }}">#}

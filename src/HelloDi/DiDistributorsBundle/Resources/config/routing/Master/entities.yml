@@ -9,6 +9,13 @@ Ent_Index:
 Ent_Accounts:
     pattern:  /accounts
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:accounts" }
+Ent_Address:
+    pattern:  /{id}/address
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:address" }
+
+Ent_Edit_Address:
+    pattern:  /address/{id}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:editaddress" }
 
 Ent_Users:
     pattern:  /users
@@ -35,11 +42,11 @@ ChangeRoleUserEntities:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ChangeRoleUserEntities" }
 
 AddProv:
-    pattern:  /entities/{id}/accounts/new-provoder
+    pattern:  /entities/{id}/new/provoder
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddProv"}
 
 AddDist:
-    pattern:  /entities/{id}/accounts/new-distibutors
+    pattern:  /entities/{id}/new/distibutors
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddDist"}
 ProvTransaction:
     pattern:  /provider/{id}/transaction

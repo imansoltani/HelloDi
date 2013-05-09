@@ -14,6 +14,7 @@ class AccountProvType extends AbstractType
             ->add('accName','text')
             ->add('accCurrency','choice',array('choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
             ->add('accTerms','text',array())
+            ->add('accTimeZone','timezone')
         ;
     }
 

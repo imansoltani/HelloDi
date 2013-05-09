@@ -216,13 +216,13 @@ class DistributorsController extends Controller
             ));
     }
 
-    public function  FundingTransferAction(Request $req,$id)
+    public function  FundingTransferAction($id)
     {
         $this->check_ChildAccount($id);
+        $req=new Request();
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
-        $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formtransfer=$this->createFormBuilder()
             ->add('Amount')
@@ -273,6 +273,8 @@ class DistributorsController extends Controller
 
 
         }
+
+        return $trandist->getTranAmount().'|'.$tranretailer->getTranAmount();
 
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
 

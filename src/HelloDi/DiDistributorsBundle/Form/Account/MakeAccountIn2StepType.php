@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EntitiAccountprovType extends AbstractType
+class MakeAccountIn2StepType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

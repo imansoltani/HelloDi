@@ -125,7 +125,7 @@
                                             {% for EA in entity.Accounts %}
                                                 {% if EA.accType==1 %}
                                                     {% set p=p+1 %}
-                                                {% else %}
+                                                {% elseif EA.accType==0 %}
                                                     {% set d=d+1 %}
                                                 {% endif %}
                                             {% endfor %}
