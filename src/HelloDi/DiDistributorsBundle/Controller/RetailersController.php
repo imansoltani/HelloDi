@@ -68,14 +68,14 @@ class RetailersController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             6/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'Account' => $Account, 'pagination' => $pagination));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'pagination' => $pagination));
     }
 
-    public function RetailerStaffAddAction(Request $request, $id)
+    public function RetailerStaffAddAction(Request $request)
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
         $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
@@ -105,9 +105,8 @@ class RetailersController extends Controller
 
     public function RetailerStaffEditAction(Request $request, $id)
     {
+        $this->check_User($id);
 
-
-        $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
         $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
@@ -128,9 +127,9 @@ class RetailersController extends Controller
 
     }
 
-    public function RetailerChangeRoleAction(Request $req,$id)
+    public function RetailerChangeRoleAction($id)
     {
-
+        $this->check_User($id);
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
@@ -218,6 +217,7 @@ class RetailersController extends Controller
 
     public function DetailsTransactionAction($id)
     {
+        $this->check_Transaction($id);
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
@@ -440,6 +440,7 @@ class RetailersController extends Controller
             $Tick->setType($data['Type']);
             $Tick->setSubject($data['Subject']);
             $Tick->setStatus(1);
+            $Tick->setLastUser($User);
 
             $TickNote->setUser($User);
             $TickNote->setDate(new \DateTime('now'));
@@ -465,6 +466,7 @@ class RetailersController extends Controller
 
     public  function  ticketsnoteAction(Request $req,$id)
     {
+        $this->check_Ticket($id);
 
         $ticketNote=new TicketNote();
         $User=$this->get('security.context')->getToken()->getUser();
@@ -519,8 +521,9 @@ class RetailersController extends Controller
         ));
 
     }
-    public  function  ticketschangestatusAction(Request $req,$id)
+    public  function  ticketschangestatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
@@ -544,8 +547,9 @@ class RetailersController extends Controller
     }
 
 
-    public  function  ticketsstatusAction(Request $req,$id)
+    public  function  ticketsstatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
@@ -768,5 +772,40 @@ class RetailersController extends Controller
         return $this->redirect($this->generateUrl('Retailer_Items_Show'));
     }
 //end mostafa
+
+// check functions
+    private function check_User($userid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
+        if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this User !");
+        }
+    }
+
+    private function check_Transaction($tranid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Transaction !");
+        }
+    }
+
+    private function check_Ticket($ticketid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($ticketid);
+        if($ticket == null || $ticket->getAccountretailer() == null || $ticket->getAccountretailer() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Ticket !");
+        }
+    }
+// end checks
 }
 
