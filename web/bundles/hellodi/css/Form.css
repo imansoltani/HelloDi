@@ -657,7 +657,30 @@ form .control-group .controls > .controls{
 /* Item Show */
 
 
+.list_items{
+    display: block;
+    min-height: 150px;
+    border-top: solid thin #70baee;
+    padding-top: 10px;
 
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(center top, ellipse farthest-corner, #dfeffa 0%, #FFFFFF 70%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center top, ellipse farthest-corner, #dfeffa 0%, #FFFFFF 70%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(center top, ellipse farthest-corner, #dfeffa 0%, #FFFFFF 70%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center top, 0, center top, 561, color-stop(0, #dfeffa), color-stop(0.7, #FFFFFF));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center top, ellipse farthest-corner, #dfeffa 0%, #FFFFFF 70%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(ellipse farthest-corner at center top, #dfeffa 0%, #FFFFFF 70%);
+}
 
 .item_show{
     display: block;
@@ -686,10 +709,20 @@ form .control-group .controls > .controls{
 
     /* W3C Markup, IE10 Release Preview */
     background-image: radial-gradient(ellipse farthest-corner at center bottom, #86C6EC 0%, #3986CE 100%);
+
+    background-position: 125px 55px;
+    background-repeat:no-repeat ;
+    background-size: 70px 70px;
+    background-clip: padding-box;
+
+    background-color: #0c4e79;
 }
 
 .item_show:hover{
     z-index: 1100;
+
+    background-size: 50px 50px;
+    background-position: 165px 85px;
 }
 
 .itemulshow{
@@ -728,19 +761,19 @@ form .control-group .controls > .controls{
 }
 
 .itemulshow li a:hover .item_show .header{
-    font-size: 30px;
+    font-size: 27px;
 }
 
 .itemulshow li a:hover .item_show .body .price{
-    font-size: 60px;
+    font-size: 45px;
     margin-top: 0px;
     padding-left: 10px;
 }
 
 .itemulshow li a:hover .item_show .body .type{
-    font-size: 30px;
-    margin-top: 20px;
-    margin-left: 100px;
+    font-size: 25px;
+    margin-top: 60px;
+    margin-left: 70px;
 
     transition : margin-left 0.3s , font-size 0.3s ;
     -webkit-transition : margin-left 0.3s , font-size 0.3s ;
@@ -812,13 +845,13 @@ body .accordion-heading > a:hover{
 
 .item_show .body .price{
 
-margin-top: 30px;
+
     display: inline-block;
-    padding-left: 20px;
+    padding-left: 10px;
     font-size: 30px;
     padding-top: 20px;
     position: absolute;
-    color: #166fa7;
+    color: #6fb9ed;
 }
 
 .item_show .body .type{
@@ -826,7 +859,9 @@ margin-top: 30px;
     font-size: 20px;
     text-align: center;
     margin-left: 5px;
-    color: #166fa7;
+    color: #6fb9ed;
+    margin-top: 50px;
+    padding-left: 10px;
 }
 
 
@@ -839,19 +874,21 @@ margin-top: 30px;
     margin-bottom: 5px;
 }
 
-body .filter_Div:last-child{
-    margin-bottom: 20px;
-}
+
+
 
 .filter_item{
     list-style: none;
     display: block;
-    margin: 5px;
+
+
+
 
 }
 
-.filter_item li{
-    float: left;
+.filter_item div{
+    margin: 5px;
+    display: inline-block;
     margin-right: 10px;
     padding: 8px;
     cursor: pointer;
@@ -861,12 +898,41 @@ body .filter_Div:last-child{
     font-size: 17px;
 }
 
-body .filter_item li.active{
+body .filter_item div.active{
     background: #0088cc;
     color: #FFFFFF;
 }
 
-.filter_item li:hover{
+.filter_item div:hover{
+    background: #eeeeee;
+    color: #2c5580;
+}
+
+
+.sort_item{
+    list-style: none;
+    display: block;
+    margin: 5px;
+
+}
+
+.sort_item div{
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px;
+    cursor: pointer;
+    color: #5d88d4;
+    border-radius: 5px;
+
+    font-size: 17px;
+}
+
+body .sort_item div.active{
+    background: #78bae7;
+    color: #FFFFFF;
+}
+
+.sort_item li:hover{
     background: #eeeeee;
     color: #2c5580;
 }

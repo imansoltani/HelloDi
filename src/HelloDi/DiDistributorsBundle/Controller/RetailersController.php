@@ -596,7 +596,7 @@ class RetailersController extends Controller
         $item = $qb->getResult();
 
         $qb = $em->createQueryBuilder()
-            ->select('DISTINCT operator.id','operator.name')
+            ->select('DISTINCT operator.id','operator.name','operator.Logo')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
             ->innerJoin('acc.Prices','price')
             ->innerJoin('price.Item','item')

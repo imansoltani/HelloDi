@@ -92,6 +92,13 @@
     body form.form-horizontal .form-actions {
         padding: 5px;
     }
+
+    /* Item showc */
+    .filter_item div , .sort_item div{
+        padding: 5px;
+        font-size: 15px;
+        margin: 2px;
+    }
 }
 
 @media  only screen and (max-width: 870px) {
@@ -199,6 +206,8 @@
     body .tablediv table.table tr td , body .tablediv table.table tr th {
         padding: 5px 3px;
     }
+
+
 }
 
 
@@ -226,7 +235,10 @@
 
 @media only screen and (max-width: 450px) {
 
-
+    /* Item showc */
+    .filter_item div , .sort_item div{
+        font-size: 12px;
+    }
 
     /* Datatable
                 ---------------------- */
