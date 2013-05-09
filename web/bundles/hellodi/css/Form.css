@@ -669,6 +669,23 @@ form .control-group .controls > .controls{
     transition : width 0.3s , height 0.3s , margin-left 0.3s , margin-right 0.3s;
     -webkit-transition : width 0.3s , height 0.3s , margin-left 0.3s , margin-right 0.3s;
     z-index: 1000;
+
+    background-image: -ms-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center bottom, 0, center bottom, 561, color-stop(0, #86C6EC), color-stop(1, #3986CE));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(ellipse farthest-corner at center bottom, #86C6EC 0%, #3986CE 100%);
 }
 
 .item_show:hover{
@@ -681,11 +698,14 @@ form .control-group .controls > .controls{
 }
 
 .itemulshow li{
+    display: none;
+    opacity: 0;
     list-style: none;
     float: left;
     padding: 5px;
+    padding-right: 15px;
     width: 200px;
-    display: inline-block;
+
     height: 130px;
 }
 
@@ -713,12 +733,14 @@ form .control-group .controls > .controls{
 
 .itemulshow li a:hover .item_show .body .price{
     font-size: 60px;
+    margin-top: 0px;
+    padding-left: 10px;
 }
 
 .itemulshow li a:hover .item_show .body .type{
     font-size: 30px;
-    margin-top: 70px;
-    margin-left: 130px;
+    margin-top: 20px;
+    margin-left: 100px;
 
     transition : margin-left 0.3s , font-size 0.3s ;
     -webkit-transition : margin-left 0.3s , font-size 0.3s ;
@@ -774,28 +796,13 @@ body .accordion-heading > a:hover{
 }
 
 .item_show .header {
-    text-align: center;
-    font-size: 25px;
+    text-align: left;
+    font-size: 20px;
     height: 27px;
     padding-top: 10px;
-    color:#FFF;
-    /* IE10 Consumer Preview */
-    background-image: -ms-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
+    color: rgb(255, 255, 255);
+    padding-left: 10px;
 
-    /* Mozilla Firefox */
-    background-image: -moz-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
-
-    /* Opera */
-    background-image: -o-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(radial, center bottom, 0, center bottom, 561, color-stop(0, #86C6EC), color-stop(1, #3986CE));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-radial-gradient(center bottom, ellipse farthest-corner, #86C6EC 0%, #3986CE 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: radial-gradient(ellipse farthest-corner at center bottom, #86C6EC 0%, #3986CE 100%);
 }
 
 .item_show .body{
@@ -805,19 +812,61 @@ body .accordion-heading > a:hover{
 
 .item_show .body .price{
 
-
+margin-top: 30px;
     display: inline-block;
     padding-left: 20px;
-    font-size: 50px;
+    font-size: 30px;
     padding-top: 20px;
     position: absolute;
+    color: #166fa7;
 }
 
 .item_show .body .type{
-    width: 66px;
     display: inline-block;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
-    margin-top: 60px;
-    margin-left: 20px;
+    margin-left: 5px;
+    color: #166fa7;
+}
+
+
+/* filter items */
+
+.filter_Div{
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    margin-bottom: 5px;
+}
+
+body .filter_Div:last-child{
+    margin-bottom: 20px;
+}
+
+.filter_item{
+    list-style: none;
+    display: block;
+    margin: 5px;
+
+}
+
+.filter_item li{
+    float: left;
+    margin-right: 10px;
+    padding: 8px;
+    cursor: pointer;
+    color: #5d88d4;
+    border-radius: 5px;
+
+    font-size: 17px;
+}
+
+body .filter_item li.active{
+    background: #0088cc;
+    color: #FFFFFF;
+}
+
+.filter_item li:hover{
+    background: #eeeeee;
+    color: #2c5580;
 }

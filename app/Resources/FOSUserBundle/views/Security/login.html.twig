@@ -36,7 +36,7 @@
 					<input id="Field" name="_remember_me" type="checkbox" class="field login-checkbox" value="on" tabindex="4" />
 					<label class="choice" for="Field">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
 				</span>
-            <input class="button btn btn-primary btn-large" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+            <input class="button btn btn-warning btn-large" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
         </div> <!-- .actions -->
 
 
@@ -44,7 +44,7 @@
 
         <div style="" class="login_remind">
             <div   >
-                <a style="width:auto;float:right" class="btn btn-info" href="{{ path('fos_user_resetting_request') }}" >Remind Password</a>
+                <a style="width:auto;float:right" class="btn btn-primary" href="{{ path('fos_user_resetting_request') }}" >Remind Password</a>
             </div>
 
 

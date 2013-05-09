@@ -117,63 +117,72 @@
     <div class="span">
         <div class="widget stacked">
             <div class="widget-content itemshow">
-                <div class="accordion" id="accordion2">
-                    {% for opr in operator %}
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
-                               href="#{{ opr.name }}">
+
+                <div class="filter_Div">
+
+                    <ul class="filter_item" >
+                        <li class="filter" data-filter="all" >
+                            All Operator
+                        </li>
+
+                        {% for opr in operator %}
+                            <li class="filter" data-filter="{{ opr.name }}" >
                                 {{ opr.name }}
-                            </a>
-                        </div>
-                        <div id="{{ opr.name }}" class="accordion-body collapse {% if loop.first %}in{% endif %}">
-                            <div class="accordion-inner">
-                                <ul class="itemulshow">
+                            </li>
+                        {% endfor %}
 
-                                    {% for item in itemlist %}
-                                        {% if( item.name == opr.name) %}
-
-
-                                            <li>
-                                                <a id="item_buy" href="#myModal" data-toggle="modal">
-                                                    <div class="item_show">
-                                                        <div class="header">{{ item.itemName }}</div>
-                                                        <div class="body">
-                                                            <div class="price">
-                                                                {{ item.itemFaceValue }}
-                                                            </div>
-                                                            <div class="type">
-                                                                {{ item.itemCurrency }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <input type="hidden" id="item_name1" value="{{ item.itemName }}">
-                                                    <input type="hidden" id="face_value1"
-                                                           value="{{ item.itemFaceValue }}">
-                                                    <input type="hidden" id="currency1" value="{{ item.itemCurrency }}">
-                                                    <input type="hidden" id="operator1" value="{{ item.name }}">
-                                                    <input type="hidden" id="item_id1" value="{{ item.id }}">
-                                                    <input type="hidden" id="price_id1" value="{{ item.pid }}">
-
-                                                </a>
-                                            </li>
-
-
-
-
-                                            {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
-                                        {% endif %}
-                                    {% endfor %}
-
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                    </ul>
                 </div>
+
+                <hr>
+                <ul id="Grid" class="itemulshow" >
+                    {% for opr in operator %}
+                        {% for item in itemlist %}
+                            {% if( item.name == opr.name) %}
+
+
+                                <li class="mix {{ opr.name }}" data-cat="{{item.itemFaceValue}}" >
+                                    <a id="item_buy" href="#myModal" data-toggle="modal" >
+                                        <div class="item_show">
+                                            <div class="header">{{ item.itemName }}</div>
+                                            <div class="body">
+                                                <div class="price">
+                                                    {{ item.itemFaceValue }}
+                                                    <div class="type">
+                                                        {{ item.itemCurrency }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" id="item_name1" value="{{ item.itemName }}">
+                                        <input type="hidden" id="face_value1"
+                                               value="{{ item.itemFaceValue }}">
+                                        <input type="hidden" id="currency1" value="{{ item.itemCurrency }}">
+                                        <input type="hidden" id="operator1" value="{{ item.name }}">
+                                        <input type="hidden" id="item_id1" value="{{ item.id }}">
+                                        <input type="hidden" id="price_id1" value="{{ item.pid }}">
+
+                                    </a>
+                                </li>
+
+
+
+
+                                {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
+                            {% endif %}
+                        {% endfor %}
+
+                    {% endfor %}
+                </ul>
+
             </div>
+
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>
+
             <script type="text/javascript">
                 $(function () {
                     $("* #item_buy").click(function () {
@@ -189,7 +198,7 @@
 
 
                     });
-
+                    $('#Grid').mixitup({effects: ['fade','scale','blur']});
 
                 });
             </script>
