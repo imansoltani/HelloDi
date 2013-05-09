@@ -56,7 +56,7 @@ li.dropdown i > span{
 
 /* Message Top
     ------------------------------------------------------- */
-.messageshow{
+.messageshow , .popupshow{
     width: 100%;
     height: 100%;
     position: fixed;
@@ -102,6 +102,8 @@ li.dropdown i > span{
 
 }
 
+
+
 .popup h1{
     text-shadow: 0px 1px 0px #CCC;
     padding: 0;
@@ -137,6 +139,20 @@ li.dropdown i > span{
     margin: 0;
 }
 
+
+.bodypopup{
+    width:100% ;
+    height: auto;
+    position: absolute;
+    right: 0px;
+    top: 15%;
+    z-index: 8001;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FFF;
+
+    opacity: 0.99;
+}
 /* For Error*/
 
 .closedoor{

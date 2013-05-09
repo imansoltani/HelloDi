@@ -50,14 +50,21 @@
 </head>
 <body>
 
-<div class="messageshow"  >
 
+<div class="messageshow">
 </div>
+
+<div class="popupshow">
+</div>
+
+
 
 <script type="text/javascript">
     $(function(){
 
         $('.messageshow').hide();
+        $('.popupshow').hide();
+        $('#popuptop').hide();
 
         {% if errors is defined  %}
             {% if errors|length != 0 %}
@@ -83,10 +90,20 @@
                 $('.messageshow').html('');
                 $('.messageshow').removeAttr('id');
             });
-
         });
 
+        $('* .messagetop ,.messageshow ').click(function(){
+            $('.messageshow').fadeOut('fast',function(){
+                $('.messageshow').html('');
+                $('.messageshow').removeAttr('id');
+            });
+        });
+
+
+
         //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
+
+
     });
 
     function messagetop(subject,body,type)
@@ -106,11 +123,37 @@
         //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
 
         $('.messageshow').html(x);
-        $('.popup').hide();
+        $('.messageshow  >.popup').hide();
         $('.messageshow').fadeIn();
         $('.popup').slideDown();
 
 
+    }
+
+    function Popuptop(text)
+    {
+        var element = document.getElementsByClassName(text) ;
+        var name = $(element).attr('id') ;
+        if(name = "popuptop")
+        {
+
+            var body = '<div class="bodypopup poptop"  >' ;
+            body += $(element).html()+'</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>' ;
+
+            $('.popupshow').html(body);
+            $('.bodypopup').hide();
+            $('.popupshow').fadeIn();
+            $('.bodypopup').slideDown();
+        }
+    }
+
+    function PopuptopClose(e)
+    {
+        e.preventDefault();
+        $('.popupshow').fadeOut('fast',function(){
+            $('.popupshow').html('');
+            $('.popupshow').removeAttr('id');
+        });
     }
 
 
@@ -131,6 +174,7 @@
         return true ;
     }
 </script>
+
 
 
 <!-- Nav Bar -->

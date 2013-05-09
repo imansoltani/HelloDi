@@ -24,15 +24,13 @@
 
 
     <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-            <h3 id="myModalLabel">Buy Card</h3>
+    <div id="popuptop" class="modal" >
+        <div class="modal-header containerpop">
+                <button type="button" class="close" onclick="PopuptopClose(event)">X</button>
+                <h3 id="myModalLabel">Buy Card</h3>
         </div>
         <form class="form-horizontal" action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST">
-            <div class="modal-body">
-
+            <div class="modal-body containerpop">
                 <div class="control-group">
                     <label class="control-label">
                         Operator
@@ -89,16 +87,16 @@
                         <input id="showsum" type="text" value="2100" disabled class="input-large">
                     </div>
                 </div>
-
-                <input type="hidden" id="itemid" name="item_id" value="">
+                <input  type="hidden" id="itemid" name="item_id" value="">
                 <input type="hidden" id="priceid" name="price_id" value="">
 
+            </div>
 
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <input type="submit" class="btn btn-primary" value="Buy">
-            </div>
+                <div class="containerpop form-actions " style="padding-left: 0px">
+                    <button class="btn" onclick="PopuptopClose(event)">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Buy">
+                </div>
+
         </form>
     </div>
 
@@ -193,17 +191,16 @@
             <script type="text/javascript">
                 $(function () {
                     $("* #item_buy").click(function () {
+                        Popuptop('modal');
 
-                        $('#operator').val($(" #operator1", this).val());
-                        $('#itemname').val($(" #item_name1", this).val());
-                        $('#facevalue').val($(" #face_value1", this).val());
-                        $('#showsum').val($(" #face_value1", this).val());
-                        $('#itemcount').val(1);
+                        $('.popupshow #operator').val($(" #operator1", this).val());
+                        $('.popupshow #itemname').val($(" #item_name1", this).val());
+                        $('.popupshow #facevalue').val($(" #face_value1", this).val());
+                        $('.popupshow #showsum').val($(" #face_value1", this).val());
+                        $('.popupshow #itemcount').val(1);
 
-                        $('#itemid').val($(" #item_id1", this).val());
-                        $('#priceid').val($(" #price_id1", this).val());
-
-
+                        $('.popupshow #itemid').val($(" #item_id1", this).val());
+                        $('.popupshow #priceid').val($(" #price_id1", this).val());
                     });
 
 

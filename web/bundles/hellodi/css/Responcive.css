@@ -1,13 +1,13 @@
 /* ??? */
 
 
+.containerpop{
+    width: 500px;
+    margin: 0 auto;
+}
+
 
 @media only screen and (max-width: 980px) {
-
-
-
-
-
     /* MenuBar
                 ========================================================= */
     .MenuBar .menubar_items ul{
@@ -234,6 +234,12 @@
 }
 
 @media only screen and (max-width: 450px) {
+
+    .containerpop{
+        width: 90%;
+        margin: 0 auto;
+    }
+
 
     /* Item showc */
     .filter_item div , .sort_item div{
