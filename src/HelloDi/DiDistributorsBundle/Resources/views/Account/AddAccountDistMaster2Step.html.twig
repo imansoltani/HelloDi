@@ -1,185 +1,194 @@
+{% extends 'HelloDiDiDistributorsBundle:Step:DistMasterAdd2.html.twig' %}
 
-
-<form action="{{ path('AddAccountDistMaster2Step') }}" method="post">
-    <h3>Create Entity</h3>
-
-
-    <div class="control-group entName">
-        {{ form_label(form2step.entName) }}
-        {{ form_widget(form2step.entName) }}
-        {{ form_errors(form2step.entName) }}
-    </div>
-
-
-    <div class="control-group entVatNumber">
-        {{ form_label(form2step.entVatNumber) }}
-        {{ form_widget(form2step.entVatNumber) }}
-        {{ form_errors(form2step.entVatNumber) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.entTel1) }}
-        {{ form_widget(form2step.entTel1) }}
-        {{ form_errors(form2step.entTel1) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.entTel2) }}
-        {{ form_widget(form2step.entTel2) }}
-        {{ form_errors(form2step.entTel2) }}
-    </div>
-
-
-    <div class="control-group">
-        {{ form_label(form2step.entFax) }}
-        {{ form_widget(form2step.entFax) }}
-        {{ form_errors(form2step.entFax) }}
-    </div>
-
-    <div class="control-group entWebsite">
-        {{ form_label(form2step.entWebsite) }}
-        {{ form_widget(form2step.entWebsite) }}
-        {{ form_errors(form2step.entWebsite) }}
-    </div>
-    </div>
-
-
-    <h3>Address Entity</h3>
-
-    <div class="control-group entAdrs1">
-        {{ form_label(form2step.entAdrs1) }}
-        {{ form_widget(form2step.entAdrs1) }}
-        {{ form_errors(form2step.entAdrs1) }}
-    </div>
-    <div class="control-group ">
-        {{ form_label(form2step.entAdrs2) }}
-        {{ form_widget(form2step.entAdrs2) }}
-        {{ form_errors(form2step.entAdrs2) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.entAdrs3) }}
-        {{ form_widget(form2step.entAdrs3) }}
-        {{ form_errors(form2step.entAdrs3) }}
-    </div>
-    <div class="control-group entCity">
-        {{ form_label(form2step.entCity) }}
-        {{ form_widget(form2step.entCity) }}
-        {{ form_errors(form2step.entCity) }}
-    </div>
-    <div class="control-group entNP">
-        {{ form_label(form2step.entNP) }}
-        {{ form_widget(form2step.entNP) }}
-        {{ form_errors(form2step.entNP) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Country) }}
-        <div class="controls">
-            {{ form_widget(form2step.Country) }}
+{% block steps %}
+    <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+        <div class="widget-header">
+            <h3>Create Entity</h3>
         </div>
-        {{ form_errors(form2step.Country) }}
-    </div>
 
-    </div>
-
-
-    <h3>Create Account</h3>
-
-    <div class="control-group accName">
-        {{ form_label(form2step.Accounts[0].accName) }}
-        {{ form_widget(form2step.Accounts[0].accName) }}
-        {{ form_errors(form2step.Accounts[0].accName) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Accounts[0].accCurrency) }}
-        <div class="controls">
-            {{ form_widget(form2step.Accounts[0].accCurrency) }}
+        <div class="control-group entName">
+            {{ form_label(form2step.entName) }}
+            {{ form_widget(form2step.entName) }}
+            {{ form_errors(form2step.entName) }}
         </div>
-        {{ form_errors(form2step.Accounts[0].accCurrency) }}
-    </div>
 
 
-    <div class="control-group">
-        {{ form_label(form2step.Accounts[0].accTimeZone) }}
-
-        {{ form_widget(form2step.Accounts[0].accTimeZone) }}
-
-        {{ form_errors(form2step.Accounts[0].accTimeZone) }}
-    </div>
-
-
-    <div class="control-group">
-        {{ form_label(form2step.Accounts[0].accTerms) }}
-
-        {{ form_widget(form2step.Accounts[0].accTerms) }}
-
-        {{ form_errors(form2step.Accounts[0].accTerms) }}
-    </div>
-
-    </div>
-
-
-
-
-<h1>User</h1>
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].firstname) }}
-        {{ form_widget(form2step.Users[0].firstname) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].lastname) }}
-        {{ form_widget(form2step.Users[0].lastname) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].username) }}
-        {{ form_widget(form2step.Users[0].username) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].mobile) }}
-        {{ form_widget(form2step.Users[0].mobile) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].email) }}
-        {{ form_widget(form2step.Users[0].email) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].enabled) }}
-        {{ form_widget(form2step.Users[0].enabled) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].plainPassword.first) }}
-        {{ form_widget(form2step.Users[0].plainPassword.first) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].plainPassword.second) }}
-        {{ form_widget(form2step.Users[0].plainPassword.second) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form2step.Users[0].language) }}
-        <div class="controls">
-            {{ form_widget(form2step.Users[0].language) }}
+        <div class="control-group entVatNumber">
+            {{ form_label(form2step.entVatNumber) }}
+            {{ form_widget(form2step.entVatNumber) }}
+            {{ form_errors(form2step.entVatNumber) }}
         </div>
-    </div>
-    <div class="control-group">
-        {{ form_label(formrole.roles) }}
-        <div class="controls">
-            {{ form_widget(formrole.roles) }}
+
+        <div class="control-group">
+            {{ form_label(form2step.entTel1) }}
+            {{ form_widget(form2step.entTel1) }}
+            {{ form_errors(form2step.entTel1) }}
         </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.entTel2) }}
+            {{ form_widget(form2step.entTel2) }}
+            {{ form_errors(form2step.entTel2) }}
+        </div>
+
+
+        <div class="control-group">
+            {{ form_label(form2step.entFax) }}
+            {{ form_widget(form2step.entFax) }}
+            {{ form_errors(form2step.entFax) }}
+        </div>
+
+        <div class="control-group entWebsite">
+            {{ form_label(form2step.entWebsite) }}
+            {{ form_widget(form2step.entWebsite) }}
+            {{ form_errors(form2step.entWebsite) }}
+        </div>
+
     </div>
 
+    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
+        <div class="widget-header">
+            <h3>Address Entity</h3>
+        </div>
 
-    {{ form_widget(form2step._token) }}
+        <div class="control-group entAdrs1">
+            {{ form_label(form2step.entAdrs1) }}
+            {{ form_widget(form2step.entAdrs1) }}
+            {{ form_errors(form2step.entAdrs1) }}
+        </div>
+        <div class="control-group ">
+            {{ form_label(form2step.entAdrs2) }}
+            {{ form_widget(form2step.entAdrs2) }}
+            {{ form_errors(form2step.entAdrs2) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.entAdrs3) }}
+            {{ form_widget(form2step.entAdrs3) }}
+            {{ form_errors(form2step.entAdrs3) }}
+        </div>
+        <div class="control-group entCity">
+            {{ form_label(form2step.entCity) }}
+            {{ form_widget(form2step.entCity) }}
+            {{ form_errors(form2step.entCity) }}
+        </div>
+        <div class="control-group entNP">
+            {{ form_label(form2step.entNP) }}
+            {{ form_widget(form2step.entNP) }}
+            {{ form_errors(form2step.entNP) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.Country) }}
+            <div class="controls">
+                {{ form_widget(form2step.Country) }}
+            </div>
+            {{ form_errors(form2step.Country) }}
+        </div>
+
+    </div>
+
+    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
+        <div class="widget-header">
+            <h3>Create Account</h3>
+        </div>
 
 
-    <input type="submit" value="creat">
+        <div class="control-group accName">
+            {{ form_label(form2step.Accounts[0].accName) }}
+            {{ form_widget(form2step.Accounts[0].accName) }}
+            {{ form_errors(form2step.Accounts[0].accName) }}
+        </div>
 
-</form>
+        <div class="control-group">
+            {{ form_label(form2step.Accounts[0].accCurrency) }}
+            <div class="controls">
+                {{ form_widget(form2step.Accounts[0].accCurrency) }}
+            </div>
+            {{ form_errors(form2step.Accounts[0].accCurrency) }}
+        </div>
+
+
+        <div class="control-group">
+            {{ form_label(form2step.Accounts[0].accTimeZone) }}
+
+            <div class="controls">
+                {{ form_widget(form2step.Accounts[0].accTimeZone) }}
+            </div>
+
+            {{ form_errors(form2step.Accounts[0].accTimeZone) }}
+        </div>
+
+
+        <div class="control-group">
+            {{ form_label(form2step.Accounts[0].accTerms) }}
+
+            {{ form_widget(form2step.Accounts[0].accTerms) }}
+
+            {{ form_errors(form2step.Accounts[0].accTerms) }}
+        </div>
+
+    </div>
+
+    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-4">
+        <div class="widget-header">
+            <h3>Create User</h3>
+        </div>
+
+        <div class="control-group firstname">
+            {{ form_label(form2step.Users[0].firstname) }}
+            {{ form_widget(form2step.Users[0].firstname) }}
+        </div>
+
+        <div class="control-group lastname">
+            {{ form_label(form2step.Users[0].lastname) }}
+            {{ form_widget(form2step.Users[0].lastname) }}
+        </div>
+        <div class="control-group username">
+            {{ form_label(form2step.Users[0].username) }}
+            {{ form_widget(form2step.Users[0].username) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.Users[0].mobile) }}
+            {{ form_widget(form2step.Users[0].mobile) }}
+        </div>
+
+        <div class="control-group email">
+            {{ form_label(form2step.Users[0].email) }}
+            {{ form_widget(form2step.Users[0].email) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.Users[0].enabled) }}
+            <div class="controls">
+                {{ form_widget(form2step.Users[0].enabled) }}
+            </div>
+        </div>
+
+        <div class="control-group first">
+            {{ form_label(form2step.Users[0].plainPassword.first) }}
+            {{ form_widget(form2step.Users[0].plainPassword.first) }}
+        </div>
+
+        <div class="control-group second">
+            {{ form_label(form2step.Users[0].plainPassword.second) }}
+            {{ form_widget(form2step.Users[0].plainPassword.second) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form2step.Users[0].language) }}
+            <div class="controls">
+                {{ form_widget(form2step.Users[0].language) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(formrole.roles) }}
+            <div class="controls">
+                {{ form_widget(formrole.roles) }}
+            </div>
+        </div>
+
+     </div>
+
+{% endblock %}

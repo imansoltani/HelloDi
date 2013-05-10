@@ -12,6 +12,11 @@ $(function(){
     $(window).resize(function(){
         ChangeSize(Now_Step(0));
     });
+
+    $('* input:text').click(function(){
+        $(this).removeAttr('style');
+    });
+
 });
 
 function ChangeSize(x)
@@ -48,7 +53,7 @@ function go(y)
         var x = Now_Step(0);
         if( x != y)
         {
-            Page(x,1);
+            if(!Page(x,1)) return;
             Page(y,0);
             Now_Step(y);
         }
@@ -61,7 +66,7 @@ function Next()
     var x = Math.round(Now_Step(0));
     if( x < 4 )
     {
-        Page(x,1);
+        if(!Page(x,1)) return;
 
         Page(x+1,0);
         Now_Step(x+1);
@@ -73,14 +78,27 @@ function Prev()
     var x = Math.round(Now_Step(0));
     if( x > 1 )
     {
-        Page(x,1);
+        if(!Page(x,1)) return;
         Page(x-1,0);
         Now_Step(x-1);
     }
 }
 
+function Done()
+{
+    if(!Validation_Prov(4)) return false ;
+    $('form.form-step').submit();
+}
+
 function Page(x , y)
 {
+    if(y == 1)
+    {
+        if(!Validation_Prov(x)) return false ;
+    }
+
+    if(y == 1) $('.form-actions').fadeOut("fast"); else $('.form-actions').fadeIn("slow");
+
     if(y == 0)
     {
         $(document).scrollTop($('.widget-header').offset().top);
@@ -97,14 +115,14 @@ function Page(x , y)
             $('#step1').removeAttr('class');
             $('#step1').attr('class','selected');
             if($('#step1').attr('isdone') == 0 )$('#step1').attr('isdone','1');
-            $('.buttonPrevious').attr('id','buttonDisabled');
-            return ;
+            $('.buttonPrevious').attr('style','display:none');
+            return true ;
         }
         $('#step1').removeAttr('class');
         $('#step1').attr('class','done');
-        $('.buttonPrevious').removeAttr('id');
+        $('.buttonPrevious').removeAttr('style');
 
-        return;
+        return true ;
     }
 
 
@@ -119,14 +137,18 @@ function Page(x , y)
             $('#step2').removeAttr('class');
             $('#step2').attr('class','selected');
             if($('#step2').attr('isdone') == 0 )$('#step2').attr('isdone','1');
-            return ;
+
+
+            return true ;
         }
         $('#step2').removeAttr('class');
         $('#step2').attr('class','done');
-        return;
+        return true ;
     }
+
     if(x == 3)
     {
+
         if(y == 0)
         {
             ChangeSize(3);
@@ -135,12 +157,16 @@ function Page(x , y)
             $('#step3').removeAttr('class');
             $('#step3').attr('class','selected');
             if($('#step3').attr('isdone') == 0 )$('#step3').attr('isdone','1');
-            return ;
+
+
+            return true ;
         }
         $('#step3').removeAttr('class');
         $('#step3').attr('class','done');
-        return;
+        return true ;
     }
+
+
     if(x == 4)
     {
         if(y == 0)
@@ -151,12 +177,95 @@ function Page(x , y)
             $('#step4').removeAttr('class');
             $('#step4').attr('class','selected');
             if($('#step4').attr('isdone') == 0 )$('#step4').attr('isdone','1');
-            $('.buttonNext').attr('id','buttonDisabled');
-            return ;
+            $('.buttonNext').attr('style','display:none');
+            $('.finalsubmit').removeAttr('style');
+            return true ;
         }
         $('#step4').removeAttr('class');
         $('#step4').attr('class','done');
-        $('.buttonNext').removeAttr('id');
-        return;
+        $('.buttonNext').removeAttr('style');
+        $('.finalsubmit').attr('style','display:none');
+        return true ;
     }
+    return false ;
 }
+
+function Validation_Prov(x)
+{
+    if(x == 1) return Valid_Step_1() ;
+    if(x == 2) return Valid_Step_2() ;
+    if(x == 3) return Valid_Step_3() ;
+    if(x == 4) return Valid_Step_4() ;
+}
+
+function Valid_Step_1()
+{
+    var y = false ;
+    $('.entName input, .entVatNumber  input, .entWebsite input').each(function() {
+        if ($(this).val() == '') {
+            y = true ;
+            $(this).attr('style','border:thin #FF0000 solid');
+        }
+    });
+    if(y)
+    {
+        messagetop('Error','Fill required inputs','error');
+        return false
+    }
+    return true ;
+}
+
+function Valid_Step_3()
+{
+    var y = false ;
+    $('.accName input').each(function() {
+        if ($(this).val() == '') {
+            y = true ;
+            $(this).attr('style','border:thin #FF0000 solid');
+        }
+    });
+    if(y)
+    {
+        messagetop('Error','Fill required inputs','error');
+        return false
+    }
+    return true ;
+
+}
+
+function Valid_Step_2()
+{
+    var y = false ;
+
+    $('.entAdrs1 input, .entCity  input, .entNP input').each(function() {
+        if ($(this).val() == '') {
+            y = true ;
+            $(this).attr('style','border:thin #FF0000 solid');
+        }
+    });
+    if(y)
+    {
+        messagetop('Error','Fill required inputs','error');
+        return false
+    }
+    return true ;
+}
+
+function Valid_Step_4()
+{
+    var y = false ;
+
+    $('.firstname input, .lastname  input, .username input, .email input, .first input, .second input').each(function() {
+        if ($(this).val() == '') {
+            y = true ;
+            $(this).attr('style','border:thin #FF0000 solid');
+        }
+    });
+    if(y)
+    {
+        messagetop('Error','Fill required inputs','error');
+        return false
+    }
+    return true ;
+}
+
