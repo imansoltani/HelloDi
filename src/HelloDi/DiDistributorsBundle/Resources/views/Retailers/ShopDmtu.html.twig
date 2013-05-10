@@ -129,12 +129,12 @@
                         {% endfor %}
                 </div>
 
-                <div class="filter_Div sort_item">
+                <!--<div class="filter_Div sort_item">
                         <div class="sort active" data-sort="default" data-order="desc">Default</div>
-                        <div class="sort" data-sort="data-cat" data-order="desc">Descending</div>
-                        <div class="sort" data-sort="data-cat" data-order="asc">Ascending</div>
+                        <div class="sort" data-sort="sfield" data-order="desc">Descending</div>
+                        <div class="sort" data-sort="sfield" data-order="asc">Ascending</div>
 
-                </div>
+                </div> -->
 
 
                <div class="list_items" >
@@ -144,8 +144,8 @@
                                {% if( item.name == opr.name) %}
 
 
-                                   <li class="mix {{ opr.name }}" data-cat="{{ item.itemFaceValue }}">
-                                       <a id="item_buy" href="#myModal" data-toggle="modal">
+                                   <li id="item_buy" class="mix {{ opr.name }}" sfield="{{ item.itemFaceValue }}" >
+                                       <a  >
                                            <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opr.Logo }}')" class="item_show">
                                                <div class="header">{{ item.itemName }}</div>
                                                <div class="body">
