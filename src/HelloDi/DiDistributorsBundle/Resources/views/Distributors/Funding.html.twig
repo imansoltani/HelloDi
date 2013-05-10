@@ -9,9 +9,6 @@
     <a class="link" href="#">Manage</a>
     <span class="link">Transactions</span>
 {% endblock Site_Map %}
-<h5>
-
-</h5>
 {% block Tab %}
     <div class="row">
         <div class="span5">
@@ -55,7 +52,7 @@
 
 
                     <div class="form-actions" style="margin-bottom: 0" >
-                        <button class="btn btn-primary" type="submit" name="transfer">Transfer</button>
+                        <button class="btn btn-primary" type="submit">Transfer</button>
                     </div>
 
 
@@ -71,7 +68,7 @@
                 </h3>
             </div> <!-- /widget-header --><br>
 
-            Retailer Balance : <b>{{ Account.accBalance }}</b>
+            Retailer CreditLimit : <b>{{ Account.accCreditlimit }}</b>
             <hr>
 
 

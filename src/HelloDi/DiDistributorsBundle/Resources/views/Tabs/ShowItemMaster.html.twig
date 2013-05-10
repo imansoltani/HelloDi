@@ -16,28 +16,19 @@
 {% block Tabs %}
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
-        <a href="">
-            <form action="{{ path('item_show') }}" method="post">
-                <input type="hidden" name="itemid" value="{{ item.id }}"/>
-                <input type="submit" value="details"/>
-            </form>
+        <a href="{{ path('item_show',{'id':item.id}) }}"  >
+            <input type="submit" value="details" >
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('item_desc') }}" method="post">
-                <input type="hidden" name="itemid" value="{{ item.id }}"/>
-                <input type="submit" value="description"/>
-            </form>
+        <a href="{{ path('item_desc',{'id':item.id}) }}"  >
+            <input type="submit" value="description" >
         </a>
     </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a>
-            <form action="#" method="post">
-                <input type="hidden" name="itemid" value="{{ item.id }}"/>
-                <input type="submit" value="price setting"/>
-            </form>
+        <a href="#"  >
+            <input type="submit" value="price setting" >
         </a>
     </li>
 

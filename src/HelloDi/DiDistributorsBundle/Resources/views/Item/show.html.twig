@@ -69,14 +69,9 @@
         </div>
     </form>
 
-
-
-    <form  action="{{ path('item_edit') }}" method="post">
-        <div class="form-actions">
-            <input class="btn btn-primary" type="submit" value="Modify" />
-        </div>
-        <input type="hidden" name="itemid" id="itemid" value="{{ item.id }}"/>
-    </form>
+    <td class="form-actions" >
+        <a class="btn btn-primary" href="{{ path('item_edit',{'id':item.id}) }}">Modify</a>
+    </td>
 
 {% endblock %}
 

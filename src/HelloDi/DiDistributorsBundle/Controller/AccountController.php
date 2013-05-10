@@ -499,7 +499,8 @@ class AccountController extends Controller
 
             if($data['As']=='Credit')
             {
-                if($data['Amount']!=0)
+                $trandist->setTranType(1);
+                if($data['Amount']!='')
                 {
                     $trandist->setTranAmount(+$data['Amount']) ;
                     $trandist->setTranAction('pmt');
@@ -512,7 +513,8 @@ class AccountController extends Controller
 
         if($data['As']=='Debit')
         {
-            if($data['Amount']!=0)
+            $trandist->setTranType(0);
+            if($data['Amount']!='')
             {
 
                 if($balancechecker->isMoreThanCreditLimit($Account,$data['Amount']))
@@ -704,7 +706,6 @@ class AccountController extends Controller
 
     public  function ProvTransferAction($id,Request $req)
     {
-
         $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
         $em=$this->getDoctrine()->getEntityManager();
 
@@ -725,7 +726,10 @@ class AccountController extends Controller
                         ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur',$Account->getAccCurrency())
                         ;
                 }
-            ))->getForm();
+            ))
+           ->add('Description','textarea',array('required'=>false))
+           ->add('Communications','textarea',array('required'=>false))
+            ->getForm();
 
         $tranprov=new Transaction();
         $trandist=new Transaction();
@@ -750,16 +754,17 @@ class AccountController extends Controller
             $tranprov->setTranAmount(-$data['Amount']);
             $tranprov->setAccount($Account);
             $tranprov->setUser($User);
-            $tranprov->setTranDescription(null);
+            $tranprov->setTranDescription($data['Description']);
             $tranprov->setTranFees(0);
             $tranprov->setTranCurrency($Account->getAccCurrency());
-
+            $tranprov->setTranType(0);#0 for debit
             #transaction for dist#
             $trandist->setTranAmount(+$data['Amount']);
             $trandist->setTranAction('tran');
+            $trandist->setTranType(1);#1 for credit
             $trandist->setAccount($data['Accounts']);
             $trandist->setUser($User);
-            $trandist->setTranDescription(null);
+            $trandist->setTranDescription($data['Communications']);
             $trandist->setTranFees(0);
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
 
@@ -803,20 +808,10 @@ class AccountController extends Controller
                 'expanded'=>true,
                 'choices'=>array(
 
-                    0=>'Credit',
-                    1=>'Debit'
+                    1=>'Credit',
+                    0=>'Debit'
                 )
 
-            ))
-            ->add('Action','choice',array(
-                'choices'=>
-                array(
-            'add'=>'add new codes to system',
-            'rmv'=>'remove codes from  the system',
-            'pmt'=>'credit provider,s account',
-            'amdt'=>'debit provider,s account',
-            'tran'=>'transfer credit from providers account to a distributors account'
-                )
             ))
             ->add('Amount','text',array(
                 'data'=>0,'required'=>false
@@ -836,26 +831,28 @@ class AccountController extends Controller
             $tran->setTranDate(new \DateTime('now'));
             $tran->setTranInsert(new \DateTime('now'));
 
-//            $tran->setTranAction($data['Action']);
             if($data['Fees']!='')
              $tran->setTranFees($data['Fees']);
             else
             $tran->setTranFees(0);
+
             $tran->setTranDescription($data['Description']);
 
-            if($data['CreditDebit']==0)
+            if($data['CreditDebit']==1)
             {
                 $tran->setTranAction('pmt');
+                $tran->setTranType(1);
                 $tran->setTranAmount(+$data['Amount']);
                 $em->persist($tran);
                 $em->flush();
             }
 
-            elseif($data['CreditDebit']==1)
+            elseif($data['CreditDebit']==0)
             {
                 if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
                 {
                     $tran->setTranAction('amdt');
+                    $tran->setTranType(0);
                     $tran->setTranAmount(-$data['Amount']);
                     $em->persist($tran);
                     $em->flush();

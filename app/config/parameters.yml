@@ -14,3 +14,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     languages: [en, fr, de ]
+    currency: [CHF,USD]

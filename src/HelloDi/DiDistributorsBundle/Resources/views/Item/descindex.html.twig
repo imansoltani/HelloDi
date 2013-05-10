@@ -20,17 +20,15 @@
         <h3>Item Descriptions</h3>
     </div> <!-- /widget-header -->
     <br>
-    <form method="post" action="{{ path('item_desc_new') }}">
-        <input type="hidden" name="itemid" value="{{ item.id }}"/>
-        <input class="button btn btn-large btn-primary" type="submit" value="Add new Item Description"/>
-    </form>
-    <div style="margin-top: 5px" class="tablediv">
+    <a class=" btn btn-primary btn-large" href="{{ path('item_desc_new',{'id':item.id}) }}">
+        Add new Item Description
+    </a>
+    <div style="margin-top: 35px" class="tablediv">
 
         <div class="contenttitle">
             <h4>Descriptions</h4>
         </div>
 
-        <form  action="{{ path('item_desc_edit') }}" method="post">
 
             <div class="tab-content">
                 <table style="margin-top: 20px"
@@ -49,7 +47,7 @@
 
                             <td >{{ itemdesc.id }}</td>
                             <td class="td-actions" >
-                                <input type="submit" value="Edit" onclick="$('#itemdescid').val('{{ itemdesc.id }}')"/>
+                                <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">Edit</a>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
                             <td>{{ include(template_from_string(itemdesc.descdesc)) }}</td>
@@ -59,8 +57,6 @@
                 </table>
 
             </div>
-            <input type="hidden" name="itemdescid" id="itemdescid" value=""/>
-        </form>
     </div>
 
 {% endblock %}

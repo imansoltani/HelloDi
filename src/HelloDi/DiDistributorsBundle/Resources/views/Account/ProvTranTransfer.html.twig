@@ -35,6 +35,23 @@
             </div>
         {% endfor %}
 
+        <div class="control-group">
+
+            {{ form_label(form.Description) }}
+
+            {{ form_widget(form.Description)  }}
+
+        </div>
+
+        <div class="control-group">
+
+            {{ form_label(form.Communications) }}
+
+            {{ form_widget(form.Communications)  }}
+
+        </div>
+
+
         <div class="form-actions" style="margin-bottom: 0" >
 
             <button class="btn btn-primary"
