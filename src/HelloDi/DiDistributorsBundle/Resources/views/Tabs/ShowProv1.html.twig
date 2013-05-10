@@ -55,6 +55,14 @@
         </a>
     </li>
 
+    <li {% if tab == '6' %}class="active"{% endif %} >
+        <a href="{{ path('MasterProvRemoved',{id:Account.id}) }}" >
+            <form>
+                <input type="submit" value="Removed"/>
+            </form>
+        </a>
+    </li>
+
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a>
             <form action="{{ path('EditAccountProv') }}" method="post">

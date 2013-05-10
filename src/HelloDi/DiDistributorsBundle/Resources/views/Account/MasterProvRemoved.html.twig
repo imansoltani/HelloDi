@@ -31,19 +31,26 @@
             <fieldset>
                 <div class="control-group">
                     {{ form_label(form.FromDate) }}
-                    <div class="controls">
+
                         {{ form_widget(form.FromDate) }}
-                    </div>
+
                 </div>
                 <div class="control-group">
                     {{ form_label(form.ToDate) }}
-                    <div class="controls">
+
                         {{ form_widget(form.ToDate) }}
-                    </div>
+
                 </div>
 
 
                 <input type="hidden" name="accountid" value="{{ Account.id }}">
+
+                <div class="control-group">
+                    {{ form_label(form.item) }}
+                    <div class="controls">
+                        {{ form_widget(form.item) }}
+                    </div>
+                </div>
 
                 {{ form_rest(form) }}
                 <hr>

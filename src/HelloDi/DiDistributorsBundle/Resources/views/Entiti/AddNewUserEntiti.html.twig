@@ -45,8 +45,14 @@
     </div>
 
     <div class="control-group">
-        {{ form_label(form.plainPassword) }}
-        {{ form_widget(form.plainPassword) }}<br>
+        {{ form_label(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first) }}
+        {#{{ form_widget(form.plainPassword) }}#}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second) }}
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
@@ -78,19 +84,7 @@
 
     <div class="form-actions" style="margin-bottom: 0" >
         <input type="submit" class="btn btn-primary btn-medium" value="Add">
-        <a class="btn" onclick="GoWhere(1)"  >Back</a>
-        <script type="text/javascript">
-            function GoWhere(x)
-            {
-                if(x == 1)
-                    $('form#usertab').submit();
-                /*else
-                {
-                    if(CheckData('.price input'))
-                        $('addprice').submit();
-                }*/
-            }
-        </script>
+        <input type="reset" class="btn btn-medium" value="Reset">
     </div>
 
 </form>
