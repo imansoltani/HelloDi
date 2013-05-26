@@ -11,9 +11,14 @@
 
 
 {% block Tab %}
+
+
+
     <div class="widget-header">
         <h3>Users</h3>
     </div> <!-- /widget-header -->
+    <br>
+    <a  class="button btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{'id':Account.Entiti.id}) }}">Add New User</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -40,12 +45,12 @@
 
             {{ form_rest(form_searchdistuser) }}
             <hr>
-            <input class="btn btn-large btn-primary" type="submit" value="Search">
-            <a class="btn btn-large" href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
+            <input class="btn  btn-primary" type="submit" value="Search">
+            <a class="btn " href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
 
         </form>
         {#{% set  route=app.request.get('_route')   %}#}
-        <a class="btn btn-info" href="{{ path('AddNewUserEntiti',{'id':Account.Entiti.id}) }}">Add New User</a>
+
         <script type="text/javascript">
             $(function () {
                 $(".SearchForm").hide();

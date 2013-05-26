@@ -1,112 +1,163 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Distributors Management
+    Entities Management
 {% endblock title %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}" xmlns="http://www.w3.org/1999/html">Home</a>
-    <span class="link">Distributors Management</span>
+    <span class="link">Entities Management</span>
 {% endblock Site_Map %}
 
 {% set MU = 'ent' %}
 
+{% block PageTitle %}
+    <i class="icon-book"></i>
+    Entities Management
+{% endblock %}
+
 {% block Body %}
-    <div class="span12">
+    <div class="span">
         <div class="widget stacked">
-            <div class="widget-header">
-                <i class="icon-book"></i>
-                <h3>All Entities</h3>
-            </div>
+
             <div class="widget-content">
-                <div class="tab-content">
-
-                    <div class="form_search" >
-                        <h5 style="cursor:pointer;" class="TitleShow1" >Filter Entity List</h5>
 
 
-                        <form action="{{ path('Ent_Main',{}) }}" method="post" >
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Entities</p>
+                        </span>
+                    </h5>
 
-                            {{ form_label(formsearch.entName) }}
-                            {{ form_widget(formsearch.entName) }}
-                            </br>
 
-                            {{ form_label(formsearch.HaveAccount) }}
-                            {{ form_widget(formsearch.HaveAccount) }}
-                            </br>
+                    <form class="form-horizontal SearchForm" action="{{ path('Ent_Main',{}) }}" method="post">
+                        <fieldset>
+                            <div class="control-group">
+                                {{ form_label(formsearch.entName) }}
+                                {{ form_widget(formsearch.entName) }}
+                            </div>
 
-                            {{ form_label(formsearch.Country) }}
-                            {{ form_widget(formsearch.Country) }}
-                            </br>
+                            <div class="control-group">
+                                {{ form_label(formsearch.HaveAccount) }}
+                                <div class="controls" >{{ form_widget(formsearch.HaveAccount) }}</div>
+                            </div>
 
-                            <input type="submit" value="Search">
-                        </form>
+                            <div class="control-group">
+                                {{ form_label(formsearch.Country) }}
+                                <div class="controls">{{ form_widget(formsearch.Country) }}</div>
+                            </div>
 
-                        <script type="text/javascript">
-                            $(function(){
-                                $(".SearchForm1").hide();
-                                $('.TitleShow1').click(function(){
-                                    $('.SearchForm1').slideToggle();
 
-                                });
+                            <hr>
+                            <input class="btn btn-primary" type="submit" value="Search">
+                        </fieldset>
+
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+                            $(".SearchForm").hide();
+                            $('.TitleShow1').click(function () {
+                                $('.SearchForm').slideToggle();
+                                $('#search_logo').removeAttr('class') ;
+
+                                if($('.title_search').html() == 'Search Entities')
+                                {
+                                    $('.title_search').html('Close Search') ;
+                                    $('#search_logo').attr('class','icon-remove') ;
+                                }
+                                else{
+                                    $('.title_search').html('Search Entities') ;
+                                    $('#search_logo').attr('class','icon-search') ;
+                                }
+
+                                var x = $('.form_search').offset().top - 20;
+                                $('body,html').animate({
+                                    scrollTop: x
+                                }, 800);
                             });
-                        </script>
+
+                        });
+                    </script>
+
+                </div>
+
+                <div class="tablediv" >
+                    <div class="contenttitle">
+                        <h4>Entities</h4>
                     </div>
+                    <form  action="{{ path('Ent_Accounts',{}) }}" method="post">
+                    <div class="tab-content">
 
-                    <form class="form-horizontal SearchForm" action="{{ path('Ent_Accounts',{}) }}" method="post" >
-                        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
-                            <thead>
-                            <tr>
-                                <th>{{'Entiti.Id' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.Manage' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.Name' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.Country' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.City' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.Distributors' | trans ({}, "entity")}}</th>
-                                <th>{{'Entiti.Provider' | trans ({}, "entity")}}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for entity in pagination %}
-                                {% set p,d=0,0  %}
+                            <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
                                 <tr>
-                                    <td style="font-weight: bold">{{ entity.id }}</td>
-
-                                    <td class="td-actions" >
-                       <input type="submit" value="Manage" onclick="$('.entityid').val('{{ entity.id}}');" />
-                                    </td>
-                                    <td>{{ entity.entName }}</td>
-                                    <td>
-
-                                            {{ entity.Country.iso }}
-
-                                    </td>
-                                    <td>
-                                        {{ entity.entCity }}</td>
-
-                                    <td>
-
-                                        {% for EA in entity.Accounts %}
-                                            {% if EA.accType==1 %}
-                                                {% set p=p+1 %}
-                                            {% else %}
-                                                {% set d=d+1 %}
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {{ p }}
-                                    </td>
-
-                                    <td>
-                                        {{ d }}
-                                    </td>
+                                    <th>{{ 'Entiti.Id' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.Manage' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.Name' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.Country' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.City' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.Distributors' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entiti.Provider' | trans ({}, "entity") }}</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="entityid" value="" class="entityid" />
+                                </thead>
+                                <tbody>
+                                {% for entity in pagination %}
+                                    {% set p,d=0,0 %}
+                                    <tr>
+                                        <td style="font-weight: bold">{{ entity.id }}</td>
+
+                                        <td class="td-actions">
+                                            {% if entity.parent==null %}
+                                                <input type="submit" value="Manage"
+                                                       onclick="$('.entityid').val('{{ entity.id }}');"/>
+                                            {% else %}
+                                                <input type="submit" value="Show"
+                                                       onclick="$('.entityid').val('{{ entity.id }}');"/>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ entity.entName }}</td>
+                                        <td>
+                                            {% if entity.Addresses.count!=0 %}
+                                                {#{{ entity.Addresses[0].Country.iso }}#}
+                                                {{ entity.Addresses[0].Country.iso }}
+                                            {% else %}
+                                                Null
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if entity.Addresses.count!=0 %}
+                                            {{ entity.Addresses[0].adrsCity }}</td>
+                                        {% else %}
+                                            Null
+                                        {% endif %}
+                                        <td>
+
+                                            {% for EA in entity.Accounts %}
+                                                {% if EA.accProv==1 %}
+                                                    {% set p=p+1 %}
+                                                {% else %}
+                                                    {% set d=d+1 %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {{ p }}
+                                        </td>
+
+                                        <td>
+                                            {{ d }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <input type="hidden" name="entityid" value="" class="entityid"/>
+
+                    </div>
                     </form>
                 </div>
+
 
             </div>
         </div>

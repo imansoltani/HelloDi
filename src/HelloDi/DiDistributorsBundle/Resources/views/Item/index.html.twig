@@ -12,8 +12,8 @@
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-book"></i>
-    Items
+    <i class="icon-tags"></i>
+    Items Management
 {% endblock %}
 
 {% block Body %}
@@ -23,7 +23,7 @@
         <!-- /widget-header -->
 
         <div class="widget-content">
-            <a class="button btn btn-warning btn-large" href="{{ path('item_new') }}">
+            <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
                 Create a new Item
             </a>
             <div class="form_search" >
@@ -65,7 +65,7 @@
 
 
                     <hr>
-                    <input class="btn btn-large btn-primary" type="submit" value="Search">
+                    <input class="btn  btn-primary" type="submit" value="Search">
                 </form>
                 <script type="text/javascript">
                     $(function () {
@@ -98,51 +98,51 @@
                 <div class="contenttitle">
                     <h4>Items</h4>
                 </div>
-                <div class="tab-content">
-                    <table style="margin-top: 20px" class="table postsend">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Manage</th>
-                        <th>Name</th>
-                        <th>Face Value (Currency)</th>
-                        <th>Code</th>
-                        <th>Type</th>
-                        <th>Min Stock</th>
-                        <th>Stock</th>
-                        <th>Operator</th>
-                        <th>Country</th>
+                <form action="{{ path('item_edit') }}" method="post"
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Manage</th>
+                                <th>Name</th>
+                                <th>Face Value (Currency)</th>
+                                <th>Code</th>
+                                <th>Type</th>
+                                <th>Min Stock</th>
+                                <th>Stock</th>
+                                <th>Operator</th>
+                                <th>Country</th>
 
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in pagination %}
-                        <tr>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in pagination %}
+                                <tr>
 
-                            <td >{{ item.id }}</td>
-                            <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('item_tabs', { 'id': item.id }) }}" class="btn btn-small btn-warning">
-                                    Manage
-                                </a>
-                            </td>
-                            <td>{{ item.itemName }}</td>
-                            <td>{{ item.itemFaceValue }} {% if item.itemCurrency==0  %}USD {% else %}CHF {% endif %}</td>
-                            <td>{{ item.itemCode }}</td>
-                            <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
-                            <td>{{ item.alertMinStock }}</td>
-                            <td>{{ item.Codes.count }}</td>
-                            <td>{{ item.operator }}</td>
-                            <td>{{ item.Country.iso }}</td>
+                                    <td >{{ item.id }}</td>
+                                    <td class="td-actions" >
+                                        <input type="submit" value="Manage" onclick="$('#itemid').val('{{ item.id }}')"/>
+                                    </td>
+                                    <td>{{ item.itemName }}</td>
+                                    <td>{{ item.itemFaceValue }} {% if item.itemCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                                    <td>{{ item.itemCode }}</td>
+                                    <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                                    <td>{{ item.alertMinStock }}</td>
+                                    <td>{{ item.Codes.count }}</td>
+                                    <td>{{ item.operator }}</td>
+                                    <td>{{ item.Country.iso }}</td>
 
 
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-            </div>
-
+                    </div>
+                <input type="hidden" name="itemid" id="itemid" value=""/>
+                </form>
             </div>
             <div class="navigation" style="text-align: center">
                 {{ knp_pagination_render(pagination) }}

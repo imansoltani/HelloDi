@@ -8,43 +8,78 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Code</span>
+    <a class="link" href="{{ path('code') }}">Code</a>
+    <span class="link">Code History</span>
 {% endblock Site_Map %}
 
+{% block PageTitle %}
+    <i class="icon-list-alt"></i>
+    Code History
+{% endblock %}
 
 {% block Body %}
 
-    <div class="span12">
+    <div class="span">
         <div class="widget stacked ">
-            <div class="widget-header">
-                <i class="icon-briefcase"></i>
 
-                <h3>Code list</h3>
-            </div>
+
             <div class="widget-content">
-                item: {{ code.item.itemName }} <br/>
-                type: {% if code.item.itemType==0 %} Mobile {% elseif code.item.itemType==1 %} Internet {% elseif code.item.itemType==2 %} Tel {% endif %}<br/>
-                serialNo: {{ code.serialNumber }} <br/>
-                status: {% if code.status==1 %} Active {% else %} Inactive {% endif %}<br/>
-                Production: {{ code.input.dateProduction|date('Y/m/d') }} <br/>
-                Expiry: {{ code.input.dateExpiry|date('Y/m/d') }} <br/>
 
-                    <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
-                        <thead>
-                        <tr>
-                            <th>Select</th>
-                            <th>Item Name</th>
-                            <th>serialNumber</th>
-                            <th>PinCode</th>
-                            <th>ExpiryDate</th>
-                            <th>Status</th>
-                            <th>Provider</th>
-                            <th>Manage</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {#{% for code in pagination %}#}
-                            {#<tr>#}
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4>Code Info</h4>
+                    </div>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table postsend">
+                            <thead>
+                            <tr>
+
+                                <th>item</th>
+                                <th>type</th>
+                                <th>serialNo</th>
+                                <th>status</th>
+                                <th>Production</th>
+                                <th>Expiry</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td style="font-weight: bold" >{{ code.item.itemName }}</td>
+                                <td style="font-weight: bold" >{% if code.item.itemType==0 %} Mobile {% elseif code.item.itemType==1 %} Internet {% elseif code.item.itemType==2 %} Tel {% endif %}</td>
+                                <td style="font-weight: bold" >{{ code.serialNumber }}</td>
+                                <td style="font-weight: bold" >{% if code.status==1 %} Active {% else %} Inactive {% endif %}</td>
+                                <td style="font-weight: bold" >{{ code.input.dateProduction|date('Y/m/d') }}</td>
+                                <td style="font-weight: bold" >{{ code.input.dateExpiry|date('Y/m/d') }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <hr>
+
+                    <div class="tablediv" >
+                        <div class="contenttitle">
+                            <h4>Code History</h4>
+                        </div>
+                        <div class="tab-content" >
+                            <table style="margin-top: 20px" class="table postsend">
+                                <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Item Name</th>
+                                    <th>serialNumber</th>
+                                    <th>PinCode</th>
+                                    <th>ExpiryDate</th>
+                                    <th>Status</th>
+                                    <th>Provider</th>
+                                    <th>Manage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {#{% for code in pagination %}#}
+                                {#<tr>#}
                                 {#<td><input type="checkbox"/></td>#}
                                 {#<td>{{ code.Item.itemName }}</td>#}
                                 {#<td>{{ code.serialNumber }}</td>#}
@@ -53,15 +88,18 @@
                                 {#<td>{{ code.status }}</td>#}
                                 {#<td>{{ code.Input.Account.accName }}</td>#}
                                 {#<td>#}
-                                    {#<a href="#" class="btn btn-warning">History</a>#}
+                                {#<a href="#" class="btn btn-warning">History</a>#}
                                 {#</td>#}
-                            {#</tr>#}
-                        {#{% endfor %}#}
-                        </tbody>
-                    </table>
-                    <div class="navigation" style="text-align: center">
-                        {#{{ knp_pagination_render(pagination) }}#}
+                                {#</tr>#}
+                                {#{% endfor %}#}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
+                <div class="navigation" style="text-align: center">
+                    {#{{ knp_pagination_render(pagination) }}#}
+                </div>
             </div>
         </div>
     </div>

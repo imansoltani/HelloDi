@@ -5,15 +5,11 @@
 {% endblock title %}
 
 
-{% set MU = 'prov' %}
+{% set MU = 'item' %}
 
 {% block PageTitle %}
-    <i class="icon-th-large"></i>
-    {{ Account.accName }}
-{% endblock %}
-
-{% block TitleDist %}
-    <i>Balance :</i><span>{{ Account.accBalance }}</span>
+    <i class="icon-tags"></i>
+    {{ entity.itemName }}
 {% endblock %}
 
 {% set hornav = '38px' %}
@@ -21,47 +17,41 @@
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="">
-            <form action="{{ path('ManageItemsProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Item"/>
+            <form action="{{ path('item_edit') }}" method="post">
+                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="submit" value="details"/>
             </form>
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a>
-            <form action="" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Transaction"/>
+            <form action="#" method="post">
+                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="submit" value="description"/>
             </form>
         </a>
     </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a>
-            <form action="" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Input"/>
+
+            <form action="#" method="post">
+                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="submit" value="logo"/>
             </form>
         </a>
     </li>
 
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a>
-            <form action="{{ path('EditAccountProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Info"/>
+            <form action="#" method="post">
+                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="submit" value="price setting"/>
             </form>
         </a>
     </li>
 
-<li {% if tab == '5' %}class="active"{% endif %} >
-    <a>
-        <form action="{{ path('ManageProvEntiti') }}" method="post">
-            <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-            <input type="submit" value="Entity"/>
-        </form>
-    </a>
-</li>
+
 {% endblock Tabs %}
 
 
@@ -70,11 +60,7 @@
         <div class="widget stacked">
 
             <div class="widget-content">
-                <!--<div class="HeadTitle" >
-                    <h1>{{ Account.accName }}</h1>
-                    <div><span>Balance:</span><i>11000000000000</i></div>
-                    <div><span>Entity Name:</span><i>{{ Account.Entiti.entName }}</i></div>
-                </div>-->
+
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="Info">

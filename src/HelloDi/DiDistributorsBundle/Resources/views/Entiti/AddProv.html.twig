@@ -1,20 +1,43 @@
-<html>
-<body>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
 
-<form action="{{ path('AddProv',{'id':id}) }}" method="post" >
+{% set tab = '1' %}
 
-    {{ form_errors(form.accName) }}
-    {{ form_widget(form.accName) }}
-    </br>
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
+    <a class="link" href="#">{{ entity.entName }}</a>
+    <span class="link">Accounts</span>
+{% endblock Site_Map %}
 
-    {{ form_errors(form.accCurrency) }}
-    {{ form_widget(form.accCurrency) }}
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Add Provider Accounts</h3>
+    </div> <!-- /widget-header --><br>
+
+<form id="addprovent" class="form-horizontal" action="{{ path('AddProv',{'id':id}) }}" method="post" >
+
+    <div class="control-group" >
+        {{ form_label(form.accName) }}
+        {{ form_widget(form.accName) }}
+        {{ form_errors(form.accName) }}
+    </div>
+
+
+    <div class="control-group">
+        {{ form_label(form.accCurrency) }}
+        <div class="controls">
+            {{ form_widget(form.accCurrency) }}
+        </div>
+        {{ form_errors(form.accCurrency) }}
+    </div>
 
     {{ form_rest(form) }}
 
     <input type="hidden" name='id' value="{{ id }}">
-    <input type="submit" value="Create">
-</form>
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Create">
 
-</body>
-</html>
+    </div>
+</form>
+{% endblock %}
+

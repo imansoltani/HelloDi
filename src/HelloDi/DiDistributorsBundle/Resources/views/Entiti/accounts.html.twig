@@ -4,74 +4,84 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Provider</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
     <a class="link" href="#">{{ entity.entName }}</a>
     <span class="link">Accounts</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
-    <a style="margin-bottom: 5px" class="button btn btn-warning btn-large" href="{{path('AddDist',{'id':entity.id})  }}">
+    <div class="widget-header">
+        <h3>Entity Accounts</h3>
+    </div> <!-- /widget-header --><br>
+
+    <a style="margin-bottom: 5px" class="btn btn-primary btn-large" href="{{path('AddDist',{'id':entity.id})  }}">
         {{'Account.New.Dist' | trans ({}, "account")}}
     </a>
 
-        <a style="margin-bottom: 5px" class="button btn btn-warning btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
+    {% if entity.Parent==null %}
+        <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
             {{'Account.New.Prov' | trans ({}, "account")}}
         </a>
+    {% endif %}
 
-
-    <div class="tab-content">
-        <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
-            <thead>
-            <tr>
-                <th>{{'Account.Id' | trans ({}, "account")}}</th>
-
-                <th>{{'Account.Name' | trans ({}, "account")}}</th>
-                <th>{{'Account.ChildNumber' | trans ({}, "account")}}</th>
-
-                <th>Type</th>
-
-                <th>{{'Account.Balance' | trans ({}, "account")}}</th>
-                <th>{{'Account.CreditLimit' | trans ({}, "account")}}</th>
-                <th>{{'Account.Manage' | trans ({}, "account")}}</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            {% for account in pagination %}
+    <div class="tablediv" >
+        <div class="contenttitle">
+            <h4>Accounts</h4>
+        </div>
+        <div class="tab-content">
+            <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
+                <thead>
                 <tr>
-                    <td style="font-weight: bold">{{ account.id }}</td>
+                    <th>{{'Account.Id' | trans ({}, "account")}}</th>
 
-                    <td style="font-weight: bold">{{ account.accName }}</td>
+                    <th>{{'Account.Name' | trans ({}, "account")}}</th>
+                    <th>{{'Account.ChildNumber' | trans ({}, "account")}}</th>
 
-                    <td style="font-weight: bold">{{ account.Childrens.count }}</td>
-                    <td>
-                        {% if account.accType == 1 %}Provider{% elseif account.accType == 0 %}Distributor{% endif %}
-                    </td>
+                    <th>Type</th>
 
-
-
-                    <td>{{ account.accBalance }}</td>
-                    <td>{{account.accCreditLimit}}</td>
-
-                    <td class="td-actions">
-
-                        {% if account.accType == 1 %}
-                            <a href="{#{{ path('ProvTransaction',{'id': account.id }) }}#}#">Show</a>
-
-
-                        {% elseif account.accType== 0 %}
-
-                            <a href="{#{{ path('DistTransaction',{'id': account.id }) }}#}">Show</a>
-
-
-                        {% endif %}
-                    </td>
-
+                    <th>{{'Account.Balance' | trans ({}, "account")}}</th>
+                    <th>{{'Account.CreditLimit' | trans ({}, "account")}}</th>
+                    <th>{{'Account.Manage' | trans ({}, "account")}}</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
 
+                </thead>
+                <tbody>
+                {% for account in pagination %}
+                    <tr>
+                        <td >{{ account.id }}</td>
+
+                        <td >{{ account.accName }}</td>
+
+                        <td >{{ account.Childrens.count }}</td>
+                        <td>
+                            {% if account.accProv == '1' %}Provider{% else %}Distributor{% endif %}
+                        </td>
+
+
+
+                        <td>{{ account.accBalance }}</td>
+                        <td>{{account.accCreditLimit}}</td>
+
+                        <td class="td-actions">
+
+                            {% if account.accProv == '1' %}
+                                {#<a href="{{ path('ProvTransaction',{'id': account.id }) }}">Show</a>#}
+                                <a class="btn_actions" href="#">Show</a>
+
+                            {% else %}
+
+                                {#<a href="{{ path('DistTransaction',{'id': account.id }) }}">Show</a>#}
+                                <a class="btn_actions" href="#">Show</a>
+
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
     </div>
 {% endblock %}

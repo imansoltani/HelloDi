@@ -10,10 +10,12 @@
 {% endblock Site_Map %}
 
 {% block Tab %}
-    <h1 class="TitleShow">Upload Input</h1>
+    <div class="widget-header">
+        <h3>Upload Input</h3>
+    </div>
 
-    <div class="tab-content">
-        <h2 class="StepTitle">Upload Submit</h2>
+
+
         Item Name: {{ input.item.itemName }} <br/>
         Face Value: {{ input.item.itemFaceValue }} <br/>
         Quantity: {{ count }} <br/>
@@ -27,5 +29,5 @@
             <input type="submit" value="Item"/>
         </form>
         <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
-    </div>
+
 {% endblock %}

@@ -12,27 +12,70 @@
 
 
 {% block Tab %}
-    <div class="span12">
-        <div class="widget stacked">
-            <div class="widget-header">
-                <i class="icon-book"></i>
 
-                <h3>Input list</h3>
-            </div>
-            <!-- /widget-header -->
+    <div class="widget-header">
+        <h3>Input List</h3>
 
-            <form method="post" action="{{ path('UploadInputProv') }}">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input class="button btn btn-large btn-warning" type="submit" value="Add new Item"/>
-            </form>
+    </div> <!-- /widget-header -->
+    <form method="post" action="{{ path('UploadInputProv') }}">
+        <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+        <input class="button btn btn-large btn-primary" type="submit" value="Upload Input File"/>
+    </form>
 
-            <div class="widget-content">
 
-                <form action="#" method="post">
-                    {{ form_widget(form) }}
-                    <input type="submit" value="Search">
-                </form>
-                <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight">
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i>
+                <p class="title_search">Search Input File</p>
+            </span>
+        </h5>
+        <form class="form-horizontal SearchForm" action="#" method="post">
+            <fieldset>
+            {{ form_widget(form) }}
+
+                <hr>
+                <input class="btn btn-large btn-primary" type="submit" value="Search">
+            </fieldset>
+        </form>
+        <script type="text/javascript">
+            $(function () {
+                $(".SearchForm").hide();
+                $('.TitleShow1').click(function () {
+                    $('.SearchForm').slideToggle();
+                    $('#search_logo').removeAttr('class') ;
+
+                    if($('.title_search').html() == 'Search Input File')
+                    {
+                        $('.title_search').html('Close Search') ;
+                        $('#search_logo').attr('class','icon-remove') ;
+                    }
+                    else{
+                        $('.title_search').html('Search Input File') ;
+                        $('#search_logo').attr('class','icon-search') ;
+                    }
+
+                    var x = $('.form_search').offset().top - 20;
+                    $('body,html').animate({
+                        scrollTop: x
+                    }, 800);
+                });
+
+            });
+        </script>
+    </div>
+
+
+
+
+
+    <div class="tablediv" >
+        <div class="contenttitle">
+            <h4>Input List</h4>
+        </div>
+        <form>
+            <div class="tab-content" >
+                <table style="margin-top: 20px" class="table postsend">
                     <thead>
                     <tr>
                         <th>Item</th>
@@ -53,14 +96,15 @@
                             <td>{{ input.dateExpiry|date('Y-m-d') }}</td>
                             <td>{{ input.Codes.count }}</td>
                             <td>{{ render(controller('HelloDiDiDistributorsBundle:Account:CalcPrice', { 'account': Account , 'item': input.Item , 'count' : input.Codes.count })) }}</td>
-                            <td>
-                                <a href="#" class="btn btn-warning">Show</a>
+                            <td class="td-actions" >
+                                <a href="#" class="btn_actions" >Show</a>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </form>
     </div>
+
 {% endblock %}

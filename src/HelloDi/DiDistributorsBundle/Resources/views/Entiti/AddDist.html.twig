@@ -1,35 +1,65 @@
-<html>
-<body>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
 
-<form action="{{ path('AddDist',{'id':id}) }}" method="post" >
+{% set tab = '1' %}
 
-    {{ form_errors(form.accName) }}
-    Name:{{ form_widget(form.accName) }}
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
+    <a class="link" href="#">{{ entity.entName }}</a>
+    <span class="link">Accounts</span>
+{% endblock Site_Map %}
 
-    </br>
+{% block Tab %}
+<div class="widget-header">
+    <h3>Add Distributor Accounts</h3>
+</div> <!-- /widget-header --><br>
 
-    {{ form_errors(form.accCurrency) }}
-    Currency :   {{ form_widget(form.accCurrency) }}
+<form class="form-horizontal" action="{{ path('AddDist',{'id':id}) }}" method="post" >
 
-    </br>
-    {{ form_errors(form.accTerms) }}
-    Payment condition :   {{ form_widget(form.accTerms) }}
+    <div class="control-group">
+        {{ form_label(form.accName) }}
+        {{ form_widget(form.accName) }}
+        {{ form_errors(form.accName) }}
+    </div>
 
-    </br>
+    <div class="control-group">
+        {{ form_label(form.accCurrency) }}
+        <div class="controls" >
+            {{ form_widget(form.accCurrency) }}
+        </div>
+        {{ form_errors(form.accCurrency) }}
+    </div>
 
-    {{ form_errors(form.accTimeZone) }}
-    TimeZone:{{ form_widget(form.accTimeZone) }}
+    <div class="control-group">
+        {{ form_label(form.accTerms) }}
+        {{ form_widget(form.accTerms) }}
+        {{ form_errors(form.accTerms) }}
+    </div>
 
-    </br>
+    <div class="control-group">
+        {{ form_label(form.accTimeZone) }}
+        <div class="controls" >
+            {{ form_widget(form.accTimeZone) }}
+        </div>
+        {{ form_errors(form.accTimeZone) }}
+    </div>
 
-    {{ form_errors(form.accType) }}
-    Sub-Account :{{ form_widget(form.accType,{'attr':{'disabled':''}})}}
+    <div class="control-group">
+        {{ form_label(form.accType) }}
+        <div class="controls" >
+            {{ form_widget(form.accType,{'attr':{'disabled':''}})}}
+        </div>
+        {{ form_errors(form.accType) }}
+    </div>
 
-    {{ form_widget(form._token) }}
+
+
+
 
     <input type="hidden" name='id' value="{{ id }}">
-    <input type="submit" value="Create">
-</form>
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Create">
 
-</body>
-</html>
+    </div>
+</form>
+{% endblock %}

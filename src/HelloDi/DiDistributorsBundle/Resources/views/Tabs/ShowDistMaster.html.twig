@@ -64,7 +64,7 @@
     </li>
     <li {% if tab == '6' %}class="active"{% endif %} >
         <a>
-            <form action="{{ path('ManageItemsDist') }}" method="post">
+            <form id="Item" action="{{ path('ManageItemsDist') }}" method="post">
                 <input type="hidden" name="id" value="{{ Account.id }}">
                 <input type="submit" value="Items">
             </form>

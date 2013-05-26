@@ -1,3 +1,5 @@
+
+
 /* Tab
         -------------------------------------------------------- */
 .tab-content{
@@ -267,6 +269,11 @@ form input[type="text"]
 
 }
 
+form div.haveerror input[type="text"]
+{
+    border: solid thin #FF0000;
+}
+
 body .form-horizontal .control-group {
     margin-bottom: 10px;
 }
@@ -311,7 +318,7 @@ form .control-group .controls > .controls{
 .main .pagetop .hornav li input[type="submit"]{
     display: block;
     padding: 10px 20px;
-    background: none repeat scroll 0% 0% #8fd0fa;
+    background: none repeat scroll 0% 0% rgb(103, 191, 248);
     color: rgb(255, 255, 255);
     text-transform: uppercase;
     font-size: 14px;
@@ -328,7 +335,7 @@ form .control-group .controls > .controls{
 }
 
 .main .pagetop .hornav li input[type="submit"]:hover{
-    background: none repeat scroll 0% 0% #5ec0ff;
+    background: none repeat scroll 0% 0% #196393;
     border-color: #5ec0ff;
 }
 
@@ -340,4 +347,9 @@ form .control-group .controls > .controls{
     background: none repeat scroll 0% 0% rgb(255, 255, 255);
     color:#fb9337;
     font-weight: bold;
+}
+
+.main .control-group ul li{
+    color: #FF0000;
+    font-size: 14px;
 }
