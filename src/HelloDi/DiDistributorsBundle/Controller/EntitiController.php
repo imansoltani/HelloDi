@@ -39,20 +39,23 @@ class EntitiController extends Controller
             $qb->select('Ent')
                 ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
                 ->innerJoin('Ent.Accounts', 'EntAcc')
-                ->innerJoin('Ent.Addresses', 'EntAdd')
-                ->innerJoin('EntAdd.Country', 'EntAddCou');
-
+                ->innerJoin('Ent.Country', 'EntCoun');
             if ($data['Country']->getName()!= 'All')
             {
-                $qb->where('EntAdd.Country=:Country');
-                $qb->setParameter('Country',$data['Country']);
+
+                $qb->where('EntCoun.iso=:iso');
+                $qb->setParameter('iso',$data['Country']->getIso());
             }
             if ($data['HaveAccount'] != 2)
-                $qb->where($qb->expr()->eq('EntAcc.accProv', $data['HaveAccount']));
-
+                $qb->andwhere($qb->expr()->eq('EntAcc.accType', $data['HaveAccount']));
+            if ($data['HaveAccount'] == 2)
+            {
+                $qb->andwhere($qb->expr()->neq('EntAcc.accType',2));
+            }
             if ($data['entName'] != '')
+            {
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
-
+            }
 
 
             $query = $qb->getQuery();
@@ -102,18 +105,15 @@ class EntitiController extends Controller
         $paginator = $this->get('knp_paginator');
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('A')
-            ->from('HelloDiDiDistributorsBundle:Account', 'A')
-
-            ->innerJoin('A.Userprivileges', 'AP')
-            ->innerJoin('AP.User', 'APS')
-            ->orderBy('APS.name', 'ASC')
-            ->where('A.Entiti=:entity')->setParameter('entity', $entity);
+        $qb = $em->createQueryBuilder($entity);
+        $qb->select('Usr')
+            ->from('HelloDiDiDistributorsBundle:User', 'Usr')
+            ->innerJoin('Usr.Account','UsrAcc')
+            ->orderBy('Usr.firstName', 'ASC');
         $query = $qb->getQuery();
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
-
+//        $count = count($query->getResult());
+//        $query = $query->setHint('knp_paginator.count', $count);
+//die('sdds'.$count);
 
         $pagination = $paginator->paginate(
             $query,
