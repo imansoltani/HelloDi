@@ -1,0 +1,10 @@
+Input:
+    Id: ID
+    FileName: File Name
+    DateInsert: Date Insert
+    Batch: Batch
+    DateProduction: Date Production
+    DateExpiry: Date Expiry
+    Item: Item
+    Account: Account
+    User: User

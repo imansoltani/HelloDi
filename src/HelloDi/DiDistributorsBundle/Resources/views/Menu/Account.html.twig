@@ -1,0 +1,40 @@
+{# {% include "HelloDiDiDistributorsBundle:Menu:Account.html.twig" with
+{ 'Name' : '3' , 'privilage' : '' , 'balance' : '' , 'credit' : '' } only %} #}
+
+<div class="account_info_open">Account Info</div>
+<div class="account_info">
+                <span class="container">
+                    <div>{% name %}</div>
+                    <div><i>Privilage : </i><span>{% privilage %}</span></div>
+                    <div><i>Balacne : </i><span>{% balacne %}</span></div>
+                    <div><i>Credit : </i><span>{% credit %}</span></div>
+                </span>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.account_info_open').click(function () {
+            $('.account_info').slideToggle();
+        });
+    });
+    var accountinfohide = 1;
+    if ($(window).width() > 747) accountinfohide = 0;
+    $(window).resize(function () {
+        var x = $(window).width();
+
+        if (x > 747) {
+            if (accountinfohide == 1) {
+                $('.account_info_open').hide();
+                $('.account_info').show();
+                accountinfohide = 0;
+            }
+        }
+        else {
+            if (accountinfohide == 0) {
+                $('.account_info_open').show();
+                $('.account_info').hide();
+                accountinfohide = 1;
+            }
+        }
+    });
+</script>

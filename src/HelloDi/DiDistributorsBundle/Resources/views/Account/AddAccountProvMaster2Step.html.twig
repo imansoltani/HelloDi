@@ -1,0 +1,84 @@
+<form action="{{ path('AddAccountProveMaster2Step') }}" method="post">
+    <b>New Entiti</b><hr>
+
+    {#{% for form_errors in e %}#}
+     {#{{ e.message}}#}
+     {#{% endfor %}#}
+
+    {{ form_label(form2step.entName) }}
+    {{ form_widget(form2step.entName) }}
+    {{ form_errors(form2step.entName) }} <br/><br/>
+
+    {{ form_label(form2step.entVatNumber) }}
+    {{ form_widget(form2step.entVatNumber) }}
+    {{ form_errors(form2step.entVatNumber) }}<br/><br/>
+
+    {{ form_label(form2step.entTel1) }}
+    {{ form_widget(form2step.entTel1) }}
+    {{ form_errors(form2step.entTel1) }}<br/><br/>
+
+
+    {{ form_label(form2step.entTel2) }}
+    {{ form_widget(form2step.entTel2) }}
+    {{ form_errors(form2step.entTel2) }}<br/><br/>
+
+
+
+    {{ form_label(form2step.entFax) }}
+    {{ form_widget(form2step.entFax) }}
+    {{ form_errors(form2step.entFax) }}<br/><br/>
+
+
+    {{ form_label(form2step.entWebsite) }}
+    {{ form_widget(form2step.entWebsite) }}
+    {{ form_errors(form2step.entWebsite) }}<br/><br/>
+
+
+    {{ form_label(form2step.entRegistrationNumber) }}
+    {{ form_widget(form2step.entRegistrationNumber) }}
+    {{ form_errors(form2step.entRegistrationNumber) }}<br/><br/>
+<b>New Account</b><hr>
+    {{ form_label(form2step.Accounts[0].accName) }}
+    {{ form_widget(form2step.Accounts[0].accName) }}
+    {{ form_errors(form2step.Accounts[0].accName) }}<br/><br/>
+
+    {{ form_label(form2step.Accounts[0].accCurrency) }}
+    {{ form_widget(form2step.Accounts[0].accCurrency) }}
+    {{ form_errors(form2step.Accounts[0].accCurrency) }}<br/><br/>
+    <b>New Address</b><hr>
+
+    {{ form_label(form2step.Addresses[0].adrsNp) }}
+    {{ form_widget(form2step.Addresses[0].adrsNp) }}
+    {{ form_errors(form2step.Addresses[0].adrsNp) }}<br/><br/>
+
+    {{ form_label(form2step.Addresses[0].Country) }}
+    {{ form_widget(form2step.Addresses[0].Country) }}
+    {{ form_errors(form2step.Addresses[0].Country) }}<br/><br/>
+
+    {{ form_label(form2step.Addresses[0].adrsCity) }}
+    {{ form_widget(form2step.Addresses[0].adrsCity) }}
+    {{ form_errors(form2step.Addresses[0].adrsCity) }}<br/><br/>
+
+    {{ form_label(form2step.Addresses[0].adrsType) }}
+    {{ form_widget(form2step.Addresses[0].adrsType) }}
+    {{ form_errors(form2step.Addresses[0].adrsType) }}<br/><br/>
+
+
+    {{ form_label(form2step.Addresses[0].adrs1) }}
+    {{ form_widget(form2step.Addresses[0].adrs1) }}
+    {{ form_errors(form2step.Addresses[0].adrs1) }}<br/><br/>
+
+    {{ form_label(form2step.Addresses[0].adrs2) }}
+    {{ form_widget(form2step.Addresses[0].adrs2) }}
+    {{ form_errors(form2step.Addresses[0].adrs2) }}<br/><br/>
+
+    {{ form_label(form2step.Addresses[0].adrs3) }}
+    {{ form_widget(form2step.Addresses[0].adrs3) }}
+    {{ form_errors(form2step.Addresses[0].adrs3) }}
+
+
+    {{form_widget(form2step._token)}}
+
+    <input type="submit" value="create">
+</form>
+

@@ -1,0 +1,43 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                default_target_path: loginsuccess
+            logout:       true
+            anonymous:    true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: ROLE_USER }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/Main$, role: ROLE_USER }
+        - { path: ^/providers/, role: ROLE_MASTER }
+        - { path: ^/distributors/, role: ROLE_USER }
+        - { path: ^/entities/, role: ROLE_USER }
+        - { path: ^/items/, role: ROLE_USER }
+        - { path: ^/app/m, roles: ROLE_MASTER, requires_channel: https }
+        - { path: ^/app/m/admin, roles: ROLE_MASTER_ADMIN, requires_channel: https }
+        - { path: ^/app/d, roles: ROLE_DISTRIBUTOR, requires_channel: https }
+        - { path: ^/app/d/admin, roles: ROLE_DISTRIBUTOR_ADMIN, requires_channel: https }
+        - { path: ^/app/r, roles: ROLE_RITAILER, requires_channel: https }
+        - { path: ^/app/r/admin, roles: ROLE_RITAILER_ADMIN, requires_channel: https }
+
+    role_hierarchy:
+        ROLE_MASTER: ROLE_USER
+        ROLE_RETAILER_ADMIN: ROLE_RETAILER
+        ROLE_DISTRIBUTOR_ADMIN: ROLE_DISTRIBUTOR
+        ROLE_MASTER_ADMIN: ROLE_MASTER

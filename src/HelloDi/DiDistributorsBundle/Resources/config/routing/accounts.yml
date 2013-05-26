@@ -1,0 +1,151 @@
+ShowMyAccount:
+    pattern:  /providers
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccount" }
+
+ManageProv:
+    pattern:  /providers/Manageprov/{id}/
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageProv" }
+
+EditAccountProv:
+    pattern:  /providers/Manageprov
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditAccountProv" }
+
+EditAccountProvSubmit:
+    pattern:  /providers/Manageprovsubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditAccountProvSubmit" }
+
+ManageProvEntiti:
+    pattern:  /providers/ManageProvEntiti
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageProvEntiti" }
+
+AddAccountProvMaster:
+    pattern:  /providers/Add/AccountProv
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMaster" }
+
+AddAccountProvMasterOk:
+    pattern:  /providers/Master/AccountProv/Ok/{id}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk" }
+
+AddAccountProveMaster2Step:
+    pattern:  /Providers/New
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProveMaster2Step" }
+
+ChangeAdminProvAccountOk:
+    pattern:  /providers/{iduser}/{idacc}/Change/UserPrivilegeProvOk
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ChangeAdminProvAccountOk" }
+
+#-------------------
+
+ShowMyAccountDist:
+    pattern:  /distributors/
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccountDist" }
+
+AddAccountDistMaster:
+    pattern:  /distributors/Master-Add/AccountDist
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountDistMaster" }
+
+ManageDist:
+    pattern:  /distributors/ManageDist/{id}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDist" }
+
+ManageDistInfo:
+    pattern:  /distributors/ManageDistInfo
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfo" }
+
+ManageDistInfoEdit:
+    pattern:  /distributors/ManageDistInfo/Edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfoEdit" }
+
+ManageDistTransaction:
+    pattern:  /distributors/ManageDistTransaction
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
+
+ManageDistChildren:
+    pattern:  /distributors/ManageDistChildren/
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
+DistChildrenCreate:
+    pattern:  /distributors/ManageDistChildren/
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
+ManageDistUser:
+    pattern:  /distributors/ManageDistUser/
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUser" }
+ManageDistUserSearch:
+    pattern:  /distributors/Search/ManageDistUser/{id}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUserSearch" }
+DistUserPrivilege:
+    pattern:  /Account/{idacc}/User/{iduser}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserPrivilege" }
+ManageDistUserSearchReset:
+    pattern:  /reset/{id}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUserSearchReset" }
+AccountDistChildrenSearch:
+    pattern:  /distributors/{id}/SearchDistChildren
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AccountDistChildrenSearch"}
+ManageDistSettings:
+    pattern:  /distributors/{id}/Settings
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettings"}
+ManageDistSettingsSubmit:
+    pattern:  /distributors/{id}/Edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettingsSubmit"}
+#---- items prov
+ManageItemsProv:
+    pattern:  /providers/Items
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsProv" }
+
+AddItemProv:
+    pattern:  /providers/Items/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProv" }
+
+AddItemProvSubmit:
+    pattern:  /providers/Items/addSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProvSubmit" }
+
+EditItemProv:
+    pattern:  /providers/Items/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProv" }
+
+EditItemProvSubmit:
+    pattern:  /providers/Items/editSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProvSubmit" }
+
+#---- items dist
+ManageItemsDist:
+    pattern:  /distributors/Items
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsDist" }
+
+AddItemDist:
+    pattern:  /distributors/Items/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDist" }
+
+AddItemDistSubmit:
+    pattern:  /distributors/Items/addSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDistSubmit" }
+
+EditItemDist:
+    pattern:  /distributors/Items/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDist" }
+
+EditItemDistSubmit:
+    pattern:  /distributors/Items/editSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDistSubmit" }
+
+#---- inputs prov
+ManageInputsProv:
+    pattern:  /providers/Inputs
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageInputsProv" }
+
+UploadInputProv:
+    pattern:  /providers/Inputs/Upload
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProv" }
+
+UploadInputProvSubmit:
+    pattern:  /providers/Inputs/UploadSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit" }
+
+UploadInputProvSubmitAccepted:
+    pattern:  /providers/Inputs/UploadSubmitAccepted
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitAccepted" }
+
+UploadInputProvSubmitCanceled:
+    pattern:  /providers/Inputs/UploadSubmitCanceled
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }

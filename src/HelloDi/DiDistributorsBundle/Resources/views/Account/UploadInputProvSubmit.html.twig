@@ -1,0 +1,31 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Items</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <h1 class="TitleShow">Upload Input</h1>
+
+    <div class="tab-content">
+        <h2 class="StepTitle">Upload Submit</h2>
+        Item Name: {{ input.item.itemName }} <br/>
+        Face Value: {{ input.item.itemFaceValue }} <br/>
+        Quantity: {{ count }} <br/>
+        Batch: {{ input.batch }} <br/>
+        Production: {{ input.dateProduction|date('Y/m/d') }} <br/>
+        Expiry: {{ input.dateExpiry|date('Y/m/d') }} <br/>
+        File Name: {{ input.name }} <br/>
+
+        <form action="{{ path('UploadInputProvSubmitAccepted') }}" method="post">
+            <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+            <input type="submit" value="Item"/>
+        </form>
+        <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
+    </div>
+{% endblock %}

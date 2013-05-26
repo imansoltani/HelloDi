@@ -1,0 +1,180 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>
+{% block title %}
+طرح اصلی سایت
+{% endblock %}
+
+    </title>
+
+
+{% block link %}
+    <link  href="{{ asset('bundles/hellodi/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link  href="{{ asset('bundles/hellodi/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{asset('bundles/hellodi/css/myfont.css')  }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+    <style>
+        {% block style %}
+        a{
+            text-decoration:none ;
+        }
+        .myfont{
+
+            font-family:byekan;
+        }
+        .border{
+            border-bottom:2px solid #3b3b3b ;
+
+        }
+        {% endblock %}
+    </style>
+
+
+</head>
+
+<body style=background-image:url("{{asset('bundles/hellodi/img/bg3.png')  }}")  >
+{% block header %}
+     <div class="navbar navbar-inverse navbar-fixed-top myfont border">
+         <div class="navbar-inner">
+             <div class="container pull-right">
+                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                 </button>
+                 <a  id="titleavarez" data-toggle="tooltip" data-placement="bottom" title="  محل قرارگیری نام سایت" class="brand" href="#" style="float: right;color: yellow"> محل قرارگیری نام سایت   </a>
+
+             </div>
+             <a   href="#" data-toggle="tooltip" data-placement="bottom" title=" خروج از سیستم   "><i  class="icon-off" style="margin:8px;background-color:#fff;border-radius: 10px;"></i></a><span style="color: #fff">|</span>
+             &nbsp;  <span style="padding-top: 7px ;color:#ffffff " > نام کاربر</span>&nbsp;<a href='#' data-toggle="tooltip"  data-placement="bottom" title="نام کاربر ">  <i  class="icon-user" style="margin:8px;background-color:#fff;border-radius: 10px"></i></a>
+         </div>
+     </div>
+
+{%  endblock %}
+
+<div class="navbar navbar-inverse" style="position: static;margin-top:3.32%;border-top:1px solid yellow ">
+    {% block topmenu %}
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Title</a>
+            <div class="nav-collapse collapse navbar-inverse-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-search pull-left" action="">
+                    <input type="text" class="search-query span2" placeholder="Search">
+                </form>
+                <ul class="nav pull-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="divider-vertical"></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div><!-- /navbar-inner -->
+   {% endblock %}
+{% block aler %}
+    <div class="alert alert-success" style="height:5% ;border:2px solid #000; margin-top:3px  ">
+        <i class="pull-right">
+            محل قرارگیری اعلان ها
+        </i>
+    </div>
+    {% endblock %}
+</div><!-- /navbar -->
+
+
+</div>
+
+{%  block pishkhan %}
+
+{% endblock %}
+
+<div class="container">
+{% block container %}
+
+
+
+
+
+
+    <div class="hero-unit" style="border:1px solid #000;  ;background: #c4c4c4;border: 2px solid #000 ">
+
+
+
+
+    </div>
+
+    {% endblock %}
+    </div>
+
+
+<script src="{{asset('bundles/hellodi/js/jquery.js')  }}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-transition.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-alert.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-modal.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-dropdown.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-scrollspy.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-tab.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-tooltip.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-popover.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-button.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-collapse.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-carousel.js')}}"></script>
+<script src="{{asset('bundles/hellodi/js/bootstrap-typeahead.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/hellodi/js-persian-cal.min.js')}}"></script>
+<script type="text/javascript" >
+{% block javascript %}
+
+$(document).ready(function(){
+
+    $('a').tooltip('hide');
+
+    $('#titleavarez').mouseover(function(){
+        $(this).css('color','#fff');
+    });
+
+    $('#titleavarez').mouseout(function(){
+        $(this).css('color','yellow');
+
+
+    });
+    $('a').tooltip('hide');
+
+
+})
+
+
+{% endblock %}
+</script>
+
+</body>
+</html>

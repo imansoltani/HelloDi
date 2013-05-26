@@ -1,0 +1,98 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Manage Distributor
+{% endblock title %}
+
+{% set MU = 'dist' %}
+
+{% block PageTitle %}
+    <i class="icon-briefcase"></i>
+    {{ Account.accName }}
+{% endblock %}
+
+{% block TitleDist %}
+    <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+    <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span><br>
+{% endblock %}
+
+{% set hornav = '38px' %}
+{% block Tabs %}
+    <li {% if tab == '1' %}class="active"{% endif %}  >
+        <a href=""  >
+            <form action="{{ path('ManageDistInfo') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}"/>
+                <input type="submit" value="Info"/>
+            </form>
+        </a>
+    </li>
+    <li {% if tab == '2' %}class="active"{% endif %} >
+        <a>
+            <form action="{{path('ManageDistChildren') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}"/>
+                <input type="submit" value="Children"/>
+            </form>
+        </a>
+    </li>
+
+    <li {% if tab == '3' %}class="active"{% endif %} >
+        <a>
+            <form action="" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}"/>
+                <input type="submit" value="Transaction"/>
+            </form>
+        </a>
+    </li>
+
+    <li {% if tab == '4' %}class="active"{% endif %} >
+        <a>
+            <form action="{{ path('ManageDistUser') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}">
+                <input type="submit" value="Users">
+            </form>
+
+        </a>
+    </li>
+    <li {% if tab == '5' %}class="active"{% endif %} >
+        <a>
+            <form action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}">
+                <input type="submit" value="Settings">
+            </form>
+
+        </a>
+    </li>
+    <li {% if tab == '6' %}class="active"{% endif %} >
+        <a>
+            <form action="{{ path('ManageItemsDist') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}">
+                <input type="submit" value="Items">
+            </form>
+
+        </a>
+    </li>
+{% endblock Tabs %}
+
+{% block Body %}
+<div class="span">
+    <div class="widget stacked">
+
+
+
+        <div class="widget-content">
+            <!--<div class="HeadTitle" >
+                    <h1>{{ Account.accName }}</h1>
+                    <div><span>Balance:</span><i>11000000000000</i></div>
+                    <div><span>Entity Name:</span><i>{{ Account.Entiti.entName }}</i></div>
+                </div>-->
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="Info">
+                    {% block Tab %}
+                    {% endblock Tab %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

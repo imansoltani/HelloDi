@@ -1,0 +1,89 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Entity</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+
+
+    <div class="tablediv">
+        <div class="contenttitle">
+            <h4>Entity Info</h4>
+        </div>
+        <div class="tab-content">
+            <table style="margin-top: 20px" class="table postsend">
+                <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Tel1</th>
+                    <th>Tel2</th>
+                    <th>Fax</th>
+                    <th>Website</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>{{ entiti.entName }}</td>
+                    <td>{{ entiti.entTel1 }}</td>
+                    <td>{{ entiti.entTel2 }}</td>
+                    <td>{{ entiti.entFax }}</td>
+                    <td>{{ entiti.entWebsite }}</td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="tablediv">
+    <div class="contenttitle">
+        <h4>Entity Address</h4>
+    </div>
+    <div class="tab-content">
+        <table style="margin-top: 20px" class="table postsend">
+            <thead>
+            <tr>
+
+                <th>Np&nbsp;&nbsp;</th>
+                <th>City&nbsp;&nbsp;</th>
+                <th>Country&nbsp;&nbsp;</th>
+                <th>adrs1&nbsp;&nbsp;</th>
+                <th>adrs2&nbsp;&nbsp;</th>
+                <th>adrs3&nbsp;&nbsp;</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for adrs in entiti.Addresses %}
+                {% if adrs.adrsEnd=='' %}
+                    <tr>
+
+                        <td>&nbsp;&nbsp;{{ adrs.adrsNp }}</td>
+                        <td>&nbsp;&nbsp;{{ adrs.adrsCity }}</td>
+                        <td>&nbsp;&nbsp;{{ adrs.Country.name }}</td>
+                        <td>&nbsp;&nbsp;{{ adrs.adrs1 }}</td>
+                        <td>&nbsp;&nbsp;{{ adrs.adrs2 }}</td>
+                        <td>&nbsp;&nbsp;{{ adrs.adrs3 }}</td>
+
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+            </tbody>
+
+
+        </table>
+    </div>
+    </div>
+{% endblock Tab %}

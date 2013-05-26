@@ -1,0 +1,40 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Setting</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+
+
+
+<form style="margin-top: 20px"  class="form-horizontal"  action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
+    <div class="control-group">
+                {{ form_label(form_edit.accStatus) }}
+                {{ form_widget(form_edit.accStatus) }}
+        </div>
+
+    <div class="control-group">
+                {{ form_label(form_edit.accTerms) }}
+                {{ form_widget(form_edit.accTerms) }}
+    </div>
+            {{ form_widget(form_edit._token) }}
+
+            <input class="btn btn-large" type="submit" value="Edit">
+
+    </form>
+    Name : {{ Account.accName }}</br>
+    Id : {{ Account.id }}</br>
+    Type : Distributors</br>
+    Creaditlimit : {{ Account.accCreditLimit }}</br>
+    TimeZone : {{ Account.accTimeZone }}</br>
+    Account Name : {{ Account.accName }}</br>
+
+
+{% endblock %}

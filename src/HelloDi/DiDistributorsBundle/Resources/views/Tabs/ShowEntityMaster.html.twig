@@ -1,0 +1,72 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Manage Entity
+{% endblock title %}
+
+
+
+{% set MU = 'ent' %}
+
+{% block Body %}
+    <div class="span12">
+        <div class="widget stacked">
+            <div class="widget-header">
+                <i class="icon-book"></i>
+
+                <h3>Manage Entity</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div class="HeadTitle" >
+                    <h1>{{ entity.entName }}</h1>
+                </div>
+                <div class="tabtable" >
+                    <ul class="nav nav-tabs" >
+                        <li {% if tab == '1' %}class="active"{% endif %}  >
+                            <a href=""  >
+                                <form action="{{ path('Ent_Accounts') }}" method="post">
+                                    <input type="hidden" name="entityid" value="{{ entity.id }}"/>
+                                    <input type="submit" value="Accounts"/>
+                                </form>
+                            </a>
+                        </li>
+                        <li {% if tab == '2' %}class="active"{% endif %} >
+                            <a>
+                                <form action="{{ path('Ent_Users') }}" method="post">
+                                    <input type="hidden" name="entityid" value="{{ entity.id }}"/>
+                                    <input type="submit" value="Users"/>
+                                </form>
+                            </a>
+                        </li>
+
+                        <li {% if tab == '4' %}class="active"{% endif %} >
+                            <a>
+                                <form action="{{ path('Ent_Info') }}" method="post">
+                                    <input type="hidden" name="entityid" value="{{ entity.id }}"/>
+                                    <input type="submit" value="Info"/>
+                                </form>
+                            </a>
+                        </li>
+
+                        <li {% if tab == '5' %}class="active"{% endif %} >
+                            <a>
+                                <form action="{{ path('Ent_Addresses') }}" method="post">
+                                    <input type="hidden" name="entityid" value="{{ entity.id }}"/>
+                                    <input type="submit" value="Address"/>
+                                </form>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="Info">
+                        {% block Tab %}
+                        {% endblock Tab %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock Body %}

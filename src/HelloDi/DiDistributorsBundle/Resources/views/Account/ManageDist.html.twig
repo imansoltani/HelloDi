@@ -1,0 +1,36 @@
+
+<form action="{{ path('ManageDistInfo') }}" method="post">
+<input type="hidden" name="id" value="{{ id }}">
+<input type="submit" value="Info">
+</form>
+<hr>
+
+<form action="{{path('ManageDistChildren') }}" method="post">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="submit" value="Children">
+</form>
+<hr>
+
+
+<form action="{{path('ManageDistUser') }}" method="post">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="submit" value="Users">
+</form>
+
+
+<form action="{{path('ManageDistSettings') }}" method="post">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="submit" value="Settings">
+</form>
+
+
+<form action="#" method="post">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="submit" value="Transaction">
+</form>
+
+{#<form action=" {{path('ManageDistTransaction') }}" method="post">#}
+    {#<input type="hidden" name="id" value="{{ id }}">#}
+    {#<input type="submit" value="Transaction">#}
+{#</form>#}
+

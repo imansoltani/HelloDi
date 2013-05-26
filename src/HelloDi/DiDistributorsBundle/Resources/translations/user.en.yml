@@ -1,0 +1,14 @@
+User:
+    Id: ID
+    Name: Name
+    Mobile: Mobile
+    Locale: Locale
+
+    Add: Create a new User
+    Modify: Modify
+    PrivilegeNumber: PrivilegeNumber
+
+Languages:
+    English: English
+    Persian: Persian
+    French: French

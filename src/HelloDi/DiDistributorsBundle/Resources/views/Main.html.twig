@@ -1,0 +1,231 @@
+{# {% extends 'HelloDiDiDistributorsBundle::Main.html.twig' %} #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>
+        Hello Di .
+        {% block title %}
+
+        {% endblock %}
+    </title>
+
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+
+    <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Main.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Form.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('bundles/hellodi/css/ui-lightness/jquery-ui-1.10.0.custom.min.css') }}" rel="stylesheet">
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+
+    {% block Link_Head %}
+
+    {% endblock %}
+
+</head>
+<body>
+<!-- Nav Bar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+    <div class="navbar-inner">
+
+        <div class="container">
+
+
+            <a class="brand" id="brand" href="{{ path('layout') }}">
+                Hello <span >Di</span>
+            </a>
+
+
+            <ul class="nav pull-right">
+
+                <li class="dropdown">
+                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold" data-toggle="dropdown">
+                        <i class="icon-exclamation-sign"></i>
+                        {% block Alert_Number %}{% endblock %}
+                    </a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+                       data-toggle="dropdown">
+                        <i class="icon-envelope">
+                            {% block Noti_Number %}{% endblock %}
+                        </i>
+                    </a>
+                    {% block Noti_Message %}{% endblock %}
+
+                </li>
+                <li class="dropdown">
+                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
+                       data-toggle="dropdown">
+                        <i class="icon-comment">
+                            {% block Ticket_Number %}{% endblock %}
+                        </i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:;">New Ticket</a></li>
+                        <li><a href="javascript:;">Inbox</a></li>
+                        <li><a href="javascript:;">Outbox</a></li>
+                        <li><a href="javascript:;">Trash</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="{{ path('fos_user_profile_edit') }}" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold;font-size: 20px;">
+                        Er
+                    </a>
+                </li>
+
+                <li class="dropdown">
+
+                    <a href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <i class="icon-user"></i>
+							<span id="user_title_menu">{{ app.user.username }}
+                                <b class="caret"></b>
+                            </span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li id="user_icon_menu"><a>{{ app.user.username }}</a></li>
+                        <li id="user_icon_menu" class="divider"></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+
+                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+
+
+        </div>
+        <!-- /container -->
+
+    </div>
+    <!-- /navbar-inner -->
+
+</div>
+<!-- /navbar -->
+
+<!-- MenuBar
+        ================================================== -->
+<div class="MenuBar" id="MenuBar1" >
+    <div class="menubar_inner" id="menubar_inner1">
+        <div class="container">
+            <div class="menubar_items">
+                <ul class="menubar_main" id="menubar_main1">
+                    {% block Main_Menu %}{% endblock %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Site Map
+        ================================================== -->
+
+
+<!-- Body
+        ================================================== -->
+
+
+<div class="main">
+    <div class="pagetop" >
+        <div class="sitemappath">
+            <div>
+                {% block Site_Map %}{% endblock %}
+            </div>
+        </div>
+        <h1 class="pagetitle" >
+            {% block PageTitle %}{% endblock %}
+        </h1>
+
+
+        <div class="pagedisc" >
+            {% block TitleDist %}
+            {% endblock %}
+        </div>
+
+        <ul class="hornav" style="min-height:{% if hornav is defined  %}{{ hornav }};{% else %}0;{% endif %}" >
+            {% block Tabs %}{% endblock %}
+        </ul>
+
+    </div>
+
+
+        <div class="row">
+            {% block Body %}{% endblock %}
+        </div>
+
+</div>
+
+
+
+
+<div class="footer">
+
+
+
+            <div id="footer-copyright" class="span6">
+                &copy; 2013-4 yAs UI.
+            </div>
+            <!-- /span6 -->
+
+            <div id="footer-terms" class="span6">
+                Programing by <a href="http://pnsadeghy.ir" target="_blank">Pnsadeghy</a>
+            </div>
+            <!-- /.span6 -->
+
+
+    <!-- /container -->
+
+</div>
+<!-- /footer -->
+
+
+<!-- Le javascript
+        ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+<script src="{{ asset('bundles/hellodi/js/Application.js') }}"></script>
+<script type="text/javascript">
+    {% block Alert_Color %}{% endblock %}
+    {% block Noti_Color %}{% endblock %}
+</script>
+
+
+</body>
+</html>

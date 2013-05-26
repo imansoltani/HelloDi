@@ -1,0 +1,55 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Provider</a>
+    <a class="link" href="#">{{ entity.entName }}</a>
+    <span class="link">Info</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <form style="margin-top: 20px" action="{{ path('Ent_InfoSubmit') }}" method="post" class="form-horizontal" >
+        <fieldset>
+
+
+
+            {{ form_label(edit_form.entName) }}
+            {{ form_widget(edit_form.entName,{'attr':{'readonly':''}}) }}
+            </br>
+
+            {{ form_label(edit_form.entVatNumber) }}
+            {{ form_widget(edit_form.entVatNumber,{'attr':{'readonly':''}}) }}
+            </br>
+
+            {{ form_label(edit_form.entTel1) }}
+            {{ form_widget(edit_form.entTel1) }}
+            </br>
+
+            {{ form_label(edit_form.entTel2) }}
+            {{ form_widget(edit_form.entTel2) }}
+            </br>
+
+            {{ form_label(edit_form.entFax) }}
+            {{ form_widget(edit_form.entFax) }}
+            </br>
+
+            {{ form_label(edit_form.entWebsite) }}
+            {{ form_widget(edit_form.entWebsite) }}
+            </br>
+            {{ form_label(edit_form.entRegistrationNumber) }}
+            {{ form_widget(edit_form.entRegistrationNumber) }}
+
+
+
+            <input type="hidden" name="entityid" value="{{ entityid }}"/>
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">{{'Entiti.Edit' | trans ({}, "entity")}}</button>
+                <button type="reset" class="btn">Reset</button>
+            </div>
+        </fieldset>
+    </form>
+
+
+{% endblock %}

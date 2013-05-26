@@ -1,0 +1,110 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Add Distributor
+{% endblock title %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    New Distributor
+{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
+    <span class="link">Add Distributor</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% set MU = 'dist' %}
+
+
+
+{% block Body %}
+<div class="span">
+
+    <div class="widget stacked">
+
+        <!-- /widget-header -->
+
+        <div class="widget-content">
+
+            <div class="widget-header">
+                <h3>Account Info</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <form action="#" method="post" class="form-horizontal">
+
+                <div class="control-group">
+                    {{ form_label(form.accName) }}
+                    {{ form_widget(form.accName,{value : 'Default title'}) }}
+                    {{ form_errors(form.accName) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.accCurrency) }}
+                    <div class="controls">
+                        {{ form_widget(form.accCurrency) }}
+
+                    </div>
+                    {{ form_errors(form.accCurrency) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.accTimeZone) }}
+                    <div class="controls">
+                        {{ form_widget(form.accTimeZone) }}
+
+                    </div>
+                    {{ form_errors(form.accTimeZone) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.accType) }}
+                    <div class="controls">
+                        {{ form_widget(form.accType,{'attr':{'disabled':''}}) }}
+                    </div>
+                    {{ form_errors(form.accType) }}
+                </div>
+
+
+                <div class="control-group">
+                    {{ form_label(form.accTerms) }}
+                    <div class="controls">
+                        {{ form_widget(form.accTerms) }}
+                    </div>
+                    {{ form_errors(form.accTerms) }}
+                </div>
+
+                {{ form_widget(form._token) }}
+                <div class="form-actions" style="margin-bottom: 0">
+                    <input type="submit" class="btn btn-primary" value="Add"/>
+                    <button type="reset" class="btn">Cancel</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var x = $('#step-1').height();
+            $('.stepContainer').height(x);
+
+            $(window).resize(function () {
+                var x = $('#step-1').height();
+                $('.stepContainer').height(x);
+            });
+        });
+
+    </script>
+    {% endblock %}
+
+
+

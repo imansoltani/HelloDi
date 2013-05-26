@@ -1,0 +1,34 @@
+Entiti:
+    Id: ردیف
+    Name: نام
+    VatNumber: شماره وت
+    Tel1: تلفن 1
+    Tel2: تلفن 2
+    Fax: فکس
+    WebSite: سایت شرکت
+    RegNumber: شماره ثبت
+    Users: کاربران
+    Accounts: حساب ها
+    Addresses: آدرس ها
+
+    Edit: ویرایش
+    Manage: مدیریت
+    Add: افزودن شرکت فرزند
+
+Address:
+    Id: ردیف
+    Type: نوع
+    Start: شروع
+    End: پایان
+    Np: کدپستی
+    City: شهر
+    Country: کشور
+    Address1: آدرس1
+    Address2: آدرس2
+    Address3: آدرس3
+
+    Add: افزودن آدرس
+    Manage: مدیریت
+
+    TypeChoice:
+        Office: دفتر

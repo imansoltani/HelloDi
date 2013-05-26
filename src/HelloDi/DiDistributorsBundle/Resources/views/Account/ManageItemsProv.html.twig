@@ -1,0 +1,74 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Items</span>
+{% endblock Site_Map %}
+
+
+
+{% block Tab %}
+
+    <div class="widget-header">
+        <h3>Provider Items</h3>
+    </div> <!-- /widget-header -->
+
+
+    <form method="post" action="{{ path('AddItemProv') }}">
+        <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+        <input class="button btn btn-large btn-warning" type="submit" value="Add new Item"/>
+    </form>
+
+    {#<a class="button btn btn-warning btn-large" href="{{ path('AddItemsProvAction') }}">#}
+        {#Add new Item#}
+    {#</a>#}
+
+    {#<h1 class="TitleShow">Items</h1>#}
+
+    <div class="tablediv">
+        <div class="contenttitle">
+            <h4>Items</h4>
+        </div>
+        <div class="tab-content">
+            <table style="margin-top: 20px" class="table postsend">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Face Value (Currency)</th>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>Price (Currency)</th>
+                    <th>Management</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for price in prices %}
+                    <tr>
+                        <td>{{ price.item.id }}</td>
+                        <td>{{ price.item.itemName }}</td>
+                        <td>{{ price.item.itemFaceValue }} {% if price.item.itemCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                        <td>{{ price.item.itemCode }}</td>
+                        <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                        <td>{{ price.price }} {% if price.priceCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                        <td>
+                            <form method="post" action="{{ path('EditItemProv') }}">
+                                <input type="hidden" name="priceid" value="{{ price.id }}"/>
+                                <input type="submit" value="Edit Price"/>
+                            </form>
+                            {#<a href="#" class="btn btn-warning">Edit Price</a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock Tab %}

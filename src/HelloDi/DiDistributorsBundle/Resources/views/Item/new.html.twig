@@ -1,0 +1,101 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    New Item
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('item') }}">Item</a>
+    <span class="link">New Item</span>
+{% endblock Site_Map %}
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+{% set MU = 'item' %}
+
+{% block Body %}
+    <div class="span12">
+        <div class="widget stacked">
+            <div class="widget-header">
+                <i class="icon-briefcase"></i>
+
+                <h3>Item creation</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div id="wizard" class="swMain">
+                    <div class="stepContainer">
+                        <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+                            <h2 class="StepTitle">Item Info</h2>
+
+                            <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
+                                <div class="control-group">
+                                    {{ form_label(form.itemName) }}
+                                    {{ form_widget(form.itemName) }}
+                                    {{ form_errors(form.itemName) }}
+                                </div>
+                                <div class="control-group">
+                                    {{ form_label(form.itemFaceValue) }}
+                                    {{ form_widget(form.itemFaceValue) }}
+                                    {{ form_errors(form.itemFaceValue) }}
+                                </div>
+                                <div class="control-group">
+                                    {{ form_label(form.itemCurrency) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.itemCurrency) }}
+                                    </div>
+                                    {{ form_errors(form.itemCurrency) }}
+                                </div>
+                                <div class="control-group">
+                                    {{ form_label(form.itemType) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.itemType) }}
+                                    </div>
+                                    {{ form_errors(form.itemType) }}
+                                </div>
+                                <div class="control-group">
+                                    {{ form_label(form.alertMinStock) }}
+                                    {{ form_widget(form.alertMinStock) }}
+                                    {{ form_errors(form.alertMinStock) }}
+                                </div>
+                                <div class="control-group">
+                                    {{ form_label(form.operator) }}
+                                    {{ form_widget(form.operator) }}
+                                    {{ form_errors(form.operator) }}
+                                </div>
+
+                                <div class="control-group">
+                                    {{ form_label(form.Country) }}
+                                    {{ form_widget(form.Country) }}
+                                    {{ form_errors(form.Country) }}
+                                </div>
+
+                                {{ form_rest(form) }}
+                                <div class="form-actions" style="margin-bottom: 0">
+                                    <input type="submit" class="btn btn-primary" value="Add"/>
+                                    <button type="reset" class="btn">Cancel</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var x = $('#step-1').height();
+                        $('.stepContainer').height(x);
+
+                        $(window).resize(function () {
+                            var x = $('#step-1').height();
+                            $('.stepContainer').height(x);
+                        });
+                    });
+
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

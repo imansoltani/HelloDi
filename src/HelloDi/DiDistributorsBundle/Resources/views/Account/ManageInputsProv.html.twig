@@ -1,0 +1,66 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Items</span>
+{% endblock Site_Map %}
+
+
+
+{% block Tab %}
+    <div class="span12">
+        <div class="widget stacked">
+            <div class="widget-header">
+                <i class="icon-book"></i>
+
+                <h3>Input list</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <form method="post" action="{{ path('UploadInputProv') }}">
+                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+                <input class="button btn btn-large btn-warning" type="submit" value="Add new Item"/>
+            </form>
+
+            <div class="widget-content">
+
+                <form action="#" method="post">
+                    {{ form_widget(form) }}
+                    <input type="submit" value="Search">
+                </form>
+                <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Batch</th>
+                        <th>Dateproduction</th>
+                        <th>Dateexpiry</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                        <th>Management</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for input in inputs %}
+                        <tr>
+                            <td>{{ input.Item.itemName }}</td>
+                            <td>{{ input.batch }}</td>
+                            <td>{{ input.dateProduction|date('Y-m-d') }}</td>
+                            <td>{{ input.dateExpiry|date('Y-m-d') }}</td>
+                            <td>{{ input.Codes.count }}</td>
+                            <td>{{ render(controller('HelloDiDiDistributorsBundle:Account:CalcPrice', { 'account': Account , 'item': input.Item , 'count' : input.Codes.count })) }}</td>
+                            <td>
+                                <a href="#" class="btn btn-warning">Show</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

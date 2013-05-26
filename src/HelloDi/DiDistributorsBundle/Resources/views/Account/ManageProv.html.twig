@@ -1,0 +1,14 @@
+<form action="{{ path('ManageProvEntiti') }}" method="post">
+    <input type="hidden" name="accountid" value="{{ id }}"/>
+    <input type="submit" value="Entiti"/>
+</form>
+
+<form action="{{ path('EditAccountProv') }}" method="post">
+    <input type="hidden" name="accountid" value="{{ id }}"/>
+    <input type="submit" value="Info"/>
+</form>
+
+<form action="#" method="post">
+    <input type="hidden" name="accountid" value="{{ id }}"/>
+    <input type="submit" value="Input"/>
+</form>

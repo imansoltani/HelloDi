@@ -1,0 +1,35 @@
+<html>
+<body>
+
+<form action="{{ path('AddDist',{'id':id}) }}" method="post" >
+
+    {{ form_errors(form.accName) }}
+    Name:{{ form_widget(form.accName) }}
+
+    </br>
+
+    {{ form_errors(form.accCurrency) }}
+    Currency :   {{ form_widget(form.accCurrency) }}
+
+    </br>
+    {{ form_errors(form.accTerms) }}
+    Payment condition :   {{ form_widget(form.accTerms) }}
+
+    </br>
+
+    {{ form_errors(form.accTimeZone) }}
+    TimeZone:{{ form_widget(form.accTimeZone) }}
+
+    </br>
+
+    {{ form_errors(form.accType) }}
+    Sub-Account :{{ form_widget(form.accType,{'attr':{'disabled':''}})}}
+
+    {{ form_widget(form._token) }}
+
+    <input type="hidden" name='id' value="{{ id }}">
+    <input type="submit" value="Create">
+</form>
+
+</body>
+</html>

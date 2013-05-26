@@ -1,0 +1,39 @@
+<html>
+<body>
+
+<form action="{{ path('AddNewUserEntiti',{'id':entity.id}) }}" method="post" >
+
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    </br>
+
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+    </br>
+
+    {{ form_label(form.mobile) }}
+    {{ form_widget(form.mobile) }}
+    </br>
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    </br>
+
+    {{ form_label(form.plainPassword) }}
+    {{ form_widget(form.plainPassword) }}
+    </br>
+    {% set i=0 %}
+    {% for usp in form.Userprivileges  %}
+        {{ acc[i].accName}}
+        {% set i=i+1 %}
+        {#{{ usp.Account.get('value') }}#}
+        {{ form_widget(usp.privileges) }}
+        </br>
+    {% endfor %}
+    {{ form_rest(form) }}
+    <input type="hidden" value="{{ entity.id }}">
+
+    <input type="submit" value="Search">
+</form>
+
+</body>
+</html>

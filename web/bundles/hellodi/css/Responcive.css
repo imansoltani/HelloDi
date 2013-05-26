@@ -1,0 +1,287 @@
+/* ??? */
+@media only screen and (max-width: 980px) {
+    /* MenuBar
+                ========================================================= */
+    .MenuBar .menubar_items ul{
+
+        margin-top: 5px;
+        margin-bottom: 1px;
+
+
+    }
+    .MenuBar .menubar_items ul > li{
+
+
+        min-width: 0;
+
+
+        /* old
+        border-bottom: 1px solid rgb(57, 73, 98);
+        */
+    }
+
+    .MenuBar .menubar_items ul > li:hover{
+        /*old
+        border-bottom: 1px solid rgb(251, 147, 55);
+        */
+    }
+    .MenuBar .menubar_items ul > li.active{
+        /*old
+        border-bottom: 1px solid rgb(251, 147, 55);
+        */
+    }
+
+    .MenuBar .menubar_items ul > li > a{
+        min-width: 0;
+        padding:6px;
+        padding-left: 12px;
+        padding-right: 12px;
+        border-radius: 5px;
+
+
+    }
+
+    .MenuBar .menubar_items ul > li > a > i{
+        margin: 0;
+        width: 26px;
+        height: 26px;
+    }
+
+    .MenuBar .menubar_items ul > li > a > span{
+        display: none;
+    }
+
+    .MenuBar .menubar_items ul > li.active > a > i{
+
+    }
+
+    /* ShortCuts
+                ------------------------------------------------------ */
+
+    .main .span ul.shortcuts > li{
+        width: auto;
+        height: auto;
+        padding: 5px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }
+
+    ul.shortcuts >li > a{
+        width: auto;
+        height: auto;
+    }
+
+    ul.shortcuts > li > a i {
+        width: 40px;
+        font-size: 30px;
+    }
+
+    ul.shortcuts > li > a span {
+        display: none;
+    }
+
+    /* Forms */
+    body form.form-horizontal .form-actions {
+        padding: 5px;
+    }
+}
+
+
+/* Phone
+            =============================================================== */
+@media only screen and (max-width: 767px) {
+
+    /* navbar
+                ------------------------------------------------ */
+    .navbar #user_title_menu{
+        display: none;
+    }
+
+    .navbar .container .dropdown > a {
+        padding: 10px;
+    }
+
+
+
+    /* Drop Down Menu
+        ------------------------------ */
+    .dropdown-menu #user_icon_menu{
+        display: block;
+    }
+
+    .dropdown-menu #user_title_menu{
+        display: none;
+    }
+
+    .dropdown-menu li a{
+        font-size : 20px;
+        padding-top : 10px;
+        padding-bottom : 10px;
+    }
+
+    /* Form
+        -------------------------------------------------------- */
+    form .control-group .controls > .controls{
+        margin-left: 0px;
+    }
+
+    form .control-group .controls > .controls input{
+        margin-left: 0px;
+        margin-top: 5px;
+    }
+
+    /* Tabs
+        -------------------------------------------------------- */
+    .main .pagetop .hornav li input[type="submit"]{
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+    /*paging */
+    .pagination > span a{
+        padding: 5px 5px;
+    }
+
+    .pagination > span a > span{
+        display: none;
+    }
+
+    .pagination > span a.btn > [class^="icon-"]{
+        display: inline;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+
+    .main .pagetop .pagetitle {
+        font-size: 17px;
+    }
+
+    .main .row{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main .span .widget-content {
+        padding: 0px;
+        margin-left: 5px;
+    }
+
+
+
+    .navbar .container {
+        height: 80px;
+    }
+
+    .navbar .container .brand{
+
+        padding: 0;
+        width: 100%;
+        margin-left: -5px;
+        padding-right: 10px;
+        border-radius: 0px;
+        padding-top: 20px;
+        padding-bottom: 10px;
+
+    }
+
+
+
+    /* Form ------------ */
+    form .control-group .controls > .controls{
+        margin-top: 5px;
+        margin-left: 0px;
+        width: 100%;
+    }
+
+    form .control-group .controls > .controls input{
+        margin-left: 0px;
+    }
+
+    body .navbar .navbar-inner {
+        border-bottom:solid thin #a9adf6;
+    }
+
+    .form-horizontal .controls {
+        display: block;
+        margin-left: 0px;
+        width: 95%;
+        margin-right: 5%;
+    }
+
+    .form-horizontal .controls input , .form-horizontal .controls select{
+        width: 100%;
+    }
+
+    form.form-horizontal .control-label {
+        float: none;
+        width: auto;
+text-align: left;
+    }
+
+
+
+    /* Tabs
+            -------------------------------------------------------- */
+    .main .pagetop .hornav{
+        padding: 0;
+        border-top:solid 2px #0075cc;
+        border-bottom:solid 2px #0075cc;
+    }
+
+    .main .pagetop .hornav li input[type="submit"]{
+        font-size: 15px;
+        padding: 2px 5px;
+        width: 100%;
+        height: 34px;
+    }
+
+    .main .pagetop .hornav li{
+        padding: 0;
+        float: none;
+        margin: 0;
+        width: 100%;
+        display: block;
+        height: auto;
+    }
+
+    .main .pagetop .pagedisc {
+        margin-bottom: 10px;
+    }
+
+    .widget-content .widget-header {
+        margin-bottom: 0px;
+    }
+
+    /* sitemap */
+    .main .pagetop .sitemappath {
+        display: none;
+    }
+
+
+}
+
+
+
+@media only screen and (max-width: 280px) {
+
+    /* Navbar --- */
+    .navbar .container .dropdown > a {
+        padding: 5px;
+        margin: 2px;
+    }
+
+    /* Menubar --- */
+    .MenuBar .menubar_items ul > li{
+        margin: 2px;
+    }
+
+    .MenuBar .menubar_items ul > li > a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+}

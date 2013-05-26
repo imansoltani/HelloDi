@@ -1,0 +1,22 @@
+layout:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Default:index }
+
+loginsuccess:
+    pattern:  /Main
+    defaults: { _controller: HelloDiDiDistributorsBundle:Default:dashboard }
+
+entities:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/entities.yml"
+    prefix:   /entities
+
+account:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/accounts.yml"
+
+items:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/item.yml"
+    prefix:   /items
+
+codes:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/code.yml"
+    prefix:   /items/code

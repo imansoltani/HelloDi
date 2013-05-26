@@ -1,0 +1,82 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Add Provider
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <span class="link">Add Provider</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    New Provider
+{% endblock %}
+
+
+{% set MU = 'prov' %}
+
+{% block Body %}
+    <div class="span">
+
+        <div class="widget stacked">
+
+
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div id="wizard" class="swMain">
+                            <ul class="anchor">
+                                <li  ><a id="step1" style="cursor:default" rel="1" isdone="1" class="{% if step == '1' %}selected{% else %}done{% endif %}">
+                                        <label style="cursor:default" class="stepNumber">1</label>
+                                        <span class="stepDesc">
+                                           Entity<br>
+
+                                        </span>
+                                    </a>
+                                </li>
+                                <li><a style="cursor:default" id="step2" rel="2" isdone="0" class="{% if step == '2' %}selected{% else %}disabled{% endif %}">
+                                        <label style="cursor:default" class="stepNumber">2</label>
+                                        <span class="stepDesc">
+                                           Account info<br>
+
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div  class="stepContainer">
+                                <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+
+                                    {% block step1 %}
+                                    {% endblock step1 %}
+                                </div>
+                            </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" >
+        $(function(){
+            var x = $('#step-1').height();
+            $('.stepContainer').height(x);
+
+            $(window).resize(function(){
+                var x = $('#step-1').height();
+                $('.stepContainer').height(x);
+            });
+        });
+
+    </script>
+
+{% endblock Body %}

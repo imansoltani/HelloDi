@@ -1,0 +1,32 @@
+{% extends "FOSUserBundle::Main0.html.twig" %}
+
+{% block title %}
+    Remind Passowrd
+{% endblock title %}
+
+{% block fos_user_content %}
+
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <h1>Reminder</h1>
+
+        <div class="login-fields">
+            <div class="field">
+                <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}:</label>
+                <input type="text" id="username" name="username"  placeholder="Username or Email Address" class="login username-field" value="" required="required" />
+            </div> <!-- /field -->
+        </div>
+
+        {% if invalid_username is defined %}
+            <div class="Login_error" >
+                <i class="icon-ban-circle" ></i><span>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</span>
+            </div>
+        {% endif %}
+
+        <div class="login-actions">
+            <input class="button btn btn-warning btn-large" type="submit" id="_submit" name="_submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+
+    </form>
+
+{% endblock fos_user_content %}
+

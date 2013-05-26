@@ -1,0 +1,14 @@
+User:
+    Id: ردیف
+    Name: نام
+    Mobile: موبایل
+    Locale: زبان
+
+    Add: ساخت کاربر جدید
+    Modify: ویرایش
+    PrivilegeNumber: تعداد مجوز ها
+
+Languages:
+    English: انگلیسی
+    Persian: فارسی
+    French: فرانسه

@@ -1,0 +1,53 @@
+{% extends 'HelloDiDiDistributorsBundle:Step:ProvMasterAdd.html.twig' %}
+
+{% set step = '1' %}
+
+{% block step1 %}
+    <div class="widget-header">
+        <h3>Choose Entity</h3>
+    </div> <!-- /widget-header -->
+<div class="tablediv" >
+    <div class="contenttitle">
+        <h4>Entities</h4>
+    </div>
+<div class="tab-content">
+    <table style="margin-top: 20px" class="table postsend"  >
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Entname</th>
+            <th>Entvatnumber</th>
+            <th>Entrole</th>
+            <th>Enttel1</th>
+            <th>Enttel2</th>
+            <th>Entfax</th>
+            <th>Entwebsite</th>
+            <th>Entregistrationnumber</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for entiti in  entities%}
+            <tr>
+                <td>{{ entiti.id }}</td>
+                <td>{{ entiti.entName }}</td>
+                <td>{{ entiti.entVatNumber }}</td>
+                <td>{{ entiti.entTel1 }}</td>
+                <td>{{ entiti.entTel2 }}</td>
+                <td>{{ entiti.entFax }}</td>
+                <td>{{ entiti.entWebsite }}</td>
+                <td>{{ entiti.entRegistrationNumber }}</td>
+                <td class="td-actions" >
+                    <a class="btn btn-small btn-warning" href="{{ path('AddAccountProvMasterOk',{'id':entiti.id}) }}">
+                        <i class="btn-icon-only icon-ok"></i>
+                    </a>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+
+{% endblock step1 %}

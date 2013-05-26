@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Search Account Dist</h1>
+
+
+    <form action="{{ path('SearchAccountDist',{}) }}" method="post" >
+
+        {{ form_label(form_searchdist.TypeSearch) }}
+        {{ form_widget(form_searchdist.TypeSearch) }}
+        </br>
+        {{ form_label(form_searchdist.accName) }}
+        {{ form_widget(form_searchdist.accName) }}
+        </br>
+
+        {{ form_label(form_searchdist.entName) }}
+        {{ form_widget(form_searchdist.entName) }}</br>
+
+        {{ form_label(form_searchdist.accParentAccount) }}
+        {{ form_widget(form_searchdist.accParentAccount) }}</br>
+
+        {{ form_label(form_searchdist.userName) }}
+        {{ form_widget(form_searchdist.userName) }}</br>
+
+
+        {{ form_label(form_searchdist.accBalence) }}
+        {{ form_widget(form_searchdist.accBalence) }}
+
+        Value: {{ form_label(form_searchdist.entBalenceValue) }}
+        {{ form_widget(form_searchdist.entBalenceValue) }}</br>
+
+        {{ form_label(form_searchdist.accCurrency) }}
+        {{ form_widget(form_searchdist.accCurrency) }}</br>
+
+        {{ form_label(form_searchdist.accStatus) }}
+        {{ form_widget(form_searchdist.accStatus) }}</br>
+
+        {{ form_label(form_searchdist.accCreditLimit) }}
+        {{ form_widget(form_searchdist.accCreditLimit) }}</br>
+
+        <input type="submit" value="Search">
+    </form>
+
+    <ul class="record_actions">
+    <li>
+</ul>
+{% endblock %}

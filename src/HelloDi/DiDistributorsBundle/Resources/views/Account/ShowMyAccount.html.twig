@@ -1,0 +1,149 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Provider Accounts
+{% endblock title %}
+
+{% set MU = 'prov' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Provider</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-th-large"></i>
+    Provider Management
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                <a class="button btn btn-warning btn-large" href="{{ path('AddAccountProvMaster') }}">
+                    Create a new Provider
+                </a>
+                <a class="button btn btn-warning btn-large" href="{{ path('AddAccountProveMaster2Step') }}">
+                  AddAccountProveMaster2Step
+                </a>
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search" ></i>
+                            <p class="title_search" >Search Provider</p>
+                        </span>
+                    </h5>
+
+                    <form class="form-horizontal SearchForm" action="{{ path('ShowMyAccount',{}) }}" method="post" >
+
+                        <fieldset>
+                            <div class="control-group">
+                                {{ form_label(form_searchprov.id) }}
+                                    {{ form_widget(form_searchprov.id) }}
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchprov.accName) }}
+                                {{ form_widget(form_searchprov.accName) }}
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchprov.entName) }}
+                                {{ form_widget(form_searchprov.entName) }}
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form_searchprov.accBalance) }}
+                                <div class="controls">
+                                    {{ form_widget(form_searchprov.accBalance) }}
+                                    {{ form_widget(form_searchprov.accBalanceValue) }}
+                                </div>
+                            </div>
+                            <hr>
+                            <input class="btn btn-large btn-primary" type="submit" value="Search">
+                        </fieldset>
+
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+                            $(".SearchForm").hide();
+                            $('.TitleShow1').click(function () {
+                                $('.SearchForm').slideToggle();
+                                $('#search_logo').removeAttr('class') ;
+
+                                if($('.title_search').html() == 'Search Provider')
+                                {
+                                    $('.title_search').html('Close Search') ;
+                                    $('#search_logo').attr('class','icon-remove') ;
+                                }
+                                else{
+                                    $('.title_search').html('Search Provider') ;
+                                    $('#search_logo').attr('class','icon-search') ;
+                                }
+
+                                var x = $('.form_search').offset().top - 20;
+                                $('body,html').animate({
+                                    scrollTop: x
+                                }, 800);
+                            });
+
+                        });
+                    </script>
+
+                </div>
+
+
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4>Providers</h4>
+                    </div>
+                    <form action="{{ path('ManageItemsProv') }}" method="post">
+                        <div class="tab-content">
+                            <table style="margin-top: 20px" class="table postsend">
+                                <thead>
+                                <tr>
+                                    <th  >Id</th>
+                                    <th>Operation</th>
+                                    <th>Name</th>
+                                    <th>Balance</th>
+                                    <th>Entity Name</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for myAccount in myAccountsprov %}
+                                    <tr>
+                                        <td style="font-weight: bold" >{{ myAccount.id }}</td>
+                                        <td class="td-actions" >
+                                            <input type="submit" value="Manage" onclick="$('.accountid').val('{{ myAccount.id }}');" />
+                                        </td>
+                                        <td>{{ myAccount.accName }}</td>
+                                        <td>{{ myAccount.accBalance }}</td>
+                                        <td>{{ myAccount.entiti.entName }}</td>
+
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <input type="hidden" name="accountid" class="accountid" value=""/>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

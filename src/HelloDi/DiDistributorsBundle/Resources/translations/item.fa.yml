@@ -1,0 +1,15 @@
+Item:
+    Id: ردیف
+    Name: نام آیتم
+    FaceValue: قیمت نهایی فروش
+    Currency: واحد ارزی
+    Type: نوع
+    AlertMinStock: حداقل تعداد برای هشدار
+    Operator: اپراتور
+
+    All: همه
+    TypeChioce:
+        All: همه
+        Internet: اینترنت
+        Mobile: موبایل
+        Tel: تلفن

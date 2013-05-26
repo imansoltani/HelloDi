@@ -1,0 +1,70 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Codes
+{% endblock title %}
+
+{% set MU = 'code' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Code</span>
+{% endblock Site_Map %}
+
+
+{% block Body %}
+
+    <div class="span12">
+        <div class="widget stacked ">
+            <div class="widget-header">
+                <i class="icon-briefcase"></i>
+
+                <h3>Code list</h3>
+            </div>
+            <div class="widget-content">
+                item: {{ code.item.itemName }} <br/>
+                type: {% if code.item.itemType==0 %} Mobile {% elseif code.item.itemType==1 %} Internet {% elseif code.item.itemType==2 %} Tel {% endif %}<br/>
+                serialNo: {{ code.serialNumber }} <br/>
+                status: {% if code.status==1 %} Active {% else %} Inactive {% endif %}<br/>
+                Production: {{ code.input.dateProduction|date('Y/m/d') }} <br/>
+                Expiry: {{ code.input.dateExpiry|date('Y/m/d') }} <br/>
+
+                    <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                        <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Item Name</th>
+                            <th>serialNumber</th>
+                            <th>PinCode</th>
+                            <th>ExpiryDate</th>
+                            <th>Status</th>
+                            <th>Provider</th>
+                            <th>Manage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {#{% for code in pagination %}#}
+                            {#<tr>#}
+                                {#<td><input type="checkbox"/></td>#}
+                                {#<td>{{ code.Item.itemName }}</td>#}
+                                {#<td>{{ code.serialNumber }}</td>#}
+                                {#<td>{{ code.pin }}</td>#}
+                                {#<td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>#}
+                                {#<td>{{ code.status }}</td>#}
+                                {#<td>{{ code.Input.Account.accName }}</td>#}
+                                {#<td>#}
+                                    {#<a href="#" class="btn btn-warning">History</a>#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#{% endfor %}#}
+                        </tbody>
+                    </table>
+                    <div class="navigation" style="text-align: center">
+                        {#{{ knp_pagination_render(pagination) }}#}
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

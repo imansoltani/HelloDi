@@ -1,0 +1,191 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Child Accounts</span>
+{% endblock Site_Map %}
+
+
+
+
+{% block Tab %}
+
+
+    <a class="button btn btn-warning btn-large" href="">
+        Create a new Child Account
+    </a>
+
+<div class="form_search">
+    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search" ></i>
+                            <p class="title_search" >Search Child Accounts</p>
+                        </span>
+    </h5>
+    <form class="form-horizontal SearchForm" action="{{ path('AccountDistChildrenSearch',{'id':Account.id}) }}" method="post">
+        <fieldset>
+
+            <div class="control-group">
+                {{ form_label(form_searchdistchild.accName) }}
+                {{ form_widget(form_searchdistchild.accName) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form_searchdistchild.accBalance) }}
+                <div class="controls">
+                    {{ form_widget(form_searchdistchild.accBalance) }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form_searchdistchild.accBalanceValue) }}
+                    {{ form_widget(form_searchdistchild.accBalanceValue) }}
+            </div>
+
+
+
+
+
+            <div class="control-group">
+                {{ form_label(form_searchdistchild.accCreditLimit) }}
+                <div class="controls">
+                    {{ form_widget(form_searchdistchild.accCreditLimit) }}
+                </div>
+            </div>
+            {{ form_rest(form_searchdistchild) }}
+            <hr>
+            <input class="btn btn-large btn-primary" type="submit" value="Search">
+            <form action="{{ path('ManageDistChildren') }}" method="post">
+                <input type="hidden" value="{{ id }}" name="id">
+
+                <input class="btn btn-large " type="submit" value="Reset">
+
+            </form>
+
+        </fieldset>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            $(".SearchForm").hide();
+            $('.TitleShow1').click(function () {
+                $('.SearchForm').slideToggle();
+                $('#search_logo').removeAttr('class') ;
+
+                if($('.title_search').html() == 'Search Child Accounts')
+                {
+                    $('.title_search').html('Close Search') ;
+                    $('#search_logo').attr('class','icon-remove') ;
+                }
+                else{
+                    $('.title_search').html('Search Child Accounts') ;
+                    $('#search_logo').attr('class','icon-search') ;
+                }
+
+                var x = $('.form_search').offset().top - 20;
+                $('body,html').animate({
+                    scrollTop: x
+                }, 800);
+            });
+
+        });
+    </script>
+</div>
+
+
+
+
+<div class="tablediv">
+    <div class="contenttitle">
+        <h4>Child Accounts</h4>
+    </div>
+    <form>
+
+
+
+        <div class="tab-content">
+        <table style="margin-top: 20px" class="table postsend">
+            <thead>
+            <tr>
+
+                <th>Id</th>
+                <th>Operation</th>
+                <th>Name</th>
+                <th>Entity Name</th>
+                <th>Type</th>
+                <th>Balance</th>
+                <th>CreditLimit</th>
+                <th>Sub Accounts</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for childaccount in pagination %}
+                <tr>
+
+                    <td >{{ childaccount.id }}</td>
+                    <td  class="td-actions" >
+
+                        <a href="#{#  #}" >ShowTranscation</a>
+
+                    </td>
+
+                    <td>
+                        {%  if childaccount.accName=='' %}
+                            Null
+                        {% else %}
+                            {{ childaccount.accName }}
+                        {% endif %}
+
+                   </td>
+                    <td>{{ childaccount.Entiti }}</td>
+                    <td>Dist</td>
+
+                    <td>
+                        {%  if childaccount.accBalance=='' %}
+                            Null
+                        {% else %}
+                            {{ childaccount.accBalance }}
+                        {% endif %}
+
+                 </td>
+
+                    <td>
+
+                   {%  if childaccount.accCreditLimit=='' %}
+                        Null
+                        {% else %}
+                        {{ childaccount.accCreditLimit }}
+                    {% endif %}
+
+                    </td>
+                    {% set countchild=(childaccount.Childrens)|length %}
+                    <td>{{ countchild}}</td>
+
+
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {#{button pagination}#}
+
+        <input type="hidden" name="id" class="accountid" value=""/>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+

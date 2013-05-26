@@ -1,0 +1,70 @@
+{% extends 'HelloDiDiDistributorsBundle::Main.html.twig' %}
+
+{% block Main_Menu %}
+    <li class="{% if MU == 'home' %}active{% else %}dropdown{% endif %}" >
+        <a href="{{ path('loginsuccess') }}">
+            <i class="icon-home"></i>
+            <span id="user_pc_menu" >Home</span>
+        </a>
+    </li>
+    <li class="{% if MU == 'prov' %}active dropdown{% else %}dropdown{% endif %}">
+        <a href="{{ path('ShowMyAccount') }}" class="dropdown-toggle">
+            <i class="icon-th-large"></i>
+            <span  id="user_pc_menu"  >Providers</span>
+        </a>
+    </li>
+    <li class="{% if MU == 'dist' %}active{% else %}dropdown{% endif %} ">
+        <a href="{{ path('ShowMyAccountDist') }}" class="dropdown-toggle" >
+            <i class="icon-briefcase"></i>
+            <span  id="user_pc_menu"  >Distributors</span>
+        </a>
+    </li>
+
+    <li class="{% if MU == 'ent' %}active{% else %}dropdown{% endif %}">
+        <a href="{{ path('Ent_Main') }}" class="dropdown-toggle" >
+            <i class="icon-book"></i>
+            <span  id="user_pc_menu"  >Entities</span>
+        </a>
+    </li>
+
+    <li class="{% if MU == 'code' %}active{% else %}dropdown{% endif %} ">
+        <a href="{{ path('code') }}" class="dropdown-toggle" >
+            <i class="icon-list-alt"></i>
+            <span  id="user_pc_menu"  >Codes</span>
+        </a>
+    </li>
+
+    <li class="{% if MU == 'item' %}active{% else %}dropdown{% endif %}">
+        <a href="{{ path('item') }}" class="dropdown-toggle">
+            <i class="icon-tags"></i>
+            <span  id="user_pc_menu"  >Items</span>
+        </a>
+    </li>
+
+
+    <li class="{% if MU == 'users' %}active{% else %}dropdown{% endif %}">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-user"></i>
+            <span  id="user_pc_menu"  >Users</span>
+        </a>
+    </li>
+    <li class="{% if MU == 'credit-note' %}active{% else %}dropdown{% endif %}">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-circle-arrow-up"></i>
+            <span  id="user_pc_menu"  >Credit Notes</span>
+        </a>
+    </li>
+    <li class="{% if MU == 'tax' %}active{% else %}dropdown{% endif %}">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-file"></i>
+            <span  id="user_pc_menu"  >Tax Setting</span>
+        </a>
+    </li>
+    <li class="{% if MU == 'system-report' %}active{% else %}dropdown{% endif %}">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-th-list"></i>
+            <span  id="user_pc_menu"  >System Report</span>
+        </a>
+    </li>
+{% endblock Main_Menu %}
+

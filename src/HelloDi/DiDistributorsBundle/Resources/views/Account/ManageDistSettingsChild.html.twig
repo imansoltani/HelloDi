@@ -1,0 +1,64 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Settings</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+
+<form style="margin-top: 20px"  class="form-horizontal"   action="{{ path('ManageDistSettingsSubmit',{'id':Account.id}) }}" method="post">
+
+
+    <div class="control-group">
+        <label class="control-label" >Id</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.id }}" >
+        </div>
+    </div>
+    <div class="control-group">
+        {{ form_errors(form_edit.accName) }}
+        {{ form_label(form_edit.accName) }}
+        {{ form_widget(form_edit.accName) }}
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" >Type</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="Distributors" >
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" >Creaditlimit</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.accCreditLimit }}" >
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" >TimeZone</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.accTimeZone }}" >
+        </div>
+    </div>
+
+
+{{ form_widget(form_edit._token) }}
+    <input type="hidden" value="{{ Account.id }}">
+
+    <div class="form-actions">
+        <input class="btn btn-primary" type="submit" value="Edit">
+        <input class="btn " type="reset" value="Reset">
+    </div>
+
+</form>
+
+
+
+{% endblock %}

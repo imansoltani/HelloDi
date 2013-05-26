@@ -1,0 +1,125 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">User</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Users</h3>
+    </div> <!-- /widget-header -->
+
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Account Users</p>
+                        </span>
+        </h5>
+        <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUserSearch',{'id':Account.id}) }}" method="post">
+
+            <div class="control-group">
+                {{ form_label(form_searchdistuser.username) }}
+                {{ form_widget(form_searchdistuser.username) }}
+            </div>
+
+
+            <div class="control-group">
+                {{ form_label(form_searchdistuser.privilege) }}
+                <div class="controls">
+                    {{ form_widget(form_searchdistuser.privilege) }}
+                </div>
+            </div>
+
+
+            {{ form_rest(form_searchdistuser) }}
+            <hr>
+            <input class="btn btn-large btn-primary" type="submit" value="Search">
+            <a class="btn btn-large" href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
+
+        </form>
+        {#{% set  route=app.request.get('_route')   %}#}
+        <a class="btn btn-info" href="{{ path('AddNewUserEntiti',{'id':Account.Entiti.id}) }}">Add New User</a>
+        <script type="text/javascript">
+            $(function () {
+                $(".SearchForm").hide();
+                $('.TitleShow1').click(function () {
+                    $('.SearchForm').slideToggle();
+                    $('#search_logo').removeAttr('class') ;
+
+                    if($('.title_search').html() == 'Search Account Users')
+                    {
+                        $('.title_search').html('Close Search') ;
+                        $('#search_logo').attr('class','icon-remove') ;
+                    }
+                    else{
+                        $('.title_search').html('Search Account Users') ;
+                        $('#search_logo').attr('class','icon-search') ;
+                    }
+
+                    var x = $('.form_search').offset().top - 20;
+                    $('body,html').animate({
+                        scrollTop: x
+                    }, 800);
+                });
+
+            });
+        </script>
+    </div>
+
+
+
+    <div class="tablediv" >
+        <div class="contenttitle">
+            <h4>Account Users</h4>
+        </div>
+
+        <div class="tab-content">
+            <table style="margin-top: 20px" class="table postsend">
+                <thead>
+                <tr>
+
+                    <th>Operation</th>
+                    <th>Name</th>
+                    <th>UserName</th>
+                    <th>Privilege</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for u in pagination %}
+                    <tr>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id }) }}"> Manage</a>
+                        </td>
+                        <td>{{ u.user.name }}</td>
+                        <td>{{ u.user.username }}</td>
+                        <td> {% if u.privileges==0 %}
+                                Seller |<a class="btn_edit_action" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id }) }}">Change</a>
+                            {% else %}
+                                Admin |
+                                <a class="btn_edit_action" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id}) }}">Change</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {#{button pagination}#}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+
+
+{% endblock %}

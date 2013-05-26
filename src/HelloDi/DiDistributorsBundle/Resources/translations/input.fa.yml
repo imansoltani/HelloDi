@@ -1,0 +1,10 @@
+Input:
+    Id: ردیف
+    FileName: نام فایل
+    DateInsert: تاریخ درج
+    Batch: شماره دسته
+    DateProduction: تاریخ تولید
+    DateExpiry: تاریخ انقضا
+    Item: آیتم
+    Account: حساب
+    User: کاربر

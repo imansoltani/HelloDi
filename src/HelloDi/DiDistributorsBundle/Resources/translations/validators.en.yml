@@ -1,0 +1,14 @@
+author.name.not_blank: Please enter an author name.
+author.name.min: نه
+#entitiy
+this.field.should.not.less.of.5: کمتر از 5 کاراکتر مجاز نمی باشد
+this.field.should.not.more.of.10: بیشتر از 10 کاراکتر مجاز نمی باشد
+this.field.should.not.less.of.3: کمتر از 3 کاراکتر مجاز نمی باشد
+this.email.is.invalid: وب سایت نا معتبر است
+entity.entvatnumber.not_blank: شماره ثبت شرکت نمی تواند خالی باشد
+entity.entname.not_blank: فیلد مرتبط با نام شرکت نمی تواند خالی باشد
+entity.enttel2.should.are.least.10.more.50: مقدار مرتبط با فیلد تلفن باید حداقل 10 کاراکتر و حداکثر 50 کاراکتر داشته باشد
+account.accBalance.should.not.has.empty: فیلد مربوط به موجودی نمی تواند خالی باشد
+entity.url.notmatch: وب سایت را درست وارد نمایید
+address.adrsNp.should.less : this value should more 3 charecter
+fos_user.accName.already_used : thin Name is already used

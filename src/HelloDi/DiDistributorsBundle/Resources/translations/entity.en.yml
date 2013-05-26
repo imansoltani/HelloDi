@@ -1,0 +1,34 @@
+Entiti:
+    Id: ID
+    Name: Name
+    VatNumber: VatNumber
+    Tel1: Tel1
+    Tel2: Tel2
+    Fax: Fax
+    WebSite: WebSite
+    RegistrationNumber: RegistrationNumber
+    Users: Users
+    Accounts: Accounts
+    Addresses: Addresses
+
+    Edit: Edit
+    Manage: Manage
+    Add: Add Child Entity
+
+Address:
+    Id: ID
+    Type: type
+    Start: start
+    End: End
+    Np: NP
+    City: City
+    Country: Country
+    Address1: Address1
+    Address2: Address2
+    Address3: Address3
+
+    Add: Add Address
+    Manage: Manage
+
+    TypeChoice:
+        Office: Office

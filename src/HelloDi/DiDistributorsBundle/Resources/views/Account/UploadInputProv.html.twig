@@ -1,0 +1,54 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Items</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <h1 class="TitleShow">Upload Input</h1>
+
+    <div class="tab-content">
+        <h2 class="StepTitle">Upload</h2>
+        {% for error in errors %}
+            {{ error }} <br/>
+        {% endfor %}
+        <form action="{{ path("UploadInputProvSubmit") }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            {{ form_label(form.File) }}
+            {{ form_widget(form.File) }}
+            <br/>
+            {{ form_label(form.Batch) }}
+            {{ form_widget(form.Batch) }}
+            <br/>
+            {{ form_label(form.Item) }}
+            {{ form_widget(form.Item) }}
+            <br/>
+            {{ form_label(form.ProductionDate) }}
+            {{ form_widget(form.ProductionDate) }}
+            <br/>
+            {{ form_label(form.ExpireDate) }}
+            {{ form_widget(form.ExpireDate) }}
+            <br/>
+            {{ form_label(form.delimiter) }}
+            {{ form_widget(form.delimiter) }}
+            <br/>
+            {{ form_label(form.SerialNumber) }}
+            {{ form_widget(form.SerialNumber) }}
+            <br/>
+            {{ form_label(form.PinCode) }}
+            {{ form_widget(form.PinCode) }}
+
+            <input type="hidden" name="accountid" value="{{ Account.id }}">
+
+            {{ form_rest(form) }}
+
+            <div class="form-actions" style="margin-bottom: 0">
+                <input type="submit" class="btn btn-primary" value="Upload Document"/>
+            </div>
+        </form>
+    </div>
+{% endblock %}

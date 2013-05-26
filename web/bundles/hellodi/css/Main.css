@@ -1,0 +1,863 @@
+body{
+    background-color: #FFF;
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#back-to-top{
+    text-decoration: none;
+    background: none repeat scroll 0% 0% rgba(255, 153, 0, 0.75);
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+}
+
+/* Navbar
+            -------------------------------------------------------- */
+.navbar-fixed-top{
+position: static;
+    right: 0px;
+    left: 0px;
+    z-index: 1030;
+    overflow: visible;
+}
+
+.navbar #user_title_menu{
+    display: inline-block;
+}
+
+.navbar .navbar-inner{
+
+    border-radius: 0px 0px 0px 0px;
+
+    padding: 7px 0px;
+    min-height: 40px;
+
+
+    filter: none;
+    border-width: 0px 0px 1px;
+    display: block;
+
+    /* ol
+        background: url("../img/topheaderbg.png") repeat scroll 0% 0% rgb(52, 68, 94);
+        border-bottom: 1px solid rgb(48, 63, 89);
+    */
+
+    /* New */
+    background-color: #a9adf6;
+    background-color: #b2b6f7;
+
+
+
+}
+
+
+
+.navbar .container {
+    position: relative;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px 10px;
+
+    display: block;
+
+    /* old
+        height:40px;
+    */
+
+    /* New*/
+    height: 100%;
+
+}
+
+.navbar .container .pull-right{
+    margin-top: 5px;
+}
+
+.navbar .container .brand{
+    width: 190px;
+    font-size: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #0f1e00;
+    text-decoration: none;
+    font-family: 'Carrois Gothic SC', sans-serif;
+     position: relative;
+    float: left;
+    display: block;
+    margin-left: 5px;
+    text-align: center;
+
+    /* old
+    padding: 5px;
+    */
+
+    /* New */
+    margin-top: -10px;
+    padding-top: 20px;
+    text-shadow: none;
+    box-shadow: 1px 1px 2px #000 ;
+
+
+
+    background-image:-moz-linear-gradient(top,#08c,#04c);
+    background-image:-webkit-gradient(linear,0 0,0 100%,from(#08c),to(#04c));
+    background-image:-webkit-linear-gradient(top,#08c,#04c);
+    background-image:-o-linear-gradient(top,#08c,#04c);
+    background-image:linear-gradient(to bottom,#08c,#04c);
+    background-repeat:repeat-x;
+
+}
+
+/* New */
+.navbar .container .brand > span{
+    padding : 5px;
+    color: #FFF;
+}
+
+.navbar .container > ul{
+    float: right;
+    margin-right: 0px;
+    position: relative;
+    left: 0px;
+    display: block;
+    list-style: none outside none;
+    margin: 0px 0px 0px 0px;
+padding: 0;
+}
+
+.navbar .container >ul >li{
+    float: left;
+    position: relative;
+    line-height: 20px;
+
+}
+
+.navbar .container .dropdown{
+    margin-right: 2px;
+    margin-left: 2px;
+
+}
+
+.navbar .container .dropdown > a {
+    float: none;
+    text-decoration: none ;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+    float: none;
+    padding: 5px 10px;
+    font-size: 20px;
+    color: #062b42;
+    border-radius: 5px;
+    display: block;
+    line-height: 20px;
+    /* background-color: #0f2336; */
+}
+
+body .navbar > .navbar-inner .container .dropdown > a:hover ,.dropdown > dropdown-toggle:hover{
+
+    /*old
+    color: #FFF;
+    */
+
+    color: #FFF;
+
+}
+
+.navbar .navbar-inner .container .dropdown > a > span > b.caret {
+color : #50627f ;
+    border-top-color: #50627f;
+    border-bottom-color: #50627f;
+}
+
+body .navbar .navbar-inner .container .dropdown.open > a {
+    color: #FFF;
+    background-color: #314455;
+
+}
+
+body .navbar .navbar-inner .container .dropdown.open > a:hover {
+    color: #FFF;
+    background-color: #314455;
+}
+
+
+
+
+
+
+
+/* MenuBar
+                -------------------------------------------------------- */
+.MenuBar{
+    position: static;
+    width: auto;
+
+}
+
+.menubar_inner{
+
+
+
+    box-shadow: 0px 1px 0px rgb(80, 98, 127) inset;
+
+    /* old
+        background: url("../img/headerbg.png") repeat scroll 0% 0% rgb(72, 91, 121);
+        border-bottom: 5px solid rgb(251, 147, 55);
+    */
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-linear-gradient(top, #2F4550 0%, #172935 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top, #2F4550 0%, #172935 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(top, #2F4550 0%, #172935 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2F4550), color-stop(1, #172935));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top, #2F4550 0%, #172935 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to bottom, #2F4550 0%, #172935 100%);
+    border-bottom: 5px solid #50627f;
+
+}
+
+.MenuBar .container{
+    width: auto;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.MenuBar .menubar_items
+{
+    height: auto !important;
+    overflow: visible !important;
+    position: relative;
+    transition: height 0.35s ease 0s;
+}
+
+.MenuBar .menubar_items ul{
+    width: 100%;
+
+    margin: 0px;
+    list-style: none;
+
+    display: inline-block;
+    margin-bottom: -5px;
+    /* old
+    padding: 0px;
+    border-right: 1px solid rgb(87, 106, 133);
+    */
+
+    padding: 0;
+    padding-bottom: 1px;
+}
+
+
+
+.MenuBar .menubar_items ul > li{
+    float: left;
+    min-width: 90px;
+
+
+    margin: 0px;
+
+
+    display: inline;
+    text-align: center;
+    line-height: 20px;
+    padding: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*old
+    border-left: 1px solid rgb(87, 106, 133);
+    border-right: 1px solid rgb(57, 73, 98);
+
+    */
+
+
+margin-left: 5px;
+    border-bottom: none;
+
+
+
+}
+
+.MenuBar .menubar_items ul > li > a{
+    display: block;
+font-weight: normal;
+
+    font-size: 13px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    text-align: center;
+    line-height: 20px;
+    min-width: 80px;
+    color: #67bff8;
+
+    font-family: 'Karla', sans-serif;
+    border-radius: 0px;
+
+    border-radius: 5px;
+    padding: 7px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.MenuBar .menubar_items ul > li > a:hover{
+
+
+    /*old
+    background: url("../img/arrow-active.png") no-repeat scroll center bottom transparent;
+    box-shadow: 0px 1px 0px rgb(79, 98, 126) inset;
+    */
+color:#FFF;
+    background-color: rgb(80, 98, 127);
+
+
+}
+.MenuBar .menubar_items ul > li.active > a{
+
+
+
+
+    /* old
+    background: url("../img/arrow-active.png") no-repeat scroll center bottom transparent;
+    box-shadow: 0px 1px 0px rgb(79, 98, 126) inset;
+    */
+
+}
+
+.MenuBar .menubar_items ul > li.active a > i{
+
+}
+
+.MenuBar .menubar_items ul > li.active > a {
+    color:#FFF;
+    background-color: rgb(80, 98, 127);
+
+}
+
+.MenuBar .menubar_items ul > li.active > a > i{
+    /*old
+    color: #FFF;
+    */
+
+}
+
+.MenuBar .menubar_items ul > li > a > i{
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-top: 12px;
+    margin-bottom: 9px;
+    font-size: 28px;
+
+    /* old
+    color: #9ba3ae;
+    */
+
+}
+
+.MenuBar .menubar_items ul > li > a > span{
+    display: block;
+    padding-bottom: 2px;
+    font-weight: bold;
+}
+
+/* Body
+                -------------------------------------------------------- */
+.main{
+    position: relative;
+
+}
+
+.main .pagetop{
+    padding-top: 10px;
+    position: relative;
+    /*background: url("../img/noise.white.png") repeat scroll 0% 0% transparent;*/
+
+
+
+
+
+   background: #efeff3;
+
+
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #bec1f8 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #bec1f8 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #bec1f8 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(1, #bec1f8));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #bec1f8 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to top, #FFFFFF 0%, #bec1f8 100%);
+
+}
+
+.main .pagetop .pagetitle{
+
+    margin: 0px 20px 10px;
+    color: #0c0e3c;
+    font-weight: normal;
+    font-size: 28px;
+    margin-top: 20px;
+
+}
+
+.main .pagetop .pagedisc{
+
+    margin: 0px 20px;
+    color: #1b206a;
+    margin-bottom: 40px;
+}
+
+/* Site Map */
+
+.sitemappath > div{
+    padding-left: 5px;
+}
+
+.sitemappath > div > a{
+    background-image: url("../img/breadcrumb.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: rgb(102, 102, 102);
+    text-decoration: none;
+    padding: 8px 20px 8px 10px;
+}
+
+.sitemappath > div > span{
+    padding: 8px 20px 8px 10px;
+
+}
+
+.sitemappath > div > a:hover{
+    text-decoration: underline;
+    color:#000;
+
+}
+
+
+.main .pagetop .sitemappath {
+
+    border-bottom: solid #dcd5d5 thin;
+    border-top: solid #dcd5d5 thin;
+    padding: 0;
+    background-color: #f7f7f7;
+    box-shadow: 0px 0px 3px #efeded inset;
+    box-shadow: 0px 0px 3px #dcd5d5;
+    font-size: 13px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    display: block;
+}
+
+
+
+
+    /* ------------------- */
+
+
+
+.main .container{
+    background: none repeat scroll 0% 0% transparent;
+    border: 0px none;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: baseline;
+}
+
+.main .pagetop .pagedisc i{
+    width: 100px;
+    display: inline-block;
+}
+
+
+/* Body Dashboard
+                -------------------------------------------------------- */
+
+
+
+/* Body Dashboard Shortcuts
+                -------------------------------------------------------- */
+.main .span{
+    width: 95%;
+    margin: 0 auto;
+}
+
+.main .row{
+    margin-bottom: 20px;
+}
+
+.main .span .widget-content{
+    padding: 20px;
+    padding-top: 5px;
+}
+
+.widget-content .widget-header{
+
+    margin: 20px 0px;
+    border-bottom: 2px solid rgb(251, 147, 55);
+    padding-bottom: 5px;
+    padding-right: 20px;
+    display: inline-block;
+    margin-top: 0px;
+    vertical-align: baseline;
+    background: none repeat scroll 0% 0% transparent;
+}
+
+.widget-content .widget-header h3{
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    color: #181c63;
+    line-height: 20px;
+}
+
+.main .span ul.shortcuts{
+
+    background: none repeat scroll 0% 0% transparent;
+    border: 0px none;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: baseline;
+    display: block;
+    position: static;
+}
+
+
+.main .span ul.shortcuts > li{
+
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 100px;
+    height: 100px;
+    background: none repeat scroll 0% 0% rgb(238, 238, 238);
+    padding: 5px;
+    border-radius: 2px 2px 2px 2px;
+    display: inline-block;
+    box-shadow: 1px 1px 2px rgb(204, 204, 204) inset;
+    list-style: none outside none;
+
+}
+
+ul.shortcuts >li > a{
+    width: 98px;
+    height: 98px;
+    display: block;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 2px 2px 2px 2px;
+    text-decoration: none;
+
+}
+
+ul.shortcuts >li > a:hover{
+    border: 1px solid #7c80d2;
+}
+
+ul.shortcuts >li > a i{
+    font-size: 40px;
+    color: #7a7a7a;
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+}
+ul.shortcuts >li > a span{
+    font-size: 15px;
+    color: #7a7a7a;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+/* Body Dashboard Alert Div
+                -------------------------------------------------------- */
+.main .span .widget-content .alertdiv{
+    position: relative;
+    width: auto;
+    border: 1px solid rgb(221, 221, 221);
+
+}
+
+.alertdiv ul{
+    background: none repeat scroll 0% 0% transparent;
+    border: 0px none;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: baseline;
+    display: block;
+    position: static;
+
+}
+
+.alertdiv ul li{
+    list-style: none ;
+    display: block;
+    padding: 20px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+    padding-top: 20px;
+}
+.alertdiv ul li:last-child{
+    border-bottom:none;
+}
+
+.alertdiv ul li .entity{
+    min-height: 60px;
+}
+
+.alertdiv ul li .entity h4{
+    margin-bottom: 0;
+}
+
+.alertdiv ul li .entity h4 a{
+    font-size: 18px;
+    font-weight: bold;
+    color: #fb9f48;
+    margin-bottom: 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+.alertdiv ul li .entity p{
+    margin-bottom: 0;
+}
+
+
+/* Footer
+                -------------------------------------------------------- */
+.footer{
+    margin-top: 50px;
+    border-top: 1px solid rgb(204, 204, 204);
+    padding: 15px ;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 12px;
+
+    color: #353881;
+
+    padding-bottom:0 ;
+
+display: none;
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-linear-gradient(bottom, #A9ADF6 0%, #FFFFFF 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(bottom, #A9ADF6 0%, #FFFFFF 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(bottom, #A9ADF6 0%, #FFFFFF 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #A9ADF6), color-stop(1, #FFFFFF));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(bottom, #A9ADF6 0%, #FFFFFF 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to top, #A9ADF6 0%, #FFFFFF 100%);
+
+    background: #efeff3;
+}
+
+
+
+.footer .span6:first-child{
+
+}
+
+.footer .span6:last-child{
+
+}
+
+.footer .span6{
+    max-width: 200px;
+    height: 30px;
+    display: inline-block;
+    padding: 0;
+}
+
+.footer .span6 a{
+    color:#062b42;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* DropDownMenu
+                -------------------------------------------------------- */
+
+.dropdown .dropdown-menu{
+    right: 0px;
+    left: auto;
+    border-radius: 6px 6px 6px 6px;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0px;
+    list-style: none outside none;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    line-height: 20px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    margin-right: -1px;
+
+
+}
+
+
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 1px;
+    overflow: hidden;
+    background-color: rgb(229, 229, 229);
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.dropdown.open .dropdown-menu{
+    display: block;
+}
+
+
+.dropdown-menu li{
+    line-height: 20px;
+    margin: 0;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.dropdown-menu li a{
+    font-size: 13px;
+     padding: 5px 9px;
+
+
+     border-radius: 4px 4px 4px 4px;
+     display: block;
+     clear: both;
+     font-weight: normal;
+     line-height: 20px;
+     color: rgb(51, 51, 51);
+     white-space: nowrap;
+     text-decoration: none;
+     font-family: 'Average Sans', sans-serif;
+ }
+
+.dropdown-menu li a:hover{
+    background-color: #ff9900;
+    color: #FFF;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.dropdown-menu #user_icon_menu{
+    display: none;
+}
+
+.dropdown-menu #user_title_menu{
+    display: inline-block;
+}
+
+.dropdown-menu #user_icon_menu >a:hover{
+    background: none;
+    color: #000;
+    text-shadow: none;
+}
+
+/* Login
+    ------------------------------------------------ */
+.stacked {
+    position: relative;
+}
+
+
+
+
+/* Login Form */
+.pass_forget a
+{
+    float: right;
+    width: 100%;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    outline-style:none;
+    margin:0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color:#fff;
+    text-shadow:0 -1px 0 rgba(0,0,0,0.25);
+
+
+
+}
+
+
+
+
+.login_remind{
+    width: 100%;
+    padding:0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    float: left;
+    border-top: solid #CCC thin;
+}
+
+.Login_error
+{
+    color : #ff0000 ;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: block;
+    width: 100%;
+}
+
+.Login_error span
+{
+
+    margin-left: 10px;
+}
+/* -------------- */
+
+/* More
+            -------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0px;
+    font-weight: normal;
+}

@@ -1,0 +1,168 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Codes
+{% endblock title %}
+
+{% set MU = 'code' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Code</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-list-alt"></i>
+    Code Management
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span">
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search" ></i>
+                            <p class="title_search" >Search Code</p>
+                        </span>
+                    </h5>
+
+                    <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
+                        <fieldset>
+                            <div class="control-group">
+                        {{ form_label(form.pro) }}
+                                <div class="controls">
+                        {{ form_widget(form.pro) }}
+                            </div>
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.item) }}
+                                <div class="controls">
+                        {{ form_widget(form.item) }}
+                            </div>
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.inputFileName) }}
+                        {{ form_widget(form.inputFileName) }}
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.serial) }}
+                        {{ form_widget(form.serial) }}
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.pin) }}
+                        {{ form_widget(form.pin) }}
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.status) }}
+                                <div class="controls">
+                                {{ form_widget(form.status) }}
+                            </div>
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.insertdate) }}
+                                <div class="controls">
+                        {{ form_widget(form.insertdate) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.saledate) }}
+                                <div class="controls">
+                        {{ form_widget(form.saledate) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                        {{ form_label(form.expiredate) }}
+                                <div class="controls">
+                        {{ form_widget(form.expiredate) }}
+                                </div>
+                            </div>
+                        {{ form_rest(form) }}
+                            <hr>
+                            <input class="btn btn-large" type="submit" value="Search">
+                        </fieldset>
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+                            $(".SearchForm").hide();
+                            $('.TitleShow1').click(function () {
+                                $('.SearchForm').slideToggle();
+                                $('#search_logo').removeAttr('class') ;
+
+                                if($('.title_search').html() == 'Search Code')
+                                {
+                                    $('.title_search').html('Close Search') ;
+                                    $('#search_logo').attr('class','icon-remove') ;
+                                }
+                                else{
+                                    $('.title_search').html('Search Code') ;
+                                    $('#search_logo').attr('class','icon-search') ;
+                                }
+
+                                var x = $('.form_search').offset().top - 20;
+                                $('body,html').animate({
+                                    scrollTop: x
+                                }, 800);
+                            });
+
+                        });
+                    </script>
+
+                </div>
+                <div class="tablediv" >
+
+                    <div class="contenttitle">
+                        <h4>Codes</h4>
+                    </div>
+                    <form>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Item Name</th>
+                                <th>serialNumber</th>
+                                <th>PinCode</th>
+                                <th>ExpiryDate</th>
+                                <th>Status</th>
+                                <th>Provider</th>
+                                <th>Manage</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for code in pagination %}
+                                <tr>
+                                    <td><input type="checkbox"/></td>
+                                    <td>{{ code.Item.itemName }}</td>
+                                    <td>{{ code.serialNumber }}</td>
+                                    <td>{{ code.pin }}</td>
+                                    <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
+                                    <td>{% if code.status==1 %}Active{% else %} Inactive {% endif %}</td>
+                                    <td>{{ code.Input.Account.accName }}</td>
+                                    <td>
+                                        <a href="{{ path('code_history',{'id':code.id}) }}" class="btn btn-warning">History</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    </form>
+                </div>
+                <div class="navigation" style="text-align: center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+                <div class="form-actions" style="margin-bottom: 0">
+                    <a href="#" class="btn btn-warning">Credit Note</a>
+                    <a href="#" class="btn btn-danger">Dead Beat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+Code:
+    Id: ردیف
+    SerialNumber: شماره سریال
+    Pin: پین کد
+    Status: وضعیت
+    CreditingDate: تاریخ ایجاد
+    Item: آیتم
+    Input: ورود
+
+    Provider: فروشنده
+    InputFileName: نام فایل ورودی
+    InsertDate: تاریخ درج
+    SaleDate: تاریخ فروش
+    ExpireDate: تاریخ انقضا
+
+    All: همه
+    Sale:
+        Sale: فروخته شده
+        NotSale: فروخته نشده
+        All: همه

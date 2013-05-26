@@ -1,0 +1,20 @@
+Code:
+    Id: ID
+    SerialNumber: Serial Number
+    Pin: Pin Code
+    Status: Status
+    CreditingDate: Crediting Date
+    Item: Item
+    Input: Input
+
+    Provider: Provider
+    InputFileName: Input File Name
+    InsertDate: Insert Date
+    SaleDate: Sale Date
+    ExpireDate: Expire Date
+
+    All: All
+    Sale:
+        Sale: Sale
+        NotSale: Not Sale
+        All: AllStatus

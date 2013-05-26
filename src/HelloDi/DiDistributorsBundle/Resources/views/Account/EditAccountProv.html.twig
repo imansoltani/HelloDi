@@ -1,0 +1,41 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <a class="link" href="#">{{ Account.accName }}</a>
+    <span class="link">Info</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+
+    <div class="widget-header">
+        <h3>Provider Info</h3>
+    </div> <!-- /widget-header -->
+<form style="margin-top: 20px" action="{{ path('EditAccountProvSubmit') }}" method="post" class="form-horizontal" >
+
+
+
+    <div class="control-group">
+        {{ form_label(edit_form.accCurrency) }}
+        <div class="controls">
+            {{ form_widget(edit_form.accCurrency) }}
+        </div>
+        {{ form_errors(edit_form.accCurrency) }}
+    </div>
+
+
+    {{form_widget(edit_form._token)}}
+
+    <input type="hidden" name="accountid" value="{{ id }}"/>
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <button class="btn btn-primary" type="submit">Edit</button>
+        <button type="reset" class="btn">Reset</button>
+    </div>
+
+</form>
+
+{% endblock Tab %}

@@ -1,0 +1,67 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Items Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Items Management</span>
+{% endblock Site_Map %}
+
+{% block Body %}
+    <h1>Item</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.itemName }}</td>
+            </tr>
+            <tr>
+                <th>Face Value</th>
+                <td>{{ entity.itemFaceValue }}</td>
+            </tr>
+            <tr>
+                <th>Currency</th>
+                <td>{{ entity.itemCurrency }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ entity.itemType }}</td>
+            </tr>
+            <tr>
+                <th>Alert Min Stock</th>
+                <td>{{ entity.alertMinStock }}</td>
+            </tr>
+            <tr>
+                <th>Operator</th>
+                <td>{{ entity.operator.entName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('item') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('item_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('item_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
