@@ -476,8 +476,6 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig', array('form_searchdistchild' => $form_searchdistchild->createView(), 'pagination' => $pagination, 'id' => $id, 'Account' => $AccountParent));
     }
 
-////////////
-
     public function  ManageDistUserAction(Request $request)
     {
         $id = $request->get('id');

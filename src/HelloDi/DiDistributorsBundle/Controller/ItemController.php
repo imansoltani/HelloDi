@@ -3,12 +3,10 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use HelloDi\DiDistributorsBundle\Form\ItmSearchType;
-use HelloDi\DiDistributorsBundle\Entity\ItmSearch;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Form\ItemType;
-use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
@@ -19,72 +17,56 @@ class ItemController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $items = $em->getRepository('HelloDiDiDistributorsBundle:Item');
+        $qb = $em->createQueryBuilder()
+            ->select('item')
+            ->from('HelloDiDiDistributorsBundle:Item','item');
 
         if ($request->isMethod('POST')) {
-            $itemsearch="";
             $form->bind($request);
             $data = $form->getData();
 
-            $qb = $items->createQueryBuilder('item');
-            if($itemsearch->getName()!="")
-                $qb =  $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($itemsearch->getName().'%')));
+            if($data['name']!="")
+                $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['name'].'%')));
 
-            if($itemsearch->getType()=='0')
-                $qb =  $qb->andWhere($qb->expr()->eq('item.itemType',intval($itemsearch->getType() )));
+            if($data['type']!= 3)
+                $qb->andWhere($qb->expr()->eq('item.itemType',intval($data['type'])));
 
-            if($itemsearch->getType()=='1')
-                $qb =  $qb->andWhere($qb->expr()->eq('item.itemType',intval($itemsearch->getType() )));
+            if($data['currency']!='All')
+                $qb->andWhere($qb->expr()->eq('item.itemCurrency',intval($data['currency'])));
 
-            if($itemsearch->getType()=='2')
-                $qb =  $qb->andWhere($qb->expr()->eq('item.itemType',intval($itemsearch->getType() )));
-
-            if($itemsearch->getCurrency()!=2)
-                $qb =  $qb->andWhere($qb->expr()->eq('item.itemCurrency',intval($itemsearch->getCurrency() )));
-
-            if($itemsearch->getOperator()!="")
-                $qb =  $qb->andWhere($qb->expr()->like('item.operator', $qb->expr()->literal($itemsearch->getOperator().'%')));
-
-            $qb = $qb->getQuery();
-            $items = $qb->getResult();
+            if($data['operator']!="")
+                $qb->andWhere($qb->expr()->like('item.operator', $qb->expr()->literal($data['operator'].'%')));
         }
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $items,
+            $qb,
             $this->get('request')->query->get('page', 1),
             10
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Item:index.html.twig', array(
             'pagination' => $pagination,
-            'MU' => 'item',
             'form' => $form->createView()
         ));
     }
 
     public function newAction(Request $request)
     {
-        $entity = new Item();
-        $form   = $this->createForm(new ItemType(), $entity);
+        $item  = new Item();
+        $form   = $this->createForm(new ItemType(), $item);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
+                $em->persist($item);
                 $em->flush();
-//                return $this->render('HelloDiDiDistributorsBundle:Item:index.html.twig', array(
-//                 'entities' => $entities,
-//                 'form'   => $form->createView(),'MU' => 'item' ,
-//
-//                ));
                 return $this->redirect($this->generateUrl('item'));
-//                return $this->redirect("HelloDiDiDistributorsBundle:Item:index");
             }
         }
         return $this->render('HelloDiDiDistributorsBundle:Item:new.html.twig', array(
-            'form'   => $form->createView(),'MU' => 'item' ,
+            'form' => $form->createView()
         ));
     }
 
@@ -94,19 +76,17 @@ class ItemController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
 
-        if (!$entity) {
+        if (!$item) {
             throw $this->createNotFoundException('Unable to find Item entity.');
         }
 
-        $editForm = $this->createForm(new ItemType(), $entity);
+        $editForm = $this->createForm(new ItemType(), $item);
 
         return $this->render('HelloDiDiDistributorsBundle:Item:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'MU' => 'item' ,
-            'itemid' => $id
+            'item'      => $item,
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -134,12 +114,4 @@ class ItemController extends Controller
 
         return $this->forward("HelloDiDiDistributorsBundle:Item:edit");
     }
-
-    public function tabsAction($id)
-    {
-        return $this->render("HelloDiDiDistributorsBundle:Item:tabs.html.twig", array(
-            'itemid'=>$id
-        ));
-    }
-
 }
