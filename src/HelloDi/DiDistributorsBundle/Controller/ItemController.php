@@ -23,7 +23,7 @@ class ItemController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            $data = $form->getData();
+//            $data = $form->getData();
 
             $qb = $items->createQueryBuilder('item');
             if($itemsearch->getName()!="")
