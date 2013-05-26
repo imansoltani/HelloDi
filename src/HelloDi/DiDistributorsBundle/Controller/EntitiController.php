@@ -244,7 +244,7 @@ class EntitiController extends Controller
                 return $this->forward("HelloDiDiDistributorsBundle:Entiti:accounts", array('entityid' => $id));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddProv.html.twig', array('id' => $id, 'form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddProv.html.twig', array('id' => $id, 'entity' => $entity, 'form' => $form->createView()));
     }
 
     public function AddDistAction(Request $request, $id)
@@ -269,7 +269,7 @@ class EntitiController extends Controller
                 return $this->forward("HelloDiDiDistributorsBundle:Entiti:accounts", array('entityid' => $id));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddDist.html.twig', array('id' => $id, 'form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddDist.html.twig', array('id' => $id, 'entity' => $entity, 'form' => $form->createView()));
     }
 
 }

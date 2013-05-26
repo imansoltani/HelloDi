@@ -1,0 +1,107 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Add Provider
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Provider</a>
+    <span class="link">Add Provider</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    New Provider
+{% endblock %}
+
+
+{% set MU = 'prov' %}
+
+{% block Body %}
+    <div class="span">
+
+        <div class="widget stacked">
+
+
+            <!-- /widget-header -->
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/more/prov.entity.form.js') }}"></script>
+            <div class="widget-content">
+                <form  action="{{ path('AddAccountProveMaster2Step') }}" method="post" class="form-horizontal form-step">
+                    <fieldset>
+                        <div id="wizard" class="swMain">
+                            <ul class="anchor">
+                                <li><a id="step1" rel="1" isdone="1" class="selected" onclick="go(1)">
+                                        <label style="cursor:default" class="stepNumber">1</label>
+                                        <span class="stepDesc">
+                                           Entity<br>
+
+                                        </span>
+                                    </a>
+                                </li>
+                                <li><a id="step2" rel="2" isdone="0" class="disabled" onclick="go(2)">
+                                        <label style="cursor:default" class="stepNumber">2</label>
+                                        <span class="stepDesc">
+                                           Account<br>
+
+                                        </span>
+                                    </a>
+                                </li>
+                                <li><a id="step3" rel="3" isdone="0" class="disabled" onclick="go(3)">
+                                        <label style="cursor:default" class="stepNumber">3</label>
+                                        <span class="stepDesc">
+                                           Address<br>
+
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="stepContainer">
+                                <!-- Steps -->
+                                <!-- Entity -->
+                               {% block steps %}
+                                {% endblock %}
+                            </div>
+                            <div class="form-actions" style="margin-bottom: 0">
+                                <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">Previous</a>
+                                <a class="btn btn-primary buttonNext" onclick="Next()">Next</a>
+
+                                <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">Create</a>
+
+                                </div>
+                            </div>
+                    </fieldset>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <input type="hidden" class="step_number" value="1"/>
+
+
+    <script type="text/javascript">
+        $(function(){
+         /*var x = $('#step-1').height();
+         $('.stepContainer').height(x);
+
+         $(window).resize(function(){
+         var x = $('#step-1').height();
+         $('.stepContainer').height(x);
+         });*/
+
+
+         });
+
+    </script>
+
+{% endblock Body %}
