@@ -20,7 +20,11 @@ class EntitiType extends AbstractType
             ->add('entTel2', 'text',array('required'=>false,'label' => 'Entiti.Tel2','translation_domain' => 'entity'))
             ->add('entFax', 'text',array('required'=>false,'label' => 'Entiti.Fax','translation_domain' => 'entity'))
             ->add('entWebsite', 'text',array('required'=>false,'label' => 'Entiti.WebSite','translation_domain' => 'entity'))
-            ->add('entRegistrationNumber', 'text',array('label' => 'Entiti.RegistrationNumber','translation_domain' => 'entity'))
+            ->add('entAdrs1')
+            ->add('entAdrs2')
+            ->add('entAdrs3')
+            ->add('entNp')
+             ->add('entCity')
         ;
     }
 

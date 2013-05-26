@@ -104,24 +104,26 @@ class EntitiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-
-        $qb = $em->createQueryBuilder($entity);
-        $qb->select('Usr')
-            ->from('HelloDiDiDistributorsBundle:User', 'Usr')
-            ->innerJoin('Usr.Account','UsrAcc')
-            ->orderBy('Usr.firstName', 'ASC');
+        $qb = $em->createQueryBuilder();
+        $qb->select('Ent')
+            ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
+            ->innerJoin('Ent.Accounts','EntAcc')
+            ->innerJoin('Ent.Users','EntUsr')
+            ->where('Ent.id =:Entiti')
+            ->orderBy('EntUsr.firstName', 'ASC')
+            ->setParameter('Entiti',$entity->getId());
         $query = $qb->getQuery();
-//        $count = count($query->getResult());
-//        $query = $query->setHint('knp_paginator.count', $count);
-//die('sdds'.$count);
+        $count = count($query->getResult());
+      $query = $query->setHint('knp_paginator.count', $count);
+
+
 
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
             6/*limit per page*/
         );
-
-
+       // die('sas'.count($pagination));
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
             'pagination' => $pagination, 'entity' => $entity
         ));
@@ -220,19 +222,17 @@ class EntitiController extends Controller
 
     public function AddProvAction(Request $request, $id)
     {
-
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $acc = new Account();
         $acc->setEntiti($entity);
         $acc->setAccCreationDate(new \DateTime('now'));
-
+        $acc->setAccCreditLimit(null);
         $acc->setAccBalance(0);
-        $acc->setAccStatus(1);
-        $acc->setAccProv(1);
-
+        $acc->setAccType(1);
+        $acc->setAccCreditLimit(0);
         $acc->setAccTimeZone(null); /////=========*******
-        $acc->setAccType(0);
+
         $form = $this->createForm(new AccountProvType(), $acc);
 
         if ($request->isMethod('POST')) {
@@ -256,8 +256,8 @@ class EntitiController extends Controller
         $acc->setEntiti($entity);
         $acc->setAccCreationDate(new \DateTime('now'));
         $acc->setAccBalance(0);
-        $acc->setAccProv(0);
-        $acc->setAccStatus(1);
+        $acc->setAccType(0);
+        $acc->setAccCreditLimit(0);
         $form = $this->createForm(new AccountDistMasterType(), $acc);
 
         if ($request->isMethod('POST')) {

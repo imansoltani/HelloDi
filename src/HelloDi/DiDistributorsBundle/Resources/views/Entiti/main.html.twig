@@ -49,7 +49,6 @@
                                 <div class="controls">{{ form_widget(formsearch.Country) }}</div>
                             </div>
 
-
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
                         </fieldset>
@@ -109,33 +108,22 @@
                                         <td style="font-weight: bold">{{ entity.id }}</td>
 
                                         <td class="td-actions">
-                                            {% if entity.parent==null %}
                                                 <input type="submit" value="Manage"
                                                        onclick="$('.entityid').val('{{ entity.id }}');"/>
-                                            {% else %}
-                                                <input type="submit" value="Show"
-                                                       onclick="$('.entityid').val('{{ entity.id }}');"/>
-                                            {% endif %}
+
                                         </td>
                                         <td>{{ entity.entName }}</td>
                                         <td>
-                                            {% if entity.Addresses.count!=0 %}
-                                                {#{{ entity.Addresses[0].Country.iso }}#}
-                                                {{ entity.Addresses[0].Country.iso }}
-                                            {% else %}
-                                                Null
-                                            {% endif %}
+                                            {{ entity.Country.iso }}
                                         </td>
                                         <td>
-                                            {% if entity.Addresses.count!=0 %}
-                                            {{ entity.Addresses[0].adrsCity }}</td>
-                                        {% else %}
-                                            Null
-                                        {% endif %}
+
+                                            {{ entity.entCity }}
+
                                         <td>
 
                                             {% for EA in entity.Accounts %}
-                                                {% if EA.accProv==1 %}
+                                                {% if EA.accType==1 %}
                                                     {% set p=p+1 %}
                                                 {% else %}
                                                     {% set d=d+1 %}
@@ -155,11 +143,15 @@
                             <input type="hidden" name="entityid" value="" class="entityid"/>
 
                     </div>
+
                     </form>
+
                 </div>
 
 
             </div>
+
         </div>
+
     </div>
 {% endblock %}

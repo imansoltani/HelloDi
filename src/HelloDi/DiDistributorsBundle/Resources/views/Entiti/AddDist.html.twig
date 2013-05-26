@@ -44,15 +44,8 @@
         {{ form_errors(form.accTimeZone) }}
     </div>
 
-    <div class="control-group">
-        {{ form_label(form.accType) }}
-        <div class="controls" >
-            {{ form_widget(form.accType,{'attr':{'disabled':''}})}}
-        </div>
-        {{ form_errors(form.accType) }}
-    </div>
 
-
+    {{ form_widget(form._token) }}
 
 
 

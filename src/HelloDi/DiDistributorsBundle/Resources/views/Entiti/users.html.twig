@@ -36,31 +36,31 @@
                 </thead>
                 <tbody>
 
-                {% for user in pagination %}
-                    {% for usp in user.Userprivileges %}
+                {% for Ent in pagination %}
+                    {% for User in Ent.Users %}
                         <tr>
-                            <td >{{ usp.User.id }}</td>
-                            <td>{{ usp.User.name }}</td>
-                            <td>{{ usp.User.username }}</td>
+                            {% if User.Account.accType  != 1 %}
+                            <td >{{ User.id }}</td>
+                            <td>{{ User.firstName }}</td>
+                            <td>{{ User.username }}</td>
                             <td>
-                                {% if usp.Account.accName!=null %}
-                                    {{ usp.Account.accName }}
-                                {% else %}
-                                    Null
-                                {% endif %}
+
+                                {% if User.Account.accName!='' %}
+                                {{ User.Account.accName }}
+                                    {% else %}
+                                        null
+                                        {% endif %}
                             </td>
                             <td>
-                                {% if usp.privileges==0 %}
-                                    Seller
-                                {% elseif usp.privileges==1 %}
-                                    <span style="color: red">Admin</span>
 
-                                {% endif %}
+                                {{ User.roles[0] }}
+
                             </td>
                             <td class="td-actions" >
                                 <a class="btn_actions" href="#">Modify</a>
                             </td>
                         </tr>
+                            {% endif %}
                     {% endfor %}
                 {% endfor %}
                 </tbody>

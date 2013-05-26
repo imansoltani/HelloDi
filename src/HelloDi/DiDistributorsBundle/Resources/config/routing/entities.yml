@@ -21,9 +21,6 @@ Ent_Info:
 Ent_InfoSubmit:
     pattern:  /entities/info/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:infoSubmit" }
-Ent_Addresses:
-    pattern:  /Address
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:addresses" }
 AddNewUserEntiti:
     pattern:  /entities/{id}/user/add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti" }

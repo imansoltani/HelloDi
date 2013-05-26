@@ -38,15 +38,6 @@
             </form>
         </a>
     </li>
-
-    <li {% if tab == '5' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('Ent_Addresses') }}" method="post">
-                <input type="hidden" name="entityid" value="{{ entity.id }}"/>
-                <input type="submit" value="Address"/>
-            </form>
-        </a>
-    </li>
 {% endblock %}
 
 {% block Body %}

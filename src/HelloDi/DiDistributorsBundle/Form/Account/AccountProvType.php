@@ -12,7 +12,7 @@ class AccountProvType extends AbstractType
     {
         $builder
             ->add('accName','text')
-            ->add('accCurrency','choice',array('choices'=>(array(0=>'USD',1=>'CHF'))))
+            ->add('accCurrency','choice',array('choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
             ->add('accTerms','text',array())
         ;
     }

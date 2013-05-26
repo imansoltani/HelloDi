@@ -38,12 +38,15 @@
 
                     <form class="form-horizontal SearchForm" action="{{ path('ShowMyAccountDist',{}) }}" method="post">
                         <fieldset>
-                            <div class="control-group">
-                                {{ form_label(form_searchdist.TypeSearch) }}
-                                <div class="controls">
-                                    {{ form_widget(form_searchdist.TypeSearch) }}
-                                </div>
-                            </div>
+
+                            {#<div class="control-group">#}
+                                {#{{ form_label(form_searchdist.TypeSearch) }}#}
+                                {#<div class="controls">#}
+                                    {#{{ form_widget(form_searchdist.TypeSearch) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {##}
+
                             <div class="control-group">
                                 {{ form_label(form_searchdist.accName) }}
                                 {{ form_widget(form_searchdist.accName) }}
@@ -69,12 +72,12 @@
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                {{ form_label(form_searchdist.accStatus) }}
-                                <div class="controls">
-                                    {{ form_widget(form_searchdist.accStatus) }}
-                                </div>
-                            </div>
+                            {#<div class="control-group">#}
+                                {#{{ form_label(form_searchdist.accStatus) }}#}
+                                {#<div class="controls">#}
+                                    {#{{ form_widget(form_searchdist.accStatus) }}#}
+                                {#</div>#}
+                            {#</div>#}
 
                             <div class="control-group">
                                 {{ form_label(form_searchdist.accCreditLimit) }}
@@ -82,7 +85,7 @@
                                     {{ form_widget(form_searchdist.accCreditLimit) }}
                                 </div>
                             </div>
-                            {{ form_rest(form_searchdist) }}
+                            {{ form_widget(form_searchdist._token) }}
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
 

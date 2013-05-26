@@ -15,6 +15,7 @@
 
 
 
+
             {{ form_label(edit_form.entName) }}
             {{ form_widget(edit_form.entName,{'attr':{'readonly':''}}) }}
             </br>
@@ -37,11 +38,24 @@
 
             {{ form_label(edit_form.entWebsite) }}
             {{ form_widget(edit_form.entWebsite) }}
+
             </br>
-            {{ form_label(edit_form.entRegistrationNumber) }}
-            {{ form_widget(edit_form.entRegistrationNumber) }}
+            {{ form_label(edit_form.entAdrs1) }}
+            {{ form_widget(edit_form.entAdrs1) }}
+            </br>
 
+            {{ form_label(edit_form.entAdrs2) }}
+            {{ form_widget(edit_form.entAdrs2) }}
+            </br>
 
+            {{ form_label(edit_form.entAdrs3) }}
+            {{ form_widget(edit_form.entAdrs3) }}
+            </br>
+
+            {{ form_label(edit_form.entCity) }}
+            {{ form_widget(edit_form.entCity) }}
+
+            {{ form_widget(edit_form._token) }}
 
             <input type="hidden" name="entityid" value="{{ entityid }}"/>
             <div class="form-actions" style="margin-bottom: 0" >

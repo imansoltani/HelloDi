@@ -31,7 +31,15 @@
         {{ form_errors(form.accCurrency) }}
     </div>
 
-    {{ form_rest(form) }}
+    <div class="control-group">
+        {{ form_label(form.accTerms) }}
+        <div class="controls">
+            {{ form_widget(form.accTerms) }}
+        </div>
+        {{ form_errors(form.accTerms) }}
+    </div>
+
+    {{ form_widget(form._token) }}
 
     <input type="hidden" name='id' value="{{ id }}">
     <div class="form-actions" style="margin-bottom: 0" >

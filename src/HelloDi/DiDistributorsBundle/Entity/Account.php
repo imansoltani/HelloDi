@@ -15,7 +15,7 @@ class Account
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=false, name="accdefaultlanguage")
+     * @ORM\Column(type="string", length=2, nullable=true, name="accdefaultlanguage")
      */
     private $accDefaultLanguage;
 
@@ -45,7 +45,7 @@ class Account
     private $accCreationDate;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="acc_time_zone")
+     * @ORM\Column(type="string", length=45, nullable=true, name="acc_time_zone")
      */
     private $accTimeZone;
 
