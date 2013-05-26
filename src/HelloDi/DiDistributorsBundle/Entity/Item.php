@@ -35,7 +35,7 @@ class Item
     private $itemType;
 
     /** 
-     * @ORM\Column(type="integer", unique=true, nullable=false, name="alert_min_stock")
+     * @ORM\Column(type="integer", nullable=false, name="alert_min_stock")
      */
     private $alertMinStock;
 

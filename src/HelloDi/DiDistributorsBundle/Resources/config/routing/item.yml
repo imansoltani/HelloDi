@@ -2,19 +2,9 @@ item:
     pattern:  /
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:index" }
 
-item_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:show" }
-
 item_new:
     pattern:  /new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:new" }
-
-
-item_create:
-    pattern:  /create
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:create" }
-    requirements: { _method: post }
 
 item_edit:
     pattern:  /details
@@ -24,13 +14,3 @@ item_update:
     pattern:  /{id}/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:update" }
     requirements: { _method: post|put }
-
-item_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:delete" }
-    requirements: { _method: post|delete }
-
-item_tabs:
-    pattern:  /{id}/tabs
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:tabs" }
-

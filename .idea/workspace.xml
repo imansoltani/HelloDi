@@ -2,6 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="in 2013/05/26 at 12:13 pm">
+      <change type="DELETED" beforePath="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Item\show.html.twig" afterPath="" />
+      <change type="DELETED" beforePath="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Item\tabs.html.twig" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItemType.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItemType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItmSearchType.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItmSearchType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowItemMaster.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowItemMaster.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/edit.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/edit.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/index.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/item.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/item.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -10,11 +22,12 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369562488039" ignored="false" />
-    <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369548961273" ignored="false" />
+    <ignored path="../HelloDiOld/.idea/workspace.xml" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369581794043" ignored="false" />
+    <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369586287325" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369320344716" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
-    <file path="/a.dummy" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369513683094" ignored="false" />
+    <file path="/a.dummy" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369584132309" ignored="false" />
     <file path="/UserrRepository.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366485716175" ignored="false" />
     <file path="/User.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368464405015" ignored="false" />
     <file path="/*.regexp" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366486220707" ignored="false" />
@@ -86,12 +99,12 @@
     <file path="/prov.entity.form.js" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367291759817" ignored="false" />
     <file path="/prov.entity.valid.form.js" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367289895250" ignored="false" />
     <file path="/Master_dashboard.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368240106755" ignored="false" />
-    <file path="/ItemController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369557714057" ignored="false" />
+    <file path="/ItemController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369583369330" ignored="false" />
     <file path="/ItemType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367223787002" ignored="false" />
     <file path="/new.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368123118776" ignored="false" />
     <file path="/upload.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368705306696" ignored="false" />
     <file path="/Item.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369298893028" ignored="false" />
-    <file path="/edit.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368954403853" ignored="false" />
+    <file path="/edit.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369584388844" ignored="false" />
     <file path="/show.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367244021090" ignored="false" />
     <file path="/index.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369319871630" ignored="false" />
     <file path="/Account.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367840112249" ignored="false" />
@@ -182,7 +195,7 @@
     <file path="/Form.css" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369093733969" ignored="false" />
     <file path="/ManageDistSettings.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369075832162" ignored="false" />
     <file path="/ManageDistSettingsChild.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369076328656" ignored="false" />
-    <file path="/ShowItemMaster.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369089432180" ignored="false" />
+    <file path="/ShowItemMaster.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369584476343" ignored="false" />
     <file path="$PROJECT_DIR$/../HelloDi4/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369131148281" ignored="false" />
     <file path="$PROJECT_DIR$/../../HelloDi/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369241066502" ignored="false" />
     <file path="$PROJECT_DIR$/../../HelloDi/app/config/security.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369155521545" ignored="false" />
@@ -200,6 +213,8 @@
     <file path="/EntitiesSearchType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369324453614" ignored="false" />
     <file path="/Country.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369512962145" ignored="false" />
     <file path="/ChangingPrice.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369514803611" ignored="false" />
+    <file path="/parameters.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369581824616" ignored="false" />
+    <file path="$PROJECT_DIR$/../HelloDiOld/app/config/parameters.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369581824616" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,47 +242,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EntitiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php">
+      <file leaf-file-name="CodeController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="246" column="21" selection-start="8592" selection-end="8592" vertical-scroll-proportion="-12.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit_content.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/FOSUserBundle/views/Profile/edit_content.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="14" selection-start="240" selection-end="240" vertical-scroll-proportion="-0.65384614">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AddNewUserEntiti.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/AddNewUserEntiti.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="24" selection-start="447" selection-end="447" vertical-scroll-proportion="-5.923077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html.twig" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/main.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="8" selection-start="93" selection-end="93" vertical-scroll-proportion="0.09514926">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Main.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="18" selection-start="165" selection-end="165" vertical-scroll-proportion="-5.230769">
-              <folding />
+            <state line="19" column="36" selection-start="646" selection-end="646" vertical-scroll-proportion="0.45124283">
+              <folding>
+                <element signature="e#2963#3271#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -281,9 +262,6 @@
   </component>
   <component name="FrameworkCommandLineHistory">
     <commandsHistory>
-      <command text="hd doctrine:generate:entities HelloDi" />
-      <command text="hd doctrine:generate:entities HelloDi" />
-      <command text="hd doctrine:schema:create" />
       <command text="hd doctrine:schema:update --force" />
       <command text="hd fos:user:create masteradmin master@admin.com 1234" />
       <command text="hd doctrine:generate:entities HelloDi" />
@@ -306,6 +284,9 @@
       <command text="hd doctrine:schema:update --force" />
       <command text="hd doctrine:generate:entities HelloDi" />
       <command text="hd doctrine:schema:update --force" />
+      <command text="hd doctrine:generate:entities HelloDI" />
+      <command text="hd doctrine:generate:entities HelloDi" />
+      <command text="hd doctrine:schema:update --force" />
     </commandsHistory>
   </component>
   <component name="Git.Settings">
@@ -318,25 +299,28 @@
       <MyDateState />
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Entiti.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/DetailHistory.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Price.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/ChangingPrice.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Country.php" />
-        <option value="$PROJECT_DIR$/app/config/security.yml" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Account.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/SecurityListener.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/CdSearchType.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" />
         <option value="$PROJECT_DIR$/app/Resources/FOSUserBundle/views/Profile/edit_content.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Main.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/edit.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowItemMaster.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/item.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItemType.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItmSearchType.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php" />
       </list>
     </option>
   </component>
@@ -503,7 +487,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Entiti" />
+              <option name="myItemId" value="Item" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -559,20 +543,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -585,7 +555,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="159" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HelloDi2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HelloDiOld/.idea/workspace.xml" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="165" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="826" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="829" />
@@ -758,20 +728,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.5136054" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24621212" sideWeight="0.2857143" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32826748" sideWeight="0.670068" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2780303" sideWeight="0.3622449" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2871212" sideWeight="0.3622449" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30757576" sideWeight="0.2993197" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32764506" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.42006803" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3282313" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6717687" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="92" y="92" width="1182" height="544" />
@@ -780,11 +750,11 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8792517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.42006803" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -875,101 +845,278 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/TicketNote.php">
+    <entry file="file://$PROJECT_DIR$/web/bundles/hellodi/js/more/prov.entity.form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.6660448" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.6263347" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/main.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="72" selection-start="785" selection-end="785" vertical-scroll-proportion="-0.63432837" />
+        <state line="8" column="49" selection-start="300" selection-end="300" vertical-scroll-proportion="-0.41231343" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/User.php">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/accounts.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="15" selection-start="469" selection-end="469" vertical-scroll-proportion="0.3488806" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-11.591418" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="49" selection-start="483" selection-end="483" vertical-scroll-proportion="0.19502868" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="963" column="30" selection-start="38210" selection-end="38244" vertical-scroll-proportion="0.03250478">
-          <folding />
-        </state>
+        <state line="20" column="0" selection-start="664" selection-end="664" vertical-scroll-proportion="-0.12686567" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/CdSearchType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="29" selection-start="490" selection-end="490" vertical-scroll-proportion="-0.65384614" />
+        <state line="38" column="23" selection-start="2093" selection-end="2093" vertical-scroll-proportion="0.58891016">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Code/history.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="31" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.0" />
+        <state line="428" column="15" selection-start="16579" selection-end="16579" vertical-scroll-proportion="0.41791046">
+          <folding>
+            <element signature="e#1637#4176#0" expanded="false" />
+            <element signature="e#2019#3502#0" expanded="false" />
+            <element signature="e#2256#2357#0" expanded="false" />
+            <element signature="e#2256#2406#0" expanded="false" />
+            <element signature="e#2256#2468#0" expanded="false" />
+            <element signature="e#3513#3795#0" expanded="false" />
+            <element signature="e#3886#4072#0" expanded="false" />
+            <element signature="e#3963#4071#0" expanded="false" />
+            <element signature="e#4192#5133#0" expanded="false" />
+            <element signature="e#4457#4567#0" expanded="false" />
+            <element signature="e#4654#4925#0" expanded="false" />
+            <element signature="e#4740#4914#0" expanded="false" />
+            <element signature="e#4941#5125#0" expanded="false" />
+            <element signature="e#5021#5124#0" expanded="false" />
+            <element signature="e#5139#5885#0" expanded="false" />
+            <element signature="e#5428#5682#0" expanded="false" />
+            <element signature="e#5514#5672#0" expanded="false" />
+            <element signature="e#5699#5878#0" expanded="false" />
+            <element signature="e#5774#5877#0" expanded="false" />
+            <element signature="e#5891#6183#0" expanded="false" />
+            <element signature="e#7080#7172#0" expanded="false" />
+            <element signature="e#7188#8519#0" expanded="false" />
+            <element signature="e#7992#8359#0" expanded="false" />
+            <element signature="e#8079#8348#0" expanded="false" />
+            <element signature="e#8546#8706#0" expanded="false" />
+            <element signature="e#8712#9272#0" expanded="false" />
+            <element signature="e#9045#9265#0" expanded="false" />
+            <element signature="e#9124#9255#0" expanded="false" />
+            <element signature="e#9278#9852#0" expanded="false" />
+            <element signature="e#9644#9760#0" expanded="false" />
+            <element signature="e#9858#10304#0" expanded="false" />
+            <element signature="e#10118#10296#0" expanded="false" />
+            <element signature="e#10198#10295#0" expanded="false" />
+            <element signature="e#10318#11475#0" expanded="false" />
+            <element signature="e#10742#11330#0" expanded="false" />
+            <element signature="e#10825#11319#0" expanded="false" />
+            <element signature="e#11854#12020#0" expanded="false" />
+            <element signature="e#12277#12364#0" expanded="false" />
+            <element signature="e#12277#12416#0" expanded="false" />
+            <element signature="e#12277#12476#0" expanded="false" />
+            <element signature="e#13806#13979#0" expanded="false" />
+            <element signature="e#14688#14870#0" expanded="false" />
+            <element signature="e#14769#14869#0" expanded="false" />
+            <element signature="e#15003#15163#0" expanded="false" />
+            <element signature="e#15189#15687#0" expanded="false" />
+            <element signature="e#15519#15679#0" expanded="false" />
+            <element signature="e#15707#16562#0" expanded="false" />
+            <element signature="e#16155#16320#0" expanded="false" />
+            <element signature="e#16338#16554#0" expanded="false" />
+            <element signature="e#16584#18873#0" expanded="false" />
+            <element signature="e#17055#17138#0" expanded="false" />
+            <element signature="e#17055#17306#0" expanded="false" />
+            <element signature="e#17055#17366#0" expanded="false" />
+            <element signature="e#18879#19692#0" expanded="false" />
+            <element signature="e#19313#19469#0" expanded="false" />
+            <element signature="e#19698#21561#0" expanded="false" />
+            <element signature="e#20146#20254#0" expanded="false" />
+            <element signature="e#20146#20299#0" expanded="false" />
+            <element signature="e#20146#20341#0" expanded="false" />
+            <element signature="e#20146#20526#0" expanded="false" />
+            <element signature="e#21044#21202#0" expanded="false" />
+            <element signature="e#21567#21737#0" expanded="false" />
+            <element signature="e#21744#22382#0" expanded="false" />
+            <element signature="e#22389#23075#0" expanded="false" />
+            <element signature="e#22724#22895#0" expanded="false" />
+            <element signature="e#22810#22883#0" expanded="false" />
+            <element signature="e#23081#24272#0" expanded="false" />
+            <element signature="e#23674#23676#0" expanded="false" />
+            <element signature="e#24279#25135#0" expanded="false" />
+            <element signature="e#24607#24964#0" expanded="false" />
+            <element signature="e#24694#24954#0" expanded="false" />
+            <element signature="e#25158#25628#0" expanded="false" />
+            <element signature="e#25458#25621#0" expanded="false" />
+            <element signature="e#25537#25620#0" expanded="false" />
+            <element signature="e#25634#26685#0" expanded="false" />
+            <element signature="e#26056#26440#0" expanded="false" />
+            <element signature="e#26125#26439#0" expanded="false" />
+            <element signature="e#26237#26306#0" expanded="false" />
+            <element signature="e#26056#26467#0" expanded="false" />
+            <element signature="e#26509#26678#0" expanded="false" />
+            <element signature="e#26584#26677#0" expanded="false" />
+            <element signature="e#26691#28069#0" expanded="false" />
+            <element signature="e#27119#27267#0" expanded="false" />
+            <element signature="e#27119#27294#0" expanded="false" />
+            <element signature="e#27359#27877#0" expanded="false" />
+            <element signature="e#27714#27866#0" expanded="false" />
+            <element signature="e#27784#27865#0" expanded="false" />
+            <element signature="e#27893#28062#0" expanded="false" />
+            <element signature="e#27968#28061#0" expanded="false" />
+            <element signature="e#28075#28609#0" expanded="false" />
+            <element signature="e#28389#28602#0" expanded="false" />
+            <element signature="e#28465#28601#0" expanded="false" />
+            <element signature="e#28615#29805#0" expanded="false" />
+            <element signature="e#29000#29568#0" expanded="false" />
+            <element signature="e#29036#29358#0" expanded="false" />
+            <element signature="e#29405#29557#0" expanded="false" />
+            <element signature="e#29475#29556#0" expanded="false" />
+            <element signature="e#29585#29798#0" expanded="false" />
+            <element signature="e#29661#29797#0" expanded="false" />
+            <element signature="e#29828#30291#0" expanded="false" />
+            <element signature="e#30121#30284#0" expanded="false" />
+            <element signature="e#30200#30283#0" expanded="false" />
+            <element signature="e#30297#31348#0" expanded="false" />
+            <element signature="e#30719#31103#0" expanded="false" />
+            <element signature="e#30788#31102#0" expanded="false" />
+            <element signature="e#30900#30969#0" expanded="false" />
+            <element signature="e#30719#31130#0" expanded="false" />
+            <element signature="e#31172#31341#0" expanded="false" />
+            <element signature="e#31247#31340#0" expanded="false" />
+            <element signature="e#31354#32726#0" expanded="false" />
+            <element signature="e#31782#31930#0" expanded="false" />
+            <element signature="e#31782#31957#0" expanded="false" />
+            <element signature="e#32023#32534#0" expanded="false" />
+            <element signature="e#32378#32523#0" expanded="false" />
+            <element signature="e#32448#32522#0" expanded="false" />
+            <element signature="e#32550#32719#0" expanded="false" />
+            <element signature="e#32625#32718#0" expanded="false" />
+            <element signature="e#32732#33266#0" expanded="false" />
+            <element signature="e#33046#33259#0" expanded="false" />
+            <element signature="e#33122#33258#0" expanded="false" />
+            <element signature="e#33272#34455#0" expanded="false" />
+            <element signature="e#33657#34218#0" expanded="false" />
+            <element signature="e#33693#34015#0" expanded="false" />
+            <element signature="e#34062#34207#0" expanded="false" />
+            <element signature="e#34132#34206#0" expanded="false" />
+            <element signature="e#34235#34448#0" expanded="false" />
+            <element signature="e#34311#34447#0" expanded="false" />
+            <element signature="e#34479#35446#0" expanded="false" />
+            <element signature="e#34864#34983#0" expanded="false" />
+            <element signature="e#34864#35074#0" expanded="false" />
+            <element signature="e#34864#35190#0" expanded="false" />
+            <element signature="e#35232#35439#0" expanded="false" />
+            <element signature="e#35312#35438#0" expanded="false" />
+            <element signature="e#35452#35836#0" expanded="false" />
+            <element signature="e#35842#37135#0" expanded="false" />
+            <element signature="e#36133#36473#0" expanded="false" />
+            <element signature="e#36133#36572#0" expanded="false" />
+            <element signature="e#36133#36694#0" expanded="false" />
+            <element signature="e#36133#36790#0" expanded="false" />
+            <element signature="e#36133#36880#0" expanded="false" />
+            <element signature="e#36922#37128#0" expanded="false" />
+            <element signature="e#37001#37127#0" expanded="false" />
+            <element signature="e#37141#41368#0" expanded="false" />
+            <element signature="e#37422#37762#0" expanded="false" />
+            <element signature="e#37422#37861#0" expanded="false" />
+            <element signature="e#37422#37983#0" expanded="false" />
+            <element signature="e#37422#38064#0" expanded="false" />
+            <element signature="e#37422#38139#0" expanded="false" />
+            <element signature="e#38508#41186#0" expanded="false" />
+            <element signature="e#39078#41176#0" expanded="false" />
+            <element signature="e#39178#41091#0" expanded="false" />
+            <element signature="e#39290#39823#0" expanded="false" />
+            <element signature="e#39844#40998#0" expanded="false" />
+            <element signature="e#41017#41091#0" expanded="false" />
+            <element signature="e#41106#41176#0" expanded="false" />
+            <element signature="e#41203#41361#0" expanded="false" />
+            <element signature="e#41273#41360#0" expanded="false" />
+            <element signature="e#41374#43329#0" expanded="false" />
+            <element signature="e#42804#43200#0" expanded="false" />
+            <element signature="e#43335#44158#0" expanded="false" />
+            <element signature="e#44025#44151#0" expanded="false" />
+            <element signature="e#44096#44150#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-31.265938">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/new.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="18" selection-start="18" selection-end="18" vertical-scroll-proportion="-0.04892368">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/edit.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="42" selection-start="42" selection-end="42" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowItemMaster.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="66" selection-start="1347" selection-end="1347" vertical-scroll-proportion="1.4906716">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/item.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="39" selection-start="453" selection-end="453" vertical-scroll-proportion="0.45373666">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItemType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="83" selection-start="666" selection-end="666" vertical-scroll-proportion="0.42256215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItmSearchType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="63" selection-start="800" selection-end="800" vertical-scroll-proportion="0.45506692">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="27" selection-start="759" selection-end="759" vertical-scroll-proportion="0.03250478">
+        <state line="36" column="35" selection-start="1204" selection-end="1204" vertical-scroll-proportion="-15.076923">
+          <folding>
+            <element signature="e#1720#2335#0" expanded="false" />
+            <element signature="e#2341#2935#0" expanded="false" />
+            <element signature="e#2941#3649#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Item/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="88" selection-start="4815" selection-end="4815" vertical-scroll-proportion="-11.115385">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/bundles/hellodi/css/Main.css">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="444" selection-end="444" vertical-scroll-proportion="0.6193078">
+        <state line="25" column="0" selection-start="514" selection-end="514" vertical-scroll-proportion="0.31716418">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Main.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="18" selection-start="165" selection-end="165" vertical-scroll-proportion="-5.230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="246" column="21" selection-start="8592" selection-end="8592" vertical-scroll-proportion="-12.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/FOSUserBundle/views/Profile/edit_content.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="14" selection-start="240" selection-end="240" vertical-scroll-proportion="-0.65384614">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/AddNewUserEntiti.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="24" selection-start="447" selection-end="447" vertical-scroll-proportion="-5.923077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/main.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="8" selection-start="93" selection-end="93" vertical-scroll-proportion="0.09514926">
-          <folding />
+        <state line="19" column="36" selection-start="646" selection-end="646" vertical-scroll-proportion="0.45124283">
+          <folding>
+            <element signature="e#2963#3271#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

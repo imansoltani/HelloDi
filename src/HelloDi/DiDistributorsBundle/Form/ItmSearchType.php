@@ -15,16 +15,8 @@ class ItmSearchType extends AbstractType
         $builder
             ->add('name','text',array('required'=> false,'label' => 'Item.Name','translation_domain' => 'item'))
             ->add('type','choice',array('choices'=> array('3' => 'Item.TypeChioce.All' , '1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel'),'label' => 'Item.Type','translation_domain' => 'item'))
-            ->add('operator','text',array('required'=>false,'label' => 'Item.Operator','translation_domain' => 'item'))
-            ->add('currency','choice',array('choices'=> array('2' => 'Item.All' , '0'=>'USD','1' =>'CHF'),'label' => 'Item.Currency','translation_domain' => 'item'));
-
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'HelloDi\DiDistributorsBundle\Entity\ItmSearch'
-        ));
+            ->add('currency','choice',array('choices'=> array('' => 'Item.All' , 'USD'=>'USD','CHF' =>'CHF'),'label' => 'Item.Currency','translation_domain' => 'item'))
+            ->add('operator','text',array('required'=>false,'label' => 'Item.Operator','translation_domain' => 'item'));
     }
 
     public function getName()

@@ -126,7 +126,7 @@
                                         <input type="submit" value="Manage" onclick="$('#itemid').val('{{ item.id }}')"/>
                                     </td>
                                     <td>{{ item.itemName }}</td>
-                                    <td>{{ item.itemFaceValue }} {% if item.itemCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                                    <td>{{ item.itemFaceValue }} {{ item.itemCurrency }}</td>
                                     <td>{{ item.itemCode }}</td>
                                     <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
                                     <td>{{ item.alertMinStock }}</td>

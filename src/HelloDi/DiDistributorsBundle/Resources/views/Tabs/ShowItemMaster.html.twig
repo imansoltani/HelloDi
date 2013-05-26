@@ -9,7 +9,7 @@
 
 {% block PageTitle %}
     <i class="icon-tags"></i>
-    {{ entity.itemName }}
+    {{ item.itemName }}
 {% endblock %}
 
 {% set hornav = '38px' %}
@@ -18,7 +18,7 @@
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="">
             <form action="{{ path('item_edit') }}" method="post">
-                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="details"/>
             </form>
         </a>
@@ -26,7 +26,7 @@
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a>
             <form action="#" method="post">
-                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="description"/>
             </form>
         </a>
@@ -36,7 +36,7 @@
         <a>
 
             <form action="#" method="post">
-                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="logo"/>
             </form>
         </a>
@@ -45,7 +45,7 @@
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a>
             <form action="#" method="post">
-                <input type="hidden" name="itemid" value="{{ itemid }}"/>
+                <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="price setting"/>
             </form>
         </a>

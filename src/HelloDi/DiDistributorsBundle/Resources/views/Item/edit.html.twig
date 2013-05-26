@@ -9,7 +9,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('item') }}">Item</a>
-    <a class="link" href="#">{{ entity.itemName }}</a>
+    <a class="link" href="#">{{ item.itemName }}</a>
     <span class="link">Edit</span>
 {% endblock Site_Map %}
 
@@ -20,7 +20,7 @@
         <h3>Item Details</h3>
     </div> <!-- /widget-header -->
 
-    <form action="{{ path('item_update', { 'id': entity.id }) }}"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+    <form action="{{ path('item_update', { 'id': item.id }) }}"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
         <input type="hidden" name="_method" value="PUT"/>
 
         <div class="control-group">
@@ -71,7 +71,7 @@
             </div>
             {{ form_errors(edit_form.Country) }}
         </div>
-        <input type="hidden" name="itemid" value="{{ itemid }}"/>
+        <input type="hidden" name="itemid" value="{{ item.id }}"/>
 
 
 

@@ -9,10 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Form\CodeType;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Code controller.
- *
- */
 class CodeController extends Controller
 {
     public function indexAction(Request $request)
