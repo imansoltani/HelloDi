@@ -21,7 +21,7 @@
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a>
-            <form action="{{ path('ManageItemsProv') }}" method="post">
+            <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
                 <input type="hidden" name="accountid" value="{{ Account.id }}"/>
                 <input type="submit" value="Item"/>
             </form>

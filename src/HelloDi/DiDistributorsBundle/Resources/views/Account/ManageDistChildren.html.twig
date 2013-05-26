@@ -15,7 +15,7 @@
 {% block Tab %}
 
 
-    <a class="button btn btn-warning btn-large" href="">
+    <a class="button btn btn-primary btn-large" href="">
         Create a new Child Account
     </a>
 
@@ -58,11 +58,11 @@
             </div>
             {{ form_rest(form_searchdistchild) }}
             <hr>
-            <input class="btn btn-large btn-primary" type="submit" value="Search">
+            <input class="btn btn-primary" type="submit" value="Search">
             <form action="{{ path('ManageDistChildren') }}" method="post">
                 <input type="hidden" value="{{ id }}" name="id">
 
-                <input class="btn btn-large " type="submit" value="Reset">
+                <input class="btn " type="submit" value="Reset">
 
             </form>
 
@@ -130,7 +130,7 @@
                     <td >{{ childaccount.id }}</td>
                     <td  class="td-actions" >
 
-                        <a href="#{#  #}" >ShowTranscation</a>
+                        <a class="button" href="#{#  #}" >ShowTranscation</a>
 
                     </td>
 

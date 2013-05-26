@@ -18,7 +18,7 @@
 
     <form method="post" action="{{ path('AddItemDist') }}">
         <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-        <input class="button btn btn-large btn-warning" type="submit" value="Add new Item"/>
+        <input class=" btn btn-large btn-primary" type="submit" value="Add new Item"/>
     </form>
 
     {#<a class="button btn btn-warning btn-large" href="{{ path('AddItemsProvAction') }}">#}
@@ -55,7 +55,7 @@
                         <td>{{ price.item.itemCode }}</td>
                         <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
                         <td>{{ price.price }} {% if price.priceCurrency==0  %}USD {% else %}CHF {% endif %}</td>
-                        <td>
+                        <td class="td-actions" >
                             <form method="post" action="{{ path('EditItemDist') }}">
                                 <input type="hidden" name="priceid" value="{{ price.id }}"/>
                                 <input type="submit" value="Edit Price"/>

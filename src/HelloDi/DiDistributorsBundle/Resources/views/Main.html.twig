@@ -47,6 +47,50 @@
 
 </head>
 <body>
+
+<div class="messageshow"  >
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+
+        $('.messageshow').hide();
+
+
+        //messagetop('hi','how','error');
+
+        $('* .messagetop ,.messageshow ').click(function(){
+            $('.messageshow').fadeOut(function(){
+                $('.messageshow').html('');
+                $('.messageshow').removeAttr('id');
+            });
+
+        });
+    });
+
+    function messagetop(subject,body,type)
+    {
+        if(type == "error") $('.messageshow').attr('id','messageerror');
+        if(type == "success") $('.messageshow').attr('id','messagesuccess');
+        if(type == "alert") $('.messageshow').attr('id','messagealert');
+
+        var x  = '<div class="popup messagetop"  >' ;
+        x += '<i class="icon-';
+        if(type == "error") x +='remove';
+        if(type == "success") x +='ok';
+        if(type == "alert") x +='warning-sign';
+        x += '" ></i>';
+        x += '<h1>'+body+'</h1></div><div class="closedoor messagetop" ></div>' ;
+        //x += '<h1>'+subject+'</h1>' ;
+        //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
+
+        $('.messageshow').html(x);
+        $('.messageshow').fadeIn();
+    }
+</script>
+
+
 <!-- Nav Bar -->
 <div class="navbar navbar-inverse navbar-fixed-top">
 

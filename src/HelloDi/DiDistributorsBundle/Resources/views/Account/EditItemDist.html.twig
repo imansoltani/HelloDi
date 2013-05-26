@@ -11,16 +11,40 @@
 
 {% block Tab %}
 
-    <h1 class="TitleShow">Edit Item</h1>
+    <div class="widget-header">
+        <h3>Edit Item</h3>
+    </div> <!-- /widget-header -->
 
-    <div class="tab-content">
-        <form action="{{ path('EditItemDistSubmit') }}" method="post" class="form-horizontal">
 
-            name: {{ price.item.itemName }}
-            <br/>
-            face value: {{ price.item.itemFaceValue }}
-            <br/>
-            operator: {{ price.item.operator }}
+        <form id="editprice" action="{{ path('EditItemDistSubmit') }}" method="post" class="form-horizontal">
+
+            <div class="control-group">
+                <label class="control-label">
+                    Name
+                </label>
+                <div class="controls">
+                    <input class="input-large" type="text" disabled="" value="{{ price.item.itemName }}" >
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">
+                    Face Value
+                </label>
+                <div class="controls">
+                    <input class="input-large" type="text" disabled="" value="{{ price.item.itemFaceValue }}" >
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">
+                    Operator
+                </label>
+                <div class="controls">
+                    <input class="input-large" type="text" disabled="" value="{{ price.item.operator }}" >
+                </div>
+            </div>
+
 
             <div class="control-group">
                 {{ form_label(form.price) }}
@@ -28,12 +52,15 @@
                 {{ form_errors(form.price) }}
             </div>
 
-            <div class="control-group">
-                {% for state in form.priceStatus %}
-                    {{ form_widget(state) }}
-                    {{ form_label(state) }}
-                {% endfor %}
-            </div>
+            {% for state in form.priceStatus %}
+                <div class="control-group">
+                    <label class="control-label">{{ form_label(state) }}</label>
+                    <div class="controls">
+                        {{ form_widget(state) }}
+                    </div>
+                </div>
+
+            {% endfor %}
 
 
             {{form_widget(form._token)}}
@@ -42,33 +69,53 @@
             <input type="hidden" name="priceid" value="{{ price.id }}" />
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <input type="submit" class="btn btn-primary" value="Edit" />
+                <input type="submit" class="btn btn-primary" onclick="$('#gowhere').val('0')" value="Edit" />
+                <input type="submit" class="btn" onclick="$('#gowhere').val('1')" value="Back" />
+                <input type="hidden" id="gowhere" value="0" />
+                <script type="text/javascript">
+                    $(function(){
+                        $('form#editprice').submit(function(e){
+                            if($('#gowhere').val() == '1')
+                            {
+                                e.preventDefault();
+                                $('form#Item').submit();
+                            }
+                        })
+                    });
+                </script>
             </div>
         </form>
 
-        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight">
-            <thead>
-            <tr>
-                <th>from</th>
-                <th>to</th>
-                <th>price</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for ph in price.PricesHistory %}
-                <tr>
-                    <td>{{ ph.date|date('Y/m/d') }}</td>
-                    <td>
-                        {% if not loop.last %}
-                            {{ price.PricesHistory[loop.index0+1].date|date('Y/m/d') }}
-                        {% else %}
-                            --
-                        {% endif %}
-                    </td>
-                    <td>{{ ph.price }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        <div class="tablediv" >
+            <div class="contenttitle">
+                <h4>Price History</h4>
+            </div>
+            <div class="tab-content" >
+                <table style="margin-top: 20px" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ph in price.PricesHistory %}
+                        <tr>
+                            <td>{{ ph.date|date('Y/m/d') }}</td>
+                            <td>
+                                {% if not loop.last %}
+                                    {{ price.PricesHistory[loop.index0+1].date|date('Y/m/d') }}
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </td>
+                            <td>{{ ph.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 {% endblock Tab %}

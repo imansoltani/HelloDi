@@ -1,5 +1,9 @@
 /* ??? */
 @media only screen and (max-width: 980px) {
+    .popup{
+        left: 30%;
+    }
+
     /* MenuBar
                 ========================================================= */
     .MenuBar .menubar_items ul{
@@ -153,6 +157,19 @@
 
 @media only screen and (max-width: 450px) {
 
+    /* PopUp ------------------------------------ */
+    .popup{
+        width: 100%;
+        left: 0;
+        border-radius: 0px;
+    }
+
+    /* Main ------------------------------------ */
+
+    .main .row .span .button{
+        font-size: 15px;
+    }
+
     .main .pagetop .pagetitle {
         font-size: 17px;
     }
@@ -209,8 +226,11 @@
         margin-right: 5%;
     }
 
-    .form-horizontal .controls input , .form-horizontal .controls select{
-        width: 100%;
+    .form-horizontal .controls input {
+        width: 97%;
+    }
+    .main select{
+        width: 97%;
     }
 
     form.form-horizontal .control-label {
@@ -250,7 +270,7 @@ text-align: left;
     }
 
     .widget-content .widget-header {
-        margin-bottom: 0px;
+        margin-bottom: 20px;
     }
 
     /* sitemap */

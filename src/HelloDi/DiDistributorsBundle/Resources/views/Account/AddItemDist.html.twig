@@ -11,20 +11,24 @@
 
 {% block Tab %}
 
-    <h1 class="TitleShow">Add new Item</h1>
+    <div class="widget-header">
+        <h3>Add new Item</h3>
+    </div> <!-- /widget-header -->
 
-    <div class="tab-content">
-        <form action="{{ path('AddItemDistSubmit') }}" method="post" class="form-horizontal">
+
+        <form id="addprice" action="{{ path('AddItemDistSubmit') }}" method="post" class="form-horizontal">
 
             <div class="control-group">
                 {{ form_label(form.Item) }}
-                {{ form_widget(form.Item) }}
+                <div class="controls">
+                    {{ form_widget(form.Item) }}
+                </div>
                 {{ form_errors(form.Item) }}
             </div>
 
             <div class="control-group">
                 {{ form_label(form.price) }}
-                {{ form_widget(form.price) }} {% if Account.accCurrency==0  %}USD {% else %}CHF {% endif %}
+                <div class="controls" >{{ form_widget(form.price) }} {% if Account.accCurrency==0  %}USD {% else %}CHF {% endif %}</div>
                 {{ form_errors(form.price) }}
             </div>
 
@@ -33,9 +37,22 @@
             <input type="hidden" name="accountid" value="{{  Account.id }}" />
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <input type="submit" class="btn btn-primary" value="Add" />
+                <input type="submit" class="btn btn-primary" onclick="$('#gowhere').val('0')" value="Add" />
+                <input type="submit" class="btn " onclick="$('#gowhere').val('1')" value="Back" />
+                <input type="hidden" id="gowhere" value="0" />
+                <script type="text/javascript">
+                    $(function(){
+                        $('form#addprice').submit(function(e){
+                            if($('#gowhere').val() == '1')
+                            {
+                                e.preventDefault();
+                                $('form#Item').submit();
+                            }
+                        })
+                    });
+                </script>
             </div>
 
         </form>
-    </div>
+
 {% endblock Tab %}

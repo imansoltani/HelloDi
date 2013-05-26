@@ -1,84 +1,139 @@
-<form action="{{ path('AddAccountProveMaster2Step') }}" method="post">
-    <b>New Entiti</b><hr>
+{% extends 'HelloDiDiDistributorsBundle:Step:ProvMasterAdd2.html.twig' %}
 
-    {#{% for form_errors in e %}#}
-     {#{{ e.message}}#}
-     {#{% endfor %}#}
+{% block steps %}
 
-    {{ form_label(form2step.entName) }}
-    {{ form_widget(form2step.entName) }}
-    {{ form_errors(form2step.entName) }} <br/><br/>
+        <!-- Entity -->
+        <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+            <div class="widget-header">
+                <h3>Create Entity</h3>
+            </div> <!-- /widget-header -->
 
-    {{ form_label(form2step.entVatNumber) }}
-    {{ form_widget(form2step.entVatNumber) }}
-    {{ form_errors(form2step.entVatNumber) }}<br/><br/>
-
-    {{ form_label(form2step.entTel1) }}
-    {{ form_widget(form2step.entTel1) }}
-    {{ form_errors(form2step.entTel1) }}<br/><br/>
-
-
-    {{ form_label(form2step.entTel2) }}
-    {{ form_widget(form2step.entTel2) }}
-    {{ form_errors(form2step.entTel2) }}<br/><br/>
+            <div class="control-group entName">
+                {{ form_label(form2step.entName) }}
+                {{ form_widget(form2step.entName) }}
+                {{ form_errors(form2step.entName) }}
+            </div>
 
 
 
-    {{ form_label(form2step.entFax) }}
-    {{ form_widget(form2step.entFax) }}
-    {{ form_errors(form2step.entFax) }}<br/><br/>
+            <div class="control-group entVatNumber">
+            {{ form_label(form2step.entVatNumber) }}
+            {{ form_widget(form2step.entVatNumber) }}
+            {{ form_errors(form2step.entVatNumber) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.entTel1) }}
+            {{ form_widget(form2step.entTel1) }}
+            {{ form_errors(form2step.entTel1) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.entTel2) }}
+            {{ form_widget(form2step.entTel2) }}
+            {{ form_errors(form2step.entTel2) }}
+             </div>
 
 
-    {{ form_label(form2step.entWebsite) }}
-    {{ form_widget(form2step.entWebsite) }}
-    {{ form_errors(form2step.entWebsite) }}<br/><br/>
+            <div class="control-group">
+            {{ form_label(form2step.entFax) }}
+            {{ form_widget(form2step.entFax) }}
+            {{ form_errors(form2step.entFax) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.entWebsite) }}
+            {{ form_widget(form2step.entWebsite) }}
+            {{ form_errors(form2step.entWebsite) }}
+            </div>
+
+            <div class="control-group entRegistrationNumber">
+            {{ form_label(form2step.entRegistrationNumber) }}
+            {{ form_widget(form2step.entRegistrationNumber) }}
+            {{ form_errors(form2step.entRegistrationNumber) }}
+                </div>
 
 
-    {{ form_label(form2step.entRegistrationNumber) }}
-    {{ form_widget(form2step.entRegistrationNumber) }}
-    {{ form_errors(form2step.entRegistrationNumber) }}<br/><br/>
-<b>New Account</b><hr>
-    {{ form_label(form2step.Accounts[0].accName) }}
-    {{ form_widget(form2step.Accounts[0].accName) }}
-    {{ form_errors(form2step.Accounts[0].accName) }}<br/><br/>
+        </div>
 
-    {{ form_label(form2step.Accounts[0].accCurrency) }}
-    {{ form_widget(form2step.Accounts[0].accCurrency) }}
-    {{ form_errors(form2step.Accounts[0].accCurrency) }}<br/><br/>
-    <b>New Address</b><hr>
+        <!-- Account -->
+        <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
+            <div class="widget-header">
+                <h3>Create Account</h3>
+            </div> <!-- /widget-header -->
+            <div class="control-group accName">
+            {{ form_label(form2step.Accounts[0].accName) }}
+            {{ form_widget(form2step.Accounts[0].accName) }}
+            {{ form_errors(form2step.Accounts[0].accName) }}
+            </div>
 
-    {{ form_label(form2step.Addresses[0].adrsNp) }}
-    {{ form_widget(form2step.Addresses[0].adrsNp) }}
-    {{ form_errors(form2step.Addresses[0].adrsNp) }}<br/><br/>
-
-    {{ form_label(form2step.Addresses[0].Country) }}
-    {{ form_widget(form2step.Addresses[0].Country) }}
-    {{ form_errors(form2step.Addresses[0].Country) }}<br/><br/>
-
-    {{ form_label(form2step.Addresses[0].adrsCity) }}
-    {{ form_widget(form2step.Addresses[0].adrsCity) }}
-    {{ form_errors(form2step.Addresses[0].adrsCity) }}<br/><br/>
-
-    {{ form_label(form2step.Addresses[0].adrsType) }}
-    {{ form_widget(form2step.Addresses[0].adrsType) }}
-    {{ form_errors(form2step.Addresses[0].adrsType) }}<br/><br/>
+            <div class="control-group">
+            {{ form_label(form2step.Accounts[0].accCurrency) }}
+            <div class="controls">
+                {{ form_widget(form2step.Accounts[0].accCurrency) }}
+            </div>
+            {{ form_errors(form2step.Accounts[0].accCurrency) }}
+             </div>
 
 
-    {{ form_label(form2step.Addresses[0].adrs1) }}
-    {{ form_widget(form2step.Addresses[0].adrs1) }}
-    {{ form_errors(form2step.Addresses[0].adrs1) }}<br/><br/>
+        </div>
 
-    {{ form_label(form2step.Addresses[0].adrs2) }}
-    {{ form_widget(form2step.Addresses[0].adrs2) }}
-    {{ form_errors(form2step.Addresses[0].adrs2) }}<br/><br/>
+        <!-- Address -->
+        <div style="display: none;position: absolute;z-index: 12" class="content" id="step-3">
+            <div class="widget-header">
+                <h3>Create Address</h3>
+            </div> <!-- /widget-header -->
 
-    {{ form_label(form2step.Addresses[0].adrs3) }}
-    {{ form_widget(form2step.Addresses[0].adrs3) }}
-    {{ form_errors(form2step.Addresses[0].adrs3) }}
+            <div class="control-group adrsNp">
+            {{ form_label(form2step.Addresses[0].adrsNp) }}
+            {{ form_widget(form2step.Addresses[0].adrsNp) }}
+            {{ form_errors(form2step.Addresses[0].adrsNp) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.Addresses[0].Country) }}
+            <div class="controls">
+                {{ form_widget(form2step.Addresses[0].Country) }}
+            </div>
+            {{ form_errors(form2step.Addresses[0].Country) }}
+                </div>
+
+            <div class="control-group adrsCity">
+            {{ form_label(form2step.Addresses[0].adrsCity) }}
+            {{ form_widget(form2step.Addresses[0].adrsCity) }}
+            {{ form_errors(form2step.Addresses[0].adrsCity) }}
+                </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.Addresses[0].adrsType) }}
+            <div class="controls" >
+                {{ form_widget(form2step.Addresses[0].adrsType) }}
+            </div>
+            {{ form_errors(form2step.Addresses[0].adrsType) }}
+             </div>
+
+            <div class="control-group adrs1">
+            {{ form_label(form2step.Addresses[0].adrs1) }}
+            {{ form_widget(form2step.Addresses[0].adrs1) }}
+            {{ form_errors(form2step.Addresses[0].adrs1) }}
+             </div>
+
+             <div class="control-group">
+            {{ form_label(form2step.Addresses[0].adrs2) }}
+            {{ form_widget(form2step.Addresses[0].adrs2) }}
+            {{ form_errors(form2step.Addresses[0].adrs2) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(form2step.Addresses[0].adrs3) }}
+            {{ form_widget(form2step.Addresses[0].adrs3) }}
+            {{ form_errors(form2step.Addresses[0].adrs3) }}
+            </div>
+
+            {{form_widget(form2step._token)}}
+        </div>
 
 
-    {{form_widget(form2step._token)}}
 
-    <input type="submit" value="create">
-</form>
+{% endblock %}
 

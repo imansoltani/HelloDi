@@ -75,16 +75,16 @@
 
                 <div class="control-group">
                     {{ form_label(form.accTerms) }}
-                    <div class="controls">
+
                         {{ form_widget(form.accTerms) }}
-                    </div>
+
                     {{ form_errors(form.accTerms) }}
                 </div>
 
                 {{ form_widget(form._token) }}
                 <div class="form-actions" style="margin-bottom: 0">
                     <input type="submit" class="btn btn-primary" value="Add"/>
-                    <button type="reset" class="btn">Cancel</button>
+                    <input type="reset" class="btn " value="Reset" >
                 </div>
 
             </form>

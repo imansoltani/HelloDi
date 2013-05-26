@@ -1,4 +1,6 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowItemMaster.html.twig' %}
+
+{% set tab = '1' %}
 
 {% block title %}
     Items Management
@@ -7,92 +9,79 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('item') }}">Item</a>
+    <a class="link" href="#">{{ entity.itemName }}</a>
     <span class="link">Edit</span>
 {% endblock Site_Map %}
-{% block Link_Head %}
 
-    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
-{% endblock %}
 {% set MU = 'item' %}
 
-{% block Body %}
-    <div class="span12">
-        <div class="widget stacked">
-            <div class="widget-header">
-                <i class="icon-briefcase"></i>
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Item Details</h3>
+    </div> <!-- /widget-header -->
 
-                <h3>Item edit</h3>
-            </div>
-            <!-- /widget-header -->
+    <form action="{{ path('item_update', { 'id': entity.id }) }}"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+        <input type="hidden" name="_method" value="PUT"/>
 
-            <div class="widget-content">
-                <div id="wizard" class="swMain">
-                    <div class="stepContainer">
-                        <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
-                            <h2 class="StepTitle">Item Edit</h2>
-
-                            <form action="{{ path('item_update', { 'id': entity.id }) }}"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
-                                <input type="hidden" name="_method" value="PUT"/>
-
-                                <div class="control-group">
-                                    {{ form_label(edit_form.itemName) }}
-                                    {{ form_widget(edit_form.itemName) }}
-                                    {{ form_errors(edit_form.itemName) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(edit_form.itemFaceValue) }}
-                                    {{ form_widget(edit_form.itemFaceValue) }}
-                                    {{ form_errors(edit_form.itemFaceValue) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(edit_form.itemCurrency) }}
-                                    <div class="controls">
-                                        {{ form_widget(edit_form.itemCurrency) }}
-                                    </div>
-                                    {{ form_errors(edit_form.itemCurrency) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(edit_form.itemType) }}
-                                    <div class="controls">
-                                        {{ form_widget(edit_form.itemType) }}
-                                    </div>
-                                    {{ form_errors(edit_form.itemType) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(edit_form.alertMinStock) }}
-                                    {{ form_widget(edit_form.alertMinStock) }}
-                                    {{ form_errors(edit_form.alertMinStock) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(edit_form.operator) }}
-                                    {{ form_widget(edit_form.operator) }}
-                                    {{ form_errors(edit_form.operator) }}
-                                </div>
-
-                                <input type="hidden" name="itemid" value="{{ itemid }}"/>
-
-                                {{ form_rest(edit_form) }}
-
-                                <div class="form-actions" style="margin-bottom: 0">
-                                    <input type="submit" class="btn btn-primary" value="Edit"/>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $(function () {
-                        var x = $('#step-1').height();
-                        $('.stepContainer').height(x);
-
-                        $(window).resize(function () {
-                            var x = $('#step-1').height();
-                            $('.stepContainer').height(x);
-                        });
-                    });
-
-                </script>
-            </div>
+        <div class="control-group">
+            {{ form_label(edit_form.itemName) }}
+            {{ form_widget(edit_form.itemName) }}
+            {{ form_errors(edit_form.itemName) }}
         </div>
-    </div>
+        <div class="control-group">
+            {{ form_label(edit_form.itemFaceValue) }}
+            {{ form_widget(edit_form.itemFaceValue) }}
+            {{ form_errors(edit_form.itemFaceValue) }}
+        </div>
+        <div class="control-group">
+            {{ form_label(edit_form.itemCurrency) }}
+            <div class="controls">
+                {{ form_widget(edit_form.itemCurrency) }}
+            </div>
+            {{ form_errors(edit_form.itemCurrency) }}
+        </div>
+        <div class="control-group">
+            {{ form_label(edit_form.itemType) }}
+            <div class="controls">
+                {{ form_widget(edit_form.itemType) }}
+            </div>
+            {{ form_errors(edit_form.itemType) }}
+        </div>
+        <div class="control-group">
+            {{ form_label(edit_form.alertMinStock) }}
+            {{ form_widget(edit_form.alertMinStock) }}
+            {{ form_errors(edit_form.alertMinStock) }}
+        </div>
+        <div class="control-group">
+            {{ form_label(edit_form.operator) }}
+            {{ form_widget(edit_form.operator) }}
+            {{ form_errors(edit_form.operator) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(edit_form.itemCode) }}
+            {{ form_widget(edit_form.itemCode) }}
+            {{ form_errors(edit_form.itemCode) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(edit_form.Country) }}
+            <div class="controls">
+                {{ form_widget(edit_form.Country) }}
+            </div>
+            {{ form_errors(edit_form.Country) }}
+        </div>
+        <input type="hidden" name="itemid" value="{{ itemid }}"/>
+
+
+
+        {{ form_rest(edit_form) }}
+
+        <div class="form-actions" style="margin-bottom: 0">
+            <input type="submit" class="btn btn-primary" value="Edit"/>
+        </div>
+    </form>
 {% endblock %}
+
+
+

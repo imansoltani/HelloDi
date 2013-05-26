@@ -10,37 +10,59 @@
 {% endblock Site_Map %}
 
 {% block Tab %}
-    <h1 class="TitleShow">Upload Input</h1>
+    <div class="widget-header">
+        <h3>Upload Input</h3>
+    </div>
 
-    <div class="tab-content">
-        <h2 class="StepTitle">Upload</h2>
+
         {% for error in errors %}
             {{ error }} <br/>
         {% endfor %}
         <form action="{{ path("UploadInputProvSubmit") }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-            {{ form_label(form.File) }}
-            {{ form_widget(form.File) }}
-            <br/>
+
+            <div class="control-group">
+                {{ form_label(form.File) }}
+                {{ form_widget(form.File) }}
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.Batch) }}
             {{ form_widget(form.Batch) }}
-            <br/>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.Item) }}
-            {{ form_widget(form.Item) }}
-            <br/>
+            <div class="controls" >
+                {{ form_widget(form.Item) }}
+            </div>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.ProductionDate) }}
             {{ form_widget(form.ProductionDate) }}
-            <br/>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.ExpireDate) }}
             {{ form_widget(form.ExpireDate) }}
-            <br/>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.delimiter) }}
-            {{ form_widget(form.delimiter) }}
-            <br/>
+                <div class="controls">
+                    {{ form_widget(form.delimiter) }}
+                 </div>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.SerialNumber) }}
             {{ form_widget(form.SerialNumber) }}
-            <br/>
+            </div>
+
+            <div class="control-group">
             {{ form_label(form.PinCode) }}
             {{ form_widget(form.PinCode) }}
+            </div>
 
             <input type="hidden" name="accountid" value="{{ Account.id }}">
 
@@ -50,5 +72,5 @@
                 <input type="submit" class="btn btn-primary" value="Upload Document"/>
             </div>
         </form>
-    </div>
+
 {% endblock %}
