@@ -22,8 +22,9 @@ class ItemController extends Controller
         $items = $em->getRepository('HelloDiDiDistributorsBundle:Item');
 
         if ($request->isMethod('POST')) {
+            $itemsearch="";
             $form->bind($request);
-//            $data = $form->getData();
+            $data = $form->getData();
 
             $qb = $items->createQueryBuilder('item');
             if($itemsearch->getName()!="")

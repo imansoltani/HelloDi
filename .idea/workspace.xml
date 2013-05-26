@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/console" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="in 2013/05/26 at 12:13 pm">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -13,7 +11,7 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369556240585" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369557640897" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369548961273" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369320344716" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -89,7 +87,7 @@
     <file path="/prov.entity.form.js" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367291759817" ignored="false" />
     <file path="/prov.entity.valid.form.js" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367289895250" ignored="false" />
     <file path="/Master_dashboard.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368240106755" ignored="false" />
-    <file path="/ItemController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368960637488" ignored="false" />
+    <file path="/ItemController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369557714057" ignored="false" />
     <file path="/ItemType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367223787002" ignored="false" />
     <file path="/new.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368123118776" ignored="false" />
     <file path="/upload.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368705306696" ignored="false" />
@@ -233,7 +231,7 @@
       <file leaf-file-name="CdSearchType.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/CdSearchType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="29" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+            <state line="16" column="29" selection-start="490" selection-end="490" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
@@ -251,7 +249,7 @@
       <file leaf-file-name="ItemController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="0" selection-start="4177" selection-end="4177" vertical-scroll-proportion="0.03250478">
+            <state line="24" column="27" selection-start="759" selection-end="759" vertical-scroll-proportion="0.48757172">
               <folding />
             </state>
           </provider>
@@ -303,6 +301,7 @@
     </commandsHistory>
   </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
@@ -359,7 +358,7 @@
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="false" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="0" id="Add" />
@@ -665,7 +664,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
@@ -725,6 +724,7 @@
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
     <option name="IGNORE_EXTERNALS" value="false" />
+    <configuration useDefault="true">C:\Users\M.Sajadi\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
@@ -777,7 +777,15 @@
       <created>1369549176509</created>
       <updated>1369549176509</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="in 2013/05/26 at 09:48 am&#10;after update database &amp; security.yml">
+      <created>1369556370245</created>
+      <updated>1369556370245</updated>
+    </task>
+    <task id="LOCAL-00013" summary="in 2013/05/26 at 12:13 pm">
+      <created>1369557219688</created>
+      <updated>1369557219688</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -804,6 +812,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.5136054" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -822,7 +831,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8792517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -872,7 +880,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="in 2013/05/26 at 09:48 am&#10;after update database &amp; security.yml" />
+    <option name="LAST_COMMIT_MESSAGE" value="in 2013/05/26 at 12:13 pm" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -896,6 +904,7 @@
     <MESSAGE value="in 2013/05/21 at 01:37 pm&#10;after change theme from sadeghi&#10;before add entity from taghandiky" />
     <MESSAGE value="in 2013/05/25 at 10:13 am&#10;after upload&#10;with full master" />
     <MESSAGE value="in 2013/05/26 at 09:48 am&#10;after update database &amp; security.yml" />
+    <MESSAGE value="in 2013/05/26 at 12:13 pm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -915,11 +924,6 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/ExchangeRate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0466418" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Input.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.5223881" />
@@ -984,7 +988,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/CdSearchType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="29" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+        <state line="16" column="29" selection-start="490" selection-end="490" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
@@ -996,9 +1000,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="0" selection-start="4177" selection-end="4177" vertical-scroll-proportion="0.03250478">
+        <state line="24" column="27" selection-start="759" selection-end="759" vertical-scroll-proportion="0.48757172">
           <folding />
         </state>
       </provider>
