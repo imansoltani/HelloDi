@@ -15,11 +15,10 @@
         {{'Account.New.Dist' | trans ({}, "account")}}
     </a>
 
-    {% if entity.Parent==null %}
         <a style="margin-bottom: 5px" class="button btn btn-warning btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
             {{'Account.New.Prov' | trans ({}, "account")}}
         </a>
-    {% endif %}
+
 
     <div class="tab-content">
         <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
@@ -47,7 +46,7 @@
 
                     <td style="font-weight: bold">{{ account.Childrens.count }}</td>
                     <td>
-                        {% if account.accProv == '1' %}Provider{% else %}Distributor{% endif %}
+                        {% if account.accType == 1 %}Provider{% elseif account.accType == 0 %}Distributor{% endif %}
                     </td>
 
 
@@ -57,14 +56,14 @@
 
                     <td class="td-actions">
 
-                        {% if account.accProv == '1' %}
-                            {#<a href="{{ path('ProvTransaction',{'id': account.id }) }}">Show</a>#}
-                            <a href="#">Show</a>
+                        {% if account.accType == 1 %}
+                            <a href="{#{{ path('ProvTransaction',{'id': account.id }) }}#}#">Show</a>
 
-                        {% else %}
 
-                            {#<a href="{{ path('DistTransaction',{'id': account.id }) }}">Show</a>#}
-                            <a href="#">Show</a>
+                        {% elseif account.accType== 0 %}
+
+                            <a href="{#{{ path('DistTransaction',{'id': account.id }) }}#}">Show</a>
+
 
                         {% endif %}
                     </td>

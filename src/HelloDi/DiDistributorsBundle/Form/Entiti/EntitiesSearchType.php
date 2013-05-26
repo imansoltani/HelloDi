@@ -19,7 +19,7 @@ class EntitiesSearchType extends AbstractType
                             ->orderBy('u.name', 'ASC');
                     })
             )
-            ->add('HaveAccount', 'choice',array('choices'=>array(2=>'All',1=>'Provider',0=>'Distributors')))
+            ->add('HaveAccount', 'choice',array('choices'=>array(2=>'Both',1=>'Provider',0=>'Distributors')))
         ;
     }
 

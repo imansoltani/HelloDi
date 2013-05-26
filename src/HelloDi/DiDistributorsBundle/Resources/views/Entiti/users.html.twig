@@ -29,31 +29,29 @@
             <tbody>
 
             {% for user in pagination %}
-                {% for usp in user.Userprivileges %}
                     <tr>
-                        <td style="font-weight: bold">{{ usp.User.id }}</td>
-                        <td>{{ usp.User.name }}</td>
-                        <td>{{ usp.User.username }}</td>
+                        <td style="font-weight: bold">{{ user.id }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.username }}</td>
                         <td>
-                            {% if usp.Account.accName!=null %}
-                                {{ usp.Account.accName }}
+                            {% if user.Account.accName!=null %}
+                                {{ user.Account.accName }}
                             {% else %}
                                 Null
                             {% endif %}
                         </td>
                         <td>
-                            {% if usp.privileges==0 %}
-                                Seller
-                            {% elseif usp.privileges==1 %}
-                                <span style="color: red">Admin</span>
+                            {#{% if user.roles==0 %}#}
+                                {#Seller#}
+                            {#{% elseif user.roles==1 %}#}
+                                {#<span style="color: red">Admin</span>#}
 
-                            {% endif %}
+                            {#{% endif %}#}
                         </td>
                         <td>
                             <a href="#">Modify</a>
                         </td>
                     </tr>
-                {% endfor %}
             {% endfor %}
             </tbody>
         </table>
