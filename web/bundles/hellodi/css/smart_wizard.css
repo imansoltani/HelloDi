@@ -304,20 +304,7 @@
     border:1px solid #EA8511;
 }
 
-.swMain .loader {
-    position:relative;
-    display:none;
-    float:left;
-    margin: 2px 0 0 2px;
-    padding:8px 10px 8px 40px;
-    border: 1px solid #FFD700;
-    font: bold 13px Verdana, Arial, Helvetica, sans-serif;
-    color:#5A5655;
-    background: #FFF url(../images/loader.gif) no-repeat 5px;
-    -moz-border-radius  : 5px;
-    -webkit-border-radius: 5px;
-    z-index:998;
-}
+
 .swMain .msgBox {
     position:relative;
     display:none;
