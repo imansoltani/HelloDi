@@ -139,9 +139,9 @@
                                     <td>{{ code.Item.itemName }}</td>
                                     <td>{{ code.serialNumber }}</td>
                                     <td>{{ code.pin }}</td>
-                                    <td></td>{#<td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>#}
+                                    <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
                                     <td>{% if code.status==1 %}Active{% else %} Inactive {% endif %}</td>
-                                    <td></td>{#<td>{{ code.Input.Account.accName }}</td>#}
+                                    <td>{{ code.Input.Account.accName }}</td>
                                     <td>
                                         <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
                                     </td>
