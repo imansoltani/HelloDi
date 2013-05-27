@@ -15,14 +15,17 @@
 
 
 <form style="margin-top: 20px"  class="form-horizontal"  action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
+
     <div class="control-group">
-                {{ form_label(form_edit.accStatus) }}
-                {{ form_widget(form_edit.accStatus) }}
+
+        {{ form_label(form_edit.accTerms) }}
+        {{ form_widget(form_edit.accTerms) }}
+
         </div>
 
     <div class="control-group">
-                {{ form_label(form_edit.accTerms) }}
-                {{ form_widget(form_edit.accTerms) }}
+        {{ form_label(form_editaccTimeZone) }}
+        {{ form_widget(form_edit.accTimeZone) }}
     </div>
             {{ form_widget(form_edit._token) }}
 

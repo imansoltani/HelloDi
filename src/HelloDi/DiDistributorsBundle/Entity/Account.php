@@ -91,7 +91,7 @@ class Account
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Accounts")
-     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=true)
      */
     private $Entiti;
 

@@ -14,7 +14,7 @@ class AccountDistChildType extends AbstractType
             ->add('accName','text',array())
             ->add('accCreditLimit','money',array('grouping'=>3))
             ->add('accTerms','text',array('data'=>120))
-            ->add('accStatus','choice',array('choices'=>(array(0=>'InActive',1=>'Active')),'preferred_choices'=>array(1)))
+            //>add('accStatus','choice',array('choices'=>(array(0=>'InActive',1=>'Active')),'preferred_choices'=>array(1)))
             ->add('accTimeZone','timezone',array('preferred_choices'=>array('America/Chicago')))
             ->add('accType','choice',array('choices'=>(array(0=>'has not child',1=>'has child')),'preferred_choices'=>array(1)))
         ;

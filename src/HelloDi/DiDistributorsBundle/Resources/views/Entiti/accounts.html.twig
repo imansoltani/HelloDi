@@ -15,6 +15,9 @@
         <h3>Entity Accounts</h3>
     </div> <!-- /widget-header --><br>
 
+
+
+    {% if pagination[0].accType!=2 %}
     <a style="margin-bottom: 5px" class="btn btn-primary btn-large" href="{{path('AddDist',{'id':entity.id})  }}">
         {{'Account.New.Dist' | trans ({}, "account")}}
     </a>
@@ -22,6 +25,7 @@
         <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
             {{'Account.New.Prov' | trans ({}, "account")}}
         </a>
+{% endif %}
 
     <div class="tablediv" >
         <div class="contenttitle">

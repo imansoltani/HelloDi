@@ -14,7 +14,7 @@
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
 
-    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }}">
+    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="#{#{{ path('AddNewUserEntiti',{id:entity.id}) }}#} ">
         {{ 'User.Add' | trans ({}, "user") }}
     </a>
 
@@ -39,14 +39,14 @@
                 {% for Ent in pagination %}
                     {% for User in Ent.Users %}
                         <tr>
-                            {% if User.Account.accType  != 1 %}
+
                             <td >{{ User.id }}</td>
                             <td>{{ User.firstName }}</td>
                             <td>{{ User.username }}</td>
                             <td>
 
-                                {% if User.Account.accName!='' %}
-                                {{ User.Account.accName }}
+                                {% if (User.roles[0]!='ROLE_MASTER_ADMIN' or User.roles[0]!='ROLE_MASTER') %}
+                                {#{{ User.Account.accName }}#}
                                     {% else %}
                                         null
                                         {% endif %}
@@ -60,7 +60,7 @@
                                 <a class="btn_actions" href="#">Modify</a>
                             </td>
                         </tr>
-                            {% endif %}
+
                     {% endfor %}
                 {% endfor %}
                 </tbody>

@@ -202,14 +202,7 @@ class AccountController extends Controller
         $Account->setAccBalance(0);
         $Account->setAccCreditLimit(0);
 
-        $AdrsDetai->setAdrsDate(new \DateTime('now'));
-        $AdrsDetai->setEntiti($Entiti);
-        $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-        $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-        $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-        $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-        $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-        $AdrsDetai->setEntiti($Entiti);
+
 
         $Account->setEntiti($Entiti);
         $Entiti->addAccount($Account);
@@ -225,6 +218,14 @@ class AccountController extends Controller
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
+                $AdrsDetai->setAdrsDate(new \DateTime('now'));
+                $AdrsDetai->setEntiti($Entiti);
+                $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
+                $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
+                $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
+                $AdrsDetai->setAdrsCity($Entiti->getEntCity());
+                $AdrsDetai->setAdrsNp($Entiti->getEntNp());
+                $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
                 return $this->redirect($this->generateUrl('ShowMyAccount'));
@@ -322,11 +323,11 @@ class AccountController extends Controller
         $form_searchdist = $this->createForm(new AccountSearchDistType());
 
         $em = $this->getDoctrine()->getManager();
-        $myAccountsdist = $this->get('security.context')->getToken()->getUser()->getEntiti()->getAccounts();
+        $query =$em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType'=>0));
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $myAccountsdist,
+            $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
             5/*limit per page*/
         );
@@ -342,9 +343,7 @@ class AccountController extends Controller
                 ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
                 ->innerJoin('Acc.Entiti', 'AccEnt')
 
-                ->where($qb->expr()->eq('Acc.accProv', 0));
-            if ($dataform['TypeSearch'] == 1)
-                $qb->andwhere($qb->expr()->isNull('Acc.Parent'));
+                ->where($qb->expr()->eq('Acc.accType', 0));
             if ($dataform['accName'] != '')
                 $qb->andwhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($dataform['accName'] . '%')));
             if ($dataform['entName'] != '')
@@ -359,8 +358,6 @@ class AccountController extends Controller
                     $qb->andwhere($qb->expr()->lte('Acc.accBalance', $dataform['accBalanceValue']));
             if ($dataform['accCreditLimit'] != 2)
                 $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', $dataform['accCreditLimit']));
-            if ($dataform['accStatus'] != 2)
-                $qb->andwhere($qb->expr()->eq('Acc.accStatus', $dataform['accStatus']));
 
             $query = $qb->getQuery();
 
@@ -371,30 +368,11 @@ class AccountController extends Controller
             );
 
 
-//            if($dataform['TypeSearch']==1)
-//            {
-//
-//                $query=Array();
-//                foreach($myAccountsdist as $child1)
-//                    $query=array_merge($query,$child1->getChildrens()->toArray());
-//                   $count=count($query);
-//                $query=$query->setHint('knp_paginator.count', $count);
-//                $pagination = $paginator->paginate(
-//                    $query,
-//                    $this->get('request')->query->get('page', 1)/*page number*/,
-//                    10/*limit per page*/
-//                );
-//
-//            }
-
-
         }
 
-        if ($this->get('security.context')->isGranted('ROLE_MASTER'))
             return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountDist.html.twig', array
             ('pagination' => $pagination, 'form_searchdist' => $form_searchdist->createView()));
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:Admin_SellerPage.html.twig');
 
     }
 
@@ -451,7 +429,6 @@ class AccountController extends Controller
         $qb = $em->createQueryBuilder();
         $qb->select('Acc')
             ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
-            // $qb->Where($qb->expr()->like('Acc.accName',$qb->expr()->literal($searchdistchilddata['accName'].'%')));
             ->Where('Acc.Parent=:AccountParent')
             ->setParameter('AccountParent', $AccountParent);
         if ($searchdistchilddata['accName'] != null)
@@ -461,7 +438,7 @@ class AccountController extends Controller
             $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', 0));
 
         if ($searchdistchilddata['accCreditLimit'] == 1)
-            $qb->andwhere($qb->expr()->gte('Acc.accCreditLimit', 0));
+            $qb->andwhere($qb->expr()->gt('Acc.accCreditLimit', 0));
 
 
         if ($searchdistchilddata['accBalance'] == 1)
@@ -495,8 +472,7 @@ class AccountController extends Controller
         $form_searchdistuser = $this->createForm(new UserDistSearchType());
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $usp = $Account->getUserprivileges();
-
+        $usp = $Account->getUsers();
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -520,22 +496,16 @@ class AccountController extends Controller
         $searchdistuserdata = $form_searchdistuser->getData();
 
         $qb = $em->createQueryBuilder();
-        $qb->select(array('UP', 'UPA', 'UPU'))
-            ->from('HelloDiDiDistributorsBundle:Userprivilege', 'UP')
-            ->innerJoin('UP.Account', 'UPA')
-            ->innerJoin('UP.User', 'UPU')
-            // $qb->Where($qb->expr()->like('Acc.accName',$qb->expr()->literal($searchdistchilddata['accName'].'%')));
-            ->Where($qb->expr()->eq('UPA.id', $Account->getId()));
-        if ($searchdistuserdata['username'] != null)
-            $qb->andWhere($qb->expr()->like('UPU.username', $qb->expr()->literal($searchdistuserdata['username'] . '%')));
-
-        if ($searchdistuserdata['privilege'] == 0)
-            $qb->andwhere($qb->expr()->eq('UP.privileges', 0));
-
-        if ($searchdistuserdata['privilege'] == 1)
-            $qb->andwhere($qb->expr()->eq('UP.privileges', 1));
+        $qb->select('U')
+            ->from('HelloDiDiDistributorsBundle:User', 'U')
+             ->where('U.Account =:MyAccount');
+              if($searchdistuserdata['username']!='')
+               $qb->andWhere($qb->expr()->like('U.username', $qb->expr()->literal($searchdistuserdata['username'] . '%')));
+              $qb->setParameter('MyAccount',$Account);
 
         $query = $qb->getQuery();
+        $count = count($query->getResult());
+        $query = $query->setHint('knp_paginator.count', $count);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -566,7 +536,6 @@ class AccountController extends Controller
         $form_edit = $this->createForm(new AccountDistChildType(), $Account);
 
         $myEntity = $this->get('security.context')->getToken()->getUser()->getEntiti();
-        if ($myEntity == $Account->getEntiti())
             return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistSettingsChild.html.twig', array('form_edit' => $form_edit->createView(), 'Account' => $Account));
 
     }
@@ -583,9 +552,10 @@ class AccountController extends Controller
 
         if ($request->isMethod('POST')) {
             $form_edit->bind($request);
+
+
             if ($form_edit->isValid()) {
                 $em->flush();
-
             }
 
 

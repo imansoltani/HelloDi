@@ -24,8 +24,8 @@
 
 
 
-                <a class="button btn btn-primary btn-large" href="{{ path('AddAccountDistMaster') }}">
-                    Create a new Master Distributor
+                <a class="button btn btn-primary btn-large" href="{{ path('Ent_Main') }}">
+                    Create Distributor
                 </a>
 
                 <div class="form_search">
@@ -153,9 +153,9 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>
-                                            {% if myAccount.accCurrency == 1 %}
+                                            {% if myAccount.accCurrency =='USD' %}
                                                 USD|
-                                            {% else %}
+                                            {% elseif myAccount.accCurrency =='CHF' %}
                                                 CHF|
                                             {% endif %}
                                             {%  if myAccount.accCreditLimit=='' %}

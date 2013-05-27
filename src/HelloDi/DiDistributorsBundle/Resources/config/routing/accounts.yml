@@ -57,7 +57,7 @@ ManageDistInfoEdit:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfoEdit" }
 
 ManageDistTransaction:
-    pattern:  /distributors/ManageDistTransaction
+    pattern:  /distributors/sub_accounts
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
 
 ManageDistChildren:
