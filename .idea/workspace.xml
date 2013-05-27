@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="in 2013/05/26 at 10:26 pm half providerh">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Account/EntitiAccountprovType.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Account/EntitiAccountprovType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -11,7 +10,7 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369635213235" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369635570259" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369573373540" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369320344716" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -234,19 +233,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Country.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Country.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="356" selection-end="356" vertical-scroll-proportion="-5.8076925">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="EntitiAccountprovType.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Account/EntitiAccountprovType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="88" selection-start="1276" selection-end="1276" vertical-scroll-proportion="0.66728973">
+            <state line="25" column="9" selection-start="1095" selection-end="1095" vertical-scroll-proportion="0.40747663">
               <folding />
             </state>
           </provider>
@@ -395,13 +385,13 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="138" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="155" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="158" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../HelloDi1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="163" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="832" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="834" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="832" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="153" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="147" />
     <property name="Database.TableEditor.Splitter" value="0.9" />
@@ -416,8 +406,8 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig" persistUploadOnCheckin="false" />
   <component name="RecentsManager">
@@ -548,7 +538,11 @@
       <created>1369635159629</created>
       <updated>1369635159629</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="in 2013/05/26 at 10:26 pm half providerh">
+      <created>1369635466061</created>
+      <updated>1369635466061</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -573,15 +567,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.51277685" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.51277685" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24621212" sideWeight="0.2857143" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32826748" sideWeight="0.670068" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2560606" sideWeight="0.579932" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25984848" sideWeight="0.579932" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30757576" sideWeight="0.2993197" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32764506" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -692,9 +686,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="62" selection-start="4898" selection-end="4898" vertical-scroll-proportion="-1.3076923">
-          <folding />
-        </state>
+        <state line="122" column="62" selection-start="4898" selection-end="4898" vertical-scroll-proportion="-1.3076923" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountProvMasterOk.html.twig">
@@ -704,9 +696,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountProvMaster.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="12" selection-start="1465" selection-end="1465" vertical-scroll-proportion="0.9364486">
-          <folding />
-        </state>
+        <state line="47" column="12" selection-start="1465" selection-end="1465" vertical-scroll-proportion="0.9364486" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Account/AccountSearchDistType.php">
@@ -736,60 +726,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/accounts.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="28" selection-start="1081" selection-end="1081" vertical-scroll-proportion="0.030303031">
-          <folding />
-        </state>
+        <state line="29" column="28" selection-start="1081" selection-end="1081" vertical-scroll-proportion="0.030303031" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/DetailHistory.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="7" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0317757">
-          <folding />
-        </state>
+        <state line="27" column="7" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0317757" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/bundles/hellodi/js/more/prov.entity.form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="17" selection-start="0" selection-end="4876" vertical-scroll-proportion="0.030303031">
-          <folding />
-        </state>
+        <state line="173" column="17" selection-start="0" selection-end="4876" vertical-scroll-proportion="0.030303031" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountProvMaster2Step.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="0" selection-start="4567" selection-end="4567" vertical-scroll-proportion="0.89719623">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#7;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#8;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
+        <state line="125" column="0" selection-start="4567" selection-end="4567" vertical-scroll-proportion="0.89719623" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="275" column="43" selection-start="10443" selection-end="10443" vertical-scroll-proportion="-13.384615">
-          <folding />
-        </state>
+        <state line="275" column="43" selection-start="10443" selection-end="10443" vertical-scroll-proportion="-13.384615" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ManageProvEntiti.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="45" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.40466926">
-          <folding />
-        </state>
+        <state line="41" column="45" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.40466926" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Country.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="356" selection-end="356" vertical-scroll-proportion="-5.8076925">
-          <folding />
-        </state>
+        <state line="19" column="0" selection-start="356" selection-end="356" vertical-scroll-proportion="0.28224298" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Account/EntitiAccountprovType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="88" selection-start="1276" selection-end="1276" vertical-scroll-proportion="0.66728973">
+        <state line="25" column="9" selection-start="1095" selection-end="1095" vertical-scroll-proportion="0.40747663">
           <folding />
         </state>
       </provider>
