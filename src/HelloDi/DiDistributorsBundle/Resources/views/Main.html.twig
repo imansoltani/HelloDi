@@ -57,7 +57,19 @@
 
         $('.messageshow').hide();
 
+        {% if errors is defined  %}
+            {% if errors|length != 0 %}
+                var x = "" ;
+                {% for error in errors %}
+                    x = "- {{ error }}<br>" ;
+                {% endfor %}
+                messagetop('hi','x','error');
+            {% endif %}
+        {% endif %}
 
+        {% if alarm is defined  %}
+            messagetop('hi','{{ alarm }}','success');
+        {% endif %}
         //messagetop('hi','how','error');
 
         $('* .messagetop ,.messageshow ').click(function(){
