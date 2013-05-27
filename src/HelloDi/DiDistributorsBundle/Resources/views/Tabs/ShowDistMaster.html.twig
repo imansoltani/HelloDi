@@ -18,22 +18,6 @@
 
 {% set hornav = '38px' %}
 {% block Tabs %}
-    <li {% if tab == '1' %}class="active"{% endif %}  >
-        <a href=""  >
-            <form action="{{ path('ManageDistInfo') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}"/>
-                <input type="submit" value="Info"/>
-            </form>
-        </a>
-    </li>
-    <li {% if tab == '2' %}class="active"{% endif %} >
-        <a>
-            <form action="{{path('ManageDistChildren') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}"/>
-                <input type="submit" value="Children"/>
-            </form>
-        </a>
-    </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a>
@@ -43,6 +27,29 @@
             </form>
         </a>
     </li>
+
+    <li {% if tab == '6' %}class="active"{% endif %} >
+        <a>
+            <form id="Item" action="{{ path('ManageItemsDist') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}">
+                <input type="submit" value="Items">
+            </form>
+
+        </a>
+    </li>
+
+    <li {% if tab == '1' %}class="active"{% endif %} >
+        <a>
+
+                <input type="submit" value="Sales">
+
+
+        </a>
+    </li>
+
+
+
+
 
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a>
@@ -55,22 +62,23 @@
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
         <a>
-            <form action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
+            <form action="{{ path('ManageDistSettings') }}" method="post">
                 <input type="hidden" name="id" value="{{ Account.id }}">
                 <input type="submit" value="Settings">
             </form>
 
         </a>
     </li>
-    <li {% if tab == '6' %}class="active"{% endif %} >
-        <a>
-            <form id="Item" action="{{ path('ManageItemsDist') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}">
-                <input type="submit" value="Items">
-            </form>
 
+    <li {% if tab == '2' %}class="active"{% endif %} >
+        <a>
+            <form action="{{path('ManageDistChildren') }}" method="post">
+                <input type="hidden" name="id" value="{{ Account.id }}"/>
+                <input type="submit" value="Sub Accounts"/>
+            </form>
         </a>
     </li>
+
 {% endblock Tabs %}
 
 {% block Body %}

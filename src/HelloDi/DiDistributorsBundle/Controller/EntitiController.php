@@ -91,9 +91,37 @@ class EntitiController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $accounts = $entity->getAccounts();
+$retail=1;
+$dist=0;
+$prov=0;
+      foreach( $accounts as $acc )
+
+      {
+          if($acc->getAccType()==0 || $acc->getAccType()==1 )
+          {
+              $dist = 1 ; // 0 is not - 1 is
+              $retail = 0 ; // 0 is not - 1 is
+          }
+          if($acc->getAccType()==1 )
+          {
+          $prov++;
+          }
+
+      }
+if($prov==count($accounts))
+{
+    $prov='yes';
+}
+        else
+        {
+            $prov='no';
+        }
+
+
+
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:accounts.html.twig', array(
-            'pagination' => $accounts, 'entity' => $entity
+            'pagination' => $accounts, 'entity' => $entity,'dist'=>$dist,'prov'=>$prov
         ));
     }
 

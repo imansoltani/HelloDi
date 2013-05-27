@@ -22,11 +22,17 @@
         </div>
     </div>
     <div class="control-group">
-        {{ form_errors(form_edit.accName) }}
-        {{ form_label(form_edit.accName) }}
-        {{ form_widget(form_edit.accName) }}
+        {{ form_errors(form_edit.accTerms) }}
+        {{ form_label(form_edit.accTerms) }}
+        {{ form_widget(form_edit.accTerms) }}
     </div>
-
+    <div class="control-group">
+        {{ form_label(form_edit.accTimeZone) }}
+        <div class="controls">
+            {{ form_widget(form_edit.accTimeZone) }}
+        </div>
+        {{ form_errors(form_edit.accTimeZone) }}
+    </div>
     <div class="control-group">
         <label class="control-label" >Type</label>
         <div class="controls">
@@ -41,12 +47,6 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label" >TimeZone</label>
-        <div class="controls">
-            <input type="text" disabled class="input-large" value="{{ Account.accTimeZone }}" >
-        </div>
-    </div>
 
 
 {{ form_widget(form_edit._token) }}

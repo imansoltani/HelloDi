@@ -18,7 +18,7 @@
         <h3>Users</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a  class="button btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{'id':Account.Entiti.id}) }}">Add New User</a>
+    <a  class="button btn btn-primary btn-large" href="#">Add New User</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -35,15 +35,8 @@
             </div>
 
 
-            <div class="control-group">
-                {{ form_label(form_searchdistuser.privilege) }}
-                <div class="controls">
-                    {{ form_widget(form_searchdistuser.privilege) }}
-                </div>
-            </div>
 
-
-            {{ form_rest(form_searchdistuser) }}
+            {{ form_widget(form_searchdistuser._token) }}
             <hr>
             <input class="btn  btn-primary" type="submit" value="Search">
             <a class="btn " href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
@@ -102,16 +95,12 @@
                 {% for u in pagination %}
                     <tr>
                         <td class="td-actions">
-                            <a class="btn_actions" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id }) }}"> Manage</a>
+                            <a class="btn_actions" href="#"> Manage</a>
                         </td>
-                        <td>{{ u.user.name }}</td>
-                        <td>{{ u.user.username }}</td>
-                        <td> {% if u.privileges==0 %}
-                                Seller |<a class="btn_edit_action" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id }) }}">Change</a>
-                            {% else %}
-                                Admin |
-                                <a class="btn_edit_action" href="{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id}) }}">Change</a>
-                            {% endif %}
+                        <td>{{ u.firstname }}</td>
+                        <td>{{ u.username }}</td>
+                        <td>
+                            Distributors
                         </td>
                     </tr>
                 {% endfor %}

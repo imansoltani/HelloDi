@@ -19,14 +19,6 @@
 {% set hornav = '38px' %}
 {% block Tabs %}
 
-    <li {% if tab == '1' %}class="active"{% endif %}  >
-        <a>
-            <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Item"/>
-            </form>
-        </a>
-    </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a>
             <form action="" method="post">
@@ -35,6 +27,15 @@
             </form>
         </a>
     </li>
+    <li {% if tab == '1' %}class="active"{% endif %}  >
+        <a>
+            <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
+                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+                <input type="submit" value="Item"/>
+            </form>
+        </a>
+    </li>
+
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a>

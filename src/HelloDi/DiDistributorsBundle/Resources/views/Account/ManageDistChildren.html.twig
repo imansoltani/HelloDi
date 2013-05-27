@@ -15,10 +15,6 @@
 {% block Tab %}
 
 
-    <a class="button btn btn-primary btn-large" href="">
-        Create a new Child Account
-    </a>
-
 <div class="form_search">
     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
@@ -142,8 +138,21 @@
                         {% endif %}
 
                    </td>
-                    <td>{{ childaccount.Entiti }}</td>
-                    <td>Dist</td>
+                    <td>
+
+
+                            {{ childaccount.Entiti.entName }}
+
+
+                    </td>
+                    <td>{% if childaccount.accType==0  %}
+                       Distributors
+                        {% elseif childaccount.accType==2  %}
+                       Retailes
+                        {% elseif childaccount.accType==1  %}
+                       Provider
+                        {% endif %}
+                    </td>
 
                     <td>
                         {%  if childaccount.accBalance=='' %}
@@ -157,7 +166,7 @@
                     <td>
 
                    {%  if childaccount.accCreditLimit=='' %}
-                        Null
+                        000
                         {% else %}
                         {{ childaccount.accCreditLimit }}
                     {% endif %}

@@ -179,7 +179,7 @@ function Validation_Prov(x)
 function Valid_Step_1()
 {
     var y = false ;
-    $('.entName input, .entVatNumber  input').each(function() {
+    $('.entName input, .entVatNumber  input, .entWebsite input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');

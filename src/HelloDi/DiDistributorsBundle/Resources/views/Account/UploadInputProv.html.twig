@@ -15,9 +15,7 @@
     </div>
 
 
-        {% for error in errors %}
-            {{ error }} <br/>
-        {% endfor %}
+
         <form action="{{ path("UploadInputProvSubmit") }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 
             <div class="control-group">
