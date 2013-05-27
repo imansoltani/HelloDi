@@ -5,6 +5,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use HelloDi\DiDistributorsBundle\Entity\Address;
 use HelloDi\DiDistributorsBundle\Entity\Code;
+use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Input;
 use HelloDi\DiDistributorsBundle\Entity\Item;
@@ -39,7 +40,7 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $myAccountsprov = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accProv' => 1));
+        $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 1));
 
         if ($request->isMethod('POST')) {
             $formsearch->bind($request);
@@ -66,26 +67,18 @@ class AccountController extends Controller
             if ($dataform['id'] != '')
                 $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
             $query = $qb->getQuery();
-            $resultsearchs = $query->getResult();
-            $t = count($resultsearchs);
-            if ($t != 0)
-                $myAccountsprov = $resultsearchs;
+
         }
 
-
-        foreach ($myAccountsprov as $myAccount) {
-            $userperiv = $myAccount->getUserprivileges();
-            if (count($userperiv) != 0)
-                $myAccount->name = $userperiv[0]->getUser()->getName();
-            else
-                $myAccount->username = "-";
-        }
-
-        if ($this->get('security.context')->isGranted('ROLE_MASTER'))
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
             return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccount.html.twig', array
-            ('myAccountsprov' => $myAccountsprov, 'form_searchprov' => $form_searchprov->createView()));
+            ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:Admin_SellerPage.html.twig');
     }
 
 //Master
@@ -143,8 +136,19 @@ class AccountController extends Controller
 
     public function AddAccountProvMasterAction()
     {
-        $entities = $this->get('security.context')->getToken()->getUser()->getEntiti()->getChildrens();
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig', array('entities' => $entities));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities =$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $entities,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig', array('pagination' => $pagination));
+
+
     }
 
     public function AddAccountProvMasterOkAction(Request $request, $id)
@@ -161,9 +165,13 @@ class AccountController extends Controller
             $Account->setEntiti($entity);
             $Account->setAccCreationDate(new \DateTime('now'));
             $Account->setAccTimeZone(null);
-            $Account->setAccProv(1);
-            $Account->setAccType(0);
+            $Account->setAccType(1);
             $Account->setAccBalance(0);
+            $Account->setAccCreditLimit(0);
+            $Account->setAccDefaultLanguage(null);
+            $Account->setParent(null);
+            $Account->setAccTerms(0);
+            $Account->setAccTimeZone(null);
             $em->persist($Account);
             $em->flush();
             return $this->redirect($this->generateUrl('ShowMyAccount'));
@@ -182,29 +190,31 @@ class AccountController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $AdrsDetai=new DetailHistory();
         $Entiti = new Entiti();
-
         $Account = new Account();
 
-        $Address = new Address();
-
-        $Address->setAdrsStart(new \DateTime('now'));
-        $Address->setAdrsEnd(null);
 
 
         $Account->setAccCreationDate(new \DateTime('now'));
         $Account->setAccTimeZone(null);
-        $Account->setAccProv(1);
-        $Account->setAccType(0);
+        $Account->setAccType(1);
         $Account->setAccBalance(0);
+        $Account->setAccCreditLimit(0);
 
-
-        $Address->setEntiti($Entiti);
-        $Entiti->addAddresse($Address);
+        $AdrsDetai->setAdrsDate(new \DateTime('now'));
+        $AdrsDetai->setEntiti($Entiti);
+        $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
+        $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
+        $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
+        $AdrsDetai->setAdrsCity($Entiti->getEntCity());
+        $AdrsDetai->setAdrsNp($Entiti->getEntNp());
+        $AdrsDetai->setEntiti($Entiti);
 
         $Account->setEntiti($Entiti);
         $Entiti->addAccount($Account);
 
+//        die('sdsd');
         $form2step = $this->createForm(new EntitiAccountprovType(), $Entiti, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
@@ -213,8 +223,9 @@ class AccountController extends Controller
             if ($form2step->isValid()) {
 
                 $em->persist($Entiti);
+                $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
-                $em->persist($Address);
+                $em->persist($AdrsDetai);
                 $em->flush();
                 return $this->redirect($this->generateUrl('ShowMyAccount'));
             }
