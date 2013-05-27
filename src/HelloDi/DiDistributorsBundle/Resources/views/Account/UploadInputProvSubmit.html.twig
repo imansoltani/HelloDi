@@ -22,11 +22,11 @@
         Batch: {{ input.batch }} <br/>
         Production: {{ input.dateProduction|date('Y/m/d') }} <br/>
         Expiry: {{ input.dateExpiry|date('Y/m/d') }} <br/>
-        File Name: {{ input.name }} <br/>
+        File Name: {{ input.fileName }} <br/>
 
         <form action="{{ path('UploadInputProvSubmitAccepted') }}" method="post">
             <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-            <input type="submit" value="Item"/>
+            <input type="submit" value="Accept"/>
         </form>
         <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
 

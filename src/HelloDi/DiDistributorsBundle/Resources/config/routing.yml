@@ -19,4 +19,4 @@ items:
 
 codes:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/code.yml"
-    prefix:   /items/code
+    prefix:   /codes

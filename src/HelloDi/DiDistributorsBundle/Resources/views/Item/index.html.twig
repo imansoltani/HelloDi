@@ -24,7 +24,7 @@
 
         <div class="widget-content">
             <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
-                Create a new Item
+                Add a new Item
             </a>
             <div class="form_search" >
                 <h5 style="cursor:pointer;" class="TitleShow1">
@@ -61,8 +61,6 @@
                             {{ form_widget(form.currency) }}
                         </div>
                     </div>
-
-
 
                     <hr>
                     <input class="btn  btn-primary" type="submit" value="Search">
@@ -111,10 +109,7 @@
                                 <th>Type</th>
                                 <th>Min Stock</th>
                                 <th>Stock</th>
-                                <th>Operator</th>
                                 <th>Country</th>
-
-
                             </tr>
                             </thead>
                             <tbody>
@@ -131,10 +126,7 @@
                                     <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
                                     <td>{{ item.alertMinStock }}</td>
                                     <td>{{ item.Codes.count }}</td>
-                                    <td>{{ item.operator }}</td>
                                     <td>{{ item.Country.iso }}</td>
-
-
                                 </tr>
                             {% endfor %}
                             </tbody>

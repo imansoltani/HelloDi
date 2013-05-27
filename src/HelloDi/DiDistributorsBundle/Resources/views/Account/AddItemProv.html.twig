@@ -29,7 +29,7 @@
 
             <div class="control-group">
                 {{ form_label(form.price) }}
-                <div class="controls" >{{ form_widget(form.price) }} {% if Account.accCurrency==0  %}USD {% else %}CHF {% endif %}</div>
+                <div class="controls" >{{ form_widget(form.price) }} {{ Account.accCurrency }}</div>
                 {{ form_errors(form.price) }}
             </div>
 
@@ -38,7 +38,7 @@
             <input type="hidden" name="accountid" value="{{  Account.id }}" />
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <input type="submit" class="btn btn-primary btn-medium" onclick="$('#gowhere').val('0')"  btn-large" value="Add" />
+                <input type="submit" class="btn btn-primary btn-medium" onclick="$('#gowhere').val('0')" value="Add" />
                 <input type="submit" class="btn " onclick="$('#gowhere').val('1')" value="Back" />
                 <input type="hidden" id="gowhere" value="0" />
                 <script type="text/javascript">

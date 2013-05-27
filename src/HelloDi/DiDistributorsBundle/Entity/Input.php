@@ -127,7 +127,7 @@ class Input
         );
 
         // set the path property to the filename where you've saved the file
-        $this->name = $this->getFile()->getClientOriginalName();
+        $this->fileName = $this->getFile()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
         $this->file = null;

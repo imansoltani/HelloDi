@@ -16,10 +16,10 @@ class CdSearchType extends AbstractType
                 'required'=> false,
                 'empty_value' => 'Code.All',
                 'class' => 'HelloDiDiDistributorsBundle:Account',
-                'property' => 'accname',
+                'property' => 'accName',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->where('u.accProv = 1 ');
+                        ->where("u.accType = 'prov' ");
                 },
                 'label' => 'Code.Provider','translation_domain' => 'code'
             ))
