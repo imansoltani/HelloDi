@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for entiti in  entities%}
+        {% for entiti in  pagination %}
             <tr>
                 <td>{{ entiti.id }}</td>
                 <td>{{ entiti.entName }}</td>
@@ -36,7 +36,6 @@
                 <td>{{ entiti.entTel2 }}</td>
                 <td>{{ entiti.entFax }}</td>
                 <td>{{ entiti.entWebsite }}</td>
-                <td>{{ entiti.entRegistrationNumber }}</td>
                 <td class="td-actions" >
                     <a class="btn btn-small btn-warning" href="{{ path('AddAccountProvMasterOk',{'id':entiti.id}) }}">
                         <i class="btn-icon-only icon-ok"></i>
