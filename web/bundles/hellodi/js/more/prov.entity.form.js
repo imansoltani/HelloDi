@@ -179,7 +179,7 @@ function Validation_Prov(x)
 function Valid_Step_1()
 {
     var y = false ;
-    $('.entName input, .entVatNumber  input, .entRegistrationNumber input').each(function() {
+    $('.entName input, .entVatNumber  input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');
@@ -194,7 +194,7 @@ function Valid_Step_1()
 }
 
 
-function Valid_Step_2()
+function Valid_Step_3()
 {
     var y = false ;
     $('.accName input').each(function() {
@@ -212,10 +212,10 @@ function Valid_Step_2()
 
 }
 
-function Valid_Step_3()
+function Valid_Step_2()
 {
     var y = false ;
-    $('.adrsNp input, .adrsCity  input, .adrs1 input').each(function() {
+    $('.entAdrs1 input, .entCity  input, .entNP input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');
