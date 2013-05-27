@@ -19,10 +19,13 @@ class EntitiAccountprovType extends AbstractType
             ->add('entTel2', 'text',array('required'=>false))
             ->add('entFax', 'text',array('required'=>false))
             ->add('entWebsite', 'text',array('required'=>false))
-            ->add('entRegistrationNumber', 'text',array())
-            ->add('Addresses','collection',array('type'=>new \HelloDi\DiDistributorsBundle\Form\Address\AddressType()))
+            ->add('entAdrs1', 'text',array())
+            ->add('entAdrs2', 'text',array('required'=>false))
+            ->add('entAdrs3', 'text',array('required'=>false))
+            ->add('entCity', 'text',array('required'=>false))
+            ->add('entNP', 'text',array())
+            ->add('Country','entity',array('class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property'=>'name'))
             ->add('Accounts','collection',array('type'=>new AccountProvType()))
-
         ;
     }
 
