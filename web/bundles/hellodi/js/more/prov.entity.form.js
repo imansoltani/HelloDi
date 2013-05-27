@@ -215,6 +215,7 @@ function Valid_Step_3()
 function Valid_Step_2()
 {
     var y = false ;
+
     $('.entAdrs1 input, .entCity  input, .entNP input').each(function() {
         if ($(this).val() == '') {
             y = true ;
