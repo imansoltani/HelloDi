@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserRetailersType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/users.html.twig" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Form\User\UserRegistrationEntityType.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserDistributorsType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Account.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Account.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/AddNewUserEntiti.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/AddNewUserEntiti.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/accounts.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/accounts.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -20,7 +10,7 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369720018308" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369731135773" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369573373540" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369320344716" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -1243,7 +1233,11 @@
       <created>1369648417115</created>
       <updated>1369648417115</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="in 2013/05/26 at 01:32 pm finish addnewuser">
+      <created>1369731138408</created>
+      <updated>1369731138408</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1270,6 +1264,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.51277685" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1288,7 +1283,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8792517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1338,7 +1332,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="in 2013/05/26 at 01:32 pm finish provider_distributors" />
+    <option name="LAST_COMMIT_MESSAGE" value="in 2013/05/26 at 01:32 pm finish addnewuser" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1368,6 +1362,7 @@
     <MESSAGE value="in 2013/05/26 at 10:26 pm half providerh" />
     <MESSAGE value="in 2013/05/26 at 10:26 pm half provi" />
     <MESSAGE value="in 2013/05/26 at 01:32 pm finish provider_distributors" />
+    <MESSAGE value="in 2013/05/26 at 01:32 pm finish addnewuser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1389,7 +1384,9 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="2346" selection-end="2346" vertical-scroll-proportion="0.848659" />
+        <state line="56" column="0" selection-start="2346" selection-end="2346" vertical-scroll-proportion="0.848659">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/entities.yml">
