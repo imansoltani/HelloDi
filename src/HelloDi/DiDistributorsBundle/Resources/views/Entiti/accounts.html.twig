@@ -68,21 +68,14 @@
                             {% endif %}
                         </td>
 
-
-
-                        <td>{{ account.accBalance }}</td>
+                        <td>{{ account.accBalance }}|<b>{{ account.accCurrency }}</b></td>
                         <td>{{account.accCreditLimit}}</td>
 
                         <td class="td-actions">
 
-                            {% if account.accType == 1 %}
+
                             <a href="{#{{ path('ProvTransaction',{'id': account.id }) }}#}#">Show</a>
 
-
-                            {% elseif account.accType== 0 %}
-
-                            <a href="#{#{{ path('DistTransaction',{'id': account.id }) }}#}">Show</a>
-                            {% endif %}
                         </td>
 
                     </tr>

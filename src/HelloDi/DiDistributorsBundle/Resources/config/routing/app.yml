@@ -1,0 +1,19 @@
+loginsuccess:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Default:dashboard }
+
+entities:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/entities.yml"
+    prefix:   m/admin/entities
+
+account:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/accounts.yml"
+    prefix:   m/admin/accounts
+
+items:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"
+    prefix:   m/admin/items
+
+codes:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
+    prefix:   m/admin/codes

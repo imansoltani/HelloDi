@@ -24,7 +24,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: ROLE_USER }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/Main$, role: ROLE_USER }
+        - { path: ^/app$, role: ROLE_USER }
         - { path: ^/providers/, role: ROLE_MASTER }
         - { path: ^/distributors/, role: ROLE_USER }
         - { path: ^/entities/, role: ROLE_USER }

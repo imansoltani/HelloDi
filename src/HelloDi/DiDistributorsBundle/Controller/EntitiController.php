@@ -164,7 +164,7 @@ class EntitiController extends Controller
         elseif ($Accountrole ==0) {
             $form = $this->createForm(new NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
             $formrole=$this->createFormBuilder()
-                ->add('roles','choice',array('choices'=>array('ROLE_DISTRIBUTORS'=>'ROLE_DISTRIBUTORS','ROLE_DISTRIBUTORS_ADMIN'=>'ROLE_DISTRIBUTORS_ADMIN')))->getForm();
+                ->add('roles','choice',array('choices'=>array('ROLE_DISTRIBUTOR'=>'ROLE_DISTRIBUTOR','ROLE_DISTRIBUTOR_ADMIN'=>'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
         }
 
         if ($request->isMethod('POST')) {
@@ -173,13 +173,13 @@ class EntitiController extends Controller
             $data=$formrole->getData();
 
        if($data['roles']=='ROLE_RETAILER')
-           $user->addRole(strtoupper($data['roles']));
+           $user->addRole(($data['roles']));
        elseif($data['roles']=='ROLE_RETAILER_ADMIN')
-           $user->addRole(strtoupper($data['roles']));
-        if($data['roles']=='ROLE_DISTRIBUTORS')
-            $user->addRole(strtoupper($data['roles']));
-        elseif($data['roles']=='ROLE_DISTRIBUTORS_ADMIN')
-            $user->addRole(strtoupper($data['roles']));
+           $user->addRole(($data['roles']));
+        if($data['roles']=='ROLE_DISTRIBUTOR')
+            $user->addRole(($data['roles']));
+        elseif($data['roles']=='ROLE_DISTRIBUTOR_ADMIN')
+            $user->addRole(($data['roles']));
             if ($form->isValid()) {
                 $user->setEntiti($entity);
                 $user->setStatus(1);
@@ -292,5 +292,64 @@ class EntitiController extends Controller
         }
         return $this->render('HelloDiDiDistributorsBundle:Entiti:AddDist.html.twig', array('id' => $id, 'entity' => $entity, 'form' => $form->createView()));
     }
+
+
+public function  EditUserEntitiesAction(Request $request,$id)
+{
+    $em=$this->getDoctrine()->getManager();
+    $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+$form_edit=$this->createForm(New NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+if($request->isMethod('POST'))
+{
+    $form_edit->bind($request);
+    if($form_edit->isValid())
+    {
+
+        $em->flush();
+        return $this->forward("HelloDiDiDistributorsBundle:Entiti:users", array('entityid' => $user->getEntiti()->getId()));
+
+    }
+}
+
+    return $this->render('HelloDiDiDistributorsBundle:Entiti:EditUserEntiti.html.twig',array('form_edit'=>$form_edit->createView(),'User'=>$user));
+}
+
+
+    public function  ChangeRoleUserEntitiesAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+         $role=$user->getRoles()[0];
+
+        switch($role){
+
+            case 'ROLE_RETAILER':
+             $user->removeRole('ROLE_RETAILER');
+             $user->addRole('ROLE_RETAILER_ADMIN');
+            break;
+
+            case 'ROLE_RETAILER_ADMIN':
+                $user->removeRole('ROLE_RETAILER_ADMIN');
+                $user->addRole('ROLE_RETAILER');
+            break;
+
+            case 'ROLE_DISTRIBUTOR':
+                $user->removeRole('ROLE_DISTRIBUTOR');
+                $user->addRole('ROLE_DISTRIBUTOR_ADMIN');
+            break;
+
+            case 'ROLE_DISTRIBUTOR_ADMIN':
+                $user->removeRole('ROLE_DISTRIBUTOR_ADMIN');
+                $user->addRole('ROLE_DISTRIBUTOR');
+             break;
+         }
+
+     $em->flush();
+     return $this->forward("HelloDiDiDistributorsBundle:Entiti:users", array('entityid' => $user->getEntiti()->getId()));
+
+            }
+
+
+
 
 }

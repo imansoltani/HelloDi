@@ -86,7 +86,7 @@
                     <th>Operation</th>
                     <th>Name</th>
                     <th>UserName</th>
-                    <th>Privilege</th>
+                    <th>Role</th>
 
 
                 </tr>
@@ -100,7 +100,11 @@
                         <td>{{ u.firstname }}</td>
                         <td>{{ u.username }}</td>
                         <td>
-                            Distributors
+                            {% if u.roles[0]=='ROLE_DISTRIBUTOR' %}
+                                     ROLE_DISTRIBUTOR
+                           {% else %}
+                                    ROLE_DISTRIBUTOR_ADMIN
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
