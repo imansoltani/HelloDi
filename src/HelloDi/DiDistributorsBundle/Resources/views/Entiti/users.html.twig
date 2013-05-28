@@ -13,7 +13,7 @@
     <div class="widget-header">
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
-
+{#{% if en %}#}
     <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
         {{ 'User.Add' | trans ({}, "user") }}
     </a>

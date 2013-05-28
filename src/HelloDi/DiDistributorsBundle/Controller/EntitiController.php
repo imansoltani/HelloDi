@@ -104,6 +104,7 @@ class EntitiController extends Controller
 
         }
         if ($prov == count($accounts)) {
+            $accounts= $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType'=>1));
             $prov = 'yes';
         } else {
             $prov = 'no';
@@ -299,8 +300,12 @@ public function  EditUserEntitiesAction(Request $request,$id)
 {
     $em=$this->getDoctrine()->getManager();
     $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+    if($user->getAccount()->getAccType()==2)
 $form_edit=$this->createForm(New NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
-if($request->isMethod('POST'))
+    if($user->getAccount()->getAccType()==0)
+        $form_edit=$this->createForm(New NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+
+    if($request->isMethod('POST'))
 {
     $form_edit->bind($request);
     if($form_edit->isValid())
