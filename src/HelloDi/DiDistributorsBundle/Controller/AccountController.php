@@ -3,7 +3,6 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Address;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
@@ -645,8 +644,7 @@ class AccountController extends Controller
                 'property' => 'itemName',
 //                'query_builder' => function(EntityRepository $er) {
 //                    return $er->createQueryBuilder('u')
-//                        ->where ('u.Prices = :dd')
-//                        ->setParameter('dd',null);
+//                        ->where ('u.')
 //                }
             ))
             ->add('price')
@@ -874,6 +872,8 @@ class AccountController extends Controller
         $accountid = $request->get('accountid');
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
 
+        $inputs = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid)->getInputs();
+
         $form = $this->createFormBuilder()
             ->add('From', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('To', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
@@ -882,6 +882,7 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageInputsProv.html.twig', array(
             'form' => $form->createView(),
+            'inputs' => $inputs,
             'Account' => $account
         ));
     }
@@ -905,14 +906,7 @@ class AccountController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('File', 'file')
-            ->add('Item', 'entity', array(
-                'class' => 'HelloDiDiDistributorsBundle:Item',
-                'property' => 'itemName',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->where ('u.price')
-//                }
-            ))
+            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
             ->add('Batch', 'text', array('data' => '12345'))
             ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
@@ -965,8 +959,8 @@ class AccountController extends Controller
             $input->setDateProduction($data['ProductionDate']);
             $input->setDateExpiry($data['ExpireDate']);
 
-            $fileName = $input->getFileName();
-            $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('fileName' => $fileName));
+            $name = $input->getName();
+            $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('name' => $name));
 
             if (!$inputfind) {
                 $file = fopen($input->getAbsolutePath(), 'r+');
@@ -985,7 +979,7 @@ class AccountController extends Controller
                         }
                     }
                     if ($ok) {
-                        $request->getSession()->set('upload_Name', $input->getFileName());
+                        $request->getSession()->set('upload_Name', $input->getName());
                         $request->getSession()->set('upload_Itemid', $input->getItem()->getId());
                         $request->getSession()->set('upload_Batch', $data['Batch']);
                         $request->getSession()->set('upload_Production', $data['ProductionDate']);
@@ -1034,7 +1028,7 @@ class AccountController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $input = new Input();
-        $input->setFileName($filename);
+        $input->setName($filename);
         $input->setItem($Item);
         $input->setBatch($batch);
         $input->setDateProduction($production);
@@ -1080,4 +1074,6 @@ class AccountController extends Controller
             'accountid' => $accountid
         ));
     }
+
 }
+

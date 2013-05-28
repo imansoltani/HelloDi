@@ -5,10 +5,12 @@ ssasdasds
 
 <form action="{{ path('AddNewUserEntiti',{'id':entity.id}) }}" method="post" >
 
-    {{ form_label(form.name) }}
-    {{ form_widget(form.name) }}
+    {{ form_label(form.firstname) }}
+    {{ form_widget(form.firstname) }}
     </br>
-
+    {{ form_label(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+    </br>
     {{ form_label(form.username) }}
     {{ form_widget(form.username) }}
     </br>
@@ -23,15 +25,17 @@ ssasdasds
     {{ form_label(form.plainPassword) }}
     {{ form_widget(form.plainPassword) }}
     </br>
-    {% set i=0 %}
-    {% for usp in form.Userprivileges  %}
-        {{ acc[i].accName}}
-        {% set i=i+1 %}
-        {#{{ usp.Account.get('value') }}#}
-        {{ form_widget(usp.privileges) }}
-        </br>
-    {% endfor %}
-    {{ form_rest(form) }}
+    {{ form_label(form.Account) }}
+    {{ form_widget(form.Account) }}
+     <br>
+    {{ form_label(form.language) }}
+    {{ form_widget(form.language) }}
+    </br>
+    {{ form_label(formrole.roles) }}
+    {{ form_widget(formrole.roles) }}
+    </br>
+
+    {{ form_widget(form._token) }}
     <input type="hidden" value="{{ entity.id }}">
 
     <input type="submit" value="Search">

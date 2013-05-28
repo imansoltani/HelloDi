@@ -149,3 +149,7 @@ UploadInputProvSubmitAccepted:
 UploadInputProvSubmitCanceled:
     pattern:  /providers/Inputs/UploadSubmitCanceled
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }
+#-------Retailers--------------#
+ListUsersInRetailers:
+    pattern:  /retailers/{id}/users
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ListUsersInRetailers" }

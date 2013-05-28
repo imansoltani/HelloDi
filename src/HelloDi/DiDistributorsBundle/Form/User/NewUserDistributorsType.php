@@ -2,21 +2,32 @@
 
 namespace HelloDi\DiDistributorsBundle\Form\User;
 
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Form\Userprivilege\UserprivilegeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
-class UserRegistrationEntityType extends BaseType
+class NewUserDistributorsType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         parent::buildForm($builder, $options);
         $builder
-            ->add('name')
+            ->add('firstname')
+            ->add('lastname')
             ->add('mobile')
-            ->add('Userprivileges','collection',array('type'=>new UserprivilegeType()));
+            ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
+            ->add('Account', 'entity', array(
+                'class'    => 'HelloDiDiDistributorsBundle:Account',
+                'property' => 'accName',
+                'query_builder' => function(EntityRepository$er) {
+                    return $er->createQueryBuilder('u')
+                        ->where("u.accType = 0 ");
+                }
+            ));
+
 
 
     }

@@ -9,6 +9,8 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiesSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationEntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,20 +42,17 @@ class EntitiController extends Controller
                 ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
                 ->innerJoin('Ent.Accounts', 'EntAcc')
                 ->innerJoin('Ent.Country', 'EntCoun');
-            if ($data['Country']->getName()!= 'All')
-            {
+            if ($data['Country']->getName() != 'All') {
 
                 $qb->where('EntCoun.iso=:iso');
-                $qb->setParameter('iso',$data['Country']->getIso());
+                $qb->setParameter('iso', $data['Country']->getIso());
             }
             if ($data['HaveAccount'] != 2)
                 $qb->andwhere($qb->expr()->eq('EntAcc.accType', $data['HaveAccount']));
-            if ($data['HaveAccount'] == 2)
-            {
-                $qb->andwhere($qb->expr()->neq('EntAcc.accType',2));
+            if ($data['HaveAccount'] == 2) {
+                $qb->andwhere($qb->expr()->neq('EntAcc.accType', 2));
             }
-            if ($data['entName'] != '')
-            {
+            if ($data['entName'] != '') {
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
             }
 
@@ -91,37 +90,28 @@ class EntitiController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $accounts = $entity->getAccounts();
-$retail=1;
-$dist=0;
-$prov=0;
-      foreach( $accounts as $acc )
+        $retail = 1;
+        $dist = 0;
+        $prov = 0;
+        foreach ($accounts as $acc) {
+            if ($acc->getAccType() == 0 || $acc->getAccType() == 1) {
+                $dist = 1; // 0 is not - 1 is
+                $retail = 0; // 0 is not - 1 is
+            }
+            if ($acc->getAccType() == 1) {
+                $prov++;
+            }
 
-      {
-          if($acc->getAccType()==0 || $acc->getAccType()==1 )
-          {
-              $dist = 1 ; // 0 is not - 1 is
-              $retail = 0 ; // 0 is not - 1 is
-          }
-          if($acc->getAccType()==1 )
-          {
-          $prov++;
-          }
-
-      }
-if($prov==count($accounts))
-{
-    $prov='yes';
-}
-        else
-        {
-            $prov='no';
+        }
+        if ($prov == count($accounts)) {
+            $prov = 'yes';
+        } else {
+            $prov = 'no';
         }
 
 
-
-
         return $this->render('HelloDiDiDistributorsBundle:Entiti:accounts.html.twig', array(
-            'pagination' => $accounts, 'entity' => $entity,'dist'=>$dist,'prov'=>$prov
+            'pagination' => $accounts, 'entity' => $entity, 'dist' => $dist, 'prov' => $prov
         ));
     }
 
@@ -135,15 +125,14 @@ if($prov==count($accounts))
         $qb = $em->createQueryBuilder();
         $qb->select('Ent')
             ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
-            ->innerJoin('Ent.Accounts','EntAcc')
-            ->innerJoin('Ent.Users','EntUsr')
+            ->innerJoin('Ent.Accounts', 'EntAcc')
+            ->innerJoin('Ent.Users', 'EntUsr')
             ->where('Ent.id =:Entiti')
             ->orderBy('EntUsr.firstName', 'ASC')
-            ->setParameter('Entiti',$entity->getId());
+            ->setParameter('Entiti', $entity->getId());
         $query = $qb->getQuery();
         $count = count($query->getResult());
-      $query = $query->setHint('knp_paginator.count', $count);
-
+        $query = $query->setHint('knp_paginator.count', $count);
 
 
         $pagination = $paginator->paginate(
@@ -151,7 +140,7 @@ if($prov==count($accounts))
             $this->get('request')->query->get('page', 1) /*page number*/,
             6/*limit per page*/
         );
-       // die('sas'.count($pagination));
+        // die('sas'.count($pagination));
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
             'pagination' => $pagination, 'entity' => $entity
         ));
@@ -163,33 +152,37 @@ if($prov==count($accounts))
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-
+        $Accountrole = $entity->getAccounts()[0]->getAccType();
         $user = new User();
-        $listaccdist = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accProv' => 0));
+        $Account = new Account();
 
-        foreach ($listaccdist as $ch) {
-            $userprivi = new Userprivilege();
-            $user->addUserprivilege($userprivi);
-            $userprivi->setUser($user);
-            $userprivi->setAccount($ch);
+        if ($Accountrole == 2) {
+            $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+             $formrole=$this->createFormBuilder()
+              ->add('roles','choice',array('choices'=>array('ROLE_RETAILER'=>'ROLE_RETAILER','ROLE_RETAILER_ADMIN'=>'ROLE_RETAILER_ADMIN')))->getForm();
+        }
+        elseif ($Accountrole ==0) {
+            $form = $this->createForm(new NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+            $formrole=$this->createFormBuilder()
+                ->add('roles','choice',array('choices'=>array('ROLE_DISTRIBUTORS'=>'ROLE_DISTRIBUTORS','ROLE_DISTRIBUTORS_ADMIN'=>'ROLE_DISTRIBUTORS_ADMIN')))->getForm();
         }
 
-        $form = $this->createForm(new UserRegistrationEntityType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
         if ($request->isMethod('POST')) {
-
             $form->bind($request);
+            $formrole->bind($request);
+            $data=$formrole->getData();
 
+       if($data['roles']=='ROLE_RETAILER')
+           $user->addRole(strtoupper($data['roles']));
+       elseif($data['roles']=='ROLE_RETAILER_ADMIN')
+           $user->addRole(strtoupper($data['roles']));
+        if($data['roles']=='ROLE_DISTRIBUTORS')
+            $user->addRole(strtoupper($data['roles']));
+        elseif($data['roles']=='ROLE_DISTRIBUTORS_ADMIN')
+            $user->addRole(strtoupper($data['roles']));
             if ($form->isValid()) {
-
-                $d = $user->getUserprivileges();
                 $user->setEntiti($entity);
-
-                foreach ($d as $up) {
-                    if ($up->getPrivileges() == 2)
-                        $d->removeElement($up);
-                }
-
-
+                $user->setStatus(1);
                 $em->persist($user);
                 $em->flush();
 
@@ -199,7 +192,7 @@ if($prov==count($accounts))
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti.html.twig', array('acc' => $listaccdist, 'entity' => $entity, 'form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti.html.twig', array('entity' => $entity, 'form' => $form->createView(),'formrole'=> $formrole->createView()));
 
     }
 

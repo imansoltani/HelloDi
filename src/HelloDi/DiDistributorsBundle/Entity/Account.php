@@ -20,6 +20,11 @@ class Account
      */
     private $accDefaultLanguage;
 
+    public function getLabel()
+    {
+        return $this->accName .', '. $this->accDefaultLanguage ;
+    }
+
     /** 
      * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
      */

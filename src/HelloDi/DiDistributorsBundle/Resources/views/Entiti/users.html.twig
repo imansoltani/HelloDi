@@ -14,7 +14,7 @@
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
 
-    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="#{#{{ path('AddNewUserEntiti',{id:entity.id}) }}#} ">
+    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
         {{ 'User.Add' | trans ({}, "user") }}
     </a>
 
@@ -45,9 +45,9 @@
                             <td>{{ User.username }}</td>
                             <td>
 
-                                {% if (User.roles[0]!='ROLE_MASTER_ADMIN' or User.roles[0]!='ROLE_MASTER') %}
-                                {#{{ User.Account.accName }}#}
-                                    {% else %}
+                                {% if (User.roles[0]!='ROLE_RETAILER_ADMIN' or User.roles[0]!='ROLE_RETAILER') %}
+                                {{ User.Account.accName }}
+                                    {% elseif (User.roles[0]!='ROLE_DISTRIBUTORS_ADMIN' or User.roles[0]!='ROLE_DISTRIBUTORS') %}
                                         null
                                         {% endif %}
                             </td>
