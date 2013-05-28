@@ -2,25 +2,10 @@ layout:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Default:index }
 
-loginsuccess:
-    pattern:  /Main
-    defaults: { _controller: HelloDiDiDistributorsBundle:Default:dashboard }
-
 app:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/app.yml"
     prefix:   /app
 
-#account:
-#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/accounts.yml"
-
 retailer:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailer.yml"
     prefix:   /d/retailers
-
-#items:
-#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"
-#    prefix:   /items
-#
-#codes:
-#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
-#    prefix:   /items/code

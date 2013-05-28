@@ -58,6 +58,7 @@ class ItemController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
+                $item->setItemDateInsert(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($item);
                 $em->flush();

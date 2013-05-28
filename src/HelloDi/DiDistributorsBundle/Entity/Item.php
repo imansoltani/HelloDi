@@ -50,6 +50,11 @@ class Item
      */
     private $itemCode;
 
+    /**
+     * @ORM\Column(type="date", nullable=false, name="item_date_insert")
+     */
+    private $itemDateInsert;
+
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", mappedBy="Item")
      */
@@ -410,5 +415,28 @@ class Item
     public function getCountry()
     {
         return $this->Country;
+    }
+
+    /**
+     * Set itemDateInsert
+     *
+     * @param \DateTime $itemDateInsert
+     * @return Item
+     */
+    public function setItemDateInsert($itemDateInsert)
+    {
+        $this->itemDateInsert = $itemDateInsert;
+    
+        return $this;
+    }
+
+    /**
+     * Get itemDateInsert
+     *
+     * @return \DateTime 
+     */
+    public function getItemDateInsert()
+    {
+        return $this->itemDateInsert;
     }
 }
