@@ -12,7 +12,6 @@ class ItemController extends Controller
 {
     public function indexAction(Request $request)
     {
-
         $form = $this->createForm(new ItmSearchType());
 
         $em = $this->getDoctrine()->getManager();

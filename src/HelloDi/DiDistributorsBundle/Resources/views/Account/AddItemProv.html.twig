@@ -27,9 +27,9 @@
                 {{ form_errors(form.Item) }}
             </div>
 
-            <div class="control-group">
+            <div class="control-group price">
                 {{ form_label(form.price) }}
-                <div class="controls" >{{ form_widget(form.price) }} {% if Account.accCurrency==0  %}USD {% else %}CHF {% endif %}</div>
+                <div class="controls" >{{ form_widget(form.price) }} {{ Account.accCurrency }}</div>
                 {{ form_errors(form.price) }}
             </div>
 
@@ -38,19 +38,19 @@
             <input type="hidden" name="accountid" value="{{  Account.id }}" />
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <input type="submit" class="btn btn-primary btn-medium" onclick="$('#gowhere').val('0')"  btn-large" value="Add" />
-                <input type="submit" class="btn " onclick="$('#gowhere').val('1')" value="Back" />
-                <input type="hidden" id="gowhere" value="0" />
+                <a class="btn btn-primary btn-medium" onclick="GoWhere(0)"  >Add</a>
+                <a class="btn" onclick="GoWhere(1)"  >Back</a>
                 <script type="text/javascript">
-                    $(function(){
-                        $('form#addprice').submit(function(e){
-                            if($('#gowhere').val() == '1')
-                            {
-                                e.preventDefault();
-                                $('form#Item').submit();
-                            }
-                        })
-                    });
+                    function GoWhere(x)
+                    {
+                        if(x == 1)
+                            $('form#Item').submit();
+                        else
+                        {
+                            if(CheckData('.price input'))
+                                $('addprice').submit();
+                        }
+                    }
                 </script>
             </div>
 

@@ -1,0 +1,40 @@
+<html>
+<body>
+
+ssasdasds
+
+<form action="{{ path('EditUserEntities',{'id':User.id}) }}" method="post" >
+
+    {{ form_label(form_edit.firstname) }}
+    {{ form_widget(form_edit.firstname) }}
+    </br>
+    {{ form_label(form_edit.lastname) }}
+    {{ form_widget(form_edit.lastname) }}
+    </br>
+    {{ form_label(form_edit.username) }}
+    {{ form_widget(form_edit.username) }}
+    </br>
+
+    {{ form_label(form_edit.mobile) }}
+    {{ form_widget(form_edit.mobile) }}
+    </br>
+    {{ form_label(form_edit.email) }}
+    {{ form_widget(form_edit.email) }}
+    </br>
+
+    {{ form_label(form_edit.plainPassword) }}
+    {{ form_widget(form_edit.plainPassword) }}
+    </br>
+    {{ form_label(form_edit.Account) }}
+    {{ form_widget(form_edit.Account) }}
+     <br>
+    {{ form_label(form_edit.language) }}
+    {{ form_widget(form_edit.language) }}
+    {{ form_widget(form_edit._token) }}
+   {#// <input type="hidden" value="{{ entity.id }}">#}
+
+    <input type="submit" value="Search">
+</form>
+
+</body>
+</html>

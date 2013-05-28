@@ -1074,6 +1074,5 @@ class AccountController extends Controller
             'accountid' => $accountid
         ));
     }
-
-
 }
+

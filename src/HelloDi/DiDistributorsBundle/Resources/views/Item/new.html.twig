@@ -13,23 +13,25 @@
 
     <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
 {% endblock %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Add Item
+{% endblock %}
+
+
 {% set MU = 'item' %}
 
 {% block Body %}
-    <div class="span12">
+    <div class="span">
         <div class="widget stacked">
-            <div class="widget-header">
-                <i class="icon-briefcase"></i>
 
-                <h3>Item creation</h3>
-            </div>
             <!-- /widget-header -->
 
             <div class="widget-content">
-                <div id="wizard" class="swMain">
-                    <div class="stepContainer">
-                        <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
-                            <h2 class="StepTitle">Item Info</h2>
+                <div class="widget-header">
+                    <h3>Item Info</h3>
+                </div> <!-- /widget-header -->
 
                             <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
                                 <div class="control-group">
@@ -69,7 +71,9 @@
 
                                 <div class="control-group">
                                     {{ form_label(form.Country) }}
-                                    {{ form_widget(form.Country) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.Country) }}
+                                    </div>
                                     {{ form_errors(form.Country) }}
                                 </div>
 
@@ -80,21 +84,7 @@
                                 </div>
 
                             </form>
-                        </div>
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $(function () {
-                        var x = $('#step-1').height();
-                        $('.stepContainer').height(x);
 
-                        $(window).resize(function () {
-                            var x = $('#step-1').height();
-                            $('.stepContainer').height(x);
-                        });
-                    });
-
-                </script>
             </div>
         </div>
     </div>

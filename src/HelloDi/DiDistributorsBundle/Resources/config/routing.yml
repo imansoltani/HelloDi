@@ -10,10 +10,6 @@ entities:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/entities.yml"
     prefix:   /entities
 
-retailer:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailer.yml"
-    prefix:   /d/retailers
-
 account:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/accounts.yml"
 

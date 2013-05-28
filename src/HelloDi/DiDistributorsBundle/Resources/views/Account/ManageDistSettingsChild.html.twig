@@ -11,7 +11,11 @@
 
 
 {% block Tab %}
-
+    <div class="widget-header">
+        <h3>
+            Account Setting
+        </h3>
+    </div> <!-- /widget-header -->
 <form style="margin-top: 20px"  class="form-horizontal"   action="{{ path('ManageDistSettingsSubmit',{'id':Account.id}) }}" method="post">
 
 

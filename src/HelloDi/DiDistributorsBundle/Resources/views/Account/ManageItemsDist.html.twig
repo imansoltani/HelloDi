@@ -21,12 +21,6 @@
         <input class=" btn btn-large btn-primary" type="submit" value="Add new Item"/>
     </form>
 
-    {#<a class="button btn btn-warning btn-large" href="{{ path('AddItemsProvAction') }}">#}
-        {#Add new Item#}
-    {#</a>#}
-
-    {#<h1 class="TitleShow">Items</h1>#}
-
     <div class="tablediv">
         <div class="contenttitle">
             <h4>Items</h4>
@@ -51,16 +45,15 @@
                     <tr>
                         <td>{{ price.item.id }}</td>
                         <td>{{ price.item.itemName }}</td>
-                        <td>{{ price.item.itemFaceValue }} {% if price.item.itemCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                        <td>{{ price.item.itemFaceValue }} {{ price.item.itemCurrency }}</td>
                         <td>{{ price.item.itemCode }}</td>
                         <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
-                        <td>{{ price.price }} {% if price.priceCurrency==0  %}USD {% else %}CHF {% endif %}</td>
+                        <td>{{ price.price }} {{ price.priceCurrency }}</td>
                         <td class="td-actions" >
                             <form method="post" action="{{ path('EditItemDist') }}">
                                 <input type="hidden" name="priceid" value="{{ price.id }}"/>
                                 <input type="submit" value="Edit Price"/>
                             </form>
-                            {#<a href="#" class="btn btn-warning">Edit Price</a>#}
                         </td>
                     </tr>
                 {% endfor %}

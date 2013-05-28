@@ -13,8 +13,8 @@
     <div class="widget-header">
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
-
-    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="#{#{{ path('AddNewUserEntiti',{id:entity.id}) }}#} ">
+{#{% if en %}#}
+    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
         {{ 'User.Add' | trans ({}, "user") }}
     </a>
 
@@ -32,6 +32,7 @@
                     <th>{{ 'User.Account' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Privilege' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
+                    <th>{{ 'User.ChangeROLE' | trans ({}, "user") }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,12 +45,12 @@
                             <td>{{ User.firstName }}</td>
                             <td>{{ User.username }}</td>
                             <td>
-
-                                {% if (User.roles[0]!='ROLE_MASTER_ADMIN' or User.roles[0]!='ROLE_MASTER') %}
-                                {#{{ User.Account.accName }}#}
+                                {% if User.roles[0]=='ROLE_MASTER' or User.roles[0]=='ROLE_MASTER_ADMIN'  %}
+                                    null
                                     {% else %}
-                                        null
-                                        {% endif %}
+                                {{ User.Account.accName }}
+                                        {% endif
+                                %}
                             </td>
                             <td>
 
@@ -57,7 +58,10 @@
 
                             </td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="#">Modify</a>
+                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':User.id}) }}">Modify</a>
+                            </td>
+                            <td class="td-actions" >
+                                <a class="btn_actions" href="{{ path('ChangeRoleUserEntities',{'id':User.id}) }}">Change Role</a>
                             </td>
                         </tr>
 

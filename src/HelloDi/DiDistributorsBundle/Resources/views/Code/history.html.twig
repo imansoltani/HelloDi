@@ -48,7 +48,7 @@
                                 <td style="font-weight: bold" >{{ code.item.itemName }}</td>
                                 <td style="font-weight: bold" >{% if code.item.itemType==0 %} Mobile {% elseif code.item.itemType==1 %} Internet {% elseif code.item.itemType==2 %} Tel {% endif %}</td>
                                 <td style="font-weight: bold" >{{ code.serialNumber }}</td>
-                                <td style="font-weight: bold" >{% if code.status==1 %} Active {% else %} Inactive {% endif %}</td>
+                                <td style="font-weight: bold" >{% if code.status==1 %}Not Sale{% else %}Sale{% endif %}</td>
                                 <td style="font-weight: bold" >{{ code.input.dateProduction|date('Y/m/d') }}</td>
                                 <td style="font-weight: bold" >{{ code.input.dateExpiry|date('Y/m/d') }}</td>
                             </tr>
@@ -67,18 +67,16 @@
                             <table style="margin-top: 20px" class="table postsend">
                                 <thead>
                                 <tr>
-                                    <th>Select</th>
-                                    <th>Item Name</th>
-                                    <th>serialNumber</th>
-                                    <th>PinCode</th>
-                                    <th>ExpiryDate</th>
-                                    <th>Status</th>
-                                    <th>Provider</th>
-                                    <th>Manage</th>
+                                    <th>Date</th>
+                                    <th>Account</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Credit</th>
+                                    <th>Debit</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {#{% for code in pagination %}#}
+                                {#{% for trans in code.transaction %}#}
                                 {#<tr>#}
                                 {#<td><input type="checkbox"/></td>#}
                                 {#<td>{{ code.Item.itemName }}</td>#}

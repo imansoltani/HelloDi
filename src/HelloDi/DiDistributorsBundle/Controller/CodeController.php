@@ -13,62 +13,60 @@ class CodeController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $search = new CdSearch();
-        $form   = $this->createForm(new CdSearchType(), $search);
+        $form = $this->createForm(new CdSearchType());
 
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        $qb = $qb->select('code')
-            ->from('HelloDiDiDistributorsBundle:Code','code')
-            ->getQuery();
+
+        $qb = $em->createQueryBuilder()
+            ->select('code')
+            ->from('HelloDiDiDistributorsBundle:Code','code');
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            $qb = $em->createQueryBuilder();
-            $qb = $qb->select('code')
-                ->from('HelloDiDiDistributorsBundle:Code','code')
-                ->innerJoin('code.Item','codeitem')
-                ->innerJoin('code.Input','codeinput');
+            $data = $form->getData();
 
-            if($search->getPro() != "")
-                $qb = $qb->andWhere($qb->expr()->eq('codeitem.operator',intval($search->getPro()->getId())));
+            $qb ->join('code.Input','input')
+                ->join('input.Account','account')
+                ->join('code.Item','item');
 
-            if($search->getItem()!="")
-                $qb =  $qb->andWhere($qb->expr()->eq('code.Item',intval($search->getItem()->getId() )));
+            if($data['provider'] != null)
+                $qb = $qb->andWhere($qb->expr()->eq('account',intval($data['provider']->getId())));
 
-            if($search->getInputFileName()!="")
-                $qb =  $qb->andWhere($qb->expr()->like('codeinput.fileName', $qb->expr()->literal($search->getInputFileName().'%')));
+            if($data['item']!=null)
+                $qb = $qb->andWhere($qb->expr()->eq('item',intval($data['item']->getId() )));
 
-            if($search->getSerial()!="")
-                $qb =  $qb->andWhere($qb->expr()->like('code.serialNumber', $qb->expr()->literal($search->getSerial().'%')));
+            if($data['inputFileName']!=null)
+                $qb = $qb->andWhere($qb->expr()->eq('input',intval($data['inputFileName']->getId() )));
 
-            if($search->getPin()!="")
-                $qb =  $qb->andWhere($qb->expr()->like('code.pin', $qb->expr()->literal($search->getPin().'%')));
+            if($data['serial']!="")
+                $qb = $qb->andWhere($qb->expr()->like('code.serialNumber', $qb->expr()->literal($data['serial'].'%')));
 
-            if($search->getStatus()=='0')
-                $qb =  $qb->andWhere($qb->expr()->eq('code.status',0));
+            if($data['pin']!="")
+                $qb = $qb->andWhere($qb->expr()->like('code.pin', $qb->expr()->literal($data['pin'].'%')));
 
-            if($search->getStatus()=='1')
-                $qb =  $qb->andWhere($qb->expr()->eq('code.status',1));
+            if($data['status']!=2)
+                $qb = $qb->andWhere('code.status = :status')->setParameter('status', $data['status']);
 
-            if($search->getInsertdate()!="")
-                $qb =$qb->andWhere($qb->expr()->like('codeinput.dateInsert', $qb->expr()->literal(date_format($search->getInsertdate() ,'Y-m-d'))));
+            if($data['insertdate']!="")
+                $qb = $qb->andWhere("input.dateInsert = :insertdate")->setParameter('insertdate', $data['insertdate']);
 
-            if($search->getExpiredate()!="")
-                $qb =$qb->andWhere($qb->expr()->like('codeinput.dateExpiry', $qb->expr()->literal(date_format($search->getExpiredate() ,'Y-m-d'))));
-
-            $qb = $qb->getQuery();
+            if($data['expiredate']!="")
+                $qb = $qb->andWhere("input.dateExpiry = :expiredate")->setParameter('expiredate', $data['expiredate']);
         }
+
+        $count = count($qb->getQuery()->getResult());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
             $this->get('request')->query->get('page', 1),
-            10
+            10,
+            array('distinct' => false)
         );
         return $this->render('HelloDiDiDistributorsBundle:Code:index.html.twig', array(
             'pagination' => $pagination,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'count' => $count
         ));
     }
 
@@ -78,7 +76,7 @@ class CodeController extends Controller
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
 
         return $this->render('HelloDiDiDistributorsBundle:Code:history.html.twig', array(
-            'code'=>$code
+            'code'=> $code
         ));
     }
 }

@@ -25,62 +25,58 @@
                 <div class="form_search">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
-                            <i id="search_logo" class="icon-search" ></i>
-                            <p class="title_search" >Search Code</p>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Code</p>
                         </span>
                     </h5>
 
                     <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
                         <fieldset>
                             <div class="control-group">
-                        {{ form_label(form.pro) }}
+                                {{ form_label(form.provider) }}
                                 <div class="controls">
-                        {{ form_widget(form.pro) }}
-                            </div>
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.item) }}
-                                <div class="controls">
-                        {{ form_widget(form.item) }}
-                            </div>
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.inputFileName) }}
-                        {{ form_widget(form.inputFileName) }}
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.serial) }}
-                        {{ form_widget(form.serial) }}
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.pin) }}
-                        {{ form_widget(form.pin) }}
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.status) }}
-                                <div class="controls">
-                                {{ form_widget(form.status) }}
-                            </div>
-                            </div>
-                            <div class="control-group">
-                        {{ form_label(form.insertdate) }}
-                                <div class="controls">
-                        {{ form_widget(form.insertdate) }}
+                                    {{ form_widget(form.provider) }}
                                 </div>
                             </div>
                             <div class="control-group">
-                        {{ form_label(form.saledate) }}
+                                {{ form_label(form.item) }}
                                 <div class="controls">
-                        {{ form_widget(form.saledate) }}
+                                    {{ form_widget(form.item) }}
                                 </div>
                             </div>
                             <div class="control-group">
-                        {{ form_label(form.expiredate) }}
+                                {{ form_label(form.inputFileName) }}
                                 <div class="controls">
-                        {{ form_widget(form.expiredate) }}
+                                    {{ form_widget(form.inputFileName) }}
                                 </div>
                             </div>
-                        {{ form_rest(form) }}
+                            <div class="control-group">
+                                {{ form_label(form.serial) }}
+                                {{ form_widget(form.serial) }}
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.pin) }}
+                                {{ form_widget(form.pin) }}
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.status) }}
+                                <div class="controls">
+                                    {{ form_widget(form.status) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.insertdate) }}
+                                <div class="controls">
+                                    {{ form_widget(form.insertdate) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.expiredate) }}
+                                <div class="controls">
+                                    {{ form_widget(form.expiredate) }}
+                                </div>
+                            </div>
+                            {{ form_rest(form) }}
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
                         </fieldset>
@@ -90,16 +86,15 @@
                             $(".SearchForm").hide();
                             $('.TitleShow1').click(function () {
                                 $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class') ;
+                                $('#search_logo').removeAttr('class');
 
-                                if($('.title_search').html() == 'Search Code')
-                                {
-                                    $('.title_search').html('Close Search') ;
-                                    $('#search_logo').attr('class','icon-remove') ;
+                                if ($('.title_search').html() == 'Search Code') {
+                                    $('.title_search').html('Close Search');
+                                    $('#search_logo').attr('class', 'icon-remove');
                                 }
-                                else{
-                                    $('.title_search').html('Search Code') ;
-                                    $('#search_logo').attr('class','icon-search') ;
+                                else {
+                                    $('.title_search').html('Search Code');
+                                    $('#search_logo').attr('class', 'icon-search');
                                 }
 
                                 var x = $('.form_search').offset().top - 20;
@@ -112,45 +107,46 @@
                     </script>
 
                 </div>
-                <div class="tablediv" >
+                <div class="tablediv">
 
                     <div class="contenttitle">
-                        <h4>Codes</h4>
+                        <h4>Codes (Quantity: {{ count }})</h4>
                     </div>
                     <form>
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox"/></th>
-                                <th>Item Name</th>
-                                <th>serialNumber</th>
-                                <th>PinCode</th>
-                                <th>ExpiryDate</th>
-                                <th>Status</th>
-                                <th>Provider</th>
-                                <th>Manage</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for code in pagination %}
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
                                 <tr>
-                                    <td><input type="checkbox"/></td>
-                                    <td>{{ code.Item.itemName }}</td>
-                                    <td>{{ code.serialNumber }}</td>
-                                    <td>{{ code.pin }}</td>
-                                    <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
-                                    <td>{% if code.status==1 %}Active{% else %} Inactive {% endif %}</td>
-                                    <td>{{ code.Input.Account.accName }}</td>
-                                    <td>
-                                        <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
-                                    </td>
+                                    <th><input type="checkbox"/></th>
+                                    <th>Item Name</th>
+                                    <th>serialNumber</th>
+                                    <th>PinCode</th>
+                                    <th>ExpiryDate</th>
+                                    <th>Status</th>
+                                    <th>Provider</th>
+                                    <th>Manage</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for code in pagination %}
+                                    <tr>
+                                        <td><input type="checkbox"/></td>
+                                        <td>{{ code.Item.itemName }}</td>
+                                        <td>{{ code.serialNumber }}</td>
+                                        <td>{{ code.pin }}</td>
+                                        <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
+                                        <td>{% if code.status==1 %}Not Sale{% else %}Sale{% endif %}</td>
+                                        <td>{{ code.Input.Account.accName }}</td>
+                                        <td>
+                                            <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
 
-                    </div>
+                        </div>
                     </form>
                 </div>
                 <div class="navigation" style="text-align: center">

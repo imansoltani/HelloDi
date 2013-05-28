@@ -15,7 +15,7 @@ Ent_Users:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:users" }
 
 Ent_Info:
-    pattern:  /Info
+    pattern:  /info
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:info" }
 
 Ent_InfoSubmit:
@@ -24,9 +24,12 @@ Ent_InfoSubmit:
 AddNewUserEntiti:
     pattern:  /entities/{id}/user/add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti" }
-ModifyUserPrivilege:
-    pattern:  /entities/{idacc}/user/{iduser}/edit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ModifyUserPrivilege" }
+EditUserEntities:
+    pattern:  /entities/user/{id}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:EditUserEntities" }
+ChangeRoleUserEntities:
+    pattern:  /entities/user/{id}/roleedit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ChangeRoleUserEntities" }
 AddProv:
     pattern:  /entities/{id}/accounts/new-provoder
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddProv"}

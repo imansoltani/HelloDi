@@ -15,19 +15,79 @@
     </div>
 
 
+    <form action="{{ path('UploadInputProvSubmitAccepted') }}" method="post"  class="form-horizontal">
 
-        Item Name: {{ input.item.itemName }} <br/>
-        Face Value: {{ input.item.itemFaceValue }} <br/>
-        Quantity: {{ count }} <br/>
-        Batch: {{ input.batch }} <br/>
-        Production: {{ input.dateProduction|date('Y/m/d') }} <br/>
-        Expiry: {{ input.dateExpiry|date('Y/m/d') }} <br/>
-        File Name: {{ input.name }} <br/>
+        <div class="control-group">
+            <label class="control-label">
+                Item Name
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.item.itemName }}" class="input-large" disabled="" >
+            </div>
+        </div>
 
-        <form action="{{ path('UploadInputProvSubmitAccepted') }}" method="post">
+        <div class="control-group">
+            <label class="control-label">
+                Face Value
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.item.itemFaceValue }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Quantity
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ count }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Batch
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.batch }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Production
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.dateProduction|date('Y/m/d') }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Expiry
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.dateExpiry|date('Y/m/d') }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                File Name
+            </label>
+            <div class="controls">
+                <input type="text" value="{{ input.fileName }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="form-actions" style="margin-bottom: 0">
             <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-            <input type="submit" value="Item"/>
+            <input type="submit" class="btn btn-primary" value="Accept"/>
+            <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
+        </div>
+
+
         </form>
-        <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
+
 
 {% endblock %}

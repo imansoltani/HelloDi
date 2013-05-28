@@ -113,6 +113,17 @@ body{
     color: #000;
 }
 
+
+a.btn{
+    display: inline-block;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    width: auto;
+    font-weight: normal;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+
 /* Navbar
             -------------------------------------------------------- */
 .navbar-fixed-top{
@@ -403,7 +414,7 @@ font-weight: normal;
     min-width: 80px;
     color: #67bff8;
 
-    font-family: 'Karla', sans-serif;
+    font-family: sans-serif;
     border-radius: 0px;
 
     border-radius: 5px;

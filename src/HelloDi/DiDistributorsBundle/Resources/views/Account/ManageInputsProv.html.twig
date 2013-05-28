@@ -88,12 +88,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for input in inputs %}
+                    {% for input in Account.inputs %}
                         <tr>
                             <td>{{ input.Item.itemName }}</td>
                             <td>{{ input.batch }}</td>
-                            <td>{{ input.dateProduction|date('Y-m-d') }}</td>
-                            <td>{{ input.dateExpiry|date('Y-m-d') }}</td>
+                            <td>{{ input.dateProduction|date('Y/m/d') }}</td>
+                            <td>{{ input.dateExpiry|date('Y/m/d') }}</td>
                             <td>{{ input.Codes.count }}</td>
                             <td>{{ render(controller('HelloDiDiDistributorsBundle:Account:CalcPrice', { 'account': Account , 'item': input.Item , 'count' : input.Codes.count })) }}</td>
                             <td class="td-actions" >

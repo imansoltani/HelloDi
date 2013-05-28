@@ -37,55 +37,55 @@ ChangeAdminProvAccountOk:
 #-------------------
 
 ShowMyAccountDist:
-    pattern:  /distributors/
+    pattern:  distributors/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccountDist" }
 
 AddAccountDistMaster:
-    pattern:  /distributors/Add/AccountDist
+    pattern:  distributors/Add/AccountDist
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountDistMaster" }
 
 ManageDist:
-    pattern:  /distributors/ManageDist/{id}
+    pattern:  distributors/ManageDist/{id}
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDist" }
 
 ManageDistInfo:
-    pattern:  /distributors/Info
+    pattern:  distributors/Info
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfo" }
 
 ManageDistInfoEdit:
-    pattern:  /distributors/ManageDistInfo/Edit
+    pattern:  distributors/ManageDistInfo/Edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfoEdit" }
 
 ManageDistTransaction:
-    pattern:  /distributors/Sub_Accounts1
+    pattern:  distributors/Sub_Accounts1
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
 
 ManageDistChildren:
-    pattern:  /distributors/Sub_Accounts/
+    pattern:  distributors/Sub_Accounts/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
 DistChildrenCreate:
-    pattern:  /distributors/ManageDistChildren/
+    pattern:  distributors/ManageDistChildren/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
 ManageDistUser:
-    pattern:  /distributors/User/
+    pattern:  distributors/User/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUser" }
 ManageDistUserSearch:
-    pattern:  /distributors/Search/ManageDistUser/{id}
+    pattern:  distributors/Search/ManageDistUser/{id}
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUserSearch" }
 DistUserPrivilege:
-    pattern:  /Account/{idacc}/User/{iduser}
+    pattern:  Account/{idacc}/User/{iduser}
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserPrivilege" }
 ManageDistUserSearchReset:
-    pattern:  /reset/{id}
+    pattern:  reset/{id}
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUserSearchReset" }
 AccountDistChildrenSearch:
-    pattern:  /distributors/{id}/SearchDistChildren
+    pattern:  distributors/{id}/SearchDistChildren
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AccountDistChildrenSearch"}
 ManageDistSettings:
-    pattern:  /distributors/Settings
+    pattern:  distributors/Settings
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettings"}
 ManageDistSettingsSubmit:
-    pattern:  /distributors/Edit
+    pattern:  distributors/Edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettingsSubmit"}
 #---- items prov
 ManageItemsProv:
@@ -149,3 +149,7 @@ UploadInputProvSubmitAccepted:
 UploadInputProvSubmitCanceled:
     pattern:  /providers/Inputs/UploadSubmitCanceled
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }
+#-------Retailers--------------#
+ListUsersInRetailers:
+    pattern:  /retailers/{id}/users
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ListUsersInRetailers" }
