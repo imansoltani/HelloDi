@@ -100,6 +100,24 @@
         $('.messageshow').html(x);
         $('.messageshow').fadeIn();
     }
+
+
+    function CheckData(x)
+    {
+        var y = false ;
+        $(x).each(function() {
+            if ($(this).val() == '') {
+                y = true ;
+                $(this).attr('style','border:thin #FF0000 solid');
+            }
+        });
+        if(y)
+        {
+            messagetop('Error','Fill required inputs','error');
+            return false
+        }
+        return true ;
+    }
 </script>
 
 
