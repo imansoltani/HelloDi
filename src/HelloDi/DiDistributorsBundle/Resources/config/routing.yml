@@ -6,17 +6,21 @@ loginsuccess:
     pattern:  /Main
     defaults: { _controller: HelloDiDiDistributorsBundle:Default:dashboard }
 
-entities:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/entities.yml"
-    prefix:   /entities
+app:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/app.yml"
+    prefix:   /app
 
-account:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/accounts.yml"
+#account:
+#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/accounts.yml"
 
-items:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/item.yml"
-    prefix:   /items
+retailer:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailer.yml"
+    prefix:   /d/retailers
 
-codes:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/code.yml"
-    prefix:   /items/code
+#items:
+#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"
+#    prefix:   /items
+#
+#codes:
+#    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
+#    prefix:   /items/code
