@@ -44,12 +44,12 @@
                             <td>{{ User.firstName }}</td>
                             <td>{{ User.username }}</td>
                             <td>
-
-                                {% if (User.roles[0]!='ROLE_RETAILER_ADMIN' or User.roles[0]!='ROLE_RETAILER') %}
+                                {% if User.roles[0]=='ROLE_MASTER' or User.roles[0]=='ROLE_MASTER_ADMIN'  %}
+                                    null
+                                    {% else %}
                                 {{ User.Account.accName }}
-                                    {% elseif (User.roles[0]!='ROLE_DISTRIBUTORS_ADMIN' or User.roles[0]!='ROLE_DISTRIBUTORS') %}
-                                        null
-                                        {% endif %}
+                                        {% endif
+                                %}
                             </td>
                             <td>
 

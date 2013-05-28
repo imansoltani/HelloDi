@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Type/RegistrationFormType.php" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Type/RegistrationFormType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -10,7 +12,7 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369731135773" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369731143887" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369573373540" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369320344716" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -110,7 +112,7 @@
     <file path="/EditAccountProv.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368216402720" ignored="false" />
     <file path="/user.en.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368556880006" ignored="false" />
     <file path="/user.fa.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368556938926" ignored="false" />
-    <file path="/users.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369730930397" ignored="false" />
+    <file path="/users.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369731830842" ignored="false" />
     <file path="/entity.en.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368595234781" ignored="false" />
     <file path="/entity.fa.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368595200350" ignored="false" />
     <file path="/entity.fr.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367924835078" ignored="false" />
@@ -237,10 +239,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="users.html.twig" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="users.html.twig" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="80" selection-start="2010" selection-end="2010" vertical-scroll-proportion="-12.576923">
+            <state line="46" column="82" selection-start="1838" selection-end="1838" vertical-scroll-proportion="0.6361868">
               <folding />
             </state>
           </provider>
@@ -293,10 +295,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewUserDistributorsType.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="NewUserDistributorsType.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserDistributorsType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="46" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.5622568">
+            <state line="26" column="46" selection-start="1038" selection-end="1038" vertical-scroll-proportion="-11.115385">
               <folding>
                 <element signature="e#58#92#0" expanded="true" />
               </folding>
@@ -395,8 +397,8 @@
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserRetailersType.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/AddNewUserEntiti.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserDistributorsType.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig" />
       </list>
     </option>
   </component>
@@ -1237,7 +1239,11 @@
       <created>1369731138408</created>
       <updated>1369731138408</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="in 2013/05/26 at 01:32 pm finish addnewuser">
+      <created>1369731146402</created>
+      <updated>1369731146402</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1475,13 +1481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="80" selection-start="2010" selection-end="2010" vertical-scroll-proportion="-12.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserRetailersType.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="0" selection-start="612" selection-end="1210" vertical-scroll-proportion="-15.846154">
@@ -1493,10 +1492,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/User/NewUserDistributorsType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="46" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.5622568">
+        <state line="26" column="46" selection-start="1038" selection-end="1038" vertical-scroll-proportion="-11.115385">
           <folding>
             <element signature="e#58#92#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Entiti/users.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="82" selection-start="1838" selection-end="1838" vertical-scroll-proportion="0.6361868">
+          <folding />
         </state>
       </provider>
     </entry>
