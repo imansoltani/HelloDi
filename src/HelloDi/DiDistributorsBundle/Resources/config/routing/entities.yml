@@ -15,7 +15,7 @@ Ent_Users:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:users" }
 
 Ent_Info:
-    pattern:  /Info
+    pattern:  /info
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:info" }
 
 Ent_InfoSubmit:
