@@ -6,20 +6,24 @@
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
     <a class="link" href="#">{{ Account.accName }}</a>
-    <span class="link">Child Accounts</span>
+    <span class="link">Sub Accounts</span>
 {% endblock Site_Map %}
 
 
 
 
 {% block Tab %}
-
+    <div class="widget-header">
+        <h3>
+            Sub Accounts List
+        </h3>
+    </div> <!-- /widget-header -->
 
 <div class="form_search">
     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
                             <i id="search_logo" class="icon-search" ></i>
-                            <p class="title_search" >Search Child Accounts</p>
+                            <p class="title_search" >Search Sub Accounts</p>
                         </span>
     </h5>
     <form class="form-horizontal SearchForm" action="{{ path('AccountDistChildrenSearch',{'id':Account.id}) }}" method="post">
@@ -71,13 +75,13 @@
                 $('.SearchForm').slideToggle();
                 $('#search_logo').removeAttr('class') ;
 
-                if($('.title_search').html() == 'Search Child Accounts')
+                if($('.title_search').html() == 'Search Sub Accounts')
                 {
                     $('.title_search').html('Close Search') ;
                     $('#search_logo').attr('class','icon-remove') ;
                 }
                 else{
-                    $('.title_search').html('Search Child Accounts') ;
+                    $('.title_search').html('Search Sub Accounts') ;
                     $('#search_logo').attr('class','icon-search') ;
                 }
 
@@ -96,7 +100,7 @@
 
 <div class="tablediv">
     <div class="contenttitle">
-        <h4>Child Accounts</h4>
+        <h4>Sub Accounts</h4>
     </div>
     <form>
 
