@@ -23,7 +23,7 @@
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a>
-            <form action="{{ path('Ent_Users') }}" method="post">
+            <form id="usertab" action="{{ path('Ent_Users') }}" method="post">
                 <input type="hidden" name="entityid" value="{{ entity.id }}"/>
                 <input type="submit" value="Users"/>
             </form>
