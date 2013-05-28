@@ -152,7 +152,8 @@ class EntitiController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-        $Accountrole = $entity->getAccounts()[0]->getAccType();
+        $Accounts=$entity->getAccounts();
+        $Accountrole = $Accounts[0]->getAccType();
         $user = new User();
         $Account = new Account();
 
