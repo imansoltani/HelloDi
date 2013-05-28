@@ -4,7 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
- * @ORM\Table(indexes={@ORM\Index(name="SerialNumberIDX", columns={"serial_number"})})
+ * @ORM\Table(name="code", indexes={@ORM\Index(name="SerialNumberIDX", columns={"serial_number"})})
  */
 class Code
 {

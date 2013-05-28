@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
+ * @ORM\Table(name="country")
  */
 class Country
 {

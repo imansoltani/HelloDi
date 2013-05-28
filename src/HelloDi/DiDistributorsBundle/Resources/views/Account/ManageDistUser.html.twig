@@ -18,7 +18,7 @@
         <h3>Users</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a  class="button btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{'id':Account.Entiti.id}) }}">Add New User</a>
+    <a  class="button btn btn-primary btn-large" href="#">Add New User</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -95,7 +95,7 @@
                 {% for u in pagination %}
                     <tr>
                         <td class="td-actions">
-                            <a class="btn_actions" href="{#{{ path('DistUserPrivilege',{ 'idacc':Account.id,'iduser' : u.user.id }) }}#}"> Manage</a>
+                            <a class="btn_actions" href="#"> Manage</a>
                         </td>
                         <td>{{ u.firstname }}</td>
                         <td>{{ u.username }}</td>
