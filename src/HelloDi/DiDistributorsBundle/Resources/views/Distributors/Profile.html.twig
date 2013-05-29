@@ -1,0 +1,24 @@
+<h5><a href="#">Request</a></h5>
+<h2>Account</h2>
+Description:------------<br>
+CreditLimit:{{ Account.accCreditLimit }}<br>
+Avilabel Balance:{{ Account.accBalance }}<br>
+Currency:{%  if Account.accCurrency==0 %}USD{% elseif Account.accCurrency==1 %}CHF{% endif %}<br>
+Account Type:Distriburors<br>
+TimeZone:{{ Account.accTimeZone }}<br>
+Account Condtion:{{ Account.accTerms }}<br>
+Notification Language:{{ Account.accDefaultLanguage }}<br>
+<hr>
+<h2>Company</h2><br>
+Description:-----------<br>
+Name:{{ Entiti.entName }}<br>
+Vat:{{ Entiti.entVatNumber }}<br>
+Tel1:{{ Entiti.entTel1 }}<br>
+Tel2:{{ Entiti.entTel2 }}<br>
+Fax:{{ Entiti.entFax }}<br>
+Website:{{ Entiti.entWebsite }}<br>
+<h4>Address</h4><br>
+Np/City:{{ Entiti.entNP }}/{{ Entiti.entCity }}<br>
+Country Name:{{ Entiti.Country.name }}/Country Code:{{ Entiti.Country.iso }}<br>
+<hr>
+<h5><a href="#">Change Address Or Detail</a></h5>

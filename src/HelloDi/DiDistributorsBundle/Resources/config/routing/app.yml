@@ -17,3 +17,6 @@ items:
 codes:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/code.yml"
     prefix:   m/admin/codes
+distributors:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/Distributors.yml"
+    prefix:   d/admin

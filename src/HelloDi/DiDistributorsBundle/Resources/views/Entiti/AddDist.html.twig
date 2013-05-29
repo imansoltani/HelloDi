@@ -44,6 +44,13 @@
         {{ form_errors(form.accTimeZone) }}
     </div>
 
+    <div class="control-group">
+        {{ form_label(form.accDefaultLanguage) }}
+        <div class="controls" >
+            {{ form_widget(form.accDefaultLanguage) }}
+        </div>
+        {{ form_errors(form.accDefaultLanguage) }}
+    </div>
 
     {{ form_widget(form._token) }}
 

@@ -57,11 +57,30 @@
                                 {{ User.roles[0] }}
 
                             </td>
+
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':User.id}) }}">Modify</a>
+                                {% if (User.roles[0]!='ROLE_MASTER_ADMIN' and User.roles[0]!='ROLE_MASTER') %}
+                                <a class="btn_actions" href="
+
+                                {{ path('EditUserEntities',{'id':User.id}) }}"
+
+                        >Modify</a>
+                                {% else %}
+                                    #
+                                {% endif %}
                             </td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('ChangeRoleUserEntities',{'id':User.id}) }}">Change Role</a>
+                                {% if (User.roles[0]!='ROLE_MASTER_ADMIN' and User.roles[0]!='ROLE_MASTER') %}
+                                <a class="btn_actions" href="
+
+
+                                {{ path('ChangeRoleUserEntities',{'id':User.id}) }}"
+
+
+                                        >Change Role</a>
+                                {% else %}
+                                    #
+                                {% endif %}
                             </td>
                         </tr>
 
