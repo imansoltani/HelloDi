@@ -6,8 +6,12 @@ item_new:
     pattern:  /new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:new" }
 
-item_edit:
+item_show:
     pattern:  /details
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:show" }
+
+item_edit:
+    pattern:  /details/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:edit" }
 
 item_update:

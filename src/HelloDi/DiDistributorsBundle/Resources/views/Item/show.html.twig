@@ -1,0 +1,45 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowItemMaster.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block title %}
+    Items Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('item') }}">Item</a>
+    <a class="link" href="#">{{ item.itemName }}</a>
+    <span class="link">Show</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Item Details</h3>
+    </div> <!-- /widget-header -->
+
+    Date: {{ item.itemDateInsert|date('Y/m/d') }}<br/>
+
+    Country: {{ item.Country.name }}<br/>
+
+    Name (FaceValue/Currency): {{ item.itemName }} ( {{ item.itemFaceValue }} / {{ item.itemCurrency }} ) <br/>
+
+    Type: {% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}<br/>
+
+    MinStock: {{ item.alertMinStock }}<br/>
+
+    Item Code: {{ item.itemCode }}<br/>
+
+    Operator: {{ item.operator }}<br/>
+
+    <form action="{{ path('item_edit') }}" method="post">
+        <input type="submit" value="Modify" />
+        <input type="hidden" name="itemid" id="itemid" value="{{ item.id }}"/>
+    </form>
+
+{% endblock %}
+
+
+
