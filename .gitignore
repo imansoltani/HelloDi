@@ -9,8 +9,6 @@ web/uploads/*
 web/bundles/*
 .idea/*
 
-
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
-.idea/workspace.xml
