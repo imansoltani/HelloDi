@@ -1,10 +1,10 @@
 Profile:
-    pattern:  /{id}/profile
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Profile,id:2 }
+    pattern:  /profile
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Profile }
 
 Staff:
-    pattern:  /{id}/staff
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Staff,id:10 }
+    pattern:  /staff
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Staff }
 
 StaffAdd:
     pattern:  /{id}/staff/add
