@@ -70,6 +70,23 @@ class ItemController extends Controller
         ));
     }
 
+    public function showAction(Request $request)
+    {
+        $id = $request->get('itemid');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+
+        if (!$item) {
+            throw $this->createNotFoundException('Unable to find Item entity.');
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Item:show.html.twig', array(
+            'item'      => $item
+        ));
+    }
+
     public function editAction(Request $request)
     {
         $id = $request->get('itemid');
@@ -109,7 +126,7 @@ class ItemController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->forward("HelloDiDiDistributorsBundle:Item:edit");
+            return $this->forward("HelloDiDiDistributorsBundle:Item:show");
         }
 
         return $this->forward("HelloDiDiDistributorsBundle:Item:edit");
