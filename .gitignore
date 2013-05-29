@@ -7,8 +7,6 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
-.idea/*
-
 
 # Configuration files
 app/config/parameters.ini
