@@ -16,3 +16,18 @@ StaffEdit:
 ChangeRole:
     pattern:  /account-setting/{id}/staff/ChangeRole
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ChangeRole }
+RetailerUser:
+    pattern:  /retailer/{id}/users
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUser }
+RetailerUserEdit:
+    pattern:  /retailer/{id}/users/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserEdit }
+RetailerUserAdd:
+    pattern:  /retailer/{id}/users/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserAdd }
+RetailerUserChangeRole:
+    pattern:  /retailer/{id}/users/changerole
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
+NewRetailer:
+    pattern:  /NewRetailer
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }
