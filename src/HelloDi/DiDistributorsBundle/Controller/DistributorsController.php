@@ -24,18 +24,14 @@ class DistributorsController extends Controller
     //Retailers
     public function ProfileAction()
     {
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+        $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Profile.html.twig', array('Account' => $Account, 'Entiti' => $Account->getEntiti(), 'User' => $user));
     }
 
     public function StaffAction()
     {
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $users = $Account->getUsers();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
