@@ -6,7 +6,7 @@
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
     <a class="link" href="#">{{ entity.entName }}</a>
-    <span class="link">Accounts</span>
+    <span class="link">Users</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
@@ -58,7 +58,7 @@
 
                             </td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':User.id}) }}">Modify</a>
+                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':User.id}) }}">Manage</a>
                             </td>
                             <td class="td-actions" >
                                 <a class="btn_actions" href="{{ path('ChangeRoleUserEntities',{'id':User.id}) }}">Change Role</a>

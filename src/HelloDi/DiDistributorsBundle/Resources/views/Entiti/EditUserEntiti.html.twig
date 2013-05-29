@@ -1,40 +1,83 @@
-<html>
-<body>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
 
-ssasdasds
+{% set tab = '2' %}
 
-<form action="{{ path('EditUserEntities',{'id':User.id}) }}" method="post" >
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
+    <a class="link" href="#">{{ entity.entName }}</a>
+    <span class="link">Users</span>
+{% endblock Site_Map %}
 
-    {{ form_label(form_edit.firstname) }}
-    {{ form_widget(form_edit.firstname) }}
-    </br>
+{% block Tab %}
+
+<div class="widget-header">
+    <h3>Manage Users</h3>
+</div> <!-- /widget-header --><br>
+
+<form class="form-horizontal"  action="{{ path('EditUserEntities',{'id':User.id}) }}" method="post" >
+
+    <div class="control-group">
+        {{ form_label(form_edit.firstname) }}
+
+    </div>
+
+    <div class="control-group">
     {{ form_label(form_edit.lastname) }}
     {{ form_widget(form_edit.lastname) }}
-    </br>
+    </div>
+
+    <div class="control-group">
     {{ form_label(form_edit.username) }}
     {{ form_widget(form_edit.username) }}
-    </br>
+    </div>
 
+    <div class="control-group">
     {{ form_label(form_edit.mobile) }}
     {{ form_widget(form_edit.mobile) }}
-    </br>
+    </div>
+
+    <div class="control-group">
     {{ form_label(form_edit.email) }}
     {{ form_widget(form_edit.email) }}
-    </br>
+    </div>
 
+    <div class="control-group">
     {{ form_label(form_edit.plainPassword) }}
     {{ form_widget(form_edit.plainPassword) }}
-    </br>
+    </div>
+
+    <div class="control-group">
     {{ form_label(form_edit.Account) }}
-    {{ form_widget(form_edit.Account) }}
-     <br>
+    <div class="controls">
+        {{ form_widget(form_edit.Account) }}
+    </div>
+     </div>
+
+    <div class="control-group">
     {{ form_label(form_edit.language) }}
-    {{ form_widget(form_edit.language) }}
-    {{ form_widget(form_edit._token) }}
+    <div class="controls">
+        {{ form_widget(form_edit.language) }}
+    </div>
+
+    </div>
    {#// <input type="hidden" value="{{ entity.id }}">#}
-
-    <input type="submit" value="Search">
+    {{ form_widget(form_edit._token) }}
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input type="submit" class="btn btn-primary btn-medium" value="Edit">
+        <a class="btn" onclick="GoWhere(1)"  >Back</a>
+        <script type="text/javascript">
+            function GoWhere(x)
+            {
+                if(x == 1)
+                    $('form#usertab').submit();
+                /*else
+                 {
+                 if(CheckData('.price input'))
+                 $('addprice').submit();
+                 }*/
+            }
+        </script>
+    </div>
 </form>
-
-</body>
-</html>
+{% endblock %}

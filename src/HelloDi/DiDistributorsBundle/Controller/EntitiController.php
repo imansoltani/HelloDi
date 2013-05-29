@@ -300,6 +300,8 @@ public function  EditUserEntitiesAction(Request $request,$id)
 {
     $em=$this->getDoctrine()->getManager();
     $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+    $entity = $user->getEntiti();
+
     if($user->getAccount()->getAccType()==2)
 $form_edit=$this->createForm(New NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
     if($user->getAccount()->getAccType()==0)
@@ -317,7 +319,7 @@ $form_edit=$this->createForm(New NewUserRetailersType('HelloDiDiDistributorsBund
     }
 }
 
-    return $this->render('HelloDiDiDistributorsBundle:Entiti:EditUserEntiti.html.twig',array('form_edit'=>$form_edit->createView(),'User'=>$user));
+    return $this->render('HelloDiDiDistributorsBundle:Entiti:EditUserEntiti.html.twig',array('entity'=>$entity,'form_edit'=>$form_edit->createView(),'User'=>$user));
 }
 
 
