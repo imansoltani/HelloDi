@@ -1,0 +1,3 @@
+retailers_dashboard:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}

@@ -1,0 +1,23 @@
+retailer_show:
+    pattern:  /
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributer:ShowRetaierAccount" }
+
+RetailerUser:
+    pattern:  /{id}/users
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUser }
+
+RetailerUserEdit:
+    pattern:  /{id}/users/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserEdit }
+
+RetailerUserAdd:
+    pattern:  /{id}/users/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserAdd }
+
+RetailerUserChangeRole:
+    pattern:  /{id}/users/changerole
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
+
+NewRetailer:
+    pattern:  /NewRetailer
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }

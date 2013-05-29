@@ -1,6 +1,7 @@
 User:
     Id: ردیف
-    Name: نام
+    FirstName: نام
+    LastName: نام خانوادگی
     Mobile: موبایل
     Locale: زبان
 

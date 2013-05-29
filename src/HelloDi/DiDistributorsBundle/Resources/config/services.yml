@@ -35,3 +35,8 @@ services:
         arguments: [@fos_user.registration.form, @request, @fos_user.user_manager, @fos_user.mailer, @fos_user.util.token_generator ,@security.context]
         scope: request
         public: false
+
+    authentication_handler:
+            class: HelloDi\DiDistributorsBundle\Listener\AuthenticationHandler
+            arguments: [@router, @security.context]
+

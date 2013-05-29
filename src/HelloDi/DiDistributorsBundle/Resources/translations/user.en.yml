@@ -1,6 +1,7 @@
 User:
     Id: ID
-    Name: Name
+    FirstName: FirstName
+    LastName: LastName
     Mobile: Mobile
     Locale: Locale
 

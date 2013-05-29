@@ -2,31 +2,12 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use HelloDi\DiDistributorsBundle\Entity\Address;
-use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
-use HelloDi\DiDistributorsBundle\Entity\Input;
-use HelloDi\DiDistributorsBundle\Entity\Item;
-use HelloDi\DiDistributorsBundle\Entity\Price;
-use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
-use HelloDi\DiDistributorsBundle\Entity\Userprivilege;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
-use HelloDi\DiDistributorsBundle\Form\PriceEditType;
-use HelloDi\DiDistributorsBundle\Form\PriceType;
-use HelloDi\DiDistributorsBundle\Form\User\DistUserPrivilegeType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
-use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
-use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -35,7 +16,12 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 
 class DistributorsController extends Controller
 {
-  #Retailers#
+    public function dashboardAction()
+    {
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig');
+    }
+
+  //Retailers#
 
 public  function ProfileAction($id)
 {
