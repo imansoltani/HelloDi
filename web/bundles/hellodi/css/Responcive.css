@@ -109,6 +109,11 @@
 
     /* Drop Down Menu
         ------------------------------ */
+    .MenuBar .menubar_items ul > li > a .caret{
+        top: 60%;
+        left: 40%;
+    }
+
     .dropdown-menu #user_icon_menu{
         display: block;
     }
@@ -156,6 +161,24 @@
 }
 
 @media only screen and (max-width: 450px) {
+
+    /* dropdown Menu
+                --------------------------------------- */
+    .MenuBar .menubar_items ul.dropdown-menu {
+        min-width: 70px;
+        padding: 0;
+    }
+
+    .MenuBar .menubar_items ul.dropdown-menu li{
+        padding: 0;
+        margin: 5px;
+
+
+    }
+
+    .MenuBar .menubar_items ul.dropdown-menu li a {
+        padding: 0;
+    }
 
     /* PopUp ------------------------------------ */
     .popup{

@@ -1,5 +1,11 @@
 
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
-{% endblock fos_user_content %}
+{% if is_granted("ROLE_MASTER") %}
+    {% include "HelloDiDiDistributorsBundle:Profile:profile_ma.html.twig " %}
+{% endif %}
+
+{% if is_granted("ROLE_DISTRIBUTOR") %}
+    {% include "HelloDiDiDistributorsBundle:Profile:profile_da.html.twig " %}
+{% endif %}
+
+

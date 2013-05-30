@@ -249,7 +249,7 @@ border-radius:500px
  
 .row{ 
 margin-left:-20px;
-    margin-right:-20px;
+    /*margin-right:-20px;*/
 
     *zoom:1
  }  
