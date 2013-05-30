@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Form\User;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
@@ -12,9 +13,10 @@ class UserRegistrationType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('name',null,array('label' => 'User.Name','translation_domain' => 'user'))
+            ->add('firstname',null,array('label' => 'User.FirstName','translation_domain' => 'user'))
+            ->add('lastname',null,array('label' => 'User.LastName','translation_domain' => 'user'))
             ->add('mobile',null,array('label' => 'User.Mobile','translation_domain' => 'user'))
-            ->add('locale','choice', array(
+            ->add('language','choice', array(
                 'choices' => array(
                     'en' => 'Languages.English',
                     'fa' => 'Languages.Persian',

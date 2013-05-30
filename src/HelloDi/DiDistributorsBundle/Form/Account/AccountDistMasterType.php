@@ -16,7 +16,7 @@ class AccountDistMasterType extends AbstractType
             ->add('accCurrency','choice',array('label'=>'Currency','choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
             ->add('accTimeZone','timezone',array('label'=>'TimeZone'))
             ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-          //  ->add('accType','choice',array('choices'=>(array('Distri'=>'Yes',0=>'No')),'preferred_choices'=>array(1)));
+            ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
     ;
     }
 

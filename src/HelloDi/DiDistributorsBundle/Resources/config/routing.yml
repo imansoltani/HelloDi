@@ -2,10 +2,15 @@ layout:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Default:index }
 
-app:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/app.yml"
-    prefix:   /app
+app_master:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/master.yml"
+    prefix:   /app/master
 
-retailer:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailer.yml"
-    prefix:   /d/retailers
+app_Distributors:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/distributors.yml"
+    prefix:   /app/distributors
+
+app_Retailers:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailers.yml"
+    prefix:   /app/retailers
+

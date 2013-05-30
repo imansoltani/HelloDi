@@ -17,7 +17,7 @@
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="">
-            <form action="{{ path('item_edit') }}" method="post">
+            <form action="{{ path('item_show') }}" method="post">
                 <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="details"/>
             </form>
