@@ -20,22 +20,61 @@
         <h3>Item Details</h3>
     </div> <!-- /widget-header -->
 
-    Date: {{ item.itemDateInsert|date('Y/m/d') }}<br/>
+    <form class="form-horizontal">
+        <div class="control-group" >
+            <label class="control-label">Date</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value="{{ item.itemDateInsert|date('Y/m/d') }}" >
+            </div>
+        </div>
+        <div class="control-group" >
+            <label class="control-label">Country</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value="{{ item.Country.name }}" >
+            </div>
+        </div>
+        <div class="control-group" >
+            <label class="control-label">(FaceValue/Currency)</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value="{{ item.itemName }} ( {{ item.itemFaceValue }} / {{ item.itemCurrency }} )" >
+            </div>
+        </div>
 
-    Country: {{ item.Country.name }}<br/>
+        <div class="control-group" >
+            <label class="control-label">Type</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value=" {% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}" >
+            </div>
+        </div>
 
-    Name (FaceValue/Currency): {{ item.itemName }} ( {{ item.itemFaceValue }} / {{ item.itemCurrency }} ) <br/>
+        <div class="control-group" >
+            <label class="control-label">MinStock</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value="{{ item.alertMinStock }}" >
+            </div>
+        </div>
 
-    Type: {% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}<br/>
+        <div class="control-group" >
+            <label class="control-label">Item Code</label>
+            <div class="controls">
+                <input  disabled="" class="input-large" type="text" value="{{ item.itemCode }}" >
+            </div>
+        </div>
 
-    MinStock: {{ item.alertMinStock }}<br/>
+        <div class="control-group" >
+            <label class="control-label">Operator</label>
+            <div class="controls">
+                <input disabled=""  class="input-large" type="text" value="{{ item.operator }}" >
+            </div>
+        </div>
+    </form>
 
-    Item Code: {{ item.itemCode }}<br/>
 
-    Operator: {{ item.operator }}<br/>
 
-    <form action="{{ path('item_edit') }}" method="post">
-        <input type="submit" value="Modify" />
+    <form  action="{{ path('item_edit') }}" method="post">
+        <div class="form-actions">
+            <input class="btn btn-primary" type="submit" value="Modify" />
+        </div>
         <input type="hidden" name="itemid" id="itemid" value="{{ item.id }}"/>
     </form>
 
