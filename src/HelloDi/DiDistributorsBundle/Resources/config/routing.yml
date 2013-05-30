@@ -4,13 +4,13 @@ layout:
 
 app_master:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/master.yml"
-    prefix:   /app/master
+    prefix:   /app/m
 
 app_Distributors:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/distributors.yml"
-    prefix:   /app/distributors
+    prefix:   /app/d
 
 app_Retailers:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailers.yml"
-    prefix:   /app/retailers
+    prefix:   /app/r
 
