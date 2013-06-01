@@ -12,6 +12,7 @@ use HelloDi\DiDistributorsBundle\Entity\Input;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Entity\Userprivilege;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
@@ -919,10 +920,14 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->where ('u.price')
-//                }
+                'query_builder' => function(EntityRepository $er) use ($Account) {
+                    return $er->createQueryBuilder('i')
+                        ->innerJoin('i.Prices','p')
+                        ->innerJoin('p.Account','a')
+                        ->where('a = :aaid')
+                        ->setParameter('aaid',$Account)
+                        ->andWhere('p.priceStatus = 1');
+                }
             ))
             ->add('Batch', 'text', array('data' => '12345'))
             ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
@@ -1067,6 +1072,16 @@ class AccountController extends Controller
             $code->setItem($input->getItem());
             $code->setInput($input);
             $em->persist($code);
+
+            $transaction =  new Transaction();
+            $transaction->setCode($code);
+            $transaction->setAccount($Account);
+            $transaction->setUser($user);
+            $transaction->setTranDate(new \DateTime('now'));
+            $transaction->setTranAction('Add');
+            $transaction->setTranCurrency($Account->getAccCurrency());
+            $transaction->setTranFees(0);
+            $em->persist($transaction);
         }
         $em->flush();
 
@@ -1087,8 +1102,8 @@ class AccountController extends Controller
         $request->getSession()->remove('upload_PinCode');
         $request->getSession()->remove('upload_accountid');
 
-        return $this->forward('HelloDiDiDistributorsBundle:Account:ManageInputsProv', array(
+        return $this->redirect($this->generateUrl('ManageInputsProv',array(
             'accountid' => $accountid
-        ));
+        )));
     }
 }
