@@ -32,8 +32,28 @@
         </h5>
         <form class="form-horizontal SearchForm" action="#" method="post">
             <fieldset>
-            {{ form_widget(form) }}
+                <div class="control-group">
+                    {{ form_label(form.From) }}
+                    <div class="controls">
+                        {{ form_widget(form.From) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.To) }}
+                    <div class="controls">
+                        {{ form_widget(form.To) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.item) }}
+                    <div class="controls">
+                        {{ form_widget(form.item) }}
+                    </div>
+                </div>
 
+                <input type="hidden" name="accountid" value="{{ Account.id }}">
+
+                {{ form_rest(form) }}
                 <hr>
                 <input class="btn btn-large btn-primary" type="submit" value="Search">
             </fieldset>
@@ -88,7 +108,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for input in Account.inputs %}
+                    {% for input in inputs %}
                         <tr>
                             <td>{{ input.Item.itemName }}</td>
                             <td>{{ input.batch }}</td>
