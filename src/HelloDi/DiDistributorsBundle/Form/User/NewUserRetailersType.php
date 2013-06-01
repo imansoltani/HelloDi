@@ -13,8 +13,6 @@ class NewUserRetailersType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $role_retailer=array('ROLE_RETAILER');$role_retailer_admin=array('ROLE_RETAILER_ADMIN');
-
         parent::buildForm($builder, $options);
         $builder
             ->add('firstname')
@@ -29,8 +27,6 @@ class NewUserRetailersType extends BaseType
                         ->where("u.accType = 2 ");
                 }
             ));
-
-
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
