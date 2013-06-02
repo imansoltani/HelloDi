@@ -9,3 +9,7 @@ distributors_account:
 distributors_retailer:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml"
     prefix:   /retailers
+
+distributors_items:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/items.yml"
+    prefix:   /admin/items
