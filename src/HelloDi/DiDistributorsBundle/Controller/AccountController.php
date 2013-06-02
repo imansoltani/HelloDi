@@ -2,16 +2,14 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use HelloDi\DiDistributorsBundle\Entity\Address;
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Input;
-use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
-use HelloDi\DiDistributorsBundle\Entity\Userprivilege;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
@@ -19,12 +17,8 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
-use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
-use HelloDi\DiDistributorsBundle\Form\PriceType;
-use HelloDi\DiDistributorsBundle\Form\User\DistUserPrivilegeType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
-use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -238,12 +232,12 @@ class AccountController extends Controller
 
 //SearchAccountDist
 
-    public function  ManageProvAction($id)
+    public function ManageProvAction($id)
     {
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageProv.html.twig', array('id' => $id));
     }
 
-    public function  EditAccountProvAction(Request $request)
+    public function EditAccountProvAction(Request $request)
     {
 
         $id = $request->get('accountid');
@@ -271,7 +265,7 @@ class AccountController extends Controller
         return $this->forward("HelloDiDiDistributorsBundle:Account:EditAccountProv");
     }
 
-    public function  ManageProvEntitiAction(Request $request)
+    public function ManageProvEntitiAction(Request $request)
     {
         $id = $request->get('accountid');
         $em = $this->getDoctrine()->getManager();
@@ -378,13 +372,13 @@ class AccountController extends Controller
 
 ////////////////////
 
-    public function  ManageDistAction($id)
+    public function ManageDistAction($id)
     {
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDist.html.twig', array('id' => $id));
     }
 
 ///////////////////
-    public function  ManageDistInfoAction(Request $request)
+    public function ManageDistInfoAction(Request $request)
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
@@ -396,7 +390,7 @@ class AccountController extends Controller
     }
 
 /////////////
-    public function  ManageDistChildrenAction(Request $request)
+    public function ManageDistChildrenAction(Request $request)
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
@@ -464,7 +458,7 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig', array('form_searchdistchild' => $form_searchdistchild->createView(), 'pagination' => $pagination, 'id' => $id, 'Account' => $AccountParent));
     }
 
-    public function  ManageDistUserAction(Request $request)
+    public function ManageDistUserAction(Request $request)
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
@@ -522,11 +516,10 @@ class AccountController extends Controller
 
     }
 
-    public function  ManageDistUserSearchResetAction($id)
+    public function ManageDistUserSearchResetAction($id)
     {
         return $this->forward('HelloDiDiDistributorsBundle:Account:ManageDistUser', array('id' => $id));
     }
-
 
     public function ManageDistSettingsAction(Request $request)
     {
@@ -540,8 +533,7 @@ class AccountController extends Controller
 
     }
 
-
-    public function  ManageDistSettingsSubmitAction(Request $request)
+    public function ManageDistSettingsSubmitAction(Request $request)
     {
 
 
@@ -563,7 +555,7 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistSettingsChild.html.twig', array('form_edit' => $form_edit->createView(), 'Account' => $Account));
     }
 
-    public function  DistUserPrivilegeAction(Request $request, $idacc, $iduser)
+    public function DistUserPrivilegeAction(Request $request, $idacc, $iduser)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($iduser);
@@ -592,7 +584,7 @@ class AccountController extends Controller
     }
 
 
-    public function  ManageDistInfoEditAction(Request $request)
+    public function ManageDistInfoEditAction(Request $request)
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
@@ -642,10 +634,17 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->where ('u.')
-//                }
+                'query_builder' => function(EntityRepository $er) use ($account) {
+                    return $er->createQueryBuilder('u')
+                        ->where ('u.id NOT IN (
+                            SELECT DISTINCT ii.id
+                            FROM HelloDiDiDistributorsBundle:Item ii
+                            JOIN ii.Prices pp
+                            JOIN pp.Account aa
+                            WHERE aa = :aaid
+                        )')
+                        ->setParameter('aaid',$account);
+                }
             ))
             ->add('price')
             ->getForm();
@@ -767,10 +766,17 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->where ('u.')
-//                }
+                'query_builder' => function(EntityRepository $er) use ($account) {
+                    return $er->createQueryBuilder('u')
+                        ->where ('u.id NOT IN (
+                            SELECT DISTINCT ii.id
+                            FROM HelloDiDiDistributorsBundle:Item ii
+                            JOIN ii.Prices pp
+                            JOIN pp.Account aa
+                            WHERE aa = :aaid
+                        )')
+                        ->setParameter('aaid',$account);
+                }
             ))
             ->add('price')
             ->getForm();
@@ -872,18 +878,54 @@ class AccountController extends Controller
         $accountid = $request->get('accountid');
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
 
-        $inputs = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid)->getInputs();
+        $qb = $em->createQueryBuilder()
+            ->select('input')
+            ->from('HelloDiDiDistributorsBundle:Input','input')
+            ->innerJoin('input.Account','a')
+            ->where('a = :aaid')
+            ->setParameter('aaid',$account);
 
         $form = $this->createFormBuilder()
-            ->add('From', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('To', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
+            ->add('From', 'date', array('required'=> false,'widget' => 'single_text','format' => 'yyyy/MM/dd'))
+            ->add('To', 'date', array('required'=> false,'widget' => 'single_text','format' => 'yyyy/MM/dd'))
+            ->add('item','entity',array(
+                'required'=> false,
+                'empty_value' => 'All',
+                'class' => 'HelloDiDiDistributorsBundle:Item',
+                'property' => 'itemName',
+                'query_builder' => function(EntityRepository $er) use ($account) {
+                    return $er->createQueryBuilder('i')
+                        ->innerJoin('i.Prices','p')
+                        ->innerJoin('p.Account','a')
+                        ->where('a = :aaid')
+                        ->setParameter('aaid',$account);
+                }
+            ))
             ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            $data = $form->getData();
+
+            $qb ->join('input.Item','item');
+
+            if($data['item']!=null)
+                $qb = $qb->andWhere($qb->expr()->eq('item',intval($data['item']->getId() )));
+
+            if($data['From']!="")
+                $qb = $qb->andWhere("input.dateInsert >= :fromdate")->setParameter('fromdate', $data['From']);
+
+            if($data['To']!="")
+                $qb = $qb->andWhere("input.dateInsert <= :todate")->setParameter('todate', $data['To']);
+
+        }
+
+        $inputs= $qb->getQuery()->getResult();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageInputsProv.html.twig', array(
             'form' => $form->createView(),
-            'inputs' => $inputs,
-            'Account' => $account
+            'Account' => $account,
+            'inputs' => $inputs
         ));
     }
 
@@ -906,7 +948,18 @@ class AccountController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('File', 'file')
-            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
+            ->add('Item', 'entity', array(
+                'class' => 'HelloDiDiDistributorsBundle:Item',
+                'property' => 'itemName',
+                'query_builder' => function(EntityRepository $er) use ($Account) {
+                    return $er->createQueryBuilder('i')
+                        ->innerJoin('i.Prices','p')
+                        ->innerJoin('p.Account','a')
+                        ->where('a = :aaid')
+                        ->setParameter('aaid',$Account)
+                        ->andWhere('p.priceStatus = 1');
+                }
+            ))
             ->add('Batch', 'text', array('data' => '12345'))
             ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
@@ -959,8 +1012,8 @@ class AccountController extends Controller
             $input->setDateProduction($data['ProductionDate']);
             $input->setDateExpiry($data['ExpireDate']);
 
-            $name = $input->getName();
-            $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('name' => $name));
+            $fileName = $input->getFileName();
+            $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('fileName' => $fileName));
 
             if (!$inputfind) {
                 $file = fopen($input->getAbsolutePath(), 'r+');
@@ -979,7 +1032,7 @@ class AccountController extends Controller
                         }
                     }
                     if ($ok) {
-                        $request->getSession()->set('upload_Name', $input->getName());
+                        $request->getSession()->set('upload_Name', $input->getFileName());
                         $request->getSession()->set('upload_Itemid', $input->getItem()->getId());
                         $request->getSession()->set('upload_Batch', $data['Batch']);
                         $request->getSession()->set('upload_Production', $data['ProductionDate']);
@@ -1028,7 +1081,7 @@ class AccountController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $input = new Input();
-        $input->setName($filename);
+        $input->setFileName($filename);
         $input->setItem($Item);
         $input->setBatch($batch);
         $input->setDateProduction($production);
@@ -1050,6 +1103,17 @@ class AccountController extends Controller
             $code->setItem($input->getItem());
             $code->setInput($input);
             $em->persist($code);
+
+            $transaction =  new Transaction();
+            $transaction->setCode($code);
+            $transaction->setAccount($Account);
+            $transaction->setUser($user);
+            $transaction->setTranDate(new \DateTime('now'));
+            $transaction->setTranInsert(new \DateTime('now'));
+            $transaction->setTranAction('Add');
+            $transaction->setTranCurrency($Account->getAccCurrency());
+            $transaction->setTranFees(0);
+            $em->persist($transaction);
         }
         $em->flush();
 
@@ -1070,9 +1134,8 @@ class AccountController extends Controller
         $request->getSession()->remove('upload_PinCode');
         $request->getSession()->remove('upload_accountid');
 
-        return $this->forward('HelloDiDiDistributorsBundle:Account:ManageInputsProv', array(
+        return $this->redirect($this->generateUrl('ManageInputsProv',array(
             'accountid' => $accountid
-        ));
+        )));
     }
 }
-

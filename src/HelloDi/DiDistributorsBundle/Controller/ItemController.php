@@ -12,41 +12,11 @@ class ItemController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new ItmSearchType());
-
         $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder()
-            ->select('item')
-            ->from('HelloDiDiDistributorsBundle:Item','item');
-
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $data = $form->getData();
-
-            if($data['name']!="")
-                $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['name'].'%')));
-
-            if($data['type']!= 3)
-                $qb->andWhere($qb->expr()->eq('item.itemType',intval($data['type'])));
-
-            if($data['currency']!='All')
-                $qb->andWhere($qb->expr()->eq('item.itemCurrency',intval($data['currency'])));
-
-            if($data['operator']!="")
-                $qb->andWhere($qb->expr()->like('item.operator', $qb->expr()->literal($data['operator'].'%')));
-        }
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb,
-            $this->get('request')->query->get('page', 1),
-            10
-        );
+        $items = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
 
         return $this->render('HelloDiDiDistributorsBundle:Item:index.html.twig', array(
-            'pagination' => $pagination,
-            'form' => $form->createView()
+            'items' => $items,
         ));
     }
 
