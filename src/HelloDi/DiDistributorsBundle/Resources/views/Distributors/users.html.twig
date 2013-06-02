@@ -5,7 +5,9 @@
                     <th>{{ 'User.Name' | trans ({}, "user") }}</th>
                     <th>{{ 'User.UserName' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Role' | trans ({}, "user") }}</th>
+                    <th>{{ 'User.Entiti' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -16,6 +18,7 @@
                             <td >{{ User.id }}</td>
                             <td>{{ User.firstName }}</td>
                             <td>{{ User.username }}</td>
+                            <td>{{ User.Entiti.entName }}</td>
                             <td>
                                 {{ User.roles[0] }}
                             </td>

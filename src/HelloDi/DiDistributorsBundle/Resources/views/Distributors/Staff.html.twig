@@ -42,6 +42,7 @@
                                     <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
                                     <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
                                     <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
                                     <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
                                     <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
                                     <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
@@ -55,6 +56,7 @@
 
                                     <td>{{ user.firstname }}</td>
                                     <td>{{ user.username }}</td>
+                                    <td>{{ user.Entiti.entName }}</td>
                                     <td>
                                         {% if user.status==0 %}
                                             InActive
