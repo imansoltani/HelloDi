@@ -1,5 +1,11 @@
 /* ??? */
+
+
+
 @media only screen and (max-width: 980px) {
+
+
+
     .popup{
         left: 30%;
     }
@@ -95,6 +101,10 @@
             =============================================================== */
 @media only screen and (max-width: 767px) {
 
+    .datatable table{
+        display: block;
+    }
+
     /* navbar
                 ------------------------------------------------ */
     .navbar #user_title_menu{
@@ -160,7 +170,21 @@
     }
 }
 
+@media only screen and (max-width:550px){
+    .datatable > div > div:first-child , .datatable > div > div:last-child{
+        height: 100px;
+    }
+}
+
 @media only screen and (max-width: 450px) {
+
+    /* Datatable
+                ---------------------- */
+
+
+    .datatable > div > div > div:last-child{
+        float: left;
+    }
 
     /* dropdown Menu
                 --------------------------------------- */

@@ -27,14 +27,12 @@
                 Add a new Item
             </a>
 
-            <div class="tablediv">
-                <div class="contenttitle">
-                    <h4>Items</h4>
-                </div>
 
-                <form action="{{ path('item_show') }}" method="post">
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
+            <div style="margin-top: 5px" class="tablediv">
+
+                <form  action="{{ path('item_show') }}" method="post">
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -72,6 +70,19 @@
                 <input type="hidden" name="itemid" id="itemid" value=""/>
                 </form>
             </div>
+
+
+
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                   Fix_Size();
+                } );
+
+            </script>
         </div>
     </div>
 </div>
