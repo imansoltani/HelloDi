@@ -5,6 +5,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
@@ -295,25 +296,30 @@ class DistributorsController extends Controller
 
     public function ShowRetaierAccountAction(Request $request)
     {
+
         $form_searchprov = $this->createForm(new RetailerSearchType());
-
-
         $em = $this->getDoctrine()->getManager();
-
+        $accParent = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+        $accchild = $accParent->getId();
 
         $qb = $em->createQueryBuilder()
             ->select('retailer')
             ->from('HelloDiDiDistributorsBundle:Account','retailer')
-            ->innerJoin('retailer.Entiti', 'Ent');
+            ->innerJoin('retailer.Entiti', 'Ent')
+            ->where('retailer.Parent =:Test')
+            ->setParameter('Test', $accchild);
+            ;
+
+
 
         if ($request->isMethod('POST')) {
 
             $form_searchprov->bind($request);
             $dataform = $form_searchprov->getData();
 
-
             if ($dataform['retName'] != '')
                 $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
+
             if ($dataform['retCityName']!='')
                 $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
             if ($dataform['retBalance'] == 1)
@@ -324,11 +330,14 @@ class DistributorsController extends Controller
                     $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
             if ($dataform['retcurency'] != '')
                 $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
+
 ////        if ($dataform['id'] != '')
 ////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
 ////        $query = $qb->getQuery();
 
         }
+        //$qb = $query->setHint('knp_paginator.count', count($qb->getResult()));
+
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -343,6 +352,50 @@ class DistributorsController extends Controller
     public function TransactionAction(Request $request){
 
        return New Response('Start Transaction');
+    }
+
+    public function DetailsAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find entity.');
+        }
+
+        $editForm = $this->createForm(new EntitiType(), $entity);
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailersDetails.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+        ));
+    }
+
+    public  function editRetailersAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find entity.');
+        }
+
+
+        $editForm = $this->createForm(new EntitiType(), $entity);
+        $editForm->bind($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $entity->getId())));
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailersDetails.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+
+        ));
     }
 }
 
