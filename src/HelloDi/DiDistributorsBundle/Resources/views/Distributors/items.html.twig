@@ -1,0 +1,85 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Items
+{% endblock title %}
+
+{% set MU = 'item' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <span class="link">Items</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    List Of Items
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+    <form class="form-horizontal SearchForm" action="#" method="post">
+        <div class="control-group">
+            {{ form_label(form.type) }}
+            <div class="controls">
+                {{ form_widget(form.type) }}
+            </div>
+
+            {{ form_rest(form) }}
+            <hr>
+            <input class="btn btn-large btn-primary" type="submit" value="Search">
+        </div>
+    </form>
+    <div class="span">
+        <div class="widget-content">
+
+            <a class="btn-large button btn btn-primary " href="#">
+                New Request
+            </a>
+            <br>
+
+            <div class="tablediv">
+                <div class="contenttitle">
+                    <h4>Items</h4>
+                </div>
+                <div class="tab-content">
+                    <table style="margin-top: 20px" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>faceValue</th>
+                            <th>type</th>
+                            <th>Price(Currency)</th>
+                            <th>Manage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in pagination %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.itemName }}</td>
+                                <td>{{ item.itemFaceValue }}</td>
+                                <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                                <td>{{ item.prices[0].price }}
+                                    {{ item.prices[0].priceCurrency }}</td>
+                                <td>
+                                    <a class="btn_actions" href="#">See Price for retailers</a>
+                                    <br/>
+                                    <a class="btn_actions" href="#">details</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="navigation" style="text-align: center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

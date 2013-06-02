@@ -961,7 +961,7 @@ class AccountController extends Controller
                         ->andWhere('p.priceStatus = 1');
                 }
             ))
-            ->add('Batch', 'text', array('data' => '12345'))
+            ->add('Batch', 'text',array('required'=>false))
             ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
@@ -986,7 +986,7 @@ class AccountController extends Controller
         $form = $this->createFormBuilder()
             ->add('File', 'file')
             ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
-            ->add('Batch', 'text', array('data' => '12345'))
+            ->add('Batch', 'text',array('required'=>false))
             ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))

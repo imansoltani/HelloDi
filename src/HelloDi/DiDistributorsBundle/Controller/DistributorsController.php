@@ -340,9 +340,58 @@ class DistributorsController extends Controller
         ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
 
     }
+
     public function TransactionAction(Request $request){
 
        return New Response('Start Transaction');
+    }
+
+    //items
+    public function ShowItemsAction(Request $request)
+    {
+        $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $form = $this->createFormBuilder()
+            ->add('type', 'choice', array(
+                'choices' => array(
+                    '-1' => 'Item.All',
+                    '1' => 'Item.TypeChioce.Internet',
+                    '0' => 'Item.TypeChioce.Mobile',
+                    '2' => 'Item.TypeChioce.Tel',
+                ),
+                'label' => 'Item.Type', 'translation_domain' => 'item'
+            ))
+            ->getForm();
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+            ->select('item')
+            ->from('HelloDiDiDistributorsBundle:Item', 'item')
+            ->innerJoin('item.Prices', 'prices')
+            ->innerJoin('prices.Account', 'account')
+            ->where('account = :acc')
+            ->setParameter('acc', $account);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            $data = $form->getData();
+            if($data['type']!='-1')
+                $qb = $qb->andWhere('item.itemType = :type')->setParameter('type', $data['type']);
+        }
+
+        $count = count($qb->getQuery()->getResult());
+        $query = $qb->getQuery()->setHint('knp_paginator.count', $count);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1),
+            10
+        );
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:items.html.twig', array(
+            'pagination' => $pagination,
+            'form' => $form->createView(),
+        ));
     }
 }
 
