@@ -327,7 +327,9 @@ $form_edit=$this->createForm(New NewUserRetailersType('HelloDiDiDistributorsBund
     {
         $em=$this->getDoctrine()->getManager();
         $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-         $role=$user->getRoles()[0];
+
+        $roles = $user->getRoles();
+        $role = $roles[0];
 
         switch($role){
 

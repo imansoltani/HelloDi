@@ -84,6 +84,10 @@
     margin-bottom:-20px ;
 }
 
+.tablediv{
+    border:solid rgb(50, 65, 90) thin ;
+}
+
 .tablediv form{
     margin:0;
     padding:0;
@@ -375,3 +379,131 @@ form .control-group .controls > .controls{
     color: #FF0000;
     font-size: 14px;
 }
+
+/* DataTable
+        ------------------------------------------------------------------ */
+.datatable .control-group select{
+    width: 100px;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 5px;
+    border-radius: 0px;
+}
+
+.datatable .control-group label{
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #FFF;
+}
+
+.datatable .control-group{
+    margin: 0;
+    padding: 5px;
+    padding-bottom: 0px;
+}
+
+.datatable .control-group input{
+    margin-left: 10px;
+    width: 140px;
+    margin-top: 5px;
+    border-radius: 0px;
+}
+
+.datatable > div > div > div{
+    padding: 0;
+}
+
+.datatable > div > div:first-child , .datatable > div > div:last-child{
+    height:50px;
+    margin: 0px;
+    background: none repeat scroll 0% 0% rgb(50, 65, 90);
+    color: rgb(251, 147, 55);
+}
+
+.datatable > div > div{
+
+}
+
+.datatable > div > div > div{
+    display: inline-block;
+    height: 50px;
+
+}
+
+.datatable > div > div > div:first-child{
+    float: left;
+
+}
+
+.datatable table{
+    overflow: auto;
+}
+
+.datatable table th {
+    cursor: pointer;
+}
+
+.datatable > div > div > div:last-child{
+    float: right;
+
+ }
+
+.datatable > div > div:last-child > div > div{
+    margin: 10px;
+    color: #FFF;
+}
+
+/* Paging */
+.datatable > div > div:last-child > div:last-child > div  a {
+    padding: 2px 6px;
+    margin: 0px;
+    cursor: pointer;
+    margin-right: -0.1em !important;
+    border: 1px solid #35275f;
+    background: #ded9ee;
+    font-weight: normal;
+    color: rgb(85, 85, 85);
+    outline: medium none;
+
+    transition: background 0.3s , color 0.3s;
+    -webkit-transition: background 0.3s, color 0.3s; /* Safari */
+
+
+}
+
+.datatable > div > div:last-child > div:last-child > div  a:hover , .datatable > div > div:last-child > div:last-child > div  a.paginate_active:hover {
+    text-decoration: underline;
+    background-color: #FFF;
+    color: #000;
+}
+
+.datatable > div > div:last-child > div:last-child > div  a.paginate_active {
+    background: none repeat scroll 0% 0% rgb(50, 65, 90);
+    color: #FFF;
+}
+
+.datatable > div > div:last-child > div:last-child > div  a.paginate_button_disabled {
+    color: #35275f;
+    background: none repeat scroll 0% 0% rgb(50, 65, 90);
+    cursor: default;
+    text-decoration: none;
+}
+
+.datatable table{
+    display:table;
+    overflow: auto;
+}
+
+.datatable table .sorting_desc {
+    background: url("../img/sort/sort_desc.png") no-repeat scroll right center transparent;
+}
+
+.datatable table .sorting {
+    background: url("../img/sort/sort_both.png") no-repeat scroll right center transparent;
+}
+
+.datatable table .sorting_asc {
+    background: url("../img/sort/sort_asc.png") no-repeat scroll right center transparent;
+}
+
+

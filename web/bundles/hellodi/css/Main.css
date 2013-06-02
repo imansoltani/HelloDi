@@ -265,6 +265,8 @@ padding: 0;
     display: block;
     line-height: 20px;
     /* background-color: #0f2336; */
+    transition: color 0.2s;
+    -webkit-transition: color 0.2s; /* Safari */
 }
 
 body .navbar > .navbar-inner .container .dropdown > a:hover ,.dropdown > dropdown-toggle:hover{
@@ -421,6 +423,9 @@ font-weight: normal;
     padding: 7px;
     padding-top: 5px;
     padding-bottom: 10px;
+
+    transition: background 0.2s;
+    -webkit-transition: background 0.2s; /* Safari */
 }
 
 .MenuBar .menubar_items ul > li > a:hover{
