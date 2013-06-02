@@ -1,6 +1,6 @@
 retailer_show:
     pattern:  /
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributer:ShowRetaierAccount" }
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ShowRetaierAccount" }
 
 RetailerUser:
     pattern:  /{id}/users
@@ -19,5 +19,9 @@ RetailerUserChangeRole:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
 
 NewRetailer:
-    pattern:  /NewRetailer
+    pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }
+
+Retailer_Transaction:
+    pattern:  /{id}/transactions
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Transaction }

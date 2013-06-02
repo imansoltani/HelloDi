@@ -13,7 +13,7 @@ class NewUserRetailersType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $role_retailer=array('ROLE_RETAILER');$role_retailer_admin=array('ROLE_RETAILER_ADMIN');
+$role_retailer=array('ROLE_RETAILER');$role_retailer_admin=array('ROLE_RETAILER_ADMIN');
 
         parent::buildForm($builder, $options);
         $builder

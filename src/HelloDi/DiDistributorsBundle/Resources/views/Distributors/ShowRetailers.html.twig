@@ -1,10 +1,10 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Provider Accounts
+    Retailers Accounts
 {% endblock title %}
 
-{% set MU = 'prov' %}
+{% set MU = 'dist' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
@@ -98,7 +98,9 @@
                     </script>
 
                 </div>
-
+                <div>
+                    <a href="{{ path('NewRetailer') }}">New Retailer</a>
+                </div>
 
                 <div class="tablediv">
                     <div class="contenttitle">
@@ -114,6 +116,7 @@
                                     <th>Entity</th>
                                     <th>Balance</th>
                                     <th>Credit Limit</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
 
@@ -126,6 +129,7 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>{{ myAccount.accCreditLimit }}</td>
+                                        <td><a href="{{ path('Retailer_Transaction',{'id':myAccount.Entiti.id}) }}">Open</a> </td>
 
                                     </tr>
                                 {% endfor %}

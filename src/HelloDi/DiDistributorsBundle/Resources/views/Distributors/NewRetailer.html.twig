@@ -1,14 +1,112 @@
+<form action="{{ path('NewRetailer') }}" method="POST">
 
-<form action="{{ path('NewRetailer',{}) }}" method="post">
-
-
-        {#<div class="control-group entName">#}
-            {#{{ form_label(form2step.entName) }}#}
-            {#{{ form_widget(form2step.entName) }}#}
-            {#{{ form_errors(form2step.entName) }}#}
-        {#</div>#}
+     <table>
 
 
+               <td>
+            <div class="control-group entName">
+                <p>Name(Company)*</p>
+                {{ form_widget(form_Relaited_New.entName) }}
+                {{ form_errors(form_Relaited_New.entName) }}
+            </div>
+            <div class="control-group entName">
+                {{ form_label(form_Relaited_New.entVatNumber) }}
+                {{ form_widget(form_Relaited_New.entVatNumber) }}
+                {{ form_errors(form_Relaited_New.entVatNumber) }}
+            </div>
+
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.entCity) }}
+                       {{ form_widget(form_Relaited_New.entCity) }}
+                       {{ form_errors(form_Relaited_New.entCity) }}
+                   </div>
+                   <fieldset><legend>Address</legend>
+
+                   <div class="control-group entName">
+                       <p>Street*</p>
+                       {{ form_widget(form_Relaited_New.entAdrs1) }}
+                       {{ form_errors(form_Relaited_New.entAdrs1) }}
+                   </div>
+                   <div class="control-group entName">
+                       <p>Aditional</p>
+                       {{ form_widget(form_Relaited_New.entAdrs2) }}
+                       {{ form_errors(form_Relaited_New.entAdrs2) }}
+                   </div>
+                   <div class="control-group entName">
+                       <p>Post Code*</p>
+                       {{ form_widget(form_Relaited_New.entNP) }}
+                       {{ form_errors(form_Relaited_New.entNP) }}
+                   </div>
+                   <div class="control-group entName">
+                       <p>Town*</p>
+                       {{ form_widget(form_Relaited_New.entAdrs3) }}
+                       {{ form_errors(form_Relaited_New.entAdrs3) }}
+                   </div>
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.Country) }}
+                       {{ form_widget(form_Relaited_New.Country) }}
+                       {{ form_errors(form_Relaited_New.Country) }}
+                   </div>
+                   </fieldset>
+                   <fieldset><legend>Aditional Details</legend>
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.entTel1) }}
+                       {{ form_widget(form_Relaited_New.entTel1) }}
+                       {{ form_errors(form_Relaited_New.entTel1) }}
+                   </div>
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.entTel2) }}
+                       {{ form_widget(form_Relaited_New.entTel2) }}
+                       {{ form_errors(form_Relaited_New.entTel2) }}
+                   </div>
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.entFax) }}
+                       {{ form_widget(form_Relaited_New.entFax) }}
+                       {{ form_errors(form_Relaited_New.entFax) }}
+                   </div>
+                   <div class="control-group entName">
+                       {{ form_label(form_Relaited_New.entWebsite) }}
+                       {{ form_widget(form_Relaited_New.entWebsite) }}
+                       {{ form_errors(form_Relaited_New.entWebsite) }}
+                   </div>
+
+               </td>
+                <td>
+                    <div class="control-group entName">
+                        {{ form_label(form_Relaited_New.accounts[0].accName) }}*
+                        {{ form_widget(form_Relaited_New.accounts[0].accName) }}
+                        {{ form_errors(form_Relaited_New.accounts[0].accName) }}
+                    </div>
+                    <div class="control-group entName">
+                        {{ form_label(form_Relaited_New.accounts[0].accTerms) }}
+                        {{ form_widget(form_Relaited_New.accounts[0].accTerms) }}
+                        {{ form_errors(form_Relaited_New.accounts[0].accTerms) }}
+                    </div>
+
+                    <div class="control-group entName">
+                        {{ form_label(form_Relaited_New.accounts[0].accDefaultLanguage) }}
+                        {{ form_widget(form_Relaited_New.accounts[0].accDefaultLanguage) }}
+                        {{ form_errors(form_Relaited_New.accounts[0].accDefaultLanguage) }}
+                    </div>
+                    {#<div class="control-group entName">#}
+                        {#{{ form_label(form_Relaited_New.accounts[0].accCurrency) }}#}
+                        {#{{ form_widget(form_Relaited_New.accounts[0].accCurrency) }}#}
+                        {#{{ form_errors(form_Relaited_New.accounts[0].accCurrency) }}#}
+                    {#</div>#}
+                    {#<div class="control-group entName">#}
+                        {#{{ form_label(form_Relaited_New.accounts[0].accTimeZone) }}#}
+                        {#{{ form_widget(form_Relaited_New.accounts[0].accTimeZone) }}#}
+                        {#{{ form_errors(form_Relaited_New.accounts[0].accTimeZone) }}#}
+                    {#</div>#}
+
+                </td>
+         <td>
+             <div class="control-group entName">
+
+                 {{ form_widget(form_Relaited_New.users[0]) }}
+                 {{ form_errors(form_Relaited_New.users[0]) }}
+             </div>
+         </td>
         {#<div class="control-group entVatNumber">#}
             {#{{ form_label(form2step.entVatNumber) }}#}
             {#{{ form_widget(form2step.entVatNumber) }}#}
@@ -111,7 +209,7 @@
             {#</div>#}
 
         {#</div>#}
-
-        {{ form_widget(form2step) }}
-
+     </table>
+<button>Create</button>
 </form>
+

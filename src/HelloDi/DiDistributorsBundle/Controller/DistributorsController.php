@@ -8,11 +8,14 @@ use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
+use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerSearchType;
+use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerNewType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+
 
 class DistributorsController extends Controller
 {
@@ -222,40 +225,44 @@ class DistributorsController extends Controller
 
     }
 
-    public function NewretailerAction(Request $request)
+    public function NewRetailerAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
+        $userget = $this->container->get('security.context')->getToken()->getUser();
+        $need = $userget->getAccount();
+        $Currency = $need->getAccCurrency();
 
         $user = new User();
         $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
 
-
+        $Account->setAccCreditLimit(0);
         $Account->setAccCreationDate(new \DateTime('now'));
-        $Account->setAccTimeZone(null);
+        $Account->setAccTimeZone('Africa/Abidjan');
         $Account->setAccType(2);
         $Account->setAccBalance(0);
-        $Account->setAccCreditLimit(0);
+        $Account->setAccCurrency($Currency);
+        $Account->setParent($need);
 
 
         $Account->setEntiti($Entiti);
-        $Entiti->addAccount($Account);
-
         $user->setEntiti($Entiti);
         $Entiti->addUser($user);
 
+        $Entiti->addAccount($Account);
 
         $user->setAccount($Account);
+        $user->setStatus(1);
 
 
-        $form2step = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
+        $form = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
-            $form2step->bind($request);
 
-            if ($form2step->isValid()) {
+            $form->bind($request);
+
+            //if ($form->isValid()) {
 
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
@@ -271,13 +278,69 @@ class DistributorsController extends Controller
                 $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
-                return new Response('dffd'); //  return $this->redirect($this->generateUrl('ShowMyAccount'));
-            }
+
+
+                 //  return $this->redirect($this->generateUrl('ShowMyAccount'));
+
+                return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $Entiti->getId() )));
+            //}
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array('form2step' => $form2step->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array('form_Relaited_New' => $form->createView()));
 
+    }
+
+    public function ShowRetaierAccountAction(Request $request)
+    {
+        $form_searchprov = $this->createForm(new RetailerSearchType());
+
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        $qb = $em->createQueryBuilder()
+            ->select('retailer')
+            ->from('HelloDiDiDistributorsBundle:Account','retailer')
+            ->innerJoin('retailer.Entiti', 'Ent');
+
+        if ($request->isMethod('POST')) {
+
+            $form_searchprov->bind($request);
+            $dataform = $form_searchprov->getData();
+
+
+            if ($dataform['retName'] != '')
+                $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
+            if ($dataform['retCityName']!='')
+                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
+            if ($dataform['retBalance'] == 1)
+                if ($dataform['retBalanceValue']!='')
+                    $qb->andwhere($qb->expr()->gte('retailer.accBalance', $dataform['retBalanceValue']));
+            if ($dataform['retBalance'] == 0)
+                if ($dataform['retBalanceValue'])
+                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
+            if ($dataform['retcurency'] != '')
+                $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
+////        if ($dataform['id'] != '')
+////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
+////        $query = $qb->getQuery();
+
+        }
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array
+        ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
+
+    }
+    public function TransactionAction(Request $request){
+
+       return New Response('Start Transaction');
     }
 }
 
