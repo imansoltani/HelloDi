@@ -1,3 +1,7 @@
 retailers_dashboard:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
+
+ritailers_account:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
+    prefix:   /admin/account-setting

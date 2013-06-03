@@ -129,7 +129,7 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>{{ myAccount.accCreditLimit }}</td>
-                                        <td><a href="{{ path('Retailer_Transaction',{'id':myAccount.Entiti.id}) }}">Open</a> </td>
+                                        <td><a href="{{ path('RetailerUser',{'id':myAccount.id}) }}">Open</a> </td>
 
                                     </tr>
                                 {% endfor %}

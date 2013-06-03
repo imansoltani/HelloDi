@@ -19,9 +19,9 @@ RetailerUserChangeRole:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
 
 NewRetailer:
-    pattern:  /new
+    pattern:  /NewRetailer
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }
 
-Retailer_Transaction:
-    pattern:  /{id}/transactions
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Transaction }
+RetailerSetting:
+    pattern:  /{id}/settings
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerSetting }

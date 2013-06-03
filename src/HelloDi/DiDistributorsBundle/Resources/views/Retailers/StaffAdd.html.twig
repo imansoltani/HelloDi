@@ -1,0 +1,62 @@
+
+
+
+    <div class="span">
+        <div class="widget-content" >
+            <div class="widget-header">
+                <h3>Add Users</h3>
+            </div> <!-- /widget-header --><br>
+
+            <form class="form-horizontal" action="{{ path('RetailerStaffAdd',{'id':Account.id}) }}" method="post" >
+
+                <div class="control-group">
+                    {{ form_label(form.firstname) }}
+                    {{ form_widget(form.firstname) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.lastname) }}
+                    {{ form_widget(form.lastname) }}
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.mobile) }}
+                    {{ form_widget(form.mobile) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.plainPassword) }}
+                    {{ form_widget(form.plainPassword) }}
+                </div>
+
+                <div class="control-group">
+                    {{ form_label(form.language) }}
+                    <div class="controls">
+                        {{ form_widget(form.language) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(formrole.roles) }}
+                    <div class="controls">
+                        {{ form_widget(formrole.roles) }}
+                    </div>
+                </div>
+
+
+                {{ form_widget(form._token) }}
+
+                <div class="form-actions" style="margin-bottom: 0" >
+                    <input class="btn btn-primary" type="submit"  value="Create">
+                </div>
+
+            </form>
+

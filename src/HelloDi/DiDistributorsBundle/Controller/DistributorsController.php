@@ -205,6 +205,7 @@ class DistributorsController extends Controller
     public function RetailerUserChangeRoleAction($id)
     {
 
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
         $roles = $user->getRoles();
@@ -295,6 +296,9 @@ class DistributorsController extends Controller
 
     public function ShowRetaierAccountAction(Request $request)
     {
+        $accparent=$this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $accchild=$accparent->getChildrens();
         $form_searchprov = $this->createForm(new RetailerSearchType());
 
 
@@ -304,35 +308,37 @@ class DistributorsController extends Controller
         $qb = $em->createQueryBuilder()
             ->select('retailer')
             ->from('HelloDiDiDistributorsBundle:Account','retailer')
-            ->innerJoin('retailer.Entiti', 'Ent');
-
-        if ($request->isMethod('POST')) {
-
-            $form_searchprov->bind($request);
-            $dataform = $form_searchprov->getData();
-
-
-            if ($dataform['retName'] != '')
-                $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
-            if ($dataform['retCityName']!='')
-                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
-            if ($dataform['retBalance'] == 1)
-                if ($dataform['retBalanceValue']!='')
-                    $qb->andwhere($qb->expr()->gte('retailer.accBalance', $dataform['retBalanceValue']));
-            if ($dataform['retBalance'] == 0)
-                if ($dataform['retBalanceValue'])
-                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
-            if ($dataform['retcurency'] != '')
-                $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
-////        if ($dataform['id'] != '')
-////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
-////        $query = $qb->getQuery();
-
-        }
+            ->innerJoin('retailer.Entiti', 'Ent')
+            ->where('retailer.Parent=:p')
+            ->setParameter('p',$accparent);
+//
+//        if ($request->isMethod('POST')) {
+//
+//            $form_searchprov->bind($request);
+//            $dataform = $form_searchprov->getData();
+//
+//
+//            if ($dataform['retName'] != '')
+//                $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
+//            if ($dataform['retCityName']!='')
+//                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
+//            if ($dataform['retBalance'] == 1)
+//                if ($dataform['retBalanceValue']!='')
+//                    $qb->andwhere($qb->expr()->gte('r etailer.accBalance', $dataform['retBalanceValue']));
+//            if ($dataform['retBalance'] == 0)
+//                if ($dataform['retBalanceValue'])
+//                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
+//            if ($dataform['retcurency'] != '')
+//                $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
+//////        if ($dataform['id'] != '')
+//////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
+//////        $query = $qb->getQuery();
+//
+//        }
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $qb,
+            $accchild,
             $this->get('request')->query->get('page', 1) /*page number*/,
             5/*limit per page*/
         );

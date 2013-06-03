@@ -1,0 +1,18 @@
+RetailerProfile:
+    pattern:  /profile
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerProfile }
+RetailerStaff:
+    pattern:  /staff
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaff }
+
+RetailerStaffAdd:
+    pattern:  /{id}/staff/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaffAdd }
+
+RetailerStaffEdit:
+    pattern:  /{id}/staff/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaffEdit }
+
+RetailerChangeRole:
+    pattern:  /{id}/staff/ChangeRole
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerChangeRole }

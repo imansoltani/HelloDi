@@ -2,6 +2,7 @@
 namespace HelloDi\DiDistributorsBundle\Listener;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
