@@ -1,19 +1,19 @@
-Profile:
+DistProfile:
     pattern:  /profile
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Profile }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistProfile }
 
-Staff:
+DistStaff:
     pattern:  /staff
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Staff }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaff }
 
-StaffAdd:
+DistStaffAdd:
     pattern:  /{id}/staff/add
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:StaffAdd }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaffAdd }
 
-StaffEdit:
+DistStaffEdit:
     pattern:  /{id}/staff/edit
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:StaffEdit }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaffEdit }
 
-ChangeRole:
+DistChangeRole:
     pattern:  /{id}/staff/ChangeRole
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ChangeRole }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistChangeRole }

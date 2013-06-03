@@ -27,7 +27,7 @@
     <div class="span">
         <div class="widget-content">
 
-            <a class="btn-large button btn btn-primary " href="{{ path('StaffAdd',{'id':Account.id}) }}">Add New
+            <a class="btn-large button btn btn-primary " href="{{ path('DistStaffAdd',{'id':Account.id}) }}">Add New
                 user</a><br>
 
             <div class="tablediv">
@@ -69,13 +69,13 @@
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('StaffEdit',{'id':user.id }) }}">Modify</a>
+                                        <a class="btn_actions" href="{{ path('DistStaffEdit',{'id':user.id }) }}">Modify</a>
 
                                     </td>
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('ChangeRole',{'id': user.id }) }}">Change Role</a>
+                                        <a class="btn_actions" href="{{ path('DistChangeRole',{'id': user.id }) }}">Change Role</a>
 
                                     </td>
                                 </tr>

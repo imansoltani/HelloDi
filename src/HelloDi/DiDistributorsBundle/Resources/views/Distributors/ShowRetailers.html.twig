@@ -99,7 +99,7 @@
 
                 </div>
                 <div>
-                    <a href="{{ path('NewRetailer') }}">New Retailer</a>
+                    <a href="{{ path('DistNewRetailer') }}">New Retailer</a>
                 </div>
 
                 <div class="tablediv">
@@ -129,7 +129,7 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>{{ myAccount.accCreditLimit }}</td>
-                                        <td><a href="{{ path('RetailerUser',{'id':myAccount.id}) }}">Open</a> </td>
+                                        <td><a href="{{ path('DistRetailerUser',{'id':myAccount.id}) }}">Open</a> </td>
 
                                     </tr>
                                 {% endfor %}

@@ -2,29 +2,29 @@ retailer_show:
     pattern:  /
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ShowRetaierAccount" }
 
-RetailerUser:
+DistRetailerUser:
     pattern:  /{id}/users
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUser }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerUser }
 
-RetailerUserEdit:
+DistRetailerUserEdit:
     pattern:  /{id}/users/edit
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserEdit }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerUserEdit }
 
-RetailerUserAdd:
+DistRetailerUserAdd:
     pattern:  /{id}/users/add
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserAdd }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerUserAdd }
 
-RetailerUserChangeRole:
+DistRetailerUserChangeRole:
     pattern:  /{id}/users/changerole
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerUserChangeRole }
 
-NewRetailer:
+DistNewRetailer:
     pattern:  /NewRetailer
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistNewRetailer }
 
-RetailerSetting:
+DistRetailerSetting:
     pattern:  /{id}/settings
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerSetting }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerSetting }
 
 #item
 dist_RetailerItem:

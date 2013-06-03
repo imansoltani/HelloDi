@@ -9,7 +9,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
     <a class="link" href="#">Account Setting</a>
-    <a class="link" href="{{ path('Staff') }}">Stuff</a>
+    <a class="link" href="{{ path('DistStaff') }}">Stuff</a>
     <span class="link">Edit User</span>
 {% endblock Site_Map %}
 
@@ -31,7 +31,7 @@
             <h3>Add Users</h3>
         </div> <!-- /widget-header --><br>
 
-        <form class="form-horizontal" action="{{ path('StaffEdit',{'id':userid}) }}" method="post" >
+        <form class="form-horizontal" action="{{ path('DistStaffEdit',{'id':userid}) }}" method="post" >
 
             <div class="control-group">
                 {{ form_label(form.firstname) }}

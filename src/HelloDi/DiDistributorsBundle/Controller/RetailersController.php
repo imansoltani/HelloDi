@@ -95,7 +95,7 @@ class RetailersController extends Controller
             }
 
         }
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:StaffEdit.html.twig', array('Account' => $user->getAccount(), 'Entiti' => $user->getEntiti(), 'userid' => $id, 'form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:StaffEdit.html.twig', array('Account' => $user->getAccount(), 'Entiti' => $user->getEntiti(), 'userid' => $id, 'form' => $form->createView()));
 
     }
 
@@ -119,7 +119,6 @@ class RetailersController extends Controller
                 $user->addRole('ROLE_RETAILER');
                 break;
         }
-     $req->getSession()->getFlashBag()->add('role','عملیات تغییر رول با موفقیت انجام شد');
 
         $em->flush();
         return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));

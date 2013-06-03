@@ -25,14 +25,14 @@ class DistributorsController extends Controller
     }
 
     //Retailers
-    public function ProfileAction()
+    public function DistProfileAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Profile.html.twig', array('Account' => $Account, 'Entiti' => $Account->getEntiti(), 'User' => $user));
     }
 
-    public function StaffAction()
+    public function DistStaffAction()
     {
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $users = $Account->getUsers();
@@ -45,7 +45,7 @@ class DistributorsController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'Account' => $Account, 'pagination' => $pagination));
     }
 
-    public function StaffAddAction(Request $request, $id)
+    public function DistStaffAddAction(Request $request, $id)
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
@@ -68,7 +68,7 @@ class DistributorsController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('Staff', array('id' => $Account->getId())));
+                return $this->redirect($this->generateUrl('DistStaff', array('id' => $Account->getId())));
 
             }
 
@@ -77,7 +77,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function StaffEditAction(Request $request, $id)
+    public function DistStaffEditAction(Request $request, $id)
     {
 
 
@@ -94,7 +94,7 @@ class DistributorsController extends Controller
                 else
                     $user->setStatus(1);
                 $em->flush();
-                return $this->redirect($this->generateUrl('Staff', array('id' => $user->getAccount()->getId())));
+                return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
             }
 
         }
@@ -102,7 +102,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function ChangeRoleAction($id)
+    public function DistChangeRoleAction($id)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -123,12 +123,12 @@ class DistributorsController extends Controller
         }
 
         $em->flush();
-        return $this->redirect($this->generateUrl('Staff', array('id' => $user->getAccount()->getId())));
+        return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
 
     }
 
 //---------click pn open list Retailers----------
-    public function RetailerUserAction($id) //id Account
+    public function DistRetailerUserAction($id) //id Account
     {
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -144,7 +144,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function RetailerUserEditAction(Request $request, $id)
+    public function DistRetailerUserEditAction(Request $request, $id)
     {
 
         $user = new User();
@@ -160,7 +160,7 @@ class DistributorsController extends Controller
                 else
                     $user->setStatus(1);
                 $em->flush();
-                return $this->redirect($this->generateUrl('RetailerUser', array('id' => $user->getAccount()->getId())));
+                return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $user->getAccount()->getId())));
             }
 
         }
@@ -168,7 +168,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function RetailerUserAddAction(Request $request, $id)
+    public function DistRetailerUserAddAction(Request $request, $id)
     {
 
         $user = new User();
@@ -192,7 +192,7 @@ class DistributorsController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('RetailerUser', array('id' => $Account->getId())));
+                return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
 
             }
 
@@ -202,7 +202,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function RetailerUserChangeRoleAction($id)
+    public function DistRetailerUserChangeRoleAction($id)
     {
 
 
@@ -224,11 +224,11 @@ class DistributorsController extends Controller
         }
 
         $em->flush();
-        return $this->redirect($this->generateUrl('RetailerUser', array('id' => $user->getAccount()->getId())));
+        return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $user->getAccount()->getId())));
 
     }
 
-    public function NewRetailerAction(Request $request)
+    public function DistNewRetailerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $userget = $this->container->get('security.context')->getToken()->getUser();
@@ -422,5 +422,32 @@ class DistributorsController extends Controller
 //            'form' => $form->createView()
         ));
     }
+
+    public  function DistRetailerSettingAction(Request $req,$id)//id account
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $retacc= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $form=$this->createForm(new AccountRetailerType(),$retacc);
+
+        if($req->isMethod('POST'))
+        {
+            $form->bind($req);
+            if($form->isValid())
+            {
+
+                $em->flush();
+
+            }
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
+
+    }
+
+
+
+
 }
 
