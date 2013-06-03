@@ -352,6 +352,29 @@ class DistributorsController extends Controller
        return New Response('Start Transaction');
     }
 
+    public  function DistRetailerSettingAction(Request $req,$id)//id account
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $retacc= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $form=$this->createForm(new AccountRetailerType(),$retacc);
+
+        if($req->isMethod('POST'))
+        {
+            $form->bind($req);
+            if($form->isValid())
+            {
+
+                $em->flush();
+
+            }
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
+
+    }
+
     //items
     public function ShowItemsAction(Request $request)
     {
@@ -418,36 +441,22 @@ class DistributorsController extends Controller
 
     public function RetailerItemsAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $qb = $em->createQueryBuilder()
+            ->select('item')
+            ->from('HelloDiDiDistributorsBundle:Item', 'item')
+            ->innerJoin('item.Prices', 'prices')
+            ->innerJoin('prices.Account', 'account')
+            ->where('account = :acc')
+            ->setParameter('acc', $account);
+
+        $items = $qb->getQuery()->getResult();
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
-//            'form' => $form->createView()
+            'items' => $items,
         ));
     }
-
-    public  function DistRetailerSettingAction(Request $req,$id)//id account
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $retacc= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form=$this->createForm(new AccountRetailerType(),$retacc);
-
-        if($req->isMethod('POST'))
-        {
-            $form->bind($req);
-            if($form->isValid())
-            {
-
-                $em->flush();
-
-            }
-
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
-
-    }
-
-
-
-
 }
 
