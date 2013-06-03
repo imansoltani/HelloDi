@@ -399,5 +399,21 @@ class DistributorsController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function ItemPerRetailerAction(Request $request, $id)
+    {
+        $form = $this->createFormBuilder()
+            ->add('fff', 'collection', array(
+                'type'   => 'checkbox',
+                'options'  => array(
+                    'required'  => false,
+                ),
+            ))
+            ->getForm();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:ItemsPerRetailer.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 }
 
