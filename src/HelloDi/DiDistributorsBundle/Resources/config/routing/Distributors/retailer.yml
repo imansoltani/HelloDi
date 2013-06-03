@@ -25,3 +25,8 @@ NewRetailer:
 RetailerSetting:
     pattern:  /{id}/settings
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerSetting }
+
+#item
+dist_RetailerItem:
+    pattern:  /{id}/items
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerItems }

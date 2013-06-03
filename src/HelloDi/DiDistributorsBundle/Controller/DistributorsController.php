@@ -415,5 +415,12 @@ class DistributorsController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    public function RetailerItemsAction($id)
+    {
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
+//            'form' => $form->createView()
+        ));
+    }
 }
 
