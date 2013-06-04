@@ -1,0 +1,55 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    test
+{% endblock title %}
+
+{% block Site_Map %}
+    <span class="link">Test</span>
+{% endblock Site_Map %}
+{% block Link_Head %}
+{% endblock %}
+
+{% block PageTitle %}
+    Test
+{% endblock %}
+
+{% set MU = 'Test' %}
+
+{% block Body %}
+<div class="span">
+    <div class="widget stacked">
+
+        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+            <thead>
+            <tr>
+                <th>Account Name</th>
+                <th>Balance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td>{{ account.accName }}</td>
+                    <td>{{ account.accBalance }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="widget-content">
+            <form action="#" method="post" class="form-horizontal">
+                    {{ form_widget(form) }}
+
+                <label class="control-label" for="count">Count</label>
+                <div class="controls">
+                    <input class="input-large" name="count" type="text" value="1">
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

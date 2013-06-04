@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping AS ORM;
 /** 
  * @ORM\Entity
  * @ORM\Table(name="transaction")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Transaction
 {
@@ -362,5 +363,15 @@ class Transaction
     public function getCode()
     {
         return $this->Code;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateAccountBalance()
+    {
+        $amount = $this->getTranCredit();
+        $currentBalance= $this->getAccount()->getAccBalance();
+        $this->getAccount()->setAccBalance($currentBalance+$amount);
     }
 }

@@ -1,31 +1,38 @@
-<html>
-<head>
-    <title>-</title>
-</head>
-<body>
-<div style="border: 1px solid #000000">
-    <a href="#">Transaction</a><br/>
-    <a href="{{ path('dist_RetailerItem',{'id':Account.id}) }}">Items</a><br/>
-    <a href="{{ path('DistRetailerUser',{'id':Account.id}) }}">Users</a><br/>
-    <a href="#">Settings</a><br/>
-    <a href="#">Details</a><br/>
-</div>
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
-        <a  href="{{ path('DistRetailerUserAdd',{'id':Account.id}) }}">Add New user</a><br>
-            <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
-                <thead>
-                <tr>
-                    <th>{{ 'User.Id' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.Name' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.UserName' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.Role' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.ChangeRole' | trans ({}, "user") }}</th>
-                </tr>
-                </thead>
-                <tbody>
+{% set tab = '3' %}
 
-                {% for User in pagination %}
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Users</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Users</h3>
+    </div> <!-- /widget-header -->
+    <br>
+    <a class="button btn btn-primary btn-large" href="{{ path('DistRetailerUserAdd',{'id':Account.id}) }}" >Add New User</a>
+    <div style="margin-top: 5px" class="tablediv">
+        <form method="post">
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>{{ 'User.Id' | trans ({}, "user") }}</th>
+                        <th>{{ 'User.Name' | trans ({}, "user") }}</th>
+                        <th>{{ 'User.UserName' | trans ({}, "user") }}</th>
+                        <th>{{ 'User.Role' | trans ({}, "user") }}</th>
+                        <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
+                        <th>{{ 'User.ChangeRole' | trans ({}, "user") }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for User in pagination %}
                         <tr>
 
                             <td >{{ User.id }}</td>
@@ -47,11 +54,19 @@
 
                     {% endfor %}
 
-                </tbody>
-            </table>
-            {#{button pagination}#}
-            <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
+                    </tbody>
+                </table>
             </div>
-</body>
-</html>
+        </form>
+    </div>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}

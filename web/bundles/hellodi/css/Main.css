@@ -730,7 +730,7 @@ ul.shortcuts >li > a i{
     width: 100%;
     margin-top: 10%;
     margin-bottom: 10%;
-
+    display: block;
 }
 ul.shortcuts >li > a span{
     font-size: 15px;

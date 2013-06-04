@@ -1,73 +1,64 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
-{% block title %}
-    Items
-{% endblock title %}
-
-{% set MU = 'retail' %}
+{% set tab = '2' %}
 
 {% block Site_Map %}
-    {#<a class="link" href="{{ path('distributors_dashboard') }}">Home</a>#}
-    {#<span class="link">Items</span>#}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Items</span>
 {% endblock Site_Map %}
 
-{% block PageTitle %}
-    {#<i class="icon-check"></i>#}
-    {#List Of Items#}
-{% endblock %}
 
-{% block Link_Footer %}
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Items</h3>
+    </div> <!-- /widget-header -->
+    <br>
+    <a class="button btn btn-primary btn-large" href="#" >Add New Item</a>
+    <div style="margin-top: 5px" class="tablediv">
+        <form method="post">
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>faceValue</th>
+                        <th>type</th>
+                        <th>Price(Currency)</th>
+                        <th>Manage</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.itemName }}</td>
+                            <td>{{ item.itemFaceValue }}</td>
+                            <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                            <td>{{ item.prices[0].price }}
+                                {{ item.prices[0].priceCurrency }}</td>
+                            <td>
+                                <a class="btn_actions" href="{{ path('items_item_per_retailers',{'id':item.id}) }}">See Price for retailers</a>
+                                <br/>
+                                <a class="btn_actions" href="#">details</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
 
-{% endblock %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        } );
 
-{% block Body %}
-    {#<div class="span">#}
-        {#<div class="widget-content">#}
+    </script>
 
-            {#<a class="btn-large button btn btn-primary " href="#">#}
-                {#New Request#}
-            {#</a>#}
-            {#<br>#}
-
-            {#<div class="tablediv">#}
-                {#<div class="contenttitle">#}
-                    {#<h4>Items</h4>#}
-                {#</div>#}
-                {#<div class="tab-content">#}
-                    {#<table style="margin-top: 20px" class="table postsend">#}
-                        {#<thead>#}
-                        {#<tr>#}
-                            {#<th>id</th>#}
-                            {#<th>name</th>#}
-                            {#<th>faceValue</th>#}
-                            {#<th>type</th>#}
-                            {#<th>Price(Currency)</th>#}
-                            {#<th>Manage</th>#}
-                        {#</tr>#}
-                        {#</thead>#}
-                        {#<tbody>#}
-                        {#{% for item in pagination %}#}
-                            {#<tr>#}
-                                {#<td>{{ item.id }}</td>#}
-                                {#<td>{{ item.itemName }}</td>#}
-                                {#<td>{{ item.itemFaceValue }}</td>#}
-                                {#<td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>#}
-                                {#<td>{{ item.prices[0].price }}#}
-                                    {#{{ item.prices[0].priceCurrency }}</td>#}
-                                {#<td>#}
-                                    {#<a class="btn_actions" href="{{ path('items_item_per_retailers',{'id':item.id}) }}">See Price for retailers</a>#}
-                                    {#<br/>#}
-                                    {#<a class="btn_actions" href="#">details</a>#}
-                                {#</td>#}
-                            {#</tr>#}
-                        {#{% endfor %}#}
-                        {#</tbody>#}
-                    {#</table>#}
-                {#</div>#}
-                {#<div class="navigation" style="text-align: center">#}
-                    {#{{ knp_pagination_render(pagination) }}#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
 {% endblock %}
