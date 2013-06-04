@@ -5,3 +5,7 @@ retailers_dashboard:
 ritailers_account:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
     prefix:   /admin/account-setting
+
+RetailerTransaction:
+    pattern:  /transaction/history
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Transaction}

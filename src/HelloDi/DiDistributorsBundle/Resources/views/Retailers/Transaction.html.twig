@@ -1,0 +1,56 @@
+
+                <form>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table postsend">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Change Role' | trans ({}, "account") }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in pagination %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+
+                                    <td>{{ user.firstname }}.{{ user.lastname }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.Entiti.entName }}</td>
+                                    <td>
+                                        {% if user.status==0 %}
+                                            InActive
+                                        {% else %}
+                                            Active
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ user.roles[0] }}</td>
+
+                                    <td class="td-actions">
+
+
+                                        <a class="btn_actions" href="{{ path('RetailerStaffEdit',{'id':user.id }) }}">Modify</a>
+
+                                    </td>
+                                    <td class="td-actions">
+
+
+                                        <a class="btn_actions" href="{{ path('RetailerChangeRole',{'id': user.id }) }}">Change Role</a>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {#{button pagination}#}
+                    </div>
+                </form>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>

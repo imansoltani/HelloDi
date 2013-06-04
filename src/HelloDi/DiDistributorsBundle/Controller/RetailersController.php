@@ -125,5 +125,66 @@ class RetailersController extends Controller
 
     }
 
+public  function TransactionAction(Request $req)
+{
+    $User= $this->get('security.context')->getToken()->getUser();
+    $Account=$User->getAccount();
+$em=$this->getDoctrine()->geManager();
+$query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account,'User'=>$User));
+
+$form=$this->createFormBuilder()
+     ->add('Type','choice',array('choices'=>array()))
+     ->add('DateStart','date')
+      ->add('DateEnd','date')
+      ->add('TypeDate','choice', array(
+        'expanded'   => true,
+        'choices'    => array(
+            0 => 'Inactive',
+            1 => 'Active',
+        )
+    ))->getForm();
+
+if($req->isMethod('POST'))
+{
+    $form->bind($req);
+$data=$form->getData();
+
+    $qb=$em->createQueryBuilder()
+        ->select('Tran')
+        ->from('HelloDiDiDistributorsBundle:Transaction');
+    if($data['TypeDate']==0)
+    {
+        $qb->where($qb->expr()->gte('Tran.tranDate',  $data['DateStart']));
+        $qb->where($qb->expr()->lte('Acc.tranDate',  $data['DateStart']));
+    }
+    if($data['TypeDate']==1)
+    {
+        $qb->where($qb->expr()->gte('Acc.tranInsert',  $data['DateStart']));
+        $qb->where($qb->expr()->lte('Acc.tranInsert',  $data['DateStart']));
+    }
+
+    if($data['Type']!='All')
+    {
+    $qb->andWhere('tranAction',$data['Type']);
+    }
+
+  $query=$qb->getQuery();
+
+}
+
+    $paginator = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+        $query,
+        $this->get('request')->query->get('page', 1) /*page number*/,
+        5/*limit per page*/
+    );
+
+
+
+
+    return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig', array('pagination'=>$pagination,'form'=>$form,'Account' =>$Account(), 'Entiti' =>$User->getEntiti(), 'form' => $form->createView()));
+}
+
+
 }
 

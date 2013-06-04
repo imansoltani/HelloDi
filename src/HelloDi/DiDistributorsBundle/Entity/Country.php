@@ -24,30 +24,6 @@ class Country
      * @ORM\Column(type="string", length=45, nullable=false, name="Name")
      */
     private $name;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\DetailHistory", mappedBy="Country")
-     */
-    private $DetailHistories;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", mappedBy="Country")
-     */
-    private $Entitis;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", mappedBy="Country")
-     */
-    private $Items;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Entitis = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Items = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->DetailHistories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Get id

@@ -10,6 +10,7 @@ use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerSearchType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerNewType;
+use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -79,7 +80,6 @@ class DistributorsController extends Controller
 
     public function DistStaffEditAction(Request $request, $id)
     {
-
 
         $user = new User();
         $em = $this->getDoctrine()->getManager();
@@ -428,7 +428,7 @@ class DistributorsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $retacc= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form=$this->createForm(new AccountRetailerType(),$retacc);
+        $form=$this->createForm(new AccountRetailerSettingType(),$retacc);
 
         if($req->isMethod('POST'))
         {
