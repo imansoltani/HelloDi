@@ -20,3 +20,7 @@ RetailerChangeRole:
 Retailer_Shop_calling_card:
     pattern:  /calling-cards
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShopCalling }
+
+Retailer_Shop_dmtu:
+    pattern:  /dmtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }

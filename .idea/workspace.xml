@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -17,7 +15,7 @@
     <ignored path="vendor/" />
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370358222510" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370364766296" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370330248867" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369754470819" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -238,7 +236,7 @@
     <file path="/RetailersDetails.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370185848673" ignored="false" />
     <file path="$PROJECT_DIR$/../HelloDiold/src/HelloDi/DiDistributorsBundle/Resources/views/Item/edit.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370183656582" ignored="false" />
     <file path="/retailers.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370364723294" ignored="false" />
-    <file path="/RetailersController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370323884411" ignored="false" />
+    <file path="/RetailersController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370364931473" ignored="false" />
     <file path="/ShopCode.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370273949457" ignored="false" />
     <file path="/ShopDmtu.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370276080069" ignored="false" />
     <file path="$PROJECT_DIR$/../HelloDiold/src/HelloDi/DiDistributorsBundle/Controller/EntitiController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370277322083" ignored="false" />
@@ -248,7 +246,7 @@
     <file path="$PROJECT_DIR$/../backUp/HelloDi/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370355086634" ignored="false" />
     <file path="$PROJECT_DIR$/../backUp/HelloDi/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminDist.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370358203854" ignored="false" />
     <file path="$PROJECT_DIR$/../backUp/HelloDi/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/Profile.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370358203854" ignored="false" />
-    <file path="/account.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370361611709" ignored="false" />
+    <file path="/account.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370364916501" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -310,7 +308,7 @@
       <file leaf-file-name="RetailersController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="23" selection-start="464" selection-end="464" vertical-scroll-proportion="-9.153846">
+            <state line="20" column="76" selection-start="648" selection-end="648" vertical-scroll-proportion="-11.769231">
               <folding />
             </state>
           </provider>
@@ -328,7 +326,7 @@
       <file leaf-file-name="account.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="28" selection-start="720" selection-end="720" vertical-scroll-proportion="0.5923345">
+            <state line="25" column="71" selection-start="914" selection-end="914" vertical-scroll-proportion="0.74041814">
               <folding />
             </state>
           </provider>
@@ -430,10 +428,10 @@
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminDist.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/ShowRetailers.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
       </list>
     </option>
   </component>
@@ -1020,7 +1018,11 @@
       <created>1370358229548</created>
       <updated>1370358229549</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Retailers">
+      <created>1370364774952</created>
+      <updated>1370364774952</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1115,7 +1117,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="distributorsAdmin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Retailers" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1153,6 +1155,7 @@
     <MESSAGE value="in 2013/05/29 at 21:50 pm distributorsAdmin v1" />
     <MESSAGE value="in 2013/05/29 at 12:00 pm distributorsAdmin v1" />
     <MESSAGE value="distributorsAdmin" />
+    <MESSAGE value="Retailers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1242,26 +1245,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="23" selection-start="464" selection-end="464" vertical-scroll-proportion="-9.153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/distributors.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="271" selection-end="414" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="272" column="0" selection-start="10623" selection-end="10623" vertical-scroll-proportion="-10.115385">
-          <folding>
-            <element signature="e#59#113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1279,9 +1266,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="272" column="0" selection-start="10623" selection-end="10623" vertical-scroll-proportion="-10.115385">
+          <folding>
+            <element signature="e#59#113#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="76" selection-start="648" selection-end="648" vertical-scroll-proportion="-11.769231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="28" selection-start="720" selection-end="720" vertical-scroll-proportion="0.5923345">
+        <state line="25" column="71" selection-start="914" selection-end="914" vertical-scroll-proportion="0.74041814">
           <folding />
         </state>
       </provider>
