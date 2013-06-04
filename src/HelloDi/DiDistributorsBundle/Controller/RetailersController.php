@@ -12,4 +12,8 @@ class RetailersController extends Controller
     {
         return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig');
     }
+
+    public function ShopCallingAction(){
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopCode.html.twig');
+    }
 }
