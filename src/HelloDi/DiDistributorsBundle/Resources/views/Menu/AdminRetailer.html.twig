@@ -1,5 +1,10 @@
 {% extends 'HelloDiDiDistributorsBundle::Main.html.twig' %}
 
+{% block Link_Head %}
+
+{% endblock %}
+
+
 {% block Dist1 %}
     <div class="pagedisc">
         <i>Name :</i><span>{{ Account.accName }}</span><br>
@@ -16,45 +21,64 @@
     </div>
 {% endblock %}
 
-
 {% block Main_Menu %}
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
-        <a href="{{ path('distributors_dashboard') }}">
+        <a href="">
             <i class="icon-home"></i>
             <span id="user_pc_menu" >Home</span>
         </a>
     </li>
-    <li class=" {% if MU == 'retail' %}active{% endif %} dropdown">
-        <a href="{{ path('retailer_show') }}" class="dropdown-toggle">
-            <i class="icon-briefcase"></i>
-            <span  id="user_pc_menu"  >Retailers</span>
+    <li class=" {% if MU == 'fav' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle">
+            <i class="icon-star"></i>
+            <span  id="user_pc_menu"  >Favorites</span>
         </a>
     </li>
+    <li class=" {% if MU == 'mob' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle">
+            <i class="icon-mobile-phone"></i>
+            <span  id="user_pc_menu"  >Mobile</span>
+        </a>
+    </li>
+
+
+    <li class=" {% if MU == 'cell' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle">
+            <i class="icon-credit-card"></i>
+            <span  id="user_pc_menu"  >Celling Cards</span>
+        </a>
+    </li>
+
+    <li class=" {% if MU == 'vou' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle">
+            <i class="icon-flag-alt"></i>
+            <span  id="user_pc_menu"  >Vou</span>
+        </a>
+    </li>
+
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
-        <a href="{{ path('items_show') }}" class="dropdown-toggle">
+        <a href="" class="dropdown-toggle">
             <i class="icon-tags"></i>
-            <span  id="user_pc_menu"  >Items</span>
+            <span  id="user_pc_menu"  >Item</span>
         </a>
     </li>
 
     <li class=" {% if MU == 'trans' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
-            <i class="icon-file"></i>
+            <i class="icon-money"></i>
             <span  id="user_pc_menu"  >Transactions</span>
             <b class="caret"></b>
         </a>
             <ul class="dropdown-menu">
+                <li><a href="javascript:;">History</a></li>
                 <li><a href="javascript:;">Recharge</a></li>
-
             </ul>
-
-
     </li>
 
     <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
             <i class="icon-list-alt"></i>
-            <span  id="user_pc_menu"  >Reports</span>
+            <span  id="user_pc_menu"  >Report</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
@@ -65,7 +89,6 @@
 
 
 
-
     <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-wrench"></i>
@@ -73,8 +96,8 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('DistProfile') }}">Profile</a></li>
-            <li><a href="{{ path('DistStaff') }}">Stuff</a></li>
+            <li><a href="{{ path('RetailerProfile') }}">Profile</a></li>
+            <li><a href="{{ path('RetailerStaff') }}">Stuff</a></li>
         </ul>
     </li>
     <li class=" {% if MU == 'support' %}active{% endif %} dropdown">
@@ -85,4 +108,6 @@
     </li>
 
 {% endblock Main_Menu %}
+
+
 

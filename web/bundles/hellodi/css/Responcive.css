@@ -170,13 +170,31 @@
     }
 }
 
+
 @media only screen and (max-width:550px){
     .datatable > div > div:first-child , .datatable > div > div:last-child{
         height: 100px;
+
+    }
+
+
+    .main .pagetop.first .pagedisc{
+        display: block;
+    }
+
+    .main .pagetop.second .pagedisc{
+        display: none;
+    }
+
+    .main .pagetop .pagetitle{
+
+        margin-bottom: 20px;
     }
 }
 
 @media only screen and (max-width: 450px) {
+
+
 
     /* Datatable
                 ---------------------- */

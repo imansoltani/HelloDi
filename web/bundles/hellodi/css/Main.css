@@ -563,19 +563,46 @@ color:#FFF;
 
 .main .pagetop .pagetitle{
 
-    margin: 0px 20px 10px;
+    margin-top: 20px ;
+    margin-left: 20px;
+    margin-bottom: 60px;
+
     color: #0c0e3c;
     font-weight: normal;
     font-size: 28px;
-    margin-top: 20px;
-
 }
 
-.main .pagetop .pagedisc{
+.main .pagetop.first .pagedisc{
 
     margin: 0px 20px;
     color: #1b206a;
     margin-bottom: 40px;
+
+}
+
+.main .pagetop.first .pagedisc{
+    display: none;
+}
+
+.main .pagetop.second{
+    top:0;
+
+}
+
+.main .pagetop .pagedisc span{
+    font-weight: bold;
+    text-align: center ;
+    margin-left: 5px;
+}
+
+.main .pagetop.second .pagedisc{
+    color: #1b206a;
+    display: block;
+    width: 200px;
+    float: right;
+
+    margin-top: 40px;
+    margin-right: 20px;
 }
 
 /* Site Map */
@@ -730,7 +757,7 @@ ul.shortcuts >li > a i{
     width: 100%;
     margin-top: 10%;
     margin-bottom: 10%;
-
+    display: block;
 }
 ul.shortcuts >li > a span{
     font-size: 15px;

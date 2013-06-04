@@ -9,11 +9,21 @@
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    {{ Account.accName }}
+    Manage Provider
 {% endblock %}
 
-{% block TitleDist %}
-    <i>Balance :</i><span>{{ Account.accBalance }}</span>
+{% block Dist1 %}
+    <div class="pagedisc">
+        <i>Name :</i><span>{{ Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+    </div>
+{% endblock %}
+
+{% block Dist2 %}
+    <div class="pagedisc">
+        <i>Name :</i><span>{{ Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+    </div>
 {% endblock %}
 
 {% set hornav = '38px' %}

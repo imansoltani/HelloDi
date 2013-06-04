@@ -1,0 +1,78 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Manage Retailer
+{% endblock title %}
+
+
+{% set MU = 'retail' %}
+
+{% block PageTitle %}
+    <i class="icon-briefcase"></i>
+    Retailers
+{% endblock %}
+
+{% set hornav = '40px' %}
+{% block Tabs %}
+
+    <li {% if tab == '1' %}class="active"{% endif %} >
+        <a href="#"  >
+            <span>
+                Transactions
+            </span>
+        </a>
+    </li>
+    <li {% if tab == '2' %}class="active"{% endif %}  >
+        <a href="{{ path('dist_RetailerItem',{'id':Account.id}) }}"  >
+            <span>
+                Items
+            </span>
+        </a>
+    </li>
+
+
+    <li {% if tab == '3' %}class="active"{% endif %} >
+        <a href="{{ path('DistRetailerUser',{'id':Account.id}) }}"  >
+            <span>
+                Users
+            </span>
+        </a>
+    </li>
+
+    <li {% if tab == '4' %}class="active"{% endif %} >
+        <a href="{{ path('DistRetailerSetting',{'id':Account.id}) }}"  >
+            <span>
+                Setting
+            </span>
+        </a>
+    </li>
+
+<li {% if tab == '5' %}class="active"{% endif %} >
+    <a>
+        <a href="#"  >
+            <span>
+                Details
+            </span>
+        </a>
+    </a>
+</li>
+{% endblock Tabs %}
+
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+
+            <div class="widget-content">
+
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="Info">
+                        {% block Tab %}
+                        {% endblock Tab %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock Body %}
