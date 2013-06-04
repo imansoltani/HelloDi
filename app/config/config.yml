@@ -86,3 +86,14 @@ knp_paginator:
     template:
         pagination: HelloDiDiDistributorsBundle:KnpPaginator:sliding.html.twig     # sliding pagination controls template
         sortable: HelloDiDiDistributorsBundle:KnpPaginator:sortable_link.html.twig # sort link template
+
+services:
+    knp_paginator.subscriber.paginate:
+        class: Knp\Component\Pager\Event\Subscriber\Paginate\PaginationSubscriber
+        tags:
+            - { name: knp_paginator.subscriber }
+
+    knp_paginator.subscriber.sortable:
+        class: Knp\Component\Pager\Event\Subscriber\Sortable\SortableSubscriber
+        tags:
+            - { name: knp_paginator.subscriber }		

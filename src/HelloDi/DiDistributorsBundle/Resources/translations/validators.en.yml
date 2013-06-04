@@ -12,3 +12,4 @@ account.accBalance.should.not.has.empty: فیلد مربوط به موجودی �
 entity.url.notmatch: وب سایت را درست وارد نمایید
 address.adrsNp.should.less : this value should more 3 charecter
 fos_user.accName.already_used : thin Name is already used
+account.accname.should.less: نام اکانت نباید کمتر از 3 کاراکتر باشد

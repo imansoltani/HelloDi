@@ -4,16 +4,16 @@
     Items
 {% endblock title %}
 
-{% set MU = 'item' %}
+{% set MU = 'retail' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <span class="link">Items</span>
+    {#<a class="link" href="{{ path('distributors_dashboard') }}">Home</a>#}
+    {#<span class="link">Items</span>#}
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-check"></i>
-    List Of Items
+    {#<i class="icon-check"></i>#}
+    {#List Of Items#}
 {% endblock %}
 
 {% block Link_Footer %}
@@ -21,23 +21,11 @@
 {% endblock %}
 
 {% block Body %}
-    <form class="form-horizontal SearchForm" action="#" method="post">
-        <div class="control-group">
-            {{ form_label(form.type) }}
-            <div class="controls">
-                {{ form_widget(form.type) }}
-            </div>
-
-            {{ form_rest(form) }}
-            <hr>
-            <input class="btn btn-large btn-primary" type="submit" value="Search">
-        </div>
-    </form>
     <div class="span">
         <div class="widget-content">
 
             <a class="btn-large button btn btn-primary " href="#">
-                New Request
+                Add New Item
             </a>
             <br>
 
@@ -58,7 +46,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for item in pagination %}
+                        {% for item in items %}
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.itemName }}</td>
@@ -75,9 +63,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <div class="navigation" style="text-align: center">
-                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>

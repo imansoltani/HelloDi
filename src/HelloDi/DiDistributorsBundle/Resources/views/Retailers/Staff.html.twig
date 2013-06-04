@@ -1,39 +1,13 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
-
-{% block title %}
-    Stuff
-{% endblock title %}
-
-{% set MU = 'setting' %}
-
-{% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <a class="link" href="#">Account Setting</a>
-    <span class="link">Stuff</span>
-{% endblock Site_Map %}
-
-{% block PageTitle %}
-    <i class="icon-th-large"></i>
-    Account Stuff
-{% endblock %}
 
 
-{% block Link_Footer %}
-
-{% endblock %}
-
-{% block Body %}
-
-    <div class="span">
-        <div class="widget-content">
-
-            <a class="btn-large button btn btn-primary " href="{{ path('DistStaffAdd',{'id':Account.id}) }}">Add New
+            <a class="btn-large button btn btn-primary " href="{{ path('RetailerStaffAdd',{'id':Account.id}) }}">Add New
                 user</a><br>
 
             <div class="tablediv">
                 <div class="contenttitle">
                     <h4>Accounts</h4>
                 </div>
+
                 <form>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
@@ -54,7 +28,7 @@
                                 <tr>
                                     <td>{{ user.id }}</td>
 
-                                    <td>{{ user.firstname }}</td>
+                                    <td>{{ user.firstname }}.{{ user.lastname }}</td>
                                     <td>{{ user.username }}</td>
                                     <td>{{ user.Entiti.entName }}</td>
                                     <td>
@@ -69,13 +43,13 @@
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('DistStaffEdit',{'id':user.id }) }}">Modify</a>
+                                        <a class="btn_actions" href="{{ path('RetailerStaffEdit',{'id':user.id }) }}">Modify</a>
 
                                     </td>
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('DistChangeRole',{'id': user.id }) }}">Change Role</a>
+                                        <a class="btn_actions" href="{{ path('RetailerChangeRole',{'id': user.id }) }}">Change Role</a>
 
                                     </td>
                                 </tr>
@@ -89,6 +63,3 @@
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
-        </div>
-    </div>
-{% endblock %}

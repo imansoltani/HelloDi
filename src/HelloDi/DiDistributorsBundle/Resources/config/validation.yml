@@ -22,19 +22,12 @@ HelloDi\DiDistributorsBundle\Entity\Entiti:
             - Url:
                 message: "entity.url.notmatch"
 
-HelloDi\DiDistributorsBundle\Entity\Address:
+HelloDi\DiDistributorsBundle\Entity\Account:
     properties:
-        adrsNp:
+        accName:
             - Length:
                 min: 3
-                minMessage: 'address.adrsNp.should.less'
-        adrsCity:
-            - NotBlank: ~
-            - Length:
-                min: 5
-                max: 10
-                minMessage: 'this.field.should.not.less.of.5'
-                maxMessage: 'this.field.should.not.more.of.10'
+                minMessage: 'account.accname.should.less'
 
 HelloDi\DiDistributorsBundle\Entity\User:
     constraints:

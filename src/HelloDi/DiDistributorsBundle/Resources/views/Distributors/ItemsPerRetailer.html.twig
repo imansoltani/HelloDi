@@ -1,0 +1,41 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Items Per Retailers
+{% endblock title %}
+
+{% set MU = 'item' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <span class="link">Item per list of retailers</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    List Of Items
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget-content">
+
+            <div class="tablediv">
+                <div class="contenttitle">
+                    <h4>Items</h4>
+                </div>
+                <div class="tab-content">
+                    <div>fwefwef</div>
+                    <div>fwefwef</div>
+                    <form>
+                        {{ form_widget(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
