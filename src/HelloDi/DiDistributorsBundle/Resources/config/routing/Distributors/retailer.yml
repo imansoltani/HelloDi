@@ -18,10 +18,18 @@ RetailerUserChangeRole:
     pattern:  /{id}/users/changerole
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerUserChangeRole }
 
-NewRetailer:
+DistNewRetailer:
     pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:NewRetailer }
 
 Retailer_Transaction:
     pattern:  /{id}/transactions
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Transaction }
+
+Retailer_details:
+    pattern:  /{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Details }
+
+Retailer_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:editRetailers }
