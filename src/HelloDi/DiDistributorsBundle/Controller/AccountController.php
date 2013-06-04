@@ -1115,8 +1115,10 @@ class AccountController extends Controller
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
             $em->persist($transaction);
+            $em->flush();
         }
         $em->flush();
+
 
         return $this->forward('HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled');
     }

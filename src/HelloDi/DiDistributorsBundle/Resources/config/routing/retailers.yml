@@ -1,3 +1,12 @@
 retailers_dashboard:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
+
+Retailer_Shop:
+    pattern:  /shop/calling-cards
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShopCode}
+
+Retailer_Shop_dmtu:
+    pattern:  /shop/dmtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShopDmtu}
+
