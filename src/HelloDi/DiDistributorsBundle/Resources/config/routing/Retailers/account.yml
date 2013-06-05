@@ -24,3 +24,7 @@ Retailer_Shop_calling_card:
 Retailer_Shop_dmtu:
     pattern:  /dmtu
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
+
+Retailer_Shop_dmtu_code:
+    pattern:  /code
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:PrintCode }

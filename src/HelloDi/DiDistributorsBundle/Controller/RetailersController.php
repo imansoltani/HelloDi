@@ -281,7 +281,16 @@ class RetailersController extends Controller
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
 
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('entiti'=>$entities,'Account'=>$Account,'operator'=>$operator));
+       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('entiti'=>$entities,'Account'=>$Account,'operator'=>$operator));
+    }
+
+    public function PrintCodeAction(Request $request){
+
+        if($request->isMethod('POST')){
+            $item = $request->get('item_id');
+            $numberOfsale = $request->get('numberOfsale');
+            return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('item' => $item ,'numberOfsale'=>$numberOfsale));
+        }
     }
 
  // End kamal

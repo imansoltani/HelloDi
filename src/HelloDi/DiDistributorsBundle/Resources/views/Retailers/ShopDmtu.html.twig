@@ -11,18 +11,19 @@
     <p style="background:#6b9311">{{  opr.name }}</p>
     <table>
     <tr>
-    <td width =30%>Neme</td>
-    <td width =30%>Face Value</td>
-    <td width =30%>Curncy</td>
-    <td width =30%>Link</td>
+    <td style="background: blanchedalmond" width =20%>Neme</td>
+    <td style="background: blanchedalmond" width =20%>Face Value</td>
+    <td style="background: blanchedalmond" width =20%>Curncy</td>
+    <td style="background: blanchedalmond" width =30%>Link</td>
     </tr>
     {% for item in entiti %}
         {% if( item.operator.id == opr.id and item.itemType == 2  ) %}
     <tr>
-        <td>{{ item.itemname }}</td>
-        <td>{{ item.itemFaceValue }}</td>
-        <td>{{ item.itemCurrency }}</td>
-        <td>link</td>
+        <td >{{ item.itemname }}</td>
+        <td >{{ item.itemFaceValue }}</td>
+        <td >{{ item.itemCurrency }}</td>
+        <td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale"><input type="hidden" name="operator_id" value="{{ item.operator.id }}">
+                  <input type="hidden" name="item_id" value="{{ item.id }}"><button>Go To Print</button> </form></td>
     </tr>
             {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
         {% endif %}
