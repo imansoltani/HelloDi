@@ -1113,7 +1113,7 @@ class AccountController extends Controller
             $transaction->setUser($user);
             $transaction->setTranDate(new \DateTime('now'));
             $transaction->setTranInsert(new \DateTime('now'));
-            $transaction->setTranAction('Add');
+            $transaction->setTranAction('add');
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
             $em->persist($transaction);
