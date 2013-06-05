@@ -9,3 +9,11 @@ ritailers_account:
 RetailerTransaction:
     pattern:  /transaction/history
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Transaction}
+
+RetailerSale:
+    pattern:  /report/sale
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Sale}
+
+retailer_shop:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
+    prefix:   /shop
