@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\TransactionType;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,44 @@ class TestController extends Controller
 
         return $this->render("HelloDiDiDistributorsBundle:Test:new.html.twig", array(
             'accounts' => $accounts,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function index1Action(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder()
+            ->select('account')
+            ->from('HelloDiDiDistributorsBundle:Account', 'account')
+            ->where('account.accType != 1');
+        $accounts = $qb->getQuery()->getResult();
+
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        if(!$account)
+        {
+            $account= $accounts[0];
+        }
+
+        $form = $this->createFormBuilder()
+            ->add('Price','entity',array(
+//                'property' => 'price',
+                'class' => 'HelloDiDiDistributorsBundle:Price',
+                'query_builder' => function(EntityRepository $er) use ($account) {
+                    return $er->createQueryBuilder('u')
+                        ->innerJoin('u.Account','a')
+                        ->where('a = :aaid')
+                        ->setParameter('aaid',$account);
+                }
+            ))
+//            ->add("")
+            ->getForm();
+
+
+        return $this->render("HelloDiDiDistributorsBundle:Test:new1.html.twig",array(
+            'accounts' => $accounts,
+            'myaccount' => $account,
             'form' => $form->createView()
         ));
     }

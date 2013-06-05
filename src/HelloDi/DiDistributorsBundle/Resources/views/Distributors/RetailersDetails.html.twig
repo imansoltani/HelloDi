@@ -1,0 +1,6 @@
+    <form action="{{ path('Retailer_edit',{'id':entity.id}) }}" method="POST">
+        {{ form_label(edit_form) }}
+        {{ form_widget(edit_form) }}
+
+        <button>save</button>
+    </form>

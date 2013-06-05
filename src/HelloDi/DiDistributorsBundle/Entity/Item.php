@@ -40,8 +40,9 @@ class Item
      */
     private $alertMinStock;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="operator")
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Operator", inversedBy="Item")
+     * @ORM\JoinColumn(name="Operator_id", referencedColumnName="id", nullable=false)
      */
     private $operator;
 

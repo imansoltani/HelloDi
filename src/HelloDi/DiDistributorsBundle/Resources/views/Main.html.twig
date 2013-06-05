@@ -229,26 +229,29 @@
 
 
 <div class="main">
-    <div class="pagetop" >
+    <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%" >
         <div class="sitemappath">
             <div>
                 {% block Site_Map %}{% endblock %}
             </div>
         </div>
-        <h1 class="pagetitle" >
+        <div class="pagetitle" >
             {% block PageTitle %}{% endblock %}
-        </h1>
-
-
-        <div class="pagedisc" >
-            {% block TitleDist %}
-            {% endblock %}
         </div>
+
+
+        {% block Dist1 %}
+
+        {% endblock %}
 
         <ul class="hornav" style="min-height:{% if hornav is defined  %}{{ hornav }};{% else %}0;{% endif %}" >
             {% block Tabs %}{% endblock %}
         </ul>
 
+    </div>
+    <div class="pagetop second" style="background: none;display: block;position: absolute;z-index: 11;width:100%" >
+        {% block Dist2 %}
+        {% endblock %}
     </div>
 
 

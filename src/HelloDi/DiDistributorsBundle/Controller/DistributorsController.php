@@ -9,6 +9,7 @@ use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerSearchType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerNewType;
 use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,13 +17,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-
+use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
 
 class DistributorsController extends Controller
 {
     public function dashboardAction()
     {
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig');
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig', array('Account' => $Account, 'Entiti' => $Account->getEntiti(), 'User' => $user));
+
     }
 
     //Retailers
@@ -206,7 +211,6 @@ class DistributorsController extends Controller
     public function DistRetailerUserChangeRoleAction($id)
     {
 
-
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
         $roles = $user->getRoles();
@@ -231,6 +235,9 @@ class DistributorsController extends Controller
 
     public function DistNewRetailerAction(Request $request)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+
         $em = $this->getDoctrine()->getManager();
         $userget = $this->container->get('security.context')->getToken()->getUser();
         $need = $userget->getAccount();
@@ -268,113 +275,160 @@ class DistributorsController extends Controller
 
             //if ($form->isValid()) {
 
-                $em->persist($Entiti);
-                $AdrsDetai->setCountry($Entiti->getCountry());
-                $em->persist($Account);
-                $em->persist($user);
-                $AdrsDetai->setAdrsDate(new \DateTime('now'));
-                $AdrsDetai->setEntiti($Entiti);
-                $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-                $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-                $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-                $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-                $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-                $AdrsDetai->setEntiti($Entiti);
-                $em->persist($AdrsDetai);
-                $em->flush();
+            $em->persist($Entiti);
+            $AdrsDetai->setCountry($Entiti->getCountry());
+            $em->persist($Account);
+            $em->persist($user);
+            $AdrsDetai->setAdrsDate(new \DateTime('now'));
+            $AdrsDetai->setEntiti($Entiti);
+            $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
+            $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
+            $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
+            $AdrsDetai->setAdrsCity($Entiti->getEntCity());
+            $AdrsDetai->setAdrsNp($Entiti->getEntNp());
+            $AdrsDetai->setEntiti($Entiti);
+            $em->persist($AdrsDetai);
+            $em->flush();
 
 
-                 //  return $this->redirect($this->generateUrl('ShowMyAccount'));
+            //  return $this->redirect($this->generateUrl('ShowMyAccount'));
 
-                return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $Entiti->getId() )));
+            return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $Entiti->getId())));
             //}
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array('form_Relaited_New' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array(
+            'form_Relaited_New' => $form->createView(),
+            'Account' => $Account
+        ));
 
     }
 
     public function ShowRetaierAccountAction(Request $request)
     {
-        $accparent=$this->get('security.context')->getToken()->getUser()->getAccount();
-
-        $accchild=$accparent->getChildrens();
         $form_searchprov = $this->createForm(new RetailerSearchType());
 
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
 
         $em = $this->getDoctrine()->getManager();
+
+
+        $check = $user->getAccount()->getId();
 
 
         $qb = $em->createQueryBuilder()
             ->select('retailer')
-            ->from('HelloDiDiDistributorsBundle:Account','retailer')
+            ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
             ->innerJoin('retailer.Entiti', 'Ent')
-            ->where('retailer.Parent=:p')
-            ->setParameter('p',$accparent);
-//
-//        if ($request->isMethod('POST')) {
-//
-//            $form_searchprov->bind($request);
-//            $dataform = $form_searchprov->getData();
-//
-//
-//            if ($dataform['retName'] != '')
-//                $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
-//            if ($dataform['retCityName']!='')
-//                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
-//            if ($dataform['retBalance'] == 1)
-//                if ($dataform['retBalanceValue']!='')
-//                    $qb->andwhere($qb->expr()->gte('r etailer.accBalance', $dataform['retBalanceValue']));
-//            if ($dataform['retBalance'] == 0)
-//                if ($dataform['retBalanceValue'])
-//                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
-//            if ($dataform['retcurency'] != '')
-//                $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
-//////        if ($dataform['id'] != '')
-//////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
-//////        $query = $qb->getQuery();
-//
-//        }
+            ->where('retailer.Parent =:check')
+            ->setParameter('check', $check);
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $accchild,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
-        );
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array
-        ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
+        if ($request->isMethod('POST')) {
 
-    }
-
-    public function TransactionAction(Request $request){
+            $form_searchprov->bind($request);
+            $dataform = $form_searchprov->getData();
 
 
-       return New Response('Start Transaction');
-
-    }
-
-    public  function DistRetailerSettingAction(Request $req,$id)//id account
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $retacc= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form=$this->createForm(new AccountRetailerType(),$retacc);
-
-        if($req->isMethod('POST'))
-        {
-            $form->bind($req);
-            if($form->isValid())
-            {
-
-                $em->flush();
-
-            }
+            if ($dataform['retName'] != '')
+                $qb->andwhere($qb->expr()->like('retailer.accName', $qb->expr()->literal($dataform['retName'] . '%')));
+            if ($dataform['retCityName'] != '')
+                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($dataform['retCityName'] . '%')));
+            if ($dataform['retBalance'] == 1)
+                if ($dataform['retBalanceValue'] != '')
+                    $qb->andwhere($qb->expr()->gte('retailer.accBalance', $dataform['retBalanceValue']));
+            if ($dataform['retBalance'] == 0)
+                if ($dataform['retBalanceValue'])
+                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $dataform['retBalanceValue']));
+            if ($dataform['retcurency'] != '')
+                $qb->andwhere($qb->expr()->like('retailer.accCurrency', $qb->expr()->literal($dataform['retcurency'] . '%')));
+////        if ($dataform['id'] != '')
+////            $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
+////        $query = $qb->getQuery();
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array('Entiti'=>$retacc->getEntiti(),'Account'=>$retacc,'form' => $form->createView()));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array (
+            'pagination' => $pagination,
+            'form_searchprov' => $form_searchprov->createView(),
+            'Account' => $Account
+        ));
+
+    }
+
+    public function TransactionAction(Request $request)
+    {
+
+        return New Response('Start Transaction');
+    }
+
+    public function DistRetailerSettingAction(Request $req, $id) //id account
+    {
+        $em = $this->getDoctrine()->getManager();
+        $retacc = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $form = $this->createForm(new AccountRetailerSettingType(), $retacc);
+
+        if ($req->isMethod('POST')) {
+            $form->bind($req);
+            if ($form->isValid()) {
+                $em->flush();
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array(
+            'Entiti' => $retacc->getEntiti(),
+            'Account' => $retacc,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function DetailsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accType' => 0));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Entiti entity.');
+        }
+
+        $editForm = $this->createForm(new EntitiType(), $entity);
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Details.html.twig', array(
+            'Account' => $Account,
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+        ));
+    }
+
+    public function editRetailersAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Entiti entity.');
+        }
+
+
+        $editForm = $this->createForm(new EntitiType(), $entity);
+        $editForm->bind($request);
+
+
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $id)));
 
     }
 
@@ -407,7 +461,7 @@ class DistributorsController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             $data = $form->getData();
-            if($data['type']!='-1')
+            if ($data['type'] != '-1')
                 $qb = $qb->andWhere('item.itemType = :type')->setParameter('type', $data['type']);
         }
 
@@ -423,27 +477,32 @@ class DistributorsController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Distributors:items.html.twig', array(
             'pagination' => $pagination,
             'form' => $form->createView(),
+            'Account' => $account
         ));
     }
 
     public function ItemPerRetailerAction(Request $request, $id)
     {
+        $account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $form = $this->createFormBuilder()
             ->add('fff', 'collection', array(
-                'type'   => 'checkbox',
-                'options'  => array(
-                    'required'  => false,
+                'type' => 'checkbox',
+                'options' => array(
+                    'required' => false,
                 ),
             ))
             ->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ItemsPerRetailer.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'Account' => $account
         ));
     }
 
     public function RetailerItemsAction($id)
     {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
@@ -459,7 +518,7 @@ class DistributorsController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
             'items' => $items,
-            'Account' => $account,
+            'Account' => $myaccount
         ));
     }
 }

@@ -1,0 +1,60 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    test1
+{% endblock title %}
+
+{% block Site_Map %}
+    <span class="link">Test1</span>
+{% endblock Site_Map %}
+{% block Link_Head %}
+{% endblock %}
+
+{% block PageTitle %}
+    Test1
+{% endblock %}
+
+{% set MU = 'Test' %}
+
+{% block Body %}
+<div class="span">
+    <div class="widget stacked">
+
+        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Account Name</th>
+                <th>Balance</th>
+                <th>CreditLimit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td><a href="{{ path('test1_index',{'id': account.id}) }}">{{ account.id }}</a></td>
+                    <td>
+                        {% if account.id==myaccount.id %}
+                            <b>{{ account.accName }}</b>
+                        {% else %}
+                            {{ account.accName }}
+                        {% endif %}
+                    </td>
+                    <td>{{ account.accBalance }}</td>
+                    <td>{{ account.accCreditLimit }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="widget-content">
+            <form action="#" method="post" class="form-horizontal">
+                    {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
