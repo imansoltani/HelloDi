@@ -1,50 +1,75 @@
 
+<a href="#{#{{ path('') }}#}">Recharge</a>
+<form action="{{ path('RetailerTransaction') }}" method="POST">
+    {% set i=0 %}
+    {% for state in form.TypeDate %}
+        <div class="control-group">
+            {% if i==0 %}Trade Date:{% else %}Looking Date{% endif %}{{ form_widget(state) }}
+            {% set i=i+1 %}
+        </div>
+    {% endfor %}
+    <div class="control-group">
+        {{ form_label(form.Type) }}
+        {{ form_widget(form.Type) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.DateStart) }}
+        {{ form_widget(form.DateStart) }}
+    </div>
+    <div class="control-group">
+        {{ form_label(form.DateEnd) }}
+        {{ form_widget(form.DateEnd) }}
+    </div>
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Search">
+    </div>
+</form>
                 <form>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
                                 <tr>
-                                    <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Change Role' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for user in pagination %}
+
+                            {% for tran in pagination %}
                                 <tr>
-                                    <td>{{ user.id }}</td>
+                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
 
-                                    <td>{{ user.firstname }}.{{ user.lastname }}</td>
-                                    <td>{{ user.username }}</td>
-                                    <td>{{ user.Entiti.entName }}</td>
+                                    <td>{{ tran.tranDescription}}</td>
+                                    <td>{{ tran.tranCredit}}</td>
+                                    <td>{{ tran.tranDebit }}</td>
+                                    <td>{{ tran.Account.accBalance }}</td>
                                     <td>
-                                        {% if user.status==0 %}
-                                            InActive
-                                        {% else %}
-                                            Active
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ user.roles[0] }}</td>
+
+                                        {% if tran.tranAction=='Sale' %}Sale
+                                        {% elseif tran.tranAction=='Transfer' %}Transfer
+                                        {% elseif tran.tranAction=='Payment' %}Payment
+                                        {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                                        {% endif %}</td>
 
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('RetailerStaffEdit',{'id':user.id }) }}">Modify</a>
+                                        <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
 
                                     </td>
-                                    <td class="td-actions">
 
-
-                                        <a class="btn_actions" href="{{ path('RetailerChangeRole',{'id': user.id }) }}">Change Role</a>
-
-                                    </td>
                                 </tr>
+
                             {% endfor %}
+
                             </tbody>
                         </table>
                         {#{button pagination}#}

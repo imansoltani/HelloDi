@@ -350,7 +350,9 @@ class DistributorsController extends Controller
 
     public function TransactionAction(Request $request){
 
+
        return New Response('Start Transaction');
+
     }
 
     public  function DistRetailerSettingAction(Request $req,$id)//id account

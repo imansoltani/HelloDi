@@ -13,6 +13,7 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 
 class RetailersController extends Controller
 {
+    /////Kazem
     public function dashboardAction()
     {
         return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig');
@@ -125,17 +126,17 @@ class RetailersController extends Controller
 
     }
 
-public  function TransactionAction(Request $req)
+    public function TransactionAction(Request $req)
 {
     $User= $this->get('security.context')->getToken()->getUser();
     $Account=$User->getAccount();
-$em=$this->getDoctrine()->geManager();
+$em=$this->getDoctrine()->getManager();
 $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account,'User'=>$User));
 
 $form=$this->createFormBuilder()
-     ->add('Type','choice',array('choices'=>array()))
-     ->add('DateStart','date')
-      ->add('DateEnd','date')
+     ->add('Type','choice',array('choices'=>array('All'=>'All','Sale'=>'Sale','Payment'=>'Payment','CreditNotes'=>'CreditNotes','Transfer'=>'Transfer')))
+     ->add('DateStart','date',array())
+      ->add('DateEnd','date',array())
       ->add('TypeDate','choice', array(
         'expanded'   => true,
         'choices'    => array(
@@ -148,30 +149,33 @@ if($req->isMethod('POST'))
 {
     $form->bind($req);
 $data=$form->getData();
-
-    $qb=$em->createQueryBuilder()
-        ->select('Tran')
-        ->from('HelloDiDiDistributorsBundle:Transaction');
+    $qb=$em->createQueryBuilder();
+        $qb->select('Tran')
+        ->from('HelloDiDiDistributorsBundle:Transaction','Tran');
     if($data['TypeDate']==0)
     {
-        $qb->where($qb->expr()->gte('Tran.tranDate',  $data['DateStart']));
-        $qb->where($qb->expr()->lte('Acc.tranDate',  $data['DateStart']));
-    }
-    if($data['TypeDate']==1)
-    {
-        $qb->where($qb->expr()->gte('Acc.tranInsert',  $data['DateStart']));
-        $qb->where($qb->expr()->lte('Acc.tranInsert',  $data['DateStart']));
+
+       $qb=$qb->where('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+       $qb=$qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+
     }
 
-    if($data['Type']!='All')
+    if($data['TypeDate']==1)
     {
-    $qb->andWhere('tranAction',$data['Type']);
+
+        $qb=$qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+        $qb=$qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+
+    }
+
+   if($data['Type']!='All')
+    {
+        $qb=$qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
+
     }
 
   $query=$qb->getQuery();
-
 }
-
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
         $query,
@@ -179,12 +183,11 @@ $data=$form->getData();
         5/*limit per page*/
     );
 
-
-
-
-    return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig', array('pagination'=>$pagination,'form'=>$form,'Account' =>$Account(), 'Entiti' =>$User->getEntiti(), 'form' => $form->createView()));
-}
-
+    return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig', array('pagination'=>$pagination,'form'=>$form->createView(),'Account' =>$Account, 'Entiti' =>$User->getEntiti()));
 
 }
 
+
+}
+
+///endkazem

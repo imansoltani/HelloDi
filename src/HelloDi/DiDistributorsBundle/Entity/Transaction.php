@@ -57,7 +57,7 @@ class Transaction
     private $tranDescription;
 
     /** 
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $tranAction;
 
