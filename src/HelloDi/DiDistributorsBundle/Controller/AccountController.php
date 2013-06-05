@@ -1015,7 +1015,7 @@ class AccountController extends Controller
 
             $fileName = $input->getFileName();
             $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('fileName' => $fileName));
-
+//$f= fopen("d:\\a.txt","w+");
             if (!$inputfind) {
                 $file = fopen($input->getAbsolutePath(), 'r+');
 
@@ -1025,6 +1025,7 @@ class AccountController extends Controller
                     while ($line = fgets($file)) {
                         $count++;
                         $lineArray = explode($data['delimiter'], $line);
+//                        fwrite($f,$count.','.$lineArray[$data['SerialNumber'] - 1].'\n');
                         $codefind = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOneBy(array('serialNumber' => $lineArray[$data['SerialNumber'] - 1]));
                         if ($codefind) {
                             $errors[] = "Codes are duplicate.";
@@ -1091,12 +1092,13 @@ class AccountController extends Controller
         $input->setAccount($Account);
         $input->setUser($user);
         $em->persist($input);
-
+//        $f= fopen("d:\\b.txt","w+");
         $file = fopen($input->getAbsolutePath(), 'r+');
-
+//        $count = 0;
         while ($line = fgets($file)) {
+//            $count++;
             $lineArray = explode($delimiter, $line);
-
+//            fwrite($f,$count.','.$lineArray[$SerialNumber - 1].'\n');
             $code = new Code();
             $code->setSerialNumber($lineArray[$SerialNumber - 1]);
             $code->setPin($lineArray[$PinCode - 1]);
@@ -1115,10 +1117,13 @@ class AccountController extends Controller
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
             $em->persist($transaction);
-            $em->flush();
+//            if($count%100 == 0 )
+//            {
+//                $count =0;
+//                $em->flush();
+//            }
         }
         $em->flush();
-
 
         return $this->forward('HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled');
     }

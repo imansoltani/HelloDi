@@ -1,48 +1,32 @@
-    <div class="widget-header">
-        <h3>Retailer Setting</h3>
-    </div> <!-- /widget-header --><br>
+<div class="widget-header">
+    <h3>Retailer Setting</h3>
+</div> <!-- /widget-header --><br>
 
-    <form class="form-horizontal" action="{{ path('DistRetailerSetting',{'id':Account.id}) }}" method="post" >
+<form class="form-horizontal" action="{{ path('DistRetailerSetting',{'id':Account.id}) }}" method="post" >
 
-        <div class="control-group">
-id:{{ Account.id }}
-        </div>
+    <div class="control-group">
+        id:{{ Account.id }}
+    </div>
+    accName:{{ Account.accName }}<br>
+    accCreationDate:{{ Account.accCreationDate|date('Y-m-d') }}<br>
+    accTimeZone:{{ Account.accTimeZone }}<br>
+    accCreditLimit:{{ Account.accCreditLimit }}<br>
+    <div class="control-group">
+        {{ form_label(form.accTerms) }}
+        {{ form_widget(form.accTerms) }}
+    </div>
 
-        <div class="control-group">
-            {{ form_label(form.accName) }}
-            {{ form_widget(form.accName) }}
-        </div>
-
-        <div class="control-group">
-            {{ form_label(form.accCreditLimit) }}
-            {{ form_widget(form.accCreditLimit) }}
-        </div>
-        <div class="control-group">
-            {{ form_label(form.accTerms) }}
-            {{ form_widget(form.accTerms) }}
-        </div>
-
-        <div class="control-group">
-            {{ form_label(form.accCreationDate) }}
-            {{ form_widget(form.accCreationDate) }}
-        </div>
-
-        <div class="control-group">
-            {{ form_label(form.accTimeZone) }}
-            {{ form_widget(form.accTimeZone) }}
-        </div>
-
-        <div class="control-group">
-            {{ form_label(form.accDefaultLanguage) }}
-            {{ form_widget(form.accDefaultLanguage) }}
-        </div>
+    <div class="control-group">
+        {{ form_label(form.accDefaultLanguage) }}
+        {{ form_widget(form.accDefaultLanguage) }}
+    </div>
 
 
-        {{ form_widget(form._token) }}
+    {{ form_widget(form._token) }}
 
-        <div class="form-actions" style="margin-bottom: 0" >
-            <input class="btn btn-primary" type="submit"  value="Edit">
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Edit">
 
-        </div>
+    </div>
 
-    </form>
+</form>

@@ -17,7 +17,10 @@ class ItemType extends AbstractType
             ->add('itemCurrency','choice',array('choices'=> array('USD'=>'USD','CHF' =>'CHF'),'label' => 'Item.Currency','translation_domain' => 'item'))
             ->add('itemType','choice',array('choices'=> array('1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel'),'label' => 'Item.Type','translation_domain' => 'item'))
             ->add('alertMinStock',null,array('label' => 'Item.AlertMinStock','translation_domain' => 'item'))
-            ->add('operator','text',array('label' => 'Item.Operator','translation_domain' => 'item'))
+            ->add('operator',null,array(
+                'property'=>'name',
+                'label' => 'Item.Operator','translation_domain' => 'item'
+            ))
             ->add('itemCode','text',array('label' => 'Item.itemCode','translation_domain' => 'item'))
             ->add('Country','entity',array(
                 'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',

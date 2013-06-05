@@ -250,4 +250,9 @@ class Price
     {
         return $this->Account;
     }
+
+    public function __toString()
+    {
+        return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
+    }
 }

@@ -37,6 +37,9 @@ services:
         public: false
 
     authentication_handler:
-            class: HelloDi\DiDistributorsBundle\Listener\AuthenticationHandler
-            arguments: [@router, @security.context]
+        class: HelloDi\DiDistributorsBundle\Listener\AuthenticationHandler
+        arguments: [@router, @security.context]
 
+    hello_di_di_distributors.balancechecker:
+        class: HelloDi\DiDistributorsBundle\Listener\BalanceChecker
+        arguments: []
