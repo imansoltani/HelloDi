@@ -267,11 +267,23 @@ class RetailersController extends Controller
     }
 //endkazem
 
+ // Start kamal
     public function ShopCallingAction(){
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopCode.html.twig');
+
     }
 
     public function DmtuAction(){
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
+        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
+        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('entiti'=>$entities,'Account'=>$Account,'operator'=>$operator));
     }
+
+ // End kamal
 }
+
