@@ -10,14 +10,12 @@ use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
-use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerNewType;
 use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
 
 class DistributorsController extends Controller
 {

@@ -15,7 +15,11 @@ class RetailersController extends Controller
 {
     public function dashboardAction()
     {
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig');
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig',array(
+            'Account' => $Account
+        ));
     }
 
     //kazem
