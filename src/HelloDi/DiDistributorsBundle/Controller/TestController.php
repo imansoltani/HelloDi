@@ -3,6 +3,8 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\Code;
+use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\TransactionType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,13 +31,14 @@ class TestController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
 
-                $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find(310);
+                $codes = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findAll();
+                $code = $codes[0];
                 $user = $this->get('security.context')->getToken()->getUser();
 
                 $transaction->setTranFees(0);
                 $transaction->setTranCurrency('usd');
                 $transaction->setTranDate(new \DateTime('now'));
-                $transaction->setTranAction('paym');
+                $transaction->setTranAction('peym');
                 $transaction->setUser($user);
                 $transaction->setCode($code);
 
@@ -49,7 +52,7 @@ class TestController extends Controller
                         $transaction1->setTranFees(0);
                         $transaction1->setTranCurrency('usd');
                         $transaction1->setTranDate(new \DateTime('now'));
-                        $transaction1->setTranAction('paym');
+                        $transaction1->setTranAction('peym');
                         $transaction1->setUser($user);
                         $transaction1->setCode($code);
 
@@ -78,14 +81,11 @@ class TestController extends Controller
         $accounts = $qb->getQuery()->getResult();
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        if(!$account)
-        {
-            $account= $accounts[0];
-        }
+        if(!$account) $account= $accounts[0];
 
         $form = $this->createFormBuilder()
             ->add('Price','entity',array(
-//                'property' => 'price',
+                'required' => true,
                 'class' => 'HelloDiDiDistributorsBundle:Price',
                 'query_builder' => function(EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('u')
@@ -94,11 +94,45 @@ class TestController extends Controller
                         ->setParameter('aaid',$account);
                 }
             ))
-//            ->add("")
             ->getForm();
+        $errors = array();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            $data = $form->getData();
+            $price = $data['Price'];
 
+            $balancecheker = $this->get('hello_di_di_distributors.balancechecker');
+
+            if($balancecheker->isBalanceEnough($account,$price))
+            {
+                $user = $this->get('security.context')->getToken()->getUser();
+
+                $codes = $price->getItem()->getCodes();
+                $code = $codes[0];
+                $code->setStatus(0);
+
+                $transaction = new Transaction();
+                $transaction->setAccount($account);
+                $transaction->setTranCredit($price->getPrice());
+                $transaction->setTranFees(0);
+                $transaction->setTranCurrency($price->getPriceCurrency());
+                $transaction->setTranDate(new \DateTime('now'));
+                $transaction->setTranAction('sale');
+                $transaction->setUser($user);
+                $transaction->setCode($code);
+
+                $em->persist($transaction);
+                $em->flush();
+                $errors[] = 'Sale Done.';
+            }
+            else
+            {
+                $errors[] = 'Balance is not enough.';
+            }
+        }
 
         return $this->render("HelloDiDiDistributorsBundle:Test:new1.html.twig",array(
+            'errors' => $errors,
             'accounts' => $accounts,
             'myaccount' => $account,
             'form' => $form->createView()
