@@ -54,7 +54,9 @@
         </div>
         <div class="control-group">
             {{ form_label(edit_form.operator) }}
-            {{ form_widget(edit_form.operator) }}
+            <div class="controls">
+                {{ form_widget(edit_form.operator) }}
+            </div>
             {{ form_errors(edit_form.operator) }}
         </div>
 

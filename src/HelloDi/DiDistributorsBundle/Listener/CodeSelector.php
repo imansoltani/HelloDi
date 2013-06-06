@@ -21,9 +21,6 @@ class CodeSelector
 
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOldestAvailableCodeByItem($item);
 
-//        $code = $codes[0];
-//        die($code->getPin());
-
         if ($code) {
             $code->setStatus(0);
         }

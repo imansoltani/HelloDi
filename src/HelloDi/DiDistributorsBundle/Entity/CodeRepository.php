@@ -18,6 +18,6 @@ class CodeRepository extends EntityRepository
             ->setMaxResults(1);
         $query = $qb->getQuery();
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 }
