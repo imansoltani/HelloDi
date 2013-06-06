@@ -70,7 +70,7 @@ class TestController extends Controller
         ));
     }
 
-    public function index1Action(Request $request,$id)
+    public function index1Action(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -81,17 +81,17 @@ class TestController extends Controller
         $accounts = $qb->getQuery()->getResult();
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        if(!$account) $account= $accounts[0];
+        if (!$account) $account = $accounts[0];
 
         $form = $this->createFormBuilder()
-            ->add('Price','entity',array(
+            ->add('Price', 'entity', array(
                 'required' => true,
                 'class' => 'HelloDiDiDistributorsBundle:Price',
-                'query_builder' => function(EntityRepository $er) use ($account) {
+                'query_builder' => function (EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('u')
-                        ->innerJoin('u.Account','a')
+                        ->innerJoin('u.Account', 'a')
                         ->where('a = :aaid')
-                        ->setParameter('aaid',$account);
+                        ->setParameter('aaid', $account);
                 }
             ))
             ->getForm();
@@ -103,35 +103,35 @@ class TestController extends Controller
 
             $balancecheker = $this->get('hello_di_di_distributors.balancechecker');
 
-            if($balancecheker->isBalanceEnough($account,$price))
-            {
+            if ($balancecheker->isBalanceEnough($account, $price)) {
                 $user = $this->get('security.context')->getToken()->getUser();
 
-                $codes = $price->getItem()->getCodes();
-                $code = $codes[0];
-                $code->setStatus(0);
+                $codeselector = $this->get('hello_di_di_distributors.codeselector');
+                $code = $codeselector->lookForAvailableCode($price->getItem());
 
-                $transaction = new Transaction();
-                $transaction->setAccount($account);
-                $transaction->setTranCredit($price->getPrice());
-                $transaction->setTranFees(0);
-                $transaction->setTranCurrency($price->getPriceCurrency());
-                $transaction->setTranDate(new \DateTime('now'));
-                $transaction->setTranAction('sale');
-                $transaction->setUser($user);
-                $transaction->setCode($code);
+                if (!$code) {
+                    $errors[] = 'Code not exist for this item.';
+                } else {
+                    $transaction = new Transaction();
+                    $transaction->setAccount($account);
+                    $transaction->setTranCredit($price->getPrice());
+                    $transaction->setTranFees(0);
+                    $transaction->setTranCurrency($price->getPriceCurrency());
+                    $transaction->setTranDate(new \DateTime('now'));
+                    $transaction->setTranAction('sale');
+                    $transaction->setUser($user);
+                    $transaction->setCode($code);
 
-                $em->persist($transaction);
-                $em->flush();
-                $errors[] = 'Sale Done.';
-            }
-            else
-            {
+                    $em->persist($transaction);
+                    $em->flush();
+                    $errors[] = 'Sale Done.';
+                }
+            } else {
                 $errors[] = 'Balance is not enough.';
             }
         }
 
-        return $this->render("HelloDiDiDistributorsBundle:Test:new1.html.twig",array(
+        return $this->render("HelloDiDiDistributorsBundle:Test:new1.html.twig", array(
             'errors' => $errors,
             'accounts' => $accounts,
             'myaccount' => $account,

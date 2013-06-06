@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/ReportSales.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/ReportSales.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/CodeRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/CodeSelector.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Code.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Code.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters.yml" afterPath="$PROJECT_DIR$/app/config/parameters.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/services.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -13,11 +16,11 @@
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
     <ignored path=".idea/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370493754640" ignored="false" />
-    <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370414370917" ignored="false" />
-    <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370255130057" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370506812337" ignored="false" />
+    <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370449005083" ignored="false" />
+    <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370427595124" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
-    <file path="/a.dummy" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370414222704" ignored="false" />
+    <file path="/a.dummy" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370446084017" ignored="false" />
     <file path="/UserrRepository.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366485716175" ignored="false" />
     <file path="/User.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368464405015" ignored="false" />
     <file path="/*.regexp" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366486220707" ignored="false" />
@@ -29,7 +32,7 @@
     <file path="$PROJECT_DIR$/../Symfony4/src/Test/MyBundle/Resources/config/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366537456972" ignored="false" />
     <file path="/DefaultController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369840331439" ignored="false" />
     <file path="/register_content.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366626801320" ignored="false" />
-    <file path="/services.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370361306101" ignored="false" />
+    <file path="/services.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370447389529" ignored="false" />
     <file path="/config.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370110556691" ignored="false" />
     <file path="/UserType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366627667292" ignored="false" />
     <file path="/RegistrationController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1366722242510" ignored="false" />
@@ -93,7 +96,7 @@
     <file path="/ItemType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370410377774" ignored="false" />
     <file path="/new.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370259188113" ignored="false" />
     <file path="/upload.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368705306696" ignored="false" />
-    <file path="/Item.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370496664788" ignored="false" />
+    <file path="/Item.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369764117468" ignored="false" />
     <file path="/edit.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369584388844" ignored="false" />
     <file path="/show.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369823405645" ignored="false" />
     <file path="/index.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370127177313" ignored="false" />
@@ -203,7 +206,7 @@
     <file path="/EntitiesSearchType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369324453614" ignored="false" />
     <file path="/Country.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369512962145" ignored="false" />
     <file path="/ChangingPrice.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369514803611" ignored="false" />
-    <file path="/parameters.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369581824616" ignored="false" />
+    <file path="/parameters.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370425107751" ignored="false" />
     <file path="$PROJECT_DIR$/../HelloDiOld/app/config/parameters.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369581824616" ignored="false" />
     <file path="/history.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370075821481" ignored="false" />
     <file path="$PROJECT_DIR$/../Symfony/src/Test/MyBundle/Controller/a/DefaultController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369840331440" ignored="false" />
@@ -279,15 +282,17 @@
     <file path="/RetailerUser.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370245800203" ignored="false" />
     <file path="/retailer.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370414851085" ignored="false" />
     <file path="/RetailerItems.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370253138462" ignored="false" />
-    <file path="/Transaction.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370258219577" ignored="false" />
-    <file path="/TestController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370410334686" ignored="false" />
+    <file path="/Transaction.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370423883750" ignored="false" />
+    <file path="/TestController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370452003434" ignored="false" />
     <file path="/TransactionType.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370256646902" ignored="false" />
     <file path="/BalanceChecker.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370360017173" ignored="false" />
-    <file path="/new1.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370363433183" ignored="false" />
+    <file path="/new1.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370421713746" ignored="false" />
     <file path="/master.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370410139988" ignored="false" />
     <file path="/ShowRetailDist.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370414402445" ignored="false" />
-    <file path="/RetailersController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370495372647" ignored="false" />
-    <file path="/ReportSales.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370451859008" ignored="false" />
+    <file path="/ReportSales.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370423802149" ignored="false" />
+    <file path="/Transaction.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370423624522" ignored="false" />
+    <file path="/CodeSelector.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370506089190" ignored="false" />
+    <file path="/CodeRepository.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370506176324" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,66 +320,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RetailersController.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
+      <file leaf-file-name="services.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/services.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="0" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.9321357">
-              <folding>
-                <element signature="e#59#93#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Item.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="36" selection-start="479" selection-end="479" vertical-scroll-proportion="-15.692307">
+            <state line="48" column="32" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
+      <file leaf-file-name="CodeSelector.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/CodeSelector.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="956" column="38" selection-start="37164" selection-end="37164" vertical-scroll-proportion="0.0">
+            <state line="28" column="9" selection-start="683" selection-end="683" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReportSales.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/ReportSales.html.twig">
+      <file leaf-file-name="TestController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="64" selection-start="2490" selection-end="2490" vertical-scroll-proportion="0.0">
+            <state line="74" column="44" selection-start="2782" selection-end="2782" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DistributorsController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
+      <file leaf-file-name="CodeRepository.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/CodeRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0">
+            <state line="20" column="25" selection-start="586" selection-end="586" vertical-scroll-proportion="0.63432837">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShowRetailers.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/ShowRetailers.html.twig">
+      <file leaf-file-name="parameters.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="0" selection-start="4082" selection-end="4082" vertical-scroll-proportion="0.0">
+            <state line="4" column="30" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="retailers.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml">
+      <file leaf-file-name="Transaction.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="15" selection-start="431" selection-end="442" vertical-scroll-proportion="0.0">
+            <state line="385" column="78" selection-start="7716" selection-end="7716" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -389,9 +383,6 @@
   </component>
   <component name="FrameworkCommandLineHistory">
     <commandsHistory>
-      <command text="hd doctrine:generate:entities HelloDI" />
-      <command text="hd doctrine:generate:entities HelloDi" />
-      <command text="hd doctrine:schema:update --force" />
       <command text="hd doctrine:generate:entities HelloDi" />
       <command text="hd doctrine:generate:entities HelloDi" />
       <command text="hd doctrine:schema:update --force" />
@@ -414,6 +405,9 @@
       <command text="hd doctrine:generate:entities HelloDi" />
       <command text="hd doctrine:schema:update --force" />
       <command text="hd router:debug " />
+      <command text="hd router:debug " />
+      <command text="hd container:debug " />
+      <command text="hd doctrine:generate:entities HelloDi" />
     </commandsHistory>
   </component>
   <component name="Git.Settings">
@@ -430,22 +424,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Dashboard/Master_dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/master.yml" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Test/new1.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/ItemType.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Price.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowRetailDist.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Retailers/AccountRetailerSettingType.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerSetting.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/ShowRetailers.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/Retailers/NewUserRetailersType.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Test/new1.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/ReportSales.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/Transaction.html.twig" />
+        <option value="$PROJECT_DIR$/app/config/parameters.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Code.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/CodeSelector.php" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/CodeRepository.php" />
       </list>
     </option>
   </component>
@@ -498,6 +492,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -574,222 +569,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Retailers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DiDistributorsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloDi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="148" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="160" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="146" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="159" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="163" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="162" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Symfony" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="173" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="809" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="805" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="165" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="157" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="171" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="814" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="810" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="163" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="155" />
     <property name="Database.TableEditor.Splitter" value="0.9" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
@@ -807,7 +607,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Retailers" />
+      <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Listener" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Test" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Controller" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Distributors" />
@@ -1009,13 +809,13 @@
       <created>1370259607473</created>
       <updated>1370259607473</updated>
     </task>
-    <task id="LOCAL-00036" summary="after repair 2">
-      <created>1370413567299</created>
-      <updated>1370413567299</updated>
+    <task id="LOCAL-00036" summary="after repair">
+      <created>1370415455840</created>
+      <updated>1370415455840</updated>
     </task>
-    <task id="LOCAL-00037" summary="after repair 3">
-      <created>1370414122965</created>
-      <updated>1370414122965</updated>
+    <task id="LOCAL-00037" summary="Balance Test">
+      <created>1370424569020</created>
+      <updated>1370424569020</updated>
     </task>
     <option name="localTasksCounter" value="38" />
     <servers />
@@ -1049,7 +849,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24621212" sideWeight="0.2857143" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32826748" sideWeight="0.670068" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20227273" sideWeight="0.3622449" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2219697" sideWeight="0.670068" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30757576" sideWeight="0.2993197" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3282313" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1112,7 +912,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="after repair 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Balance Test" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1149,12 +949,12 @@
     <MESSAGE value="a" />
     <MESSAGE value="create tabs for retailer page in dist" />
     <MESSAGE value="transaction and balance test" />
-    <MESSAGE value="after repair 2" />
-    <MESSAGE value="after repair 3" />
+    <MESSAGE value="after repair" />
+    <MESSAGE value="Balance Test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="25" />
+      <option name="time" value="24" />
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
@@ -1170,99 +970,97 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/BalanceChecker.php">
+    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="58" selection-start="413" selection-end="413" vertical-scroll-proportion="0.36448598" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="19" selection-start="840" selection-end="859" vertical-scroll-proportion="0.21296297" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/master.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="25" selection-start="756" selection-end="756" vertical-scroll-proportion="0.75757575" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/ShowRetailers.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="0" selection-start="4082" selection-end="4082" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="15" selection-start="431" selection-end="442" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="13" column="13" selection-start="266" selection-end="266" vertical-scroll-proportion="0.21352313" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Code.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="8" selection-start="714" selection-end="714" vertical-scroll-proportion="0.9364486" />
+        <state line="41" column="17" selection-start="1135" selection-end="1139" vertical-scroll-proportion="-4.6455226">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Operator.php">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/BalanceChecker.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="4" selection-start="61" selection-end="61" vertical-scroll-proportion="0.12686567" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="3" selection-start="140" selection-end="140" vertical-scroll-proportion="0.22201492" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="62" selection-start="1477" selection-end="1477" vertical-scroll-proportion="0.98320895" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/ItemController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="6" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/CodeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="6" vertical-scroll-proportion="-1.6373832" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="6" vertical-scroll-proportion="-1.659533" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.3619404" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="956" column="38" selection-start="37164" selection-end="37164" vertical-scroll-proportion="0.0">
+        <state line="234" column="0" selection-start="8706" selection-end="8706" vertical-scroll-proportion="4.3977056" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="6" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.3488806" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="25" selection-start="3270" selection-end="3270" vertical-scroll-proportion="0.33208954" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="385" column="78" selection-start="7716" selection-end="7716" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/ReportSales.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Listener/CodeSelector.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="64" selection-start="2490" selection-end="2490" vertical-scroll-proportion="0.0">
+        <state line="28" column="9" selection-start="683" selection-end="683" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Item.php">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="36" selection-start="479" selection-end="479" vertical-scroll-proportion="-15.692307">
+        <state line="74" column="44" selection-start="2782" selection-end="2782" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="0" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.9321357">
-          <folding>
-            <element signature="e#59#93#0" expanded="true" />
-          </folding>
+        <state line="48" column="32" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="30" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/CodeRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="25" selection-start="586" selection-end="586" vertical-scroll-proportion="0.63432837">
+          <folding />
         </state>
       </provider>
     </entry>
