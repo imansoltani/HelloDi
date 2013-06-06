@@ -20,6 +20,11 @@ class Item
      */
     private $itemName;
 
+    function __toString()
+    {
+        return $this->getItemName();
+    }
+
     /** 
      * @ORM\Column(type="string", length=45, nullable=false, name="item_face_value")
      */

@@ -1,11 +1,7 @@
 
 <a href="#{#{{ path('') }}#}">Recharge</a>
-<form action="{{ path('RetailerTransaction') }}" method="POST">
+<form action="{{ path('RetailerSale') }}" method="POST">
 
-    <div class="control-group">
-        {{ form_label(form.Type) }}
-        {{ form_widget(form.Type) }}
-    </div>
 
     <div class="control-group">
         {{ form_label(form.DateStart) }}
@@ -15,6 +11,23 @@
         {{ form_label(form.DateEnd) }}
         {{ form_widget(form.DateEnd) }}
     </div>
+
+    <div class="control-group">
+        {{ form_label(form.ItemType) }}
+        {{ form_widget(form.ItemType) }}
+    </div>
+    <div class="control-group">
+        {{ form_label(form.ItemName) }}
+        {{ form_widget(form.ItemName) }}
+    </div>
+
+    <div class="control-group">
+       {%   if(User.roles[0]=='ROLE_RETAILER_ADMIN') %}
+        {{ form_label(form.Staff) }}
+        {{ form_widget(form.Staff) }}
+        {% endif %}
+    </div>
+
 
     <div class="form-actions" style="margin-bottom: 0" >
         <input class="btn btn-primary" type="submit"  value="Search">
@@ -26,39 +39,27 @@
                             <thead>
                                 <tr>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.FaceValue' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Serial Number' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Seller' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
 
                                 </tr>
                             </thead>
                             <tbody>
 
-                            {% for tran in pagination %}
+                            {% for co in pagination %}
                                 <tr>
-                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
 
-                                    <td>{{ tran.tranDescription}}</td>
-                                    <td>{{ tran.tranCredit}}</td>
-                                    <td>{{ tran.tranDebit }}</td>
-                                    <td>{{ tran.Account.accBalance }}</td>
-                                    <td>
-
-                                        {% if tran.tranAction=='Sale' %}Sale
-                                        {% elseif tran.tranAction=='Transfer' %}Transfer
-                                        {% elseif tran.tranAction=='Payment' %}Payment
-                                        {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                                        {% endif %}</td>
-
-                                    <td class="td-actions">
-
-
-                                        <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
-
-                                    </td>
+                                    <td>{{ co.Transactions[0].tranDate|date('y-M-d') }}</td>
+                                    <td>{{ co.Item.itemName}}</td>
+                                    <td>{{ co.Item.itemFaceValue}}</td>
+                                    <td>{{ co.Item.Prices[0].price }}</td>
+                                    <td>{{ co.serialNumber }}</td>
+                                    <td>{{ co.Transactions[0].User.username }}</td>
+                                    <td>{{ co.Transactions[0].User.Entiti.entVatNumber }}</td>
 
                                 </tr>
 
