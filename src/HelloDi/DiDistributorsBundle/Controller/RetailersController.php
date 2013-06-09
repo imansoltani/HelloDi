@@ -267,21 +267,53 @@ class RetailersController extends Controller
     }
 //endkazem
 
- // Start kamal
-    public function ShopCallingAction(){
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopCode.html.twig');
-
-    }
+// Start kamal
 
     public function DmtuAction(){
 
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
-        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
+
+
+        //$operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+        $check = $Account->getId();
+        $qb = $em->createQueryBuilder()
+            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency')
+            ->from('HelloDiDiDistributorsBundle:Account','acc')
+            ->innerJoin('acc.Prices','price')
+            ->innerJoin('price.Item','item')
+            ->innerJoin('item.operator','operator')
+            ->where('acc.id =:check')
+            ->setParameter('check',$check)
+            ->andwhere('item.itemType =:check2')
+            ->setParameter('check2',0)
+            ->OrderBy('item.itemName')
+
+            //->innerJoin('itemCalling.operator','operator')
 
 
-       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('entiti'=>$entities,'Account'=>$Account,'operator'=>$operator));
+            //->OrderBy('itemCalling.itemName,itemCalling.itemFaceValue')
+            //->OrderBy('itemCalling.itemFaceValue')
+            ->getQuery();
+
+        $item = $qb->getResult();
+
+        $qb = $em->createQueryBuilder()
+            ->select('DISTINCT operator.id','operator.name')
+            ->from('HelloDiDiDistributorsBundle:Account','acc')
+            ->innerJoin('acc.Prices','price')
+            ->innerJoin('price.Item','item')
+            ->innerJoin('item.operator','operator')
+            ->where('acc.id =:check')
+            ->setParameter('check',$check)
+            ->andwhere('item.itemType =:check2')
+            ->setParameter('check2',0)
+
+
+            ->getQuery();
+        $operator = $qb->getResult();
+
+       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('itemlist' => $item , 'operator'=>$operator ,'account'=>$Account));
     }
 
     public function PrintCodeAction(Request $request){
@@ -291,6 +323,60 @@ class RetailersController extends Controller
             $numberOfsale = $request->get('numberOfsale');
             return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('item' => $item ,'numberOfsale'=>$numberOfsale));
         }
+    }
+
+    public function CallingCardAction() {
+        //$entities = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
+
+//        $query = $entities->createQueryBuilder('p')
+//            //->where('p.price > :price')
+//            //->setParameter('price', '19.99')
+//            //->orderBy('p.price', 'ASC')
+//            ->getQuery();
+//
+//        $test = $query->getResult();
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        //$operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
+        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+        $check = $Account->getId();
+        $qb = $em->createQueryBuilder()
+            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency')
+            ->from('HelloDiDiDistributorsBundle:Account','acc')
+            ->innerJoin('acc.Prices','price')
+            ->innerJoin('price.Item','item')
+            ->innerJoin('item.operator','operator')
+            ->where('acc.id =:check')
+            ->setParameter('check',$check)
+            ->andwhere('item.itemType =:check2')
+            ->setParameter('check2',2)
+            ->OrderBy('item.itemName')
+
+            //->innerJoin('itemCalling.operator','operator')
+
+
+            //->OrderBy('itemCalling.itemName,itemCalling.itemFaceValue')
+            //->OrderBy('itemCalling.itemFaceValue')
+            ->getQuery();
+
+            $item = $qb->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('DISTINCT operator.id','operator.name')
+            ->from('HelloDiDiDistributorsBundle:Account','acc')
+            ->innerJoin('acc.Prices','price')
+            ->innerJoin('price.Item','item')
+            ->innerJoin('item.operator','operator')
+            ->where('acc.id =:check')
+            ->andwhere('item.itemType =:check2')
+            ->setParameter('check2',2)
+            ->setParameter('check',$check)
+
+            ->getQuery();
+        $operator = $qb->getResult();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array('itemlist' => $item , 'operator'=>$operator));
+
     }
 
  // End kamal

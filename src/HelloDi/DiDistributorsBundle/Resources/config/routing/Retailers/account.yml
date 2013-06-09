@@ -17,10 +17,6 @@ RetailerChangeRole:
     pattern:  /{id}/staff/ChangeRole
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerChangeRole }
 
-Retailer_Shop_calling_card:
-    pattern:  /calling-cards
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShopCalling }
-
 Retailer_Shop_dmtu:
     pattern:  /dmtu
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
@@ -28,3 +24,7 @@ Retailer_Shop_dmtu:
 Retailer_Shop_dmtu_code:
     pattern:  /code
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:PrintCode }
+
+Retailer_Shop_callingCard:
+    pattern:  /calling-cards
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:CallingCard }
