@@ -9,6 +9,7 @@ use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\DiDistributorsBundle\Listener\BalanceChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 
@@ -405,7 +406,6 @@ class RetailersController extends Controller
             ->setParameter('check',$check)
             ->andwhere('price.isFavourite =:check2')
             ->setParameter('check2',1)
-
             ->getQuery();
 
         $itemFavourite = $qb->getResult();
@@ -414,7 +414,7 @@ class RetailersController extends Controller
     }
 
     public  function FavouritesCodeAction($id){
-
+        hello_di_di_distributors.balancechecker.isBalanceEnough();
         return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$id));
     }
  // End kamal

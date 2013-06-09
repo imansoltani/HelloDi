@@ -34,6 +34,6 @@ class CodeSelector
             }
             return $codes;
         }
-        throw new \Exception("Code not exist in this item.");
+        throw new \Exception("Balance is not enough.");
     }
 }
