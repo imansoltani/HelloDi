@@ -46,4 +46,4 @@ services:
 
     hello_di_di_distributors.codeselector:
             class: HelloDi\DiDistributorsBundle\Listener\CodeSelector
-            arguments: [@doctrine]
+            arguments: [@doctrine,@hello_di_di_distributors.balancechecker]
