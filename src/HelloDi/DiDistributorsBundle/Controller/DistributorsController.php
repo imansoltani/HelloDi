@@ -393,18 +393,24 @@ class DistributorsController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accType' => 0));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Entiti entity.');
         }
 
+
+
         $editForm = $this->createForm(new EntitiType(), $entity);
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Details.html.twig', array(
-            'Account' => $Account,
+            'account' => $Account,
+            'Account' => $account,
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
+            'form'
         ));
     }
 

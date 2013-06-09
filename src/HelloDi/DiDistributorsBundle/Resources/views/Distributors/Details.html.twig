@@ -1,14 +1,104 @@
-{% for acc in Account %}
-    <p>Account Name:
-    {{ acc.accName  }}</p>
-{% endfor %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
-{% for acc in Account %}
-        <p>Account Balance:
-        {{ acc.accBalance  }}</p>
-{% endfor %}
+{% set tab = '5' %}
 
-<form action="{{ path('Retailer_edit',{'id':entity.id}) }}">
-    {{ form_widget(edit_form) }}
-    <button>Save</button>
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Details</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+<div class="widget-header">
+    <h3>Retailer Details</h3>
+</div> <!-- /widget-header -->
+<br>
+<form class="form-horizontal" action="{{ path('Retailer_edit',{'id':entity.id}) }}" method="post" >
+
+    {% for acc in account %}
+    <div class="control-group">
+        <label class="control-label">Account Name
+        </label>
+        <div class="controls">
+            <input class="input-large" type="text"  value="{{ acc.accName }}" disabled="" >
+        </div>
+    </div>
+    {% endfor %}
+
+
+    {% for acc in account %}
+    <div class="control-group">
+        <label class="control-label">Account Balance
+        </label>
+        <div class="controls">
+            <input class="input-large" type="text"  value="{{ acc.accBalance  }}" disabled="" >
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="control-group">
+        {{ form_label(edit_form.entName) }}
+        {{ form_widget(edit_form.entName) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entVatNumber) }}
+        {{ form_widget(edit_form.entVatNumber) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entTel1) }}
+        {{ form_widget(edit_form.entTel1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entTel2) }}
+        {{ form_widget(edit_form.entTel2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entFax) }}
+        {{ form_widget(edit_form.entFax) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entWebsite) }}
+        {{ form_widget(edit_form.entWebsite) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs1) }}
+        {{ form_widget(edit_form.entAdrs1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs2) }}
+        {{ form_widget(edit_form.entAdrs2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs3) }}
+        {{ form_widget(edit_form.entAdrs3) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entNp) }}
+        {{ form_widget(edit_form.entNp) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entCity) }}
+        {{ form_widget(edit_form.entCity) }}
+    </div>
+
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Edit">
+
+    </div>
+
 </form>
+
+{% endblock %}

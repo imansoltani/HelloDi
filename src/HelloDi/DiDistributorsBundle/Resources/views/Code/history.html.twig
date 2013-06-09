@@ -40,6 +40,7 @@
                                 <th>status</th>
                                 <th>Production</th>
                                 <th>Expiry</th>
+                                <th>Operator</th>
                             </tr>
                             </thead>
 
@@ -51,6 +52,7 @@
                                 <td style="font-weight: bold">{% if code.status==1 %}Not Sale{% else %}Sale{% endif %}</td>
                                 <td style="font-weight: bold">{{ code.input.dateProduction|date('Y/m/d') }}</td>
                                 <td style="font-weight: bold">{{ code.input.dateExpiry|date('Y/m/d') }}</td>
+                                <td style="font-weight: bold">{{ code.item.operator.name }}</td>
                             </tr>
                             </tbody>
                         </table>

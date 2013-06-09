@@ -65,7 +65,9 @@
                                 </div>
                                 <div class="control-group">
                                     {{ form_label(form.operator) }}
-                                    {{ form_widget(form.operator) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.operator) }}
+                                    </div>
                                     {{ form_errors(form.operator) }}
                                 </div>
 
