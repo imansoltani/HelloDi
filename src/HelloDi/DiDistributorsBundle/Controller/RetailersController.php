@@ -410,6 +410,7 @@ class RetailersController extends Controller
 
     }
 
+
  // End kamal
 }
 
