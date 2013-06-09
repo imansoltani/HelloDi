@@ -390,7 +390,33 @@ class RetailersController extends Controller
 
     }
 
+    public function FavouritesAction(){
+        $em = $this->getDoctrine()->getManager();
 
+        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+        $check = $Account->getId();
+        $qb = $em->createQueryBuilder()
+            ->select('item.itemName','item.id')
+            ->from('HelloDiDiDistributorsBundle:Account','acc')
+            ->innerJoin('acc.Prices','price')
+            ->innerJoin('price.Item','item')
+            ->innerJoin('item.operator','operator')
+            ->where('acc.id =:check')
+            ->setParameter('check',$check)
+            ->andwhere('price.isFavourite =:check2')
+            ->setParameter('check2',1)
+
+            ->getQuery();
+
+        $itemFavourite = $qb->getResult();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:favourite.html.twig',array('listFavourite'=>$itemFavourite));
+
+    }
+
+    public  function FavouritesCodeAction($id){
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$id));
+    }
  // End kamal
 }
 

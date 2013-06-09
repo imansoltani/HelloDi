@@ -28,3 +28,11 @@ Retailer_Shop_dmtu_code:
 Retailer_Shop_callingCard:
     pattern:  /calling-cards
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:CallingCard }
+
+Retailer_Shop_favourite:
+    pattern:  /favourites
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Favourites }
+
+Retailer_Shop_favourite_code:
+    pattern:  /favourites/code/{id}
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:FavouritesCode }
