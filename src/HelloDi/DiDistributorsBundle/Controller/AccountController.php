@@ -770,11 +770,18 @@ class AccountController extends Controller
                 'query_builder' => function(EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('u')
                         ->where ('u.id NOT IN (
-                            SELECT DISTINCT ii.id
+                            SELECT ii.id
                             FROM HelloDiDiDistributorsBundle:Item ii
                             JOIN ii.Prices pp
                             JOIN pp.Account aa
                             WHERE aa = :aaid
+                        )')
+                        ->andWhere('u.id IN (
+                            SELECT iii.id
+                            FROM HelloDiDiDistributorsBundle:Item iii
+                            JOIN iii.Prices ppp
+                            JOIN ppp.Account aaa
+                            WHERE aaa.accType = 1
                         )')
                         ->setParameter('aaid',$account);
                 }

@@ -525,5 +525,28 @@ class DistributorsController extends Controller
             'Account' => $myaccount
         ));
     }
+
+    public function RetailerItemsAddAction($id)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $qb = $em->createQueryBuilder()
+            ->select('item')
+            ->from('HelloDiDiDistributorsBundle:Item', 'item')
+            ->innerJoin('item.Prices', 'prices')
+            ->innerJoin('prices.Account', 'account')
+            ->where('account = :acc')
+            ->setParameter('acc', $account);
+
+        $items = $qb->getQuery()->getResult();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItemsAdd.html.twig', array(
+            'items' => $items,
+            'Account' => $myaccount
+        ));
+    }
 }
 

@@ -101,33 +101,26 @@ class TestController extends Controller
             $data = $form->getData();
             $price = $data['Price'];
 
-            $balancecheker = $this->get('hello_di_di_distributors.balancechecker');
+            $codeselector = $this->get('hello_di_di_distributors.codeselector');
+            $code = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
 
-            if ($balancecheker->isBalanceEnough($account, $price)) {
-                $user = $this->get('security.context')->getToken()->getUser();
-
-                $codeselector = $this->get('hello_di_di_distributors.codeselector');
-                $code = $codeselector->lookForAvailableCode($price->getItem());
-
-                if (!$code) {
-                    $errors[] = 'Code not exist for this item.';
-                } else {
-                    $transaction = new Transaction();
-                    $transaction->setAccount($account);
-                    $transaction->setTranCredit($price->getPrice());
-                    $transaction->setTranFees(0);
-                    $transaction->setTranCurrency($price->getPriceCurrency());
-                    $transaction->setTranDate(new \DateTime('now'));
-                    $transaction->setTranAction('sale');
-                    $transaction->setUser($user);
-                    $transaction->setCode($code);
-
-                    $em->persist($transaction);
-                    $em->flush();
-                    $errors[] = 'Sale Done.';
-                }
+            if (!$code) {
+                $errors[] = 'Code not exist for this item or Balance is not enough.';
             } else {
-                $errors[] = 'Balance is not enough.';
+                $user = $this->get('security.context')->getToken()->getUser();
+                $transaction = new Transaction();
+                $transaction->setAccount($account);
+                $transaction->setTranCredit($price->getPrice());
+                $transaction->setTranFees(0);
+                $transaction->setTranCurrency($price->getPriceCurrency());
+                $transaction->setTranDate(new \DateTime('now'));
+                $transaction->setTranAction('sale');
+                $transaction->setUser($user);
+                $transaction->setCode($code);
+
+                $em->persist($transaction);
+                $em->flush();
+                $errors[] = 'Sale Done.';
             }
         }
 
