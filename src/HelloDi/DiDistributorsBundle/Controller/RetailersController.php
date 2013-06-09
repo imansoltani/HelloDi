@@ -305,7 +305,6 @@ class RetailersController extends Controller
         $em = $this->getDoctrine()->getManager();
 
 
-        //$operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
         $check = $Account->getId();
         $qb = $em->createQueryBuilder()
@@ -320,11 +319,7 @@ class RetailersController extends Controller
             ->setParameter('check2',0)
             ->OrderBy('item.itemName')
 
-            //->innerJoin('itemCalling.operator','operator')
 
-
-            //->OrderBy('itemCalling.itemName,itemCalling.itemFaceValue')
-            //->OrderBy('itemCalling.itemFaceValue')
             ->getQuery();
 
         $item = $qb->getResult();
@@ -357,20 +352,9 @@ class RetailersController extends Controller
     }
 
     public function CallingCardAction() {
-        //$entities = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
-
-//        $query = $entities->createQueryBuilder('p')
-//            //->where('p.price > :price')
-//            //->setParameter('price', '19.99')
-//            //->orderBy('p.price', 'ASC')
-//            ->getQuery();
-//
-//        $test = $query->getResult();
 
         $em = $this->getDoctrine()->getManager();
 
-
-        //$operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findAll();
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
         $check = $Account->getId();
         $qb = $em->createQueryBuilder()
@@ -385,11 +369,7 @@ class RetailersController extends Controller
             ->setParameter('check2',2)
             ->OrderBy('item.itemName')
 
-            //->innerJoin('itemCalling.operator','operator')
 
-
-            //->OrderBy('itemCalling.itemName,itemCalling.itemFaceValue')
-            //->OrderBy('itemCalling.itemFaceValue')
             ->getQuery();
 
             $item = $qb->getResult();
