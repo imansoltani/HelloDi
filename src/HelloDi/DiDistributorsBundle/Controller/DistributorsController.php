@@ -671,7 +671,6 @@ public function  DistTransactionAction(Request $req)
             'Account' => $account,
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'form'
         ));
     }
 
