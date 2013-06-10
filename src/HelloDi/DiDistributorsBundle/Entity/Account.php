@@ -30,6 +30,9 @@ class Account
      */
     private $accName;
 
+    public  function  __toString(){
+        return $this->getAccName();
+    }
     /** 
      * @ORM\Column(type="decimal", nullable=false, name="acc_balance")
      */
