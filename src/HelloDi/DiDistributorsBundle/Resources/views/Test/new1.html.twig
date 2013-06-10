@@ -24,6 +24,7 @@
             <tr>
                 <th>id</th>
                 <th>Account Name</th>
+                <th>Account Type</th>
                 <th>Balance</th>
                 <th>CreditLimit</th>
             </tr>
@@ -31,7 +32,13 @@
             <tbody>
             {% for account in accounts %}
                 <tr>
-                    <td><a href="{{ path('test1_index',{'id': account.id}) }}">{{ account.id }}</a></td>
+                    <td>
+                        {% if account.id==myaccount.id %}
+                            <b><a href="{{ path('test1_index',{'id': account.id}) }}">{{ account.id }}</a></b>
+                        {% else %}
+                            <a href="{{ path('test1_index',{'id': account.id}) }}">{{ account.id }}</a>
+                        {% endif %}
+                    </td>
                     <td>
                         {% if account.id==myaccount.id %}
                             <b>{{ account.accName }}</b>
@@ -39,6 +46,7 @@
                             {{ account.accName }}
                         {% endif %}
                     </td>
+                    <td>{% if account.accType==0 %}dist{% elseif account.accType==2 %}retailer{% else %}--{% endif %}</td>
                     <td>{{ account.accBalance }}</td>
                     <td>{{ account.accCreditLimit }}</td>
                 </tr>

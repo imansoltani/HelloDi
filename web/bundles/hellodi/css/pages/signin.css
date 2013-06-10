@@ -20,24 +20,7 @@ body .navbar .navbar-inner {
 /** Base Body Styles **/
 body{
     /* IE10 Consumer Preview */
-    background-image: -ms-linear-gradient(top, #A8ACF6 0%, #FFFFFF 100%);
 
-    /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(top, #A8ACF6 0%, #FFFFFF 100%);
-
-    /* Opera */
-    background-image: -o-linear-gradient(top, #A8ACF6 0%, #FFFFFF 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A8ACF6), color-stop(1, #FFFFFF));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(top, #A8ACF6 0%, #FFFFFF 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: linear-gradient(to bottom, #A8ACF6 0%, #FFFFFF 100%);
-
-    background-repeat: no-repeat;
 
     color:#838383;
     font: 13px/1.7em 'Open Sans';
@@ -50,8 +33,9 @@ body{
 
 
 	    margin: 60px auto 0 auto;
-        background: #f9f9f9;
-        border: 1px solid #d5d5d5;
+
+        border-left: solid 2px #50627f;
+    border-right: solid 2px #50627f;
 
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -179,7 +163,7 @@ span.login-checkbox > input[type='checkbox']:checked + label {
 .account-container h1 {
 	margin-bottom: .4em;
 
-    color: rgb(255, 153, 0);
+    color: #0e5c92;
 }
 
 /** Buttons **/

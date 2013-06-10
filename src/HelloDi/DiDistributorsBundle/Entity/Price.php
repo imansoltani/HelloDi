@@ -19,6 +19,10 @@ class Price
      * @ORM\Column(type="decimal", nullable=false, name="price")
      */
     private $price;
+    /**
+     * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
+     */
+    private $isFavourite;
 
     /** 
      * @ORM\Column(type="string", length=3, nullable=false, name="price_currency")

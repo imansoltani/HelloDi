@@ -1,32 +1,84 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Setting</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
 <div class="widget-header">
     <h3>Retailer Setting</h3>
-</div> <!-- /widget-header --><br>
-
-<form class="form-horizontal" action="{{ path('DistRetailerSetting',{'id':Account.id}) }}" method="post" >
-
-    <div class="control-group">
-        id:{{ Account.id }}
-    </div>
-    accName:{{ Account.accName }}<br>
-    accCreationDate:{{ Account.accCreationDate|date('Y-m-d') }}<br>
-    accTimeZone:{{ Account.accTimeZone }}<br>
-    accCreditLimit:{{ Account.accCreditLimit }}<br>
-    <div class="control-group">
-        {{ form_label(form.accTerms) }}
-        {{ form_widget(form.accTerms) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.accDefaultLanguage) }}
-        {{ form_widget(form.accDefaultLanguage) }}
-    </div>
+</div> <!-- /widget-header -->
+    <br>
+    <form class="form-horizontal" action="{{ path('DistRetailerSetting',{'id':Account.id}) }}" method="post">
+        <div class="control-group">
+            <label class="control-label">id
+            </label>
+            <div class="controls">
+                <input class="input-large" type="text"  value="{{ Account.id }}" disabled="" >
+            </div>
+        </div>
 
 
-    {{ form_widget(form._token) }}
+        <div class="control-group">
+            <label class="control-label">accName
+            </label>
+            <div class="controls">
+                <input class="input-large" type="text"  value="{{ Account.accName }}" disabled="" >
+            </div>
+        </div>
 
-    <div class="form-actions" style="margin-bottom: 0" >
-        <input class="btn btn-primary" type="submit"  value="Edit">
+        <div class="control-group">
+            <label class="control-label">accCreationDate
+            </label>
+            <div class="controls">
+                <input class="input-large" type="text"  value="{{ Account.accCreationDate|date('Y-m-d') }}" disabled="" >
+            </div>
+        </div>
 
-    </div>
+        <div class="control-group">
+            <label class="control-label">accTimeZone
+            </label>
+            <div class="controls">
+                <input class="input-large" type="text"  value="{{ Account.accTimeZone }}" disabled="" >
+            </div>
+        </div>
 
-</form>
+
+        <div class="control-group">
+            <label class="control-label">accCreditLimit
+            </label>
+            <div class="controls">
+                <input class="input-large" type="text" value="{{ Account.accCreditLimit }}" disabled="" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form.accTerms) }}
+            {{ form_widget(form.accTerms) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form.accDefaultLanguage) }}
+            <div class="controls">
+                {{ form_widget(form.accDefaultLanguage) }}
+            </div>
+        </div>
+
+
+        {{ form_widget(form._token) }}
+
+        <div class="form-actions" style="margin-bottom: 0" >
+            <input class="btn btn-primary" type="submit"  value="Edit">
+
+        </div>
+    </form>
+
+
+
+{% endblock %}

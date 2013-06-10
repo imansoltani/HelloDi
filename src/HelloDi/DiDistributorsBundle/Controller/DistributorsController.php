@@ -654,18 +654,24 @@ public function  DistTransactionAction(Request $req)
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accType' => 0));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Entiti entity.');
         }
 
+
+
         $editForm = $this->createForm(new EntitiType(), $entity);
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Details.html.twig', array(
-            'Account' => $Account,
+            'account' => $Account,
+            'Account' => $account,
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
+            'form'
         ));
     }
 
@@ -776,6 +782,29 @@ public function  DistTransactionAction(Request $req)
         $items = $qb->getQuery()->getResult();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
+            'items' => $items,
+            'Account' => $myaccount
+        ));
+    }
+
+    public function RetailerItemsAddAction($id)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $qb = $em->createQueryBuilder()
+            ->select('item')
+            ->from('HelloDiDiDistributorsBundle:Item', 'item')
+            ->innerJoin('item.Prices', 'prices')
+            ->innerJoin('prices.Account', 'account')
+            ->where('account = :acc')
+            ->setParameter('acc', $account);
+
+        $items = $qb->getQuery()->getResult();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItemsAdd.html.twig', array(
             'items' => $items,
             'Account' => $myaccount
         ));

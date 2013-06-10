@@ -35,7 +35,7 @@
         </a>
     </li>
     <li class=" {% if MU == 'mob' %}active{% endif %} dropdown">
-        <a href="" class="dropdown-toggle">
+        <a href="{{ path('Retailer_Shop_dmtu') }}" class="dropdown-toggle">
             <i class="icon-mobile-phone"></i>
             <span  id="user_pc_menu"  >Mobile</span>
         </a>
@@ -43,7 +43,7 @@
 
 
     <li class=" {% if MU == 'cell' %}active{% endif %} dropdown">
-        <a href="" class="dropdown-toggle">
+        <a href="{{ path('Retailer_Shop_callingCard') }}" class="dropdown-toggle">
             <i class="icon-credit-card"></i>
             <span  id="user_pc_menu"  >Celling Cards</span>
         </a>
@@ -70,7 +70,7 @@
             <b class="caret"></b>
         </a>
             <ul class="dropdown-menu">
-                <li><a href="javascript:;">History</a></li>
+                <li><a href="{{ path('RetailerTransaction') }}">History</a></li>
                 <li><a href="javascript:;">Recharge</a></li>
             </ul>
     </li>
@@ -82,7 +82,7 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="javascript:;">Sales</a></li>
+            <li><a href="{{ path('RetailerSale') }}">Sales</a></li>
             <li><a href="javascript:;">Trends</a></li>
         </ul>
     </li>

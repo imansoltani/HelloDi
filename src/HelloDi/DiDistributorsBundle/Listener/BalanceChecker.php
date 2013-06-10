@@ -7,7 +7,7 @@ use HelloDi\DiDistributorsBundle\Entity\Price;
 
 class BalanceChecker
 {
-    public function isBalanceEnough(Account $account, Price $price, $count=1)
+    public function isBalanceEnough(Account $account, Price $price, $count = 1)
     {
         if ($this->currenciesMatch($account->getAccCurrency(), $price->getPriceCurrency())) {
             return ($account->getAccBalance() + $account->getAccCreditLimit() >= ($price->getPrice()*$count));

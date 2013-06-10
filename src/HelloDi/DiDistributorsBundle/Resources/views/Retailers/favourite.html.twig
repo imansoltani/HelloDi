@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Is Favourite</title>
+</head>
+<body>
+{% for favourite in listFavourite %}
+    {{ favourite.itemName }}<a href="{{ path('Retailer_Shop_favourite_code',{'id':favourite.id}) }}">Go</a><br>
+{% endfor %}
+</body>
+</html>

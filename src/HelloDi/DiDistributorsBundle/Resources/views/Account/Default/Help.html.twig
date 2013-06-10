@@ -1,157 +1,49 @@
 
+<a href="#{#{{ path('') }}#}">Recharge</a>
+<form action="{{ path('RetailerSale') }}" method="POST">
 
-<div class="span" >
-    <div class="widget-content">
-        <div class="tab-content">
-            <div id="account" class="tab-pane active">
-                <div class="widget-header">
-                    <h3>Account</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Description</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="------------" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Credit Limit</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accCreditLimit }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Avilabel Balance</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accBalance }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Currency</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{%  if Account.accCurrency==0 %}USD{% elseif Account.accCurrency==1 %}CHF{% endif %}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Account Type</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="Retailer" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">TimeZone</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accTimeZone }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Account Condtion</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accTerms }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Notification Language</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Account.accDefaultLanguage }}" />
-                        </div>
-                    </div>
-
-
-                </form>
-
-                <div class="form-actions">
-                    <a class="btn btn-primary" href="#">Request Ticket</a>
-                </div>
-            </div>
-            <div id="company" class="tab-pane ">
-
-                <div class="widget-header">
-                    <h3>Company</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Description</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="------------" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Name</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entName }}" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Vat</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entVatNumber }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Tel1</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel1 }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Tel2</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel2 }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Fax</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entFax }}" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" >
-                        <label class="control-label">Website</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entWebsite }}" />
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-            <div id="address" class="tab-pane ">
-                <div class="widget-header">
-                    <h3>Address</h3>
-                </div> <!-- /widget-header --><br>
-
-                <form class="form-horizontal">
-                    <div class="control-group" >
-                        <label class="control-label">Np/City</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entNP }}/{{ Entiti.entCity }}" />
-                        </div>
-                    </div>
-                    <div class="control-group" >
-                        <label class="control-label">Country Name</label>
-                        <div class="controls">
-                            <input class="input-large" disabled="" type="text" value="{{ Entiti.Country.name }}/Country Code:{{ Entiti.Country.iso }}" />
-                        </div>
-                    </div>
-                </form>
-
-                <div class="form-actions">
-                    <a class="btn btn-primary" href="#">Change Address Or Detail</a>
-                </div>
-            </div>
-        </div>
+    <div class="control-group">
+        {{ form_label(form.DateStart) }}
+        {{ form_widget(form.DateStart) }}
     </div>
+    <div class="control-group">
+        {{ form_label(form.DateEnd) }}
+        {{ form_widget(form.DateEnd) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.ItemType) }}
+        {{ form_widget(form.ItemType) }}
+    </div>
+    <div class="control-group">
+        {{ form_label(form.ItemName) }}
+        {{ form_widget(form.ItemName) }}
+    </div>
+
+    <div class="control-group">
+        {%   if(User.roles[0]=='ROLE_RETAILER_ADMIN') %}
+            {{ form_label(form.Staff) }}
+            {{ form_widget(form.Staff) }}
+        {% endif %}
+    </div>
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Search">
+    </div>
+</form>
+<form>
+    <div class="tab-content">
+        <table style="margin-top: 20px" class="table postsend">
+            <thead>
+            <tr>
+
+
+            </tr>
+            </thead>
+
+        </table>
+        {#{button pagination}#}
+    </div>
+</form>
+
 </div>

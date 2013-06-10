@@ -3,7 +3,7 @@ namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\CodeRepository")
  * @ORM\Table(name="code", indexes={@ORM\Index(name="SerialNumberIDX", columns={"serial_number"})})
  */
 class Code

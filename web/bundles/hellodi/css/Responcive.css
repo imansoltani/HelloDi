@@ -151,7 +151,7 @@
 
     /* Tabs
         -------------------------------------------------------- */
-    .main .pagetop .hornav li input[type="submit"]{
+    .main .pagetop .hornav li input[type="submit"] , .main .pagetop .hornav li a span{
         font-size: 10px;
         padding: 5px 10px;
     }
