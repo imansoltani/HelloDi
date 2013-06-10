@@ -22,13 +22,14 @@ DistNewRetailer:
     pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistNewRetailer }
 
-DistRetailerSetting:
-    pattern:  /{id}/settings
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistRetailerSetting }
+DistRetailer:
+    pattern:  /new
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistNewRetailer }
+
 
 Retailer_Transaction:
     pattern:  /{id}/transactions
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Transaction }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
 
 Retailer_details:
     pattern:  /{id}/details

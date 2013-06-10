@@ -1,0 +1,87 @@
+
+<a href="#{#{{ path('') }}#}">Fund Retailers</a>
+<form action="{{ path('Retailer_Transaction',{'id':Account.id}) }}" method="POST">
+
+    <div class="control-group">
+        {{ form_label(form.TypeDate[0]) }}
+        {{ form_widget(form.TypeDate[0]) }}
+    </div>
+    </br>
+
+    <div class="control-group">
+        {{ form_label(form.TypeDate[1]) }}
+        {{ form_widget(form.TypeDate[1] )}}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.Type) }}
+        {{ form_widget(form.Type) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.DateStart) }}
+        {{ form_widget(form.DateStart) }}
+    </div>
+    <div class="control-group">
+        {{ form_label(form.DateEnd) }}
+        {{ form_widget(form.DateEnd) }}
+    </div>
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="Search">
+    </div>
+</form>
+                <form>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table postsend">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for tran in pagination %}
+                                <tr>
+                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
+
+                                    <td>{{ tran.tranDescription}}</td>
+                                    <td>{{ tran.tranCredit}}</td>
+                                    <td>{{ tran.tranDebit }}</td>
+                                    <td>{{ tran.Account.accBalance }}</td>
+                                    <td>
+
+                                        {% if tran.tranAction=='sale' %}Sale
+                                        {% elseif tran.tranAction=='trans' %}Transfer
+                                        {% elseif tran.tranAction=='paym' %}Payment
+                                        {% elseif tran.tranAction=='cred' %}CreditNote
+                                        {% elseif tran.tranAction=='add' %}Add
+                                        {% endif %}</td>
+
+                                    <td class="td-actions">
+
+
+                                        <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        {#{button pagination}#}
+                    </div>
+                </form>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
