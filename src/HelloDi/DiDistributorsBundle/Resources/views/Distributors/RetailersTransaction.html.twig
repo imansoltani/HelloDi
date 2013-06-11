@@ -38,8 +38,7 @@
                                 <tr>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
@@ -53,8 +52,7 @@
                                     <td>{{ tran.tranDate|date('y-M-d') }}</td>
 
                                     <td>{{ tran.tranDescription}}</td>
-                                    <td>{{ tran.tranCredit}}</td>
-                                    <td>{{ tran.tranDebit }}</td>
+                                    <td>{{ tran.tranAmount}}</td>
                                     <td>{{ tran.Account.accBalance }}</td>
                                     <td>
 

@@ -1,28 +1,9 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
-{% block title %}
-    Transactions
-{% endblock title %}
-
-{% set MU = 'trans' %}
-
-{% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" >Transaction</a>
-    <span class="link">History</span>
-{% endblock Site_Map %}
-
-{% block PageTitle %}
-    <i class="icon-money"></i>
-    Transaction History
-{% endblock %}
-
-{% block Body %}
     <div class="span" >
         <div class="widget stacked ">
             <div class="widget-content">
                 <a class="btn-large button btn btn-primary " href="#">
-                    Recharge
+                 Fund Distributors
                 </a>
 
                 <div class="form_search">
@@ -33,7 +14,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTransaction') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('MasterDistTransaction',{'id':Account.id}) }}" method="POST" >
 
 
                         <div class="control-group">
@@ -76,31 +57,7 @@
                         <input class="btn btn-primary" type="submit" value="Search">
 
                     </form>
-                    <script type="text/javascript">
-                        $(function () {
-                            $(".SearchForm").hide();
-                            $('.TitleShow1').click(function () {
-                                $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class');
-
-                                if ($('.title_search').html() == 'Filter List') {
-                                    $('.title_search').html('Close Search');
-                                    $('#search_logo').attr('class', 'icon-remove');
-                                }
-                                else {
-                                    $('.title_search').html('Filter List');
-                                    $('#search_logo').attr('class', 'icon-search');
-                                }
-
-                                var x = $('.form_search').offset().top - 20;
-                                $('body,html').animate({
-                                    scrollTop: x
-                                }, 800);
-                            });
-
-                        });
-                    </script>
-                </div>
+                                  </div>
 
                 <div class="tablediv">
 
@@ -134,18 +91,15 @@
                                         <td>
 
                                             {% if tran.tranAction=='Sale' %}Sale
-                                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                                            {% elseif tran.tranAction=='Payment' %}Payment
-                                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                                            {% elseif tran.tranAction=='Tras' %}Transfer
+                                            {% elseif tran.tranAction=='Paym' %}Payment
+                                            {% elseif tran.tranAction=='Cred' %}CreditNote
+                                            {% elseif tran.tranAction=='Add' %}Add
                                             {% endif %}</td>
 
-                                        <td class="td-actions">
 
 
-                                            <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
-
-                                        </td>
-
+                                        <td><a href="{{ path('DetailsMasterDistTransaction',{'idacc':tran.Account.id,'idusr':tran.User.id}) }}">Details</a></td>
                                     </tr>
 
                                 {% endfor %}
@@ -159,4 +113,3 @@
             </div>
         </div>
     </div>
-{% endblock %}
