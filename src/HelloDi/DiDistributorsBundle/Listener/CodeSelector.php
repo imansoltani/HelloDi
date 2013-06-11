@@ -24,16 +24,22 @@ class CodeSelector
         {
             $em = $this->doctrine->getManager();
 
+            $countinitem = $em->getRepository('HelloDiDiDistributorsBundle:Code')->countAvailableCodeByItem($item);
+
+            if($count > $countinitem)
+            {
+                throw new \Exception("Code not exist in this item.",1);
+            }
+
             $codes = array();
             for($i=1;$i<=$count;$i++)
             {
                 $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOldestAvailableCodeByItem($item);
-                if ($code)  $code->setStatus(0);
-                else        throw new \Exception("Code not exist in this item.");
+                $code->setStatus(0);
                 $codes[] = $code;
             }
             return $codes;
         }
-        throw new \Exception("Balance is not enough.");
+        throw new \Exception("Balance is not enough.",2);
     }
 }

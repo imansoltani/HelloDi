@@ -584,7 +584,6 @@ class AccountController extends Controller
 
     }
 
-
     public function ManageDistInfoEditAction(Request $request)
     {
         $id = $request->get('id');
@@ -629,6 +628,7 @@ class AccountController extends Controller
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
+        $price->setIsFavourite(false);
         $price->setAccount($account);
 
         $form = $this->createFormBuilder($price)
@@ -665,6 +665,7 @@ class AccountController extends Controller
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
+        $price->setIsFavourite(false);
         $price->setAccount($account);
 
         $form = $this->createFormBuilder($price)
@@ -761,6 +762,7 @@ class AccountController extends Controller
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
+        $price->setIsFavourite(false);
         $price->setAccount($account);
 
         $form = $this->createFormBuilder($price)
@@ -804,6 +806,7 @@ class AccountController extends Controller
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
+        $price->setIsFavourite(false);
         $price->setAccount($account);
 
         $form = $this->createFormBuilder($price)
