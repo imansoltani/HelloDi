@@ -24,13 +24,7 @@ class Transaction
     /** 
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
-    private $tranCredit;
-
-    /** 
-     * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
-     */
-    private $tranDebit;
-
+    private $tranAmount;
     /** 
      * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
      */
@@ -392,5 +386,28 @@ class Transaction
             case 'add':
                 break;
         }
+    }
+
+    /**
+     * Set tranAmount
+     *
+     * @param float $tranAmount
+     * @return Transaction
+     */
+    public function setTranAmount($tranAmount)
+    {
+        $this->tranAmount = $tranAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranAmount
+     *
+     * @return float 
+     */
+    public function getTranAmount()
+    {
+        return $this->tranAmount;
     }
 }

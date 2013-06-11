@@ -78,8 +78,6 @@ class DistributorsController extends Controller
                 ))
 
 
-
-
             ->add('DateStart','date',array())
             ->add('DateEnd','date',array())->getForm();
 
@@ -93,14 +91,14 @@ class DistributorsController extends Controller
                 ->innerjoin('Co.Item','CoIt')
                 ->innerjoin('CoIt.Prices','CoItPr')
                 ->innerjoin('Co.Transactions','CoTr')
-                ->innerjoin('CoTr.Account','CoTrAc')
                 ->where('Co.status= 0')
                 ->andwhere('CoTr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
                 ->andwhere('CoTr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             if($data['Account']!='All')
             {
-                $qb=$qb->andWhere($qb->expr()->like('CoTrAc.accName',$qb->expr()->literal($data['Account'])));
+
+                $qb=$qb->andwhere('CoTr.Account =:account')->setParameter('account',$data['Account']);
 
             }
 
@@ -137,10 +135,8 @@ class DistributorsController extends Controller
                 'Entiti' =>$User->getEntiti()));
 
 
-
-
-
     }
+
     public function DistProfileAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -472,7 +468,9 @@ class DistributorsController extends Controller
         ));
 
     }
+
 /////---kazem--
+
     public function RetailersTransactionAction(Request $req,$id)
     {
 
