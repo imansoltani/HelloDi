@@ -491,7 +491,7 @@ class DistributorsController extends Controller
 
     public function RetailersTransactionAction(Request $req,$id)
     {
-
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em=$this->getDoctrine()->getManager();
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account));
@@ -506,7 +506,8 @@ class DistributorsController extends Controller
                     0 => 'Trade Date',
                     1 => 'Looking Date',
                 )
-            ))->getForm();
+            ))
+            ->getForm();
 
 
         if($req->isMethod('POST'))
@@ -552,7 +553,8 @@ class DistributorsController extends Controller
         array(
             'pagination'=>$pagination,
             'form'=>$form->createView(),
-            'Account' =>$Account,
+            'Account' =>$myaccount,
+            'retailerAccount' => $Account,
             'Entiti' =>$Account->getEntiti()
         ));
 

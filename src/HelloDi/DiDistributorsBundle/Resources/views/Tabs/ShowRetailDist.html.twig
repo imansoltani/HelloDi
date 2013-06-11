@@ -16,7 +16,7 @@
 {% block Tabs %}
 
     <li {% if tab == '1' %}class="active"{% endif %} >
-        <a href="#"  >
+        <a href="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}"  >
             <span>
                 Transactions
             </span>

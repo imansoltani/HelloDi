@@ -1,6 +1,6 @@
 
 <a href="#{#{{ path('') }}#}">Fund Retailers</a>
-<form action="{{ path('Retailer_Transaction',{'id':Account.id}) }}" method="POST">
+<form action="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}" method="POST">
 
     <div class="control-group">
         {{ form_label(form.TypeDate[0]) }}
@@ -53,7 +53,7 @@
 
                                     <td>{{ tran.tranDescription}}</td>
                                     <td>{{ tran.tranAmount}}</td>
-                                    <td>{{ tran.Account.accBalance }}</td>
+                                    <td>{{ tran.retailerAccount.accBalance }}</td>
                                     <td>
 
                                         {% if tran.tranAction=='sale' %}Sale
