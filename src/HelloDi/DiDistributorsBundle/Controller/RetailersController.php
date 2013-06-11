@@ -418,5 +418,30 @@ class RetailersController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$id));
     }
  // End kamal
+
+//start mostafa
+    public function ShowItemsAction()
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $prices = $myaccount->getPrices();
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:items.html.twig', array(
+                'prices' => $prices,
+                'Account' => $myaccount
+            ));
+    }
+
+    public function SwitchFavoriteItemAction($priceid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
+
+        $price->setIsFavourite(!$price->getIsFavourite());
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('Retailer_Items_Show'));
+    }
+//end mostafa
 }
 

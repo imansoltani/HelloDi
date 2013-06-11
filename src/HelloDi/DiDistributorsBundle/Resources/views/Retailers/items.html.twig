@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
     Items
@@ -50,17 +50,21 @@
                                 {% for price in prices %}
                                     <tr>
                                         <td>{{ price.item.id }}</td>
-                                        <td>{{  price.item.itemName }}</td>
-                                        <td>{{  price.item.itemFaceValue }}</td>
-                                        <td>{% if price.item.itemType==0 %}Mobile{% elseif  price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
-                                        <td>{{  price.price }}
-                                            {{  price.priceCurrency }}</td>
+                                        <td>{{ price.item.itemName }}</td>
+                                        <td>{{ price.item.itemFaceValue }}</td>
+                                        <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                                        <td>{{ price.price }}
+                                            {{ price.priceCurrency }}</td>
                                         <td>
-                                            <a class="btn_actions"
-                                               href="{{ path('items_item_per_retailers',{'id': price.item.id}) }}">See Price
-                                                for retailers</a>
-                                            <br/>
                                             <a class="btn_actions" href="#">details</a>
+                                            <br/>
+                                            <a class="btn_actions" href="{{ path('Retailer_Items_Change_Favorite',{'priceid':price.id}) }}">
+                                                {% if price.isFavourite==0 %}
+                                                    add to Favorite
+                                                {% else %}
+                                                    Heart Pic
+                                                {% endif %}
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}

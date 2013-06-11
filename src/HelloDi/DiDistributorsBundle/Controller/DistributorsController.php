@@ -715,24 +715,15 @@ class DistributorsController extends Controller
     }
 
     //items
-    public function ShowItemsAction(Request $request)
+    public function ShowItemsAction()
     {
-        $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder()
-            ->select('item')
-            ->from('HelloDiDiDistributorsBundle:Item', 'item')
-            ->innerJoin('item.Prices', 'prices')
-            ->innerJoin('prices.Account', 'account')
-            ->where('account = :acc')
-            ->setParameter('acc', $account);
-
-        $query = $qb->getQuery()->getResult();
+        $prices = $myaccount->getPrices();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:items.html.twig', array(
-            'pagination' => $query,
-            'Account' => $account
+            'prices' => $prices,
+            'Account' => $myaccount
         ));
     }
 
@@ -761,14 +752,7 @@ class DistributorsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $qb = $em->createQueryBuilder()
-            ->select('price')
-            ->from('HelloDiDiDistributorsBundle:Price', 'price')
-            ->innerJoin('price.Account', 'account')
-            ->where('account = :acc')
-            ->setParameter('acc', $account);
-
-        $prices = $qb->getQuery()->getResult();
+        $prices = $account->getPrices();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItems.html.twig', array(
             'Account' => $myaccount,
@@ -817,21 +801,22 @@ class DistributorsController extends Controller
                 ))
             ->add('price')
             ->getForm();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->persist($price);
 
-        $form->bind($request);
-        if ($form->isValid()) {
-            $em->persist($price);
+                $pricehistory = new PriceHistory();
+                $pricehistory->setDate(new \DateTime('now'));
+                $pricehistory->setPrice($price->getPrice());
+                $pricehistory->setPrices($price);
+                $em->persist($pricehistory);
 
-            $pricehistory = new PriceHistory();
-            $pricehistory->setDate(new \DateTime('now'));
-            $pricehistory->setPrice($price->getPrice());
-            $pricehistory->setPrices($price);
-            $em->persist($pricehistory);
-
-            $em->flush();
-            return $this->forward('HelloDiDiDistributorsBundle:Distributors:RetailerItems', array(
-                    'id' => $account->getId()
-                ));
+                $em->flush();
+                return $this->forward('HelloDiDiDistributorsBundle:Distributors:RetailerItems', array(
+                        'id' => $account->getId()
+                    ));
+            }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItemsAdd.html.twig', array(
@@ -851,21 +836,23 @@ class DistributorsController extends Controller
 
         $form = $this->createForm(new PriceEditType(), $price);
 
-        $form->bind($request);
-        if ($form->isValid()) {
-            if ($price->getPrice() != $oldprice) {
-                $pricehistory = new PriceHistory();
-                $pricehistory->setDate(new \DateTime('now'));
-                $pricehistory->setPrice($price->getPrice());
-                $pricehistory->setPrices($price);
-                $em->persist($pricehistory);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                if ($price->getPrice() != $oldprice) {
+                    $pricehistory = new PriceHistory();
+                    $pricehistory->setDate(new \DateTime('now'));
+                    $pricehistory->setPrice($price->getPrice());
+                    $pricehistory->setPrices($price);
+                    $em->persist($pricehistory);
+                }
+                $em->flush();
+
+
+                return $this->forward('HelloDiDiDistributorsBundle:Distributors:RetailerItems', array(
+                        'id' => $price->getAccount()->getId()
+                    ));
             }
-            $em->flush();
-
-
-            return $this->forward('HelloDiDiDistributorsBundle:Distributors:RetailerItems', array(
-                    'id' => $price->getAccount()->getId()
-                ));
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerItemsEdit.html.twig', array(

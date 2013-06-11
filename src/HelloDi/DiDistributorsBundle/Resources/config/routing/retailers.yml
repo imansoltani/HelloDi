@@ -17,3 +17,7 @@ RetailerSale:
 retailer_shop:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
     prefix:   /shop
+
+retailer_items:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/items.yml"
+    prefix:   /items
