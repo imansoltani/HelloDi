@@ -22,8 +22,8 @@
         <td>{{ item.itemName }}</td>
         <td>{{ item.itemFaceValue }}</td>
         <td>{{ item.itemCurrency }}</td>
-        <td><td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
-                <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td></td>
+        <td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
+                <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td>
     </tr>
             {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
         {% endif %}
