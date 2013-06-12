@@ -1,0 +1,55 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Edit Operator
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('operator') }}">Operator</a>
+    <span class="link">Edit Operator</span>
+{% endblock Site_Map %}
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Edit Operator
+{% endblock %}
+
+
+{% set MU = 'operator' %}
+
+{% block Body %}
+
+    <div class="span">
+        Logo:
+        <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
+    </div>
+    <form action="#"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+
+        <div class="control-group">
+            {{ form_label(edit_form.name) }}
+            {{ form_widget(edit_form.name) }}
+            {{ form_errors(edit_form.name) }}
+        </div>
+
+
+        <div class="control-group">
+            {{ form_label(edit_form.file) }}
+            {{ form_widget(edit_form.file) }}
+            {{ form_errors(edit_form.file) }}
+        </div>
+
+        {{ form_rest(edit_form) }}
+
+        <div class="form-actions" style="margin-bottom: 0">
+            <input type="submit" class="btn btn-primary" value="Edit"/>
+        </div>
+    </form>
+{% endblock %}
+
+
+

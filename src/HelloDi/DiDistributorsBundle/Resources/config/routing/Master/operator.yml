@@ -1,0 +1,11 @@
+operator:
+    pattern:  /
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Operator:index" }
+
+operator_new:
+    pattern:  /new
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Operator:new" }
+
+operator_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Operator:edit" }

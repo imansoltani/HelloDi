@@ -805,6 +805,12 @@ class DistributorsController extends Controller
                     {
                         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
                         $price->setPrice($newprice);
+
+                        $pricehistory = new PriceHistory();
+                        $pricehistory->setPrice($newprice);
+                        $pricehistory->setDate(new \DateTime('now'));
+                        $pricehistory->setPrices($price);
+                        $em->persist($pricehistory);
                     }
                     else
                     {

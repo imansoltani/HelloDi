@@ -1,0 +1,60 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    New Operator
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('operator') }}">Operator</a>
+    <span class="link">New Operator</span>
+{% endblock Site_Map %}
+{% block Link_Head %}
+
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Add Operator
+{% endblock %}
+
+
+{% set MU = 'operator' %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div class="widget-header">
+                    <h3>Operator Info</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.file) }}
+                        {{ form_widget(form.file) }}
+                        {{ form_errors(form.file) }}
+                    </div>
+
+                    {{ form_rest(form) }}
+                    <div class="form-actions" style="margin-bottom: 0">
+                        <input type="submit" class="btn btn-primary" value="Add"/>
+                        <button type="reset" class="btn">Cancel</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
