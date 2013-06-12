@@ -1,0 +1,71 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Operators
+{% endblock title %}
+
+{% set MU = 'operator' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Operator</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Operators Management
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+    <div class="widget stacked">
+
+        <!-- /widget-header -->
+
+        <div class="widget-content">
+            <a class=" btn btn-primary btn-large" href="{{ path('operator_new') }}">
+                Add a new Operator
+            </a>
+
+            <div style="margin-top: 5px" class="tablediv">
+
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Manage</th>
+                                <th>Name</th>
+                                <th>Logo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for operator in operators %}
+                                <tr>
+
+                                    <td >{{ operator.id }}</td>
+                                    <td class="td-actions" >
+                                        <a class="btn_actions" href="{{ path('operator_edit',{'id':operator.id}) }}">edit</a>
+                                    </td>
+                                    <td>{{ operator.name }}</td>
+                                    <td><img src="{{ asset(operator.webPath) }}" style="width: 50px;height: 50px" /></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+            </div>
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                   Fix_Size();
+                } );
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
