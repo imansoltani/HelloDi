@@ -769,21 +769,70 @@ class DistributorsController extends Controller
         ));
     }
 
-    public function ItemPerRetailerAction(Request $request, $id)
+    public function ItemPerRetailerAction(Request $request, $itemid)
     {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
+
         $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
         $form = $this->createFormBuilder()
-            ->add('fff', 'collection', array(
-                'type' => 'checkbox',
-                'options' => array(
-                    'required' => false,
-                ),
+            ->add('checks', 'entity', array(
+                    'class' => 'HelloDiDiDistributorsBundle:Account',
+                    'expanded' => 'true',
+                    'multiple' => 'true',
+                    'query_builder' => function(EntityRepository $er) use ($account,$item) {
+                        return $er->createQueryBuilder('u')
+                            ->leftJoin('u.Prices','prices')
+                            ->where('prices is null or prices.Item = :item')
+                            ->andWhere('u.Parent = :parent')
+                            ->setParameter('item',$item)
+                            ->setParameter('parent',$account)
+                            ;
+                    }
             ))
+            ->add('NewPrice','text')
             ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $newprice = $data['NewPrice'];
+                foreach ($data['checks'] as $accountretailer)
+                {
+                    if(count($accountretailer->getPrices())!=0)
+                    {
+                        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
+                        $price->setPrice($newprice);
+                    }
+                    else
+                    {
+                        $price = new Price();
+                        $price->setPrice($newprice);
+                        $price->setPriceCurrency($accountretailer->getAccCurrency());
+                        $price->setPriceStatus(true);
+                        $price->setIsFavourite(true);
+                        $price->setItem($item);
+                        $price->setAccount($accountretailer);
+                        $em->persist($price);
+
+                        $pricehistory = new PriceHistory();
+                        $pricehistory->setPrice($newprice);
+                        $pricehistory->setDate(new \DateTime('now'));
+                        $pricehistory->setPrices($price);
+                        $em->persist($pricehistory);
+                    }
+                }
+                $em->flush();
+                return $this->forward('HelloDiDiDistributorsBundle:Distributors:ShowItems');
+            }
+        }
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ItemsPerRetailer.html.twig', array(
             'form' => $form->createView(),
-            'Account' => $account
+            'Account' => $account,
+            'itemid' => $itemid
         ));
     }
 
