@@ -17,3 +17,7 @@ DistStaffEdit:
 DistChangeRole:
     pattern:  /{id}/staff/ChangeRole
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistChangeRole }
+
+DistTransaction:
+    pattern:  /transaction
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistTransaction }

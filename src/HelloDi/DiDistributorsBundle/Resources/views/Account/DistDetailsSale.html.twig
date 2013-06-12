@@ -1,0 +1,64 @@
+
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+                <a class="btn-large button btn btn-primary " href="#">
+                    Recharge
+                </a>
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Filter List</p>
+                        </span>
+                    </h5>
+                                  </div>
+
+                <div class="tablediv">
+
+                    <div class="contenttitle">
+                        <h4>History</h4>
+                    </div>
+                    <form>
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Buying price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Selling price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Account' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
+                                    <td>{{ 'Transaction.Code' | trans ({}, "account") }} </td>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>{{ tran.id}}</td>
+                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                                        <td>{{ tran.Code.Item.itemName}}</td>
+                                        <td>{{ BuPrice }}</td>
+                                        <td>{{ SePrice }}</td>
+                                        <td>{{ tran.Account.accName }}</td>
+                                        <td>{{ tran.User.username }}</td>
+                                        <td> {{ tran.Code.id }} </td>
+
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -66,26 +66,52 @@
 }
 /* Table
         -------------------------------------------------------- */
+.contenttitle h4{
+
+}
+
 .contenttitle{
     background: none repeat scroll 0% 0% rgb(50, 65, 90);
-    color: rgb(251, 147, 55);
+    color: rgb(51, 51, 51);
     text-transform: uppercase;
     border-radius: 2px 2px 0px 0px;
     font-size: 14px;
     font-weight: normal;
     margin-bottom:0 ;
+
+
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, left top, 0, left top, 1012, color-stop(0, #F5FAFD), color-stop(1, #5EACE0));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(circle farthest-corner at left top, #F5FAFD 0%, #5EACE0 100%);
 }
 .contenttitle h4{
     padding: 12px 10px;
     font-size: 14px;
     font-family: 'Karla',sans-serif;
     font-weight: bold;
-    color: #FFF;
+    color: rgb(51, 51, 51);
     margin-bottom:-20px ;
+    border-bottom: solid 2px rgb(221,221,221);
 }
 
 .tablediv{
-    border:solid rgb(50, 65, 90) thin ;
+    border:solid #c2e8ff thin ;
+
 }
 
 .tablediv form{
@@ -168,6 +194,36 @@ body .tablediv table.table tr td:last-child{
 .btn_edit_action:hover{
     color: rgb(251, 147, 55);
     text-decoration: none;
+
+}
+
+.favorite.unfav{
+    color:rgb(249, 249, 249);
+}
+
+.favorite.fav{
+    color:  #003399;
+}
+
+.favorite{
+    font-size: 20px;
+    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    text-shadow: 1px 1px 3px  #003399;
+    transition : font-size 0.2s ;
+    -webkit-transition : font-size 0.2s ;
+}
+
+.favorite:hover,.favorite:focus{
+    text-decoration: none;
+}
+
+.favorite:hover{
+
+    font-size: 30px;
 }
 
 .tablediv table.table tr td.td-actions input ,.btn_actions{
@@ -177,6 +233,7 @@ body .tablediv table.table tr td:last-child{
     border: none;
     transition:padding-left 0.3s;
     -webkit-transition:padding-left 0.3s; /* Safari */
+
 }
 .tablediv table.table tr td.td-actions input:hover ,.btn_actions:hover{
     color: rgb(251, 147, 55);
@@ -184,7 +241,7 @@ body .tablediv table.table tr td:last-child{
 }
 
 .tablediv table.table tr:last-child td{
-    border-bottom: solid 2px rgb(221,221,221);
+    border-bottom: solid 2px rgb(220, 180, 220);
 }
 
 
@@ -292,11 +349,14 @@ form .control-group .controls > .controls{
 /* Tabs */
 
 .main .pagetop .hornav{
-    padding: 0px 20px;
+    padding: 0px 30px;
     list-style: none outside none;
     margin-top: 15px;
     border-bottom: 1px solid #8fd0fa /*rgb(204, 204, 204)*/;
     margin-left: 0px;
+    margin-bottom: 0;
+    min-height: 40px;
+    display: block;
 
 }
 
@@ -312,6 +372,7 @@ form .control-group .controls > .controls{
 
 .main .pagetop .hornav li a{
     text-decoration: none;
+
 }
 
 .main .pagetop .hornav li a span{
@@ -327,7 +388,7 @@ form .control-group .controls > .controls{
     display: block;
     padding: 10px 20px;
     background: none repeat scroll 0% 0% rgb(103, 191, 248);
-    color: rgb(255, 255, 255);
+    color: #FFF;
     text-transform: uppercase;
     font-size: 14px;
     border-radius: 2px 2px 0px 0px;
@@ -341,6 +402,9 @@ form .control-group .controls > .controls{
     border-image: none;
     transition: background-color 0.3s ;
     -webkit-transition: background-color 0.3s ;
+
+
+
 }
 
 .main .pagetop .hornav li input[type="submit"]  {
@@ -363,21 +427,52 @@ form .control-group .controls > .controls{
 
     transition: background-color 0.3s ;
     -webkit-transition: background-color 0.3s ;
+
+}
+
+.main .pagetop .hornav li input[type="submit"] , .main .pagetop .hornav li a span{
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, left top, 0, left top, 973, color-stop(0, #9FC7E2), color-stop(1, #57A8DF));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(left top, circle farthest-side, #9FC7E2 0%, #57A8DF 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(circle farthest-side at left top, #9FC7E2 0%, #57A8DF 100%);
+
+    text-shadow: 1px 2px 0px #34739c;
+
+    border-radius: 0px 10px 0px 0px;
+
+
 }
 
 .main .pagetop .hornav li input[type="submit"]:hover , .main .pagetop .hornav li a span:hover{
-    background: none repeat scroll 0% 0% #196393;
+    background: none repeat scroll 0% 0% #3593d1;
     border-color: #5ec0ff;
+
+
 }
 
-.main .pagetop .hornav li.active input[type="submit"]:hover , .main .pagetop .hornav li.active a span{
-    color : #196393 ;
+.main .pagetop .hornav li.active input[type="submit"]:hover , .main .pagetop .hornav li.active a span:hover{
+
 }
 
 .main .pagetop .hornav li.active input[type="submit"] , .main .pagetop .hornav li.active a span{
     background: none repeat scroll 0% 0% rgb(255, 255, 255);
     color:#fb9337;
     font-weight: bold;
+    color : #0058cc ;
+    text-shadow: none;
 }
 
 .main .control-group ul li{
@@ -398,7 +493,9 @@ form .control-group .controls > .controls{
 .datatable .control-group label{
     padding-left: 5px;
     padding-right: 5px;
-    color: #FFF;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px #FFF;
+
 }
 
 .datatable .control-group{
@@ -418,11 +515,57 @@ form .control-group .controls > .controls{
     padding: 0;
 }
 
+.datatable > div > div:first-child{
+
+    border-bottom:solid #c2e8ff 2px ;
+/*
+    background: -moz-linear-gradient(top, #f5fafd 0%, #4fa4dd 100%);  FF3.6+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5fafd), color-stop(100%,#4fa4dd)); /* Chrome,Safari4+
+    background: -webkit-linear-gradient(top, #f5fafd 0%,#4fa4dd 100%); /* Chrome10+,Safari5.1+
+    background: -o-linear-gradient(top, #f5fafd 0%,#4fa4dd 100%); /* Opera 11.10+
+    background: -ms-linear-gradient(top, #f5fafd 0%,#4fa4dd 100%); /* IE10+
+    background: linear-gradient(to bottom, #f5fafd 0%,#4fa4dd 100%); /* W3C
+*/
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, left top, 0, left top, 1012, color-stop(0, #F5FAFD), color-stop(1, #5EACE0));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(left top, circle farthest-corner, #F5FAFD 0%, #5EACE0 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(circle farthest-corner at left top, #F5FAFD 0%, #5EACE0 100%);
+}
+
+.datatable > div > div:last-child{
+    background:#FFF;
+    border-bottom: solid thin #c2e8ff;
+
+:
+    /*
+    background: -moz-linear-gradient(top, #b5dff6 0%, #4fa4dd 100%); /* FF3.6+
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,b5dff6), color-stop(100%,#4fa4dd)); /* Chrome,Safari4+
+        background: -webkit-linear-gradient(top, #b5dff6 0%,#4fa4dd 100%); /* Chrome10+,Safari5.1+
+        background: -o-linear-gradient(top, #b5dff6 0%,#4fa4dd 100%); /* Opera 11.10+
+        background: -ms-linear-gradient(top, #b5dff6 0%,#4fa4dd 100%); /* IE10+
+        background: linear-gradient(to bottom, #b5dff6 0%,#4fa4dd 100%); /* W3C */
+}
+
 .datatable > div > div:first-child , .datatable > div > div:last-child{
     height:50px;
     margin: 0px;
-    background: none repeat scroll 0% 0% rgb(50, 65, 90);
-    color: rgb(251, 147, 55);
+    /*background: none repeat scroll 0% 0% rgb(50, 65, 90);*/
+    color: rgb(51, 51, 51);
+
 }
 
 .datatable > div > div{
@@ -455,7 +598,10 @@ form .control-group .controls > .controls{
 
 .datatable > div > div:last-child > div > div{
     margin: 10px;
-    color: #FFF;
+    font-weight: bold;
+
+    color: rgb(51, 51, 51);
+    text-shadow: 0px 1px 1px #FFF;
 }
 
 /* Paging */
@@ -464,7 +610,7 @@ form .control-group .controls > .controls{
     margin: 0px;
     cursor: pointer;
     margin-right: -0.1em !important;
-    border: 1px solid #35275f;
+    border: 1px solid #549ccd;
     background: #ded9ee;
     font-weight: normal;
     color: rgb(85, 85, 85);
@@ -483,13 +629,13 @@ form .control-group .controls > .controls{
 }
 
 .datatable > div > div:last-child > div:last-child > div  a.paginate_active {
-    background: none repeat scroll 0% 0% rgb(50, 65, 90);
+    background:#1983ca;
     color: #FFF;
 }
 
 .datatable > div > div:last-child > div:last-child > div  a.paginate_button_disabled {
     color: #35275f;
-    background: none repeat scroll 0% 0% rgb(50, 65, 90);
+    background: #b2dbf6;
     cursor: default;
     text-decoration: none;
 }

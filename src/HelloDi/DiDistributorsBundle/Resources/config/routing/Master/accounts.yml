@@ -87,6 +87,32 @@ ManageDistSettings:
 ManageDistSettingsSubmit:
     pattern:  distributors/Edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettingsSubmit"}
+
+
+
+
+MasterDistTransaction:
+    pattern:  distributors/{id}/transaction
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Transaction"}
+DetailsMasterDistTransaction:
+    pattern:  distributors/{id}/transaction/details
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
+MasterDistSale:
+    pattern:  distributors/{id}/reports/sale
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Sale"}
+MasterDistDetailsSale:
+    pattern:  distributors/{id}/reports/sale/detailes
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
+
+MasterDistFunding:
+    pattern:  distributors/{id}/transaction/funding
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Funding"}
+
+
+
+
+
+
 #---- items prov
 ManageItemsProv:
     pattern:  /providers/Items

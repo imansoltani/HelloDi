@@ -28,11 +28,53 @@
                 <div class="contenttitle">
                     <h4>Items</h4>
                 </div>
-                <div class="tab-content">
-                    <div>fwefwef</div>
-                    <div>fwefwef</div>
-                    <form>
-                        {{ form_widget(form) }}
+                <div class="tab-content"><br/>
+
+                    <form action="#" method="post" class="form-horizontal">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Retailer Account</th>
+                                <th>Retailer Price</th>
+                                <th>Status</th>
+                                <th><input type="checkbox"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.checks %}
+                                <tr>
+                                    <td>
+                                        {{ form.checks.vars.choices[row.vars.value].data.accName }}
+                                    </td>
+                                    <td>
+                                        {% for rowsss in form.checks.vars.choices[row.vars.value].data.prices %}
+                                            {% if rowsss.item.id == itemid %}
+                                                {{ rowsss.price }} {{ rowsss.priceCurrency }}
+                                            {% endif %}
+                                        {% else %}
+                                            N/A
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for rowsss in form.checks.vars.choices[row.vars.value].data.prices %}
+                                            {% if rowsss.item.id == itemid %}
+                                                {% if rowsss.priceStatus==1 %}true{% else %}false{% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            N/A
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {{ form_widget(row) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {{ form_rest(form) }}
+
+                        <input type="submit" class="btn btn-primary" value="Approve" />
                     </form>
                 </div>
             </div>

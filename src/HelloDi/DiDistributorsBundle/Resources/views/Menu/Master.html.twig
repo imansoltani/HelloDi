@@ -42,29 +42,45 @@
     </li>
 
 
-    <li class="{% if MU == 'users' %}active{% else %}dropdown{% endif %}">
+    <li class="{% if MU == 'operator' %}active{% else %}dropdown{% endif %}">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-user"></i>
-            <span  id="user_pc_menu"  >Users</span>
+            <i class="icon-th-large"></i>
+            <span  id="user_pc_menu"  >Operations</span>
         </a>
     </li>
-    <li class="{% if MU == 'credit-note' %}active{% else %}dropdown{% endif %}">
+
+
+    <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
+            <i class="icon-list-alt"></i>
+            <span  id="user_pc_menu"  >Report</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="">Sales</a></li>
+            <li><a href="javascript:;">Trends</a></li>
+        </ul>
+    </li>
+
+
+    <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-circle-arrow-up"></i>
-            <span  id="user_pc_menu"  >Credit Notes</span>
+            <i class="icon-wrench"></i>
+            <span  id="user_pc_menu"  >Setting</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="">Profile</a></li>
+            <li><a href="{{ path('MasterStaff') }}">Staff</a></li>
+        </ul>
+    </li>
+
+    <li class="{% if MU == 'ticket' %}active{% else %}dropdown{% endif %}">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-comment"></i>
+            <span  id="user_pc_menu"  >Tickets</span>
         </a>
     </li>
-    <li class="{% if MU == 'tax' %}active{% else %}dropdown{% endif %}">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-file"></i>
-            <span  id="user_pc_menu"  >Tax Setting</span>
-        </a>
-    </li>
-    <li class="{% if MU == 'system-report' %}active{% else %}dropdown{% endif %}">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-th-list"></i>
-            <span  id="user_pc_menu"  >System Report</span>
-        </a>
-    </li>
+
 {% endblock Main_Menu %}
 

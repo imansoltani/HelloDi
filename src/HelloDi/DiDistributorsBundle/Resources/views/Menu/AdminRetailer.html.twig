@@ -7,17 +7,17 @@
 
 {% block Dist1 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
@@ -29,7 +29,7 @@
         </a>
     </li>
     <li class=" {% if MU == 'fav' %}active{% endif %} dropdown">
-        <a href="" class="dropdown-toggle">
+        <a href="{{ path('Retailer_Shop_favourite') }}" class="dropdown-toggle">
             <i class="icon-star"></i>
             <span  id="user_pc_menu"  >Favorites</span>
         </a>
@@ -57,7 +57,7 @@
     </li>
 
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
-        <a href="" class="dropdown-toggle">
+        <a href="{{ path('Retailer_Items_Show') }}" class="dropdown-toggle">
             <i class="icon-tags"></i>
             <span  id="user_pc_menu"  >Item</span>
         </a>
@@ -82,7 +82,7 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="javascript:;">Sales</a></li>
+            <li><a href="{{ path('RetailerSale') }}">Sales</a></li>
             <li><a href="javascript:;">Trends</a></li>
         </ul>
     </li>

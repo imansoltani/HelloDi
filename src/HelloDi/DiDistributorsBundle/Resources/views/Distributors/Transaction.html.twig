@@ -1,0 +1,167 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Transactions
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <span class="link">Transactions</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    Transactions
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+<div class="span">
+    <div class="widget stacked">
+        <div class="widget-content">
+            <a class="btn btn-primary btn-large" href="#{#{{ path('') }}#}">Recharge</a>
+
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Transactions</p>
+                        </span>
+                </h5>
+                <form class="form-horizontal SearchForm" action="{{ path('DistTransaction') }}"
+                      method="POST">
+                    <fieldset>
+                        <div class="control-group">
+                            {{ form_label(form.TypeDate[0]) }}
+                            <div class="controls">
+                                {{ form_widget(form.TypeDate[0]) }}
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            {{ form_label(form.TypeDate[1]) }}
+                            <div class="controls">
+                                {{ form_widget(form.TypeDate[1]) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            {{ form_label(form.Type) }}
+                            <div class="controls">
+                                {{ form_widget(form.Type) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            {{ form_label(form.DateStart) }}
+                            <div class="controls">
+                                {{ form_widget(form.DateStart) }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form.DateEnd) }}
+                            <div class="controls">
+                                {{ form_widget(form.DateEnd) }}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <input class="btn btn-primary" type="submit" value="Search">
+
+                    </fieldset>
+                </form>
+                <script type="text/javascript">
+                    $(function () {
+                        $(".SearchForm").hide();
+                        $('.TitleShow1').click(function () {
+                            $('.SearchForm').slideToggle();
+                            $('#search_logo').removeAttr('class');
+
+                            if ($('.title_search').html() == 'Search Transactions') {
+                                $('.title_search').html('Close Search');
+                                $('#search_logo').attr('class', 'icon-remove');
+                            }
+                            else {
+                                $('.title_search').html('Search Transactions');
+                                $('#search_logo').attr('class', 'icon-search');
+                            }
+
+                            var x = $('.form_search').offset().top - 20;
+                            $('body,html').animate({
+                                scrollTop: x
+                            }, 800);
+                        });
+
+                    });
+                </script>
+            </div>
+
+            <div class="tablediv">
+                <div class="contenttitle">
+                    <h4>Transactions</h4>
+                </div>
+                <form>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px"
+                               class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for tran in pagination %}
+                                <tr>
+                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
+
+                                    <td>{{ tran.tranDescription}}</td>
+                                    <td>{{ tran.tranAmount}}</td>
+                                    <td>{{ tran.Account.accBalance }}</td>
+                                    <td>
+
+                                        {% if tran.tranAction=='sale' %}Sale
+                                        {% elseif tran.tranAction=='tras' %}Transfer
+                                        {% elseif tran.tranAction=='paym' %}Payment
+                                        {% elseif tran.tranAction=='cred' %}CreditNote
+                                        {% elseif tran.tranAction=='add' %}Add
+                                        {% endif %}</td>
+
+                                    <td class="td-actions">
+
+
+                                        <a class="btn_actions" href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Show</a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        {#{button pagination}#}
+                    </div>
+                </form>
+            </div>
+
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

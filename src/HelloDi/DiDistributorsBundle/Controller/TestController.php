@@ -64,10 +64,13 @@ class TestController extends Controller
             }
         }
 
-        return $this->render("HelloDiDiDistributorsBundle:Test:new.html.twig", array(
-            'accounts' => $accounts,
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            "HelloDiDiDistributorsBundle:Test:new.html.twig",
+            array(
+                'accounts' => $accounts,
+                'form' => $form->createView()
+            )
+        );
     }
 
     public function index1Action(Request $request, $id)
@@ -81,19 +84,25 @@ class TestController extends Controller
         $accounts = $qb->getQuery()->getResult();
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        if (!$account) $account = $accounts[0];
+        if (!$account) {
+            $account = $accounts[0];
+        }
 
         $form = $this->createFormBuilder()
-            ->add('Price', 'entity', array(
-                'required' => true,
-                'class' => 'HelloDiDiDistributorsBundle:Price',
-                'query_builder' => function (EntityRepository $er) use ($account) {
-                    return $er->createQueryBuilder('u')
-                        ->innerJoin('u.Account', 'a')
-                        ->where('a = :aaid')
-                        ->setParameter('aaid', $account);
-                }
-            ))
+            ->add(
+                'Price',
+                'entity',
+                array(
+                    'required' => true,
+                    'class' => 'HelloDiDiDistributorsBundle:Price',
+                    'query_builder' => function (EntityRepository $er) use ($account) {
+                        return $er->createQueryBuilder('u')
+                            ->innerJoin('u.Account', 'a')
+                            ->where('a = :aaid')
+                            ->setParameter('aaid', $account);
+                    }
+                )
+            )
             ->getForm();
         $errors = array();
         if ($request->isMethod('POST')) {
@@ -102,33 +111,40 @@ class TestController extends Controller
             $price = $data['Price'];
 
             $codeselector = $this->get('hello_di_di_distributors.codeselector');
-            $code = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
 
-            if (!$code) {
-                $errors[] = 'Code not exist for this item or Balance is not enough.';
-            } else {
-                $user = $this->get('security.context')->getToken()->getUser();
-                $transaction = new Transaction();
-                $transaction->setAccount($account);
-                $transaction->setTranCredit($price->getPrice());
-                $transaction->setTranFees(0);
-                $transaction->setTranCurrency($price->getPriceCurrency());
-                $transaction->setTranDate(new \DateTime('now'));
-                $transaction->setTranAction('sale');
-                $transaction->setUser($user);
-                $transaction->setCode($code);
+            try {
+                $codes = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
+                foreach ($codes as $code) {
+                    $user = $this->get('security.context')->getToken()->getUser();
+                    $transaction = new Transaction();
+                    $transaction->setAccount($account);
+                    $transaction->setTranCredit($price->getPrice());
+                    $transaction->setTranFees(0);
+                    $transaction->setTranCurrency($price->getPriceCurrency());
+                    $transaction->setTranDate(new \DateTime('now'));
+                    $transaction->setTranAction('sale');
+                    $transaction->setUser($user);
+                    $transaction->setCode($code);
 
-                $em->persist($transaction);
-                $em->flush();
+                    $em->persist($transaction);
+                    $em->flush();
+
+                }
                 $errors[] = 'Sale Done.';
+            } catch (\Exception $ex) {
+                $errors[] = $ex->getMessage();
             }
+
         }
 
-        return $this->render("HelloDiDiDistributorsBundle:Test:new1.html.twig", array(
-            'errors' => $errors,
-            'accounts' => $accounts,
-            'myaccount' => $account,
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            "HelloDiDiDistributorsBundle:Test:new1.html.twig",
+            array(
+                'errors' => $errors,
+                'accounts' => $accounts,
+                'myaccount' => $account,
+                'form' => $form->createView()
+            )
+        );
     }
 }

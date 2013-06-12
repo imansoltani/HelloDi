@@ -118,11 +118,14 @@ class EntitiController extends Controller
 
     public function usersAction(Request $request)
     {
+        $newuser='false';
         $id = $request->get('entityid');
 
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        if ($this->get('security.context')->getToken()->getUser()->getEntiti()==$entity)
+         $newuser='true';
         $qb = $em->createQueryBuilder();
         $qb->select('Ent')
             ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
@@ -143,7 +146,9 @@ class EntitiController extends Controller
         );
         // die('sas'.count($pagination));
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' => $pagination, 'entity' => $entity
+            'pagination' => $pagination,
+            'entity' => $entity,
+            'Master'=>$newuser
         ));
     }
 
@@ -184,6 +189,7 @@ class EntitiController extends Controller
             $user->addRole(($data['roles']));
             if ($form->isValid()) {
                 $user->setEntiti($entity);
+                $user->setAccount($Account);
                 $user->setStatus(1);
                 $em->persist($user);
                 $em->flush();

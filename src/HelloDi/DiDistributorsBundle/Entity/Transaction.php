@@ -1,7 +1,6 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as CTRL;
 
 /** 
  * @ORM\Entity
@@ -17,8 +16,6 @@ class Transaction
      */
     private $id;
 
-
-    private $entityManager;
     /** 
      * @ORM\Column(type="decimal", nullable=true)
      */
@@ -27,13 +24,7 @@ class Transaction
     /** 
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
-    private $tranCredit;
-
-    /** 
-     * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
-     */
-    private $tranDebit;
-
+    private $tranAmount;
     /** 
      * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
      */
@@ -387,24 +378,6 @@ class Transaction
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance - $amount);
-
-               $acc = $this->getAccount();
-               $accParent = $this->getAccount()->getParent();
-               $accParentBalance = $this->getAccount()->getParent()->getAccBalance();
-               $item = $this->getCode()->getItem();
-
-               //$priceParent =  $this->getAccount()->getParent()->getPrices(array('Account'=>$acc,'Item'=>$item));
-               //$price->;
-
-               //$this->getAccount()->getParent()->setAccBalance($price + $priceParent);
-
-
-               $prices = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$acc,'Item'=>$item));
-               print $acc->getId();
-               print $item->getId();
-
-               //$pricesParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$accParent,'Item'=>$item));
-//                $this->getAccount()->getParent()->setAccBalance($accParentBalance + 100);
                 break;
 
             case 'cred':
@@ -415,8 +388,26 @@ class Transaction
         }
     }
 
-    public function __construct($entityManager)
+    /**
+     * Set tranAmount
+     *
+     * @param float $tranAmount
+     * @return Transaction
+     */
+    public function setTranAmount($tranAmount)
     {
-        $this->entityManager = $entityManager;
+        $this->tranAmount = $tranAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranAmount
+     *
+     * @return float 
+     */
+    public function getTranAmount()
+    {
+        return $this->tranAmount;
     }
 }

@@ -3,5 +3,5 @@ items_show:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ShowItems }
 
 items_item_per_retailers:
-    pattern:  /{id}/item_per_retailers
+    pattern:  /{itemid}/item_per_retailers
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ItemPerRetailer }

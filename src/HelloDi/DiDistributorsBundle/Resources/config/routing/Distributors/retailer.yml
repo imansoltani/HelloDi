@@ -28,7 +28,7 @@ DistRetailerSetting:
 
 Retailer_Transaction:
     pattern:  /{id}/transactions
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Transaction }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
 
 Retailer_details:
     pattern:  /{id}/details
@@ -42,3 +42,11 @@ Retailer_edit:
 dist_RetailerItem:
     pattern:  /{id}/items
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerItems }
+
+dist_RetailerItemAdd:
+    pattern:  /{id}/items/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerItemsAdd }
+
+dist_RetailerItemEdit:
+    pattern:  /{id}/items/{priceid}/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailerItemsEdit }
