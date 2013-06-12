@@ -388,27 +388,24 @@ class Transaction
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance - $amount);
 
-                $acc = $this->getAccount();
-                $accParent = $this->getAccount()->getParent();
-                $accParentBalance = $this->getAccount()->getParent()->getAccBalance();
-                $item = $this->getCode()->getItem();
-
-                //$priceParent =  $this->getAccount()->getParent()->getPrices(array('Account'=>$acc,'Item'=>$item));
-                //$price->;
-
-                //$this->getAccount()->getParent()->setAccBalance($price + $priceParent);
-
-
-                $prices = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$acc,'Item'=>$item));
-
-                //$pricesParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$accParent,'Item'=>$item));
-//                $this->getAccount()->getParent()->setAccBalance($accParentBalance + 100);
                 break;
 
             case 'cred':
                 break;
 
             case 'add':
+                break;
+            case 'Profit':
+                $acc = $this->getAccount();
+                $accParent = $this->getAccount()->getParent();
+                $accParentBalance = $this->getAccount()->getParent()->getAccBalance();
+                $item = $this->getCode()->getItem();
+
+                $prices = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$acc,'Item'=>$item));
+
+                $pricesParent = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accParent,'Item'=>$item));
+                $currentBalanceParent = $this->getAccount()->getParent()->getAccBalance();
+                $this->getAccount()->getParent()->setAccBalance($currentBalanceParent + ($prices->getprice() - $pricesParent->getprice()));
                 break;
         }
     }

@@ -357,13 +357,15 @@ class RetailersController extends Controller
                 $logger->info('test1');
                 $account = $this->get('security.context')->getToken()->getUser()->getAccount();
                 $user = $this->get('security.context')->getToken()->getUser();
-                $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
+                $accountParent = $this->get('security.context')->getToken()->getUser()->getAccount()->getParent();
                 $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
                 $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
                 $codeselector = $this->get('hello_di_di_distributors.codeselector');
                 $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
+                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accountParent));
+                $tranProfit = $price->getprice() - $priceParent->getprice();
 
-                foreach($code as &$value){
+                foreach($code as $value){
 
                     $transaction = new Transaction($em);
                     $transaction->setAccount($account);
@@ -376,6 +378,19 @@ class RetailersController extends Controller
                     $transaction->setUser($user);
                     $em->persist($transaction);
                     $em->flush();
+                    // For Parent
+                    $transaction = new Transaction($em);
+                    $transaction->setAccount($account);
+                    $transaction->setTranCredit($tranProfit);
+                    $transaction->setTranFees(0);
+                    $transaction->setTranCurrency($price->getPriceCurrency());
+                    $transaction->setTranDate(new \DateTime('now'));
+                    $transaction->setCode($value);
+                    $transaction->setTranAction('Profit');
+                    $transaction->setUser($user);
+                    $em->persist($transaction);
+                    $em->flush();
+
                 }
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
 
