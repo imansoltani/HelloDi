@@ -5,8 +5,14 @@
 </head>
 <body>
 
-{{ item }}
-{{ numberOfsale }}
+
+{% set i=0 %}
+{% for listcode in code %}
+    {{ code[0].serialNumber }}<br>
+    {% set i=i+1 %}
+
+{% endfor %}
+
 
 </body>
 </html>

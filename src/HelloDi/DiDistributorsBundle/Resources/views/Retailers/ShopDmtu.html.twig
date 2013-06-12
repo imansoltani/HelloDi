@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<p>Account Balance:{{ Account.accBalance }}</p>
+<p>Account Balance:{{ account.accBalance }}</p>
 {% for opr in operator %}
 
     <p style="background:#6b9311">{{  opr.name }}</p>
@@ -16,13 +16,14 @@
     <td width =30%>Curncy</td>
     <td width =30%>Link</td>
     </tr>
-    {% for item in entiti %}
-        {% if( item.operator.id == opr.id and item.itemType == 2  ) %}
+    {% for item in itemlist %}
+        {% if( item.name == opr.name) %}
     <tr>
-        <td>{{ item.itemname }}</td>
+        <td>{{ item.itemName }}</td>
         <td>{{ item.itemFaceValue }}</td>
         <td>{{ item.itemCurrency }}</td>
-        <td>link</td>
+        <td><td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
+                <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td></td>
     </tr>
             {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
         {% endif %}

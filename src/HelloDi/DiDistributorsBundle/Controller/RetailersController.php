@@ -12,6 +12,9 @@ use HelloDi\DiDistributorsBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Listener\BalanceChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\DiDistributorsBundle\Form\TransactionType;
+
 
 class RetailersController extends Controller
 {
@@ -304,12 +307,10 @@ class RetailersController extends Controller
     public function DmtuAction(){
 
         $em = $this->getDoctrine()->getManager();
-
-
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
         $check = $Account->getId();
         $qb = $em->createQueryBuilder()
-            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency')
+            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency','price.id as pid')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
             ->innerJoin('acc.Prices','price')
             ->innerJoin('price.Item','item')
@@ -345,10 +346,45 @@ class RetailersController extends Controller
 
     public function PrintCodeAction(Request $request){
 
+//        $codeselector = $this->get('hello_di_di_distributors.codeselector');
+//        $code = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
+
         if($request->isMethod('POST')){
-            $item = $request->get('item_id');
-            $numberOfsale = $request->get('numberOfsale');
-            return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('item' => $item ,'numberOfsale'=>$numberOfsale));
+            //$logger = $this->get('logger'); // Log
+            try{
+            $em = $this->getDoctrine()->getManager();
+            $logger = $this->get('logger');
+            $logger->info('test1');
+            $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+            $user = $this->get('security.context')->getToken()->getUser();
+            $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
+            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+            $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+            $codeselector = $this->get('hello_di_di_distributors.codeselector');
+            $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
+
+            foreach($code as &$value){
+
+                $transaction = new Transaction($em);
+                $transaction->setAccount($account);
+                $transaction->setTranCredit($price->getPrice());
+                $transaction->setTranFees(0);
+                $transaction->setTranCurrency($price->getPriceCurrency());
+                $transaction->setTranDate(new \DateTime('now'));
+                $transaction->setCode($value);
+                $transaction->setTranAction('sale');
+                $transaction->setUser($user);
+                $em->persist($transaction);
+                $em->flush();
+            }
+            return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
+
+
+            }
+            catch(\Exception $e){
+                print "A problem";
+                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>null));
+           }
         }
     }
 
@@ -359,7 +395,7 @@ class RetailersController extends Controller
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
         $check = $Account->getId();
         $qb = $em->createQueryBuilder()
-            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency')
+            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency','price.id as pid')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
             ->innerJoin('acc.Prices','price')
             ->innerJoin('price.Item','item')
@@ -369,11 +405,9 @@ class RetailersController extends Controller
             ->andwhere('item.itemType =:check2')
             ->setParameter('check2',2)
             ->OrderBy('item.itemName')
-
-
             ->getQuery();
-
             $item = $qb->getResult();
+
         $qb = $em->createQueryBuilder()
             ->select('DISTINCT operator.id','operator.name')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
@@ -384,10 +418,10 @@ class RetailersController extends Controller
             ->andwhere('item.itemType =:check2')
             ->setParameter('check2',2)
             ->setParameter('check',$check)
-
             ->getQuery();
-        $operator = $qb->getResult();
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array('itemlist' => $item , 'operator'=>$operator));
+
+            $operator = $qb->getResult();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array('itemlist' => $item , 'operator'=>$operator,'account'=>$Account));
 
     }
 
@@ -414,7 +448,7 @@ class RetailersController extends Controller
     }
 
     public  function FavouritesCodeAction($id){
-        hello_di_di_distributors.balancechecker.isBalanceEnough();
+
         return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$id));
     }
  // End kamal

@@ -29,7 +29,7 @@ class CodeSelector
             {
                 $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOldestAvailableCodeByItem($item);
                 if ($code)  $code->setStatus(0);
-                else        throw new \Exception("Code not exist in this item.");
+                else        throw new \Exception ("Code not exist in this item.");
                 $codes[] = $code;
             }
             return $codes;

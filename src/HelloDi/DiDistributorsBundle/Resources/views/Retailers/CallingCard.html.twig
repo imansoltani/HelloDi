@@ -5,7 +5,7 @@
 </head>
 <body>
 
-
+<p>Account Balance:{{ account.accBalance }}</p>
 {% for opr in operator %}
     <p style="background:#6b9311">{{  opr.name }}</p>
 <table>
@@ -21,8 +21,9 @@
         <td >{{ item.itemName }}</td>
         <td >{{ item.itemFaceValue }}</td>
         <td >{{ item.itemCurrency }}</td>
+
         <td><form action="{{ path('Retailer_Shop_dmtu_code') }}" method="POST"><input type="text" name="numberOfsale">
-                <input type="hidden" name="item_id" value="{{ item.id }}"><button>Go To Print</button> </form></td>
+                <input type="hidden" name="item_id" value="{{ item.id }}"><input type="hidden" name="price_id" value="{{ item.pid }}"><button>Go To Print</button> </form></td>
     </tr>
     {% endif %}
     {% endfor %}
