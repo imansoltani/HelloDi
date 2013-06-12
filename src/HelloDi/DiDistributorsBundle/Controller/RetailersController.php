@@ -362,8 +362,18 @@ class RetailersController extends Controller
                 $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
                 $codeselector = $this->get('hello_di_di_distributors.codeselector');
                 $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
-                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accountParent));
+                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account' => $accountParent));
                 $tranProfit = $price->getprice() - $priceParent->getprice();
+
+
+                $accParentBalance = $account->getAccBalance();
+
+
+                $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$account,'Item'=>$itemlist));
+
+                $pricesParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accountParent,'Item'=>$itemlist));
+                $currentBalanceParent = $accountParent->getAccBalance();
+                $tranFinalProfit =  $currentBalanceParent + $tranProfit;
 
                 foreach($code as $value){
 
@@ -380,7 +390,7 @@ class RetailersController extends Controller
                     $em->flush();
                     // For Parent
                     $transaction = new Transaction($em);
-                    $transaction->setAccount($account);
+                    $transaction->setAccount($accountParent);
                     $transaction->setTranCredit($tranProfit);
                     $transaction->setTranFees(0);
                     $transaction->setTranCurrency($price->getPriceCurrency());

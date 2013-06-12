@@ -396,16 +396,9 @@ class Transaction
             case 'add':
                 break;
             case 'Profit':
-                $acc = $this->getAccount();
-                $accParent = $this->getAccount()->getParent();
-                $accParentBalance = $this->getAccount()->getParent()->getAccBalance();
-                $item = $this->getCode()->getItem();
-
-                $prices = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$acc,'Item'=>$item));
-
-                $pricesParent = $this->entityManager->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accParent,'Item'=>$item));
-                $currentBalanceParent = $this->getAccount()->getParent()->getAccBalance();
-                $this->getAccount()->getParent()->setAccBalance($currentBalanceParent + ($prices->getprice() - $pricesParent->getprice()));
+                $amount = $this->getTranCredit();
+                $currentBalance = $this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance + $amount);
                 break;
         }
     }
