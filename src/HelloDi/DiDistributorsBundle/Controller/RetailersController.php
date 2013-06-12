@@ -352,40 +352,41 @@ class RetailersController extends Controller
         if($request->isMethod('POST')){
             //$logger = $this->get('logger'); // Log
             try{
-            $em = $this->getDoctrine()->getManager();
-            $logger = $this->get('logger');
-            $logger->info('test1');
-            $account = $this->get('security.context')->getToken()->getUser()->getAccount();
-            $user = $this->get('security.context')->getToken()->getUser();
-            $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
-            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
-            $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
-            $codeselector = $this->get('hello_di_di_distributors.codeselector');
-            $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
+                $em = $this->getDoctrine()->getManager();
+                $logger = $this->get('logger');
+                $logger->info('test1');
+                $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+                $user = $this->get('security.context')->getToken()->getUser();
+                $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
+                $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+                $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+                $codeselector = $this->get('hello_di_di_distributors.codeselector');
+                $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
 
-            foreach($code as &$value){
+                foreach($code as &$value){
 
-                $transaction = new Transaction($em);
-                $transaction->setAccount($account);
-                $transaction->setTranCredit($price->getPrice());
-                $transaction->setTranFees(0);
-                $transaction->setTranCurrency($price->getPriceCurrency());
-                $transaction->setTranDate(new \DateTime('now'));
-                $transaction->setCode($value);
-                $transaction->setTranAction('sale');
-                $transaction->setUser($user);
-                $em->persist($transaction);
-                $em->flush();
-            }
-            return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
+                    $transaction = new Transaction($em);
+                    $transaction->setAccount($account);
+                    $transaction->setTranCredit($price->getPrice());
+                    $transaction->setTranFees(0);
+                    $transaction->setTranCurrency($price->getPriceCurrency());
+                    $transaction->setTranDate(new \DateTime('now'));
+                    $transaction->setCode($value);
+                    $transaction->setTranAction('sale');
+                    $transaction->setUser($user);
+                    $em->persist($transaction);
+                    $em->flush();
+                }
+                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
 
 
             }
             catch(\Exception $e){
                 print "A problem";
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>null));
-           }
+            }
         }
+
     }
 
     public function CallingCardAction() {
