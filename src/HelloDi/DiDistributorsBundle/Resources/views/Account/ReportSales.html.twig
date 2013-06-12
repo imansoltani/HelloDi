@@ -26,6 +26,11 @@
         {{ form_widget(form.Account) }}
     </div>
 
+    <div class="control-group">
+        {{ form_label(form.GroupBy) }}
+        {{ form_widget(form.GroupBy) }}
+    </div>
+
 
     <div class="form-actions" style="margin-bottom: 0" >
         <input class="btn btn-primary" type="submit"  value="Search">
@@ -36,31 +41,27 @@
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
                                 <tr>
+                                    <th>id</th>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.FaceValue' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Retailers' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Serial Number' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Seller' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
-
+                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                            {% for co in pagination %}
+                            {% for Tr in pagination %}
 
                                 <tr>
-
-                                    <td>{{ co.Transactions[0].tranDate|date('y-M-d') }}</td>
-                                    <td>{{ co.Item.itemName}}</td>
-                                    <td>{{ co.Item.itemFaceValue}}</td>
-                                    <td>{{ co.Item.Prices[0].price }}</td>
-                                    <td>{{ co.Transactions[0].Account.accName }}</td>
-                                    <td>{{ co.serialNumber }}</td>
-                                    <td>{{ co.Transactions[0].User.username }}</td>
-                                    <td>{{ co.Transactions[0].User.Entiti.entVatNumber }}</td>
+                                    <td>{{ Tr.id}}</td>
+                                    <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                                    <td>{{ Tr.Code.Item.itemName}}</td>
+                                    <td>{{ Tr.tranAmount}}</td>
+                                    <td>{{ Tr.User.username }}</td>
+                                    <td>{{ Tr.User.Entiti.entVatNumber }}</td>
+                                    <td><a href="{{ path('MasterDistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
 
                                 </tr>
 

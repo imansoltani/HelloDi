@@ -36,20 +36,28 @@ class DistributorsController extends Controller
 
     public function saleAction(Request $req){
 
-
         $User= $this->get('security.context')->getToken()->getUser();
+        $Account=$User->getAccount();
 
         $em=$this->getDoctrine()->getManager();
-        $query=null;
-        //load first list search
 
         $qb=$em->createQueryBuilder();
-        $qb->select('Co')
-            ->from('HelloDiDiDistributorsBundle:Code','Co')
-            ->innerjoin('Co.Transactions','CoTr')
-            ->where('Co.status=:st')->setParameter('st',0)
-            ->andwhere('CoTr.Account=:ac')->setParameter('ac',$User->getAccount());
+
+        $qb->select('Tr')
+            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+            /*for GroupBy*/  ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
+            ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+
+        foreach($Account->getChildrens() as $child)
+        {
+            $qb=$qb->orwhere('Tr.Account=:ac')->setParameter('ac',$child);
+            // ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+
+        }
+
         $query=$qb->getQuery();
+
+
 
 
 
@@ -72,47 +80,54 @@ class DistributorsController extends Controller
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
                     'empty_data'=>'All',
-                    'query_builder' => function(EntityRepository $er) use ($User) {
+                    'query_builder' => function(EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('a')
                             ->where('a.Parent = :ap')
                             ->orderBy('a.accName', 'ASC')
-                            ->setParameter('ap',$User->getAccount());
+                            ->setParameter('ap',$Account);
                     }
                 ))
 
 
             ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())->getForm();
+            ->add('DateEnd','date',array())
+            ->add('GroupBy','choice',array('choices'=>array('NotGroupBy'=>'NotGroupBy','TrCoIt.itemName'=>'Item Name','TrAc.accName'=>'Retainer Name')))
+            ->getForm();
 
         if($req->isMethod('POST'))
         {
             $form->bind($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
-            $qb->select('Co')
-                ->from('HelloDiDiDistributorsBundle:Code','Co')
-                ->innerjoin('Co.Item','CoIt')
-                ->innerjoin('CoIt.Prices','CoItPr')
-                ->innerjoin('Co.Transactions','CoTr')
-                ->where('Co.status= 0')
-                ->andwhere('CoTr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andwhere('CoTr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+            $qb->select('Tr')
+                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+
+                /*for groupBy*/
+                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
+                /**/
+
+                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
+                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
+                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             if($data['Account']!='All')
-            {
 
-                $qb=$qb->andwhere('CoTr.Account =:account')->setParameter('account',$data['Account']);
+                $qb=$qb->andwhere('Tr.Account =:account')->setParameter('account',$data['Account']);
 
-            }
 
             if($data['ItemType']!=3)
-            {
-                $qb=$qb->andwhere('CoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
-            }
+                $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+
+
 
             if($data['ItemName']!='All')
-                $qb=$qb->andWhere($qb->expr()->like('CoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+                $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+
+            if($data['GroupBy']!='NotGroupBy')
+            {
+                $qb=$qb->GroupBy($data['GroupBy']);
+            }
 
 
             $query=$qb->getQuery();
@@ -128,7 +143,7 @@ class DistributorsController extends Controller
             5/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSales.html.twig',
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSale.html.twig',
 
             array(
                 'pagination'=>$pagination,
@@ -137,8 +152,35 @@ class DistributorsController extends Controller
                 'Account' =>$User->getAccount(),
                 'Entiti' =>$User->getEntiti()));
 
+    }
+
+
+    public function  DetailsSaleAction(Request $req,$id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+        $BuPrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
+         'Account'=>$tran->getAccount()->getParent()
+        ,'Item'=>$tran->getCode()->getItem()));
+
+        $SePrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
+            'Account'=>$tran->getAccount()
+        ,'Item'=>$tran->getCode()->getItem()));
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsReportSale.html.twig',
+            array(
+                'tran'=>$tran,
+                'BuPrice'=>$BuPrice,
+                'SePrice'=>$SePrice
+            ));
 
     }
+
+
+
 
     public function DistProfileAction()
     {

@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/items.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/items.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminRetailer.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminRetailer.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/DetailsReportSale.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/DistDetailsSale.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/Funding.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/ReportSale.html.twig" />
+      <change type="MOVED" beforePath="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Distributors\ReportSales.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ReportSales.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/DistDetailsTransaction.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/DistDetailsTransaction.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/items.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/items.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Master/accounts.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Master/accounts.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/frameworkRootSettings.xml" afterPath="$PROJECT_DIR$/.idea/frameworkRootSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/reports.yml" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/reports.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloDi.iws" />
@@ -17,7 +21,7 @@
     <ignored path="web/uploads/" />
     <ignored path="app/logs/" />
     <ignored path=".idea/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370959483556" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1371024662959" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370961527104" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370427595124" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -110,9 +114,9 @@
     <file path="/account.en.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368591705748" ignored="false" />
     <file path="/account.fa.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368592277918" ignored="false" />
     <file path="/accounts.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368152797467" ignored="false" />
-    <file path="/AccountController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370860138775" ignored="false" />
+    <file path="/AccountController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1371026239414" ignored="false" />
     <file path="/ManageProv.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367907648786" ignored="false" />
-    <file path="/accounts.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369316744365" ignored="false" />
+    <file path="/accounts.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1371025354402" ignored="false" />
     <file path="/a.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370722229089" ignored="false" />
     <file path="/EditAccountProv.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368216402720" ignored="false" />
     <file path="/user.en.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369844257093" ignored="false" />
@@ -359,6 +363,7 @@
     <file path="/RetailerItemsAdd.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370936578940" ignored="false" />
     <file path="/RetailerItemsEdit.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370940189195" ignored="false" />
     <file path="/AdminRetailer.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370961368207" ignored="false" />
+    <file path="/Funding.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1371026093361" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -389,10 +394,111 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="items.html.twig" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="items.html.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/items.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="49" selection-start="2227" selection-end="2227" vertical-scroll-proportion="1.1376673">
+            <state line="59" column="49" selection-start="2227" selection-end="2227" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="538" column="0" selection-start="19584" selection-end="19584" vertical-scroll-proportion="-15.5">
+              <folding>
+                <element signature="e#1355#3485#0" expanded="false" />
+                <element signature="e#1965#2066#0" expanded="false" />
+                <element signature="e#1965#2115#0" expanded="false" />
+                <element signature="e#1965#2177#0" expanded="false" />
+                <element signature="e#3121#3278#0" expanded="false" />
+                <element signature="e#3299#3477#0" expanded="false" />
+                <element signature="e#3376#3476#0" expanded="false" />
+                <element signature="e#3501#4442#0" expanded="false" />
+                <element signature="e#4250#4434#0" expanded="false" />
+                <element signature="e#4330#4433#0" expanded="false" />
+                <element signature="e#4448#5194#0" expanded="false" />
+                <element signature="e#5008#5187#0" expanded="false" />
+                <element signature="e#5083#5186#0" expanded="false" />
+                <element signature="e#5200#5769#0" expanded="false" />
+                <element signature="e#5464#5624#0" expanded="false" />
+                <element signature="e#5775#6947#0" expanded="false" />
+                <element signature="e#6759#6938#0" expanded="false" />
+                <element signature="e#6845#6937#0" expanded="false" />
+                <element signature="e#6953#8684#0" expanded="false" />
+                <element signature="e#8711#8870#0" expanded="false" />
+                <element signature="e#8876#9435#0" expanded="false" />
+                <element signature="e#9208#9428#0" expanded="false" />
+                <element signature="e#9287#9418#0" expanded="false" />
+                <element signature="e#9441#10015#0" expanded="false" />
+                <element signature="e#10021#10466#0" expanded="false" />
+                <element signature="e#10280#10458#0" expanded="false" />
+                <element signature="e#10360#10457#0" expanded="false" />
+                <element signature="e#10481#13133#0" expanded="false" />
+                <element signature="e#10805#10992#0" expanded="false" />
+                <element signature="e#10805#11038#0" expanded="false" />
+                <element signature="e#10805#11082#0" expanded="false" />
+                <element signature="e#10805#11318#0" expanded="false" />
+                <element signature="e#11122#11317#0" expanded="false" />
+                <element signature="e#11500#11592#0" expanded="false" />
+                <element signature="e#11500#11639#0" expanded="false" />
+                <element signature="e#11500#11669#0" expanded="false" />
+                <element signature="e#12661#12819#0" expanded="false" />
+                <element signature="e#12838#13125#0" expanded="false" />
+                <element signature="e#12929#13124#0" expanded="false" />
+                <element signature="e#13139#13520#0" expanded="false" />
+                <element signature="e#13526#14539#0" expanded="false" />
+                <element signature="e#14545#18766#0" expanded="false" />
+                <element signature="e#18772#19582#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DistributorsController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="517" column="38" selection-start="19622" selection-end="19622" vertical-scroll-proportion="0.035928145">
+              <folding>
+                <element signature="e#1138#1472#0" expanded="false" />
+                <element signature="e#20098#22767#0" expanded="false" />
+                <element signature="e#22773#25209#0" expanded="false" />
+                <element signature="e#28667#29220#0" expanded="false" />
+                <element signature="e#29226#31920#0" expanded="false" />
+                <element signature="e#31926#33369#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Funding.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/Funding.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="10" selection-start="620" selection-end="840" vertical-scroll-proportion="-1.9615384">
+              <folding>
+                <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#fieldset#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#form#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#fieldset#0;n#form#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accounts.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Master/accounts.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="107" column="36" selection-start="4288" selection-end="4312" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="retailer.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="0" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -401,93 +507,8 @@
       <file leaf-file-name="RetailersController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="428" column="27" selection-start="16174" selection-end="16174" vertical-scroll-proportion="-4.269231">
-              <folding>
-                <element signature="e#661#959#0" expanded="false" />
-                <element signature="e#827#952#0" expanded="false" />
-                <element signature="e#901#951#0" expanded="false" />
-                <element signature="e#998#1339#0" expanded="false" />
-                <element signature="e#1345#1933#0" expanded="false" />
-                <element signature="e#1588#1745#0" expanded="false" />
-                <element signature="e#1939#3361#0" expanded="false" />
-                <element signature="e#2384#2558#0" expanded="false" />
-                <element signature="e#2580#3129#0" expanded="false" />
-                <element signature="e#2901#3118#0" expanded="false" />
-                <element signature="e#3145#3353#0" expanded="false" />
-                <element signature="e#3367#4404#0" expanded="false" />
-                <element signature="e#4410#5187#0" expanded="false" />
-                <element signature="e#4681#5043#0" expanded="false" />
-                <element signature="e#4711#4862#0" expanded="false" />
-                <element signature="e#4876#5033#0" expanded="false" />
-                <element signature="e#5193#7570#0" expanded="false" />
-                <element signature="e#5546#5732#0" expanded="false" />
-                <element signature="e#5546#5778#0" expanded="false" />
-                <element signature="e#5546#5822#0" expanded="false" />
-                <element signature="e#5546#6058#0" expanded="false" />
-                <element signature="e#5862#6057#0" expanded="false" />
-                <element signature="e#6080#7124#0" expanded="false" />
-                <element signature="e#6239#6331#0" expanded="false" />
-                <element signature="e#6345#6614#0" expanded="false" />
-                <element signature="e#6628#6901#0" expanded="false" />
-                <element signature="e#6915#7077#0" expanded="false" />
-                <element signature="e#7197#7354#0" expanded="false" />
-                <element signature="e#7607#11277#0" expanded="false" />
-                <element signature="e#7877#7954#0" expanded="false" />
-                <element signature="e#7877#8004#0" expanded="false" />
-                <element signature="e#7877#8041#0" expanded="false" />
-                <element signature="e#7877#8063#0" expanded="false" />
-                <element signature="e#7877#8103#0" expanded="false" />
-                <element signature="e#7877#8129#0" expanded="false" />
-                <element signature="e#8185#8404#0" expanded="false" />
-                <element signature="e#8264#8403#0" expanded="false" />
-                <element signature="e#8185#8630#0" expanded="false" />
-                <element signature="e#8464#8629#0" expanded="false" />
-                <element signature="e#8666#9333#0" expanded="false" />
-                <element signature="e#8719#9327#0" expanded="false" />
-                <element signature="e#8765#9326#0" expanded="false" />
-                <element signature="e#9344#9427#0" expanded="false" />
-                <element signature="e#9449#10617#0" expanded="false" />
-                <element signature="e#9608#9989#0" expanded="false" />
-                <element signature="e#9608#10035#0" expanded="false" />
-                <element signature="e#9608#10091#0" expanded="false" />
-                <element signature="e#9608#10133#0" expanded="false" />
-                <element signature="e#9608#10239#0" expanded="false" />
-                <element signature="e#10254#10414#0" expanded="false" />
-                <element signature="e#10801#10958#0" expanded="false" />
-                <element signature="e#10976#11269#0" expanded="false" />
-                <element signature="e#11066#11268#0" expanded="false" />
-                <element signature="e#11329#12881#0" expanded="false" />
-                <element signature="e#11561#11936#0" expanded="false" />
-                <element signature="e#11561#11979#0" expanded="false" />
-                <element signature="e#11561#12028#0" expanded="false" />
-                <element signature="e#11561#12067#0" expanded="false" />
-                <element signature="e#11561#12106#0" expanded="false" />
-                <element signature="e#12185#12478#0" expanded="false" />
-                <element signature="e#12185#12516#0" expanded="false" />
-                <element signature="e#12185#12559#0" expanded="false" />
-                <element signature="e#12185#12608#0" expanded="false" />
-                <element signature="e#12185#12647#0" expanded="false" />
-                <element signature="e#12887#13248#0" expanded="false" />
-                <element signature="e#12947#13242#0" expanded="false" />
-                <element signature="e#13254#14798#0" expanded="false" />
-                <element signature="e#13493#13868#0" expanded="false" />
-                <element signature="e#13493#13911#0" expanded="false" />
-                <element signature="e#13493#13960#0" expanded="false" />
-                <element signature="e#13493#13999#0" expanded="false" />
-                <element signature="e#13493#14038#0" expanded="false" />
-                <element signature="e#14120#14413#0" expanded="false" />
-                <element signature="e#14120#14451#0" expanded="false" />
-                <element signature="e#14120#14500#0" expanded="false" />
-                <element signature="e#14120#14539#0" expanded="false" />
-                <element signature="e#14120#14582#0" expanded="false" />
-                <element signature="e#14804#15700#0" expanded="false" />
-                <element signature="e#15040#15320#0" expanded="false" />
-                <element signature="e#15040#15358#0" expanded="false" />
-                <element signature="e#15040#15401#0" expanded="false" />
-                <element signature="e#15040#15454#0" expanded="false" />
-                <element signature="e#15040#15493#0" expanded="false" />
-                <element signature="e#15706#15936#0" expanded="false" />
-              </folding>
+            <state line="428" column="27" selection-start="16174" selection-end="16174" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -495,7 +516,7 @@
       <file leaf-file-name="Price.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Price.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="271" column="26" selection-start="5944" selection-end="5955" vertical-scroll-proportion="-7.5384617">
+            <state line="271" column="26" selection-start="5944" selection-end="5955" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -557,20 +578,13 @@
       <MyDateState />
     </option>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerSetting.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerItemsAdd.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerItems.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerItemsEdit.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/EditItemDist.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailersTransaction.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Tabs/ShowRetailDist.html.twig" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminRetailer.html.twig" />
@@ -579,6 +593,10 @@
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/items.yml" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/items.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Master/accounts.yml" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/Funding.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
       </list>
     </option>
   </component>
@@ -636,6 +654,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -745,6 +764,40 @@
               <option name="myItemId" value="Resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Account" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloDi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloDi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloDi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DiDistributorsBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -844,7 +897,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Retailers" />
+              <option name="myItemId" value="Master" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -900,9 +953,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloDi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloDi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -937,11 +1003,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Account" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\config\routing\Retailers" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Retailers" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Distributors" />
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Listener" />
-      <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Resources\views\Test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\HelloDi\src\HelloDi\DiDistributorsBundle\Listener" />
@@ -950,118 +1016,6 @@
       <recent name="C:\EasyPHP-12.1\www\HelloDi\src\HelloDi\DiDistributorsBundle\Form\User" />
       <recent name="C:\EasyPHP-12.1\www\HelloDi\src\HelloDi\DiDistributorsBundle\Form\Entiti" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="Moments ago" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/web/bundles/hellodi/css/Home.css</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
   </component>
   <component name="RunManager" selected="PHP Web Application.helldi">
     <configuration default="false" name="AccountController.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
@@ -1354,34 +1308,34 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.5136054" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24621212" sideWeight="0.2857143" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280303" sideWeight="0.670068" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25378788" sideWeight="0.670068" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26136363" sideWeight="0.670068" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39965987" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30757576" sideWeight="0.2993197" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3282313" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.42006803" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.70408165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="92" y="92" width="1182" height="544" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8792517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6717687" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="92" y="92" width="1182" height="544" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6377551" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8792517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.42006803" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1410,7 +1364,7 @@
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
-    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
     <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
     <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
@@ -1487,394 +1441,39 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Form/PriceEditType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="6" selection-start="214" selection-end="214" vertical-scroll-proportion="0.19029851">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/RetailerItemsAdd.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="14" selection-start="1932" selection-end="1932" vertical-scroll-proportion="1.292543">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/Staff.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="72" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/CallingCard.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/favouriteCode.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/account.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/items.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Menu/AdminRetailer.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="45" selection-start="1962" selection-end="1962" vertical-scroll-proportion="0.5391791">
-          <folding />
-        </state>
+        <state line="59" column="45" selection-start="1962" selection-end="1962" vertical-scroll-proportion="0.5391791" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/retailers.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="516" selection-end="516" vertical-scroll-proportion="0.45373666">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="966" column="59" selection-start="36341" selection-end="36341" vertical-scroll-proportion="0.45242718">
-          <folding>
-            <element signature="e#1355#3485#0" expanded="false" />
-            <element signature="e#1728#3047#0" expanded="false" />
-            <element signature="e#1965#2066#0" expanded="false" />
-            <element signature="e#1965#2115#0" expanded="false" />
-            <element signature="e#1965#2177#0" expanded="false" />
-            <element signature="e#3121#3278#0" expanded="false" />
-            <element signature="e#3299#3477#0" expanded="false" />
-            <element signature="e#3376#3476#0" expanded="false" />
-            <element signature="e#3501#4442#0" expanded="false" />
-            <element signature="e#3766#3876#0" expanded="false" />
-            <element signature="e#3963#4234#0" expanded="false" />
-            <element signature="e#4049#4223#0" expanded="false" />
-            <element signature="e#4250#4434#0" expanded="false" />
-            <element signature="e#4330#4433#0" expanded="false" />
-            <element signature="e#4448#5194#0" expanded="false" />
-            <element signature="e#4737#4991#0" expanded="false" />
-            <element signature="e#4823#4981#0" expanded="false" />
-            <element signature="e#5008#5187#0" expanded="false" />
-            <element signature="e#5083#5186#0" expanded="false" />
-            <element signature="e#5200#5769#0" expanded="false" />
-            <element signature="e#5464#5624#0" expanded="false" />
-            <element signature="e#5775#6947#0" expanded="false" />
-            <element signature="e#6130#6742#0" expanded="false" />
-            <element signature="e#6759#6938#0" expanded="false" />
-            <element signature="e#6845#6937#0" expanded="false" />
-            <element signature="e#6953#8684#0" expanded="false" />
-            <element signature="e#7623#8524#0" expanded="false" />
-            <element signature="e#7710#8513#0" expanded="false" />
-            <element signature="e#8711#8870#0" expanded="false" />
-            <element signature="e#8876#9435#0" expanded="false" />
-            <element signature="e#9208#9428#0" expanded="false" />
-            <element signature="e#9287#9418#0" expanded="false" />
-            <element signature="e#9441#10015#0" expanded="false" />
-            <element signature="e#9807#9923#0" expanded="false" />
-            <element signature="e#10021#10466#0" expanded="false" />
-            <element signature="e#10280#10458#0" expanded="false" />
-            <element signature="e#10360#10457#0" expanded="false" />
-            <element signature="e#10481#13133#0" expanded="false" />
-            <element signature="e#10805#10992#0" expanded="false" />
-            <element signature="e#10805#11038#0" expanded="false" />
-            <element signature="e#10805#11082#0" expanded="false" />
-            <element signature="e#10805#11318#0" expanded="false" />
-            <element signature="e#11122#11317#0" expanded="false" />
-            <element signature="e#11341#12588#0" expanded="false" />
-            <element signature="e#11500#11592#0" expanded="false" />
-            <element signature="e#11500#11639#0" expanded="false" />
-            <element signature="e#11500#11669#0" expanded="false" />
-            <element signature="e#11684#11956#0" expanded="false" />
-            <element signature="e#11970#12246#0" expanded="false" />
-            <element signature="e#12260#12422#0" expanded="false" />
-            <element signature="e#12661#12819#0" expanded="false" />
-            <element signature="e#12838#13125#0" expanded="false" />
-            <element signature="e#12929#13124#0" expanded="false" />
-            <element signature="e#13141#14074#0" expanded="false" />
-            <element signature="e#13641#13799#0" expanded="false" />
-            <element signature="e#13817#14066#0" expanded="false" />
-            <element signature="e#13915#14065#0" expanded="false" />
-            <element signature="e#14081#17863#0" expanded="false" />
-            <element signature="e#14374#14451#0" expanded="false" />
-            <element signature="e#14374#14501#0" expanded="false" />
-            <element signature="e#14374#14538#0" expanded="false" />
-            <element signature="e#14374#14560#0" expanded="false" />
-            <element signature="e#14570#14809#0" expanded="false" />
-            <element signature="e#14880#15107#0" expanded="false" />
-            <element signature="e#14880#15346#0" expanded="false" />
-            <element signature="e#14880#15925#0" expanded="false" />
-            <element signature="e#15404#15924#0" expanded="false" />
-            <element signature="e#14880#15973#0" expanded="false" />
-            <element signature="e#14880#16017#0" expanded="false" />
-            <element signature="e#16039#17224#0" expanded="false" />
-            <element signature="e#16198#16471#0" expanded="false" />
-            <element signature="e#16198#16529#0" expanded="false" />
-            <element signature="e#16198#16575#0" expanded="false" />
-            <element signature="e#16198#16631#0" expanded="false" />
-            <element signature="e#16198#16673#0" expanded="false" />
-            <element signature="e#16688#16848#0" expanded="false" />
-            <element signature="e#16862#17022#0" expanded="false" />
-            <element signature="e#17408#17565#0" expanded="false" />
-            <element signature="e#17583#17854#0" expanded="false" />
-            <element signature="e#17671#17853#0" expanded="false" />
-            <element signature="e#17882#19039#0" expanded="false" />
-            <element signature="e#18306#18894#0" expanded="false" />
-            <element signature="e#18389#18883#0" expanded="false" />
-            <element signature="e#19045#21508#0" expanded="false" />
-            <element signature="e#19413#19570#0" expanded="false" />
-            <element signature="e#19580#21296#0" expanded="false" />
-            <element signature="e#19827#19914#0" expanded="false" />
-            <element signature="e#19827#19966#0" expanded="false" />
-            <element signature="e#19827#20026#0" expanded="false" />
-            <element signature="e#21110#21283#0" expanded="false" />
-            <element signature="e#21317#21499#0" expanded="false" />
-            <element signature="e#21398#21498#0" expanded="false" />
-            <element signature="e#21536#21695#0" expanded="false" />
-            <element signature="e#21721#22218#0" expanded="false" />
-            <element signature="e#22050#22210#0" expanded="false" />
-            <element signature="e#22238#23092#0" expanded="false" />
-            <element signature="e#22685#22850#0" expanded="false" />
-            <element signature="e#22868#23084#0" expanded="false" />
-            <element signature="e#23114#25283#0" expanded="false" />
-            <element signature="e#23585#23668#0" expanded="false" />
-            <element signature="e#23585#23717#0" expanded="false" />
-            <element signature="e#23585#23777#0" expanded="false" />
-            <element signature="e#24878#25036#0" expanded="false" />
-            <element signature="e#25054#25276#0" expanded="false" />
-            <element signature="e#25289#26091#0" expanded="false" />
-            <element signature="e#25712#25868#0" expanded="false" />
-            <element signature="e#26097#27637#0" expanded="false" />
-            <element signature="e#26545#26621#0" expanded="false" />
-            <element signature="e#26545#26667#0" expanded="false" />
-            <element signature="e#27120#27278#0" expanded="false" />
-            <element signature="e#27643#27812#0" expanded="false" />
-            <element signature="e#27818#28408#0" expanded="false" />
-            <element signature="e#28414#29100#0" expanded="false" />
-            <element signature="e#28748#28920#0" expanded="false" />
-            <element signature="e#28836#28908#0" expanded="false" />
-            <element signature="e#29106#30296#0" expanded="false" />
-            <element signature="e#29698#29700#0" expanded="false" />
-            <element signature="e#30302#31157#0" expanded="false" />
-            <element signature="e#30629#30986#0" expanded="false" />
-            <element signature="e#30716#30976#0" expanded="false" />
-            <element signature="e#31180#31650#0" expanded="false" />
-            <element signature="e#31656#33104#0" expanded="false" />
-            <element signature="e#32117#32859#0" expanded="false" />
-            <element signature="e#32186#32858#0" expanded="false" />
-            <element signature="e#32117#32886#0" expanded="false" />
-            <element signature="e#32928#33097#0" expanded="false" />
-            <element signature="e#33003#33096#0" expanded="false" />
-            <element signature="e#33110#34527#0" expanded="false" />
-            <element signature="e#33577#33725#0" expanded="false" />
-            <element signature="e#33577#33752#0" expanded="false" />
-            <element signature="e#33817#34335#0" expanded="false" />
-            <element signature="e#34172#34324#0" expanded="false" />
-            <element signature="e#34242#34323#0" expanded="false" />
-            <element signature="e#34351#34520#0" expanded="false" />
-            <element signature="e#34426#34519#0" expanded="false" />
-            <element signature="e#34533#35067#0" expanded="false" />
-            <element signature="e#34923#35059#0" expanded="false" />
-            <element signature="e#35073#36263#0" expanded="false" />
-            <element signature="e#35458#36026#0" expanded="false" />
-            <element signature="e#35494#35816#0" expanded="false" />
-            <element signature="e#35863#36015#0" expanded="false" />
-            <element signature="e#35933#36014#0" expanded="false" />
-            <element signature="e#36043#36256#0" expanded="false" />
-            <element signature="e#36119#36255#0" expanded="false" />
-            <element signature="e#36286#36749#0" expanded="false" />
-            <element signature="e#36755#38527#0" expanded="false" />
-            <element signature="e#37216#38282#0" expanded="false" />
-            <element signature="e#37285#38281#0" expanded="false" />
-            <element signature="e#37216#38309#0" expanded="false" />
-            <element signature="e#38351#38520#0" expanded="false" />
-            <element signature="e#38426#38519#0" expanded="false" />
-            <element signature="e#38533#39944#0" expanded="false" />
-            <element signature="e#39000#39148#0" expanded="false" />
-            <element signature="e#39000#39175#0" expanded="false" />
-            <element signature="e#39241#39752#0" expanded="false" />
-            <element signature="e#39596#39741#0" expanded="false" />
-            <element signature="e#39666#39740#0" expanded="false" />
-            <element signature="e#39768#39937#0" expanded="false" />
-            <element signature="e#39843#39936#0" expanded="false" />
-            <element signature="e#39950#40484#0" expanded="false" />
-            <element signature="e#40264#40477#0" expanded="false" />
-            <element signature="e#40340#40476#0" expanded="false" />
-            <element signature="e#40490#41673#0" expanded="false" />
-            <element signature="e#40875#41436#0" expanded="false" />
-            <element signature="e#40911#41233#0" expanded="false" />
-            <element signature="e#41280#41425#0" expanded="false" />
-            <element signature="e#41350#41424#0" expanded="false" />
-            <element signature="e#41453#41666#0" expanded="false" />
-            <element signature="e#41529#41665#0" expanded="false" />
-            <element signature="e#41697#43972#0" expanded="false" />
-            <element signature="e#41971#42026#0" expanded="false" />
-            <element signature="e#41971#42090#0" expanded="false" />
-            <element signature="e#41971#42135#0" expanded="false" />
-            <element signature="e#41971#42168#0" expanded="false" />
-            <element signature="e#41971#42212#0" expanded="false" />
-            <element signature="e#42231#42369#0" expanded="false" />
-            <element signature="e#42231#42479#0" expanded="false" />
-            <element signature="e#42231#43080#0" expanded="false" />
-            <element signature="e#42514#43079#0" expanded="false" />
-            <element signature="e#43115#43693#0" expanded="false" />
-            <element signature="e#43758#43965#0" expanded="false" />
-            <element signature="e#43838#43964#0" expanded="false" />
-            <element signature="e#43978#44362#0" expanded="false" />
-            <element signature="e#44368#46127#0" expanded="false" />
-            <element signature="e#44659#45465#0" expanded="false" />
-            <element signature="e#44659#45564#0" expanded="false" />
-            <element signature="e#44659#45686#0" expanded="false" />
-            <element signature="e#44659#45782#0" expanded="false" />
-            <element signature="e#44659#45872#0" expanded="false" />
-            <element signature="e#45914#46120#0" expanded="false" />
-            <element signature="e#45993#46119#0" expanded="false" />
-            <element signature="e#46133#50501#0" expanded="false" />
-            <element signature="e#46414#46753#0" expanded="false" />
-            <element signature="e#46414#46852#0" expanded="false" />
-            <element signature="e#46414#46974#0" expanded="false" />
-            <element signature="e#46414#47055#0" expanded="false" />
-            <element signature="e#46414#47130#0" expanded="false" />
-            <element signature="e#47499#50319#0" expanded="false" />
-            <element signature="e#48115#50309#0" expanded="false" />
-            <element signature="e#48215#50224#0" expanded="false" />
-            <element signature="e#48327#48952#0" expanded="false" />
-            <element signature="e#48973#50131#0" expanded="false" />
-            <element signature="e#50150#50224#0" expanded="false" />
-            <element signature="e#50239#50309#0" expanded="false" />
-            <element signature="e#50336#50494#0" expanded="false" />
-            <element signature="e#50406#50493#0" expanded="false" />
-            <element signature="e#50507#53253#0" expanded="false" />
-            <element signature="e#52000#53124#0" expanded="false" />
-            <element signature="e#52987#53021#0" expanded="false" />
-            <element signature="e#53259#54066#0" expanded="false" />
-            <element signature="e#53949#54059#0" expanded="false" />
-            <element signature="e#53965#54058#1" expanded="false" />
-            <element signature="e#54003#54057#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="15" column="0" selection-start="516" selection-end="516" vertical-scroll-proportion="0.45373666" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Distributors/items.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="101" selection-start="2259" selection-end="2259" vertical-scroll-proportion="0.8374761">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="815" column="16" selection-start="30092" selection-end="30252" vertical-scroll-proportion="0.5261194">
-          <folding>
-            <element signature="e#1138#1472#0" expanded="false" />
-            <element signature="e#1495#5115#0" expanded="false" />
-            <element signature="e#1760#1837#0" expanded="false" />
-            <element signature="e#1760#1887#0" expanded="false" />
-            <element signature="e#1760#1924#0" expanded="false" />
-            <element signature="e#1760#1946#0" expanded="false" />
-            <element signature="e#1760#1989#0" expanded="false" />
-            <element signature="e#1760#2029#0" expanded="false" />
-            <element signature="e#2080#2307#0" expanded="false" />
-            <element signature="e#2080#2546#0" expanded="false" />
-            <element signature="e#2080#3133#0" expanded="false" />
-            <element signature="e#2604#3132#0" expanded="false" />
-            <element signature="e#2080#3181#0" expanded="false" />
-            <element signature="e#2080#3225#0" expanded="false" />
-            <element signature="e#3406#3679#0" expanded="false" />
-            <element signature="e#3406#3737#0" expanded="false" />
-            <element signature="e#3406#3783#0" expanded="false" />
-            <element signature="e#3406#3839#0" expanded="false" />
-            <element signature="e#3406#3881#0" expanded="false" />
-            <element signature="e#4616#4773#0" expanded="false" />
-            <element signature="e#4791#5106#0" expanded="false" />
-            <element signature="e#4884#5105#0" expanded="false" />
-            <element signature="e#5121#5453#0" expanded="false" />
-            <element signature="e#5459#6046#0" expanded="false" />
-            <element signature="e#5698#5855#0" expanded="false" />
-            <element signature="e#6052#7484#0" expanded="false" />
-            <element signature="e#6496#6682#0" expanded="false" />
-            <element signature="e#7265#7476#0" expanded="false" />
-            <element signature="e#7490#8525#0" expanded="false" />
-            <element signature="e#8531#9304#0" expanded="false" />
-            <element signature="e#8784#9164#0" expanded="false" />
-            <element signature="e#8814#8974#0" expanded="false" />
-            <element signature="e#8988#9154#0" expanded="false" />
-            <element signature="e#9360#10250#0" expanded="false" />
-            <element signature="e#9766#9923#0" expanded="false" />
-            <element signature="e#9941#10242#0" expanded="false" />
-            <element signature="e#10022#10241#0" expanded="false" />
-            <element signature="e#10256#11524#0" expanded="false" />
-            <element signature="e#11184#11516#0" expanded="false" />
-            <element signature="e#11269#11515#0" expanded="false" />
-            <element signature="e#11530#13182#0" expanded="false" />
-            <element signature="e#12068#12242#0" expanded="false" />
-            <element signature="e#12830#13174#0" expanded="false" />
-            <element signature="e#12914#13173#0" expanded="false" />
-            <element signature="e#13188#13962#0" expanded="false" />
-            <element signature="e#13453#13815#0" expanded="false" />
-            <element signature="e#13483#13634#0" expanded="false" />
-            <element signature="e#13648#13805#0" expanded="false" />
-            <element signature="e#13968#16338#0" expanded="false" />
-            <element signature="e#16143#16330#0" expanded="false" />
-            <element signature="e#16223#16329#0" expanded="false" />
-            <element signature="e#16344#18695#0" expanded="false" />
-            <element signature="e#16709#16767#0" expanded="false" />
-            <element signature="e#16709#16837#0" expanded="false" />
-            <element signature="e#16709#16887#0" expanded="false" />
-            <element signature="e#16709#16934#0" expanded="false" />
-            <element signature="e#16709#16978#0" expanded="false" />
-            <element signature="e#18276#18430#0" expanded="false" />
-            <element signature="e#18447#18687#0" expanded="false" />
-            <element signature="e#18529#18686#0" expanded="false" />
-            <element signature="e#18718#21387#0" expanded="false" />
-            <element signature="e#19847#19939#0" expanded="false" />
-            <element signature="e#19847#19986#0" expanded="false" />
-            <element signature="e#21393#23829#0" expanded="false" />
-            <element signature="e#21695#21878#0" expanded="false" />
-            <element signature="e#21695#21920#0" expanded="false" />
-            <element signature="e#21695#21960#0" expanded="false" />
-            <element signature="e#21695#22168#0" expanded="false" />
-            <element signature="e#21996#22167#0" expanded="false" />
-            <element signature="e#22326#22414#0" expanded="false" />
-            <element signature="e#22326#22457#0" expanded="false" />
-            <element signature="e#22326#22487#0" expanded="false" />
-            <element signature="e#23399#23541#0" expanded="false" />
-            <element signature="e#23555#23819#0" expanded="false" />
-            <element signature="e#23643#23818#0" expanded="false" />
-            <element signature="e#23857#24694#0" expanded="false" />
-            <element signature="e#24419#24687#0" expanded="false" />
-            <element signature="e#24503#24686#0" expanded="false" />
-            <element signature="e#24700#25692#0" expanded="false" />
-            <element signature="e#25393#25685#0" expanded="false" />
-            <element signature="e#25469#25684#0" expanded="false" />
-            <element signature="e#25698#26280#0" expanded="false" />
-            <element signature="e#26661#27281#0" expanded="false" />
-            <element signature="e#26832#27053#0" expanded="false" />
-            <element signature="e#26898#27052#0" expanded="false" />
-            <element signature="e#27095#27274#0" expanded="false" />
-            <element signature="e#27180#27273#0" expanded="false" />
-            <element signature="e#28366#29570#0" expanded="false" />
-            <element signature="e#28435#29569#0" expanded="false" />
-            <element signature="e#30378#30532#0" expanded="false" />
-            <element signature="e#30546#31989#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="59" column="101" selection-start="2259" selection-end="2259" vertical-scroll-proportion="0.8374761" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Retailers/items.yml">
@@ -1886,107 +1485,113 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Price.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="26" selection-start="5944" selection-end="5955" vertical-scroll-proportion="-7.5384617">
+        <state line="271" column="26" selection-start="5944" selection-end="5955" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/RetailersController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="428" column="27" selection-start="16174" selection-end="16174" vertical-scroll-proportion="-4.269231">
-          <folding>
-            <element signature="e#661#959#0" expanded="false" />
-            <element signature="e#827#952#0" expanded="false" />
-            <element signature="e#901#951#0" expanded="false" />
-            <element signature="e#998#1339#0" expanded="false" />
-            <element signature="e#1345#1933#0" expanded="false" />
-            <element signature="e#1588#1745#0" expanded="false" />
-            <element signature="e#1939#3361#0" expanded="false" />
-            <element signature="e#2384#2558#0" expanded="false" />
-            <element signature="e#2580#3129#0" expanded="false" />
-            <element signature="e#2901#3118#0" expanded="false" />
-            <element signature="e#3145#3353#0" expanded="false" />
-            <element signature="e#3367#4404#0" expanded="false" />
-            <element signature="e#4410#5187#0" expanded="false" />
-            <element signature="e#4681#5043#0" expanded="false" />
-            <element signature="e#4711#4862#0" expanded="false" />
-            <element signature="e#4876#5033#0" expanded="false" />
-            <element signature="e#5193#7570#0" expanded="false" />
-            <element signature="e#5546#5732#0" expanded="false" />
-            <element signature="e#5546#5778#0" expanded="false" />
-            <element signature="e#5546#5822#0" expanded="false" />
-            <element signature="e#5546#6058#0" expanded="false" />
-            <element signature="e#5862#6057#0" expanded="false" />
-            <element signature="e#6080#7124#0" expanded="false" />
-            <element signature="e#6239#6331#0" expanded="false" />
-            <element signature="e#6345#6614#0" expanded="false" />
-            <element signature="e#6628#6901#0" expanded="false" />
-            <element signature="e#6915#7077#0" expanded="false" />
-            <element signature="e#7197#7354#0" expanded="false" />
-            <element signature="e#7607#11277#0" expanded="false" />
-            <element signature="e#7877#7954#0" expanded="false" />
-            <element signature="e#7877#8004#0" expanded="false" />
-            <element signature="e#7877#8041#0" expanded="false" />
-            <element signature="e#7877#8063#0" expanded="false" />
-            <element signature="e#7877#8103#0" expanded="false" />
-            <element signature="e#7877#8129#0" expanded="false" />
-            <element signature="e#8185#8404#0" expanded="false" />
-            <element signature="e#8264#8403#0" expanded="false" />
-            <element signature="e#8185#8630#0" expanded="false" />
-            <element signature="e#8464#8629#0" expanded="false" />
-            <element signature="e#8666#9333#0" expanded="false" />
-            <element signature="e#8719#9327#0" expanded="false" />
-            <element signature="e#8765#9326#0" expanded="false" />
-            <element signature="e#9344#9427#0" expanded="false" />
-            <element signature="e#9449#10617#0" expanded="false" />
-            <element signature="e#9608#9989#0" expanded="false" />
-            <element signature="e#9608#10035#0" expanded="false" />
-            <element signature="e#9608#10091#0" expanded="false" />
-            <element signature="e#9608#10133#0" expanded="false" />
-            <element signature="e#9608#10239#0" expanded="false" />
-            <element signature="e#10254#10414#0" expanded="false" />
-            <element signature="e#10801#10958#0" expanded="false" />
-            <element signature="e#10976#11269#0" expanded="false" />
-            <element signature="e#11066#11268#0" expanded="false" />
-            <element signature="e#11329#12881#0" expanded="false" />
-            <element signature="e#11561#11936#0" expanded="false" />
-            <element signature="e#11561#11979#0" expanded="false" />
-            <element signature="e#11561#12028#0" expanded="false" />
-            <element signature="e#11561#12067#0" expanded="false" />
-            <element signature="e#11561#12106#0" expanded="false" />
-            <element signature="e#12185#12478#0" expanded="false" />
-            <element signature="e#12185#12516#0" expanded="false" />
-            <element signature="e#12185#12559#0" expanded="false" />
-            <element signature="e#12185#12608#0" expanded="false" />
-            <element signature="e#12185#12647#0" expanded="false" />
-            <element signature="e#12887#13248#0" expanded="false" />
-            <element signature="e#12947#13242#0" expanded="false" />
-            <element signature="e#13254#14798#0" expanded="false" />
-            <element signature="e#13493#13868#0" expanded="false" />
-            <element signature="e#13493#13911#0" expanded="false" />
-            <element signature="e#13493#13960#0" expanded="false" />
-            <element signature="e#13493#13999#0" expanded="false" />
-            <element signature="e#13493#14038#0" expanded="false" />
-            <element signature="e#14120#14413#0" expanded="false" />
-            <element signature="e#14120#14451#0" expanded="false" />
-            <element signature="e#14120#14500#0" expanded="false" />
-            <element signature="e#14120#14539#0" expanded="false" />
-            <element signature="e#14120#14582#0" expanded="false" />
-            <element signature="e#14804#15700#0" expanded="false" />
-            <element signature="e#15040#15320#0" expanded="false" />
-            <element signature="e#15040#15358#0" expanded="false" />
-            <element signature="e#15040#15401#0" expanded="false" />
-            <element signature="e#15040#15454#0" expanded="false" />
-            <element signature="e#15040#15493#0" expanded="false" />
-            <element signature="e#15706#15936#0" expanded="false" />
-          </folding>
+        <state line="428" column="27" selection-start="16174" selection-end="16174" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="0" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Retailers/items.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="49" selection-start="2227" selection-end="2227" vertical-scroll-proportion="1.1376673">
+        <state line="59" column="49" selection-start="2227" selection-end="2227" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/config/routing/Master/accounts.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="36" selection-start="4288" selection-end="4312" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/Funding.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="10" selection-start="620" selection-end="840" vertical-scroll-proportion="-1.9615384">
+          <folding>
+            <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#fieldset#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#form#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#fieldset#0;n#form#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="538" column="0" selection-start="19584" selection-end="19584" vertical-scroll-proportion="-15.5">
+          <folding>
+            <element signature="e#1355#3485#0" expanded="false" />
+            <element signature="e#1965#2066#0" expanded="false" />
+            <element signature="e#1965#2115#0" expanded="false" />
+            <element signature="e#1965#2177#0" expanded="false" />
+            <element signature="e#3121#3278#0" expanded="false" />
+            <element signature="e#3299#3477#0" expanded="false" />
+            <element signature="e#3376#3476#0" expanded="false" />
+            <element signature="e#3501#4442#0" expanded="false" />
+            <element signature="e#4250#4434#0" expanded="false" />
+            <element signature="e#4330#4433#0" expanded="false" />
+            <element signature="e#4448#5194#0" expanded="false" />
+            <element signature="e#5008#5187#0" expanded="false" />
+            <element signature="e#5083#5186#0" expanded="false" />
+            <element signature="e#5200#5769#0" expanded="false" />
+            <element signature="e#5464#5624#0" expanded="false" />
+            <element signature="e#5775#6947#0" expanded="false" />
+            <element signature="e#6759#6938#0" expanded="false" />
+            <element signature="e#6845#6937#0" expanded="false" />
+            <element signature="e#6953#8684#0" expanded="false" />
+            <element signature="e#8711#8870#0" expanded="false" />
+            <element signature="e#8876#9435#0" expanded="false" />
+            <element signature="e#9208#9428#0" expanded="false" />
+            <element signature="e#9287#9418#0" expanded="false" />
+            <element signature="e#9441#10015#0" expanded="false" />
+            <element signature="e#10021#10466#0" expanded="false" />
+            <element signature="e#10280#10458#0" expanded="false" />
+            <element signature="e#10360#10457#0" expanded="false" />
+            <element signature="e#10481#13133#0" expanded="false" />
+            <element signature="e#10805#10992#0" expanded="false" />
+            <element signature="e#10805#11038#0" expanded="false" />
+            <element signature="e#10805#11082#0" expanded="false" />
+            <element signature="e#10805#11318#0" expanded="false" />
+            <element signature="e#11122#11317#0" expanded="false" />
+            <element signature="e#11500#11592#0" expanded="false" />
+            <element signature="e#11500#11639#0" expanded="false" />
+            <element signature="e#11500#11669#0" expanded="false" />
+            <element signature="e#12661#12819#0" expanded="false" />
+            <element signature="e#12838#13125#0" expanded="false" />
+            <element signature="e#12929#13124#0" expanded="false" />
+            <element signature="e#13139#13520#0" expanded="false" />
+            <element signature="e#13526#14539#0" expanded="false" />
+            <element signature="e#14545#18766#0" expanded="false" />
+            <element signature="e#18772#19582#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/DistributorsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="517" column="38" selection-start="19622" selection-end="19622" vertical-scroll-proportion="0.035928145">
+          <folding>
+            <element signature="e#1138#1472#0" expanded="false" />
+            <element signature="e#20098#22767#0" expanded="false" />
+            <element signature="e#22773#25209#0" expanded="false" />
+            <element signature="e#28667#29220#0" expanded="false" />
+            <element signature="e#29226#31920#0" expanded="false" />
+            <element signature="e#31926#33369#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

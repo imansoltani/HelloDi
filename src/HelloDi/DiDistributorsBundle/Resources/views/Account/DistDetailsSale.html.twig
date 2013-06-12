@@ -26,43 +26,32 @@
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Transaction.id' | trans ({}, "account") }}</th>
+                                    <th>id</th>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-
+                                    <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Buying price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Selling price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Account' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
-                                    <td>{{ 'Transaction.ItemName' | trans ({}, "account") }}</td>
-                                    <td>{{ 'Transaction.Accountname' | trans ({}, "account") }} </td>
+                                    <td>{{ 'Transaction.Code' | trans ({}, "account") }} </td>
 
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                {% for tran in pagination %}
                                     <tr>
                                         <td>{{ tran.id}}</td>
                                         <td>{{ tran.tranDate|date('y-M-d') }}</td>
-                                        <td>{{ tran.tranDescription}}</td>
-                                        <td>{{ tran.tarnAmount}}</td>
-                                        <td>{{ tran.Account.accBalance }}</td>
-                                        <td>
-                                            {% if tran.tranAction=='Sale' %}Sale
-                                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                                            {% elseif tran.tranAction=='Payment' %}Payment
-                                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                                            {% endif %}
-                                        </td>
+                                        <td>{{ tran.Code.Item.itemName}}</td>
+                                        <td>{{ BuPrice }}</td>
+                                        <td>{{ SePrice }}</td>
+                                        <td>{{ tran.Account.accName }}</td>
+                                        <td>{{ tran.User.username }}</td>
+                                        <td> {{ tran.Code.id }} </td>
 
-                                        <td> {{ tran.User.username }} </td>
-                                        <td> {{ tran.Code.Item.itemName }} </td>
-                                        <td> {{ tran.Account.accName }} </td>
 
                                     </tr>
 
-                                {% endfor %}
 
                                 </tbody>
                             </table>
