@@ -24,10 +24,6 @@
 
 {% block Body %}
 
-    <div class="span">
-        Logo:
-        <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
-    </div>
     <form action="#"  method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
 
         <div class="control-group">
@@ -36,6 +32,10 @@
             {{ form_errors(edit_form.name) }}
         </div>
 
+        <div class="span">
+            Logo:
+            <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
+        </div>
 
         <div class="control-group">
             {{ form_label(edit_form.file) }}
