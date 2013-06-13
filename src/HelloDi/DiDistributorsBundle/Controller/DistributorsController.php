@@ -7,6 +7,7 @@ use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
@@ -168,7 +169,7 @@ class DistributorsController extends Controller
 
         $SePrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
             'Account'=>$tran->getAccount()
-        ,'Item'=>$tran->getCode()->getItem()));
+           ,'Item'=>$tran->getCode()->getItem()));
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsReportSale.html.twig',
             array(
@@ -179,7 +180,131 @@ class DistributorsController extends Controller
 
     }
 
+    public function  FundingAction($id)
+    {
 
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $formapplay=$this->createFormBuilder()
+            ->add('Amount')
+            ->add('Description','textarea',array())
+            ->getForm();
+
+        $formupdate=$this->createFormBuilder()
+            ->add('Amount','text')
+            ->add('As','choice',array(
+                'preferred_choices'=>array('Credit'),
+                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+            ))->getForm();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',
+            array(
+                'Entiti'=>$Account->getEntiti(),
+                'Account'=>$Account,
+                'formapplay'=>$formapplay->createView(),
+                'formupdate'=>$formupdate->createView(),
+
+            ));
+    }
+
+    public function  FundingTransferAction(Request $req,$id)
+    {
+        $User= $this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $AccountParent=$Account->getParent();
+        $formtransfer=$this->createFormBuilder()
+            ->add('Amount')
+            ->add('Description','textarea',array())
+            ->getForm();
+
+        if($req->isMethod('post'))
+        {
+            $tran=new Transaction();
+            $formtransfer->bind($req);
+            $data=$formtransfer->getData();
+
+            //objeavt transaction//
+
+            $tran->setTranDate(new \DateTime('now'));
+            $tran->setTranCurrency($Account->getAccCurrency());
+
+            $tran->setTranInsert(new \DateTime('now'));
+            $tran->setAccount($Account);
+            $tran->setTranAction('tras');
+            $tran->setUser($User);
+            $tran->setTranFees(0);
+
+            if($data['Description']!='')$tran->setTranDescription($data['Description']);
+
+            if($data['Amount']!='')
+            {
+                $AccountParent->setAccBalance($AccountParent->getAccBalance()-$data['Amount']);
+                $Account->setAccBalance($Account->getAccBalance()+$data['Amount']);
+            }
+            $em->persist($tran);
+            $em->flush();
+
+        }
+
+        return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
+
+    }
+
+    public function  FundingUpdateAction(Request $req,$id)
+    {
+        $User= $this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $AccountParent=$Account->getParent();
+        $formupdate=$this->createFormBuilder()
+            ->add('Amount','text')
+            ->add('As','choice',array('preferred_choices'=>array('Credit'),
+                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+            ))->getForm();
+
+        if($req->isMethod('POST'))
+        {
+            $formupdate->bind($req);
+            $data=$formupdate->getData();
+
+            $tran=new Transaction();
+
+            $tran->setTranDate(new \DateTime('now'));
+            $tran->setTranCurrency($Account->getAccCurrency());
+
+            $tran->setTranInsert(new \DateTime('now'));
+
+
+            $tran->setUser($User);
+            $tran->setTranFees(0);
+
+
+            if($data['As']=='Credit')
+            {
+                $AccountParent->setAccBalance($AccountParent->getAccBalance()-$data['Amount']);
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()+ $data['Amount']);
+                $tran->setAccount($AccountParent);
+                $tran->setTranAction('Credit');
+                $em->persist($tran);
+           ///وقتی که سرویس اماده شد دستورات اصلاح خواهد شد
+            }
+            elseif($data['As']=='Debit')
+            {
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+                $tran->setTranAction('Debit');
+
+            }
+
+
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
+    }
 
 
     public function DistProfileAction()
@@ -529,7 +654,7 @@ class DistributorsController extends Controller
 
     }
 
-/////---kazem--
+/////---jaadidkazem--
 
     public function RetailersTransactionAction(Request $req,$id)
     {
@@ -682,7 +807,7 @@ class DistributorsController extends Controller
 
 }
 
-//----endkazem----//
+//----endjadidkazem----//
 
     public function DistRetailerSettingAction(Request $req, $id) //id account
     {

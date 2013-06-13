@@ -1,115 +1,113 @@
 
-    <div class="span" >
-        <div class="widget stacked ">
-            <div class="widget-content">
-                <a class="btn-large button btn btn-primary " href="#">
-                 Fund Distributors
-                </a>
+<div class="span" >
+    <div class="widget stacked ">
+        <div class="widget-content">
+            <a class="btn-large button btn btn-primary " href="{{ path('MasterDistFunding',{'id':Account.id}) }}">
+             Fund Distributors
+            </a>
 
-                <div class="form_search">
-                    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Filter List</p>
-                        </span>
-                    </h5>
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                    <span>
+                        <i id="search_logo" class="icon-search"></i>
+                        <p class="title_search">Filter List</p>
+                    </span>
+                </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('MasterDistTransaction',{'id':Account.id}) }}" method="POST" >
+                <form class="form-horizontal SearchForm" action="{{ path('MasterDistTransaction',{'id':Account.id}) }}" method="POST" >
 
 
-                        <div class="control-group">
-                            <label class="control-label" >Trade Date
-                            </label>
-                            <div class="controls">
-                                {{ form_widget(form.TypeDate[0]) }}
-                            </div>
+                    <div class="control-group">
+                        <label class="control-label" >Trade Date
+                        </label>
+                        <div class="controls">
+                            {{ form_widget(form.TypeDate[0]) }}
                         </div>
-
-                        <div class="control-group">
-                            <label class="control-label" >Looking Date
-                            </label>
-                            <div class="controls">
-                                {{ form_widget(form.TypeDate[1]) }}
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.Type) }}
-                            <div class="controls">
-                                {{ form_widget(form.Type) }}
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.DateStart) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateStart) }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ form_label(form.DateEnd) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateEnd) }}
-                            </div>
-                        </div>
-
-                        <hr>
-                        <input class="btn btn-primary" type="submit" value="Search">
-
-                    </form>
-                                  </div>
-
-                <div class="tablediv">
-
-                    <div class="contenttitle">
-                        <h4>History</h4>
                     </div>
-                    <form>
-                        <div class="tab-content">
-                            <table style="margin-top: 20px"
-                                   class="table table-bordered table-striped table-highlight postsend">
-                                <thead>
-                                <tr>
-                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
 
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                {% for tran in pagination %}
-                                    <tr>
-                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
-
-                                        <td>{{ tran.tranDescription}}</td>
-                                        <td>{{ tran.tranAmount}}</td>
-                                        <td>{{ tran.Account.accBalance }}</td>
-                                        <td>
-
-                                            {% if tran.tranAction=='Sale' %}Sale
-                                            {% elseif tran.tranAction=='Tras' %}Transfer
-                                            {% elseif tran.tranAction=='Paym' %}Payment
-                                            {% elseif tran.tranAction=='Cred' %}CreditNote
-                                            {% elseif tran.tranAction=='Add' %}Add
-                                            {% endif %}</td>
-
-
-
-                                        <td><a href="{{ path('DetailsMasterDistTransaction',{'idacc':tran.Account.id,'idusr':tran.User.id}) }}">Details</a></td>
-                                    </tr>
-
-                                {% endfor %}
-
-                                </tbody>
-                            </table>
+                    <div class="control-group">
+                        <label class="control-label" >Looking Date
+                        </label>
+                        <div class="controls">
+                            {{ form_widget(form.TypeDate[1]) }}
                         </div>
-                    </form>
-                </div>
+                    </div>
 
+                    <div class="control-group">
+                        {{ form_label(form.Type) }}
+                        <div class="controls">
+                            {{ form_widget(form.Type) }}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        {{ form_label(form.DateStart) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateStart) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.DateEnd) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateEnd) }}
+                        </div>
+                    </div>
+
+                    <hr>
+                    <input class="btn btn-primary" type="submit" value="Search">
+
+                </form>
+                              </div>
+
+            <div class="tablediv">
+
+                <div class="contenttitle">
+                    <h4>History</h4>
+                </div>
+                <form>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px"
+                               class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for tran in pagination %}
+                                <tr>
+                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
+
+                                    <td>{{ tran.tranDescription}}</td>
+                                    <td>{{ tran.tranAmount}}</td>
+                                    <td>{{ tran.Account.accBalance }}</td>
+                                                  <td>
+
+                                        {% if tran.tranAction=='Sale' %}Sale
+                                        {% elseif tran.tranAction=='Tras' %}Transfer
+                                        {% elseif tran.tranAction=='Paym' %}Payment
+                                        {% elseif tran.tranAction=='Cred' %}CreditNote
+                                        {% elseif tran.tranAction=='Add' %}Add
+                                        {% endif %}</td>
+
+                                    <td><a href="{{ path('DetailsMasterDistTransaction',{'id':tran.id}) }}">Details</a></td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
+</div>

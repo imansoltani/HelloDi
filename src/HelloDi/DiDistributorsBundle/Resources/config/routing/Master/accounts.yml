@@ -108,9 +108,13 @@ MasterDistFunding:
     pattern:  distributors/{id}/transaction/funding
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Funding"}
 
+MasterDistApplayFunding:
+    pattern:  distributors/{id}/transaction/funding/applay
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingApplay"}
 
-
-
+MasterDistUpdateFunding:
+    pattern:  distributors/{id}/transaction/funding/update
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdate"}
 
 
 #---- items prov

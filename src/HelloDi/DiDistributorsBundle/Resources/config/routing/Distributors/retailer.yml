@@ -38,6 +38,22 @@ Retailer_edit:
     pattern:  /{id}/edit
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:editRetailers }
 
+#start
+
+DistRetailerFunding:
+    pattern:  /{id}/transaction/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:Funding"}
+
+DistRetailerTransferFunding:
+    pattern:  /{id}/transaction/transfer/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:FundingTransfer"}
+
+DistRetailerUpdateFunding:
+    pattern:  /{id}/transaction/transfer/update
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:FundingUpdate"}
+
+#end
+
 #item
 dist_RetailerItem:
     pattern:  /{id}/items

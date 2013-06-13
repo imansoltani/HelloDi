@@ -1,9 +1,11 @@
-Description: </br>
-Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</br>
-<h3> Fund distributors balance </h3>
+<h3> Fund distributors balance </h3></br>
+Description 1: </br>
+Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
+Retailer Balance:{{ Account.accBalance }}|{{ Account.accCurrency }}</br>
+
     {#//----Form Applay----//#}
 
-    <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+    <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
         <fieldset>
 
@@ -14,14 +16,6 @@ Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</
                     {{ form_widget(formapplay.Amount)  }}
 
             </div>
-
-            <div class="control-group">
-                {{ form_label(formapplay.As) }}
-                <div class="controls">
-                    {{ form_widget(formapplay.As)  }}
-                </div>
-            </div>
-
             <div class="control-group">
                 {{ form_label(formapplay.Description ) }}
                 <div class="controls">
@@ -31,7 +25,7 @@ Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</
 
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">Applay</button>
+                <button class="btn btn-primary" type="submit">Transfer</button>
             </div>
 
 
@@ -41,8 +35,13 @@ Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</
 
 
 {#//----Form update----//#}
-<h3> Update distributors Credit Limit </h3>
-    <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+<h3> Update distributors Credit Limit </h3></br>
+Description 1: </br>
+Avilable Balance {{ Account.Parent.accBalance }}|{{ Account.Parent.accCurrency }}
+Retailer Credit Limit:{{ Account.accCreditLimit }}|{{ Account.accCurrency }}</br>
+
+
+    <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
         <fieldset>
 
