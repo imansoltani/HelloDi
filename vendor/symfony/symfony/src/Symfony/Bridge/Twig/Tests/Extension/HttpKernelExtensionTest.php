@@ -14,13 +14,14 @@ namespace Symfony\Bridge\Twig\Tests\Extension;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Bridge\Twig\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class HttpKernelExtensionTest extends TestCase
 {
     protected function setUp()
     {
+        parent::setUp();
+
         if (!class_exists('Symfony\Component\HttpKernel\HttpKernel')) {
             $this->markTestSkipped('The "HttpKernel" component is not available');
         }
@@ -50,16 +51,8 @@ class HttpKernelExtensionTest extends TestCase
         $strategy->expects($this->once())->method('getName')->will($this->returnValue('inline'));
         $strategy->expects($this->once())->method('render')->will($return);
 
-        // simulate a master request
-        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')->disableOriginalConstructor()->getMock();
-        $event
-            ->expects($this->once())
-            ->method('getRequest')
-            ->will($this->returnValue(Request::create('/')))
-        ;
-
         $renderer = new FragmentHandler(array($strategy));
-        $renderer->onKernelRequest($event);
+        $renderer->setRequest(Request::create('/'));
 
         return $renderer;
     }

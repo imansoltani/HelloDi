@@ -287,7 +287,7 @@ class XmlEncoder extends SerializerAwareEncoder implements EncoderInterface, Dec
      *
      * @throws UnexpectedValueException
      */
-    private function buildXml($parentNode, $data, $xmlRootNodeName)
+    private function buildXml($parentNode, $data, $xmlRootNodeName = null)
     {
         $append = true;
 
@@ -341,7 +341,7 @@ class XmlEncoder extends SerializerAwareEncoder implements EncoderInterface, Dec
             return $this->appendNode($parentNode, $data, 'data');
         }
 
-        throw new UnexpectedValueException('An unexpected value could not be serialized: '.var_export($data, true));
+        throw new UnexpectedValueException(sprintf('An unexpected value could not be serialized: %s', var_export($data, true)));
     }
 
     /**
@@ -392,7 +392,7 @@ class XmlEncoder extends SerializerAwareEncoder implements EncoderInterface, Dec
     private function selectNodeType($node, $val)
     {
         if (is_array($val)) {
-            return $this->buildXml($node, $val, null);
+            return $this->buildXml($node, $val);
         } elseif ($val instanceof \SimpleXMLElement) {
             $child = $this->dom->importNode(dom_import_simplexml($val), true);
             $node->appendChild($child);

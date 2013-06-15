@@ -132,6 +132,10 @@ class TraceableEventDispatcher implements EventDispatcherInterface, TraceableEve
 
         $this->firstCalledEvent[$eventName] = $this->stopwatch->start($eventName.'.loading', 'event_listener_loading');
 
+        if (!$this->dispatcher->hasListeners($eventName)) {
+            $this->firstCalledEvent[$eventName]->stop();
+        }
+
         $this->dispatcher->dispatch($eventName, $event);
 
         // reset the id as another event might have been dispatched during the dispatching of this event
@@ -381,9 +385,8 @@ class TraceableEventDispatcher implements EventDispatcherInterface, TraceableEve
             case KernelEvents::VIEW:
             case KernelEvents::RESPONSE:
                 // stop only if a controller has been executed
-                try {
+                if ($this->stopwatch->isStarted('controller')) {
                     $this->stopwatch->stop('controller');
-                } catch (\LogicException $e) {
                 }
                 break;
             case KernelEvents::TERMINATE:
