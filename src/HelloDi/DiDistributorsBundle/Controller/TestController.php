@@ -87,7 +87,7 @@ class TestController extends Controller
         if (!$account) {
             $account = $accounts[0];
         }
-
+        $codes = array();
         $form = $this->createFormBuilder()
             ->add(
                 'Price',
@@ -103,17 +103,18 @@ class TestController extends Controller
                     }
                 )
             )
+            ->add('count','text',array('data'=>'1'))
             ->getForm();
         $errors = array();
         if ($request->isMethod('POST')) {
             $form->bind($request);
             $data = $form->getData();
             $price = $data['Price'];
-
+            $count = $data['count'];
             $codeselector = $this->get('hello_di_di_distributors.codeselector');
 
             try {
-                $codes = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
+                $codes = $codeselector->lookForAvailableCode($account, $price, $price->getItem(),$count);
                 foreach ($codes as $code) {
                     $user = $this->get('security.context')->getToken()->getUser();
                     $transaction = new Transaction();
@@ -140,6 +141,7 @@ class TestController extends Controller
         return $this->render(
             "HelloDiDiDistributorsBundle:Test:new1.html.twig",
             array(
+                'codes' => $codes,
                 'errors' => $errors,
                 'accounts' => $accounts,
                 'myaccount' => $account,

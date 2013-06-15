@@ -36,6 +36,7 @@ class CodeSelector
             {
                 $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOldestAvailableCodeByItem($item);
                 $code->setStatus(0);
+                $em->flush();
                 $codes[] = $code;
             }
             return $codes;
