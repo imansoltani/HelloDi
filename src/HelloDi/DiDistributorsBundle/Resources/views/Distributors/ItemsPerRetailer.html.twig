@@ -101,7 +101,7 @@
 
                 <div style="margin-top: 15px" class="control-group">
                     {{ form_label(form.NewPrice) }}
-                    {{ form_widget(form.NewPrice) }}
+                    {{ form_widget(form.NewPrice) }} {{ Account.accCurrency }}
                     {{ form_errors(form.NewPrice) }}
                 </div>
 
