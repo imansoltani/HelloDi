@@ -1,7 +1,9 @@
+Description: </br>
+Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</br>
 <h3> Fund distributors balance </h3>
     {#//----Form Applay----//#}
 
-    <form style="margin-top: 20px" action="#{#{{ path('ManageDistInfoEdit') }}#}" method="post" class="form-horizontal" >
+    <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
         <fieldset>
 
@@ -40,7 +42,7 @@
 
 {#//----Form update----//#}
 <h3> Update distributors Credit Limit </h3>
-    <form style="margin-top: 20px" action="#{#{{ path('ManageDistInfoEdit') }}#}" method="post" class="form-horizontal" >
+    <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
         <fieldset>
 

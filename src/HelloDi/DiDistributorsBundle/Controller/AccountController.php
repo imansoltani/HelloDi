@@ -280,6 +280,7 @@ class AccountController extends Controller
 
 //dist
 
+///--jadidkazem--//
 
     public function  TransactionAction(Request $req,$id)
     {
@@ -366,7 +367,7 @@ class AccountController extends Controller
             ));
     }
 
-    public function  FundingAction(Request $req,$id)
+    public function  FundingAction($id)
     {
 
         $em=$this->getDoctrine()->getManager();
@@ -376,6 +377,7 @@ class AccountController extends Controller
         $formapplay=$this->createFormBuilder()
             ->add('Amount')
             ->add('As','choice',array(
+             'preferred_choices'=>array('Credit'),
              'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
             ))
             ->add('Description','textarea',array())
@@ -384,6 +386,7 @@ class AccountController extends Controller
         $formupdate=$this->createFormBuilder()
             ->add('Amount','text')
             ->add('As','choice',array(
+                 'preferred_choices'=>array('Credit'),
                 'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
             ))->getForm();
 
@@ -396,6 +399,85 @@ class AccountController extends Controller
 
             ));
     }
+
+    public function  FundingApplayAction(Request $req,$id)
+    {
+        $User= $this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $formapplay=$this->createFormBuilder()
+            ->add('Amount')
+            ->add('As','choice',array(
+                   'preferred_choices'=>array('Credit'),
+                   'choices'
+                    =>array('Credit'=>'Credit','Debit'=>'Debit')))
+            ->add('Description','textarea',array())
+            ->getForm();
+
+if($req->isMethod('post'))
+{
+    $tran=new Transaction();
+    $formapplay->bind($req);
+    $data=$formapplay->getData();
+
+    //objeavt transaction//
+
+        $tran->setTranDate(new \DateTime('now'));
+        $tran->setTranCurrency($Account->getAccCurrency());
+
+        $tran->setTranInsert(new \DateTime('now'));
+        $tran->setAccount($Account);
+        $tran->setTranAction('paym');
+        $tran->setUser($User);
+        $tran->setTranFees(0);
+
+        if($data['Description']!='')$tran->setTranDescription($data['Description']);
+
+        if($data['As']=='Credit')
+            $tran->setTranCredit($data['Amount']) ;
+
+        if($data['As']=='Debit')
+            $tran->setTranDebit($data['Amount']) ;
+
+       $em->persist($tran);
+       $em->flush();
+
+}
+
+        return $this->redirect($this->generateUrl('MasterDistFunding',array('id'=>$id)));
+
+    }
+
+    public function  FundingUpdateAction(Request $req,$id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $formupdate=$this->createFormBuilder()
+            ->add('Amount','text')
+            ->add('As','choice',array('preferred_choices'=>array('Credit'),
+                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+            ))->getForm();
+
+        if($req->isMethod('POST'))
+        {
+            $formupdate->bind($req);
+            $data=$formupdate->getData();
+
+            if($data['As']=='Credit')
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
+
+            elseif($data['As']=='Debit')
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+
+               $em->flush();
+         }
+        return $this->redirect($this->generateUrl('MasterDistFunding',array('id'=>$id)));
+    }
+
 
     public  function  SaleAction(Request $req,$id){
 
@@ -536,7 +618,7 @@ class AccountController extends Controller
 
     }
 
-//---------endkazem---------//
+//---------endjadidkazem---------//
 
     public function AddAccountDistMasterAction(Request $request)
     {

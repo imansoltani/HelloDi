@@ -180,6 +180,9 @@ class Operator
             return;
         }
 
+        if(file_exists($this->getAbsolutePath()))
+            unlink($this->getAbsolutePath());
+
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
 
@@ -187,11 +190,11 @@ class Operator
         // target filename to move to
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
+            $this->id.'.'.$this->getFile()->getClientOriginalExtension()
         );
 
         // set the path property to the filename where you've saved the file
-        $this->Logo = $this->getFile()->getClientOriginalName();
+        $this->Logo = $this->id.'.'.$this->getFile()->getClientOriginalExtension();
 
         // clean up the file property as you won't need it anymore
         $this->file = null;

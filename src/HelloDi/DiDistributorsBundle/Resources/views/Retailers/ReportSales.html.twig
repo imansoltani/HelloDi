@@ -122,16 +122,16 @@
                                     </thead>
                                     <tbody>
 
-                                    {% for co in pagination %}
+                                    {% for Tr in pagination %}
                                         <tr>
 
-                                            <td>{{ co.Transactions[0].tranDate|date('y-M-d') }}</td>
-                                            <td>{{ co.Item.itemName}}</td>
-                                            <td>{{ co.Item.itemFaceValue}}</td>
-                                            <td>{{ co.Item.Prices[0].price }}</td>
-                                            <td>{{ co.serialNumber }}</td>
-                                            <td>{{ co.Transactions[0].User.username }}</td>
-                                            <td>{{ co.Transactions[0].User.Entiti.entVatNumber }}</td>
+                                            <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                                            <td>{{ Tr.Code.Item.itemName}}</td>
+                                            <td>{{ Tr.Code.Item.itemFaceValue}}</td>
+                                            <td>{{ Tr.tranAmount }}</td>
+                                            <td>{{ Tr.Code.serialNumber }}</td>
+                                            <td>{{ Tr.User.username }}</td>
+                                            <td>{{ Tr.User.Entiti.entVatNumber }}</td>
 
                                         </tr>
 

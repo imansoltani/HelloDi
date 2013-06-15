@@ -43,8 +43,8 @@
                                         <td>{{ tran.id}}</td>
                                         <td>{{ tran.tranDate|date('y-M-d') }}</td>
                                         <td>{{ tran.Code.Item.itemName}}</td>
-                                        <td>{{ BuPrice }}</td>
-                                        <td>{{ SePrice }}</td>
+                                        <td>{{ tran.tranAmount }}</td>
+                                        <td>{{ tran.tranAmount}}</td>
                                         <td>{{ tran.Account.accName }}</td>
                                         <td>{{ tran.User.username }}</td>
                                         <td> {{ tran.Code.id }} </td>

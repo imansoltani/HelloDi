@@ -27,9 +27,10 @@ class OperatorController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
-                $operator->upload();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($operator);
+                $em->flush();
+                $operator->upload();
                 $em->flush();
                 return $this->redirect($this->generateUrl('operator'));
             }

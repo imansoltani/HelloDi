@@ -205,11 +205,11 @@ class RetailersController extends Controller
         //load first list search
 
         $qb=$em->createQueryBuilder();
-        $qb->select('Co')
-            ->from('HelloDiDiDistributorsBundle:Code','Co')
-            ->innerjoin('Co.Transactions','CoTr')
-            ->where('Co.status=:st')->setParameter('st',0)
-            ->andwhere('CoTr.User=:ur')->setParameter('ur',$User);
+        $qb->select('Tr')
+            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+            /*for GroupBy*/  ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
+            ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
+            ->andwhere('Tr.User=:ur')->setParameter('ur',$User);
              $query=$qb->getQuery();
 
 
@@ -240,7 +240,7 @@ class RetailersController extends Controller
                            ->where('u.Account = :ua')
                            ->orderBy('u.username', 'ASC')
                            ->setParameter('ua',$User->getAccount());
-//                    die('as'.count($er));
+
                 }
                 ));
 
@@ -255,25 +255,22 @@ class RetailersController extends Controller
             $form->bind($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
-            $qb->select('Co')
-                ->from('HelloDiDiDistributorsBundle:Code','Co')
-                ->innerjoin('Co.Item','CoIt')
-                ->innerjoin('CoIt.Prices','CoItPr')
-                ->innerjoin('Co.Transactions','CoTr')
-                ->innerjoin('CoTr.User','CoTrUs')
-                ->where('Co.status= 0')
-                ->andwhere('CoTr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andwhere('CoTr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd'])
-                ->andWhere($qb->expr()->like('CoTrUs.username',$qb->expr()->literal($data['Staff'].'%')));
+            $qb->select(array('Tr'))
+                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+                /*for groupBy*/
+                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')->innerJoin('Tr.User','TrUs')
+                /**/
+                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
+                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
+                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd'])
+                ->andWhere($qb->expr()->like('TrUs.username',$qb->expr()->literal($data['Staff'].'%')));
 
             if($data['ItemType']!=3)
-            {
-                $qb=$qb->andwhere('CoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+                $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
-            }
 
             if($data['ItemName']!='All')
-                 $qb=$qb->andWhere($qb->expr()->like('CoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
 
 
             $query=$qb->getQuery();
@@ -300,11 +297,17 @@ class RetailersController extends Controller
 
     }
 
+
+
+
+
+
+
 //--------endkazem--------//
 
 // Start kamal
 
-    public function DmtuAction(){
+        public function DmtuAction(){
 
         $em = $this->getDoctrine()->getManager();
         $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();

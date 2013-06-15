@@ -152,6 +152,7 @@ class MainConfiguration implements ConfigurationInterface
                 ->arrayNode('access_control')
                     ->cannotBeOverwritten()
                     ->prototype('array')
+                        ->fixXmlConfig('ip')
                         ->children()
                             ->scalarNode('requires_channel')->defaultNull()->end()
                             ->scalarNode('path')
@@ -160,7 +161,10 @@ class MainConfiguration implements ConfigurationInterface
                                 ->example('^/path to resource/')
                             ->end()
                             ->scalarNode('host')->defaultNull()->end()
-                            ->scalarNode('ip')->defaultNull()->end()
+                            ->arrayNode('ips')
+                                ->beforeNormalization()->ifString()->then(function($v) { return array($v); })->end()
+                                ->prototype('scalar')->end()
+                            ->end()
                             ->arrayNode('methods')
                                 ->beforeNormalization()->ifString()->then(function($v) { return preg_split('/\s*,\s*/', $v); })->end()
                                 ->prototype('scalar')->end()
@@ -301,8 +305,7 @@ class MainConfiguration implements ConfigurationInterface
             ->children()
                 ->arrayNode('providers')
                     ->example(array(
-                        'memory' => array(
-                            'name' => 'memory',
+                        'my_memory_provider' => array(
                             'memory' => array(
                                 'users' => array(
                                     'foo' => array('password' => 'foo', 'roles' => 'ROLE_USER'),
@@ -310,7 +313,7 @@ class MainConfiguration implements ConfigurationInterface
                                 ),
                             )
                         ),
-                        'entity' => array('entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'))
+                        'my_entity_provider' => array('entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'))
                     ))
                     ->disallowNewKeysInSubsequentConfigs()
                     ->isRequired()

@@ -25,14 +25,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class ConfigDumpReferenceCommand extends ContainerDebugCommand
 {
     /**
-     * @see Command
+     * {@inheritdoc}
      */
     protected function configure()
     {
         $this
             ->setName('config:dump-reference')
             ->setDefinition(array(
-                new InputArgument('name', InputArgument::REQUIRED, 'The Bundle or extension alias')
+                new InputArgument('name', InputArgument::OPTIONAL, 'The Bundle or extension alias')
             ))
             ->setDescription('Dumps default configuration for an extension')
             ->setHelp(<<<EOF
@@ -53,7 +53,9 @@ EOF
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @throws \LogicException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -61,6 +63,16 @@ EOF
         $containerBuilder = $this->getContainerBuilder();
 
         $name = $input->getArgument('name');
+
+        if (empty($name)) {
+            $output->writeln('Available registered bundles with their extension alias if available:');
+            foreach ($bundles as $bundle) {
+                $extension = $bundle->getContainerExtension();
+                $output->writeln($bundle->getName().($extension ? ': '.$extension->getAlias() : ''));
+            }
+
+            return;
+        }
 
         $extension = null;
 
@@ -72,7 +84,7 @@ EOF
             }
 
             if (!$extension) {
-                throw new \LogicException('No extensions with configuration available for "'.$name.'"');
+                throw new \LogicException(sprintf('No extensions with configuration available for "%s"', $name));
             }
 
             $message = 'Default configuration for "'.$name.'"';
@@ -88,7 +100,7 @@ EOF
             }
 
             if (!$extension) {
-                throw new \LogicException('No extension with alias "'.$name.'" is enabled');
+                throw new \LogicException(sprintf('No extension with alias "%s" is enabled', $name));
             }
 
             $message = 'Default configuration for extension with alias: "'.$name.'"';
@@ -97,14 +109,11 @@ EOF
         $configuration = $extension->getConfiguration(array(), $containerBuilder);
 
         if (!$configuration) {
-            throw new \LogicException('The extension with alias "'.$extension->getAlias().
-                    '" does not have it\'s getConfiguration() method setup');
+            throw new \LogicException(sprintf('The extension with alias "%s" does not have it\'s getConfiguration() method setup', $extension->getAlias()));
         }
 
         if (!$configuration instanceof ConfigurationInterface) {
-            throw new \LogicException(
-                'Configuration class "'.get_class($configuration).
-                '" should implement ConfigurationInterface in order to be dumpable');
+            throw new \LogicException(sprintf('Configuration class "%s" should implement ConfigurationInterface in order to be dumpable', get_class($configuration)));
         }
 
         $output->writeln($message);
