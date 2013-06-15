@@ -16,9 +16,6 @@ class Transaction
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-
-    private $entityManager;
     /**
      * @ORM\Column(type="decimal", nullable=true)
      */
@@ -403,8 +400,5 @@ class Transaction
         }
     }
 
-    public function __construct($entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+
 }

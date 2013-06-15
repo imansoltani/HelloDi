@@ -377,7 +377,7 @@ class RetailersController extends Controller
 
                 foreach($code as $value){
 
-                    $transaction = new Transaction($em);
+                    $transaction = new Transaction();
                     $transaction->setAccount($account);
                     $transaction->setTranCredit($price->getPrice());
                     $transaction->setTranFees(0);
@@ -389,7 +389,7 @@ class RetailersController extends Controller
                     $em->persist($transaction);
                     $em->flush();
                     // For Parent
-                    $transaction = new Transaction($em);
+                    $transaction = new Transaction();
                     $transaction->setAccount($accountParent);
                     $transaction->setTranCredit($tranProfit);
                     $transaction->setTranFees(0);
