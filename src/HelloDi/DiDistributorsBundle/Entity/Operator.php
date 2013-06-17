@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Operator")
+ * @ORM\Table(name="operator")
  */
 class Operator
 {

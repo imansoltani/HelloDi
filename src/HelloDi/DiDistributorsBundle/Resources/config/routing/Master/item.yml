@@ -18,3 +18,12 @@ item_update:
     pattern:  /{id}/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:update" }
     requirements: { _method: post|put }
+
+#description
+item_desc:
+    pattern:  /description
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descIndex" }
+
+item_desc_new:
+    pattern:  /description/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNew" }

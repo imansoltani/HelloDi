@@ -25,7 +25,7 @@
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a>
-            <form action="#" method="post">
+            <form action="{{ path('item_desc') }}" method="post">
                 <input type="hidden" name="itemid" value="{{ item.id }}"/>
                 <input type="submit" value="description"/>
             </form>
@@ -33,16 +33,6 @@
     </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a>
-
-            <form action="#" method="post">
-                <input type="hidden" name="itemid" value="{{ item.id }}"/>
-                <input type="submit" value="logo"/>
-            </form>
-        </a>
-    </li>
-
-    <li {% if tab == '4' %}class="active"{% endif %} >
         <a>
             <form action="#" method="post">
                 <input type="hidden" name="itemid" value="{{ item.id }}"/>

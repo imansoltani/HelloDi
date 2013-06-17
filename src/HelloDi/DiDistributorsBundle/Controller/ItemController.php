@@ -101,4 +101,28 @@ class ItemController extends Controller
 
         return $this->forward("HelloDiDiDistributorsBundle:Item:edit");
     }
+
+    //item desc
+
+    public function descIndexAction(Request $request)
+    {
+        $id = $request->get('itemid');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+
+        $itemdescs = $item->getItemDescs();
+
+        if (!$item) {
+            throw $this->createNotFoundException('Unable to find ItemSesc entity.');
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Item:descindex.html.twig', array(
+                'item'      => $item,
+                'itemdescs' => $itemdescs
+            ));
+    }
+
+
 }

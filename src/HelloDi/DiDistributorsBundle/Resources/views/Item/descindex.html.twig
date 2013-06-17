@@ -1,0 +1,62 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowItemMaster.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block title %}
+    Items Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('item') }}">Item</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Item Descriptions</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Item Descriptions</h3>
+    </div> <!-- /widget-header -->
+
+    <div style="margin-top: 5px" class="tablediv">
+
+        <form method="post" action="{{ path('item_desc_new') }}">
+            <input type="hidden" name="itemid" value="{{ item.id }}"/>
+            <input class="button btn btn-large btn-primary" type="submit" value="Add new Item Description"/>
+        </form>
+
+        <form  action="#" method="post">
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Manage</th>
+                        <th>Language</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for itemdesc in itemdescs %}
+                        <tr>
+
+                            <td >{{ itemdesc.id }}</td>
+                            <td class="td-actions" >
+                                <input type="submit" value="Manage" onclick="$('#itemid').val('{{ itemdesc.id }}')"/>
+                            </td>
+                            <td>{{ itemdesc.desclang }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            <input type="hidden" name="itemid" id="itemid" value=""/>
+        </form>
+    </div>
+
+{% endblock %}
+
+
+
