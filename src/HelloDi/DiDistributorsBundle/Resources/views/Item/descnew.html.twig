@@ -1,0 +1,47 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowItemMaster.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block title %}
+    Items Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('item') }}">Item</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">New Item Descriptions</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Item Descriptions</h3>
+    </div> <!-- /widget-header -->
+
+    <div style="margin-top: 5px" class="tablediv">
+        <form action="{{ path('item_desc_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            {{ form_errors(form) }}
+            <div class="control-group">
+                {{ form_label(form.desclang) }}
+                {{ form_widget(form.desclang) }}
+            </div>
+            <div class="control-group">
+                {{ form_label(form.descdesc) }}
+                {{ form_widget(form.descdesc) }}
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="hidden" name="itemid" value="{{ item.id }}"/>
+
+            <div class="form-actions" style="margin-bottom: 0">
+                <input type="submit" class="btn btn-primary" value="Add"/>
+                <button type="reset" class="btn">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

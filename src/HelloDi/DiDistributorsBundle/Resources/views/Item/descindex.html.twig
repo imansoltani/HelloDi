@@ -27,7 +27,7 @@
             <input class="button btn btn-large btn-primary" type="submit" value="Add new Item Description"/>
         </form>
 
-        <form  action="#" method="post">
+        <form  action="{{ path('item_desc_edit') }}" method="post">
             <div class="tab-content datatable">
                 <table id="example" class="table postsend">
                     <thead>
@@ -35,6 +35,7 @@
                         <th>Id</th>
                         <th>Manage</th>
                         <th>Language</th>
+                        <th>Sample (Pin:1234, Serial:4321)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,16 +44,17 @@
 
                             <td >{{ itemdesc.id }}</td>
                             <td class="td-actions" >
-                                <input type="submit" value="Manage" onclick="$('#itemid').val('{{ itemdesc.id }}')"/>
+                                <input type="submit" value="Edit" onclick="$('#itemdescid').val('{{ itemdesc.id }}')"/>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
+                            <td>{{ include(template_from_string(itemdesc.descdesc)) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
 
             </div>
-            <input type="hidden" name="itemid" id="itemid" value=""/>
+            <input type="hidden" name="itemdescid" id="itemdescid" value=""/>
         </form>
     </div>
 
