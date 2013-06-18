@@ -16,7 +16,7 @@ class ItemDesc
     private $id;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="desc_desc")
+     * @ORM\Column(type="text", nullable=false, name="desc_desc")
      */
     private $descdesc;
 

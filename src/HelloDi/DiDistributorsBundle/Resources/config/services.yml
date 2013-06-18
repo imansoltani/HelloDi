@@ -47,3 +47,8 @@ services:
     hello_di_di_distributors.codeselector:
             class: HelloDi\DiDistributorsBundle\Listener\CodeSelector
             arguments: [@doctrine,@hello_di_di_distributors.balancechecker]
+
+    acme.twig.extension.loader:
+        class:        Twig_Extension_StringLoader
+        tags:
+         - { name: 'twig.extension' }

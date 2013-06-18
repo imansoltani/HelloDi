@@ -25,5 +25,17 @@ item_desc:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descIndex" }
 
 item_desc_new:
-    pattern:  /description/add
+    pattern:  /description/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNew" }
+
+item_desc_create:
+    pattern:  /description/create
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNewSubmit" }
+
+item_desc_edit:
+    pattern:  /description/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
+
+item_desc_update:
+    pattern:  /description/update
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descUpdate" }
