@@ -37,6 +37,7 @@
     </div>
 </form>
                 <form>
+          <a href="#">Print To PDF</a>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
@@ -44,7 +45,8 @@
                                     <th>id</th>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                    {#<th>{{ 'Transaction.Quntity' | trans ({}, "account") }}</th>#}
+                                    <th>{{ 'Transaction.Selling Price' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Retailers' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
@@ -57,10 +59,11 @@
                                 <tr>
                                     <td>{{ Tr.id}}</td>
                                     <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                                    {#<td>{{ Quantity }}/td>#}
                                     <td>{{ Tr.Code.Item.itemName}}</td>
                                     <td>{{ Tr.tranAmount}}</td>
                                     <td>{{ Tr.User.username }}</td>
-                                    <td>{{ Tr.User.Entiti.entVatNumber }}</td>
+                                    <td>Task</td>
                                     <td><a href="{{ path('MasterDistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
 
                                 </tr>

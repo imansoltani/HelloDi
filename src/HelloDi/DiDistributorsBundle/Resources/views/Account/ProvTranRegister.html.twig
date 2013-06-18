@@ -1,0 +1,82 @@
+
+
+    <form style="margin-top: 20px" action="{{ path('ProvTranRegister',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+        <fieldset>
+
+            <div class="control-group">
+
+                {{ form_label(form.CreditDebit[0]) }}
+
+                    {{ form_widget(form.CreditDebit[0])  }}
+
+            </div>
+
+            <div class="control-group">
+
+                {{ form_label(form.CreditDebit[1]) }}
+
+                {{ form_widget(form.CreditDebit[1])  }}
+
+            </div>
+
+
+            <div class="control-group">
+                {{ form_label(form.Action ) }}
+                <div class="controls">
+                    {{ form_widget(form.Action)  }}
+            </div>
+            </div>
+
+
+
+            <div class="control-group">
+
+                {{ form_label(form.Amount) }}
+
+                {{ form_widget(form.Amount)  }}
+
+            </div>
+
+
+
+            <div class="control-group">
+
+                {{ form_label(form.TradeDate) }}
+
+                {{ form_widget(form.TradeDate)  }}
+
+            </div>
+
+
+
+            <div class="control-group">
+
+                {{ form_label(form.Description) }}
+
+                {{ form_widget(form.Description)  }}
+
+            </div>
+
+
+
+            <div class="control-group">
+
+                {{ form_label(form.Fees) }}
+
+                {{ form_widget(form.Fees)  }}|{{ Account.accCurrency }}
+
+            </div>
+
+
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">Register</button>
+            </div>
+
+
+        </fieldset>
+
+    </form>
+
+

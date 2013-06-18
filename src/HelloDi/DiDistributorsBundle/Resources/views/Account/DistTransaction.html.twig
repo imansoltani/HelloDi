@@ -93,11 +93,20 @@
                                         {% if tran.tranAction=='Sale' %}Sale
                                         {% elseif tran.tranAction=='Tras' %}Transfer
                                         {% elseif tran.tranAction=='Paym' %}Payment
-                                        {% elseif tran.tranAction=='Cred' %}CreditNote
+                                        {% elseif tran.tranAction=='Cred' %}Credit==><b style="color: red">Money</b>
+                                        {% elseif tran.tranAction=='Debi' %}Debit==><b style="color: red">Money</b>
                                         {% elseif tran.tranAction=='Add' %}Add
                                         {% endif %}</td>
 
-                                    <td><a href="{{ path('DetailsMasterDistTransaction',{'id':tran.id}) }}">Details</a></td>
+                                    <td>
+                                        {% if (tran.Code!='' and  tran.Code.id != 0) %}
+                                        <a href="{{ path('DetailsMasterDistTransaction',{'id':tran.id}) }}">
+
+                                            Details</a>
+                                    {% else %}
+                                            Details
+                                   {% endif %}
+                                    </td>
                                 </tr>
 
                             {% endfor %}

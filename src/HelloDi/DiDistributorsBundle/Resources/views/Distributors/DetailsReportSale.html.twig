@@ -22,39 +22,29 @@
                     </div>
                     <form>
                         <div class="tab-content">
-                            <table style="margin-top: 20px"
-                                   class="table table-bordered table-striped table-highlight postsend">
-                                <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Buying price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Selling price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Account' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
-                                    <td>{{ 'Transaction.Code' | trans ({}, "account") }} </td>
 
-                                </tr>
-                                </thead>
-                                <tbody>
+{% set sel=tran.tranAmount %}
+{% set buy=BuPrice %}
 
-                                    <tr>
-                                        <td>{{ tran.id}}</td>
-                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
-                                        <td>{{ tran.Code.Item.itemName}}</td>
-                                        <td>{{ tran.tranAmount }}</td>
-                                        <td>{{ tran.tranAmount}}</td>
-                                        <td>{{ tran.Account.accName }}</td>
-                                        <td>{{ tran.User.username }}</td>
-                                        <td> {{ tran.Code.id }} </td>
+                                    {{ 'id' | trans ({}, "account") }} :  {{ tran.id}}</br>
+                                    {{ 'date' | trans ({}, "account") }}:  {{ tran.tranDate|date('y-M-d') }}</br>
+                                    {{ 'itemneme' | trans ({}, "account") }}:  {{ tran.Code.Item.itemName}}</br>
+                                    {{ 'bying price' | trans ({}, "account") }}: {{ BuPrice }}</br>
+                                    {{ 'selling price' | trans ({}, "account") }}: {{ tran.tranAmount}}&nbsp;&nbsp;</br>
+                                    {{ 'benefit' | trans ({}, "account") }}: {{ sel-buy }}</br>
+                                    {{ 'accname' | trans ({}, "account") }}:  {{ tran.Account.accName }}</br>
+                                    {{ 'username' | trans ({}, "account") }}:{{ tran.User.username }} </br>
+                                    {{ 'code' | trans ({}, "account") }}: {{ tran.Code.id }} </br>
 
 
-                                    </tr>
 
 
-                                </tbody>
-                            </table>
+
+
+
+
+
+
                         </div>
                     </form>
                 </div>

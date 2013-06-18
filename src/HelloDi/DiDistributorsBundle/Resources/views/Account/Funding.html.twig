@@ -11,7 +11,7 @@ Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</
 
                 {{ form_label(formapplay.Amount) }}
 
-                    {{ form_widget(formapplay.Amount)  }}
+                    {{ form_widget(formapplay.Amount)  }}|{{ Account.accCurrency }}
 
             </div>
 
@@ -50,7 +50,7 @@ Cuurent Discription Balance:{{ Account.accbalance }}|{{ Account.accCurrency }}</
 
                 {{ form_label(formupdate.Amount) }}
 
-                {{ form_widget(formupdate.Amount)  }}
+                {{ form_widget(formupdate.Amount)  }}|{{ Account.accCurrency }}
 
             </div>
 

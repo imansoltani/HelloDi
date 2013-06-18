@@ -1,0 +1,33 @@
+
+
+    <form style="margin-top: 20px" action="{{ path('ProvTranTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+        <fieldset>
+
+            <div class="control-group">
+
+                {{ form_label(form.Amount) }}
+
+                    {{ form_widget(form.Amount)  }}
+
+            </div>
+
+{% for Acc in form.Accounts %}
+            <div class="control-group">
+                {{ form_label(Acc ) }}
+                <div class="controls">
+                    {{ form_widget(Acc)  }}
+            </div>
+            </div>
+{% endfor %}
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">Transfer</button>
+            </div>
+
+
+        </fieldset>
+
+    </form>
+
+

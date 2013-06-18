@@ -21,3 +21,6 @@ DistChangeRole:
 DistTransaction:
     pattern:  /transaction
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistTransaction }
+DistDetailsTransaction:
+    pattern:  /transaction/{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsTransaction }

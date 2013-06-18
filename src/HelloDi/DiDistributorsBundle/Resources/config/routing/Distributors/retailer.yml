@@ -29,6 +29,10 @@ DistRetailerSetting:
 Retailer_Transaction:
     pattern:  /{id}/transactions
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
+Retailer_DetailsTransaction:
+    pattern:  /transactions/{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsRetailerTransaction }
+
 
 Retailer_details:
     pattern:  /{id}/details
@@ -41,15 +45,15 @@ Retailer_edit:
 #start
 
 DistRetailerFunding:
-    pattern:  /{id}/transaction/transfer
+    pattern:  /{id}/transactions/transfer
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:Funding"}
 
 DistRetailerTransferFunding:
-    pattern:  /{id}/transaction/transfer/transfer
+    pattern:  /{id}/transactions/transfer/transfer
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:FundingTransfer"}
 
 DistRetailerUpdateFunding:
-    pattern:  /{id}/transaction/transfer/update
+    pattern:  /{id}/transactions/transfer/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:FundingUpdate"}
 
 #end

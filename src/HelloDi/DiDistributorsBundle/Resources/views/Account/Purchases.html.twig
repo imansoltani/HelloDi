@@ -1,0 +1,97 @@
+
+<div class="span" >
+    <div class="widget stacked ">
+        <div class="widget-content">
+
+
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                    <span>
+                        <i id="search_logo" class="icon-search"></i>
+                        <p class="title_search">Filter List</p>
+                    </span>
+                </h5>
+
+                <form class="form-horizontal SearchForm" action="{{ path('MasterDistPurchases',{'id':Account.id}) }}" method="POST" >
+
+
+                    <div class="control-group">
+                        {{ form_label(form.DateStart) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateStart) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.DateEnd) }}
+                        <div class="controls">
+                            {{ form_widget(form.DateEnd) }}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        {{ form_label(form.ItemType) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemType) }}
+                        </div>
+                    </div>
+
+
+                    <div class="control-group">
+                        {{ form_label(form.ItemName) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemName) }}
+                        </div>
+                    </div>
+
+                    <hr>
+                    <input class="btn btn-primary" type="submit" value="Search">
+
+                </form>
+                              </div>
+
+            <div class="tablediv">
+
+                <div class="contenttitle">
+                    <h4>History</h4>
+                </div>
+                <form>
+                    <a href="#">Print To PDF</a>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px"
+                               class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
+                                {#<th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>#}
+                                <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
+                                <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for Tr in pagination %}
+                                <tr>
+                                    <td>{{ Tr.Code.Item.itemName}}</td>
+                                    {#<td>{{ Quantity }}</td>#}
+                                    <td>{{Tr.tranAmount }}</td>
+                                    <td>{{ Tr.User.Entiti.entVatNumber }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

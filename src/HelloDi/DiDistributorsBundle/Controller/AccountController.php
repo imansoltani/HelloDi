@@ -3,6 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Tests\ORM\Tools\Pagination\User;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
@@ -280,7 +281,6 @@ class AccountController extends Controller
 
 //dist
 
-///--jadidkazem--//
 
     public function  TransactionAction(Request $req,$id)
     {
@@ -363,7 +363,7 @@ class AccountController extends Controller
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
             array(
-                'pagination'=>$Tran,
+                'tran'=>$Tran,
             ));
     }
 
@@ -422,14 +422,14 @@ if($req->isMethod('post'))
     $formapplay->bind($req);
     $data=$formapplay->getData();
 
-    //objeavt transaction//
+
 
         $tran->setTranDate(new \DateTime('now'));
         $tran->setTranCurrency($Account->getAccCurrency());
 
         $tran->setTranInsert(new \DateTime('now'));
         $tran->setAccount($Account);
-        $tran->setTranAction('paym');
+        $tran->setTranAction('Paye');
         $tran->setUser($User);
         $tran->setTranFees(0);
 
@@ -486,8 +486,12 @@ if($req->isMethod('post'))
         $query=null;
         //load first list search
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+//        $qb = "SELECT tr.id, count(tr.id) as cnt FROM Entity\Transaction tr " .
+//            "JOIN tr.Code trg GROUP BY trg.id ORDER BY cnt DESC LIMIT 10;";
+
         $qb=$em->createQueryBuilder();
         $qb->select('Tr')
+
             ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
           /*for GroupBy*/  ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
             ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
@@ -498,7 +502,8 @@ if($req->isMethod('post'))
            // ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
 
         }
-        //$qb->GroupBy('TrCoIt.itemName');
+
+        $qb->GroupBy('Tr.id');
         $query=$qb->getQuery();
 
 
@@ -612,13 +617,271 @@ if($req->isMethod('post'))
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
             array(
                 'tran'=>$tran,
-                'BuPrice'=>$BuPrice,
-                'SePrice'=>$SePrice
+                'BuPrice'=>$BuPrice->getPrice(),
+                'SePrice'=>$SePrice->getprice()
             ));
 
     }
 
-//---------endjadidkazem---------//
+////today
+public function PurchasesAction($id,Request $req)
+
+{
+     $em=$this->getDoctrine()->getManager();
+
+    $User=$this->get('security.context')->getToken()->getUser();
+    $paginator = $this->get('knp_paginator');
+
+    $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+    $qb=$em->createQueryBuilder();
+        $qb->select('Tr')
+            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+            ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+        foreach($Account->getChildrens() as $child)
+        {
+            $qb=$qb->orWhere('Tr.Account=:acc')->setParameter('acc',$child);
+        }
+
+    $query=$qb->getQuery();
+    $form=$this->createFormBuilder()
+        ->add('DateStart','date',array())
+        ->add('DateEnd','date',array())
+        ->add('ItemType','choice',
+            array('choices'=>
+            array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
+        ->add('ItemName', 'entity',
+            array(
+                'empty_data' => 'All',
+                'class' => 'HelloDiDiDistributorsBundle:Item',
+                'property' => 'itemName',
+        ))->getForm();
+
+ if($req->isMethod('POST'))
+ {
+     $form->bind($req);
+     $data=$form->getData();
+     $qb=$em->createQueryBuilder();
+
+    $qb->select('Tr');
+      $qb->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+         ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')
+         ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+        foreach($Account->getChildrens() as $child)
+        {
+            $qb->orWhere('Tr.Account=:acc')->setParameter('acc',$child);
+        }
+      $qb->andWhere('Tr.tranInsert >=:DateStart')->setParameter('DateStart',$data['DateStart'])
+         ->andWhere('Tr.tranInsert <=:DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+         if($data['ItemType']!=3)
+       $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType',$data['ItemType']);
+         if($data['ItemName']!='All')
+       $qb->andWhere('TrCoIt=:ItemName')->setParameter('ItemName',$data['ItemName']);
+
+
+     $query=$qb->getQuery();
+
+
+ }
+
+    $count = count($query->getResult());
+    $query = $query->setHint('knp_paginator.count', $count);
+    $pagination = $paginator->paginate(
+        $query,
+        $this->get('request')->query->get('page', 1) /*page number*/,
+        5/*limit per page*/
+    );
+
+    return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig',array(
+    'pagination'=>$pagination,
+     'Account'=>$Account,
+     'User'=>$User,
+     'Entity'=>$Account->getEntiti(),
+      'form'=>$form->createView()
+    ));
+}
+
+
+public  function ProvTranTransferAction($id,Request $req)
+{
+
+$AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
+      $em=$this->getDoctrine()->getEntityManager();
+
+    $User=$this->get('security.context')->getToken()->getUser();
+    $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+
+$form=$this->createFormBuilder()
+    ->add('Amount','text',array('data'=>0))
+    ->add('Accounts','entity',array(
+    'class' => 'HelloDiDiDistributorsBundle:Account',
+    'expanded'=>'true',
+    'multiple'=>false,
+   'query_builder' => function(EntityRepository $er) use ($Account) {
+    return $er->createQueryBuilder('Acc')
+        ->Where('Acc.Entiti = :Ent')->setParameter('Ent',$Account->getEntiti())
+        ->andWhere('Acc.accType =0')
+        ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur',$Account->getAccCurrency())
+        ;
+}
+    ))->getForm();
+
+$tranprov=new Transaction();$trandist=new Transaction();
+
+$tranprov->setTranBookingValue(null);
+$tranprov->setTranDate(new \DateTime('now'));
+$tranprov->setTranInsert(new \DateTime('now'));
+
+$trandist->setTranBookingValue(null);
+$trandist->setTranDate(new \DateTime('now'));
+$trandist->setTranInsert(new \DateTime('now'));
+
+
+
+if($req->isMethod('POST'))
+{
+   $form->bind($req);
+   $data=$form->getData();
+
+     #transaction for prov#
+$tranprov->setTranAction('Debi');
+$tranprov->setTranAmount($data['Amount']);
+$tranprov->setAccount($Account);
+$tranprov->setUser($User);
+$tranprov->setTranDescription(null);
+$tranprov->setTranFees(0);
+$tranprov->setTranCurrency($Account->getAccCurrency());
+
+    #transaction for dist#
+$trandist->setTranAmount($data['Amount']);
+$trandist->setTranAction('Cred');
+$trandist->setAccount($data['Accounts']);
+$trandist->setUser($User);
+$trandist->setTranDescription(null);
+$trandist->setTranFees(0);
+$trandist->setTranCurrency($Account->getAccCurrency());
+
+ if($data['Amount']!='')
+    if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+{
+    $em->persist($trandist);
+    $em->persist($tranprov);
+    $em->flush();
+}
+
+
+}
+
+return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig',array(
+        'Account'=>$Account,
+        'User'=>$User,
+        'Entity'=>$Account->getEntiti(),
+        'form'=>$form->createView()
+    ));
+
+
+
+}
+
+
+
+
+public function  ProvTranRegisterAction($id,Request $Req)
+{
+    $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
+    $em=$this->getDoctrine()->getEntityManager();
+
+    $User=$this->get('security.context')->getToken()->getUser();
+    $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+$tran=new Transaction();
+
+$form=$this->createFormBuilder()
+    ->add('CreditDebit','choice',array(
+
+        'expanded'=>true,
+        'choices'=>array(
+
+           0=>'Credit',
+           1=>'Debit'
+        )
+
+    ))
+    ->add('Action','choice',array(
+    'choices'=>array('Paym'=>'Payment'),
+    'preferred_choices'=>array(0)
+    ))
+    ->add('Amount','text',array(
+       'data'=>0,'required'=>false
+    ))
+    ->add('TradeDate','date',array())
+    ->add('Description','textarea',array('required'=>false))
+    ->add('Fees','text',array('required'=>false))->getForm();
+
+if($Req->isMethod('POST'))
+{
+    $form->bind($Req);
+    $data=$form->getData();
+
+    $tran->setTranCurrency($Account->getAccCurrency());
+    $tran->setUser($User);
+    $tran->setAccount($Account);
+    $tran->setTranDate(new \DateTime('now'));
+    $tran->setTranInsert(new \DateTime('now'));
+    $tran->setTranAction($data['Action']);
+    $tran->setTranFees($data['Fees']);
+    $tran->setTranDescription($data['Description']);
+    $tran->setTranAmount($data['Amount']);
+        if($data['CreditDebit']==0)
+        {
+
+             $tran->setTranAction('Cred');
+             $em->persist($tran);
+             $em->flush();
+        }
+
+        elseif($data['CreditDebit']==1)
+        {
+            if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+            {
+            $tran->setTranAction('Debi');
+            $em->persist($tran);
+            $em->flush();
+            }
+            }
+
+}
+
+return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
+    array(
+        'form'=>$form->createView(),
+        'Account'=>$Account,
+        'User'=>$User,
+        'Entity'=>$Account->getEntiti(),
+    ));
+
+}
+
+public function pdfAction(){
+
+    $html = $this->renderView('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig', array(
+    ));
+
+    return new Response(
+        $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+        200,
+        array(
+            'Content-Type'          => 'application/pdf',
+            'Content-Disposition'   => 'attachment; filename="file.pdf"'
+        )
+    );
+}
+
+//today
+
+
+
 
     public function AddAccountDistMasterAction(Request $request)
     {

@@ -174,8 +174,8 @@ class DistributorsController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsReportSale.html.twig',
             array(
                 'tran'=>$tran,
-                'BuPrice'=>$BuPrice,
-                'SePrice'=>$SePrice
+                'BuPrice'=>$BuPrice->getPrice(),
+                'SePrice'=>$SePrice->getPrice()
             ));
 
     }
@@ -188,12 +188,12 @@ class DistributorsController extends Controller
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
-            ->add('Amount')
-            ->add('Description','textarea',array())
+            ->add('Amount',null,array('data'=>0))
+            ->add('Description','textarea',array('required'=>false))
             ->getForm();
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text')
+            ->add('Amount','text',array('data'=>0))
             ->add('As','choice',array(
                 'preferred_choices'=>array('Credit'),
                 'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
@@ -211,42 +211,58 @@ class DistributorsController extends Controller
 
     public function  FundingTransferAction(Request $req,$id)
     {
+        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $AccountParent=$Account->getParent();
         $formtransfer=$this->createFormBuilder()
             ->add('Amount')
-            ->add('Description','textarea',array())
+            ->add('Description','textarea',array('required'=>false))
             ->getForm();
 
         if($req->isMethod('post'))
         {
-            $tran=new Transaction();
+            $trandist=new Transaction();
+            $tranretailer=new Transaction();
             $formtransfer->bind($req);
             $data=$formtransfer->getData();
 
-            //objeavt transaction//
+            #transaction for dist#
 
-            $tran->setTranDate(new \DateTime('now'));
-            $tran->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranDate(new \DateTime('now'));
+            $trandist->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranInsert(new \DateTime('now'));
+            $trandist->setAccount($Account->getParent());
+            $trandist->setUser($User);
+            $trandist->setTranFees(0);
+            $trandist->setTranAction('Debi');
+            $trandist->setTranAmount($data['Amount']);
 
-            $tran->setTranInsert(new \DateTime('now'));
-            $tran->setAccount($Account);
-            $tran->setTranAction('tras');
-            $tran->setUser($User);
-            $tran->setTranFees(0);
+            #transaction for retailer#
 
-            if($data['Description']!='')$tran->setTranDescription($data['Description']);
+            $tranretailer->setTranDate(new \DateTime('now'));
+            $tranretailer->setTranCurrency($Account->getAccCurrency());
+            $tranretailer->setTranInsert(new \DateTime('now'));
+            $tranretailer->setAccount($Account);
+            $tranretailer->setUser($User);
+            $tranretailer->setTranFees(0);
+            $tranretailer->setTranAmount($data['Amount']);
+            $tranretailer->setTranAction('Cred');
+
+            if($data['Description']!='')$trandist->setTranDescription($data['Description']);
 
             if($data['Amount']!='')
             {
-                $AccountParent->setAccBalance($AccountParent->getAccBalance()-$data['Amount']);
-                $Account->setAccBalance($Account->getAccBalance()+$data['Amount']);
+                if($balancechecker->isBalanceEnoughTran($Account->getParent(),$data['Amount']))
+                {
+                    $em->persist($trandist);
+                    $em->persist($tranretailer);
+                    $em->flush();
+                }
+
             }
-            $em->persist($tran);
-            $em->flush();
+
 
         }
 
@@ -256,11 +272,11 @@ class DistributorsController extends Controller
 
     public function  FundingUpdateAction(Request $req,$id)
     {
+        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $AccountParent=$Account->getParent();
         $formupdate=$this->createFormBuilder()
             ->add('Amount','text')
             ->add('As','choice',array('preferred_choices'=>array('Credit'),
@@ -272,34 +288,30 @@ class DistributorsController extends Controller
             $formupdate->bind($req);
             $data=$formupdate->getData();
 
-            $tran=new Transaction();
+            $trandist=new Transaction();
 
-            $tran->setTranDate(new \DateTime('now'));
-            $tran->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranDate(new \DateTime('now'));
+            $trandist->setTranCurrency($Account->getAccCurrency());
 
-            $tran->setTranInsert(new \DateTime('now'));
+            $trandist->setTranInsert(new \DateTime('now'));
 
-
-            $tran->setUser($User);
-            $tran->setTranFees(0);
-
-
+            $trandist->setUser($User);
+            $trandist->setTranFees(0);
+            $trandist->setTranAmount($data['Amount']);
+            $trandist->setTranAction('Debi');
             if($data['As']=='Credit')
             {
-                $AccountParent->setAccBalance($AccountParent->getAccBalance()-$data['Amount']);
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()+ $data['Amount']);
-                $tran->setAccount($AccountParent);
-                $tran->setTranAction('Credit');
-                $em->persist($tran);
-           ///وقتی که سرویس اماده شد دستورات اصلاح خواهد شد
-            }
+               if($balancechecker->isBalanceEnoughTran($Account->getParent(),$data['Amount']))
+               {
+                $trandist->setAccount($Account->getParent());
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
+                $em->persist($trandist);
+               }
+               }
             elseif($data['As']=='Debit')
             {
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
-                $tran->setTranAction('Debit');
-
             }
-
 
             $em->flush();
         }
@@ -728,6 +740,19 @@ class DistributorsController extends Controller
 
     }
 
+    public function DetailsRetailerTransactionAction($id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerDetailsTransaction.html.twig',
+            array(
+                'tran'=>$Tran,
+            ));
+
+    }
+
+
     public function DistTransactionAction(Request $req)
 {
 
@@ -806,6 +831,22 @@ class DistributorsController extends Controller
 
 
 }
+
+
+    public function DetailsTransactionAction(Request $req,$id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsTransaction.html.twig',
+            array(
+                'tran'=>$Tran,
+            ));
+
+    }
+
+
+
 
 //----endjadidkazem----//
 

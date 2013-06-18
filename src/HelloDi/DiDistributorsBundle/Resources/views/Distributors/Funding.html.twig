@@ -13,7 +13,7 @@ Retailer Balance:{{ Account.accBalance }}|{{ Account.accCurrency }}</br>
 
                 {{ form_label(formapplay.Amount) }}
 
-                    {{ form_widget(formapplay.Amount)  }}
+                    {{ form_widget(formapplay.Amount)  }}|{{ Account.Parent.accCurrency }}
 
             </div>
             <div class="control-group">
@@ -49,7 +49,7 @@ Retailer Credit Limit:{{ Account.accCreditLimit }}|{{ Account.accCurrency }}</br
 
                 {{ form_label(formupdate.Amount) }}
 
-                {{ form_widget(formupdate.Amount)  }}
+                {{ form_widget(formupdate.Amount)  }}|{{ Account.Parent.accCurrency }}
 
             </div>
 

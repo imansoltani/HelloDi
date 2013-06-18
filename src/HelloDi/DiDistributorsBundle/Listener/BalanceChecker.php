@@ -17,6 +17,16 @@ class BalanceChecker
         }
     }
 
+    public function isBalanceEnoughTran(Account $account,$value)
+    {
+
+        if ($account->getAccBalance() >= $value  ) {
+            return true;
+        } else {
+            throw new \Exception('The Currencies are NOT matched!');
+        }
+    }
+
     private function currenciesMatch($accountCurr, $priceCurr)
     {
         if (strcasecmp($accountCurr, $priceCurr) == 0) {

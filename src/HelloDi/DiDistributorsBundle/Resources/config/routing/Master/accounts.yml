@@ -34,6 +34,13 @@ ChangeAdminProvAccountOk:
     pattern:  /providers/{iduser}/{idacc}/Change/UserPrivilegeProvOk
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ChangeAdminProvAccountOk" }
 
+ProvTranTransfer:
+    pattern:  /providers/{id}/transaction/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTranTransfer" }
+
+ProvTranRegister:
+    pattern:  /providers/{id}/transaction/register
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTranregister" }
 #-------------------
 
 ShowMyAccountDist:
@@ -98,10 +105,10 @@ DetailsMasterDistTransaction:
     pattern:  distributors/{id}/transaction/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
 MasterDistSale:
-    pattern:  distributors/{id}/reports/sale
+    pattern:  distributors/{id}/reports/sales
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Sale"}
 MasterDistDetailsSale:
-    pattern:  distributors/{id}/reports/sale/detailes
+    pattern:  distributors/{id}/reports/sales/detailes
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
 
 MasterDistFunding:
@@ -115,7 +122,9 @@ MasterDistApplayFunding:
 MasterDistUpdateFunding:
     pattern:  distributors/{id}/transaction/funding/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdate"}
-
+MasterDistPurchases:
+    pattern:  distributors/{id}/purchases
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Purchases"}
 
 #---- items prov
 ManageItemsProv:

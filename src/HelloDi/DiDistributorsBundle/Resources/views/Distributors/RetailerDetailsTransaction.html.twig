@@ -3,6 +3,7 @@
         <div class="widget stacked ">
             <div class="widget-content">
 
+
                 <div class="form_search">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
@@ -30,7 +31,8 @@
                             {% if tran.tranAction=='Sale' %}Sale
                             {% elseif tran.tranAction=='Transfer' %}Transfer
                             {% elseif tran.tranAction=='Payment' %}Payment
-                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                            {% elseif tran.tranAction=='Credit' %}Credit
+                            {% elseif tran.tranAction=='Debi' %}Credit
                             {% endif %}</br>
                              {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
                             {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>

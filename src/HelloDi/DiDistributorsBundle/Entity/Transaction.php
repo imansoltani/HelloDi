@@ -16,6 +16,9 @@ class Transaction
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+
+    private $entityManager;
     /**
      * @ORM\Column(type="decimal", nullable=true)
      */
@@ -25,6 +28,12 @@ class Transaction
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
     private $tranCredit;
+
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, name="tran_Amount")
+     */
+    private $tranAmount;
 
     /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
@@ -75,7 +84,7 @@ class Transaction
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", inversedBy="Transactions")
-     * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=true)
      */
     private $Code;
 
@@ -371,10 +380,13 @@ class Transaction
     public function updateAccountBalance()
     {
         switch ($this->getTranAction()) {
-            case 'trans':
+            case 'Debi':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance-$amount);
                 break;
 
-            case 'peym':
+            case 'paym':
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance + $amount);
@@ -387,8 +399,12 @@ class Transaction
 
                 break;
 
-            case 'cred':
+            case 'Cred':
+                $Amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$Amount);
                 break;
+
 
             case 'add':
                 break;
@@ -400,5 +416,31 @@ class Transaction
         }
     }
 
+//    public function __construct($entityManager)
+//    {
+//        $this->entityManager = $entityManager;
+//    }
 
+    /**
+     * Set tranAmount
+     *
+     * @param float $tranAmount
+     * @return Transaction
+     */
+    public function setTranAmount($tranAmount)
+    {
+        $this->tranAmount = $tranAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranAmount
+     *
+     * @return float 
+     */
+    public function getTranAmount()
+    {
+        return $this->tranAmount;
+    }
 }

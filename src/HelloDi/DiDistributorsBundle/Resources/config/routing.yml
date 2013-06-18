@@ -14,3 +14,6 @@ app_Retailers:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailers.yml"
     prefix:   /app/r
 
+pdf:
+    pattern:  /pdf
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:pdf}

@@ -125,18 +125,19 @@
                             <td>{{ tran.Account.accBalance }}</td>
                             <td>
 
-                                {% if tran.tranAction=='sale' %}Sale
-                                {% elseif tran.tranAction=='trans' %}Transfer
-                                {% elseif tran.tranAction=='paym' %}Payment
-                                {% elseif tran.tranAction=='cred' %}CreditNote
-                                {% elseif tran.tranAction=='add' %}Add
+                                {% if tran.tranAction=='Sale' %}Sale
+                                {% elseif tran.tranAction=='Trans' %}Transfer
+                                {% elseif tran.tranAction=='Paym' %}Payment
+                                {% elseif tran.tranAction=='Cred' %}Credit==><b style="color: red">Money</b>
+                                {% elseif tran.tranAction=='Debi' %}Debit==><b style="color: red">Money</b>
+                                {% elseif tran.tranAction=='Add' %}Add
                                 {% endif %}</td>
 
                             <td class="td-actions">
 
 
                                 <a class="btn_actions"
-                                   href="#{#{{ path('RetailerStaffEdit',{'id':user.id }) }}#}">Modify</a>
+                                   href="{{ path('Retailer_DetailsTransaction',{'id':tran.id }) }}">Details</a>
 
                             </td>
 
