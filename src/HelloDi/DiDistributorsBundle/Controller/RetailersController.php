@@ -194,6 +194,17 @@ class RetailersController extends Controller
     }
 
 
+    public function DetailsTransactionAction($id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:DetailsTransaction.html.twig',
+            array(
+                'tran'=>$Tran,
+            ));
+
+    }
 
     ////function Report/Sale
     public  function SaleAction(Request $req)

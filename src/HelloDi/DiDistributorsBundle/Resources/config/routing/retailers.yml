@@ -10,6 +10,10 @@ RetailerTransaction:
     pattern:  /transaction/history
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Transaction}
 
+RetailerDetailsTransaction:
+    pattern:  /transaction/history/{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:DetailsTransaction}
+
 RetailerSale:
     pattern:  /report/sale
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Sale}
