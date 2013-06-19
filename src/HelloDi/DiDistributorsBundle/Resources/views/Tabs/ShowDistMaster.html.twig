@@ -32,13 +32,17 @@
 {% block Tabs %}
 
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a>
-            <form action="" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}"/>
-                <input type="submit" value="Transaction"/>
-            </form>
+
+
+        <a  href="{{ path('MasterDistTransaction',{'id':Account.id}) }}">
+         <span>
+           Transaction
+         </span>
         </a>
+
+
     </li>
+
 
     <li {% if tab == '6' %}class="active"{% endif %} >
         <a>
@@ -51,12 +55,17 @@
     </li>
 
     <li {% if tab == '1' %}class="active"{% endif %} >
-        <a>
-
-                <input type="submit" value="Sales">
 
 
-        </a>
+
+     <a  href="{{ path('MasterDistSale',{'id':Account.id}) }}">
+         <span>
+             Sales
+         </span>
+     </a>
+
+
+
     </li>
 
 

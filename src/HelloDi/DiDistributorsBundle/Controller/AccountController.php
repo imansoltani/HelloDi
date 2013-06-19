@@ -502,8 +502,6 @@ if($req->isMethod('post'))
            // ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
 
         }
-
-        $qb->GroupBy('Tr.id');
         $query=$qb->getQuery();
 
 

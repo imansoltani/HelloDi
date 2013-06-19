@@ -1,43 +1,18 @@
 
-<a href="#{#{{ path('') }}#}">Recharge</a>
-<form action="{{ path('MasterDistSale',{'id':Account.id}) }}" method="POST">
 
 
-    <div class="control-group">
-        {{ form_label(form.DateStart) }}
-        {{ form_widget(form.DateStart) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form.DateEnd) }}
-        {{ form_widget(form.DateEnd) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.ItemType) }}
-        {{ form_widget(form.ItemType) }}
-    </div>
-    <div class="control-group">
-        {{ form_label(form.ItemName) }}
-        {{ form_widget(form.ItemName) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.Account) }}
-        {{ form_widget(form.Account) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.GroupBy) }}
-        {{ form_widget(form.GroupBy) }}
-    </div>
 
 
-    <div class="form-actions" style="margin-bottom: 0" >
-        <input class="btn btn-primary" type="submit"  value="Search">
-    </div>
-</form>
-                <form>
-          <a href="#">Print To PDF</a>
+Distributors Details :
+<hr>
+Seles Statement
+<hr>
+Period :
+
+<hr>
+Retailer Details :
+<hr>
+All Prices in 'Account Currency'
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
