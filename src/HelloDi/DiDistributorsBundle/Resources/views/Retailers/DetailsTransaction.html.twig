@@ -1,0 +1,41 @@
+
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+
+                <div class="form_search">
+
+                                  </div>
+
+                <div class="tablediv">
+
+                    <div class="contenttitle">
+                        <h4>History</h4>
+                    </div>
+                    <form>
+                        <div class="tab-content">
+
+                            {{ 'id' | trans ({}, "account") }}:{{ tran.id}}</br>
+                            {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
+                            {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
+                            {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
+                            {{ 'Balance' | trans ({}, "account") }}: {{ tran.Account.accBalance }}</br>
+
+                            {{ 'Action' | trans ({}, "account") }}:
+                            {% if tran.tranAction=='Sale' %}Sale
+                            {% elseif tran.tranAction=='Transfer' %}Transfer
+                            {% elseif tran.tranAction=='Payment' %}Payment
+                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
+                            {% endif %}</br>
+                             {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
+                            {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>
+                            {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
