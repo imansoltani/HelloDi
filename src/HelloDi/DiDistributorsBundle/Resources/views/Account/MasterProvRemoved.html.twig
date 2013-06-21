@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>ProvTransaction</title>
+    <body>
+    <form action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="POST">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <button>Search</button>
+    </form>
+    {% for trans in accProv %}
+
+        {{ trans.Code.Item.itemName }}
+        {{ trans.Code.serialNumber }}
+        {{ trans.tranDescription }}
+        {{ trans.tranDescription }}
+        {{ trans.tranDate|date('Y/m/d') }}
+        <a href="#" >History</a>
+
+
+    {% endfor %}
+
+    </body>
+</head>
+</html>

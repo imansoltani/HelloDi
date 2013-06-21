@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>ProvTransaction</title>
+    <body>
+    <form method="POST" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" >
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <button>Search</button>
+    </form>
+    {% for Trans in accprov%}
+
+        {{ Trans.tranDate|date('Y-m-d') }}
+        {{ Trans.tranDescription }}
+        {{ Trans.tranCredit }}
+        {{ Trans.tranDebit }}
+        {{ Trans.accBalance }}
+        <a href="#">Show</a>
+        <form method="post" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" ><input type="hidden" name="trans_id" value="{{ Trans.id }}"><button>Delet</button></form>
+    {% endfor %}
+
+    </body>
+</head>
+</html>
