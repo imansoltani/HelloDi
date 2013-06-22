@@ -26,6 +26,10 @@ master_settings:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/setting.yml"
     prefix:   /settings
 
+master_print:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/print.yml"
+    prefix:   /print
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }

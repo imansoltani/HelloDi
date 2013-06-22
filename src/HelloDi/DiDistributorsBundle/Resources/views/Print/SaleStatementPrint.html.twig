@@ -1,0 +1,77 @@
+Distributors Details :
+<hr>
+Seles Statement
+<hr>
+Period :
+
+<hr>
+Retailer Details :
+<hr>
+All Prices in 'Account Currency'
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table postsend">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>{{ 'Item' | trans ({}, "account") }}</th>
+                                    <th>{{ 'FaceValue' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Quantity' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Vat' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Price' | trans ({}, "account") }}</th>{#gheymat kharid retailer#}
+                                    <th>{{ 'Discont' | trans ({}, "account") }}</th>{#ghemat kharid- face value#}
+                                    <th>{{ 'Total' | trans ({}, "account") }}</th>{#quantity * price#}
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {#{% for Tr in pagination %}#}
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            {#{% endfor %}#}
+
+                            </tbody>
+                        </table>
+                        {#{button pagination}#}
+                    </div>
+                </form>
+
+Condition :
+Printed :{#print date roze#}
+
+<table style="margin-top: 20px" class="table postsend">
+    <tr>
+        <th></th><th></th>
+    </tr>
+    <tr>
+        <td>Vat @ 0.00 %</td><td></td>
+    </tr>
+
+    <tr>
+        <td>Total To Pay</td><td></td>
+    </tr>
+
+</table>
+
+
+<table style="margin-top: 20px" class="table postsend">
+    <tr>
+        <th>Vat Code</th><th>Vat %</th>
+    </tr>
+    <tr>
+        <td></td><td></td>
+    </tr>
+
+</table>
+
+
+            </div>

@@ -595,6 +595,9 @@ class AccountController extends Controller
                 'Entiti' =>$Account->getEntiti()));
 
 
+
+
+
     }
 
     public function  DetailsSaleAction(Request $req,$id)
