@@ -30,13 +30,13 @@
 {% block Tabs %}
 
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a href="{{ path('ProvTransaction',{id:Account.id}) }}" >
-            <span>
-                Transaction
-            </span>
+        <a>
+            <form action="{{ path('MasterProvTransaction',{id:Account.id}) }}" method="post">
+                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+                <input type="submit" value="Transaction"/>
+            </form>
         </a>
     </li>
-
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a>
             <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
@@ -53,14 +53,6 @@
                 <input type="hidden" name="accountid" value="{{ Account.id }}"/>
                 <input type="submit" value="Input"/>
             </form>
-        </a>
-    </li>
-
-    <li {% if tab == '6' %}class="active"{% endif %} >
-        <a href="{{ path('MasterProvRemoved',{id:Account.id}) }}" >
-            <span>
-                Removed
-            </span>
         </a>
     </li>
 
