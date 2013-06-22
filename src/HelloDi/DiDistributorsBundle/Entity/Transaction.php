@@ -408,7 +408,7 @@ class Transaction
             case 'add':
                 break;
             case 'Profit':
-                $amount = $this->getTranCredit();
+                $amount = $this->getTranAmount();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance + $amount);
                 break;

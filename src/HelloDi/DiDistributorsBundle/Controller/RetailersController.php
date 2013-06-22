@@ -393,7 +393,7 @@ class RetailersController extends Controller
 
                     $transaction = new Transaction();
                     $transaction->setAccount($account);
-                    $transaction->setTranCredit($price->getPrice());
+                    $transaction->setTranAmount($price->getPrice());
                     $transaction->setTranFees(0);
                     $transaction->setTranCurrency($price->getPriceCurrency());
                     $transaction->setTranDate(new \DateTime('now'));
@@ -405,7 +405,7 @@ class RetailersController extends Controller
                     // For Parent
                     $transaction = new Transaction();
                     $transaction->setAccount($accountParent);
-                    $transaction->setTranCredit($tranProfit);
+                    $transaction->setTranAmount($tranProfit);
                     $transaction->setTranFees(0);
                     $transaction->setTranCurrency($price->getPriceCurrency());
                     $transaction->setTranDate(new \DateTime('now'));
