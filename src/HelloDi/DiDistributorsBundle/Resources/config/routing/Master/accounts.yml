@@ -192,3 +192,15 @@ UploadInputProvSubmitCanceled:
 ListUsersInRetailers:
     pattern:  /retailers/{id}/users
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ListUsersInRetailers" }
+
+#------strat kamal transaction Root-----#
+MasterProvTransaction:
+    pattern:  /providers/{id}/transactions
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransaction" }
+
+MasterProvRemoved:
+    pattern:  /providers/{id}/removed
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvRemoved" }
+
+
+#------End kamal transaction Root-----#

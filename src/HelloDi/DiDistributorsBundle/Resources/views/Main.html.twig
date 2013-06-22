@@ -71,15 +71,21 @@
         {% if alarm is defined  %}
             messagetop('hi','{{ alarm }}','success');
         {% endif %}
+
+        {% if alarm is defined  %}
+        messagetop('hi','{{ success }}','success');
+        {% endif %}
         //messagetop('hi','how','error');
 
         $('* .messagetop ,.messageshow ').click(function(){
-            $('.messageshow').fadeOut(function(){
+            $('.messageshow').fadeOut('fast',function(){
                 $('.messageshow').html('');
                 $('.messageshow').removeAttr('id');
             });
 
         });
+
+        //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
     });
 
     function messagetop(subject,body,type)
@@ -99,7 +105,7 @@
         //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
 
         $('.messageshow').html(x);
-        $('.messageshow').fadeIn();
+        $('.messageshow').slideDown();
     }
 
 

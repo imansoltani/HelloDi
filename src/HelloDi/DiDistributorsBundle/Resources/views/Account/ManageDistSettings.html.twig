@@ -14,22 +14,26 @@
 
 
 
-<form style="margin-top: 20px"  class="form-horizontal"  action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
+    <form style="margin-top: 20px" class="form-horizontal" action="{{ path('ManageDistSettings',{'id':Account.id}) }}"
+          method="post">
 
-    <div class="control-group">
+        <div class="control-group">
 
-        {{ form_label(form_edit.accTerms) }}
-        {{ form_widget(form_edit.accTerms) }}
+            {{ form_label(form_edit.accTerms) }}
+            {{ form_widget(form_edit.accTerms) }}
 
         </div>
 
-    <div class="control-group">
-        {{ form_label(form_editaccTimeZone) }}
-        {{ form_widget(form_edit.accTimeZone) }}
-    </div>
-            {{ form_widget(form_edit._token) }}
+        <div class="control-group">
+            {{ form_label(form_editaccTimeZone) }}
+            {{ form_widget(form_edit.accTimeZone) }}
+        </div>
 
-            <input class="btn btn-large" type="submit" value="Edit">
+        {{ form_widget(form_edit._token) }}
+
+       <div class="form-actions">
+           <input class="btn btn-large" type="submit" value="Edit">
+       </div>
 
     </form>
     Name : {{ Account.accName }}</br>

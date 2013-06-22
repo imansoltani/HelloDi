@@ -1,19 +1,21 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
 
-    <div class="span" >
-        <div class="widget stacked ">
-            <div class="widget-content">
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
+    <a class="link" href="#">Manage</a>
+    <span class="link">Sales</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+
                 <a class="btn-large button btn btn-primary " href="#">
                     Recharge
                 </a>
 
-                <div class="form_search">
-                    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Filter List</p>
-                        </span>
-                    </h5>
-                                  </div>
 
                 <div class="tablediv">
 
@@ -22,31 +24,41 @@
                     </div>
                     <form>
                         <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Buying price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Selling price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Account' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Code' | trans ({}, "account") }} </th>
 
-                                    id: {{ tran.id}}</br>
-                                    {{ 'Transaction.Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
-                                    {{ 'Transaction.ItemName' | trans ({}, "account") }}:   {{ tran.Code.Item.itemName}}</br>
-                                    {{ 'Transaction.Buying price' | trans ({}, "account") }}:    {{ BuPrice }}</br>
-                                    {{ 'Transaction.Selling price' | trans ({}, "account") }}: {{ tran.tranAmount }}</br>
-                                    {{ 'Transaction.Account' | trans ({}, "account") }}:  {{ tran.Account.accName }}</br>
-                                    {{ 'Transaction.User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                                    {{ 'Transaction.Code' | trans ({}, "account") }} :      {{ tran.Code.id }}</br>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>{{ tran.id}}</td>
+                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                                        <td>{{ tran.Code.Item.itemName}}</td>
+                                        <td>{{ tran.tranAmount }}</td>
+                                        <td>{{ tran.tranAmount }}</td>
+                                        <td>{{ tran.Account.accName }}</td>
+                                        <td>{{ tran.User.username }}</td>
+                                        <td> {{ tran.Code.id }} </td>
 
 
+                                    </tr>
 
 
-
-
-
-
-
-
-
-
+                                </tbody>
+                            </table>
                         </div>
                     </form>
                 </div>
 
-            </div>
-        </div>
-    </div>
+{% endblock %}

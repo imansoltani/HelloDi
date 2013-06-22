@@ -25,18 +25,23 @@
             <input type="text" disabled class="input-large" value="{{ Account.id }}" >
         </div>
     </div>
-    <div class="control-group">
-        {{ form_errors(form_edit.accTerms) }}
+
+    <div class="control-group Need">
         {{ form_label(form_edit.accTerms) }}
-        {{ form_widget(form_edit.accTerms) }}
+
+            {{ form_widget(form_edit.accTerms) }}
+
+        {{ form_errors(form_edit.accTerms) }}
     </div>
-    <div class="control-group">
+
+    <div class="control-group Need">
         {{ form_label(form_edit.accTimeZone) }}
         <div class="controls">
             {{ form_widget(form_edit.accTimeZone) }}
         </div>
         {{ form_errors(form_edit.accTimeZone) }}
     </div>
+
     <div class="control-group">
         <label class="control-label" >Type</label>
         <div class="controls">

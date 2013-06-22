@@ -30,7 +30,7 @@
 
 
                 <div style="margin-top: 5px" class="tablediv" >
-                    <form action="{{ path('ManageItemsDist',{}) }}" method="post">
+                    <form >
                         <div class="tab-content datatable">
                             <table id="example" class="table postsend">
                                 <thead>
@@ -53,8 +53,7 @@
                                     <tr>
                                         <td >{{ myAccount.id }}</td>
                                         <td class="td-actions" >
-                                            <input type="submit" value="Manage"
-                                                   onclick="$('.accountid').val('{{ myAccount.id }}');"/>
+                                            <a class="btn_actions" href="{{ path('MasterDistTransaction',{'id':myAccount.id}) }}" >Manage</a>
                                         </td>
                                         <td>{{ myAccount.accName }}</td>
                                         <td>{{ myAccount.Entiti.entName }}</td>
@@ -81,7 +80,7 @@
                             </table>
                             {#{button pagination}#}
 
-                            <input type="hidden" name="id" class="accountid" value=""/>
+
                         </div>
                     </form>
                 </div>
