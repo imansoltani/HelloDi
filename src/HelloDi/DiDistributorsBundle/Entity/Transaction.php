@@ -29,7 +29,6 @@ class Transaction
      */
     private $tranCredit;
 
-
     /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_Amount")
      */
