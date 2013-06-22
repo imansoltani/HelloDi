@@ -434,7 +434,7 @@ class AccountController extends Controller
 
             $tran->setTranInsert(new \DateTime('now'));
             $tran->setAccount($Account);
-            $tran->setTranAction('paym');
+            $tran->setTranAction('Paym');
             $tran->setUser($User);
             $tran->setTranFees(0);
 
@@ -626,6 +626,171 @@ class AccountController extends Controller
             ));
 
     }
+
+
+
+    public  function ProvTranTransferAction($id,Request $req)
+    {
+
+        $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
+        $em=$this->getDoctrine()->getEntityManager();
+
+        $User=$this->get('security.context')->getToken()->getUser();
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+
+        $form=$this->createFormBuilder()
+            ->add('Amount','text',array('data'=>0))
+            ->add('Accounts','entity',array(
+                'class' => 'HelloDiDiDistributorsBundle:Account',
+                'expanded'=>'true',
+                'multiple'=>false,
+                'query_builder' => function(EntityRepository $er) use ($Account) {
+                    return $er->createQueryBuilder('Acc')
+                        ->Where('Acc.Entiti = :Ent')->setParameter('Ent',$Account->getEntiti())
+                        ->andWhere('Acc.accType =0')
+                        ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur',$Account->getAccCurrency())
+                        ;
+                }
+            ))->getForm();
+
+        $tranprov=new Transaction();$trandist=new Transaction();
+
+        $tranprov->setTranBookingValue(null);
+        $tranprov->setTranDate(new \DateTime('now'));
+        $tranprov->setTranInsert(new \DateTime('now'));
+
+        $trandist->setTranBookingValue(null);
+        $trandist->setTranDate(new \DateTime('now'));
+        $trandist->setTranInsert(new \DateTime('now'));
+
+
+
+        if($req->isMethod('POST'))
+        {
+            $form->bind($req);
+            $data=$form->getData();
+
+            #transaction for prov#
+            $tranprov->setTranAction('Debi');
+            $tranprov->setTranAmount($data['Amount']);
+            $tranprov->setAccount($Account);
+            $tranprov->setUser($User);
+            $tranprov->setTranDescription(null);
+            $tranprov->setTranFees(0);
+            $tranprov->setTranCurrency($Account->getAccCurrency());
+
+            #transaction for dist#
+            $trandist->setTranAmount($data['Amount']);
+            $trandist->setTranAction('Cred');
+            $trandist->setAccount($data['Accounts']);
+            $trandist->setUser($User);
+            $trandist->setTranDescription(null);
+            $trandist->setTranFees(0);
+            $trandist->setTranCurrency($Account->getAccCurrency());
+
+            if($data['Amount']!='')
+                if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+                {
+                    $em->persist($trandist);
+                    $em->persist($tranprov);
+                    $em->flush();
+                }
+
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig',array(
+            'Account'=>$Account,
+            'User'=>$User,
+            'Entity'=>$Account->getEntiti(),
+            'form'=>$form->createView()
+        ));
+
+
+
+    }
+
+
+
+
+    public function  ProvTranRegisterAction($id,Request $Req)
+    {
+        $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
+        $em=$this->getDoctrine()->getEntityManager();
+
+        $User=$this->get('security.context')->getToken()->getUser();
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $tran=new Transaction();
+
+        $form=$this->createFormBuilder()
+            ->add('CreditDebit','choice',array(
+
+                'expanded'=>true,
+                'choices'=>array(
+
+                    0=>'Credit',
+                    1=>'Debit'
+                )
+
+            ))
+            ->add('Action','choice',array(
+                'choices'=>array('Paym'=>'Payment'),
+                'preferred_choices'=>array(0)
+            ))
+            ->add('Amount','text',array(
+                'data'=>0,'required'=>false
+            ))
+            ->add('TradeDate','date',array())
+            ->add('Description','textarea',array('required'=>false))
+            ->add('Fees','text',array('required'=>false))->getForm();
+
+        if($Req->isMethod('POST'))
+        {
+            $form->bind($Req);
+            $data=$form->getData();
+
+            $tran->setTranCurrency($Account->getAccCurrency());
+            $tran->setUser($User);
+            $tran->setAccount($Account);
+            $tran->setTranDate(new \DateTime('now'));
+            $tran->setTranInsert(new \DateTime('now'));
+            $tran->setTranAction($data['Action']);
+            $tran->setTranFees($data['Fees']);
+            $tran->setTranDescription($data['Description']);
+            $tran->setTranAmount($data['Amount']);
+            if($data['CreditDebit']==0)
+            {
+
+                $tran->setTranAction('Cred');
+                $em->persist($tran);
+                $em->flush();
+            }
+
+            elseif($data['CreditDebit']==1)
+            {
+                if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+                {
+                    $tran->setTranAction('Debi');
+                    $em->persist($tran);
+                    $em->flush();
+                }
+            }
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
+            array(
+                'form'=>$form->createView(),
+                'Account'=>$Account,
+                'User'=>$User,
+                'Entity'=>$Account->getEntiti(),
+            ));
+
+    }
+
+
 
 //---------endjadidkazem---------//
 
