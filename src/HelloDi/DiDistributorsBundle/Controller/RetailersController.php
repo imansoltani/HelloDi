@@ -206,7 +206,7 @@ class RetailersController extends Controller
 
     }
 
-    ////function Report/Sale
+    ////function Report/Sales
     public  function SaleAction(Request $req)
     {
         $User= $this->get('security.context')->getToken()->getUser();

@@ -39,10 +39,7 @@
            Transaction
          </span>
         </a>
-
-
     </li>
-
 
     <li {% if tab == '6' %}class="active"{% endif %} >
         <a>
@@ -55,30 +52,16 @@
     </li>
 
     <li {% if tab == '1' %}class="active"{% endif %} >
+        <a href="{{ path('MasterDistSale',{'id':Account.id}) }}">
 
 
-
-     <a  href="{{ path('MasterDistSale',{'id':Account.id}) }}">
-         <span>
-             Sales
-         </span>
-     </a>
+               <span>Sales</span>
 
 
-
-    </li>
-
-    <li {% if tab == '7' %}class="active"{% endif %} >
-
-
-        <a  href="{{ path('MasterDistPurchases',{'id':Account.id}) }}">
-         <span>
-           Purchases
-         </span>
         </a>
-
-
     </li>
+
+
 
 
 
