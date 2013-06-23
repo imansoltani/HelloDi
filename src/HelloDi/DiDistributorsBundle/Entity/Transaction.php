@@ -404,6 +404,17 @@ class Transaction
                 $this->getAccount()->setAccBalance($currentBalance+$Amount);
                 break;
 
+            case 'CredMas':
+                $Amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$Amount);
+                break;
+
+            case 'DebiMas':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance-$amount);
+                break;
 
             case 'add':
                 break;

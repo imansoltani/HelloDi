@@ -27,6 +27,15 @@ class BalanceChecker
         }
     }
 
+
+   public function isMoreThanCreditLimit(Account $account,$value)
+   {
+       if(($account->getAccBalance()-$value)>=$account->getAccCreditLimit())
+           return true;
+       throw new \Exception('از اعتبار کمتر میشود');
+
+   }
+
     private function currenciesMatch($accountCurr, $priceCurr)
     {
         if (strcasecmp($accountCurr, $priceCurr) == 0) {
