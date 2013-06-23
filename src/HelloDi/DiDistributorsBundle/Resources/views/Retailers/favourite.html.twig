@@ -5,7 +5,14 @@
 </head>
 <body>
 {% for favourite in listFavourite %}
-    {{ favourite.itemName }}<a href="{{ path('Retailer_Shop_favourite_code',{'id':favourite.id}) }}">Go</a><br>
+
+
+    <form method="post" action="{{ path('Retailer_Shop_favourite_code') }}">
+        {{ favourite.itemName }}
+        <input type="hidden" name="favourite_id" value="{{ favourite.id }}">
+        <button>Go</button>
+    </form>
+    {#<a href="{{ path('Retailer_Shop_favourite_code',{'id':favourite.id}) }}">Go</a><br>#}
 {% endfor %}
 </body>
 </html>

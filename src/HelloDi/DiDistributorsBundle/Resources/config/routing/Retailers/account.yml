@@ -34,5 +34,5 @@ Retailer_Shop_favourite:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Favourites }
 
 Retailer_Shop_favourite_code:
-    pattern:  /favourites/code/{id}
+    pattern:  /favourites/code
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:FavouritesCode }

@@ -487,9 +487,9 @@ class RetailersController extends Controller
 
     }
 
-    public  function FavouritesCodeAction($id){
+    public  function FavouritesCodeAction(Request $request ){
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$id));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$request->get('favourite_id')));
     }
  // End kamal
 
