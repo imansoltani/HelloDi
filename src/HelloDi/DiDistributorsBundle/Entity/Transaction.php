@@ -385,13 +385,13 @@ class Transaction
                 $this->getAccount()->setAccBalance($currentBalance-$amount);
                 break;
 
-            case 'paym':
+            case 'Paym':
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance + $amount);
                 break;
 
-            case 'sale':
+            case 'Sale':
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance - $amount);

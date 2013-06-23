@@ -3,8 +3,8 @@
     <title>ProvTransaction</title>
     <body>
 
-<a href="{{ path('ProvTranTransfer',{'id':3}) }}">Register transaction</a></br>
-<a href="{{ path('ProvTranRegister',{'id':3}) }}">Make Transfer</a>
+<a href="{{ path('ProvTranRegister',{'id':3}) }}">Register transaction</a></br>
+<a href="{{ path('ProvTranTransfer',{'id':3}) }}">Make Transfer</a>
 
     <form method="POST" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" >
         {{ form_label(form) }}
