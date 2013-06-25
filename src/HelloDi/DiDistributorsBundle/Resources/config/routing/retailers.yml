@@ -39,6 +39,14 @@ RetailerTicketsNew:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew }
 
 
+RetailerTicketsOpenNote:
+    pattern:  /tickets/{id}/opennote
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsopennote }
+RetailerTicketsCloseNote:
+    pattern:  /tickets/{id}/closenote
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclosenote }
+
+
 retailer_shop:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
     prefix:   /shop

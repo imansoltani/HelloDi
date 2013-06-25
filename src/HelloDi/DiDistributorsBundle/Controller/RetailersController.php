@@ -22,13 +22,29 @@ class RetailersController extends Controller
 {
     public function dashboardAction()
     {
+
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
+
         return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig',array(
-            'Account' => $Account
+            'Account' => $Account,
+
+
         ));
     }
 
+
+  public  function  countnoteAction()
+  {
+      $user = $this->get('security.context')->getToken()->getUser();
+      $em=$this->getDoctrine()->getEntityManager();
+      $Countnote=$em->createQueryBuilder();
+      $Countnote->select('Note')
+          ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
+          ->Where('Note.User != :usr')->setParameter('usr',$user)
+          ->andWhere('Note.view = 0');
+      return new Response('<b>'.count($Countnote->getQuery()->getResult()).'</b>');
+  }
     //-----startkazem--------//
 
     public function RetailerProfileAction()
@@ -401,6 +417,7 @@ public  function ticketsnewAction(Request $req)
      $TickNote->setDate(new \DateTime('now'));
      $TickNote->setDescription($data['Description']);
      $TickNote->setTicket($Tick);
+     $TickNote->setView(0);
 
 $em->persist($TickNote);
 $em->persist($Tick);
@@ -441,17 +458,36 @@ public  function  ticketsnoteAction(Request $req,$id)
         $ticketNote->setDescription($data['Description']);
         $ticketNote->setDate(new \DateTime('now'));
         $ticketNote->setUser($User);
+        $ticketNote->setView(0);
     if($ticket->getStatus()==1)
     {
         $em->persist($ticketNote);
         $em->flush();
     }
-    else
-    {
-        $req->getSession()->getFlashBag()->add('sendcancel','This Ticket Is In Active');
     }
-    }
+
+
+
     $notes=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
+
+
+
+//       $qb->select('Note')
+//           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
+//           ->Where('Note.User != :usr')->setParameter('usr',$User)
+//           ->andWhere('Note.Ticket != :tic')->setParameter('tic',$ticket)
+//           ->andWhere('Note.view = 0');
+//    $qb->setView(0);
+
+    $qb=$em->createQueryBuilder();
+    $qb->update('HelloDiDiDistributorsBundle:TicketNote Note')
+        ->set('Note.view',1)
+        ->Where('Note.User != :usr')->setParameter('usr',$User)
+        ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
+        ->andWhere('Note.view = 0')
+        ->getQuery()->execute();
+
+
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
         array_reverse($notes),
@@ -465,7 +501,7 @@ public  function  ticketsnoteAction(Request $req,$id)
         'Ticket'=>$ticket,
         'User'=>$User,
         'Account'=>$User->getAccount(),
-        'pagination'=>$pagination
+        'pagination'=>$pagination,
     ));
 
 }
@@ -489,6 +525,29 @@ public  function  ticketscloseAction($id)
     $em->flush();
     return $this->redirect($this->generateUrl('RetailerTickets'));
 }
+
+
+    public  function  ticketsopennoteAction($id)
+    {
+
+        $em=$this->getDoctrine()->getEntityManager();
+        $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
+        $ticket->setStatus(1);
+        $em->flush();
+        return $this->redirect($this->generateUrl('RetailerTicketsNote',array('id'=>$id)));
+    }
+
+    public  function  ticketsclosenoteAction($id)
+    {
+
+        $em=$this->getDoctrine()->getEntityManager();
+        $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
+        $ticket->setStatus(0);
+        $em->flush();
+        return $this->redirect($this->generateUrl('RetailerTicketsNote',array('id'=>$id)));
+    }
+
+
 
 //--------endkazem--------//
 

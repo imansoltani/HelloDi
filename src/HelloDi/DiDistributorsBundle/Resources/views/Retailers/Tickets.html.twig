@@ -99,6 +99,7 @@
                                     <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
                                 </tr>
                                 </thead>
@@ -122,6 +123,20 @@
                                             {{ Ticket.subject }}
                                         </a>
                                         </td>
+
+                                        <td>
+                                            {% set i=0 %}
+                                        {% for Note in Ticket.TicketNotes %}
+                                            {% if Note.view==0 and Note.User!=app.user %}
+                                                {% set i=i+1  %}
+                                            {% endif %}
+                                          {% endfor %}
+
+                                            {{ i }}
+
+                                        </td>
+
+
 <td>{% if Ticket.status==0 %}
         <a href="{{ path('RetailerTicketsOpen',{id:Ticket.id}) }}">Open</a>
     {% else %}

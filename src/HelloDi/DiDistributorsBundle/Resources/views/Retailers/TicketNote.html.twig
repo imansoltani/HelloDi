@@ -27,6 +27,7 @@
  {% endif %}
                 <hr>
 <br>
+
 Date:{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</br>
 Type:
     {% if Ticket.type==0 %}Payment Issue
@@ -36,10 +37,10 @@ Type:
 
     {% endif %}
     </br>
-Status:{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsOpen',{id:Ticket.id}) }}">Close</a>
+Status Current:{% if Ticket.status==0 %}
+        <a href="{{ path('RetailerTicketsOpenNote',{id:Ticket.id}) }}">Close</a>
        {% else %}
-        <a href="{{ path('RetailerTicketsClose',{id:Ticket.id}) }}">Open</a>
+        <a href="{{ path('RetailerTicketsCloseNote',{id:Ticket.id}) }}">Open</a>
        {% endif %}
 
                 <div class="tab-content">
@@ -65,6 +66,7 @@ Status:{% if Ticket.status==0 %}
         </div>
 
 <hr>
+                {% if Ticket.Status!=0 %}
 <form action="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" method="POST">
 
         {{form_label(form.Description)}}
@@ -72,6 +74,7 @@ Status:{% if Ticket.status==0 %}
 
     <input type="submit" value="Send">
 </form>
+                    {% endif %}
 
             </div>
         </div>

@@ -25,7 +25,12 @@ class TicketNote
      */
     private $date;
 
-    /** 
+    /**
+     * @ORM\Column(type="smallint", nullable=false, name="view")
+     */
+    private $view;
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", inversedBy="TicketNotes")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id", nullable=false)
      */
@@ -137,5 +142,28 @@ class TicketNote
     public function getUser()
     {
         return $this->User;
+    }
+
+    /**
+     * Set view
+     *
+     * @param integer $view
+     * @return TicketNote
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+    
+        return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return integer 
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 }
