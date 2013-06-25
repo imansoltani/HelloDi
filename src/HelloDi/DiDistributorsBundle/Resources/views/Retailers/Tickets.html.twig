@@ -33,22 +33,22 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTransaction') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST" >
 
 
                         <div class="control-group">
-                            <label class="control-label" >Trade Date
+                            <label class="control-label" >Close
                             </label>
                             <div class="controls">
-                                {{ form_widget(form.TypeDate[0]) }}
+                                {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Looking Date
+                            <label class="control-label" >Open
                             </label>
                             <div class="controls">
-                                {{ form_widget(form.TypeDate[1]) }}
+                                {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
@@ -59,21 +59,7 @@
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            {{ form_label(form.DateStart) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateStart) }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ form_label(form.DateEnd) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateEnd) }}
-                            </div>
-                        </div>
-
-                        <hr>
-                        <input class="btn btn-primary" type="submit" value="Search">
+                   <input type="submit" value="search">
 
                     </form>
                     <script type="text/javascript">
@@ -104,46 +90,43 @@
 
                 <div class="tablediv">
 
-                    <div class="contenttitle">
-                        <h4>History</h4>
-                    </div>
-                    <form>
+
                         <div class="tab-content">
                             <table style="margin-top: 20px"
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
-
+                                    <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.Status' | trans ({}, "account") }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                {% for tran in pagination %}
+                                {% for Ticket in pagination %}
                                     <tr>
-                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                                        <td>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</td>
 
-                                        <td>{{ tran.tranDescription}}</td>
-                                        <td>{{ tran.tranAmount}}</td>
-                                        <td>{{ tran.Account.accBalance }}</td>
                                         <td>
-                                            {% if tran.tranAction=='Sale' %}Sale
-                                            {% elseif tran.tranAction=='Tran' %}Transfer
-                                            {% elseif tran.tranAction=='Paym' %}Payment
-                                            {% elseif tran.tranAction=='Cred' %}Credit==><b style="color: red">Money</b>
-                                            {% elseif tran.tranAction=='Debi' %}Debit==><b style="color: red">Money</b>                                            {% endif %}</td>
 
-                                        <td class="td-actions">
-
-
-                                            <a class="btn_actions" href="{{ path('RetailerDetailsTransaction',{'id':tran.id }) }}">Details</a>
-
+                                            {% if Ticket.type==0 %}Payment
+                                            {% elseif Ticket.type==1 %}new item request
+                                            {% elseif Ticket.type==2 %}"price change request
+                                            {% elseif Ticket.type==3 %}Payment
+                                            {% elseif Ticket.type==4 %}Payment
+                                                {% endif %}
+                                          </td>
+                                        <td>
+                                        <a href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}">
+                                            {{ Ticket.subject }}
+                                        </a>
                                         </td>
+<td>{% if Ticket.status==0 %}
+        <a href="{{ path('RetailerTicketsOpen',{id:Ticket.id}) }}">Close</a>
+    {% else %}
+        <a href="{{ path('RetailerTicketsClose',{id:Ticket.id}) }}">Open</a>
+    {% endif %}</td>
 
                                     </tr>
 
@@ -152,10 +135,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="navigation">
-                            {{ knp_pagination_render(pagination) }}
-                        </div>
-                    </form>
+
                 </div>
 
             </div>

@@ -18,6 +18,27 @@ RetailerSale:
     pattern:  /report/sale
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Sale}
 
+
+RetailerTickets:
+    pattern:  /tickets
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:tickets }
+
+RetailerTicketsNote:
+    pattern:  /tickets/{id}/notes
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnote }
+
+RetailerTicketsClose:
+    pattern:  /tickets/{id}/close
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclose }
+
+RetailerTicketsOpen:
+    pattern:  /tickets/{id}/open
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsopen }
+RetailerTicketsNew:
+    pattern:  /tickets/new
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew }
+
+
 retailer_shop:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
     prefix:   /shop

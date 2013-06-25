@@ -36,3 +36,4 @@ Retailer_Shop_favourite:
 Retailer_Shop_favourite_code:
     pattern:  /favourites/code
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:FavouritesCode }
+#    Tickets

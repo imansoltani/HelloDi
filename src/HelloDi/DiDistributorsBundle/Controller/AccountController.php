@@ -438,13 +438,14 @@ class AccountController extends Controller
             $trandist->setUser($User);
             $trandist->setTranFees(0);
             $trandist->setTranDescription($data['Description']);
-            $trandist->setTranAmount($data['Amount']) ;
+
 
             if($data['As']=='Credit')
             {
                 if($data['Amount']!=0)
                 {
-                    $trandist->setTranAction('CredMas');
+                    $trandist->setTranAmount(+$data['Amount']) ;
+                    $trandist->setTranAction('Cred');
                     $em->persist($trandist);
                     $em->flush();
                 }
@@ -459,7 +460,8 @@ class AccountController extends Controller
 
                 if($balancechecker->isMoreThanCreditLimit($Account,$data['Amount']))
                 {
-                $trandist->setTranAction('DebiMas');
+                $trandist->setTranAmount(-$data['Amount']) ;
+                $trandist->setTranAction('Debi');
                 $em->persist($trandist);
                 $em->flush();
                 }

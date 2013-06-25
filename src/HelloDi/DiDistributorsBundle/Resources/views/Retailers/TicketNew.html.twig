@@ -1,0 +1,65 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+
+{% block title %}
+    Transactions
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" >Transaction</a>
+    <span class="link">History</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-money"></i>
+    Transaction History
+{% endblock %}
+
+{% block Body %}
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+                <a class="btn-large button btn btn-primary " href="#">
+                    Recharge
+                </a>
+
+
+
+                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTicketsNew') }}" method="POST" >
+
+
+                        <div class="control-group">
+                            {{ form_label(form.Subject) }}
+                            <div class="controls">
+                                {{ form_widget(form.Subject) }}
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            {{ form_label(form.Type) }}
+                            <div class="controls">
+                                {{ form_widget(form.Type) }}
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="control-group">
+                            {{ form_label(form.Description) }}
+                            <div class="controls">
+                                {{ form_widget(form.Description) }}
+                            </div>
+                        </div>
+                        {{ form_widget(form._token) }}
+                   <input type="submit" value="Open">
+
+                    </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -189,6 +189,7 @@ class DistributorsController extends Controller
         $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formapplay=$this->createFormBuilder()
             ->add('Amount',null,array('data'=>0))
+            ->add('Communications','textarea',array('required'=>false))
             ->add('Description','textarea',array('required'=>false))
             ->getForm();
 
@@ -219,6 +220,7 @@ class DistributorsController extends Controller
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formtransfer=$this->createFormBuilder()
             ->add('Amount')
+            ->add('Communications','textarea',array('required'=>false))
             ->add('Description','textarea',array('required'=>false))
             ->getForm();
 
@@ -238,8 +240,8 @@ class DistributorsController extends Controller
             $trandist->setUser($User);
             $trandist->setTranFees(0);
             $trandist->setTranAction('Debi');
-            $trandist->setTranAmount($data['Amount']);
-
+            $trandist->setTranAmount(-$data['Amount']);
+            $trandist->setTranDescription($data['Description']);
             #transaction for retailer#
 
             $tranretailer->setTranDate(new \DateTime('now'));
@@ -248,10 +250,9 @@ class DistributorsController extends Controller
             $tranretailer->setAccount($Account);
             $tranretailer->setUser($User);
             $tranretailer->setTranFees(0);
-            $tranretailer->setTranAmount($data['Amount']);
+            $tranretailer->setTranAmount(+$data['Amount']);
             $tranretailer->setTranAction('Cred');
-
-            if($data['Description']!='')$trandist->setTranDescription($data['Description']);
+            $tranretailer->setTranDescription($data['Communications']);
 
             if($data['Amount']!='')
             {
@@ -298,7 +299,7 @@ class DistributorsController extends Controller
 
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAmount($data['Amount']);
+            $trandist->setTranAmount(-$data['Amount']);
             $trandist->setTranAction('Debi');
             if($data['As']=='Credit')
             {
@@ -686,6 +687,7 @@ class DistributorsController extends Controller
                     1 => 'Looking Date',
                 )
             ))
+
             ->getForm();
 
 

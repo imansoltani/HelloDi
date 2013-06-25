@@ -19,7 +19,8 @@
             </h3>
         </div> <!-- /widget-header -->
         <br>
-
+        Current distributors balance:{{ Account.accBalance }}
+        <br>
         <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
             <fieldset>
@@ -64,6 +65,9 @@
             <h3>
                 Update distributors Credit Limit
             </h3>
+            <br>
+            Current distributors credit limit:{{ Account.accCreditlimit }}
+            <br>
         </div> <!-- /widget-header -->
         <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 

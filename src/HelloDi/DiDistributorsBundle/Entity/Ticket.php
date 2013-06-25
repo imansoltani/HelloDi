@@ -16,7 +16,7 @@ class Ticket
     private $id;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=true, name="subject")
+     * @ORM\Column(type="string", length=45, nullable=false, name="subject")
      */
     private $subject;
 
@@ -35,8 +35,13 @@ class Ticket
      */
     private $type;
 
-    /** 
+    /**
      * @ORM\Column(type="integer", nullable=false)
+     */
+    private $Status;
+    
+    /** 
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $importance;
 
@@ -266,5 +271,28 @@ class Ticket
     public function getUser()
     {
         return $this->User;
+    }
+
+    /**
+     * Set Status
+     *
+     * @param integer $status
+     * @return Ticket
+     */
+    public function setStatus($status)
+    {
+        $this->Status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get Status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->Status;
     }
 }

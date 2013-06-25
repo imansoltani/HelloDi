@@ -15,12 +15,15 @@
         <div class="span5">
             <div class="widget-header">
                 <h3>
-                    Fund distributors balance
+                    Fund retailer  balance
                 </h3>
             </div> <!-- /widget-header -->
             <br>
 
-            <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+            Available Balance:{{ Account.Parent.accBalance }}</br>
+            Retailer Balance:{{ Account.accBalance }}
+<hr>
+            <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
                 <fieldset>
 
@@ -35,6 +38,12 @@
                     </div>
 
 
+                    <div class="control-group ">
+                        {{ form_label(formapplay.Communications ) }}
+                        <div class="controls">
+                            {{ form_widget(formapplay.Communications )  }}
+                        </div>
+                    </div>
 
                     <div class="control-group ">
                         {{ form_label(formapplay.Description ) }}
@@ -57,10 +66,15 @@
             {#//----Form update----//#}
             <div class="widget-header">
                 <h3>
-                    Update distributors Credit Limit
+                    Update retailer Credit Limit
                 </h3>
+                <br>
+
+                Available Balance:{{ Account.Parent.accBalance }}</br>
+                Retailer Balance:{{ Account.accCreditLimit }}
+                <hr>
             </div> <!-- /widget-header -->
-            <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+            <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
                 <fieldset>
 
@@ -69,7 +83,7 @@
                         {{ form_label(formupdate.Amount) }}
 
 
-                        {{ form_widget(formupdate.Amount)  }}
+                        {{ form_widget(formupdate.Amount)  }}|{{ Account.Parent.accCurrency }}
 
 
                     </div>
