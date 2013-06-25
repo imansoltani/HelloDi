@@ -162,7 +162,7 @@ class TestController extends Controller
             $data = $ogoneForm->getData();
             $key = 'MySha-In@key765?';
             $nameMaster = 'hellodi';
-            $OrderNimber = '1';
+            $OrderNimber = '3';
             $center[] = '';
             $center[0] = 'AMOUNT='.$data['AMOUNT'].$key;
             $center[1] = 'CURRENCY='.$data['CURRENCY'].$key;
@@ -184,6 +184,10 @@ class TestController extends Controller
             return $this->render('HelloDiDiDistributorsBundle::OgoneTestSendPage.html.twig',array('center'=>$center,'sin'=>$singer,'val'=>$value));
         }
         return $this->render('HelloDiDiDistributorsBundle::OgoneTest.html.twig',array('form' => $ogoneForm->createView()));
+
+    }
+
+    public function OgoneTestAcceptAction(){
 
     }
 }

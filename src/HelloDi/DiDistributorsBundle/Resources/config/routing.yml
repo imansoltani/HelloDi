@@ -21,3 +21,7 @@ pdf:
 ogonetest:
     pattern:  /ogonetest
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTest }
+
+ogonetestaccept:
+    pattern:  /ogonetest/accept
+    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTestAccept }
