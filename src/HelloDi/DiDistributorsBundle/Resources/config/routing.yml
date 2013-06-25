@@ -17,3 +17,7 @@ app_Retailers:
 pdf:
     pattern:  /pdf
     defaults: { _controller: HelloDiDiDistributorsBundle:Account:pdf}
+
+ogonetest:
+    pattern:  /ogonetest
+    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTest }
