@@ -939,6 +939,7 @@ class DistributorsController extends Controller
 
     public function ItemPerRetailerAction(Request $request, $itemid)
     {
+        $this->check_Item($itemid);
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
 
@@ -1127,5 +1128,20 @@ class DistributorsController extends Controller
                 'form' => $form->createView()
             ));
     }
+
+    // check functions
+    public function check_Item($itemid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
+        $account = $this->getUser()->getAccount();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$account,'Item'=>$item));
+
+        if($price == null || $price->getPrice()==0)
+        {
+            throw new \Exception('You cant set price to your retailers by this item !');
+        }
+    }
+
 }
 
