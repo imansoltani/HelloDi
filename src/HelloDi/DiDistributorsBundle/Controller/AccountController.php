@@ -822,19 +822,19 @@ class AccountController extends Controller
         $qb->select('Tr')
             ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
             ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')
-            ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+            ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('Sale')));
         foreach($Account->getChildrens() as $child)
         {
             $qb=$qb->orWhere('Tr.Account=:acc')->setParameter('acc',$child);
         }
-        $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+
         $query=$qb->getQuery();
         $form=$this->createFormBuilder()
             ->add('DateStart','date',array())
             ->add('DateEnd','date',array())
             ->add('ItemType','choice',
                 array('choices'=>
-                array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
+                array(3=>'All',1=>'Item.TypeChioce.Internet',0 =>'Item.TypeChioce.Mobile',2 =>'Item.TypeChioce.Tel')))
             ->add('ItemName', 'entity',
                 array(
                     'empty_data' => 'All',
@@ -851,23 +851,24 @@ class AccountController extends Controller
             $qb->select('Tr');
             $qb->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')
-                ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+                ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('Sale')));
             foreach($Account->getChildrens() as $child)
             {
-                $qb->orWhere('Tr.Account=:acc')->setParameter('acc',$child);
+                $qb=$qb->orWhere('Tr.Account = :acc')->setParameter('acc',$child);
             }
-            $qb->andWhere('Tr.tranInsert >=:DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andWhere('Tr.tranInsert <=:DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+            $qb->andWhere('Tr.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart'])
+                ->andWhere('Tr.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
             if($data['ItemType']!=3)
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType',$data['ItemType']);
             if($data['ItemName']!='All')
-                $qb->andWhere('TrCoIt.itemName=:ItemName')->setParameter('ItemName',$data['ItemName']);
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ',$qb->expr()->literal($data['ItemName'])));
 
-            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
             $query=$qb->getQuery();
 
 
         }
+
+
 
         $count = count($query->getResult());
         $query = $query->setHint('knp_paginator.count', $count);

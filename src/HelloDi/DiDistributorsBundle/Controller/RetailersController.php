@@ -468,29 +468,21 @@ public  function  ticketsnoteAction(Request $req,$id)
 
 
 
-    $notes=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
+    $noteslist=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
 
 
-
-//       $qb->select('Note')
-//           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
-//           ->Where('Note.User != :usr')->setParameter('usr',$User)
-//           ->andWhere('Note.Ticket != :tic')->setParameter('tic',$ticket)
-//           ->andWhere('Note.view = 0');
-//    $qb->setView(0);
-
-    $qb=$em->createQueryBuilder();
-    $qb->update('HelloDiDiDistributorsBundle:TicketNote Note')
+///update vi
+    $notesview=$em->createQueryBuilder();
+    $notesview->update('HelloDiDiDistributorsBundle:TicketNote Note')
         ->set('Note.view',1)
         ->Where('Note.User != :usr')->setParameter('usr',$User)
         ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
         ->andWhere('Note.view = 0')
         ->getQuery()->execute();
 
-
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
-        array_reverse($notes),
+        array_reverse($noteslist),
         $this->get('request')->query->get('page', 1) /*page number*/,
         10/*limit per page*/
     );

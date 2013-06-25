@@ -61,9 +61,10 @@
                                class="table table-bordered table-striped table-highlight postsend">
                             <thead>
                             <tr>
+                                <th>id</th>
                                 <th>Date</th>
                                 <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>
+                                {#<th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>#}
                                 <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
                                 <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
 
@@ -74,11 +75,26 @@
 
                             {% for Tr in pagination %}
                                 <tr>
+                                    <td>{{Tr.id }}</td>
                                     <td>{{Tr.tranDate|date }}</td>
                                     <td>{{ Tr.Code.Item.itemName}}</td>
-                                    <td>{{ Tr|length }}</td>
-                                    <td>{{Tr.tranAmount }}</td>
-                                    <td>{{ Tr.User.Entiti.entVatNumber }}</td>
+                                    {#<td>{{ Tr|length }}</td>#}
+                                    <td>
+
+                                        {% set Item=Tr.Code.Item %}
+                                        {% set Account=Tr.Account.Parent %}
+
+                                        {% for Acc in Account.Prices %}
+                                           {% for Itm in Item.Prices %}
+                                               {% if Acc.Price==Itm.Price  %}
+                                               {{ Acc.price  }}
+                                                 {% endif %}
+                                           {% endfor %}
+                                       {% endfor %}
+
+
+                                    </td>
+                                    <td>Task</td>
                                 </tr>
 
                             {% endfor %}
