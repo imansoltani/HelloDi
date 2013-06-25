@@ -454,7 +454,7 @@ public  function  ticketsnoteAction(Request $req,$id)
     $notes=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
-        $notes,
+        array_reverse($notes),
         $this->get('request')->query->get('page', 1) /*page number*/,
         10/*limit per page*/
     );
