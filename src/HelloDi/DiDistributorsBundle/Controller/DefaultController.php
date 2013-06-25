@@ -17,4 +17,5 @@ class DefaultController extends Controller
     {
         return $this->render('HelloDiDiDistributorsBundle:Dashboard:Master_dashboard.html.twig', array('MU' => 'home'));
     }
+
 }

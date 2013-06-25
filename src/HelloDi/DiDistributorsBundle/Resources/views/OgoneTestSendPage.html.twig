@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Send For OGONE</title>
+    <body>
+    {{ val[0] }}
+    {{ val[1] }}
+    {{ val[2] }}
+    {{ val[3] }}
+    {{ val[4] }}
+    <form method="post" action="https://secure.ogone.com/ncol/test/orderstandard.asp" id=form1 name=form1>
+        <input type="hidden" name="AMOUNT" value="{{ val[0] }}">
+        <input type="hidden" name="CURRENCY" value="{{ val[1] }}">
+        <input type="hidden" name="LANGUAGE" value="{{ val[2] }}">
+        <input type="hidden" name="ORDERID" value="{{ val[3] }}">
+        <input type="hidden" name="PSPID" value="{{ val[4] }}">
+        <INPUT type="hidden" NAME="SHASIGN" value="{{ sin }}">
+
+<button>Send</button>
+
+    </form>
+
+    </body>
+
+</head>
+</html>

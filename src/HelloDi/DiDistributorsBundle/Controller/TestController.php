@@ -149,4 +149,41 @@ class TestController extends Controller
             )
         );
     }
+
+    public function OgoneTestAction(Request $request){
+        $ogoneForm = $this->createFormBuilder()
+            ->add('AMOUNT','text',array('label'=>'Amount'))
+            ->add('CURRENCY','choice',array('label'=>'Curency','choices'=> array('CHF'=>'CHF','EUR'=>'EUR','USA'=>'USA')))
+            ->add('LANGUAGE','choice',array('label'=>'Language','choices'=>array('en_US'=>'en_US')))
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $ogoneForm->bind($request);
+            $data = $ogoneForm->getData();
+            $key = 'MySha-In@key765?';
+            $nameMaster = 'hellodi';
+            $OrderNimber = '1';
+            $center[] = '';
+            $center[0] = 'AMOUNT='.$data['AMOUNT'].$key;
+            $center[1] = 'CURRENCY='.$data['CURRENCY'].$key;
+            $center[2] = 'LANGUAGE='.$data['LANGUAGE'].$key;
+            $center[3] = 'PSPID='.$nameMaster.$key;
+            $center[4] = 'ORDERID='.$OrderNimber.$key;
+
+            $value[] = '';
+            $value[0] = $data['AMOUNT'];
+            $value[1] = $data['CURRENCY'];
+            $value[2] = $data['LANGUAGE'];
+            $value[3] = $OrderNimber;
+            $value[4] = $nameMaster;
+
+
+            sort($center);
+            $singer = sha1($center[0].$center[1].$center[2].$center[3].$center[4]) ;
+            print $singer;
+            return $this->render('HelloDiDiDistributorsBundle::OgoneTestSendPage.html.twig',array('center'=>$center,'sin'=>$singer,'val'=>$value));
+        }
+        return $this->render('HelloDiDiDistributorsBundle::OgoneTest.html.twig',array('form' => $ogoneForm->createView()));
+
+    }
 }

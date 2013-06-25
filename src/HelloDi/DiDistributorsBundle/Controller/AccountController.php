@@ -1772,7 +1772,7 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $searchForm = $this->createForm(new searchProvTransType());
-        $account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($request->get('accountid'));
         $qb = $em->createQueryBuilder()
             ->select('trans.id','trans.tranDate','trans.tranDescription','trans.tranCredit','trans.tranDebit','acc.accBalance','trans.tranAction')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
@@ -1793,7 +1793,6 @@ class AccountController extends Controller
             elseif($request->get('accountid')== null){
                 $searchForm->bind($request);
                 $data = $searchForm->getData();
-
                 if($data['FromDate']!="")
                     $qb = $qb->andWhere("trans.tranDate >= :transdateFrom")->setParameter('transdateFrom', $data['FromDate']);
 
