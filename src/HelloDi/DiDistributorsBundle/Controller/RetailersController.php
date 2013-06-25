@@ -340,10 +340,11 @@ public function ticketsAction(Request $req)
       $data=$form->getData();
       $tickets=$em->createQueryBuilder();
       $tickets->select('Tic')
-           ->from('HelloDiDiDistributorsBundle:Ticket','Tic');
+       ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
+      ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status']);
       if($data['Type']!=5)
-          $tickets->where('Tic.type =:type')->setParameter('type',$data['Type'])
-           ->andWhere('Tic.Status =:sta')->setParameter('sta',$data['Status'])->getQuery();
+          $tickets->andwhere('Tic.type =:type')->setParameter('type',$data['Type'])
+              ->getQuery();
 
   }
 

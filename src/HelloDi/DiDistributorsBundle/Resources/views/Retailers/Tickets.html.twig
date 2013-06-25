@@ -99,7 +99,7 @@
                                     <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Status' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -123,9 +123,9 @@
                                         </a>
                                         </td>
 <td>{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsOpen',{id:Ticket.id}) }}">Close</a>
+        <a href="{{ path('RetailerTicketsOpen',{id:Ticket.id}) }}">Open</a>
     {% else %}
-        <a href="{{ path('RetailerTicketsClose',{id:Ticket.id}) }}">Open</a>
+        <a href="{{ path('RetailerTicketsClose',{id:Ticket.id}) }}">Close</a>
     {% endif %}</td>
 
                                     </tr>
