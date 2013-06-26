@@ -37,42 +37,22 @@
                     <tr>
                         <th>{{ 'Transaction.id' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-
                         <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Accountname' | trans ({}, "account") }} </th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    {% for tran in pagination %}
                         <tr>
                             <td>{{ tran.id}}</td>
                             <td>{{ tran.tranDate|date('y-M-d') }}</td>
-                            <td>{{ tran.tranDescription}}</td>
-                            <td>{{ tran.tarnAmount}}</td>
-                            <td>{{ tran.Account.accBalance }}</td>
-                            <td>
-                                {% if tran.tranAction=='Sale' %}Sale
-                                {% elseif tran.tranAction=='Tran' %}Transfer
-                                {% elseif tran.tranAction=='Paym' %}Payment
-                                {% elseif tran.tranAction=='Regis' %}Register
-                                {% elseif tran.tranAction=='Fund' %}Funding
-                                {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                                {% endif %}
-                            </td>
 
                             <td> {{ tran.User.username }} </td>
+
                             <td> {{ tran.Code.Item.itemName }} </td>
                             <td> {{ tran.Account.accName }} </td>
 
                         </tr>
-
-                    {% endfor %}
 
                     </tbody>
                 </table>

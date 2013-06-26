@@ -115,9 +115,9 @@
                                 <tr>
                                     <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
                                     <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
 
                                 </tr>
@@ -129,14 +129,15 @@
                                         <td>{{ tran.tranDate|date('y-M-d') }}</td>
 
                                         <td>{{ tran.tranDescription}}</td>
-                                        <td>{{ tran.tranAmount}}</td>
+
+                                        {% if tran.tranAmount>=0 %}
+                                            <td>{{ tran.tranAmount }}</td>
+                                            <td>------</td>
+                                        {% else %}
+                                            <td>------</td>
+                                            <td>{{ -tran.tranAmount }}</td>
+                                        {% endif %}
                                         <td>{{ tran.Account.accBalance }}</td>
-                                        <td>
-                                            {% if tran.tranAction=='Sale' %}Sale
-                                            {% elseif tran.tranAction=='Tran' %}Transfer
-                                            {% elseif tran.tranAction=='Paym' %}Payment
-                                            {% elseif tran.tranAction=='Regis' %}Register
-                                            {% elseif tran.tranAction=='Fund' %}Funding                                           {% endif %}</td>
 
                                         <td class="td-actions">
 

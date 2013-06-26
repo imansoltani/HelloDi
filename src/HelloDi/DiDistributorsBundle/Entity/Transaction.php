@@ -379,31 +379,40 @@ class Transaction
     public function updateAccountBalance()
     {
         switch ($this->getTranAction()) {
-            case 'Tran':
+            case 'tran':
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
-            case 'Fund':
+            case 'crtl':
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
-            case 'Regis':
+            case 'pmt':
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
-            case 'Paym':
-                $amount = $this->getTranCredit();
-                $currentBalance = $this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance + $amount);
+
+            case 'amdt':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
-            case 'Sale':
+
+
+            case 'paym':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+            case 'sale':
                 $amount = $this->getTranCredit();
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance + $amount);

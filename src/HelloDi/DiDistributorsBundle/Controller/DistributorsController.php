@@ -239,7 +239,7 @@ class DistributorsController extends Controller
             $trandist->setAccount($Account->getParent());
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAction('Tran');
+            $trandist->setTranAction('tran');
             $trandist->setTranAmount(-$data['Amount']);
             $trandist->setTranDescription($data['Description']);
             #transaction for retailer#
@@ -251,7 +251,7 @@ class DistributorsController extends Controller
             $tranretailer->setUser($User);
             $tranretailer->setTranFees(0);
             $tranretailer->setTranAmount(+$data['Amount']);
-            $tranretailer->setTranAction('Tran');
+            $tranretailer->setTranAction('tran');
             $tranretailer->setTranDescription($data['Communications']);
 
             if($data['Amount']!='')
@@ -300,12 +300,12 @@ class DistributorsController extends Controller
             $trandist->setUser($User);
             $trandist->setTranFees(0);
 
-            $trandist->setTranAction('Tran');
+            $trandist->setTranAction('crtl');
             if($data['As']=='Credit')
             {
                if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                {
-                   $trandist->setTranAmount(-$data['Amount']);
+                $trandist->setTranAmount(-$data['Amount']);
                 $trandist->setAccount($Account->getParent());
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
                 $em->persist($trandist);

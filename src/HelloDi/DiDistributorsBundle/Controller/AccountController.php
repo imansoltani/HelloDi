@@ -316,10 +316,8 @@ class AccountController extends Controller
 
             if($data['TypeDate']==0)
             {
-
                 $qb=$qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 $qb=$qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
             }
 
             if($data['TypeDate']==1)
@@ -368,7 +366,7 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
             array(
                 'Account'=>$Account,
-                'pagination'=>$Tran,
+                'tran'=>$Tran,
             ));
     }
 
@@ -445,7 +443,7 @@ class AccountController extends Controller
                 if($data['Amount']!=0)
                 {
                     $trandist->setTranAmount(+$data['Amount']) ;
-                    $trandist->setTranAction('Fund');
+                    $trandist->setTranAction('pmt');
                     $em->persist($trandist);
                     $em->flush();
                 }
@@ -462,7 +460,7 @@ class AccountController extends Controller
                 {
 
                 $trandist->setTranAmount(-$data['Amount']) ;
-                $trandist->setTranAction('Fund');
+                $trandist->setTranAction('amdt');
                 $em->persist($trandist);
                 $em->flush();
                 }
@@ -692,7 +690,7 @@ class AccountController extends Controller
             $data=$form->getData();
 
             #transaction for prov#
-            $tranprov->setTranAction('Tran');
+            $tranprov->setTranAction('tran');
             $tranprov->setTranAmount(-$data['Amount']);
             $tranprov->setAccount($Account);
             $tranprov->setUser($User);
@@ -702,7 +700,7 @@ class AccountController extends Controller
 
             #transaction for dist#
             $trandist->setTranAmount(+$data['Amount']);
-            $trandist->setTranAction('Tran');
+            $trandist->setTranAction('tran');
             $trandist->setAccount($data['Accounts']);
             $trandist->setUser($User);
             $trandist->setTranDescription(null);
@@ -755,8 +753,11 @@ class AccountController extends Controller
 
             ))
             ->add('Action','choice',array(
-                'choices'=>array('Paym'=>'Payment'),
-                'preferred_choices'=>array(0)
+                'choices'=>
+                array(
+            'paym'=>'Payment',
+            'tran'=>'transfer credit from providers account to a distributors account'
+                )
             ))
             ->add('Amount','text',array(
                 'data'=>0,'required'=>false
@@ -767,7 +768,7 @@ class AccountController extends Controller
 
         if($Req->isMethod('POST'))
         {
-            $form->bind($Req);
+            $form->submit($Req);
             $data=$form->getData();
 
             $tran->setTranCurrency($Account->getAccCurrency());
@@ -775,14 +776,15 @@ class AccountController extends Controller
             $tran->setAccount($Account);
             $tran->setTranDate(new \DateTime('now'));
             $tran->setTranInsert(new \DateTime('now'));
-            $tran->setTranAction($data['Action']);
+
+//            $tran->setTranAction($data['Action']);
             $tran->setTranFees($data['Fees']);
             $tran->setTranDescription($data['Description']);
 
             if($data['CreditDebit']==0)
             {
+                $tran->setTranAction('pmt');
                 $tran->setTranAmount(+$data['Amount']);
-                $tran->setTranAction('Regis');
                 $em->persist($tran);
                 $em->flush();
             }
@@ -791,8 +793,8 @@ class AccountController extends Controller
             {
                 if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
                 {
+                    $tran->setTranAction('amdt');
                     $tran->setTranAmount(-$data['Amount']);
-                    $tran->setTranAction('Regis');
                     $em->persist($tran);
                     $em->flush();
                 }
