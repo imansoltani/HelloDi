@@ -445,7 +445,7 @@ class AccountController extends Controller
                 if($data['Amount']!=0)
                 {
                     $trandist->setTranAmount(+$data['Amount']) ;
-                    $trandist->setTranAction('Cred');
+                    $trandist->setTranAction('Fund');
                     $em->persist($trandist);
                     $em->flush();
                 }
@@ -460,8 +460,9 @@ class AccountController extends Controller
 
                 if($balancechecker->isMoreThanCreditLimit($Account,$data['Amount']))
                 {
+
                 $trandist->setTranAmount(-$data['Amount']) ;
-                $trandist->setTranAction('Debi');
+                $trandist->setTranAction('Fund');
                 $em->persist($trandist);
                 $em->flush();
                 }
@@ -672,7 +673,8 @@ class AccountController extends Controller
                 }
             ))->getForm();
 
-        $tranprov=new Transaction();$trandist=new Transaction();
+        $tranprov=new Transaction();
+        $trandist=new Transaction();
 
         $tranprov->setTranBookingValue(null);
         $tranprov->setTranDate(new \DateTime('now'));
@@ -690,8 +692,8 @@ class AccountController extends Controller
             $data=$form->getData();
 
             #transaction for prov#
-            $tranprov->setTranAction('Debi');
-            $tranprov->setTranAmount($data['Amount']);
+            $tranprov->setTranAction('Tran');
+            $tranprov->setTranAmount(-$data['Amount']);
             $tranprov->setAccount($Account);
             $tranprov->setUser($User);
             $tranprov->setTranDescription(null);
@@ -699,8 +701,8 @@ class AccountController extends Controller
             $tranprov->setTranCurrency($Account->getAccCurrency());
 
             #transaction for dist#
-            $trandist->setTranAmount($data['Amount']);
-            $trandist->setTranAction('Cred');
+            $trandist->setTranAmount(+$data['Amount']);
+            $trandist->setTranAction('Tran');
             $trandist->setAccount($data['Accounts']);
             $trandist->setUser($User);
             $trandist->setTranDescription(null);
@@ -708,7 +710,7 @@ class AccountController extends Controller
             $trandist->setTranCurrency($Account->getAccCurrency());
 
             if($data['Amount']!='')
-                if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+                if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
                 {
                     $em->persist($trandist);
                     $em->persist($tranprov);
@@ -744,7 +746,6 @@ class AccountController extends Controller
 
         $form=$this->createFormBuilder()
             ->add('CreditDebit','choice',array(
-
                 'expanded'=>true,
                 'choices'=>array(
 
@@ -777,20 +778,21 @@ class AccountController extends Controller
             $tran->setTranAction($data['Action']);
             $tran->setTranFees($data['Fees']);
             $tran->setTranDescription($data['Description']);
-            $tran->setTranAmount($data['Amount']);
+
             if($data['CreditDebit']==0)
             {
-
-                $tran->setTranAction('Cred');
+                $tran->setTranAmount(+$data['Amount']);
+                $tran->setTranAction('Regis');
                 $em->persist($tran);
                 $em->flush();
             }
 
             elseif($data['CreditDebit']==1)
             {
-                if($AccountBalance->isBalanceEnoughTran($Account,$data['Amount']))
+                if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
                 {
-                    $tran->setTranAction('Debi');
+                    $tran->setTranAmount(-$data['Amount']);
+                    $tran->setTranAction('Regis');
                     $em->persist($tran);
                     $em->flush();
                 }
@@ -862,7 +864,6 @@ class AccountController extends Controller
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType',$data['ItemType']);
             if($data['ItemName']!='All')
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ',$qb->expr()->literal($data['ItemName'])));
-
             $query=$qb->getQuery();
 
 
@@ -1810,6 +1811,7 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array('accprov'=>$accProv,'idTrans'=>$id,'form' => $searchForm   ->createView()));
     }
+
     public function MasterProvRemovedAction(Request $request,$id){
 
 

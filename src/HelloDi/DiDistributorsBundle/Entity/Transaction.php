@@ -379,7 +379,19 @@ class Transaction
     public function updateAccountBalance()
     {
         switch ($this->getTranAction()) {
-            case 'Debi':
+            case 'Tran':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+            case 'Fund':
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+            case 'Regis':
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
@@ -398,11 +410,6 @@ class Transaction
 
                 break;
 
-            case 'Cred':
-                $Amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$Amount);
-                break;
 
             case 'add':
                 break;

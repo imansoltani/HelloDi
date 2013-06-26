@@ -133,11 +133,11 @@
                                     <td>
 
                                         {% if tran.tranAction=='Sale' %}Sale
-                                        {% elseif tran.tranAction=='Tras' %}Transfer
+                                        {% elseif tran.tranAction=='Tran' %}Transfer
                                         {% elseif tran.tranAction=='Paym' %}Payment
-                                        {% elseif tran.tranAction=='Cred' %}Credit==><b style="color: red">Money</b>
+                                        {% elseif tran.tranAction=='Regis' %}Register
+                                        {% elseif tran.tranAction=='Fund' %}Funding
                                         {% elseif tran.tranAction=='Add' %}Add
-                                        {% elseif tran.tranAction=='Debi' %}Debit==><b style="color: red">Money</b>
                                         {% endif %}</td>
 
                                     <td class="td-actions">

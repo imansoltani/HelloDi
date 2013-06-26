@@ -81,14 +81,14 @@
                                     {#<td>{{ Tr|length }}</td>#}
                                     <td>
 
-                                        {% set Item=Tr.Code.Item %}
-                                        {% set Account=Tr.Account.Parent %}
+                                         {% set Item=Tr.Code.Item %}
+                                         {% set Account=Tr.Account.Parent %}
 
                                         {% for Acc in Account.Prices %}
-                                           {% for Itm in Item.Prices %}
-                                               {% if Acc.Price==Itm.Price  %}
-                                               {{ Acc.price  }}
-                                                 {% endif %}
+                                            {% for Itm in Item.Prices %}
+                                                {% if Acc.Price==Itm.Price  %}
+                                                  {{ Acc.price  }}
+                                                {% endif %}
                                            {% endfor %}
                                        {% endfor %}
 

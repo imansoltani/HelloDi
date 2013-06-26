@@ -58,8 +58,10 @@
                             <td>{{ tran.Account.accBalance }}</td>
                             <td>
                                 {% if tran.tranAction=='Sale' %}Sale
-                                {% elseif tran.tranAction=='Transfer' %}Transfer
-                                {% elseif tran.tranAction=='Payment' %}Payment
+                                {% elseif tran.tranAction=='Tran' %}Transfer
+                                {% elseif tran.tranAction=='Paym' %}Payment
+                                {% elseif tran.tranAction=='Regis' %}Register
+                                {% elseif tran.tranAction=='Fund' %}Funding
                                 {% elseif tran.tranAction=='CreditNote' %}CreditNote
                                 {% endif %}
                             </td>

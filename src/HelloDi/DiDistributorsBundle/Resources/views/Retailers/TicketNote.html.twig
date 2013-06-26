@@ -37,7 +37,7 @@ Type:
 
     {% endif %}
     </br>
-Status Current:{% if Ticket.status==0 %}
+Current Status:{% if Ticket.status==0 %}
         <a href="{{ path('RetailerTicketsOpenNote',{id:Ticket.id}) }}">Close</a>
        {% else %}
         <a href="{{ path('RetailerTicketsCloseNote',{id:Ticket.id}) }}">Open</a>

@@ -29,10 +29,10 @@
 
                             {{ 'Action' | trans ({}, "account") }}:
                             {% if tran.tranAction=='Sale' %}Sale
-                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                            {% elseif tran.tranAction=='Payment' %}Payment
-                            {% elseif tran.tranAction=='Credit' %}Credit
-                            {% elseif tran.tranAction=='Debi' %}Credit
+                        {% elseif tran.tranAction=='Tran' %}Transfer
+                        {% elseif tran.tranAction=='Paym' %}Payment
+                        {% elseif tran.tranAction=='Regis' %}Register
+                        {% elseif tran.tranAction=='Fund' %}Funding
                             {% endif %}</br>
                              {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
                             {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>

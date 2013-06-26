@@ -17,7 +17,7 @@ class BalanceChecker
         }
     }
 
-    public function isBalanceEnoughTran(Account $account,$value)
+    public function isBalanceEnoughForMoney(Account $account,$value)
     {
 
         if ($account->getAccBalance() >= $value  ) {

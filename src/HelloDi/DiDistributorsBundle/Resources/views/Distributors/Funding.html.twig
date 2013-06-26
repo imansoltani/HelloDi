@@ -71,7 +71,7 @@
                 <br>
 
                 Available Balance:{{ Account.Parent.accBalance }}</br>
-                Retailer Balance:{{ Account.accCreditLimit }}
+                Retailer accCreditLimit:{{ Account.accCreditLimit }}
                 <hr>
             </div> <!-- /widget-header -->
             <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >

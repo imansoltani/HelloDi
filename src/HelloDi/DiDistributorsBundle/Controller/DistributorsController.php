@@ -239,7 +239,7 @@ class DistributorsController extends Controller
             $trandist->setAccount($Account->getParent());
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAction('Debi');
+            $trandist->setTranAction('Tran');
             $trandist->setTranAmount(-$data['Amount']);
             $trandist->setTranDescription($data['Description']);
             #transaction for retailer#
@@ -251,12 +251,12 @@ class DistributorsController extends Controller
             $tranretailer->setUser($User);
             $tranretailer->setTranFees(0);
             $tranretailer->setTranAmount(+$data['Amount']);
-            $tranretailer->setTranAction('Cred');
+            $tranretailer->setTranAction('Tran');
             $tranretailer->setTranDescription($data['Communications']);
 
             if($data['Amount']!='')
             {
-                if($balancechecker->isBalanceEnoughTran($Account->getParent(),$data['Amount']))
+                if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                 {
                     $em->persist($trandist);
                     $em->persist($tranretailer);
@@ -299,12 +299,13 @@ class DistributorsController extends Controller
 
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAmount(-$data['Amount']);
-            $trandist->setTranAction('Debi');
+
+            $trandist->setTranAction('Tran');
             if($data['As']=='Credit')
             {
-               if($balancechecker->isBalanceEnoughTran($Account->getParent(),$data['Amount']))
+               if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                {
+                   $trandist->setTranAmount(-$data['Amount']);
                 $trandist->setAccount($Account->getParent());
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
                 $em->persist($trandist);
