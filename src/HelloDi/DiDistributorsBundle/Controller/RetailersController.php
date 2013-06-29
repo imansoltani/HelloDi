@@ -36,16 +36,17 @@ class RetailersController extends Controller
 
   public  function  countnoteAction()
   {
-      $user = $this->get('security.context')->getToken()->getUser();
+      $User = $this->get('security.context')->getToken()->getUser();
       $em=$this->getDoctrine()->getEntityManager();
       $Countnote=$em->createQueryBuilder();
       $Countnote->select('Note')
           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
-          ->Where('Note.User != :usr')->setParameter('usr',$user)
-          ->andWhere('Note.view = 0');
+          ->innerJoin('Note.Ticket','NoteTic')
+          ->Where('Note.User != :usr')->setParameter('usr',$User)
+          ->andWhere('Note.view = 0')
+          ->andWhere('NoteTic.Account = :Acc')->setParameter('Acc',$User->getAccount());
       return new Response(count($Countnote->getQuery()->getResult()));
   }
-    //-----startkazem--------//
 
     public function RetailerProfileAction()
     {
@@ -357,7 +358,8 @@ public function ticketsAction(Request $req)
       $tickets=$em->createQueryBuilder();
       $tickets->select('Tic')
        ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
-      ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status']);
+      ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status'])
+      ->andWhere('Tic.Account = :Acc')->setParameter('Acc',$User->getAccount());
       if($data['Type']!=5)
           $tickets->andwhere('Tic.type =:type')->setParameter('type',$data['Type'])
               ->getQuery();
@@ -409,6 +411,7 @@ public  function ticketsnewAction(Request $req)
      $Tick->setUser($User);
      $Tick->setAccount($User->getAccount());
      $Tick->setTicketStart(new \DateTime('now'));
+     $Tick->setTicketEnd(null);
      $Tick->setType($data['Type']);
      $Tick->setSubject($data['Subject']);
      $Tick->setStatus(1);
@@ -459,11 +462,10 @@ public  function  ticketsnoteAction(Request $req,$id)
         $ticketNote->setDate(new \DateTime('now'));
         $ticketNote->setUser($User);
         $ticketNote->setView(0);
-    if($ticket->getStatus()==1)
-    {
+
         $em->persist($ticketNote);
         $em->flush();
-    }
+
     }
 
 
@@ -492,46 +494,45 @@ public  function  ticketsnoteAction(Request $req,$id)
     ));
 
 }
-
-public  function  ticketsopenAction($id)
-{
-
-    $em=$this->getDoctrine()->getEntityManager();
-    $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
-    $ticket->setStatus(1);
-    $em->flush();
-    return $this->redirect($this->generateUrl('RetailerTickets'));
-}
-
-public  function  ticketscloseAction($id)
-{
-
-    $em=$this->getDoctrine()->getEntityManager();
-    $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
-    $ticket->setStatus(0);
-    $em->flush();
-    return $this->redirect($this->generateUrl('RetailerTickets'));
-}
-
-
-    public  function  ticketsopennoteAction($id)
+    public  function  ticketschangestatusAction(Request $req,$id)
     {
-
         $em=$this->getDoctrine()->getEntityManager();
+
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
-        $ticket->setStatus(1);
+
+        if($ticket->getStatus()==1)
+        {
+            $ticket->setStatus(0);
+            $ticket->setTicketEnd(new \DateTime('now'));
+        }
+
+        else
+        {
+            $ticket->setStatus(1);
+            $ticket->setTicketStart(new \DateTime('now'));
+            $ticket->setTicketEnd(null);
+        }
+
         $em->flush();
-        return $this->redirect($this->generateUrl('RetailerTicketsNote',array('id'=>$id)));
+
+        return $this->redirect($this->generateUrl('RetailerTickets'));
     }
 
-    public  function  ticketsclosenoteAction($id)
-    {
 
+    public  function  ticketsstatusAction(Request $req,$id)
+    {
         $em=$this->getDoctrine()->getEntityManager();
+
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
-        $ticket->setStatus(0);
+
+        $ticket->setStatus(1);
+        $ticket->setTicketStart(new \DateTime('now'));
+        $ticket->setTicketEnd(null);
+
         $em->flush();
+
         return $this->redirect($this->generateUrl('RetailerTicketsNote',array('id'=>$id)));
+
     }
 
 

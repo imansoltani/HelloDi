@@ -1,0 +1,20 @@
+DistTickets:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:tickets }
+
+DistTicketsNote:
+    pattern:  /{id}/notes
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketsnote }
+
+DistTicketsNew:
+    pattern:  /new
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:tickestnew }
+
+
+DistTicketsChangeStatus:
+    pattern:  /{id}/change/status
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketschangestatus }
+
+DistTicketsStatus:
+    pattern:  /{id}/change/
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketsstatus }

@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
     Tickets
@@ -30,7 +30,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('DistTickets') }}" method="POST" >
 
 
                         <div class="control-group">
@@ -118,13 +118,13 @@
                                                 {% endif %}
                                           </td>
                                         <td>
-                                            {% if Ticket.status==1 %}
-                                        <a href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}">
+                                    {% if Ticket.status==1 %}
+                                        <a href="{{ path('DistTicketsNote',{'id':Ticket.id}) }}">
                                             {{ Ticket.subject }}
                                         </a>
-                                                {% else %}
-                                                {{ Ticket.subject }}
-                                                {% endif %}
+                                    {% else %}
+                                        {{ Ticket.subject }}
+                                        {% endif %}
                                         </td>
 
                                         <td>
@@ -141,9 +141,9 @@
 
 
 <td>{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
+        <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
     {% else %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
+        <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
     {% endif %}</td>
 
                                     </tr>

@@ -31,20 +31,17 @@ RetailerTicketsClose:
     pattern:  /tickets/{id}/close
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclose }
 
-RetailerTicketsOpen:
-    pattern:  /tickets/{id}/open
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsopen }
 RetailerTicketsNew:
     pattern:  /tickets/new
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew }
 
+RetailerTicketsChangeStatus:
+    pattern:  /{id}/change/status
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketschangestatus }
 
-RetailerTicketsOpenNote:
-    pattern:  /tickets/{id}/opennote
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsopennote }
-RetailerTicketsCloseNote:
-    pattern:  /tickets/{id}/closenote
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclosenote }
+RetailerTicketsStatus:
+    pattern:  /{id}/change/
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsstatus }
 
 
 retailer_shop:

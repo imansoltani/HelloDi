@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
     Transactions
@@ -28,11 +28,11 @@
                 <hr>
 <br>
 
-Date:{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</br>
-{% if Ticket.ticketEnd is not null %}
-    DateEnd:{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</br>
+DateStart:{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</br>
+ {% if Ticket.ticketEnd is not null %}
+DateEnd:{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</br>
 {% endif %}
-Type:
+     Type:
     {% if Ticket.type==0 %}Payment Issue
     {% elseif Ticket.type==1 %}New Item Request
     {% elseif Ticket.type==2 %}Price Change Request
@@ -41,9 +41,9 @@ Type:
     {% endif %}
     </br>
 Current Status:{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsStatus',{id:Ticket.id}) }}">Close</a>
+        <a href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">Close</a>
        {% else %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
+        <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
        {% endif %}
 
                 <div class="tab-content">
@@ -51,7 +51,7 @@ Current Status:{% if Ticket.status==0 %}
                            class="table table-bordered table-striped table-highlight postsend">
                         <tbody>
 
-                        {% for Note in pagination %}
+                        {% for Note in Notes %}
                             <tr>
                                 <td>
                                    Time: {{ Note.date|date('y-M-d  H:i:s') }}<br>
@@ -67,8 +67,8 @@ Current Status:{% if Ticket.status==0 %}
 
 
 <hr>
-                {% if Ticket.Status!=0 %}
-<form action="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" method="POST">
+  {% if Ticket.Status!=0 %}
+<form action="{{ path('DistTicketsNote',{'id':Ticket.id}) }}" method="POST">
 
         {{form_label(form.Description)}}
         {{form_widget(form.Description)}}

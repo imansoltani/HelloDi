@@ -22,11 +22,13 @@ class Transaction
     /**
      * @ORM\Column(type="decimal", nullable=true)
      */
+
     private $tranBookingValue;
 
     /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
+
     private $tranCredit;
 
     /**
