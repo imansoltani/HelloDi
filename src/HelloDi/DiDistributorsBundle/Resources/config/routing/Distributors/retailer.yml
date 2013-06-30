@@ -29,6 +29,7 @@ DistRetailerSetting:
 Retailer_Transaction:
     pattern:  /{id}/transactions
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
+
 Retailer_DetailsTransaction:
     pattern:  /transactions/{id}/details
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsRetailerTransaction }

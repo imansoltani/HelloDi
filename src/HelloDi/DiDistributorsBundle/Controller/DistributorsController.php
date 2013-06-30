@@ -877,9 +877,6 @@ class DistributorsController extends Controller
     public function DetailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-//        $myaccount = $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $entity = $account->getEntiti();
@@ -888,8 +885,6 @@ class DistributorsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Entiti entity.');
         }
-
-
 
         $editForm = $this->createForm(new EntitiType(), $entity);
 
