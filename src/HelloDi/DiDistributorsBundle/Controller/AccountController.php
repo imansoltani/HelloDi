@@ -1778,7 +1778,7 @@ class AccountController extends Controller
         $searchForm = $this->createForm(new searchProvTransType());
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $qb = $em->createQueryBuilder()
-            ->select('trans.id','trans.tranDate','trans.tranDescription','trans.tranCredit','trans.tranDebit','acc.accBalance','trans.tranAction')
+            ->select('trans.id','trans.tranDate','trans.tranDescription','trans.tranCredit','trans.tranDebit','acc.accBalance','trans.tranAction','trans.tranAmount')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
             ->innerJoin('acc.Transactions','trans')
             ->andwhere('acc.accType =:check')
