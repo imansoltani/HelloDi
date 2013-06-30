@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c6805969-5728-4729-9b74-51ca5d1f8560" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig" afterPath="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="591cd036-25ec-4087-a49b-6ea3fdcd9adb" name="Failed commit: Default" comment="check" />
@@ -12,7 +11,7 @@
     <ignored path=".idea/" />
     <ignored path="app/cache/" />
     <ignored path="app/logs/" />
-    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372602307659" ignored="false" />
+    <file path="/Dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372603489817" ignored="false" />
     <file path="/dummy.txt" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372172947946" ignored="false" />
     <file path="/routing.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372169848982" ignored="false" />
     <file path="/Entiti.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367243184569" ignored="false" />
@@ -105,7 +104,7 @@
     <file path="/account.en.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368591705748" ignored="false" />
     <file path="/account.fa.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368592277918" ignored="false" />
     <file path="/accounts.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1368152797467" ignored="false" />
-    <file path="/AccountController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372263152839" ignored="false" />
+    <file path="/AccountController.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1372603290840" ignored="false" />
     <file path="/ManageProv.html.twig" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1367907648786" ignored="false" />
     <file path="/accounts.yml" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1369316744365" ignored="false" />
     <file path="/a.php" changelist="c6805969-5728-4729-9b74-51ca5d1f8560" time="1370722229089" ignored="false" />
@@ -499,20 +498,39 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountController.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AccountController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="74" selection-start="3475" selection-end="3475" vertical-scroll-proportion="-3.3333333">
+            <state line="1817" column="20" selection-start="70007" selection-end="70007" vertical-scroll-proportion="0.80037665">
               <folding>
+                <element signature="e#1476#3598#0" expanded="false" />
+                <element signature="e#1849#3168#0" expanded="false" />
+                <element signature="e#2086#2187#0" expanded="false" />
+                <element signature="e#2086#2236#0" expanded="false" />
+                <element signature="e#2086#2298#0" expanded="false" />
+                <element signature="e#3242#3399#0" expanded="false" />
+                <element signature="e#3416#3590#0" expanded="false" />
+                <element signature="e#3493#3589#0" expanded="false" />
+                <element signature="e#3614#4555#0" expanded="false" />
                 <element signature="e#3879#3989#0" expanded="false" />
+                <element signature="e#4076#4347#0" expanded="false" />
+                <element signature="e#4162#4336#0" expanded="false" />
                 <element signature="e#4363#4547#0" expanded="false" />
                 <element signature="e#4443#4546#0" expanded="false" />
+                <element signature="e#4561#5307#0" expanded="false" />
+                <element signature="e#4850#5104#0" expanded="false" />
+                <element signature="e#4936#5094#0" expanded="false" />
                 <element signature="e#5121#5300#0" expanded="false" />
                 <element signature="e#5196#5299#0" expanded="false" />
                 <element signature="e#5313#5882#0" expanded="false" />
                 <element signature="e#5577#5737#0" expanded="false" />
+                <element signature="e#5888#7060#0" expanded="false" />
+                <element signature="e#6243#6855#0" expanded="false" />
                 <element signature="e#6872#7051#0" expanded="false" />
                 <element signature="e#6958#7050#0" expanded="false" />
+                <element signature="e#7066#8797#0" expanded="false" />
+                <element signature="e#7736#8637#0" expanded="false" />
+                <element signature="e#7823#8626#0" expanded="false" />
                 <element signature="e#8824#8983#0" expanded="false" />
                 <element signature="e#8989#9548#0" expanded="false" />
                 <element signature="e#9321#9541#0" expanded="false" />
@@ -596,9 +614,12 @@
                 <element signature="e#22753#22848#1" expanded="false" />
                 <element signature="e#22867#23120#0" expanded="false" />
                 <element signature="e#22958#23119#0" expanded="false" />
+                <element signature="e#23136#26068#0" expanded="false" />
                 <element signature="e#23507#23585#0" expanded="false" />
                 <element signature="e#23507#24223#0" expanded="false" />
                 <element signature="e#23624#24222#0" expanded="false" />
+                <element signature="e#24636#25800#0" expanded="false" />
+                <element signature="e#25558#25788#0" expanded="false" />
                 <element signature="e#25817#26058#0" expanded="false" />
                 <element signature="e#25896#26057#0" expanded="false" />
                 <element signature="e#26077#28708#0" expanded="false" />
@@ -635,13 +656,13 @@
                 <element signature="e#31355#31512#0" expanded="false" />
                 <element signature="e#31530#31803#0" expanded="false" />
                 <element signature="e#31602#31802#0" expanded="false" />
-                <element signature="e#33385#33542#0" expanded="false" />
-                <element signature="e#33552#35268#0" expanded="false" />
+                <element signature="e#31854#33011#0" expanded="false" />
+                <element signature="e#32278#32866#0" expanded="false" />
+                <element signature="e#32361#32855#0" expanded="false" />
                 <element signature="e#33799#33886#0" expanded="false" />
                 <element signature="e#33799#33938#0" expanded="false" />
                 <element signature="e#33799#33998#0" expanded="false" />
                 <element signature="e#35082#35255#0" expanded="false" />
-                <element signature="e#35366#35462#0" expanded="false" />
                 <element signature="e#35500#35659#0" expanded="false" />
                 <element signature="e#35685#36182#0" expanded="false" />
                 <element signature="e#36014#36174#0" expanded="false" />
@@ -724,7 +745,6 @@
                 <element signature="e#55294#55368#0" expanded="false" />
                 <element signature="e#55397#55610#0" expanded="false" />
                 <element signature="e#55473#55609#0" expanded="false" />
-                <element signature="e#55641#57916#0" expanded="false" />
                 <element signature="e#55915#55970#0" expanded="false" />
                 <element signature="e#55915#56034#0" expanded="false" />
                 <element signature="e#55915#56079#0" expanded="false" />
@@ -768,46 +788,19 @@
                 <element signature="e#67893#68003#0" expanded="false" />
                 <element signature="e#67909#68002#1" expanded="false" />
                 <element signature="e#67947#68001#0" expanded="false" />
-                <element signature="e#70123#72690#0" expanded="false" />
-                <element signature="e#70438#70579#0" expanded="false" />
-                <element signature="e#70438#70691#0" expanded="false" />
-                <element signature="e#70438#71292#0" expanded="false" />
-                <element signature="e#70726#71291#0" expanded="false" />
-                <element signature="e#71333#71547#0" expanded="false" />
-                <element signature="e#71333#71594#0" expanded="false" />
-                <element signature="e#71333#71642#0" expanded="false" />
-                <element signature="e#71333#71688#0" expanded="false" />
-                <element signature="e#71333#71727#0" expanded="false" />
-                <element signature="e#71333#71773#0" expanded="false" />
-                <element signature="e#71785#72423#0" expanded="false" />
+                <element signature="e#70355#72922#0" expanded="false" />
+                <element signature="e#70670#70811#0" expanded="false" />
+                <element signature="e#70670#70923#0" expanded="false" />
+                <element signature="e#70670#71524#0" expanded="false" />
+                <element signature="e#70958#71523#0" expanded="false" />
+                <element signature="e#71565#71779#0" expanded="false" />
+                <element signature="e#71565#71826#0" expanded="false" />
+                <element signature="e#71565#71874#0" expanded="false" />
+                <element signature="e#71565#71920#0" expanded="false" />
+                <element signature="e#71565#71959#0" expanded="false" />
+                <element signature="e#71565#72005#0" expanded="false" />
+                <element signature="e#72017#72655#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AddAccountDistMaster.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountDistMaster.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="47" selection-start="45" selection-end="47" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShowMyAccountDist.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccountDist.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="141" selection-start="1854" selection-end="1951" vertical-scroll-proportion="-7.5">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShowMyAccount.html.twig" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="44" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.1271028">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -877,8 +870,8 @@
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Entity/Transaction.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/TestController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ProvTransactionMaster.html.twig" />
-        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
         <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig" />
+        <option value="$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php" />
       </list>
     </option>
   </component>
@@ -1552,7 +1545,11 @@
       <created>1372602314193</created>
       <updated>1372602314193</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="check">
+      <created>1372602913441</created>
+      <updated>1372602913441</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1774,20 +1771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountDistMaster.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="47" selection-start="45" selection-end="47" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccountDist.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="141" selection-start="1854" selection-end="1951" vertical-scroll-proportion="-7.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ProvTransactionMaster.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="118" column="59" selection-start="4669" selection-end="4669" vertical-scroll-proportion="-9.807693">
@@ -1797,19 +1780,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="0" selection-start="2689" selection-end="2689" vertical-scroll-proportion="0.69906545">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccountDist.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="141" selection-start="1854" selection-end="1951" vertical-scroll-proportion="0.36448598">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/AddAccountDistMaster.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="594" selection-end="594" vertical-scroll-proportion="0.68717045">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Controller/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="74" selection-start="3475" selection-end="3475" vertical-scroll-proportion="-3.3333333">
+        <state line="1817" column="20" selection-start="70007" selection-end="70007" vertical-scroll-proportion="0.80037665">
           <folding>
+            <element signature="e#1476#3598#0" expanded="false" />
+            <element signature="e#1849#3168#0" expanded="false" />
+            <element signature="e#2086#2187#0" expanded="false" />
+            <element signature="e#2086#2236#0" expanded="false" />
+            <element signature="e#2086#2298#0" expanded="false" />
+            <element signature="e#3242#3399#0" expanded="false" />
+            <element signature="e#3416#3590#0" expanded="false" />
+            <element signature="e#3493#3589#0" expanded="false" />
+            <element signature="e#3614#4555#0" expanded="false" />
             <element signature="e#3879#3989#0" expanded="false" />
+            <element signature="e#4076#4347#0" expanded="false" />
+            <element signature="e#4162#4336#0" expanded="false" />
             <element signature="e#4363#4547#0" expanded="false" />
             <element signature="e#4443#4546#0" expanded="false" />
+            <element signature="e#4561#5307#0" expanded="false" />
+            <element signature="e#4850#5104#0" expanded="false" />
+            <element signature="e#4936#5094#0" expanded="false" />
             <element signature="e#5121#5300#0" expanded="false" />
             <element signature="e#5196#5299#0" expanded="false" />
             <element signature="e#5313#5882#0" expanded="false" />
             <element signature="e#5577#5737#0" expanded="false" />
+            <element signature="e#5888#7060#0" expanded="false" />
+            <element signature="e#6243#6855#0" expanded="false" />
             <element signature="e#6872#7051#0" expanded="false" />
             <element signature="e#6958#7050#0" expanded="false" />
+            <element signature="e#7066#8797#0" expanded="false" />
+            <element signature="e#7736#8637#0" expanded="false" />
+            <element signature="e#7823#8626#0" expanded="false" />
             <element signature="e#8824#8983#0" expanded="false" />
             <element signature="e#8989#9548#0" expanded="false" />
             <element signature="e#9321#9541#0" expanded="false" />
@@ -1893,9 +1916,12 @@
             <element signature="e#22753#22848#1" expanded="false" />
             <element signature="e#22867#23120#0" expanded="false" />
             <element signature="e#22958#23119#0" expanded="false" />
+            <element signature="e#23136#26068#0" expanded="false" />
             <element signature="e#23507#23585#0" expanded="false" />
             <element signature="e#23507#24223#0" expanded="false" />
             <element signature="e#23624#24222#0" expanded="false" />
+            <element signature="e#24636#25800#0" expanded="false" />
+            <element signature="e#25558#25788#0" expanded="false" />
             <element signature="e#25817#26058#0" expanded="false" />
             <element signature="e#25896#26057#0" expanded="false" />
             <element signature="e#26077#28708#0" expanded="false" />
@@ -1932,13 +1958,13 @@
             <element signature="e#31355#31512#0" expanded="false" />
             <element signature="e#31530#31803#0" expanded="false" />
             <element signature="e#31602#31802#0" expanded="false" />
-            <element signature="e#33385#33542#0" expanded="false" />
-            <element signature="e#33552#35268#0" expanded="false" />
+            <element signature="e#31854#33011#0" expanded="false" />
+            <element signature="e#32278#32866#0" expanded="false" />
+            <element signature="e#32361#32855#0" expanded="false" />
             <element signature="e#33799#33886#0" expanded="false" />
             <element signature="e#33799#33938#0" expanded="false" />
             <element signature="e#33799#33998#0" expanded="false" />
             <element signature="e#35082#35255#0" expanded="false" />
-            <element signature="e#35366#35462#0" expanded="false" />
             <element signature="e#35500#35659#0" expanded="false" />
             <element signature="e#35685#36182#0" expanded="false" />
             <element signature="e#36014#36174#0" expanded="false" />
@@ -2021,7 +2047,6 @@
             <element signature="e#55294#55368#0" expanded="false" />
             <element signature="e#55397#55610#0" expanded="false" />
             <element signature="e#55473#55609#0" expanded="false" />
-            <element signature="e#55641#57916#0" expanded="false" />
             <element signature="e#55915#55970#0" expanded="false" />
             <element signature="e#55915#56034#0" expanded="false" />
             <element signature="e#55915#56079#0" expanded="false" />
@@ -2065,26 +2090,19 @@
             <element signature="e#67893#68003#0" expanded="false" />
             <element signature="e#67909#68002#1" expanded="false" />
             <element signature="e#67947#68001#0" expanded="false" />
-            <element signature="e#70123#72690#0" expanded="false" />
-            <element signature="e#70438#70579#0" expanded="false" />
-            <element signature="e#70438#70691#0" expanded="false" />
-            <element signature="e#70438#71292#0" expanded="false" />
-            <element signature="e#70726#71291#0" expanded="false" />
-            <element signature="e#71333#71547#0" expanded="false" />
-            <element signature="e#71333#71594#0" expanded="false" />
-            <element signature="e#71333#71642#0" expanded="false" />
-            <element signature="e#71333#71688#0" expanded="false" />
-            <element signature="e#71333#71727#0" expanded="false" />
-            <element signature="e#71333#71773#0" expanded="false" />
-            <element signature="e#71785#72423#0" expanded="false" />
+            <element signature="e#70355#72922#0" expanded="false" />
+            <element signature="e#70670#70811#0" expanded="false" />
+            <element signature="e#70670#70923#0" expanded="false" />
+            <element signature="e#70670#71524#0" expanded="false" />
+            <element signature="e#70958#71523#0" expanded="false" />
+            <element signature="e#71565#71779#0" expanded="false" />
+            <element signature="e#71565#71826#0" expanded="false" />
+            <element signature="e#71565#71874#0" expanded="false" />
+            <element signature="e#71565#71920#0" expanded="false" />
+            <element signature="e#71565#71959#0" expanded="false" />
+            <element signature="e#71565#72005#0" expanded="false" />
+            <element signature="e#72017#72655#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloDi/DiDistributorsBundle/Resources/views/Account/ShowMyAccount.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="44" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.1271028">
-          <folding />
         </state>
       </provider>
     </entry>

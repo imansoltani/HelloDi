@@ -1812,6 +1812,14 @@ class AccountController extends Controller
         $qb = $qb->getQuery();
         $accProv = $qb->getResult();
 
+        $paginator = $this->get('knp_paginator');
+
+        $accProv = $paginator->paginate(
+            $accProv,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
+
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array(
             'accprov'=>$accProv,'Account' => $account,'idTrans'=>$id,'form' => $searchForm   ->createView()));
     }
