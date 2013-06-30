@@ -1817,7 +1817,7 @@ class AccountController extends Controller
         $accProv = $paginator->paginate(
             $accProv,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            20/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array(
@@ -1877,6 +1877,13 @@ class AccountController extends Controller
         }
         $qb = $qb->getQuery();
         $accProv = $qb->getResult();
+        $paginator = $this->get('knp_paginator');
+
+        $accProv = $paginator->paginate(
+            $accProv,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            20/*limit per page*/
+        );
         return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig',array('id'=>$id,'Account'=>$Account,'accProv'=>$accProv,'form' => $searchForm   ->createView()));
     }
 

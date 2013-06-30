@@ -616,13 +616,9 @@ class DistributorsController extends Controller
     public function ShowRetaierAccountAction(Request $request)
     {
         $form_searchprov = $this->createForm(new RetailerSearchType());
-
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
-
-        $em = $this->getDoctrine()->getManager();
-
-
         $check = $user->getAccount()->getId();
 
 
@@ -731,7 +727,7 @@ class DistributorsController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailersTransaction.html.twig',
@@ -880,13 +876,13 @@ class DistributorsController extends Controller
 
     public function DetailsAction($id)
     {
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
+//        $myaccount = $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
+        $entity = $account->getEntiti();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accType' => 0));
 
         if (!$entity) {
@@ -899,7 +895,7 @@ class DistributorsController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Details.html.twig', array(
             'account' => $Account,
-            'Account' => $myaccount,
+            'Account' => $account,
             'retailerAccount' =>$account,
             'entity' => $entity,
             'edit_form' => $editForm->createView(),

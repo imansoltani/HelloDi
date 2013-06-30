@@ -122,13 +122,13 @@
                                         <td class="td-actions" >
                                             <a class="btn_actions" href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
                                         </td>
-
                                     </tr>
                                 {% endfor %}
-
                                 </tbody>
-
                             </table>
+                            <div class="navigation">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
                         </div>
                         <input type="hidden" name="accountid" class="accountid" value=""/>
 
