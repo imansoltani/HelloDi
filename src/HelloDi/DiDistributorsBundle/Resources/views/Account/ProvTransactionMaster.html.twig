@@ -93,7 +93,9 @@
                         <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+
                         <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
 
                     </tr>
@@ -104,10 +106,10 @@
                             <td>{{ tran.tranDate|date('Y-m-d') }}</td>
 
                             <td>{{ tran.tranDescription }}</td>
+                            <td>{{ tran.tranAmount }}</td>
+                            <td>{{ tran.accBalance }}</td>
                             <td>{{ tran.tranCredit }}</td>
                             <td>{{ tran.tranDebit }}</td>
-                            <td>{{ tran.accBalance }}</td>
-
 
                             <td class="td-actions">
 
@@ -126,10 +128,11 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(accprov) }}
+                </div>
             </div>
         </form>
     </div>
-
-
 
 {% endblock %}
