@@ -50,7 +50,7 @@ class AccountController extends Controller
             $qb->select(array('Acc', 'Ent'))
                 ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
                 ->innerJoin('Acc.Entiti', 'Ent')
-                ->andwhere($qb->expr()->eq('Acc.accProv', 1));
+                ->andwhere($qb->expr()->eq('Acc.accType', 1));
             if ($dataform['accName'] != '')
                 $qb->andwhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($dataform['accName'] . '%')));
             if ($dataform['entName'])
