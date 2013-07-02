@@ -72,8 +72,14 @@ class User extends BaseUser
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=true)
      */
     private $Account;
-	
-	/**
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ogone", mappedBy="User")
+     */
+    private $Ogone;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -387,5 +393,38 @@ class User extends BaseUser
     public function getAccount()
     {
         return $this->Account;
+    }
+
+    /**
+     * Add Ogone
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     * @return User
+     */
+    public function addOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    {
+        $this->Ogone[] = $ogone;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Ogone
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     */
+    public function removeOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    {
+        $this->Ogone->removeElement($ogone);
+    }
+
+    /**
+     * Get Ogone
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOgone()
+    {
+        return $this->Ogone;
     }
 }
