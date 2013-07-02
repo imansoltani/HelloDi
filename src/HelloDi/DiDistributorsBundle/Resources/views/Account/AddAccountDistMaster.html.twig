@@ -38,11 +38,11 @@
             </div>
             <!-- /widget-header -->
 
-            <form action="#" method="post" class="form-horizontal">
+            <form action="{{ path('AddAccountDistMaster') }}" method="post" class="form-horizontal">
 
                 <div class="control-group">
                     {{ form_label(form.accName) }}
-                    {{ form_widget(form.accName,{value : 'Default title'}) }}
+                    {{ form_widget(form.accName) }}
                     {{ form_errors(form.accName) }}
                 </div>
 
@@ -64,13 +64,6 @@
                     {{ form_errors(form.accTimeZone) }}
                 </div>
 
-                <div class="control-group">
-                    {{ form_label(form.accType) }}
-                    <div class="controls">
-                        {{ form_widget(form.accType,{'attr':{'disabled':''}}) }}
-                    </div>
-                    {{ form_errors(form.accType) }}
-                </div>
 
 
                 <div class="control-group">

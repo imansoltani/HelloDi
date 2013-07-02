@@ -1,0 +1,21 @@
+MasterTickets:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:tickets }
+
+MasterTicketsNote:
+    pattern:  /{id}/notes
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:ticketsnote }
+MasterReleaseTickets:
+    pattern:  /release/{id}
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:releasetickets }
+
+MasterTakeTickets:
+    pattern:  /take/{id}
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:taketickets }
+MasterTicketsChangeStatus:
+    pattern:  /{id}/change/status
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:ticketschangestatus }
+
+MasterTicketsStatus:
+    pattern:  /{id}/change/
+    defaults: { _controller: HelloDiDiDistributorsBundle:Tickets:ticketsstatus }

@@ -31,6 +31,20 @@
 
 
                         <div class="control-group">
+                            {{ form_label(form.Contact[0]) }}
+                            <div class="controls">
+                                {{ form_widget(form.Contact[0]) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            {{ form_label(form.Contact[1]) }}
+                            <div class="controls">
+                                {{ form_widget(form.Contact[1]) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
                             {{ form_label(form.Subject) }}
                             <div class="controls">
                                 {{ form_widget(form.Subject) }}

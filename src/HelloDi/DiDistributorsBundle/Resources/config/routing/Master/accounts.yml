@@ -99,10 +99,10 @@ ManageDistSettingsSubmit:
 
 
 MasterDistTransaction:
-    pattern:  distributors/{id}/transaction
+    pattern:  distributors/{id}/transactions
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Transaction"}
 DetailsMasterDistTransaction:
-    pattern:  distributors/{id}/transaction/details
+    pattern:  distributors/{id}/transactions/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
 MasterDistSale:
     pattern:  distributors/{id}/reports/sales
@@ -112,15 +112,15 @@ MasterDistDetailsSale:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
 
 MasterDistFunding:
-    pattern:  distributors/{id}/transaction/funding
+    pattern:  distributors/{id}/transactions/funding
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Funding"}
 
 MasterDistApplayFunding:
-    pattern:  distributors/{id}/transaction/funding/applay
+    pattern:  distributors/{id}/transactions/funding/applay
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingApplay"}
 
 MasterDistUpdateFunding:
-    pattern:  distributors/{id}/transaction/funding/update
+    pattern:  distributors/{id}/transactions/funding/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdate"}
 MasterDistPurchases:
     pattern:  distributors/{id}/purchases

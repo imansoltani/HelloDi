@@ -390,6 +390,7 @@ class AccountController extends Controller
             ->add('Amount','text')
             ->add('As','choice',array(
                 'preferred_choices'=>array('Credit'),
+                'preferred_choices'=>array('Credit'),
                 'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
             ))->getForm();
 
@@ -901,20 +902,19 @@ class AccountController extends Controller
 
         $Account = new Account();
 
-        $Userprivilege = new Userprivilege();
         $form = $this->createForm(new AccountDistMasterType(), $Account);
 
         if ($request->isMethod('POST')) {
 
-            $form->bind($request);
-
-            if ($form->isValid()) {
+            $form->submit($request);
+            if ($form->isValid())
+            {
                 $em = $this->getDoctrine()->getManager();
                 $Account->setEntiti($entitimaster);
                 $Account->setAccCreationDate(new \DateTime('now'));
                 $Account->setAccBalance(0);
-                $Account->setAccStatus(1);
-                $Account->setAccType(1);
+                $Account->setAccType(0);
+                $Account->setAccCreditLimit(0);
                 $em->persist($Account);
                 $em->flush();
                 return $this->redirect($this->generateUrl('ShowMyAccountDist'));
@@ -922,7 +922,10 @@ class AccountController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster.html.twig', array('form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster.html.twig',
+        array(
+            'form' => $form->createView()
+        ));
     }
 
     public function ShowMyAccountDistAction(Request $request)

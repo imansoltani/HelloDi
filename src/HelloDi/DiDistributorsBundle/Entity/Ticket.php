@@ -43,7 +43,9 @@ class Ticket
     /** 
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $importance;
+    private $inchange;
+
+
 
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TicketNote", mappedBy="Ticket")
@@ -52,15 +54,23 @@ class Ticket
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Tickets")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="accountdist_id", referencedColumnName="id",nullable=true)
      */
-    private $Account;
+    private $Accountdist;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Tickets")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Tickets")
+     * @ORM\JoinColumn(name="accountretailer_id", referencedColumnName="id", nullable=true)
      */
-    private $User;
+    private $Accountretailer;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Tickets")
+     * @ORM\JoinColumn(name="lastuser_id", referencedColumnName="id", nullable=false)
+     */
+    private $lastUser;
     /**
      * Constructor
      */
@@ -227,28 +237,6 @@ class Ticket
         return $this->TicketNotes;
     }
 
-    /**
-     * Set Account
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
-     * @return Ticket
-     */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
-    {
-        $this->Account = $account;
-    
-        return $this;
-    }
-
-    /**
-     * Get Account
-     *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
-     */
-    public function getAccount()
-    {
-        return $this->Account;
-    }
 
     /**
      * Set User
@@ -294,5 +282,97 @@ class Ticket
     public function getStatus()
     {
         return $this->Status;
+    }
+
+    /**
+     * Set Accountdist
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accountdist
+     * @return Ticket
+     */
+    public function setAccountdist(\HelloDi\DiDistributorsBundle\Entity\Account $accountdist)
+    {
+        $this->Accountdist = $accountdist;
+    
+        return $this;
+    }
+
+    /**
+     * Get Accountdist
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     */
+    public function getAccountdist()
+    {
+        return $this->Accountdist;
+    }
+
+    /**
+     * Set Accountretailer
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accountretailer
+     * @return Ticket
+     */
+    public function setAccountretailer(\HelloDi\DiDistributorsBundle\Entity\Account $accountretailer)
+    {
+        $this->Accountretailer = $accountretailer;
+    
+        return $this;
+    }
+
+    /**
+     * Get Accountretailer
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     */
+    public function getAccountretailer()
+    {
+        return $this->Accountretailer;
+    }
+
+    /**
+     * Set inchange
+     *
+     * @param integer $inchange
+     * @return Ticket
+     */
+    public function setInchange($inchange)
+    {
+        $this->inchange = $inchange;
+    
+        return $this;
+    }
+
+    /**
+     * Get inchange
+     *
+     * @return integer 
+     */
+    public function getInchange()
+    {
+        return $this->inchange;
+    }
+
+    /**
+     * Set lastUser
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\User $lastUser
+     * @return Ticket
+     */
+    public function setLastUser(\HelloDi\DiDistributorsBundle\Entity\User $lastUser)
+    {
+        $this->lastUser = $lastUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastUser
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\User 
+     */
+    public function getLastUser()
+    {
+        return $this->lastUser;
     }
 }

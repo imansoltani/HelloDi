@@ -165,16 +165,53 @@
                     <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
                        data-toggle="dropdown">
                         <i class="icon-comment">
-                            {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
+
+                            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
                             <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
                             </span>
                             {% endif %}
+
+
+
+                            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
+                                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
+                            </span>
+                                {% endif %}
+
+
+
+                            {%  else %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
+                                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
+                            </span>
+                                {% endif %}
+                            {% endif %}
                         </i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a  href="#myModal0123" data-toggle="modal">New Ticket</a></li>
-                        <li><a href="{{ path('RetailerTickets') }}">Tickets</a></li>
+                        <li><a  href="#myModal0123" data-toggle="modal">
+
+                                New Ticket
+
+                            </a></li>
+                        <li><a
+                                    {%  if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                                    href="{{ path('DistTickets') }}"
+                                    {%  elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                                    href="{{ path('RetailerTickets') }}"
+
+                                    {#{% else %}#}
+                                        {#href="{{ path('MasterTakeTickets') }}"#}
+                                    {% endif %}
+                                    >
+
+
+                                Tickets</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -325,8 +362,24 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
         <h3 id="myModalLabel">New Ticket</h3>
     </div>
-    <form class="form-horizontal"  action="{{ path('RetailerTicketsNew') }}" method="POST">
+    <form class="form-horizontal"
+            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+          action="{{ path('RetailerTicketsNew') }}"
+            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                action="{{ path('DistTicketsNew') }}"
+            {% endif %}
+          method="POST">
+
         <div class="modal-body">
+
+
+            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                {#{{ render(controller('HelloDiDiDistributorsBundle:Retailers:ticketsnew')) }}#}
+                {#{% include "HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig" %}#}
+            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                {#{{ render(controller('HelloDiDiDistributorsBundle:Distributors:ticketsnew')) }}#}
+                {#{% include "HelloDiDiDistributorsBundle:Retailers:Distributors.html.twig" %}#}
+            {% endif %}
 
 
 

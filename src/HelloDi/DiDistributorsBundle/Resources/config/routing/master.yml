@@ -30,6 +30,10 @@ master_print:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/print.yml"
     prefix:   /print
 
+master_tickets:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/tickets.yml"
+    prefix:   /tickets
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }

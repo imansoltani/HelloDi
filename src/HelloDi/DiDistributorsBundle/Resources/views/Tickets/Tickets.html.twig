@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
     Tickets
@@ -30,7 +30,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('MasterTickets') }}" method="POST" >
 
 
                         <div class="control-group">
@@ -53,15 +53,15 @@
                             <label class="control-label" >Distributors
                             </label>
                             <div class="controls">
-                                {{ form_widget(form.Contact[0]) }}
+                                {{ form_widget(form.Distributors) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Support Team
+                            <label class="control-label" >Retailers
                             </label>
                             <div class="controls">
-                                {{ form_widget(form.Contact[1]) }}
+                                {{ form_widget(form.Retailers) }}
                             </div>
                         </div>
 
@@ -115,6 +115,7 @@
                                     <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Countact' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tickets.In change' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
                                 </tr>
@@ -136,7 +137,7 @@
                                           </td>
                                         <td>
                                             {% if Ticket.status==1 %}
-                                        <a href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}">
+                                        <a href="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}">
                                             {{ Ticket.subject }}
                                         </a>
                                                 {% else %}
@@ -144,12 +145,27 @@
                                                 {% endif %}
                                         </td>
                                         <td>
-                                            {% if Ticket.Accountdist is not null %}
-                                            {{ Ticket.Accountdist.accName }}
-                                                {% else %}
-                                                Master
-                                                  {% endif %}
+                                            {% if Ticket.Accountdist is  null %}
+                                            {{ Ticket.Accountretailer.accName }}
+                                            {% elseif Ticket.Accountretailer is  null %}
+                                                {{ Ticket.Accountdist.accName }}
+                                           {% endif %}
                                                 </td>
+
+                                        <td>
+                                    {% set i=0 %}
+                                            {% for user in usermaster %}
+                                                {% if user.id==Ticket.inchange %}
+                                                     {{ user.username }}
+                                                         {% set i=1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                                  {% if i==0 %}
+                                                     <a class="btn btn-danger btn-mini" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
+                                                {% endif %}
+                                        </td>
+
+
 
                                         <td>
                                             {% set i=0 %}
@@ -165,9 +181,9 @@
 
 
 <td>{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
+        <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
     {% else %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
+        <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
     {% endif %}</td>
 
                                     </tr>

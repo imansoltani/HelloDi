@@ -98,6 +98,10 @@
                                     <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
+<<<<<<< Updated upstream
+=======
+                                    <th>{{ 'Tickets.Contact' | trans ({}, "account") }}</th>
+>>>>>>> Stashed changes
                                     <th>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</th>
                                     <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
                                 </tr>
@@ -113,8 +117,11 @@
                                             {% if Ticket.type==0 %}Payment
                                             {% elseif Ticket.type==1 %}new item request
                                             {% elseif Ticket.type==2 %}price change request
+<<<<<<< Updated upstream
                                             {% elseif Ticket.type==3 %}Payment
                                             {% elseif Ticket.type==4 %}Payment
+=======
+>>>>>>> Stashed changes
                                                 {% endif %}
                                           </td>
                                         <td>
@@ -128,6 +135,17 @@
                                         </td>
 
                                         <td>
+<<<<<<< Updated upstream
+=======
+                                            {% if Ticket.Accountretailer is not null %}
+                                                {{ Ticket.Accountretailer.accName }}
+                                            {% else %}
+                                                Master
+                                            {% endif %}
+                                        </td>
+
+                                        <td>
+>>>>>>> Stashed changes
                                             {% set i=0 %}
                                         {% for Note in Ticket.TicketNotes %}
                                             {% if Note.view==0 and Note.User!=app.user %}
