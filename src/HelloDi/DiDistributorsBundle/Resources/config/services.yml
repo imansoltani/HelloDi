@@ -52,6 +52,11 @@ services:
             class: HelloDi\DiDistributorsBundle\Listener\Taketickets
             arguments: [@doctrine.orm.default_entity_manager]
 
+    hello_di_di_distributors.GetOrderNumber:
+            class: HelloDi\DiDistributorsBundle\Listener\GetOrderNumber
+            arguments: [@doctrine]
+
+
 
     acme.twig.extension.loader:
         class:        Twig_Extension_StringLoader

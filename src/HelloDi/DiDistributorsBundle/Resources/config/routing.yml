@@ -20,7 +20,7 @@ pdf:
 
 ogonetest:
     pattern:  /ogonetest
-    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTest }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTestAccept }
 
 ogonetestaccept:
     pattern:  /ogonetest/accept

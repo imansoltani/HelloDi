@@ -188,6 +188,9 @@ class TestController extends Controller
     }
 
     public function OgoneTestAcceptAction(){
-
+        $em = $this->getDoctrine()->getManager();
+        $test = $this->get('hello_di_di_distributors.GetOrderNumber');
+        $pri = $test->GetOrderNumber();
+        return $this->render('HelloDiDiDistributorsBundle::OgoneTest.html.twig',array('yt'=>$pri));
     }
 }
