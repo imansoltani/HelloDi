@@ -16,7 +16,9 @@ class GetOrderNumber
 
     public function GetOrderNumber()
     {
-        return 200;
+        $em = $this->doctrine->getManager();
+        $code = $em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1)->getOrderId();
+        return $code;
     }
 
 }
