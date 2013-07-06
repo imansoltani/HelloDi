@@ -27,11 +27,11 @@
 
 
             <form action="#" method="post" class="form-horizontal">
-            <div class="tablediv">
+                <div class="tablediv">
 
 
-                <div class="tab-content datatable">
-                    <table id="example" class="table postsend">
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
                             <thead>
                             <tr>
                                 <th>Retailer Account</th>
@@ -47,24 +47,33 @@
                                         {{ form.checks.vars.choices[row.vars.value].data.accName }}
                                     </td>
                                     <td>
-                                        {% for rowsss in form.checks.vars.choices[row.vars.value].data.prices %}
-                                            {% if rowsss.item.id == itemid %}
-                                                {{ rowsss.price }} {{ rowsss.priceCurrency }}
+                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
+                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
+                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].price }}
+                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].priceCurrency }}
+                                            {% else %}
+                                                N/A
                                             {% endif %}
                                         {% else %}
                                             N/A
-                                        {% endfor %}
+                                        {% endif %}
                                     </td>
                                     <td>
-                                        {% for rowsss in form.checks.vars.choices[row.vars.value].data.prices %}
-                                            {% if rowsss.item.id == itemid %}
-                                                {% if rowsss.priceStatus==1 %}true{% else %}false{% endif %}
+                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
+                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
+                                                {% if form.checks.vars.choices[row.vars.value].data.prices[0].priceStatus==1 %}
+                                                    true
+                                                {% else %}
+                                                    false
+                                                {% endif %}
+                                            {% else %}
+                                                N/A
                                             {% endif %}
                                         {% else %}
                                             N/A
-                                        {% endfor %}
+                                        {% endif %}
                                     </td>
-                                    <td class="checkboxs" >
+                                    <td class="checkboxs">
                                         {{ form_widget(row) }}
                                     </td>
                                 </tr>
@@ -73,9 +82,9 @@
                         </table>
 
 
-                </div>
+                    </div>
 
-            </div>
+                </div>
 
                 <script type="text/javascript"
                         src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
@@ -90,8 +99,7 @@
                     });
 
 
-                    function CheckAll()
-                    {
+                    function CheckAll() {
                         var clickall = document.getElementById('clickall').checked;
                         $('* .checkboxs > input').prop("checked", clickall);
                     }
@@ -108,7 +116,7 @@
                 {{ form_rest(form) }}
 
                 <div class="form-actions">
-                    <input type="submit" class="btn btn-primary" value="Approve" />
+                    <input type="submit" class="btn btn-primary" value="Approve"/>
                 </div>
             </form>
         </div>

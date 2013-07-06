@@ -962,8 +962,7 @@ class DistributorsController extends Controller
                     'multiple' => 'true',
                     'query_builder' => function(EntityRepository $er) use ($account,$item) {
                         return $er->createQueryBuilder('u')
-                            ->leftJoin('u.Prices','prices')
-                            ->where('prices is null or prices.Item = :item')
+                            ->leftJoin('u.Prices','prices','WITH','prices.Item = :item')
                             ->andWhere('u.Parent = :parent')
                             ->setParameter('item',$item)
                             ->setParameter('parent',$account)
@@ -1104,9 +1103,9 @@ class DistributorsController extends Controller
             ));
     }
 
-    public function RetailerItemsEditAction($priceid, Request $request)
+    public function RetailerItemsEditAction($id,$priceid, Request $request)
     {
-//        $this->check_ChildAccount($id);
+        $this->check_ChildAccount($id);
         $this->check_ChildPrice($priceid);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
