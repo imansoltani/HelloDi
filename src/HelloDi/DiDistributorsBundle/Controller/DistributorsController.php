@@ -1125,7 +1125,7 @@ class DistributorsController extends Controller
     }
 
     // check functions
-    public function check_Item($itemid)
+    private function check_Item($itemid)
     {
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
@@ -1134,11 +1134,99 @@ class DistributorsController extends Controller
 
         if($price == null || $price->getPrice()==0)
         {
-            throw new \Exception('You cant set price to your retailers by this item !');
+            throw new \Exception("You haven't permission to access this item !");
         }
     }
 
+    private function check_ChildAccount($accountid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
+        if($account == null || $account->getParent() == null || $account->getParent() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Account !");
+        }
+    }
 
+    private function check_ChildPrice($priceid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        if($price == null || $price->getAccount() == null || $price->getAccount()->getParent() == null || $price->getAccount()->getParent() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Price !");
+        }
+    }
+
+    private function check_User($userid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
+        if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this User !");
+        }
+    }
+
+    private function check_ChildUser($userid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
+        if($user == null || $user->getAccount() == null || $user->getAccount()->getParent() == null || $user->getAccount()->getParent()!= $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this User !");
+        }
+    }
+
+    private function check_Transaction($tranid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Transaction !");
+        }
+    }
+
+    private function check_ChildTransaction($tranid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        if($tran == null || $tran->getAccount() == null || $tran->getAccount()->getParent() == null || $tran->getAccount()->getParent() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Transaction !");
+        }
+    }
+
+    private function check_ChildEntity($entityid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $entiti = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($entityid);
+
+        $qb = $em->createQueryBuilder()
+            ->select('count(ent.id)')
+            ->from('HelloDiDiDistributorsBundle:Entiti','ent')
+            ->innerJoin('ent.Accounts','accs')
+            ->innerJoin('accs.Parent','p')
+            ->where('ent = :enti')
+            ->andWhere('p = :par')
+            ->setParameter('enti',$entiti)
+            ->setParameter('par',$myaccount)
+            ->getQuery();
+        $count = $qb->getSingleScalarResult();
+
+//        if($entiti == null || $entiti->getAccount() == null || $tran->getAccount()->getParent() == null || $tran->getAccount()->getParent() != $myaccount)
+//        {
+//            throw new \Exception("You haven't permission to access this Transaction !");
+//        }
+    }
 
     /////tickets
 
