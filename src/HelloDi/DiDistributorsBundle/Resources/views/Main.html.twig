@@ -201,13 +201,19 @@
                             </a></li>
                         <li><a
                                     {%  if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+
                                     href="{{ path('DistTickets') }}"
+
                                     {%  elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
                                     href="{{ path('RetailerTickets') }}"
 
+
                                     {#{% else %}#}
                                         {#href="{{ path('MasterTakeTickets') }}"#}
+
                                     {% endif %}
+
+
                                     >
 
 

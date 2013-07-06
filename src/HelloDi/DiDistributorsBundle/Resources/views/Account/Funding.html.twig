@@ -17,6 +17,7 @@
             <h3>
                 Fund distributors balance
             </h3>
+            Current Distributors Balance:{{ Account.accBalance }}
         </div> <!-- /widget-header -->
         <br>
         <form style="margin-top: 20px" action="{{ path('MasterDistApplayFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
@@ -63,6 +64,7 @@
             <h3>
                 Update distributors Credit Limit
             </h3>
+            Current Distributors Credit limit:{{ Account.accCreditlimit }}
         </div> <!-- /widget-header -->
         <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 

@@ -122,7 +122,7 @@
 
                                 {% for Acc in Account.Prices %}
                                     {% for Itm in Item.Prices %}
-                                        {% if Acc.Price==Itm.Price  %}
+                                        {% if Acc.id==Itm.id  %}
                                             {{ Acc.price  }}
                                         {% endif %}
                                     {% endfor %}

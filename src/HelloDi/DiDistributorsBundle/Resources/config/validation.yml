@@ -22,12 +22,6 @@ HelloDi\DiDistributorsBundle\Entity\Entiti:
             - Url:
                 message: "entity.url.notmatch"
 
-HelloDi\DiDistributorsBundle\Entity\Account:
-    properties:
-        accName:
-            - Length:
-                min: 3
-                minMessage: 'account.accname.should.less'
 
 HelloDi\DiDistributorsBundle\Entity\User:
     constraints:

@@ -19,28 +19,28 @@ ManageProvEntiti:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageProvEntiti" }
 
 AddAccountProvMaster:
-    pattern:  /providers/New_Provider/Entity
+    pattern:  /providers/select/entity
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMaster" }
 
 AddAccountProvMasterOk:
-    pattern:  /providers/Master/New_Provider/Account/{id}
+    pattern:  /providers/{id}/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk" }
 
 AddAccountProveMaster2Step:
-    pattern:  /providers/New_Provider
+    pattern:  /providers/withentity/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProveMaster2Step" }
 
-ChangeAdminProvAccountOk:
-    pattern:  /providers/{iduser}/{idacc}/Change/UserPrivilegeProvOk
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ChangeAdminProvAccountOk" }
+#ChangeAdminProvAccountOk:
+#    pattern:  /providers/{iduser}/{idacc}/Change/UserPrivilegeProvOk
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ChangeAdminProvAccountOk" }
 
-ProvTranTransfer:
+ProvTransfer:
     pattern:  /providers/{id}/transaction/transfer
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTranTransfer" }
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTransfer" }
 
-ProvTranRegister:
+ProvRegister:
     pattern:  /providers/{id}/transaction/register
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTranregister" }
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Provregister" }
 #-------------------
 
 ShowMyAccountDist:
@@ -63,12 +63,12 @@ ManageDistInfoEdit:
     pattern:  distributors/ManageDistInfo/Edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistInfoEdit" }
 
-ManageDistTransaction:
-    pattern:  distributors/Sub_Accounts1
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
+#ManageDistTransaction:
+#    pattern:  distributors/subaccounts
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
 
 ManageDistChildren:
-    pattern:  distributors/Sub_Accounts/
+    pattern:  distributors/subaccounts
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
 DistChildrenCreate:
     pattern:  distributors/ManageDistChildren/
@@ -105,10 +105,10 @@ DetailsMasterDistTransaction:
     pattern:  distributors/{id}/transactions/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
 MasterDistSale:
-    pattern:  distributors/{id}/reports/sales
+    pattern:  distributors/reports/{id}/sales
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Sale"}
 MasterDistDetailsSale:
-    pattern:  distributors/{id}/reports/sales/detailes
+    pattern:  distributors/reports/sales/{id}/detailes
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
 
 MasterDistFunding:

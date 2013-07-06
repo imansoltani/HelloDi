@@ -118,7 +118,7 @@
                             <td>{{ Tr.id}}</td>
                             <td>{{ Tr.tranDate|date('y-M-d') }}</td>
                             <td>{{ Tr.Code.Item.itemName}}</td>
-                            <td>{{ Tr.tranAmount}}</td>
+                            <td>{{ Tr.tranAmount}}|{{Account.accCurrency}}</td>
                             <td>{{ Tr.User.username }}</td>
                             <td>{{ Tr.User.Entiti.entVatNumber }}</td>
                             <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Tr.id}) }}">Details</a></td>

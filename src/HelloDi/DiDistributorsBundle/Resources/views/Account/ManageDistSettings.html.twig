@@ -6,42 +6,84 @@
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccount') }}">Distributor</a>
     <a class="link" href="#">Manage</a>
-    <span class="link">Setting</span>
+    <span class="link">Settings</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
+    <div class="widget-header">
+        <h3>
+            Account Setting
+        </h3>
+    </div> <!-- /widget-header -->
+<form style="margin-top: 20px"  class="form-horizontal"   action="{{ path('ManageDistSettingsSubmit',{'id':Account.id}) }}" method="post">
 
 
+    <div class="control-group">
+        <label class="control-label" >Id</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.id }}" >
+        </div>
+    </div>
 
-    <form style="margin-top: 20px" class="form-horizontal" action="{{ path('ManageDistSettings',{'id':Account.id}) }}"
-          method="post">
+    <div class="control-group Need">
+        {{ form_label(form_edit.accName) }}
 
-        <div class="control-group">
+        {{ form_widget(form_edit.accName) }}
 
-            {{ form_label(form_edit.accTerms) }}
+        {{ form_errors(form_edit.accName) }}
+    </div>
+
+    <div class="control-group Need">
+        {{ form_label(form_edit.accTerms) }}
+
             {{ form_widget(form_edit.accTerms) }}
 
-        </div>
+        {{ form_errors(form_edit.accTerms) }}
+    </div>
 
-        <div class="control-group">
-            {{ form_label(form_editaccTimeZone) }}
+    <div class="control-group Need">
+        {{ form_label(form_edit.accDefaultLanguage) }}
+
+        {{ form_widget(form_edit.accDefaultLanguage) }}
+
+        {{ form_errors(form_edit.accDefaultLanguage) }}
+    </div>
+
+    <div class="control-group Need">
+        {{ form_label(form_edit.accTimeZone) }}
+        <div class="controls">
             {{ form_widget(form_edit.accTimeZone) }}
         </div>
+        {{ form_errors(form_edit.accTimeZone) }}
+    </div>
 
-        {{ form_widget(form_edit._token) }}
+    <div class="control-group">
+        <label class="control-label" >Type</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="Distributors" >
+        </div>
+    </div>
 
-       <div class="form-actions">
-           <input class="btn btn-large" type="submit" value="Edit">
-       </div>
+    <div class="control-group">
+        <label class="control-label" >Creaditlimit</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.accCreditLimit }}" >
+        </div>
+    </div>
 
-    </form>
-    Name : {{ Account.accName }}</br>
-    Id : {{ Account.id }}</br>
-    Type : Distributors</br>
-    Creaditlimit : {{ Account.accCreditLimit }}</br>
-    TimeZone : {{ Account.accTimeZone }}</br>
-    Account Name : {{ Account.accName }}</br>
+
+
+{{ form_widget(form_edit._token) }}
+    <input type="hidden" value="{{ Account.id }}">
+
+    <div class="form-actions">
+        <input class="btn btn-primary" type="submit" value="Edit">
+        <input class="btn " type="reset" value="Reset">
+    </div>
+
+</form>
+
 
 
 {% endblock %}

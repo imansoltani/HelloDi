@@ -42,9 +42,12 @@ class RetailersController extends Controller
       $Countnote->select('Note')
           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
           ->innerJoin('Note.Ticket','NoteTic')
-          ->Where('Note.User != :usr')->setParameter('usr',$User)
-          ->andWhere('Note.view = 0')
-          ->andWhere('NoteTic.Account = :Acc')->setParameter('Acc',$User->getAccount());
+          ->Where('NoteTic.Accountretailer = :Accr')->setParameter('Accr',$User->getAccount())
+          ->andWhere('NoteTic.Accountdist = :Accd')->setParameter('Accd',$User->getAccount()->getParent())
+          ->orWhere($Countnote->expr()->isNull('NoteTic.Accountdist'))
+          ->andWhere('Note.User != :usr')->setParameter('usr',$User)
+          ->andWhere('Note.view = 0');
+
       return new Response(count($Countnote->getQuery()->getResult()));
   }
 
@@ -329,171 +332,193 @@ class RetailersController extends Controller
 
 
 
+    public function ticketsAction(Request $req)
+    {
 
-public function ticketsAction(Request $req)
-{
+        $User=$this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getEntityManager();
 
-  $User=$this->get('security.context')->getToken()->getUser();
-    $em=$this->getDoctrine()->getEntityManager();
-
-    $form=$this->createFormBuilder()
-        ->add('Type','choice',array('choices'=>array(
-            5=>'All',
-            0=>'Payment issue',
-            1=>'new item request',
-            2=>'price change request'
-        )))
-        ->add('Status','choice',array(
-              'expanded'=>true,
-              'multiple'=>false,
-              'choices'=>array(0=>'Close',1=>'Open')
-            ))
-        ->getForm();
-    $tickets=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->findBy(array('Account'=>$User->getAccount(),'User'=>$User));
-
-  if($req->isMethod('POST'))
-  {
-      $form->submit($req);
-      $data=$form->getData();
-      $tickets=$em->createQueryBuilder();
-      $tickets->select('Tic')
-       ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
-      ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status'])
-      ->andWhere('Tic.Account = :Acc')->setParameter('Acc',$User->getAccount());
-      if($data['Type']!=5)
-          $tickets->andwhere('Tic.type =:type')->setParameter('type',$data['Type'])
-              ->getQuery();
-
-  }
-
-
-    $paginator = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        $tickets,
-        $this->get('request')->query->get('page', 1) /*page number*/,
-        5/*limit per page*/
-    );
-
-    return $this->render('HelloDiDiDistributorsBundle:Retailers:Tickets.html.twig',array(
-         'pagination'=>$pagination,
-        'Account'=>$User->getAccount(),
-        'User'=>$User,
-        'form'=>$form->createView()
-    ));
-
-}
-
-
-public  function ticketsnewAction(Request $req)
-{
-   $User=$this->get('security.context')->getToken()->getUser();
-
-   $em=$this->getDoctrine()->getEntityManager();
-    $Tick=new Ticket();
-    $TickNote=new TicketNote();
-    $form=$this->createFormBuilder()
-        ->add('Subject','text')
-        ->add('Type','choice',array(
-            'choices'=>array(
-                0=>'Payment',
+        $form=$this->createFormBuilder()
+            ->add('Type','choice',array('choices'=>array(
+                5=>'All',
+                0=>'Payment issue',
                 1=>'new item request',
                 2=>'price change request'
-            )
-        ))
-        ->add('Description','textarea')
-        ->getForm();
+            )))
+            ->add('Status','choice',array(
+                'expanded'=>true,
+                'multiple'=>false,
+                'choices'=>array(0=>'Close',1=>'Open')
+            ))
+            ->add('Contact','choice',array(
+                'expanded'=>true,
+                'multiple'=>false,
+                'choices'=>array(0=>'Distributors',1=>'Support Team')
+            ))
+            ->getForm();
 
- if($req->isMethod('POST'))
- {
-     $form->submit($req);
-     $data=$form->getData();
-
-     $Tick->setUser($User);
-     $Tick->setAccount($User->getAccount());
-     $Tick->setTicketStart(new \DateTime('now'));
-     $Tick->setTicketEnd(null);
-     $Tick->setType($data['Type']);
-     $Tick->setSubject($data['Subject']);
-     $Tick->setStatus(1);
-
-     $TickNote->setUser($User);
-     $TickNote->setDate(new \DateTime('now'));
-     $TickNote->setDescription($data['Description']);
-     $TickNote->setTicket($Tick);
-     $TickNote->setView(0);
-
-$em->persist($TickNote);
-$em->persist($Tick);
-$em->flush();
- }
+        $tickets=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->findBy(array('Accountretailer'=>$User->getAccount()));
 
 
-return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig',array(
+        if($req->isMethod('POST'))
+        {
+            $form->submit($req);
+            $data=$form->getData();
+            $tickets=$em->createQueryBuilder();
+            $tickets->select('Tic')
+                ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
+                ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status'])
+                ->andWhere('Tic.Accountretailer = :Acc')->setParameter('Acc',$User->getAccount());
+            if($data['Type']!=5)
+                $tickets->andwhere('Tic.type =:type')->setParameter('type',$data['Type']);
+            if($data['Contact']==0)
+                $tickets->andwhere('Tic.Accountdist = :Accdist')->setParameter('Accdist',$User->getAccount()->getParent());
+            elseif($data['Contact']==1)
+                $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
+            $tickets=$tickets->getQuery();
 
-    'form'=>$form->createView(),
-     'User'=>$User,
-     'Account'=>$User->getAccount()
-));
+            $count = count($tickets->getResult());
+            $tickets = $tickets->setHint('knp_paginator.count', $count);
+
+        }
 
 
-}
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $tickets,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
 
-public  function  ticketsnoteAction(Request $req,$id)
-{
-
-    $ticketNote=new TicketNote();
-    $User=$this->get('security.context')->getToken()->getUser();
-    $em=$this->getDoctrine()->getEntityManager();
-    $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
-
-
-
-    $form=$this->createFormBuilder()
-        ->add('Description','textarea',array('required'=>false,
-        'label'=>'New note'
-        ))->getForm();
-
-    if($req->isMethod('POST'))
-    {
-        $form->submit($req);
-        $data=$form->getData();
-        $ticketNote->setTicket($ticket);
-        $ticketNote->setDescription($data['Description']);
-        $ticketNote->setDate(new \DateTime('now'));
-        $ticketNote->setUser($User);
-        $ticketNote->setView(0);
-
-        $em->persist($ticketNote);
-        $em->flush();
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:Tickets.html.twig',array(
+            'pagination'=>$pagination,
+            'Account'=>$User->getAccount(),
+            'User'=>$User,
+            'form'=>$form->createView()
+        ));
 
     }
 
 
+    public  function ticketsnewAction(Request $req)
+    {
+        $User=$this->get('security.context')->getToken()->getUser();
 
-    $noteslist=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
+        $em=$this->getDoctrine()->getEntityManager();
+        $Tick=new Ticket();
+        $TickNote=new TicketNote();
+        $form=$this->createFormBuilder()
+            ->add('Contact','choice',array(
+                'expanded'=>true,
+                'multiple'=>false,
+                'choices'=>array(0=>'Distributors',1=>'Support Team')
+            ))
+            ->add('Subject','text')
+            ->add('Type','choice',array(
+                'choices'=>array(
+                    0=>'Payment',
+                    1=>'new item request',
+                    2=>'price change request'
+                )
+            ))
+            ->add('Description','textarea')
+            ->getForm();
+
+        if($req->isMethod('POST'))
+        {
+            $form->submit($req);
+            $data=$form->getData();
+
+            $Tick->setUser($User);
+            $Tick->setAccountretailer($User->getAccount());
+
+            if($data['Contact']==0)
+                $Tick->setAccountdist($User->getAccount()->getParent());
+
+            $Tick->setTicketStart(new \DateTime('now'));
+            $Tick->setTicketEnd(null);
+            $Tick->setType($data['Type']);
+            $Tick->setSubject($data['Subject']);
+            $Tick->setStatus(1);
+
+            $TickNote->setUser($User);
+            $TickNote->setDate(new \DateTime('now'));
+            $TickNote->setDescription($data['Description']);
+            $TickNote->setTicket($Tick);
+            $TickNote->setView(0);
+
+            $em->persist($TickNote);
+            $em->persist($Tick);
+            $em->flush();
+        }
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig',array(
+
+            'form'=>$form->createView(),
+            'User'=>$User,
+            'Account'=>$User->getAccount()
+        ));
+
+
+    }
+
+    public  function  ticketsnoteAction(Request $req,$id)
+    {
+
+        $ticketNote=new TicketNote();
+        $User=$this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getEntityManager();
+        $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
+
+
+
+        $form=$this->createFormBuilder()
+            ->add('Description','textarea',array('required'=>false,
+                'label'=>'New note'
+            ))->getForm();
+
+        if($req->isMethod('POST'))
+        {
+            $form->submit($req);
+            $data=$form->getData();
+            $ticketNote->setTicket($ticket);
+            $ticketNote->setDescription($data['Description']);
+            $ticketNote->setDate(new \DateTime('now'));
+            $ticketNote->setUser($User);
+            $ticketNote->setView(0);
+            $ticket->setLastUser($User);
+            $em->persist($ticketNote);
+            $em->flush();
+
+        }
+
+
+
+        $noteslist=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
 
 
 ///update vi
-    $notesview=$em->createQueryBuilder();
-    $notesview->update('HelloDiDiDistributorsBundle:TicketNote Note')
-        ->set('Note.view',1)
-        ->Where('Note.User != :usr')->setParameter('usr',$User)
-        ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
-        ->andWhere('Note.view = 0')
-        ->getQuery()->execute();
+        $notesview=$em->createQueryBuilder();
+        $notesview->update('HelloDiDiDistributorsBundle:TicketNote Note')
+            ->set('Note.view',1)
+            ->Where('Note.User != :usr')->setParameter('usr',$User)
+            ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
+            ->andWhere('Note.view = 0')
+            ->getQuery()->execute();
 
 
 
 
-    return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNote.html.twig',array(
-        'form'=>$form->createView(),
-        'Ticket'=>$ticket,
-        'User'=>$User,
-        'Account'=>$User->getAccount(),
-        'pagination'=>array_reverse($noteslist),
-    ));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNote.html.twig',array(
+            'form'=>$form->createView(),
+            'Ticket'=>$ticket,
+            'User'=>$User,
+            'Account'=>$User->getAccount(),
+            'pagination'=>array_reverse($noteslist),
+        ));
 
-}
+    }
     public  function  ticketschangestatusAction(Request $req,$id)
     {
         $em=$this->getDoctrine()->getEntityManager();
@@ -534,6 +559,9 @@ public  function  ticketsnoteAction(Request $req,$id)
         return $this->redirect($this->generateUrl('RetailerTicketsNote',array('id'=>$id)));
 
     }
+
+
+
 
 
 

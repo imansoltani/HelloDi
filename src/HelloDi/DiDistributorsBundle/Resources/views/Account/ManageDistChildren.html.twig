@@ -59,15 +59,17 @@
             {{ form_rest(form_searchdistchild) }}
             <hr>
             <input class="btn btn-primary" type="submit" value="Search">
+    </form>
+
             <form action="{{ path('ManageDistChildren') }}" method="post">
-                <input type="hidden" value="{{ id }}" name="id">
+                <input type="hidden" value="{{ Account.id }}" name="id">
 
                 <input class="btn " type="submit" value="Reset">
 
             </form>
 
         </fieldset>
-    </form>
+
     <script type="text/javascript">
         $(function () {
             $(".SearchForm").hide();
@@ -118,7 +120,6 @@
                 <th>Type</th>
                 <th>Balance</th>
                 <th>CreditLimit</th>
-                <th>Sub Accounts</th>
 
 
             </tr>
@@ -159,26 +160,19 @@
                     </td>
 
                     <td>
-                        {%  if childaccount.accBalance=='' %}
-                            Null
-                        {% else %}
+
                             {{ childaccount.accBalance }}
-                        {% endif %}
+
 
                  </td>
 
                     <td>
 
-                   {%  if childaccount.accCreditLimit=='' %}
-                        000
-                        {% else %}
+
                         {{ childaccount.accCreditLimit }}
-                    {% endif %}
+
 
                     </td>
-                    {% set countchild=(childaccount.Childrens)|length %}
-                    <td>{{ countchild}}</td>
-
 
 
                 </tr>

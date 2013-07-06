@@ -35,7 +35,6 @@ class TicketsController extends Controller
 public  function  ticketsAction(Request $req)
 {
 
-
 ////    print_r($req->getPathInfo().'==='.$req->getBasePath().'==='.$req->getBaseUrl());
 //
 //    die(str_split($req->getPathInfo(),7)[0]);

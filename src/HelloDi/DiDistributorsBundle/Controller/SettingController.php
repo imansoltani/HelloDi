@@ -15,6 +15,8 @@ class SettingController extends Controller
 public  function staffAction(){
 
     $User=$this->get('security.context')->getToken()->getUser();
+    if($User->getRoles()[0]!='ROLE_MASTER_ADMIN')
+        return new Response('Lack of license=======>>> you lack role_master_admin');
     $Users=$User->getEntiti()->getUsers();
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
@@ -41,16 +43,25 @@ public  function staffaddAction(Request $req,$id)
 
     $form = $this->createForm(new NewUserMasterType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
     $formrole = $this->createFormBuilder()
-        ->add('roles', 'choice', array('choices' => array('ROLE_MASTER' => 'ROLE_MASTER', 'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN')))->getForm();
+        ->add('roles', 'choice',
+            array(
+                'choices' =>
+                array(
+                    'ROLE_MASTER' => 'ROLE_MASTER',
+                    'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN'
+                )))
+        ->getForm();
 
     if ($req->isMethod('POST')) {
         $form->bind($req);
         $formrole->bind($req);
         $data = $formrole->getData();
-        $user->addRole(($data['roles']));
-        $user->setEntiti($Entiti);
+
+
         $user->setStatus(1);
         if ($form->isValid()) {
+            $user->addRole(($data['roles']));
+            $user->setEntiti($Entiti);
             $em->persist($user);
             $em->flush();
 

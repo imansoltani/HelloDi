@@ -74,6 +74,15 @@
                     {{ form_errors(form.accTerms) }}
                 </div>
 
+
+
+                <div class="control-group">
+                    {{ form_label(form.accDefaultLanguage) }}
+
+                    {{ form_widget(form.accDefaultLanguage) }}
+
+                    {{ form_errors(form.accDefaultLanguage) }}
+                </div>
                 {{ form_widget(form._token) }}
                 <div class="form-actions" style="margin-bottom: 0">
                     <input type="submit" class="btn btn-primary" value="Add"/>
