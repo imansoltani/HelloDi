@@ -185,6 +185,7 @@ class DistributorsController extends Controller
 
     public function  FundingAction($id)
     {
+        $this->check_ChildAccount($id);
 
         $em=$this->getDoctrine()->getManager();
 
@@ -216,6 +217,7 @@ class DistributorsController extends Controller
 
     public function  FundingTransferAction(Request $req,$id)
     {
+        $this->check_ChildAccount($id);
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
@@ -277,6 +279,7 @@ class DistributorsController extends Controller
 
     public function  FundingUpdateAction(Request $req,$id)
     {
+        $this->check_ChildAccount($id);
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
@@ -379,6 +382,7 @@ class DistributorsController extends Controller
 
     public function DistStaffEditAction(Request $request, $id)
     {
+        $this->check_User($id);
 
 
         $user = new User();
@@ -404,6 +408,7 @@ class DistributorsController extends Controller
 
     public function DistChangeRoleAction($id)
     {
+        $this->check_User($id);
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
@@ -429,6 +434,7 @@ class DistributorsController extends Controller
 
     public function DistRetailerUserAction($id)
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
         $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -451,6 +457,7 @@ class DistributorsController extends Controller
 
     public function DistRetailerUserEditAction(Request $request, $id)
     {
+        $this->check_ChildUser($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $user = new User();
         $em = $this->getDoctrine()->getManager();
@@ -481,6 +488,7 @@ class DistributorsController extends Controller
 
     public function DistRetailerUserAddAction(Request $request, $id)
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $user = new User();
         $em = $this->getDoctrine()->getManager();
@@ -518,6 +526,7 @@ class DistributorsController extends Controller
 
     public function DistRetailerUserChangeRoleAction($id)
     {
+        $this->check_ChildUser($id);
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
@@ -671,6 +680,7 @@ class DistributorsController extends Controller
 
     public function RetailersTransactionAction(Request $req,$id)
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em=$this->getDoctrine()->getManager();
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -744,6 +754,7 @@ class DistributorsController extends Controller
 
     public function DetailsRetailerTransactionAction($id)
     {
+        $this->check_ChildTransaction($id);
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
@@ -837,6 +848,7 @@ class DistributorsController extends Controller
 
     public function DetailsTransactionAction(Request $req,$id)
     {
+        $this->check_Transaction($id);
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
@@ -854,6 +866,7 @@ class DistributorsController extends Controller
 
     public function DistRetailerSettingAction(Request $req, $id) //id account
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
         $retacc = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -876,6 +889,7 @@ class DistributorsController extends Controller
 
     public function DetailsAction($id)
     {
+        $this->check_ChildAccount($id);
         $em = $this->getDoctrine()->getManager();
 
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -899,6 +913,7 @@ class DistributorsController extends Controller
 
     public function editRetailersAction(Request $request, $id)
     {
+        $this->check_ChildEntity($id);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
@@ -1008,6 +1023,7 @@ class DistributorsController extends Controller
 
     public function RetailerItemsAction($id)
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $em = $this->getDoctrine()->getManager();
@@ -1024,6 +1040,7 @@ class DistributorsController extends Controller
 
     public function RetailerItemsAddAction($id, Request $request)
     {
+        $this->check_ChildAccount($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $em = $this->getDoctrine()->getManager();
@@ -1089,6 +1106,8 @@ class DistributorsController extends Controller
 
     public function RetailerItemsEditAction($priceid, Request $request)
     {
+//        $this->check_ChildAccount($id);
+        $this->check_ChildPrice($priceid);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $em = $this->getDoctrine()->getManager();
