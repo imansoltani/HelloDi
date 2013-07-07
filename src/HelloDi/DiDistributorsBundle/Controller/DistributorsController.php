@@ -1473,6 +1473,9 @@ class DistributorsController extends Controller
     }
 
 
-    /////end tickets
+    public function add($a, $b)
+    {
+        return $a + $b;
+    }
 }
 

@@ -1,6 +1,6 @@
-ShowMyAccount:
+ShowMyAccountProv:
     pattern:  /providers
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccount" }
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccountProv" }
 
 ManageProv:
     pattern:  /providers/Manageprov/{id}/
@@ -96,9 +96,6 @@ ManageDistSettings:
 ManageDistSettingsSubmit:
     pattern:  distributors/Edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettingsSubmit"}
-
-
-
 
 MasterDistTransaction:
     pattern:  distributors/{id}/transactions

@@ -13,6 +13,7 @@ use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
+use HelloDi\DiDistributorsBundle\Form\Account\AccountDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
@@ -30,7 +31,7 @@ use HelloDi\DiDistributorsBundle\Form\searchProvTransType;
 
 class AccountController extends Controller
 {
-    public function ShowMyAccountAction(Request $request)
+    public function ShowMyAccountProvAction(Request $request)
     {
         $form_searchprov = $this->createForm(new AccountSearchProvType());
         $formsearch = $this->createForm(new AccountSearchProvType());
@@ -71,9 +72,9 @@ class AccountController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccount.html.twig', array
+        return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
         ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
 
     }
@@ -121,7 +122,7 @@ class AccountController extends Controller
             if ($edit_form->isValid()) {
 
                 $em->flush($account);
-                return $this->redirect($this->generateUrl('ShowMyAccount'));
+                return $this->redirect($this->generateUrl('ShowMyAccountProv'));
             }
         }
 
@@ -184,7 +185,7 @@ class AccountController extends Controller
             $Account->setAccTimeZone(null);
             $em->persist($Account);
             $em->flush();
-            return $this->redirect($this->generateUrl('ShowMyAccount'));
+            return $this->redirect($this->generateUrl('ShowMyAccountProv'));
 
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk.html.twig', array(
@@ -200,6 +201,7 @@ class AccountController extends Controller
 
 
         $em = $this->getDoctrine()->getManager();
+
 
         $AdrsDetai=new DetailHistory();
         $Entiti = new Entiti();
@@ -226,7 +228,6 @@ class AccountController extends Controller
             $form2step->bind($request);
 
             if ($form2step->isValid()) {
-
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
@@ -240,7 +241,7 @@ class AccountController extends Controller
                 $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
-                return $this->redirect($this->generateUrl('ShowMyAccount'));
+                return $this->redirect($this->generateUrl('ShowMyAccountProv'));
             }
 
         }
@@ -1043,7 +1044,7 @@ class AccountController extends Controller
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $form_searchdistchild = $this->createForm(new AccountDistChildSearchType());
+        $form_searchdistchild = $this->createForm(new AccountDistSearchType());
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $ChildAccount = $Account->getChildrens();
@@ -1068,7 +1069,7 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $AccountParent = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_searchdistchild = $this->createForm(new AccountDistChildSearchType());
+        $form_searchdistchild = $this->createForm(new AccountDistSearchType());
 
         $form_searchdistchild->bind($request);
         $searchdistchilddata = $form_searchdistchild->getData();

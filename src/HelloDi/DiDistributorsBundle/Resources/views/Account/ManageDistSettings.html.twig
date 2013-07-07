@@ -26,13 +26,13 @@
         </div>
     </div>
 
-    <div class="control-group Need">
-        {{ form_label(form_edit.accName) }}
-
-        {{ form_widget(form_edit.accName) }}
-
-        {{ form_errors(form_edit.accName) }}
+    <div class="control-group">
+        <label class="control-label" >accName</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.accName }}" >
+        </div>
     </div>
+
 
     <div class="control-group Need">
         {{ form_label(form_edit.accTerms) }}
@@ -42,12 +42,13 @@
         {{ form_errors(form_edit.accTerms) }}
     </div>
 
-    <div class="control-group Need">
-        {{ form_label(form_edit.accDefaultLanguage) }}
 
-        {{ form_widget(form_edit.accDefaultLanguage) }}
 
-        {{ form_errors(form_edit.accDefaultLanguage) }}
+    <div class="control-group">
+        <label class="control-label" >accDefaultLanguage</label>
+        <div class="controls">
+            <input type="text" disabled class="input-large" value="{{ Account.accDefaultLanguage }}" >
+        </div>
     </div>
 
     <div class="control-group Need">
