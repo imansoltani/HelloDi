@@ -121,6 +121,8 @@
                                         <td>{{ myAccount.accCreditLimit }}</td>
                                         <td class="td-actions" >
                                             <a class="btn_actions" href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
+                                            <br/>
+                                            <a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
