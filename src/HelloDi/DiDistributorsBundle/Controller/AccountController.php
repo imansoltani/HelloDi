@@ -156,7 +156,6 @@ class AccountController extends Controller
 
             array(
                 'pagination' => $pagination
-
                 ));
 
 
@@ -188,7 +187,6 @@ class AccountController extends Controller
             return $this->redirect($this->generateUrl('ShowMyAccount'));
 
         }
-
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk.html.twig', array(
             'entity' => $entity,
             'form' => $Form->createView(),
@@ -199,6 +197,8 @@ class AccountController extends Controller
 
     public function AddAccountProveMaster2StepAction(Request $request)
     {
+
+
         $em = $this->getDoctrine()->getManager();
 
         $AdrsDetai=new DetailHistory();
@@ -245,7 +245,10 @@ class AccountController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster2Step.html.twig', array('form2step' => $form2step->createView()));
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster2Step.html.twig', array(
+         'form2step' => $form2step->createView(),
+        ));
     }
 
 //SearchAccountDist
@@ -276,10 +279,8 @@ class AccountController extends Controller
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $edit_form = $this->createForm(new AccountProvType(), $account);
         $edit_form->bind($request);
-        if ($edit_form->isValid()) {
             $account->setAccTimeZone(null);
             $em->flush($account);
-        }
         return $this->forward("HelloDiDiDistributorsBundle:Account:EditAccountProv");
     }
 
@@ -299,7 +300,7 @@ class AccountController extends Controller
 
 ///--jadidkazem--//
 
-    public function  TransactionAction(Request $req,$id)
+    public function  DistTransactionAction(Request $req,$id)
     {
 
         $em=$this->getDoctrine()->getManager();
@@ -731,7 +732,7 @@ class AccountController extends Controller
             $trandist->setUser($User);
             $trandist->setTranDescription(null);
             $trandist->setTranFees(0);
-            $trandist->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
 
             if($data['Amount']!='')
                 if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
@@ -807,7 +808,10 @@ class AccountController extends Controller
             $tran->setTranInsert(new \DateTime('now'));
 
 //            $tran->setTranAction($data['Action']);
-            $tran->setTranFees($data['Fees']);
+            if($data['Fees']!='')
+             $tran->setTranFees($data['Fees']);
+            else
+            $tran->setTranFees(0);
             $tran->setTranDescription($data['Description']);
 
             if($data['CreditDebit']==0)

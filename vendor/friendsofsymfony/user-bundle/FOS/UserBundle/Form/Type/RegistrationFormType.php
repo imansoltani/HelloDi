@@ -39,6 +39,7 @@ class RegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
+            ->add('enabled','choice',array('choices'=>array(1=>'Enabled',0=>'Disabled')));
         ;
     }
 

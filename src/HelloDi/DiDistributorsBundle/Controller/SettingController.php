@@ -15,8 +15,6 @@ class SettingController extends Controller
 public  function staffAction(){
 
     $User=$this->get('security.context')->getToken()->getUser();
-    if($User->getRoles()[0]!='ROLE_MASTER_ADMIN')
-        return new Response('Lack of license=======>>> you lack role_master_admin');
     $Users=$User->getEntiti()->getUsers();
     $paginator = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
@@ -62,6 +60,7 @@ public  function staffaddAction(Request $req,$id)
         if ($form->isValid()) {
             $user->addRole(($data['roles']));
             $user->setEntiti($Entiti);
+            $user->setEnabled(1);
             $em->persist($user);
             $em->flush();
 
