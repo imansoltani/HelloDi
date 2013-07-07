@@ -159,8 +159,9 @@ class DistributorsController extends Controller
     }
 
 
-    public function  DetailsSaleAction(Request $req,$id)
+    public function  DetailsSaleAction($id)
     {
+        $this->check_ChildTransaction($id);
 
         $em=$this->getDoctrine()->getManager();
 
@@ -1222,7 +1223,7 @@ class DistributorsController extends Controller
         }
     }
 
-    private function check_ChildEntity($entityid)
+    private function check_ChildEntity($entityid) //---has problem----
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
