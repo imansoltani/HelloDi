@@ -35,7 +35,7 @@
                         {% elseif tran.tranAction=='Fund' %}Funding
                             {% endif %}</br>
                              {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                            {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>
+                            {{ 'ItemName' | trans ({}, "account") }}: {% if tran.code is not null %}{{ tran.Code.Item.itemName }}{% else %} -- {% endif %}</br>
                             {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
 
 

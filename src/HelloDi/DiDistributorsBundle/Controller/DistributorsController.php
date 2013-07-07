@@ -846,7 +846,7 @@ class DistributorsController extends Controller
 }
 
 
-    public function DetailsTransactionAction(Request $req,$id)
+    public function DetailsTransactionAction($id)
     {
         $this->check_Transaction($id);
 
