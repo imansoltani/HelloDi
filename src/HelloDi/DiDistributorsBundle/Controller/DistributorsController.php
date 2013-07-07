@@ -1247,6 +1247,16 @@ class DistributorsController extends Controller
 //        }
     }
 
+    private function check_Ticket($ticketid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($ticketid);
+        if($ticket == null || $ticket->getAccountdist() == null || $ticket->getAccountdist() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Ticket !");
+        }
+    }
     /////tickets
 
 
@@ -1336,6 +1346,7 @@ class DistributorsController extends Controller
             $tickets->setSubject($data['Subject']);
             $tickets->setTicketEnd(null);
             $tickets->setTicketStart(new \DateTime('now'));
+            $tickets->setLastUser($User);
 
             $note->setUser($User);
             $note->setDate(new \DateTime('now'));
@@ -1357,6 +1368,7 @@ class DistributorsController extends Controller
 
     public  function ticketsnoteAction(Request $req,$id)
     {
+        $this->check_Ticket($id);
         $note=new TicketNote();
         $em=$this->getDoctrine()->getEntityManager();
         $User=$this->get('security.context')->getToken()->getUser();
@@ -1402,8 +1414,9 @@ class DistributorsController extends Controller
 
     }
 
-    public  function  ticketschangestatusAction(Request $req,$id)
+    public  function  ticketschangestatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
@@ -1427,8 +1440,9 @@ class DistributorsController extends Controller
     }
 
 
-    public  function  ticketsstatusAction(Request $req,$id)
+    public  function  ticketsstatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
