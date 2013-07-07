@@ -345,14 +345,14 @@ class DistributorsController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             6/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'Account' => $Account, 'pagination' => $pagination));
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'pagination' => $pagination));
     }
 
-    public function DistStaffAddAction(Request $request, $id)
+    public function DistStaffAddAction(Request $request)
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
         $form = $this->createForm(new NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));

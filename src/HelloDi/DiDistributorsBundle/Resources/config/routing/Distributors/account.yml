@@ -7,7 +7,7 @@ DistStaff:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaff }
 
 DistStaffAdd:
-    pattern:  /{id}/staff/add
+    pattern:  /staff/add
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaffAdd }
 
 DistStaffEdit:
