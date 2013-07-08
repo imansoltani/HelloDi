@@ -217,6 +217,7 @@ class RetailersController extends Controller
 
     public function DetailsTransactionAction($id)
     {
+        $this->check_Transaction($id);
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
@@ -439,6 +440,7 @@ class RetailersController extends Controller
             $Tick->setType($data['Type']);
             $Tick->setSubject($data['Subject']);
             $Tick->setStatus(1);
+            $Tick->setLastUser($User);
 
             $TickNote->setUser($User);
             $TickNote->setDate(new \DateTime('now'));
@@ -464,6 +466,7 @@ class RetailersController extends Controller
 
     public  function  ticketsnoteAction(Request $req,$id)
     {
+        $this->check_Ticket($id);
 
         $ticketNote=new TicketNote();
         $User=$this->get('security.context')->getToken()->getUser();
@@ -518,8 +521,9 @@ class RetailersController extends Controller
         ));
 
     }
-    public  function  ticketschangestatusAction(Request $req,$id)
+    public  function  ticketschangestatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
@@ -543,8 +547,9 @@ class RetailersController extends Controller
     }
 
 
-    public  function  ticketsstatusAction(Request $req,$id)
+    public  function  ticketsstatusAction($id)
     {
+        $this->check_Ticket($id);
         $em=$this->getDoctrine()->getEntityManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
@@ -777,6 +782,28 @@ class RetailersController extends Controller
         if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
         {
             throw new \Exception("You haven't permission to access this User !");
+        }
+    }
+
+    private function check_Transaction($tranid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Transaction !");
+        }
+    }
+
+    private function check_Ticket($ticketid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($ticketid);
+        if($ticket == null || $ticket->getAccountretailer() == null || $ticket->getAccountretailer() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this Ticket !");
         }
     }
 // end checks
