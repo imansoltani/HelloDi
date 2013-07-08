@@ -6,7 +6,7 @@ RetailerStaff:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaff }
 
 RetailerStaffAdd:
-    pattern:  /{id}/staff/add
+    pattern:  /staff/add
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaffAdd }
 
 RetailerStaffEdit:
