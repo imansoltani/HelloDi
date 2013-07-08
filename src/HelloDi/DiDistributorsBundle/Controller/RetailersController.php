@@ -105,9 +105,8 @@ class RetailersController extends Controller
 
     public function RetailerStaffEditAction(Request $request, $id)
     {
+        $this->check_User($id);
 
-
-        $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
         $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
@@ -128,9 +127,9 @@ class RetailersController extends Controller
 
     }
 
-    public function RetailerChangeRoleAction(Request $req,$id)
+    public function RetailerChangeRoleAction($id)
     {
-
+        $this->check_User($id);
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
@@ -770,7 +769,16 @@ class RetailersController extends Controller
 //end mostafa
 
 // check functions
-
+    private function check_User($userid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
+        if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
+        {
+            throw new \Exception("You haven't permission to access this User !");
+        }
+    }
 // end checks
 }
 
