@@ -2,7 +2,9 @@
 
 namespace HelloDi\DiDistributorsBundle\Tests\Controller;
 
+use HelloDi\DiDistributorsBundle\Controller\DistributorsController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use HelloDi\DiDistributorsBundle\Entity\Account;
 
 class DistributorsControllerTest extends WebTestCase
 {
@@ -15,10 +17,10 @@ class DistributorsControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
     }
 
-    public function testAdd()
+    public function FundingTransferAction()
     {
-        $calc = new Calculator();
-        $result = $calc->add(30, 12);
+        $dist = new DistributorsController();
+        $result = $dist->FundingTransferAction();
 
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(42, $result);
