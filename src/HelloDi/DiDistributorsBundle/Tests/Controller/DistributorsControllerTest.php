@@ -20,10 +20,10 @@ class DistributorsControllerTest extends WebTestCase
     public function FundingTransferAction()
     {
         $dist = new DistributorsController();
-        $result = $dist->FundingTransferAction();
+//        $result = $dist->FundingTransferAction();
 
         // assert that your calculator added the numbers correctly!
-        $this->assertEquals(42, $result);
+//        $this->assertEquals(42, $result);
     }
 
 }
