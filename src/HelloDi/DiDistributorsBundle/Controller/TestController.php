@@ -198,4 +198,12 @@ public function test1Action()
 {
     return $this->render('HelloDiDiDistributorsBundle::Test.html.twig');
 }
+    
+    //start mostafa
+    public function listlangsAction()
+    {
+        $langs = $this->container->getParameter('languages');
+        return $this->render('HelloDiDiDistributorsBundle:Test:listlang.html.twig',array('langs'=>$langs));
+    }
+    //end mostafa
 }
