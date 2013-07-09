@@ -35,11 +35,11 @@ ChangeRoleUserEntities:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ChangeRoleUserEntities" }
 
 AddProv:
-    pattern:  /entities/{id}/accounts/new-provoder
+    pattern:  /entities/{id}/new/provoder
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddProv"}
 
 AddDist:
-    pattern:  /entities/{id}/accounts/new-distibutors
+    pattern:  /entities/{id}/new/distibutors
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddDist"}
 ProvTransaction:
     pattern:  /provider/{id}/transaction

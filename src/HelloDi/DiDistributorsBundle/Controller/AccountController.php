@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
@@ -18,6 +19,7 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
+use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
@@ -33,49 +35,20 @@ class AccountController extends Controller
 {
     public function ShowMyAccountProvAction(Request $request)
     {
-        $form_searchprov = $this->createForm(new AccountSearchProvType());
-        $formsearch = $this->createForm(new AccountSearchProvType());
 
         $em = $this->getDoctrine()->getManager();
 
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 1));
 
-        if ($request->isMethod('POST')) {
-            $formsearch->bind($request);
-            $dataform = $formsearch->getData();
-
-            $em = $this->getDoctrine()->getManager();
-
-            $qb = $em->createQueryBuilder();
-
-            $qb->select(array('Acc', 'Ent'))
-                ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
-                ->innerJoin('Acc.Entiti', 'Ent')
-                ->andwhere($qb->expr()->eq('Acc.accType', 1));
-            if ($dataform['accName'] != '')
-                $qb->andwhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($dataform['accName'] . '%')));
-            if ($dataform['entName'])
-                $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($dataform['entName'] . '%')));
-            if ($dataform['accBalance'] == 1)
-                if ($dataform['accBalanceValue'])
-                    $qb->andwhere($qb->expr()->gte('Acc.accBalance', $dataform['accBalanceValue']));
-            if ($dataform['accBalance'] == 0)
-                if ($dataform['accBalanceValue'])
-                    $qb->andwhere($qb->expr()->lte('Acc.accBalance', $dataform['accBalanceValue']));
-            if ($dataform['id'] != '')
-                $qb->andwhere($qb->expr()->eq('Acc.id', $dataform['id']));
-            $query = $qb->getQuery();
-
-        }
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
+            $this->get('request')->query->get('page', 1) /*page number*/
+
         );
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
-        ('pagination' => $pagination, 'form_searchprov' => $form_searchprov->createView()));
+        ('pagination' => $pagination));
 
     }
 
@@ -142,7 +115,9 @@ class AccountController extends Controller
         $entities =$em->createQueryBuilder();
             $entities->select('Ent')
                      ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
-                     ->where('Ent.id!=:id ')->setParameter('id',$Entiti->getId());
+                     ->innerJoin('Ent.Accounts','EntAcc')
+                     ->where('Ent.id !=:id ')->setParameter('id',$Entiti->getId())
+                     ->andWhere('EntAcc.accType != 2');
 
         $entities=$entities->getQuery()->getResult();
 
@@ -151,7 +126,7 @@ class AccountController extends Controller
         $pagination = $paginator->paginate(
             $entities,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig',
 
@@ -222,7 +197,7 @@ class AccountController extends Controller
         $Entiti->addAccount($Account);
 
 
-        $form2step = $this->createForm(new EntitiAccountprovType(), $Entiti, array('cascade_validation' => true));
+        $form2step = $this->createForm(new MakeAccountIn2StepType(), $Entiti, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form2step->bind($request);
@@ -249,6 +224,60 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster2Step.html.twig', array(
          'form2step' => $form2step->createView(),
+        ));
+    }
+
+
+
+    public function AddAccountDistMaster2StepAction(Request $request)
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $AdrsDetai=new DetailHistory();
+        $Entiti = new Entiti();
+        $Account = new Account();
+
+        $Account->setAccCreationDate(new \DateTime('now'));
+        $Account->setAccTimeZone(null);
+        $Account->setAccType(0);
+        $Account->setAccBalance(0);
+        $Account->setAccCreditLimit(0);
+
+        $Account->setEntiti($Entiti);
+        $Entiti->addAccount($Account);
+
+        $form2step = $this->createForm(new MakeAccountIn2StepType(), $Entiti,
+            array(
+                'cascade_validation' => true
+            ));
+
+        if ($request->isMethod('POST')) {
+            $form2step->handleRequest($request);
+
+            if ($form2step->isValid()) {
+                $em->persist($Entiti);
+                $AdrsDetai->setCountry($Entiti->getCountry());
+                $em->persist($Account);
+                $AdrsDetai->setAdrsDate(new \DateTime('now'));
+                $AdrsDetai->setEntiti($Entiti);
+                $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
+                $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
+                $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
+                $AdrsDetai->setAdrsCity($Entiti->getEntCity());
+                $AdrsDetai->setAdrsNp($Entiti->getEntNp());
+                $AdrsDetai->setEntiti($Entiti);
+                $em->persist($AdrsDetai);
+                $em->flush();
+                return $this->redirect($this->generateUrl('ShowMyAccountDist'));
+            }
+
+        }
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster2Step.html.twig', array(
+            'form2step' => $form2step->createView(),
         ));
     }
 
@@ -297,16 +326,17 @@ class AccountController extends Controller
 
     }
 
-//dist
 
-///--jadidkazem--//
 
     public function  DistTransactionAction(Request $req,$id)
     {
 
-        $em=$this->getDoctrine()->getManager();
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $paginator = $this->get('knp_paginator');
 
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $qb=$em->createQueryBuilder();
         $result=array();
 
         $form=$this->createFormBuilder()
@@ -334,7 +364,6 @@ class AccountController extends Controller
         {
             $form->bind($req);
             $data=$form->getData();
-            $qb=$em->createQueryBuilder();
             $qb->select('Tran')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
@@ -359,12 +388,11 @@ class AccountController extends Controller
 
             }
 
-            $result=$qb->getQuery();
-            $count = count($result->getResult());
-            $result =$result->setHint('knp_paginator.count', $count);
+            $result=$qb->getQuery()->getResult();
 
         }
-        $paginator = $this->get('knp_paginator');
+
+
         $pagination = $paginator->paginate(
             $result,
             $this->get('request')->query->get('page', 1) /*page number*/,
@@ -925,10 +953,10 @@ class AccountController extends Controller
     }
 
 
-//---------endjadidkazem---------//
 
     public function AddAccountDistMasterAction(Request $request)
     {
+
         $entitimaster = $this->get('security.context')->getToken()->getUser()->getEntiti();
 
         if (!$entitimaster) throw $this->createNotFoundException('Unable to find Entiti entity.');
@@ -959,12 +987,13 @@ class AccountController extends Controller
         array(
             'form' => $form->createView()
         ));
+
+
     }
 
     public function ShowMyAccountDistAction(Request $request)
     {
 
-        $form_searchdist = $this->createForm(new AccountSearchDistType());
 
         $em = $this->getDoctrine()->getManager();
         $query =$em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType'=>0));
@@ -975,47 +1004,19 @@ class AccountController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             5/*limit per page*/
         );
-        if ($request->isMethod('POST')) {
-            $form_searchdist->bind($request);
-            $dataform = $form_searchdist->getData();
 
-
-            $em = $this->getDoctrine()->getManager();
-            $qb = $em->createQueryBuilder();
-
-            $qb->select('Acc')
-                ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
-                ->innerJoin('Acc.Entiti', 'AccEnt')
-
-                ->where($qb->expr()->eq('Acc.accType', 0));
-            if ($dataform['accName'] != '')
-                $qb->andwhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($dataform['accName'] . '%')));
-            if ($dataform['entName'] != '')
-                $qb->andwhere($qb->expr()->like('AccEnt.entName', $qb->expr()->literal($dataform['entName'] . '%')));
-            if ($dataform['accCurrency'] != 2)
-                $qb->andwhere($qb->expr()->eq('Acc.accCurrency', $dataform['accCurrency']));
-            if ($dataform['accBalance'] == 1)
-                if ($dataform['accBalanceValue'] != '')
-                    $qb->andwhere($qb->expr()->gte('Acc.accBalance', $dataform['accBalanceValue']));
-            if ($dataform['accBalance'] == 0)
-                if ($dataform['accBalanceValue'] != '')
-                    $qb->andwhere($qb->expr()->lte('Acc.accBalance', $dataform['accBalanceValue']));
-            if ($dataform['accCreditLimit'] != 2)
-                $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', $dataform['accCreditLimit']));
-
-            $query = $qb->getQuery();
 
             $pagination = $paginator->paginate(
                 $query,
-                $this->get('request')->query->get('page', 1) /*page number*/,
-                5/*limit per page*/
+                $this->get('request')->query->get('page', 1) /*page number*/
+                /*limit per page*/
             );
 
 
-        }
+
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountDist.html.twig', array
-        ('pagination' => $pagination, 'form_searchdist' => $form_searchdist->createView()));
+        ('pagination' => $pagination));
 
 
     }

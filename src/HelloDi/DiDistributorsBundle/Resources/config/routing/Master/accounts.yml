@@ -18,18 +18,15 @@ ManageProvEntiti:
     pattern:  /providers/Entiti
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageProvEntiti" }
 
-AddAccountProvMaster:
-    pattern:  /providers/select/entity
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMaster" }
-
+AddAccountDistMaster2Step:
+    pattern:  /distributors/entity/new
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountDistMaster2Step" }
 
 AddAccountProveMaster2Step:
     pattern:  /providers/entity/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProveMaster2Step" }
 
-AddAccountProvMasterOk:
-    pattern:  /providers/{id}/new
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk" }
+
 
 
 #ChangeAdminProvAccountOk:

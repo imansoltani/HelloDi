@@ -1,3 +1,4 @@
+
 {% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
 {% set tab = '1' %}
@@ -8,8 +9,9 @@
     <a class="link" href="#">Manage</a>
     <span class="link">Transactions</span>
 {% endblock Site_Map %}
+<h5>
 
-
+</h5>
 {% block Tab %}
     <div class="row">
         <div class="span5">
@@ -19,7 +21,7 @@
                 </h3>
             </div> <!-- /widget-header -->
             <br>
-
+<a href="#" name="Go elsewhere...">Go elsewhere...</a>
             Retailer Balance : <b>{{ Account.accBalance }}</b>
 <hr>
             <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
@@ -53,7 +55,7 @@
 
 
                     <div class="form-actions" style="margin-bottom: 0" >
-                        <button class="btn btn-primary" type="submit">Transfer</button>
+                        <button class="btn btn-primary" type="submit" name="transfer">Transfer</button>
                     </div>
 
 

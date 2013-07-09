@@ -193,4 +193,9 @@ class TestController extends Controller
         $pri = $test->GetOrderNumber();
         return $this->render('HelloDiDiDistributorsBundle::OgoneTest.html.twig',array('yt'=>$pri));
     }
+
+public function test1Action()
+{
+    return $this->render('HelloDiDiDistributorsBundle::Test.html.twig');
+}
 }

@@ -7,26 +7,42 @@ use HelloDi\DiDistributorsBundle\Form\Userprivilege\UserprivilegeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\Form\FormTypeInterface;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 
-class NewUserRetailersType extends BaseType
+class NewUserDistributorsRetailerInEntityType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options,Entiti $ent=null)
+    protected $Entity;
+    private $class;
+    public function __construct ($class,Entiti $entity)
     {
+        parent::__construct($class);
+        $this->Entity =$entity;
+    }
 
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+   $entity=$this->Entity;
         parent::buildForm($builder, $options);
         $builder
             ->add('firstname')
             ->add('lastname')
             ->add('mobile')
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
+             ->add('Account', 'entity', array(
+                     'class'    => 'HelloDiDiDistributorsBundle:Account',
+                     'property' => 'accName',
+                     'query_builder' => function(EntityRepository $er)use ($entity) {
+                         return $er->createQueryBuilder('u')
+                             ->where('u.accType != 1')
+                             ->andwhere('u.Entiti=:ent')->setParameter('ent',$entity);
+                     }
+                 ))
+        ;
 
-;
 
 
     }
+
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -36,6 +52,6 @@ class NewUserRetailersType extends BaseType
     }
     public function getName()
     {
-        return 'NewUserRetailers';
+        return 'UserRegistrationEntity';
     }
 }
