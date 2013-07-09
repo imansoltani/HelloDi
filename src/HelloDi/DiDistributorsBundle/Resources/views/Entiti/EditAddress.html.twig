@@ -1,0 +1,55 @@
+{#{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}#}
+
+{#{% set tab = '2' %}#}
+
+{#{% block Site_Map %}#}
+    {#<a class="link" href="{{ path('loginsuccess') }}">Home</a>#}
+    {#<a class="link" href="{{ path('Ent_Main') }}">Entities</a>#}
+    {#<a class="link" href="#">{{User.Entiti.entName }}</a>#}
+    {#<span class="link">Users</span>#}
+{#{% endblock Site_Map %}#}
+
+{#{% block Tab %}#}
+
+<div class="widget-header">
+    <h3>Manage Address</h3>
+</div> <!-- /widget-header --><br>
+
+<form class="form-horizontal"  action="{{ path('Ent_Edit_Address',{'id':entity.id}) }}" method="post" >
+
+    <div class="control-group">
+        {{ form_label(form_edit.entAdrs1) }}
+        {{ form_widget(form_edit.entAdrs1) }}
+    </div>
+
+    <div class="control-group">
+    {{ form_label(form_edit.entAdrs2) }}
+    {{ form_widget(form_edit.entAdrs2) }}
+    </div>
+
+    <div class="control-group">
+    {{ form_label(form_edit.entAdrs3) }}
+    {{ form_widget(form_edit.entAdrs3) }}
+    </div>
+
+    <div class="control-group">
+    {{ form_label(form_edit.entNp) }}
+    {{ form_widget(form_edit.entNp) }}
+    </div>
+
+    <div class="control-group">
+    {{ form_label(form_edit.entCity) }}
+    {{ form_widget(form_edit.entCity) }}
+    </div>
+
+    <div class="control-group">
+    {{ form_label(form_edit.Country) }}
+    {{ form_widget(form_edit.Country) }}
+    </div>
+
+   {#// <input type="hidden" value="{{ entity.id }}">#}
+    {{ form_widget(form_edit._token) }}
+
+    <input type="submit" value="edit">
+</form>
+{#{% endblock %}#}

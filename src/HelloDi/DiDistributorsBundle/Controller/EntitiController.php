@@ -3,6 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
@@ -369,4 +370,62 @@ public function  EditUserEntitiesAction(Request $request,$id)
 
             }
 
+
+    public  function addressAction($id)
+    {
+
+        $paginator = $this->get('knp_paginator');
+        $em=$this->getDoctrine()->getEntityManager();
+        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        $Address=$entity->getDetailHistories();
+
+
+
+        $pagination = $paginator->paginate(
+            $Address,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            6/*limit per page*/
+        );
+        // die('sas'.count($pagination));
+        return $this->render('HelloDiDiDistributorsBundle:Entiti:Address.html.twig', array(
+            'pagination' => $pagination,
+            'entity' => $entity,
+        ));
+
+    }
+
+    public  function EditAddressAction(Request $req,$id)
+    {
+
+        $em=$this->getDoctrine()->getEntityManager();
+        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        $DetaHis=new DetailHistory();
+        $form=$this->createForm(new EntitiType(),$entity);
+
+        if($req->isMethod('POST'))
+        {
+
+            $form->handleRequest($req);
+            if($form->isValid($form))
+            {
+                $DetaHis->setAdrs1($entity->getEntAdrs1());
+                $DetaHis->setAdrs2($entity->getEntAdrs2());
+                $DetaHis->setAdrs3($entity->getEntAdrs3());
+                $DetaHis->setAdrsNp($entity->getEntNp());
+                $DetaHis->setAdrsCity($entity->getEntCity());
+                $DetaHis->setCountry($entity->getCountry());
+                $DetaHis->setEntiti($entity);
+                $DetaHis->setAdrsDate(new \DateTime('now'));
+                $em->persist($DetaHis);
+                $em->flush();
+  return $this->redirect($this->generateUrl('Ent_Address',array('id'=>$id)));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Entiti:EditAddress.html.twig', array(
+            'form_edit'=>$form->createView(),
+            'entity' => $entity,
+        ));
+    }
 }
