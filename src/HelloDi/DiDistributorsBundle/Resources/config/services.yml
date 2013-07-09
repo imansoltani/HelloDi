@@ -46,7 +46,7 @@ services:
 
     hello_di_di_distributors.codeselector:
             class: HelloDi\DiDistributorsBundle\Listener\CodeSelector
-            arguments: [@doctrine,@hello_di_di_distributors.balancechecker]
+            arguments: [@doctrine.orm.default_entity_manager,@hello_di_di_distributors.balancechecker]
 
     hello_di_di_distributors.Tickets:
             class: HelloDi\DiDistributorsBundle\Listener\Taketickets
@@ -54,7 +54,7 @@ services:
 
     hello_di_di_distributors.GetOrderNumber:
             class: HelloDi\DiDistributorsBundle\Listener\GetOrderNumber
-            arguments: [@doctrine]
+            arguments: [@doctrine.orm.default_entity_manager]
 
 
 

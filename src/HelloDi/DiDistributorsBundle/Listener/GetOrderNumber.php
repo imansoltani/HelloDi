@@ -2,22 +2,21 @@
 
 namespace HelloDi\DiDistributorsBundle\Listener;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 
 class GetOrderNumber
 {
-    private $doctrine;
+    private $em;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->doctrine = $doctrine;
+        $this->em = $entityManager;
 
     }
 
     public function GetOrderNumber()
     {
-        $em = $this->doctrine->getManager();
-        $code = $em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1)->getOrderId();
+        $code = $this->em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1)->getOrderId();
         return $code;
     }
 
