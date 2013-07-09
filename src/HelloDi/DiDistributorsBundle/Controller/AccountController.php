@@ -281,7 +281,7 @@ class AccountController extends Controller
         ));
     }
 
-//SearchAccountDist
+
 
     public function ManageProvAction($id)
     {
