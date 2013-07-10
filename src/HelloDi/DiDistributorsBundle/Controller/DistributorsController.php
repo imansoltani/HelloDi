@@ -359,7 +359,7 @@ class DistributorsController extends Controller
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user);
         $formrole = $this->createFormBuilder()
             ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
 
@@ -380,7 +380,12 @@ class DistributorsController extends Controller
             }
 
         }
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:StaffAdd.html.twig', array('Entiti' => $Account->getEntiti(), 'Account' => $Account, 'form' => $form->createView(), 'formrole' => $formrole->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:StaffAdd.html.twig',
+            array(
+                'Entiti' => $Account->getEntiti(),
+                'Account' => $Account,
+                'form' => $form->createView(),
+                'formrole' => $formrole->createView()));
 
     }
 
@@ -392,7 +397,7 @@ class DistributorsController extends Controller
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserDistributorsType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -497,7 +502,7 @@ class DistributorsController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'),$user);
         $formrole = $this->createFormBuilder()
                ->add('roles', 'choice',
                         array(

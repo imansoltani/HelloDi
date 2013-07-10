@@ -15,9 +15,13 @@
         <h3>Add User</h3>
     </div> <!-- /widget-header -->
     <br>
+
+
+
     <form class="form-horizontal" action="{{ path('DistRetailerUserAdd',{'id':retailerAccount.id}) }}" method="post" >
 
         <div class="control-group">
+            {{ form_errors(form.firstname) }}
             {{ form_label(form.firstname) }}
             {{ form_widget(form.firstname) }}
         </div>

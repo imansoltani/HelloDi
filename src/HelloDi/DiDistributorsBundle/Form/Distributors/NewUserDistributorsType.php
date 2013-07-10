@@ -15,8 +15,8 @@ class NewUserDistributorsType extends BaseType
 
         parent::buildForm($builder, $options);
         $builder
-            ->add('firstname')
-            ->add('lastname')
+            ->add('firstName')
+            ->add('lastName')
             ->add('mobile')
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
 ;
