@@ -5,6 +5,7 @@ namespace HelloDi\DiDistributorsBundle\Form\Account;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\AddressType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -27,7 +28,7 @@ class MakeAccountIn2StepType extends AbstractType
             ->add('entNP', 'text',array())
             ->add('Country','entity',array('class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property'=>'name'))
             ->add('Accounts','collection',array('type'=>new AccountProvType()))
-            ->add('Users','collection',array('type'=>new NewUserDistributorsType('HelloDi\DiDistributorsBundle\Entity\User')))
+            ->add('Users','collection',array('type'=>new NewUserRetailersType('HelloDi\DiDistributorsBundle\Entity\User')))
         ;
     }
 

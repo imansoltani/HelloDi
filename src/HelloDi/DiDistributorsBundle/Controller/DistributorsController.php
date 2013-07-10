@@ -12,9 +12,6 @@ use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserRetailersType;
-use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
-use HelloDi\DiDistributorsBundle\Form\Distributors\RetailerSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
@@ -23,7 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class DistributorsController extends Controller
 {
@@ -473,7 +469,7 @@ class DistributorsController extends Controller
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
