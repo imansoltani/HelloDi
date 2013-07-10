@@ -29,7 +29,7 @@
               method="POST">
             <fieldset>
                 <div class="control-group">
-                    {{ form_label(form.TypeDate[0]) }}
+                    {{ form_label(form.TypeDate[0], { 'attr': {'checked': 'checked'} }) }}
                     <div class="controls">
                         {{ form_widget(form.TypeDate[0]) }}
                     </div>

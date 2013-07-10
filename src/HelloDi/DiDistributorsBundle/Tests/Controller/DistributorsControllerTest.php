@@ -62,56 +62,57 @@ class DistributorsControllerTest extends WebTestCase
 
 
     }
+//}
+
+    public function testFundingTransfer()
+    {
+
+
+       $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
+       $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
+
+       $tranretailer=new Transaction();
+       $tranDist=new Transaction();
+
+
+        $tranretailer->setTranAmount(100);
+
+        $tranretailer->setTranAction('tran');
+
+        $tranretailer->setAccount($AccountRetailer);
+
+        $tranDist->setTranAmount(-100);
+
+        $tranDist->setTranAction('tran');
+
+        $tranDist->setAccount($AccountDist);
+
+
+        print $AccountDist->getAccBalance().'=='.$AccountRetailer->getAccBalance().'  '.'Result===>>>>>     ';
+
+        $client = static::createClient();
+        $helper = $client->getContainer()->get('hello_di_di_distributors.balancechecker');
+
+     if($helper->isBalanceEnoughForMoney($AccountDist,100))
+     {
+         $this->em->persist($tranDist);
+         $this->em->persist($tranretailer);
+
+     }
+
+        $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
+        $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
+
+        if($this->assertGreaterThan($AccountDist->getAccBalance(),$AccountRetailer->getAccBalance()))
+             die($AccountDist->getAccBalance().' >'.$AccountRetailer->getAccBalance().'       Balance Parent More Than Balance Child');
+        else
+            die($AccountDist->getAccBalance().' < '.$AccountRetailer->getAccBalance().'      Balance Child More Than Balance Parent');
+
+
+    }
 }
 
-//    public function testFundingTransfer()
-//    {
-//
-//
-//       $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
-//       $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
-//
-//       $tranretailer=new Transaction();
-//       $tranDist=new Transaction();
-//
-//
-//        $tranretailer->setTranAmount(100);
-//
-//        $tranretailer->setTranAction('tran');
-//
-//        $tranretailer->setAccount($AccountRetailer);
-//
-//        $tranDist->setTranAmount(-100);
-//
-//        $tranDist->setTranAction('tran');
-//
-//        $tranDist->setAccount($AccountDist);
-//
-//
-//        print $AccountDist->getAccBalance().'=='.$AccountRetailer->getAccBalance().'  '.'Result===>>>>>     ';
-//
-//        $client = static::createClient();
-//        $helper = $client->getContainer()->get('hello_di_di_distributors.balancechecker');
-//
-//     if($helper->isBalanceEnoughForMoney($AccountDist,100))
-//     {
-//         $this->em->persist($tranDist);
-//         $this->em->persist($tranretailer);
-//
-//     }
-//
-//        $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
-//        $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
-//
-//        if($this->assertGreaterThan($AccountDist->getAccBalance(),$AccountRetailer->getAccBalance()))
-//            die($AccountDist->getAccBalance().' >'.$AccountRetailer->getAccBalance().'       Balance Parent More Than Balance Child');
-//        else
-//            die($AccountDist->getAccBalance().' < '.$AccountRetailer->getAccBalance().'      Balance Child More Than Balance Parent');
-//
-//
-//    }
-//
-//    }
+  //  }
 //
 
 
