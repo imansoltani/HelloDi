@@ -80,6 +80,12 @@
                                 </div>
 
                                 <div class="control-group">
+                                    {{ form_label(edit_form.itemCode) }}
+                                    {{ form_widget(edit_form.itemCode) }}
+                                    {{ form_errors(edit_form.itemCode) }}
+                                </div>
+
+                                <div class="control-group">
                                     {{ form_label(form.ItemDescs[0].desclang) }}
                                     <div class="controls">
                                         {{ form_widget(form.ItemDescs[0].desclang) }}
