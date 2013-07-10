@@ -30,7 +30,6 @@
 
             <div style="margin-top: 5px" class="tablediv">
 
-                <form  action="{{ path('item_show') }}" method="post">
                     <div class="tab-content datatable">
                         <table id="example" class="table postsend">
                             <thead>
@@ -52,7 +51,7 @@
 
                                     <td >{{ item.id }}</td>
                                     <td class="td-actions" >
-                                        <input type="submit" value="Manage" onclick="$('#itemid').val('{{ item.id }}')"/>
+                                        <a class="btn_actions" href="{{ path('item_show',{'id':item.id}) }}">Manage</a>
                                     </td>
                                     <td>{{ item.itemName }}</td>
                                     <td>{{ item.itemFaceValue }} {{ item.itemCurrency }}</td>
@@ -67,8 +66,6 @@
                         </table>
 
                     </div>
-                <input type="hidden" name="itemid" id="itemid" value=""/>
-                </form>
             </div>
 
 

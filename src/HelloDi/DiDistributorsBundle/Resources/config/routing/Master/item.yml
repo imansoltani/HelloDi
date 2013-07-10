@@ -7,35 +7,26 @@ item_new:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:new" }
 
 item_show:
-    pattern:  /details
+    pattern:  /{id}/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:show" }
 
 item_edit:
-    pattern:  /details/edit
+    pattern:  /{id}/details/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:edit" }
-
-item_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:update" }
-    requirements: { _method: post|put }
 
 #description
 item_desc:
-    pattern:  /description
+    pattern:  /{id}/description
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descIndex" }
 
 item_desc_new:
-    pattern:  /description/new
+    pattern:  /{id}/description/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNew" }
 
-item_desc_create:
-    pattern:  /description/create
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNewSubmit" }
-
 item_desc_edit:
-    pattern:  /description/edit
+    pattern:  /{id}/description/{descid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
 
 item_desc_update:
-    pattern:  /description/update
+    pattern:  /{id}/description/{descid}/update
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descUpdate" }

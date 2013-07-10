@@ -12,7 +12,7 @@ use HelloDi\DiDistributorsBundle\Form\ItemType;
 
 class ItemController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         $items = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
@@ -28,7 +28,7 @@ class ItemController extends Controller
         $form   = $this->createForm(new ItemType(), $item);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $item->setItemDateInsert(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
@@ -42,10 +42,8 @@ class ItemController extends Controller
         ));
     }
 
-    public function showAction(Request $request)
+    public function showAction($id)
     {
-        $id = $request->get('itemid');
-
         $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
@@ -59,10 +57,8 @@ class ItemController extends Controller
         ));
     }
 
-    public function editAction(Request $request)
+    public function editAction(Request $request,$id)
     {
-        $id = $request->get('itemid');
-
         $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
@@ -72,44 +68,26 @@ class ItemController extends Controller
         }
 
         $editForm = $this->createForm(new ItemType(), $item);
+        if ($request->isMethod('POST'))
+        {
+            $editForm->handleRequest($request);
+            if ($editForm->isValid()) {
+                $em->persist($item);
+                $em->flush();
 
+                return $this->forward("HelloDiDiDistributorsBundle:Item:show", array('id'=>$id));
+            }
+        }
         return $this->render('HelloDiDiDistributorsBundle:Item:edit.html.twig', array(
             'item'      => $item,
             'edit_form'   => $editForm->createView()
         ));
     }
 
-    public function updateAction(Request $request)
-    {
-        $id = $request->get('itemid');
-
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Item entity.');
-        }
-
-        $editForm = $this->createForm(new ItemType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->forward("HelloDiDiDistributorsBundle:Item:show");
-        }
-
-        return $this->forward("HelloDiDiDistributorsBundle:Item:edit");
-    }
-
     //item desc
 
-    public function descIndexAction(Request $request)
+    public function descIndexAction($id)
     {
-        $id = $request->get('itemid');
-
         $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
@@ -128,92 +106,63 @@ class ItemController extends Controller
             ));
     }
 
-    public function descNewAction(Request $request)
+    public function descNewAction(Request $request,$id)
     {
-        $id = $request->get('itemid');
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
         $desc = new ItemDesc();
         $form = $this->createForm(new ItemDescType(),$desc);
+        if ($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
 
+            if ($form->isValid()) {
+                $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
+                if($finddesc)
+                    $form ->addError(new FormError('lang is duplicate.'));
+                else
+                {
+                    $desc->setItem($item);
+                    $em->persist($desc);
+                    $em->flush();
+
+                    return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
+                            'id' => $item->getId()
+                        ));
+                }
+            }
+        }
         return $this->render('HelloDiDiDistributorsBundle:Item:descnew.html.twig', array(
                 'form' => $form->createView(),
                 'item' => $item
             ));
     }
 
-    public function descNewSubmitAction(Request $request)
+    public function descEditAction(Request $request,$descid)
     {
-        $id = $request->get('itemid');
         $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid);
 
-        $desc = new ItemDesc();
         $form = $this->createForm(new ItemDescType(),$desc);
-        $form->handleRequest($request);
+        if ($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
-            if($finddesc)
-                $form ->addError(new FormError('lang is duplicate.'));
-            else
-            {
-                $desc->setItem($item);
-                $em->persist($desc);
-                $em->flush();
+            if ($form->isValid()) {
+                $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$desc->getItem(),'desclang'=>$desc->getDesclang()));
+                if($finddesc and $finddesc!=$desc)
+                    $form ->addError(new FormError('lang is duplicate.'));
+                else
+                {
+                    $em->persist($desc);
+                    $em->flush();
 
-                return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
-                        'itemid' => $item->getId()
-                    ));
+                    return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
+                            'id' => $desc->getItem()->getId()
+                        ));
+                }
             }
         }
-
-        return $this->render('HelloDiDiDistributorsBundle:Item:descnew.html.twig', array(
-                'form' => $form->createView(),
-                'item' => $item
-            ));
-    }
-
-    public function descEditAction(Request $request)
-    {
-        $id = $request->get('itemdescid');
-        $em = $this->getDoctrine()->getManager();
-        $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($id);
-
-        $form = $this->createForm(new ItemDescType(),$desc);
-
-        return $this->render('HelloDiDiDistributorsBundle:Item:descedit.html.twig', array(
-                'form' => $form->createView(),
-                'item' => $desc->getItem(),
-                'itemdescid' => $desc->getId()
-            ));
-    }
-
-    public function descUpdateAction(Request $request)
-    {
-        $id = $request->get('itemdescid');
-        $em = $this->getDoctrine()->getManager();
-        $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($id);
-
-        $form = $this->createForm(new ItemDescType(),$desc);
-
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$desc->getItem(),'desclang'=>$desc->getDesclang()));
-            if($finddesc and $finddesc!=$desc)
-                $form ->addError(new FormError('lang is duplicate.'));
-            else
-            {
-                $em->persist($desc);
-                $em->flush();
-
-                return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
-                        'itemid' => $desc->getItem()->getId()
-                    ));
-            }
-        }
-
         return $this->render('HelloDiDiDistributorsBundle:Item:descedit.html.twig', array(
                 'form' => $form->createView(),
                 'item' => $desc->getItem(),
