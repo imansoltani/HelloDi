@@ -17,35 +17,19 @@
     </div> <!-- /widget-header -->
 
     <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+
+       {% for credeb in  form.CreditDebit %}
         <div class="control-group">
 
-            {{ form_label(form.CreditDebit[0]) }}
+            {{ form_label(credeb) }}
 
             <div class="controls">
-                {{ form_widget(form.CreditDebit[0])  }}
+                {{ form_widget(credeb)  }}
             </div>
 
         </div>
 
-        <div class="control-group">
-
-            {{ form_label(form.CreditDebit[1]) }}
-
-            <div class="controls">
-                {{ form_widget(form.CreditDebit[1])  }}
-            </div>
-
-        </div>
-
-
-        <div class="control-group">
-            {{ form_label(form.Action ) }}
-            <div class="controls">
-                {{ form_widget(form.Action)  }}
-            </div>
-        </div>
-
-
+      {% endfor %}
 
         <div class="control-group">
 

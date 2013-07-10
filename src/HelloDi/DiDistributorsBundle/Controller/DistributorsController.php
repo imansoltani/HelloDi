@@ -216,14 +216,15 @@ class DistributorsController extends Controller
             ));
     }
 
-    public function  FundingTransferAction($id)
+    public function  FundingTransferAction(Request $req,$id)
     {
+
         $this->check_ChildAccount($id);
-        $req=new Request();
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $formtransfer=$this->createFormBuilder()
             ->add('Amount')
             ->add('Communications','textarea',array('required'=>false))
@@ -232,12 +233,13 @@ class DistributorsController extends Controller
 
         if($req->isMethod('post'))
         {
+
             $trandist=new Transaction();
             $tranretailer=new Transaction();
-            $formtransfer->bind($req);
+            $formtransfer->handleRequest($req);
             $data=$formtransfer->getData();
 
-            #transaction for dist#
+           #transaction for dist#
 
             $trandist->setTranDate(new \DateTime('now'));
             $trandist->setTranCurrency($Account->getAccCurrency());
@@ -246,8 +248,10 @@ class DistributorsController extends Controller
             $trandist->setUser($User);
             $trandist->setTranFees(0);
             $trandist->setTranAction('tran');
+            $trandist->setTranType(0);
             $trandist->setTranAmount(-$data['Amount']);
             $trandist->setTranDescription($data['Description']);
+
             #transaction for retailer#
 
             $tranretailer->setTranDate(new \DateTime('now'));
@@ -258,6 +262,7 @@ class DistributorsController extends Controller
             $tranretailer->setTranFees(0);
             $tranretailer->setTranAmount(+$data['Amount']);
             $tranretailer->setTranAction('tran');
+            $trandist->setTranType(1);
             $tranretailer->setTranDescription($data['Communications']);
 
             if($data['Amount']!='')
@@ -273,8 +278,6 @@ class DistributorsController extends Controller
 
 
         }
-
-        return $trandist->getTranAmount().'|'.$tranretailer->getTranAmount();
 
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
 
@@ -309,11 +312,13 @@ class DistributorsController extends Controller
             $trandist->setUser($User);
             $trandist->setTranFees(0);
 
-            $trandist->setTranAction('crtl');
+
             if($data['As']=='Credit')
             {
                if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                {
+                $trandist->setTranAction('crtl');
+                $trandist->setTranType(0);
                 $trandist->setTranAmount(-$data['Amount']);
                 $trandist->setAccount($Account->getParent());
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);

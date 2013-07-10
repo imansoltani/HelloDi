@@ -25,6 +25,14 @@ class Transaction
 
     private $tranBookingValue;
 
+
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+
+    private $tranType;
+
     /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
@@ -380,39 +388,40 @@ class Transaction
      */
     public function updateAccountBalance()
     {
-        switch ($this->getTranAction()) {
-            case 'tran':
+#this switch for function money
+        switch ($this->getTranType()) {
+            case 1:# 1 for credit
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+            case 0: #0 for debit
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+                  }
+#this switch for function code
+switch ($this->getTranAction()) {
+            case 'tran':
+
                 break;
 
             case 'crtl':
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
+
                 break;
 
             case 'pmt':
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
+
                 break;
 
 
             case 'amdt':
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
+
                 break;
 
-
-
-            case 'paym':
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
-                break;
 
             case 'sale':
                 $amount = $this->getTranCredit();
@@ -458,5 +467,28 @@ class Transaction
     public function getTranAmount()
     {
         return $this->tranAmount;
+    }
+
+    /**
+     * Set tranType
+     *
+     * @param integer $tranType
+     * @return Transaction
+     */
+    public function setTranType($tranType)
+    {
+        $this->tranType = $tranType;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranType
+     *
+     * @return integer 
+     */
+    public function getTranType()
+    {
+        return $this->tranType;
     }
 }
