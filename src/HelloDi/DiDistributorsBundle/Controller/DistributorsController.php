@@ -67,9 +67,9 @@ class DistributorsController extends Controller
                 array(
                     0 =>'Item.TypeChioce.Mobile',
                     1=>'Item.TypeChioce.Internet',
-                    2 =>'Item.TypeChioce.Tel'),
+                    2 =>'Item.TypeChioce.Tel',
                     3=>'All'
-                      ))
+                      )))
 
             ->add('ItemName', 'entity',
                 array(
@@ -108,6 +108,7 @@ class DistributorsController extends Controller
                 /**/
 
                 ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
+                ->andWhere($qb->expr()->isNotNull('Tr.tranType'))
                 ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
                 ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
@@ -119,8 +120,6 @@ class DistributorsController extends Controller
             if($data['ItemType']!=3)
 
                 $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
-
-
 
             if($data['ItemName']!='All')
                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
@@ -141,7 +140,7 @@ class DistributorsController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+           10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSale.html.twig',
