@@ -46,16 +46,16 @@
 
 
                             <div class="control-group">
-                                {{ form_label(form_searchprov.retCityName) }}
-                                {{ form_widget(form_searchprov.retCityName) }}
+                                {{ form_label(form_search.CityName) }}
+                                {{ form_widget(form_search.CityName) }}
                             </div>
 
                             <div class="control-group">
 
-                                {{ form_label(form_searchprov.retBalance) }}
+                                {{ form_label(form_search.Balance) }}
                                 <div class="controls">
-                                    {{ form_widget(form_searchprov.retBalance) }}
-                                    {{ form_widget(form_searchprov.retBalanceValue) }}
+                                    {{ form_widget(form_search.Balance) }}
+                                    {{ form_widget(form_search.BalanceValue) }}
                                 </div>
                              </div>
 
@@ -106,30 +106,30 @@
                                     <th>Entity</th>
                                     <th>Balance</th>
                                     <th>Credit Limit</th>
-                                    <th>Operator</th>
+                                    <th>Manage</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                {% for myAccount in pagination %}
+                                {% for myAccount in Retailers %}
                                     <tr>
                                         <td style="font-weight: bold" >{{ myAccount.id }}</td>
 
                                         <td>{{ myAccount.accName }}</td>
                                         <td>{{ myAccount.Entiti.entName }}</td>
-                                        <td>{{ myAccount.accBalance }}</td>
+                                        <td>{{ myAccount.accBalance }}|<b>{{ myAccount.accCurrency }}</b></td>
                                         <td>{{ myAccount.accCreditLimit }}</td>
                                         <td class="td-actions" >
                                             <a class="btn_actions" href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
-                                            <br/>
-                                            <a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>
+                                            {#<br/>#}
+                                            {#<a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>#}
                                         </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
                             <div class="navigation">
-                                {{ knp_pagination_render(pagination) }}
+                                {{ knp_pagination_render(Retailers) }}
                             </div>
                         </div>
                         <input type="hidden" name="accountid" class="accountid" value=""/>
