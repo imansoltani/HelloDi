@@ -4,6 +4,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Setting\NewUserMasterType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,7 @@ public  function staffaddAction(Request $req,$id)
     $Entiti= $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
 
-    $form = $this->createForm(new NewUserMasterType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+    $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
     $formrole = $this->createFormBuilder()
         ->add('roles', 'choice',
             array(
@@ -83,7 +84,7 @@ public  function staffeditAction(Request $req,$id)
 {
     $em = $this->getDoctrine()->getManager();
     $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-    $form = $this->createForm(new NewUserMasterType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+    $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
     if ($req->isMethod('POST')) {
         $form->bind($req);
