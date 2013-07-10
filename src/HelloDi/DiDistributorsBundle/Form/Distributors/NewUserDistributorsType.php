@@ -18,7 +18,6 @@ class NewUserDistributorsType extends BaseType
             ->add('firstname')
             ->add('lastname')
             ->add('mobile')
-            ->add('status','choice',array('choices'=>array(1=>'Active',0=>'Not Active')))
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
 ;
 

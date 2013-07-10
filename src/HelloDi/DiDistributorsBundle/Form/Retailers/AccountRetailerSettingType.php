@@ -13,7 +13,11 @@ class AccountRetailerSettingType extends AbstractType
         $builder
 
             ->add('accTerms','text',array())
-            ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
+            ->add('accDefaultLanguage','choice',
+                     array('choices'=>(
+                              array(
+                                  'en'=>'en'
+                                  ,'fr'=>'fr')),'preferred_choices'=>array(1)));
         ;
     }
 

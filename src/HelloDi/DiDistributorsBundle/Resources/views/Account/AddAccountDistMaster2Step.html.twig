@@ -120,12 +120,66 @@
 
     </div>
 
+
+
+
+<h1>User</h1>
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].firstname) }}
+        {{ form_widget(form2step.Users[0].firstname) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].lastname) }}
+        {{ form_widget(form2step.Users[0].lastname) }}
+    </div>
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].username) }}
+        {{ form_widget(form2step.Users[0].username) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].mobile) }}
+        {{ form_widget(form2step.Users[0].mobile) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].email) }}
+        {{ form_widget(form2step.Users[0].email) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].enabled) }}
+        {{ form_widget(form2step.Users[0].enabled) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].plainPassword.first) }}
+        {{ form_widget(form2step.Users[0].plainPassword.first) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].plainPassword.second) }}
+        {{ form_widget(form2step.Users[0].plainPassword.second) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form2step.Users[0].language) }}
+        <div class="controls">
+            {{ form_widget(form2step.Users[0].language) }}
+        </div>
+    </div>
+    <div class="control-group">
+        {{ form_label(formrole.roles) }}
+        <div class="controls">
+            {{ form_widget(formrole.roles) }}
+        </div>
+    </div>
+
+
     {{ form_widget(form2step._token) }}
 
 
-
-
-
-<input type="submit" value="creat">
+    <input type="submit" value="creat">
 
 </form>

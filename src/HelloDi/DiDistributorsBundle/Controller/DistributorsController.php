@@ -439,15 +439,17 @@ class DistributorsController extends Controller
     public function DistRetailerUserAction($id)
     {
         $this->check_ChildAccount($id);
+        $paginator = $this->get('knp_paginator');
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
         $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $users = $retailerAccount->getUsers();
-        $paginator = $this->get('knp_paginator');
+
+
         $pagination = $paginator->paginate(
             $users,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            6/*limit per page*/
+            10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerUser.html.twig', array(
@@ -469,12 +471,8 @@ class DistributorsController extends Controller
         $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
-                if ($user->getStatus() == 0)
-                    $user->setStatus(0);
-                else
-                    $user->setStatus(1);
                 $em->flush();
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $user->getAccount()->getId())));
             }
@@ -501,17 +499,21 @@ class DistributorsController extends Controller
 
         $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
         $formrole = $this->createFormBuilder()
-            ->add('roles', 'choice', array('choices' => array('ROLE_RETAILER' => 'ROLE_RETAILER', 'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
+               ->add('roles', 'choice',
+                        array(
+                            'choices' =>
+                                     array('ROLE_RETAILER' => 'ROLE_RETAILER',
+                                            'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $formrole->bind($request);
+            $form->handleRequest($request);
+            $formrole->handleRequest($request);
             $data = $formrole->getData();
             $user->addRole(($data['roles']));
             $user->setAccount($Account);
             $user->setEntiti($Entiti);
-            $user->setStatus(1);
-            if ($form->isValid()) {
+            if ($form->isValid())
+            {
                 $em->persist($user);
                 $em->flush();
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
@@ -900,27 +902,25 @@ class DistributorsController extends Controller
 
 
 
-//----endjadidkazem----//
-
-    public function DistRetailerSettingAction(Request $req, $id) //id account
+    public function DistRetailerSettingAction(Request $req, $id)
     {
         $this->check_ChildAccount($id);
+
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $retacc = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form = $this->createForm(new AccountRetailerSettingType(), $retacc);
-
+        $Account= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $form = $this->createForm(new AccountRetailerSettingType(),$Account);
         if ($req->isMethod('POST')) {
-            $form->bind($req);
+            $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
             }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array(
-            'Entiti' => $retacc->getEntiti(),
+            'Entiti' => $Account->getEntiti(),
             'Account' => $myaccount,
-            'retailerAccount' => $retacc,
+            'retailerAccount' => $Account,
             'form' => $form->createView()
         ));
     }

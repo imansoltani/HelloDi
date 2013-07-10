@@ -11,6 +11,7 @@ use HelloDi\DiDistributorsBundle\Entity\Input;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
@@ -104,72 +105,72 @@ class AccountController extends Controller
             'edit_form' => $edit_form->createView()
         ));
     }
-
-    public function AddAccountProvMasterAction()
-    {
-
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $Entiti=$this->get('security.context')->getToken()->getUser()->getEntiti();
-
-        $entities =$em->createQueryBuilder();
-            $entities->select('Ent')
-                     ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
-                     ->innerJoin('Ent.Accounts','EntAcc')
-                     ->where('Ent.id !=:id ')->setParameter('id',$Entiti->getId())
-                     ->andWhere('EntAcc.accType != 2');
-
-        $entities=$entities->getQuery()->getResult();
-
-        $paginator = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig',
-
-            array(
-                'pagination' => $pagination
-                ));
-
-
-    }
-
-    public function AddAccountProvMasterOkAction(Request $request, $id)
-    {
-
-        $Account = new Account();
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-        $Form = $this->createForm(new AccountProvType(), $Account);
-
-        $Form->bind($request);
-
-        if ($Form->isValid()) {
-            $Account->setEntiti($entity);
-            $Account->setAccCreationDate(new \DateTime('now'));
-            $Account->setAccTimeZone(null);
-            $Account->setAccType(1);
-            $Account->setAccBalance(0);
-            $Account->setAccCreditLimit(0);
-            $Account->setAccDefaultLanguage(null);
-            $Account->setParent(null);
-            $Account->setAccTerms(0);
-            $Account->setAccTimeZone(null);
-            $em->persist($Account);
-            $em->flush();
-            return $this->redirect($this->generateUrl('ShowMyAccountProv'));
-
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk.html.twig', array(
-            'entity' => $entity,
-            'form' => $Form->createView(),
-        ));
-
-
-    }
+//
+//    public function AddAccountProvMasterAction()
+//    {
+//
+//        $em = $this->getDoctrine()->getEntityManager();
+//
+//        $Entiti=$this->get('security.context')->getToken()->getUser()->getEntiti();
+//
+//        $entities =$em->createQueryBuilder();
+//            $entities->select('Ent')
+//                     ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
+//                     ->innerJoin('Ent.Accounts','EntAcc')
+//                     ->where('Ent.id !=:id ')->setParameter('id',$Entiti->getId())
+//                     ->andWhere('EntAcc.accType != 2');
+//
+//        $entities=$entities->getQuery()->getResult();
+//
+//        $paginator = $this->get('knp_paginator');
+//
+//        $pagination = $paginator->paginate(
+//            $entities,
+//            $this->get('request')->query->get('page', 1) /*page number*/,
+//            10/*limit per page*/
+//        );
+//        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig',
+//
+//            array(
+//                'pagination' => $pagination
+//                ));
+//
+//
+//    }
+//
+//    public function AddAccountProvMasterOkAction(Request $request, $id)
+//    {
+//
+//        $Account = new Account();
+//        $em = $this->getDoctrine()->getManager();
+//        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+//        $Form = $this->createForm(new AccountProvType(), $Account);
+//
+//        $Form->bind($request);
+//
+//        if ($Form->isValid()) {
+//            $Account->setEntiti($entity);
+//            $Account->setAccCreationDate(new \DateTime('now'));
+//            $Account->setAccTimeZone(null);
+//            $Account->setAccType(1);
+//            $Account->setAccBalance(0);
+//            $Account->setAccCreditLimit(0);
+//            $Account->setAccDefaultLanguage(null);
+//            $Account->setParent(null);
+//            $Account->setAccTerms(0);
+//            $Account->setAccTimeZone(null);
+//            $em->persist($Account);
+//            $em->flush();
+//            return $this->redirect($this->generateUrl('ShowMyAccountProv'));
+//
+//        }
+//        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk.html.twig', array(
+//            'entity' => $entity,
+//            'form' => $Form->createView(),
+//        ));
+//
+//
+//    }
 
     public function AddAccountProveMaster2StepAction(Request $request)
     {
@@ -232,12 +233,12 @@ class AccountController extends Controller
     public function AddAccountDistMaster2StepAction(Request $request)
     {
 
-
         $em = $this->getDoctrine()->getManager();
 
         $AdrsDetai=new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
+        $User =new User();
 
         $Account->setAccCreationDate(new \DateTime('now'));
         $Account->setAccTimeZone(null);
@@ -248,18 +249,30 @@ class AccountController extends Controller
         $Account->setEntiti($Entiti);
         $Entiti->addAccount($Account);
 
+
+        $User->setEntiti($Entiti);
+        $Entiti->addUser($User);
+
+        $User->setAccount($Account);
+        $Account->addUser($User);
+
         $form2step = $this->createForm(new MakeAccountIn2StepType(), $Entiti,
             array(
                 'cascade_validation' => true
             ));
+        $formrole = $this->createFormBuilder()
+            ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
 
         if ($request->isMethod('POST')) {
             $form2step->handleRequest($request);
-
+             $formrole->handleRequest($request);
             if ($form2step->isValid()) {
+                $data=$formrole->getData();
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
+               $User->addRole($data['roles']);
+                $em->persist($User);
                 $AdrsDetai->setAdrsDate(new \DateTime('now'));
                 $AdrsDetai->setEntiti($Entiti);
                 $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
@@ -278,6 +291,7 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster2Step.html.twig', array(
             'form2step' => $form2step->createView(),
+            'formrole'=>$formrole->createView()
         ));
     }
 
@@ -1213,33 +1227,6 @@ class AccountController extends Controller
         ));
     }
 
-    public function DistUserPrivilegeAction(Request $request, $idacc, $iduser)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($iduser);
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($idacc);
-
-//$form_distuserprivilege=$this->createForm(new DistUserPrivilegeType());
-        $userprivilege = $em->getRepository('HelloDiDiDistributorsBundle:Userprivilege')->findOneBy(array('Account' => $account, 'User' => $user));
-        $valueprivilege = $userprivilege->getPrivileges();
-//
-// if($request->isMethod('POST'))
-//{
-//$form_distuserprivilege->bind($request);
-//$distuserprivilegedata=$form_distuserprivilege->getData();
-
-        $userprivilege->setPrivileges(1 - $valueprivilege);
-        $em->flush();
-
-
-        return $this->forward('HelloDiDiDistributorsBundle:Account:ManageDistUser', array('id' => $idacc, 'resultuser' => null));
-
-//}
-
-//return $this->render('HelloDiDiDistributorsBundle:Account:DistUserPrivilege.html.twig',array('privilege'=>$valueprivilege,'Account'=>$account,'User'=>$user,'form_distuserprivilege'=>$form_distuserprivilege->createView()));
-
-
-    }
 
     public function ManageDistInfoEditAction(Request $request)
     {

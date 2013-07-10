@@ -37,7 +37,7 @@ class User extends BaseUser
     private $language;
 
     /** 
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $status;
 

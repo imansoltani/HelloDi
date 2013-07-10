@@ -142,7 +142,10 @@
                                     <tr>
                                         <td>{{ Tr.id}}</td>
                                         <td>{{ Tr.tranDate|date('y-M-d') }}</td>
-                                        <td>{{ Tr.Code.Item.itemName}}</td>
+                                        <td>{% if Tr.Code.Item is not null %}
+                                            {{ Tr.Code.Item.itemName}}
+                                        {% endif %}
+                                        </td>
                                         <td>{{ Tr.tranAmount}}</td>
                                         <td>{{ Tr.User.username }}</td>
                                         <td>Taks</td>
