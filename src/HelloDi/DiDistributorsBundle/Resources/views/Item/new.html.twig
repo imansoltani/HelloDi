@@ -79,9 +79,27 @@
                                     {{ form_errors(form.Country) }}
                                 </div>
 
-                                {{ form_rest(form) }}
+                                <div class="control-group">
+                                    {{ form_label(form.ItemDescs[0].desclang) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.ItemDescs[0].desclang) }}
+                                    </div>
+                                    {{ form_errors(form.ItemDescs[0].desclang) }}
+                                </div>
+
+                                <div class="control-group">
+                                    {{ form_label(form.ItemDescs[0].descdesc) }}
+                                    <div class="controls">
+                                        {{ form_widget(form.ItemDescs[0].descdesc) }}
+                                    </div>
+                                    {{ form_errors(form.ItemDescs[0].descdesc) }}
+                                </div>
+
+                                {{ form_widget(form._token) }}
+
                                 <div class="form-actions" style="margin-bottom: 0">
                                     <input type="submit" class="btn btn-primary" value="Add"/>
+                                    <button type="reset" class="btn">Reset</button>
                                 </div>
 
                             </form>

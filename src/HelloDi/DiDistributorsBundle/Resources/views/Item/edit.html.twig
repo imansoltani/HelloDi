@@ -73,10 +73,11 @@
             {{ form_errors(edit_form.Country) }}
         </div>
 
-        {{ form_rest(edit_form) }}
+        {{ form_widget(edit_form._token) }}
 
         <div class="form-actions" style="margin-bottom: 0">
             <input type="submit" class="btn btn-primary" value="Edit"/>
+            <button type="reset" class="btn">Reset</button>
         </div>
     </form>
 {% endblock %}

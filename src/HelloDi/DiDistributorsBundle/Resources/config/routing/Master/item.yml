@@ -26,7 +26,3 @@ item_desc_new:
 item_desc_edit:
     pattern:  /{id}/description/{descid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
-
-item_desc_update:
-    pattern:  /{id}/description/{descid}/update
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descUpdate" }

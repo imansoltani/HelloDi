@@ -40,3 +40,17 @@ HelloDi\DiDistributorsBundle\Entity\Account:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: accName
             message: 'fos_user.accName.already_used'
+
+#mostafa
+HelloDi\DiDistributorsBundle\Entity\ItemDesc:
+    properties:
+        descdesc:
+            - Regex:
+                pattern: "/{{pin}}/"
+                match:   true
+                message: pin not exist in description.
+            - Regex:
+                pattern: "/{{serial}}/"
+                match:   true
+                message: serial not exist in description.
+#mostafa

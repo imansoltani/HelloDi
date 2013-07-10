@@ -8,10 +8,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemDescType extends AbstractType
 {
+    protected $langs;
+
+    public function __construct ($langs)
+    {
+        $this->langs = $langs;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('desclang')
+            ->add('desclang','choice', array(
+                    'choices'   => $this->langs,
+                ))
             ->add('descdesc',null,array('required'=>false))
         ;
     }

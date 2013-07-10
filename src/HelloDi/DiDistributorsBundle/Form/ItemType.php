@@ -9,6 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemType extends AbstractType
 {
+    protected $langs;
+
+    public function __construct ($langs)
+    {
+        $this->langs = $langs;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,6 +33,7 @@ class ItemType extends AbstractType
                 'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                 'property'=>'name',
             ))
+            ->add('ItemDescs','collection', array('type' => new ItemDescType($this->langs)));
         ;
 
     }

@@ -24,8 +24,15 @@ class ItemController extends Controller
 
     public function newAction(Request $request)
     {
+        $langs = $this->container->getParameter('languages');
+        $langs = array_combine($langs, $langs);
+
         $item  = new Item();
-        $form   = $this->createForm(new ItemType(), $item);
+        $itemdesc = new ItemDesc();
+        $itemdesc->setItem($item);
+        $item->addItemDesc($itemdesc);
+
+        $form   = $this->createForm(new ItemType($langs), $item, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -33,6 +40,7 @@ class ItemController extends Controller
                 $item->setItemDateInsert(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($item);
+                $em->persist($itemdesc);
                 $em->flush();
                 return $this->redirect($this->generateUrl('item'));
             }
@@ -59,6 +67,7 @@ class ItemController extends Controller
 
     public function editAction(Request $request,$id)
     {
+        $langs = $this->container->getParameter('languages');
         $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
@@ -67,7 +76,7 @@ class ItemController extends Controller
             throw $this->createNotFoundException('Unable to find Item entity.');
         }
 
-        $editForm = $this->createForm(new ItemType(), $item);
+        $editForm = $this->createForm(new ItemType($langs), $item);
         if ($request->isMethod('POST'))
         {
             $editForm->handleRequest($request);
@@ -108,10 +117,24 @@ class ItemController extends Controller
 
     public function descNewAction(Request $request,$id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
         $desc = new ItemDesc();
-        $form = $this->createForm(new ItemDescType(),$desc);
+        $langs = $this->container->getParameter('languages');
+        $qb = $em->createQueryBuilder()
+            ->select('DISTINCT u.desclang')
+            ->from('HelloDiDiDistributorsBundle:ItemDesc','u')
+            ->where('u.Item = :item')
+            ->setParameter('item',$item)
+            ->getQuery();
+
+        $tt = $qb->getResult();
+        $mylang = array();
+        foreach ($tt as $t)
+            $mylang[] = $t["desclang"];
+        $selectlangs = array_diff($langs,$mylang);
+        $selectlangs = array_combine($selectlangs, $selectlangs);
+        $form = $this->createForm(new ItemDescType($selectlangs),$desc);
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
@@ -119,7 +142,7 @@ class ItemController extends Controller
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
                 if($finddesc)
-                    $form ->addError(new FormError('lang is duplicate.'));
+                    $form ->addError(new FormError('language is duplicate.'));
                 else
                 {
                     $desc->setItem($item);
@@ -142,8 +165,9 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid);
-
-        $form = $this->createForm(new ItemDescType(),$desc);
+        $langs = $this->container->getParameter('languages');
+        $langs = array_combine($langs, $langs);
+        $form = $this->createForm(new ItemDescType($langs),$desc);
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
@@ -151,7 +175,7 @@ class ItemController extends Controller
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$desc->getItem(),'desclang'=>$desc->getDesclang()));
                 if($finddesc and $finddesc!=$desc)
-                    $form ->addError(new FormError('lang is duplicate.'));
+                    $form ->addError(new FormError('language is duplicate.'));
                 else
                 {
                     $em->persist($desc);
