@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Form\Account;
 
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\AddressType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
@@ -26,7 +27,13 @@ class MakeAccountIn2StepType extends AbstractType
             ->add('entAdrs3', 'text',array('required'=>false))
             ->add('entCity', 'text',array('required'=>false))
             ->add('entNP', 'text',array())
-            ->add('Country','entity',array('class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property'=>'name'))
+            ->add('Country','entity',
+                array(
+                    'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
+                    'property'=>'name',
+                    'query_builder' => function(EntityRepository $er) {
+                     return $er->createQueryBuilder('u');
+                            }))
             ->add('Accounts','collection',array('type'=>new AccountType()))
             ->add('Users','collection',array('type'=>new NewUserType('HelloDi\DiDistributorsBundle\Entity\User')))
         ;

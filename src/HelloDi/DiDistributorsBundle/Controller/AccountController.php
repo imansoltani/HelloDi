@@ -746,13 +746,9 @@ class AccountController extends Controller
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
 
             if ($data['Amount'] != '')
-                if ($AccountBalance->isBalanceEnoughForMoney($Account, $data['Amount'])) {
                     $em->persist($trandist);
                     $em->persist($tranprov);
                     $em->flush();
-                }
-
-
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig', array(
@@ -817,13 +813,12 @@ class AccountController extends Controller
                 $em->persist($tran);
                 $em->flush();
             } elseif ($data['CreditDebit'] == 0) {
-                if ($AccountBalance->isBalanceEnoughForMoney($Account, $data['Amount'])) {
                     $tran->setTranAction('amdt');
                     $tran->setTranType(0);
                     $tran->setTranAmount(-$data['Amount']);
                     $em->persist($tran);
                     $em->flush();
-                }
+
             }
 
         }

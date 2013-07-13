@@ -115,12 +115,12 @@ function Page(x , y)
             $('#step1').removeAttr('class');
             $('#step1').attr('class','selected');
             if($('#step1').attr('isdone') == 0 )$('#step1').attr('isdone','1');
-            $('.buttonPrevious').attr('style','display:none');
+            //$('.buttonPrevious').attr('style','display:none');
             return true ;
         }
         $('#step1').removeAttr('class');
         $('#step1').attr('class','done');
-        $('.buttonPrevious').removeAttr('style');
+        //$('.buttonPrevious').removeAttr('style');
 
         return true ;
     }
@@ -179,7 +179,7 @@ function Validation_Prov(x)
 function Valid_Step_1()
 {
     var y = false ;
-    $('.entName input, .entVatNumber  input, .entWebsite input').each(function() {
+    $('.entName input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');
