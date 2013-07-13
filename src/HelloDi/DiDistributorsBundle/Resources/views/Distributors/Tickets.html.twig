@@ -99,26 +99,28 @@
                             href="{{ path('DistTicketsNote',{'id':Ticket.id}) }}" {% endif %} >
                             <div class="head">
                                 <div class="items">
-                <span class="new">
+                                    <div>
+                                        <span class="new">
                     {% set i=0 %}
-                    {% for Note in Ticket.TicketNotes %}
-                        {% if Note.view==0 and Note.User!=app.user %}
-                            {% set i=i+1 %}
-                        {% endif %}
-                    {% endfor %}
+                                            {% for Note in Ticket.TicketNotes %}
+                                                {% if Note.view==0 and Note.User!=app.user %}
+                                                    {% set i=i+1 %}
+                                                {% endif %}
+                                            {% endfor %}
 
-                    {{ i }}
+                                            {{ i }}
                 </span>
                 <span class="count">
                     {{ Ticket.TicketNotes.count }}
                 </span>
-                                    <b>
-                                        <i class="{% if Ticket.status==0 %}
+                                        <b>
+                                            <i class="{% if Ticket.status==0 %}
                                     icon-remove
                                     {% else %}
                                     icon-ok
                                     {% endif %}"></i>
-                                    </b>
+                                        </b>
+                                    </div>
                                 </div>
 
                                 <div class="header">

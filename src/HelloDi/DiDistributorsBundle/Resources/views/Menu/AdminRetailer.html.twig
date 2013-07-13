@@ -8,16 +8,16 @@
 {% block Dist1 %}
     <div class="pagedisc">
         <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }} {{ app.user.Account.accCurrency }}</span>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
         <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }} {{ app.user.Account.accCurrency }}</span>
     </div>
 {% endblock %}
 

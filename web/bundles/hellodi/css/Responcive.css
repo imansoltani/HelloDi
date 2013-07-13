@@ -213,6 +213,86 @@
 
 }
 
+@media only screen and (max-width:670px){
+
+    /* Ticket */
+    .Ticket .head .header {
+        width: 100% ;
+    }
+
+    .Ticket .head .header h1 {
+        padding: 1px;
+        padding-left: 15px;
+        font-size: 20px;
+        line-height: 30px;
+        padding-top: 0px;
+    }
+
+    .Ticket .head .items {
+        padding: 1px;
+        float: none;
+        width: 99%;
+        height:30px
+    }
+
+    .Ticket .head {
+        height: 70px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+
+    .Ticket .head .items > div {
+        float: right;
+    }
+
+    .Ticket .head .items span.new , .Ticket .head .items span.count {
+        padding: 1px;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin: 1px;
+        margin-top: 5px;
+
+    }
+
+    .Ticket .footer {
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .Ticket .footer .contact  {
+        display: block;
+        width: 90%;
+        padding-left: 15px;
+
+    }
+
+    .Ticket .footer .detail{
+        float: none;
+        padding-left: 15px;
+
+    }
+
+    .Ticket .controler{
+        font-size: 14px;
+
+    }
+
+    .Ticket:hover .controler , .Ticket:active .controler{
+        padding-left: 15px;
+    }
+
+    .Ticket .controler a:hover{
+        font-size: 16px;
+    }
+
+    .Ticket:hover .controler div , .Ticket:active .controler div {
+        margin-left: 0px;
+        padding-left: 0px;
+        border: none;
+        margin-top: 5px;
+    }
+}
+
 
 @media only screen and (max-width:550px){
 
@@ -249,9 +329,7 @@
 
     /*Ticket*/
 
-    .Ticket .head{
-        height: 100px;
-    }
+
 
 
     /* ------------ */

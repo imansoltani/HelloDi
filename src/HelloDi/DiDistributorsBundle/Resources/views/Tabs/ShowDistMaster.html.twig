@@ -15,16 +15,16 @@
 {% block Dist1 %}
    <div class="pagedisc" >
        <i>Name :</i><span>{{ Account.accName }}</span><br>
-       <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-       <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+       <i>Balance :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
+       <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}  {{ Account.accCurrency }}</span>
    </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc" >
         <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>Balance :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
+        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}  {{ Account.accCurrency }}</span>
     </div>
 {% endblock %}
 
