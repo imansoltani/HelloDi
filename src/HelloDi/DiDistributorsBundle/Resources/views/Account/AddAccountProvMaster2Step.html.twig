@@ -11,7 +11,7 @@
 
         <div class="control-group entName">
             {{ form_label(form2step.entName) }}
-            {{ form_widget(form2step.entName) }}
+            {{ form_widget(form2step.entName, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.entName) }}
         </div>
 
@@ -56,7 +56,7 @@
             <!-- /widget-header -->
             <div class="control-group entAdrs1">
                 {{ form_label(form2step.entAdrs1) }}
-                {{ form_widget(form2step.entAdrs1) }}
+                {{ form_widget(form2step.entAdrs1, { 'attr' : { 'placeholder': 'important'} }) }}
                 {{ form_errors(form2step.entAdrs1) }}
             </div>
             <div class="control-group ">
@@ -72,12 +72,12 @@
             </div>
             <div class="control-group entCity">
                 {{ form_label(form2step.entCity) }}
-                {{ form_widget(form2step.entCity) }}
+                {{ form_widget(form2step.entCity, { 'attr' : { 'placeholder': 'important'} }) }}
                 {{ form_errors(form2step.entCity) }}
             </div>
             <div class="control-group entNP">
                 {{ form_label(form2step.entNP) }}
-                {{ form_widget(form2step.entNP) }}
+                {{ form_widget(form2step.entNP, { 'attr' : { 'placeholder': 'important'} }) }}
                 {{ form_errors(form2step.entNP) }}
             </div>
 
@@ -99,7 +99,7 @@
             <!-- /widget-header -->
             <div class="control-group accName">
                 {{ form_label(form2step.Accounts[0].accName) }}
-                {{ form_widget(form2step.Accounts[0].accName) }}
+                {{ form_widget(form2step.Accounts[0].accName, { 'attr' : { 'placeholder': 'important'} }) }}
                 {{ form_errors(form2step.Accounts[0].accName) }}
             </div>
 

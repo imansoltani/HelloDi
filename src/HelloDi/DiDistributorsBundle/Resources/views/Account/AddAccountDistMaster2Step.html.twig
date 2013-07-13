@@ -8,7 +8,7 @@
 
         <div class="control-group entName">
             {{ form_label(form2step.entName) }}
-            {{ form_widget(form2step.entName) }}
+            {{ form_widget(form2step.entName, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.entName) }}
         </div>
 
@@ -53,7 +53,7 @@
 
         <div class="control-group entAdrs1">
             {{ form_label(form2step.entAdrs1) }}
-            {{ form_widget(form2step.entAdrs1) }}
+            {{ form_widget(form2step.entAdrs1, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.entAdrs1) }}
         </div>
         <div class="control-group ">
@@ -69,12 +69,12 @@
         </div>
         <div class="control-group entCity">
             {{ form_label(form2step.entCity) }}
-            {{ form_widget(form2step.entCity) }}
+            {{ form_widget(form2step.entCity, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.entCity) }}
         </div>
         <div class="control-group entNP">
             {{ form_label(form2step.entNP) }}
-            {{ form_widget(form2step.entNP) }}
+            {{ form_widget(form2step.entNP, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.entNP) }}
         </div>
 
@@ -96,7 +96,7 @@
 
         <div class="control-group accName">
             {{ form_label(form2step.Accounts[0].accName) }}
-            {{ form_widget(form2step.Accounts[0].accName) }}
+            {{ form_widget(form2step.Accounts[0].accName, { 'attr' : { 'placeholder': 'important'} }) }}
             {{ form_errors(form2step.Accounts[0].accName) }}
         </div>
 
@@ -147,16 +147,16 @@
 
         <div class="control-group firstname">
             {{ form_label(form2step.Users[0].firstname) }}
-            {{ form_widget(form2step.Users[0].firstname) }}
+            {{ form_widget(form2step.Users[0].firstname, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
 
         <div class="control-group lastname">
             {{ form_label(form2step.Users[0].lastname) }}
-            {{ form_widget(form2step.Users[0].lastname) }}
+            {{ form_widget(form2step.Users[0].lastname, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
         <div class="control-group username">
             {{ form_label(form2step.Users[0].username) }}
-            {{ form_widget(form2step.Users[0].username) }}
+            {{ form_widget(form2step.Users[0].username, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
 
         <div class="control-group">
@@ -166,7 +166,7 @@
 
         <div class="control-group email">
             {{ form_label(form2step.Users[0].email) }}
-            {{ form_widget(form2step.Users[0].email) }}
+            {{ form_widget(form2step.Users[0].email, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
 
         <div class="control-group">
@@ -178,12 +178,12 @@
 
         <div class="control-group first">
             {{ form_label(form2step.Users[0].plainPassword.first) }}
-            {{ form_widget(form2step.Users[0].plainPassword.first) }}
+            {{ form_widget(form2step.Users[0].plainPassword.first, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
 
         <div class="control-group second">
             {{ form_label(form2step.Users[0].plainPassword.second) }}
-            {{ form_widget(form2step.Users[0].plainPassword.second) }}
+            {{ form_widget(form2step.Users[0].plainPassword.second, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
 
         <div class="control-group">

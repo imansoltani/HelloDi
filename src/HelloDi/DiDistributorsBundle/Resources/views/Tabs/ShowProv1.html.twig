@@ -9,20 +9,20 @@
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    Manage Provider
+    {{ Account.Entiti.entName }}
 {% endblock %}
 
 {% block Dist1 %}
     <div class="pagedisc">
         <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }} | {{ Account.accCurrency }}</span><br>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
         <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}</span><br>
+        <i>Balance :</i><span>{{ Account.accBalance }} | {{ Account.accCurrency }}</span><br>
     </div>
 {% endblock %}
 
