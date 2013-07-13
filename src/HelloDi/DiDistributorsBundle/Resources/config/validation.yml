@@ -52,6 +52,7 @@ HelloDi\DiDistributorsBundle\Entity\Account:
 HelloDi\DiDistributorsBundle\Entity\ItemDesc:
     properties:
         descdesc:
+            - NotBlank: ~
             - Regex:
                 pattern: "/{{pin}}/"
                 match:   true

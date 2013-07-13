@@ -35,13 +35,13 @@
         <div class="control-group">
             {{ form_label(form.desclang) }}
             <div class="controls" >
-                {{ form_widget(form.desclang) }}
+                {{ form_widget(form.desclang, {'attr': {'disabled':'disabled'}  } ) }}
             </div>
         </div>
         <div class="control-group">
             {{ form_label(form.descdesc) }}
             <div class="controls">
-                {{ form_widget(form.descdesc, { 'id': 'texteditor' }) }}
+                {{ form_widget(form.descdesc, { 'id': 'texteditor', 'required':'' }) }}
             </div>
         </div>
 

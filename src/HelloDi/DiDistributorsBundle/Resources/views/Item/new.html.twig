@@ -96,7 +96,7 @@
                                 <div class="control-group">
                                     {{ form_label(form.ItemDescs[0].descdesc) }}
                                     <div class="controls">
-                                        {{ form_widget(form.ItemDescs[0].descdesc) }}
+                                        {{ form_widget(form.ItemDescs[0].descdesc,{'required':''}) }}
                                     </div>
                                     {{ form_errors(form.ItemDescs[0].descdesc) }}
                                 </div>
