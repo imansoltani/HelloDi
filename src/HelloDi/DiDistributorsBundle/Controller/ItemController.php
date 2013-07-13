@@ -117,7 +117,7 @@ class ItemController extends Controller
 
     public function descNewAction(Request $request,$id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
         $desc = new ItemDesc();
         $langs = $this->container->getParameter('languages');
