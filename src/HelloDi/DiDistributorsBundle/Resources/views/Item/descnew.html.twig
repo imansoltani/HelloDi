@@ -28,7 +28,9 @@
 
 
         <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
-            {{ form_errors(form) }}
+
+            {{ form_errors(form.desclang) }}
+            {{ form_errors(form.descdesc) }}
             <div class="control-group">
                 {{ form_label(form.desclang) }}
                 <div class="controls" >

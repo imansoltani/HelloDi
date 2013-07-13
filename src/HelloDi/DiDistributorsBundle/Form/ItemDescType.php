@@ -21,7 +21,7 @@ class ItemDescType extends AbstractType
             ->add('desclang','choice', array(
                     'choices'   => $this->langs,
                 ))
-            ->add('descdesc',null,array('required'=>false))
+            ->add('descdesc')
         ;
     }
 
