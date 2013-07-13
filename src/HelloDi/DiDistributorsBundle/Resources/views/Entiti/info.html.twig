@@ -58,7 +58,10 @@
 
             {{ form_label(edit_form.entCity) }}
             {{ form_widget(edit_form.entCity) }}
+            </br>
 
+            {{ form_label(edit_form.Country) }}
+            {{ form_widget(edit_form.Country) }}
             {{ form_widget(edit_form._token) }}
 
             <input type="hidden" name="entityid" value="{{ entityid }}"/>

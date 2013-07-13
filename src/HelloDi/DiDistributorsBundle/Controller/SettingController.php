@@ -3,8 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Setting\NewUserMasterType;
-use HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +39,7 @@ public  function staffaddAction(Request $req,$id)
     $Entiti= $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
 
-    $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
     $formrole = $this->createFormBuilder()
         ->add('roles', 'choice',
             array(
@@ -52,8 +51,8 @@ public  function staffaddAction(Request $req,$id)
         ->getForm();
 
     if ($req->isMethod('POST')) {
-        $form->bind($req);
-        $formrole->bind($req);
+        $form->handleRequest($req);
+        $formrole->handleRequest($req);
         $data = $formrole->getData();
 
 
@@ -64,7 +63,6 @@ public  function staffaddAction(Request $req,$id)
             $user->setEnabled(1);
             $em->persist($user);
             $em->flush();
-
             return $this->redirect($this->generateUrl('MasterStaff'));
 
         }
@@ -73,7 +71,8 @@ public  function staffaddAction(Request $req,$id)
     return $this->render('HelloDiDiDistributorsBundle:Setting:StaffAdd.html.twig', array(
     'Entiti'=>$Entiti,
     'form' => $form->createView(),
-    'formrole' => $formrole->createView()));
+    'formrole' => $formrole->createView())
+    );
 }
 
 
@@ -82,9 +81,10 @@ public  function staffaddAction(Request $req,$id)
 
 public  function staffeditAction(Request $req,$id)
 {
+
     $em = $this->getDoctrine()->getManager();
     $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-    $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
     if ($req->isMethod('POST')) {
         $form->bind($req);

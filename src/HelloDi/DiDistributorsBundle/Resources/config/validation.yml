@@ -24,6 +24,12 @@
 
 
 HelloDi\DiDistributorsBundle\Entity\User:
+    properties:
+        firstName:
+            - Regex:
+                pattern: "/\d/"
+                match:   false
+                message: Your name cannot contain a number
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: usernameCanonical
@@ -34,15 +40,7 @@ HelloDi\DiDistributorsBundle\Entity\User:
             fields: emailCanonical
             errorPath: email
             message: 'fos_user.email.already_used'
-    properties:
-        firstName:
-            - NotBlank:
-                message: "entity.entname.not_blank"
-            - Length:
-                min: 3
-                max: 10
-                minMessage: 'this.field.should.not.less.of.3'
-                maxMessage: 'this.field.should.not.more.of.10'
+
 HelloDi\DiDistributorsBundle\Entity\Account:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

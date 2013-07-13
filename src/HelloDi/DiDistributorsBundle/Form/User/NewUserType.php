@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Form\Retailers;
+namespace HelloDi\DiDistributorsBundle\Form\User;
 
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Form\Userprivilege\UserprivilegeType;
@@ -8,10 +8,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 use Symfony\Component\Form\FormTypeInterface;
+use HelloDi\DiDistributorsBundle\Entity\Entiti;
 
-class NewUserRetailersType extends BaseType
+class NewUserType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options,Entiti $ent=null)
     {
 
 
@@ -21,6 +22,7 @@ class NewUserRetailersType extends BaseType
             ->add('lastname')
             ->add('mobile')
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
+
 ;
 
 

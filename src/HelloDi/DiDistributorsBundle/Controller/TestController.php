@@ -206,4 +206,37 @@ public function test1Action()
         return $this->render('HelloDiDiDistributorsBundle:Test:listlang.html.twig',array('langs'=>$langs));
     }
     //end mostafa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#kazem testing
+
+    public  function A_1Action(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+
+            $name= $request->request->get('name');
+            $family= $request->request->get('family');
+
+            die('Name :'.$name.'Family :'.$family);
+
+
+
+
+        }
+    }
 }

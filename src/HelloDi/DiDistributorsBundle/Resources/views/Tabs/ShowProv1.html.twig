@@ -36,6 +36,7 @@
             </form>
         </a>
     </li>
+
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a>
             <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
@@ -64,22 +65,13 @@
     </li>
 
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('EditAccountProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-                <input type="submit" value="Info"/>
-            </form>
-        </a>
+
+            <a href="{{ path('EditAccountProv',{'id':Account.id }) }}">
+
+                <input type="submit" value="Info" >
+            </a>
     </li>
 
-<li {% if tab == '5' %}class="active"{% endif %} >
-    <a>
-        <form action="{{ path('ManageProvEntiti') }}" method="post">
-            <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-            <input type="submit" value="Entity"/>
-        </form>
-    </a>
-</li>
 {% endblock Tabs %}
 
 

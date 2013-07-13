@@ -120,6 +120,14 @@
                 {{ form_errors(form2step.Accounts[0].accTerms) }}
             </div>
 
+
+            <div class="control-group">
+                {{ form_label(form2step.Accounts[0].accDefaultLanguage) }}
+
+                {{ form_widget(form2step.Accounts[0].accDefaultLanguage) }}
+
+                {{ form_errors(form2step.Accounts[0].accDefaultLanguage) }}
+            </div>
         </div>
 
         {{ form_widget(form2step._token) }}

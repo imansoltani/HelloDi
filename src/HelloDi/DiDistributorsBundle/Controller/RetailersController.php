@@ -5,7 +5,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
-use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserRetailersType;
+use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +78,7 @@ class RetailersController extends Controller
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
         $formrole = $this->createFormBuilder()
             ->add('roles', 'choice', array('choices' => array('ROLE_RETAILER' => 'ROLE_RETAILER', 'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
 
@@ -109,7 +109,7 @@ class RetailersController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);

@@ -26,24 +26,24 @@
                             <p class="title_search" >Search Sub Accounts</p>
                         </span>
     </h5>
-    <form class="form-horizontal SearchForm" action="{{ path('AccountDistChildrenSearch',{'id':Account.id}) }}" method="post">
+    <form class="form-horizontal SearchForm" action="{{ path('ManageDistChildren',{'id':Account.id}) }}" method="post">
         <fieldset>
 
             <div class="control-group">
-                {{ form_label(form_searchdistchild.accName) }}
-                {{ form_widget(form_searchdistchild.accName) }}
+                {{ form_label(form.accName) }}
+                {{ form_widget(form.accName) }}
             </div>
 
             <div class="control-group">
-                {{ form_label(form_searchdistchild.accBalance) }}
+                {{ form_label(form.accCreditLimit) }}
                 <div class="controls">
-                    {{ form_widget(form_searchdistchild.accBalance) }}
+                    {{ form_widget(form.accCreditLimit) }}
                 </div>
             </div>
 
             <div class="control-group">
-                {{ form_label(form_searchdistchild.accBalanceValue) }}
-                    {{ form_widget(form_searchdistchild.accBalanceValue) }}
+                {{ form_label(form.accBalance) }}
+                    {{ form_widget(form.accBalance) }}
             </div>
 
 
@@ -51,22 +51,20 @@
 
 
             <div class="control-group">
-                {{ form_label(form_searchdistchild.accCreditLimit) }}
+                {{ form_label(form.accBalanceValue) }}
                 <div class="controls">
-                    {{ form_widget(form_searchdistchild.accCreditLimit) }}
+                    {{ form_widget(form.accBalanceValue) }}
                 </div>
             </div>
-            {{ form_rest(form_searchdistchild) }}
+            {{ form_rest(form) }}
             <hr>
             <input class="btn btn-primary" type="submit" value="Search">
     </form>
 
-            <form action="{{ path('ManageDistChildren') }}" method="post">
-                <input type="hidden" value="{{ Account.id }}" name="id">
+            <a href="{{ path('ManageDistChildren',{'id': Account.id}) }}" class="btn btn-mini">Reset</a>
 
-                <input class="btn " type="submit" value="Reset">
 
-            </form>
+
 
         </fieldset>
 

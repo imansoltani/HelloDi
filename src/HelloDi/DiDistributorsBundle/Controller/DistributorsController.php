@@ -10,6 +10,7 @@ use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
@@ -23,6 +24,7 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 
 class DistributorsController extends Controller
 {
+
     public function dashboardAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -355,7 +357,7 @@ class DistributorsController extends Controller
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user);
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user);
         $formrole = $this->createFormBuilder()
             ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
 
@@ -393,7 +395,7 @@ class DistributorsController extends Controller
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -469,7 +471,7 @@ class DistributorsController extends Controller
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -498,7 +500,7 @@ class DistributorsController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserRetailersType('HelloDiDiDistributorsBundle\Entity\User'),$user);
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'),$user);
         $formrole = $this->createFormBuilder()
                ->add('roles', 'choice',
                         array(
@@ -705,6 +707,7 @@ class DistributorsController extends Controller
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account));
 
         $form=$this->createFormBuilder()
@@ -908,9 +911,11 @@ class DistributorsController extends Controller
         $this->check_ChildAccount($id);
 
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
         $em = $this->getDoctrine()->getManager();
+
         $Account= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form = $this->createForm(new AccountRetailerSettingType(),$Account);
+        $form = $this->createForm(new AccountType(),$Account);
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             if ($form->isValid()) {

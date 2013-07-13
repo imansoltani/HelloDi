@@ -59,7 +59,7 @@ class Account
     private $accTimeZone;
 
     /** 
-     * @ORM\Column(type="integer", nullable=false, name="acc_terms")
+     * @ORM\Column(type="integer", nullable=null, name="acc_terms")
      */
     private $accTerms;
 

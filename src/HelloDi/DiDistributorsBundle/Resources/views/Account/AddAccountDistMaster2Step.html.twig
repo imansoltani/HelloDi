@@ -128,6 +128,16 @@
             {{ form_errors(form2step.Accounts[0].accTerms) }}
         </div>
 
+
+
+    <div class="control-group">
+        {{ form_label(form2step.Accounts[0].accDefaultLanguage) }}
+
+        {{ form_widget(form2step.Accounts[0].accDefaultLanguage) }}
+
+        {{ form_errors(form2step.Accounts[0].accDefaultLanguage) }}
+    </div>
+
     </div>
 
     <div style="display: none;position: absolute;z-index: 11" class="content" id="step-4">

@@ -30,8 +30,13 @@
                 <h3>Add Users</h3>
             </div> <!-- /widget-header --><br>
 
-            <form class="form-horizontal" action="{{ path('MasterStaffAdd',{'id':Entiti.id}) }}" method="post" >
 
+            {#{% for error in form_errors(form) %}#}
+                      {#{{ error.message  }}#}
+            {#{% endfor %}#}
+
+            <form class="form-horizontal" action="{{ path('MasterStaffAdd',{'id':Entiti.id}) }}" method="post" >
+                {{ form_errors(form) }}
                 <div class="control-group">
                     {{ form_label(form.firstname) }}
                     {{ form_widget(form.firstname) }}
@@ -42,6 +47,7 @@
                     {{ form_widget(form.lastname) }}
                 </div>
                 <div class="control-group">
+                    {#{{ form_errors(form.username) }}#}
                     {{ form_label(form.username) }}
                     {{ form_widget(form.username) }}
                 </div>

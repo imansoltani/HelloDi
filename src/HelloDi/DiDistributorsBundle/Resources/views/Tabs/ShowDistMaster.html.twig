@@ -71,31 +71,36 @@
 
 
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('ManageDistUser') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}">
-                <input type="submit" value="Users">
-            </form>
+
+        <a href="{{ path('ManageDistUser',{'id':Account.id}) }}">
+
+
+            <input type="submit" value="Users" >
+
 
         </a>
+
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('ManageDistSettings') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}">
-                <input type="submit" value="Settings">
-            </form>
+        <a href="{{ path('ManageDistSettings',{'id':Account.id}) }}">
+
+
+            <input type="submit" value="Settings" >
+
 
         </a>
+
     </li>
 
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a>
-            <form action="{{path('ManageDistChildren') }}" method="post">
-                <input type="hidden" name="id" value="{{ Account.id }}"/>
-                <input type="submit" value="Sub Accounts"/>
-            </form>
+        <a href="{{ path('ManageDistChildren',{'id':Account.id}) }}">
+
+
+            <input type="submit" value="Sub Accounts" >
+
+
         </a>
+
     </li>
 
 {% endblock Tabs %}

@@ -19,9 +19,11 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
+use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
 use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,57 +57,57 @@ class AccountController extends Controller
 
 //Master
 
-    public function EditChildAccountAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-        $idp = $account->getparent()->getId();
-
-        if (!$account) {
-            throw $this->createNotFoundException('Unable to find Account entity.');
-        }
-
-        $editForm = $this->createForm(new AccountDistChildType(), $account);
-        if ($request->isMethod('POST')) {
-
-            $editForm->bind($request);
-            if ($editForm->isValid()) {
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('ShowChildAccount', array('id' => $idp)));
-
-            }
-
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Account:EditChildAccount.html.twig', array(
-            'account' => $account,
-            'edit_form' => $editForm->createView(),
-        ));
-
-    }
-
-    public function EditAccountAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountDistMasterType(), $account);
-        if ($request->isMethod('POST')) {
-            $edit_form->bind($request);
-            if ($edit_form->isValid()) {
-
-                $em->flush($account);
-                return $this->redirect($this->generateUrl('ShowMyAccountProv'));
-            }
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:EditAccount.html.twig', array(
-            'account' => $account,
-            'edit_form' => $edit_form->createView()
-        ));
-    }
+//    public function EditChildAccountAction(Request $request, $id)
+//    {
+//        $em = $this->getDoctrine()->getManager();
 //
+//        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+//
+//        $idp = $account->getparent()->getId();
+//
+//        if (!$account) {
+//            throw $this->createNotFoundException('Unable to find Account entity.');
+//        }
+//
+//        $editForm = $this->createForm(new AccountDistChildType(), $account);
+//        if ($request->isMethod('POST')) {
+//
+//            $editForm->bind($request);
+//            if ($editForm->isValid()) {
+//                $em->flush();
+//
+//                return $this->redirect($this->generateUrl('ShowChildAccount', array('id' => $idp)));
+//
+//            }
+//
+////        }
+//        return $this->render('HelloDiDiDistributorsBundle:Account:EditChildAccount.html.twig', array(
+//            'account' => $account,
+//            'edit_form' => $editForm->createView(),
+//        ));
+//
+//    }
+
+//    public function EditAccountAction(Request $request, $id)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+//        $edit_form = $this->createForm(new AccountDistMasterType(), $account);
+//        if ($request->isMethod('POST')) {
+//            $edit_form->bind($request);
+//            if ($edit_form->isValid()) {
+//
+//                $em->flush($account);
+//                return $this->redirect($this->generateUrl('ShowMyAccountProv'));
+//            }
+//        }
+//
+//        return $this->render('HelloDiDiDistributorsBundle:Account:EditAccount.html.twig', array(
+//            'account' => $account,
+//            'edit_form' => $edit_form->createView()
+//        ));
+//    }
+////
 //    public function AddAccountProvMasterAction()
 //    {
 //
@@ -172,6 +174,7 @@ class AccountController extends Controller
 //
 //    }
 
+
     public function AddAccountProveMaster2StepAction(Request $request)
     {
 
@@ -179,10 +182,9 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
 
-        $AdrsDetai=new DetailHistory();
+        $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
-
 
 
         $Account->setAccCreationDate(new \DateTime('now'));
@@ -190,8 +192,6 @@ class AccountController extends Controller
         $Account->setAccType(1);
         $Account->setAccBalance(0);
         $Account->setAccCreditLimit(0);
-
-
 
 
         $Account->setEntiti($Entiti);
@@ -224,10 +224,9 @@ class AccountController extends Controller
 
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster2Step.html.twig', array(
-         'form2step' => $form2step->createView(),
+            'form2step' => $form2step->createView(),
         ));
     }
-
 
 
     public function AddAccountDistMaster2StepAction(Request $request)
@@ -235,10 +234,10 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $AdrsDetai=new DetailHistory();
+        $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
-        $User =new User();
+        $User = new User();
 
         $Account->setAccCreationDate(new \DateTime('now'));
         $Account->setAccTimeZone(null);
@@ -265,13 +264,13 @@ class AccountController extends Controller
 
         if ($request->isMethod('POST')) {
             $form2step->handleRequest($request);
-             $formrole->handleRequest($request);
+            $formrole->handleRequest($request);
             if ($form2step->isValid()) {
-                $data=$formrole->getData();
+                $data = $formrole->getData();
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
-               $User->addRole($data['roles']);
+                $User->addRole($data['roles']);
                 $em->persist($User);
                 $AdrsDetai->setAdrsDate(new \DateTime('now'));
                 $AdrsDetai->setEntiti($Entiti);
@@ -291,10 +290,9 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster2Step.html.twig', array(
             'form2step' => $form2step->createView(),
-            'formrole'=>$formrole->createView()
+            'formrole' => $formrole->createView()
         ));
     }
-
 
 
     public function ManageProvAction($id)
@@ -302,13 +300,20 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageProv.html.twig', array('id' => $id));
     }
 
-    public function EditAccountProvAction(Request $request)
+    public function EditAccountProvAction(Request $request, $id)
     {
 
-        $id = $request->get('accountid');
+
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountProvType(), $account);
+        $edit_form = $this->createForm(new AccountType(), $account);
+        if ($request->isMethod('post')) {
+            $edit_form->handleRequest($request);
+            if ($edit_form->isValid()) {
+                $em->flush($account);
+            }
+        }
+
         return $this->render('HelloDiDiDistributorsBundle:Account:EditAccountProv.html.twig', array(
                 'edit_form' => $edit_form->createView(),
                 'Account' => $account,
@@ -316,93 +321,64 @@ class AccountController extends Controller
         );
     }
 
-    public function EditAccountProvSubmitAction(Request $request)
-    {
-        $id = $request->get('accountid');
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountProvType(), $account);
-        $edit_form->bind($request);
-            $account->setAccTimeZone(null);
-            $em->flush($account);
-        return $this->forward("HelloDiDiDistributorsBundle:Account:EditAccountProv");
-    }
 
-    public function ManageProvEntitiAction(Request $request)
-    {
-        $id = $request->get('accountid');
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageProvEntiti.html.twig', array(
-            'entiti' => $Account->getEntiti(),
-            'Account' => $Account
-        ));
-
-    }
-
-
-
-    public function  DistTransactionAction(Request $req,$id)
+    public function  DistTransactionAction(Request $req, $id)
     {
 
         $paginator = $this->get('knp_paginator');
 
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $qb=$em->createQueryBuilder();
-        $result=array();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $qb = $em->createQueryBuilder();
+        $result = array();
 
-        $form=$this->createFormBuilder()
-            ->add('Type','choice',array(
-            'choices'=>
-            array(
-                'All'=>'All',
-                'pmt'=>'credit distributor,s account',
-                'amdt'=>'debit distributor,s account',
-                'tran'=>'transfer credit from provider,s account to a distributors account',
-                'add'=>'add new code to system'
-            )))
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
-            ->add('TypeDate','choice', array(
-                'expanded'   => true,
-                'choices'    => array(
+        $form = $this->createFormBuilder()
+            ->add('Type', 'choice', array(
+                'choices' =>
+                array(
+                    'All' => 'All',
+                    'pmt' => 'credit distributor,s account',
+                    'amdt' => 'debit distributor,s account',
+                    'tran' => 'transfer credit from provider,s account to a distributors account',
+                    'add' => 'add new code to system'
+                )))
+            ->add('DateStart', 'date', array())
+            ->add('DateEnd', 'date', array())
+            ->add('TypeDate', 'choice', array(
+                'expanded' => true,
+                'choices' => array(
                     0 => 'Trade Date',
                     1 => 'Looking Date',
                 )
             ))->getForm();
 
 
-        if($req->isMethod('POST'))
-        {
+        if ($req->isMethod('POST')) {
             $form->bind($req);
-            $data=$form->getData();
+            $data = $form->getData();
             $qb->select('Tran')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
-                ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
+                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tran')
+                ->where('Tran.Account = :Acc')->setParameter('Acc', $Account);
 
-            if($data['TypeDate']==0)
-            {
-                $qb=$qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+            if ($data['TypeDate'] == 0) {
+                $qb = $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                $qb = $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
             }
 
-            if($data['TypeDate']==1)
-            {
+            if ($data['TypeDate'] == 1) {
 
-                $qb=$qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            }
-
-            if($data['Type']!='All')
-            {
-                $qb=$qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
+                $qb = $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                $qb = $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             }
 
-            $result=$qb->getQuery()->getResult();
+            if ($data['Type'] != 'All') {
+                $qb = $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Type'])));
+
+            }
+
+            $result = $qb->getQuery()->getResult();
 
         }
 
@@ -416,88 +392,87 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistTransaction.html.twig',
             array(
-                'pagination'=>$pagination,
-                'form'=>$form->createView(),
-                'Account' =>$Account,
-                'Entiti' =>$Account->getEntiti()
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+                'Account' => $Account,
+                'Entiti' => $Account->getEntiti()
             ));
 
     }
 
-    public function  DetailsTransactionAction(Request $req,$id)
+    public function  DetailsTransactionAction(Request $req, $id)
     {
 
-        $em=$this->getDoctrine()->getManager();
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $Tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
         $Account = $Tran->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
             array(
-                'Account'=>$Account,
-                'tran'=>$Tran,
+                'Account' => $Account,
+                'tran' => $Tran,
             ));
     }
 
     public function  FundingAction($id)
     {
 
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $formapplay=$this->createFormBuilder()
+        $formapplay = $this->createFormBuilder()
             ->add('Amount')
-            ->add('As','choice',array(
-                'preferred_choices'=>array('Credit'),
-                'choices'=>array(
-                    'Credit'=>'Credit',
-                    'Debit'=>'Debit')
+            ->add('As', 'choice', array(
+                'preferred_choices' => array('Credit'),
+                'choices' => array(
+                    'Credit' => 'Credit',
+                    'Debit' => 'Debit')
             ))
-            ->add('Description','textarea',
+            ->add('Description', 'textarea',
                 array(
-                    'required'=>false
+                    'required' => false
                 ))
             ->getForm();
 
-        $formupdate=$this->createFormBuilder()
-            ->add('Amount','text')
-            ->add('As','choice',array(
-                'preferred_choices'=>array('Credit'),
-                'preferred_choices'=>array('Credit'),
-                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+        $formupdate = $this->createFormBuilder()
+            ->add('Amount', 'text')
+            ->add('As', 'choice', array(
+                'preferred_choices' => array('Credit'),
+                'preferred_choices' => array('Credit'),
+                'choices' => array('Credit' => 'Credit', 'Debit' => 'Debit')
             ))->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:Funding.html.twig',
             array(
-                'Entiti'=>$Account->getEntiti(),
-                'Account'=>$Account,
-                'formapplay'=>$formapplay->createView(),
-                'formupdate'=>$formupdate->createView(),
+                'Entiti' => $Account->getEntiti(),
+                'Account' => $Account,
+                'formapplay' => $formapplay->createView(),
+                'formupdate' => $formupdate->createView(),
 
             ));
     }
 
-    public function  FundingApplayAction(Request $req,$id)
+    public function  FundingApplayAction(Request $req, $id)
     {
-        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
+        $balancechecker = $this->get('hello_di_di_distributors.balancechecker');
 
-        $User= $this->get('security.context')->getToken()->getUser();
-        $em=$this->getDoctrine()->getManager();
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $User = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $formapplay=$this->createFormBuilder()
+        $formapplay = $this->createFormBuilder()
             ->add('Amount')
-            ->add('As','choice',array(
-                'preferred_choices'=>array('Credit'),
+            ->add('As', 'choice', array(
+                'preferred_choices' => array('Credit'),
                 'choices'
-                =>array('Credit'=>'Credit','Debit'=>'Debit')))
-            ->add('Description','textarea',array('required'=>false))
+                => array('Credit' => 'Credit', 'Debit' => 'Debit')))
+            ->add('Description', 'textarea', array('required' => false))
             ->getForm();
 
-        if($req->isMethod('post'))
-        {
-            $trandist=new Transaction();
+        if ($req->isMethod('post')) {
+            $trandist = new Transaction();
             $formapplay->bind($req);
-            $data=$formapplay->getData();
+            $data = $formapplay->getData();
 
             //objeavt transaction//
 
@@ -511,12 +486,10 @@ class AccountController extends Controller
             $trandist->setTranDescription($data['Description']);
 
 
-            if($data['As']=='Credit')
-            {
+            if ($data['As'] == 'Credit') {
                 $trandist->setTranType(1);
-                if($data['Amount']!='')
-                {
-                    $trandist->setTranAmount(+$data['Amount']) ;
+                if ($data['Amount'] != '') {
+                    $trandist->setTranAmount(+$data['Amount']);
                     $trandist->setTranAction('pmt');
                     $em->persist($trandist);
                     $em->flush();
@@ -525,75 +498,71 @@ class AccountController extends Controller
         }
 
 
-        if($data['As']=='Debit')
-        {
+        if ($data['As'] == 'Debit') {
             $trandist->setTranType(0);
-            if($data['Amount']!='')
-            {
+            if ($data['Amount'] != '') {
 
-                if($balancechecker->isMoreThanCreditLimit($Account,$data['Amount']))
-                {
-
-                $trandist->setTranAmount(-$data['Amount']) ;
-                $trandist->setTranAction('amdt');
-                $em->persist($trandist);
-                $em->flush();
+                if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                    $trandist->setTranAmount(-$data['Amount']);
+                    $trandist->setTranAction('amdt');
+                    $em->persist($trandist);
+                    $em->flush();
                 }
-                }
+            }
         }
 
 
-        return $this->redirect($this->generateUrl('MasterDistFunding',array('id'=>$id)));
+        return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
 
     }
 
-    public function  FundingUpdateAction(Request $req,$id)
+    public function  FundingUpdateAction(Request $req, $id)
     {
 
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $formupdate=$this->createFormBuilder()
-            ->add('Amount','text')
-            ->add('As','choice',array('preferred_choices'=>array('Credit'),
-                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $formupdate = $this->createFormBuilder()
+            ->add('Amount', 'text')
+            ->add('As', 'choice', array('preferred_choices' => array('Credit'),
+                'choices' => array('Credit' => 'Credit', 'Debit' => 'Debit')
             ))->getForm();
 
-        if($req->isMethod('POST'))
-        {
+        if ($req->isMethod('POST')) {
             $formupdate->bind($req);
-            $data=$formupdate->getData();
+            $data = $formupdate->getData();
 
-            if($data['As']=='Credit')
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
+            if ($data['As'] == 'Credit')
+                $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
 
-            elseif($data['As']=='Debit')
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+            elseif ($data['As'] == 'Debit')
+                $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
 
             $em->flush();
         }
-        return $this->redirect($this->generateUrl('MasterDistFunding',array('id'=>$id)));
+        return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
     }
 
 
-    public  function  SaleAction(Request $req,$id){
+    public function  SaleAction(Request $req, $id)
+    {
 
-        $i=0;
-        $em=$this->getDoctrine()->getEntityManager();
-        $result=array();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $result = array();
         //load first list search
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $form=$this->createFormBuilder()
+        $form = $this->createFormBuilder()
 
-            ->add('ItemType','choice',
-                array('choices'=>
+            ->add('ItemType', 'choice',
+                array('choices' =>
                 array(
-                    0 =>'Item.TypeChioce.Mobile',
-                    1=>'Item.TypeChioce.Internet',
-                    2 =>'Item.TypeChioce.Tel',
-                    3=>'All'
-                    )))
+                    0 => 'Item.TypeChioce.Mobile',
+                    1 => 'Item.TypeChioce.Internet',
+                    2 => 'Item.TypeChioce.Tel',
+                    3 => 'All'
+                )))
 
             ->add('ItemName', 'entity',
                 array(
@@ -607,66 +576,64 @@ class AccountController extends Controller
                 array(
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
-                    'empty_data'=>'All',
-                    'query_builder' => function(EntityRepository $er) use ($Account) {
+                    'empty_data' => 'All',
+                    'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('a')
                             ->where('a.Parent = :ap')
                             ->orderBy('a.accName', 'ASC')
-                            ->setParameter('ap',$Account);
+                            ->setParameter('ap', $Account);
                     }
                 ))
 
 
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
+            ->add('DateStart', 'date', array())
+            ->add('DateEnd', 'date', array())
 
-            ->add('GroupBy','choice',array(
-                'choices'=>array(
-                    'NotGroupBy'=>'NotGroupBy',
-                    'TrCoIt.itemName'=>'Item Name',
-                    'TrAc.accName'=>'Retainer Name'
+            ->add('GroupBy', 'choice', array(
+                'choices' => array(
+                    'NotGroupBy' => 'NotGroupBy',
+                    'TrCoIt.itemName' => 'Item Name',
+                    'TrAc.accName' => 'Retainer Name'
                 )))
 
             ->getForm();
 
-        if($req->isMethod('POST'))
-        {
-            $form->bind($req);
-            $data=$form->getData();
-            $qb=$em->createQueryBuilder();
+        if ($req->isMethod('POST')) {
+            $form->handleRequest($req);
+            $data = $form->getData();
+            $qb = $em->createQueryBuilder();
             $qb->select('Tr')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
+                ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')->innerJoin('Tr.Account', 'TrAc')
                 /**/
 
-                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
-                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')))
+                ->andWhere($qb->expr()->isNotNull('Tr.Code'))
+                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart'])
+                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
-            if($data['Account']!='All')
+            if ($data['Account'] != 'All')
 
-                $qb=$qb->andwhere('Tr.Account =:account')->setParameter('account',$data['Account']);
-
-
-            if($data['ItemType']!=3)
-
-                $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+                $qb->andwhere('Tr.Account =:account')->setParameter('account', $data['Account']);
 
 
+            if ($data['ItemType'] != 3)
 
-            if($data['ItemName']!='All')
-                $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+                 $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType', $data['ItemType']);
 
-            if($data['GroupBy']!='NotGroupBy')
-            {
-                $qb=$qb->GroupBy($data['GroupBy']);
+
+            if ($data['ItemName'] != 'All')
+                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName'])));
+
+            if ($data['GroupBy'] != 'NotGroupBy') {
+                 $qb->GroupBy($data['GroupBy']);
             }
 
 
-            $result=$qb->getQuery();
+            $result = $qb->getQuery();
             $count = count($result->getResult());
-            $result = $result->setHint('knp_paginator.count', $count);
+            $result->setHint('knp_paginator.count', $count);
         }
 
 
@@ -680,73 +647,71 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',
 
             array(
-                'pagination'=>$pagination,
-                'form'=>$form->createView(),
-                'Account' =>$Account,
-                'Entiti' =>$Account->getEntiti()));
-
-
-
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+                'Account' => $Account,
+                'Entiti' => $Account->getEntiti()));
 
 
     }
 
-    public function  DetailsSaleAction(Request $req,$id)
+    public function  DetailsSaleAction(Request $req, $id)
     {
 
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
         $Account = $tran->getAccount();
-        $BuPrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-            'Account'=>$tran->getAccount()->getParent()
-            ,'Item'=>$tran->getCode()->getItem()));
 
-        $SePrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-            'Account'=>$tran->getAccount()
-            ,'Item'=>$tran->getCode()->getItem()));
+        $BuPrice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
+            'Account' => $tran->getAccount()->getParent()
+          , 'Item' => $tran->getCode()->getItem()));
+
+        $SePrice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
+            'Account' => $tran->getAccount()
+        , 'Item' => $tran->getCode()->getItem()));
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
+
             array(
-                'Account'=>$Account,
-                'tran'=>$tran,
-                'BuPrice'=>$BuPrice->getPrice(),
-                'SePrice'=>$SePrice->getPrice()
+                'Account' => $Account,
+                'tran' => $tran,
+                'BuPrice' => $BuPrice->getPrice(),
+                'SePrice' => $SePrice->getPrice()
             ));
 
     }
 
 
-
-    public  function ProvTransferAction($id,Request $req)
+    public function ProvTransferAction($id, Request $req)
     {
-        $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
-        $em=$this->getDoctrine()->getEntityManager();
+        $AccountBalance = $this->get('hello_di_di_distributors.balancechecker');
+        $em = $this->getDoctrine()->getEntityManager();
 
-        $User=$this->get('security.context')->getToken()->getUser();
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $User = $this->get('security.context')->getToken()->getUser();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
 
-        $form=$this->createFormBuilder()
-            ->add('Amount','text',array('data'=>0))
-            ->add('Accounts','entity',array(
+        $form = $this->createFormBuilder()
+            ->add('Amount', 'text', array('data' => 0))
+            ->add('Accounts', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Account',
-                'expanded'=>'true',
-                'multiple'=>false,
-                'query_builder' => function(EntityRepository $er) use ($Account) {
+                'expanded' => 'true',
+                'multiple' => false,
+                'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
-                        ->Where('Acc.Entiti = :Ent')->setParameter('Ent',$Account->getEntiti())
+                        ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
                         ->andWhere('Acc.accType =0')
-                        ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur',$Account->getAccCurrency())
-                        ;
+                        ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
                 }
             ))
-           ->add('Description','textarea',array('required'=>false))
-           ->add('Communications','textarea',array('required'=>false))
+            ->add('Description', 'textarea', array('required' => false))
+            ->add('Communications', 'textarea', array('required' => false))
             ->getForm();
 
-        $tranprov=new Transaction();
-        $trandist=new Transaction();
+        $tranprov = new Transaction();
+        $trandist = new Transaction();
 
         $tranprov->setTranBookingValue(null);
         $tranprov->setTranDate(new \DateTime('now'));
@@ -757,11 +722,9 @@ class AccountController extends Controller
         $trandist->setTranInsert(new \DateTime('now'));
 
 
-
-        if($req->isMethod('POST'))
-        {
+        if ($req->isMethod('POST')) {
             $form->bind($req);
-            $data=$form->getData();
+            $data = $form->getData();
 
             #transaction for prov#
             $tranprov->setTranAction('tran');
@@ -771,20 +734,19 @@ class AccountController extends Controller
             $tranprov->setTranDescription($data['Description']);
             $tranprov->setTranFees(0);
             $tranprov->setTranCurrency($Account->getAccCurrency());
-            $tranprov->setTranType(0);#0 for debit
+            $tranprov->setTranType(0); #0 for debit
             #transaction for dist#
             $trandist->setTranAmount(+$data['Amount']);
             $trandist->setTranAction('tran');
-            $trandist->setTranType(1);#1 for credit
+            $trandist->setTranType(1); #1 for credit
             $trandist->setAccount($data['Accounts']);
             $trandist->setUser($User);
             $trandist->setTranDescription($data['Communications']);
             $trandist->setTranFees(0);
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
 
-            if($data['Amount']!='')
-                if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
-                {
+            if ($data['Amount'] != '')
+                if ($AccountBalance->isBalanceEnoughForMoney($Account, $data['Amount'])) {
                     $em->persist($trandist);
                     $em->persist($tranprov);
                     $em->flush();
@@ -793,51 +755,47 @@ class AccountController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig',array(
-            'Account'=>$Account,
-            'User'=>$User,
-            'Entity'=>$Account->getEntiti(),
-            'form'=>$form->createView()
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig', array(
+            'Account' => $Account,
+            'User' => $User,
+            'Entity' => $Account->getEntiti(),
+            'form' => $form->createView()
         ));
-
 
 
     }
 
 
-
-
-    public function  ProvRegisterAction($id,Request $Req)
+    public function  ProvRegisterAction($id, Request $Req)
     {
-        $AccountBalance=$this->get('hello_di_di_distributors.balancechecker');
-        $em=$this->getDoctrine()->getEntityManager();
+        $AccountBalance = $this->get('hello_di_di_distributors.balancechecker');
+        $em = $this->getDoctrine()->getEntityManager();
 
-        $User=$this->get('security.context')->getToken()->getUser();
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $User = $this->get('security.context')->getToken()->getUser();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $tran=new Transaction();
+        $tran = new Transaction();
 
-        $form=$this->createFormBuilder()
-            ->add('CreditDebit','choice',array(
-                'expanded'=>true,
-                'choices'=>array(
+        $form = $this->createFormBuilder()
+            ->add('CreditDebit', 'choice', array(
+                'expanded' => true,
+                'choices' => array(
 
-                    1=>'Credit',
-                    0=>'Debit'
+                    1 => 'Credit',
+                    0 => 'Debit'
                 )
 
             ))
-            ->add('Amount','text',array(
-                'data'=>0,'required'=>false
+            ->add('Amount', 'text', array(
+                'data' => 0, 'required' => false
             ))
-            ->add('TradeDate','date',array())
-            ->add('Description','textarea',array('required'=>false))
-            ->add('Fees','text',array('required'=>false))->getForm();
+            ->add('TradeDate', 'date', array())
+            ->add('Description', 'textarea', array('required' => false))
+            ->add('Fees', 'text', array('required' => false))->getForm();
 
-        if($Req->isMethod('POST'))
-        {
+        if ($Req->isMethod('POST')) {
             $form->submit($Req);
-            $data=$form->getData();
+            $data = $form->getData();
 
             $tran->setTranCurrency($Account->getAccCurrency());
             $tran->setUser($User);
@@ -845,26 +803,21 @@ class AccountController extends Controller
             $tran->setTranDate(new \DateTime('now'));
             $tran->setTranInsert(new \DateTime('now'));
 
-            if($data['Fees']!='')
-             $tran->setTranFees($data['Fees']);
+            if ($data['Fees'] != '')
+                $tran->setTranFees($data['Fees']);
             else
-            $tran->setTranFees(0);
+                $tran->setTranFees(0);
 
             $tran->setTranDescription($data['Description']);
 
-            if($data['CreditDebit']==1)
-            {
+            if ($data['CreditDebit'] == 1) {
                 $tran->setTranAction('pmt');
                 $tran->setTranType(1);
                 $tran->setTranAmount(+$data['Amount']);
                 $em->persist($tran);
                 $em->flush();
-            }
-
-            elseif($data['CreditDebit']==0)
-            {
-                if($AccountBalance->isBalanceEnoughForMoney($Account,$data['Amount']))
-                {
+            } elseif ($data['CreditDebit'] == 0) {
+                if ($AccountBalance->isBalanceEnoughForMoney($Account, $data['Amount'])) {
                     $tran->setTranAction('amdt');
                     $tran->setTranType(0);
                     $tran->setTranAmount(-$data['Amount']);
@@ -877,47 +830,38 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
-                'form'=>$form->createView(),
-                'Account'=>$Account,
-                'User'=>$User,
-                'Entity'=>$Account->getEntiti(),
+                'form' => $form->createView(),
+                'Account' => $Account,
+                'User' => $User,
+                'Entity' => $Account->getEntiti(),
             ));
 
     }
 
-    public function PurchasesAction($id,Request $req)
+    public function PurchasesAction($id, Request $req)
 
     {
-        $em=$this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-        $User=$this->get('security.context')->getToken()->getUser();
+        $User = $this->get('security.context')->getToken()->getUser();
         $paginator = $this->get('knp_paginator');
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $qb=$em->createQueryBuilder();
-        $qb->select('Tr')
-            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-            ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')
-            ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('Sale')));
-        foreach($Account->getChildrens() as $child)
-        {
-            $qb=$qb->orWhere('Tr.Account=:acc')->setParameter('acc',$child);
-        }
+        $qb = $em->createQueryBuilder();
+        $query=array();
 
-        $query=$qb->getQuery();
-
-        $form=$this->createFormBuilder()
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
-            ->add('ItemType','choice',
-                array('choices'=>
-                       array(
-                           3=>'All',
-                           1=>'Item.TypeChioce.Internet',
-                           0 =>'Item.TypeChioce.Mobile',
-                           2 =>'Item.TypeChioce.Tel')
-                            ))
+        $form = $this->createFormBuilder()
+            ->add('DateStart', 'date', array())
+            ->add('DateEnd', 'date', array())
+            ->add('ItemType', 'choice',
+                array('choices' =>
+                array(
+                    3 => 'All',
+                    1 => 'Item.TypeChioce.Internet',
+                    0 => 'Item.TypeChioce.Mobile',
+                    2 => 'Item.TypeChioce.Tel')
+                ))
             ->add('ItemName', 'entity',
                 array(
                     'empty_data' => 'All',
@@ -925,50 +869,50 @@ class AccountController extends Controller
                     'property' => 'itemName',
                 ))->getForm();
 
-        if($req->isMethod('POST'))
-        {
+        if ($req->isMethod('POST')) {
             $form->handleRequest($req);
-            $data=$form->getData();
-            $qb=$em->createQueryBuilder();
+            $data = $form->getData();
+            $qb = $em->createQueryBuilder();
 
             $qb->select('Tr');
-            $qb->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')
-                ->where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
-            foreach($Account->getChildrens() as $child)
-            {
-                $qb=$qb->orWhere('Tr.Account = :acc')->setParameter('acc',$child);
-            }
-            $qb->andWhere('Tr.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andWhere('Tr.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-            if($data['ItemType']!=3)
-                $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType',$data['ItemType']);
-            if($data['ItemName']!='All')
-                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ',$qb->expr()->literal($data['ItemName'])));
-            $query=$qb->getQuery();
+            $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
+                ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')
+                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')))
+                ->andWhere($qb->expr()->isNotNull('Tr.Code'));
+            foreach ($Account->getChildrens() as $child) {
 
+                $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
+            }
+
+             $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart'])
+                ->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+            if ($data['ItemType'] != 3)
+                $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
+            if ($data['ItemName'] != 'All')
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName'])));
+//            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+            $query = $qb->getQuery();
+            $count = count($query->getResult());
+            $query->setHint('knp_paginator.count', $count);
 
         }
 
 
 
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig',array(
-            'pagination'=>$pagination,
-            'Account'=>$Account,
-            'User'=>$User,
-            'Entity'=>$Account->getEntiti(),
-            'form'=>$form->createView()
+        return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
+            'pagination' => $pagination,
+            'Account' => $Account,
+            'User' => $User,
+            'Entity' => $Account->getEntiti(),
+            'form' => $form->createView()
         ));
     }
-
 
 
     public function AddAccountDistMasterAction(Request $request)
@@ -985,8 +929,7 @@ class AccountController extends Controller
         if ($request->isMethod('POST')) {
 
             $form->submit($request);
-            if ($form->isValid())
-            {
+            if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $Account->setEntiti($entitimaster);
                 $Account->setAccCreationDate(new \DateTime('now'));
@@ -1001,9 +944,9 @@ class AccountController extends Controller
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster.html.twig',
-        array(
-            'form' => $form->createView()
-        ));
+            array(
+                'form' => $form->createView()
+            ));
 
 
     }
@@ -1013,7 +956,7 @@ class AccountController extends Controller
 
 
         $em = $this->getDoctrine()->getManager();
-        $query =$em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType'=>0));
+        $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 0));
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -1023,13 +966,11 @@ class AccountController extends Controller
         );
 
 
-            $pagination = $paginator->paginate(
-                $query,
-                $this->get('request')->query->get('page', 1) /*page number*/
-                /*limit per page*/
-            );
-
-
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/
+        /*limit per page*/
+        );
 
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountDist.html.twig', array
@@ -1057,162 +998,126 @@ class AccountController extends Controller
 
     }
 
-/////////////
-    public function ManageDistChildrenAction(Request $request)
-    {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $form_searchdistchild = $this->createForm(new AccountDistSearchType());
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $ChildAccount = $Account->getChildrens();
+    public function ManageDistChildrenAction(Request $request,$id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form= $this->createFormBuilder()
+            ->add('accName','text',array('required'=>false))
+            ->add('accCreditLimit','choice',array('choices'=>(array(0=>'Have Not',1=>'Have'))))
+            ->add('accBalance','choice',array('choices'=>(array(0=>'Lower Than',1=>'More Than'))))
+            ->add('accBalanceValue','text',array('required'=>false))->getForm()
+
+        ;
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $query=array();
+        $query = $Account->getChildrens();
+
+        if($request->isMethod('post'))
+        {
+            $form->handleRequest($request);
+            $data=$form->getData();
+                $qb = $em->createQueryBuilder()
+                ->select('Acc')
+                ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
+                ->Where('Acc.Parent=:AccountParent')
+                ->setParameter('AccountParent', $Account);
+            if ($data['accName'] != null)
+                $qb->andWhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($data['accName'] . '%')));
+
+            if ($data['accCreditLimit'] == 0)
+                $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', 0));
+
+            if ($data['accCreditLimit'] == 1)
+                $qb->andwhere($qb->expr()->gt('Acc.accCreditLimit', 0));
+
+
+            if ($data['accBalance'] == 1)
+                if ($data['accBalanceValue'] != '')
+                    $qb->andwhere($qb->expr()->gte('Acc.accBalance', $data['accBalanceValue']));
+
+            if ($data['accBalance'] == 0)
+                if ($data['accBalanceValue'] != '')
+                    $qb->andwhere($qb->expr()->lte('Acc.accBalance', $data['accBalanceValue']));
+
+            $query = $qb->getQuery();
+
+            $count = count($query->getResult());
+            $query->setHint('knp_paginator.count', $count);
+
+        }
+
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $ChildAccount,
+            $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig',
             array(
-                'form_searchdistchild' => $form_searchdistchild->createView(),
+                'form' => $form->createView(),
                 'pagination' => $pagination,
                 'Account' => $Account));
 
     }
 
-///////////////
-    public function AccountDistChildrenSearchAction(Request $request, $id)
+
+    public function ManageDistUserAction(Request $request, $id)
     {
+        $paginator = $this->get('knp_paginator');
 
         $em = $this->getDoctrine()->getManager();
-        $AccountParent = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_searchdistchild = $this->createForm(new AccountDistSearchType());
 
-        $form_searchdistchild->bind($request);
-        $searchdistchilddata = $form_searchdistchild->getData();
+        $form = $this->createFormBuilder()
+            ->add('username', null, array('required' => false))->getForm();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('Acc')
-            ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
-            ->Where('Acc.Parent=:AccountParent')
-            ->setParameter('AccountParent', $AccountParent);
-        if ($searchdistchilddata['accName'] != null)
-            $qb->andWhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($searchdistchilddata['accName'] . '%')));
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        if ($searchdistchilddata['accCreditLimit'] == 0)
-            $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', 0));
+        $result = $Account->getUsers();
 
-        if ($searchdistchilddata['accCreditLimit'] == 1)
-            $qb->andwhere($qb->expr()->gt('Acc.accCreditLimit', 0));
+        if ($request->isMethod('post')) {
+            $form->handleRequest($request);
+            $data = $form->getData();
 
+            $qb = $em->createQueryBuilder();
+            $qb->select('Usr')
+                ->from('HelloDiDiDistributorsBundle:User', 'Usr')
+                ->where('Usr.Account = :Acc')->setParameter('Acc', $Account)
+                ->andwhere('Usr.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
+                ->andWhere($qb->expr()->like('Usr.username', $qb->expr()->literal($data['username'] . '%')));
+            $result = $qb->getQuery();
+            $count = count($qb->getQuery()->getResult());
+            $result->setHint('knp_paginator.count', $count);
 
-        if ($searchdistchilddata['accBalance'] == 1)
-            if ($searchdistchilddata['accBalanceValue'] != '')
-                $qb->andwhere($qb->expr()->gte('Acc.accBalance', $searchdistchilddata['accBalanceValue']));
+        }
 
-        if ($searchdistchilddata['accBalance'] == 0)
-            if ($searchdistchilddata['accBalanceValue'] != '')
-                $qb->andwhere($qb->expr()->lte('Acc.accBalance', $searchdistchilddata['accBalanceValue']));
-
-        $query = $qb->getQuery();
-
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
-
-        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query,
+            $result,
             $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig', array('form_searchdistchild' => $form_searchdistchild->createView(), 'pagination' => $pagination, 'id' => $id, 'Account' => $AccountParent));
-    }
+        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig',
 
-    public function ManageDistUserAction(Request $request)
-    {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-
-        $form_searchdistuser = $this->createForm(new UserDistSearchType());
-
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $usp = $Account->getUsers();
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $usp,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig', array('pagination' => $pagination, 'form_searchdistuser' => $form_searchdistuser->createView(), 'Account' => $Account));
+            array(
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+                'Account' => $Account
+            ));
 
     }
 
-    public function ManageDistUserSearchAction(Request $request, $id)
+    public function ManageDistSettingsAction(Request $request,$id)
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_searchdistuser = $this->createForm(new UserDistSearchType());
-
-        $form_searchdistuser->bind($request);
-        $searchdistuserdata = $form_searchdistuser->getData();
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('U')
-            ->from('HelloDiDiDistributorsBundle:User', 'U')
-            ->where('U.Account =:MyAccount');
-        if($searchdistuserdata['username']!='')
-            $qb->andWhere($qb->expr()->like('U.username', $qb->expr()->literal($searchdistuserdata['username'] . '%')));
-        $qb->setParameter('MyAccount',$Account);
-
-        $query = $qb->getQuery();
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
-
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig', array('pagination' => $pagination, 'form_searchdistuser' => $form_searchdistuser->createView(), 'Account' => $Account));
-
-
-        //return  $this->forward('HelloDiDiDistributorsBundle:Account:ManageDistUser',array('resultuser'=>$resultsearch,'id'=>$id));
-
-    }
-
-    public function ManageDistUserSearchResetAction($id)
-    {
-        return $this->forward('HelloDiDiDistributorsBundle:Account:ManageDistUser', array('id' => $id));
-    }
-
-
-    public function ManageDistSettingsAction(Request $request)
-    {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_edit = $this->createForm(new AccountDistMasterType(),$Account);
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistSettings.html.twig',
-        array('form_edit' => $form_edit->createView(),
-        'Account' => $Account
-        ));
-
-    }
-
-    public function ManageDistSettingsSubmitAction(Request $request)
-    {
-        $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $form_edit = $this->createForm(new AccountDistMasterType(), $Account);
+
 
         if ($request->isMethod('POST')) {
             $form_edit->bind($request);
@@ -1221,10 +1126,13 @@ class AccountController extends Controller
             }
 
         }
+
+
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistSettings.html.twig',
-        array('form_edit' => $form_edit->createView(),
-        'Account' => $Account
-        ));
+            array('form_edit' => $form_edit->createView(),
+                'Account' => $Account
+            ));
+
     }
 
 
@@ -1242,7 +1150,7 @@ class AccountController extends Controller
 
                 $em->flush();
                 return $this->forward("HelloDiDiDistributorsBundle:Account:ManageDistInfo");
-                //return $this->redirect($this->generateUrl('ManageDist',array('id'=>$id)));
+
 
             }
         }
@@ -1279,16 +1187,16 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-                'query_builder' => function(EntityRepository $er) use ($account) {
+                'query_builder' => function (EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('u')
-                        ->where ('u.id NOT IN (
+                        ->where('u.id NOT IN (
                             SELECT DISTINCT ii.id
                             FROM HelloDiDiDistributorsBundle:Item ii
                             JOIN ii.Prices pp
                             JOIN pp.Account aa
                             WHERE aa = :aaid
                         )')
-                        ->setParameter('aaid',$account);
+                        ->setParameter('aaid', $account);
                 }
             ))
             ->add('price')
@@ -1413,9 +1321,9 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-                'query_builder' => function(EntityRepository $er) use ($account) {
+                'query_builder' => function (EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('u')
-                        ->where ('u.id NOT IN (
+                        ->where('u.id NOT IN (
                             SELECT ii.id
                             FROM HelloDiDiDistributorsBundle:Item ii
                             JOIN ii.Prices pp
@@ -1429,7 +1337,7 @@ class AccountController extends Controller
                             JOIN ppp.Account aaa
                             WHERE aaa.accType = 1
                         )')
-                        ->setParameter('aaid',$account);
+                        ->setParameter('aaid', $account);
                 }
             ))
             ->add('price')
@@ -1535,25 +1443,25 @@ class AccountController extends Controller
 
         $qb = $em->createQueryBuilder()
             ->select('input')
-            ->from('HelloDiDiDistributorsBundle:Input','input')
-            ->innerJoin('input.Account','a')
+            ->from('HelloDiDiDistributorsBundle:Input', 'input')
+            ->innerJoin('input.Account', 'a')
             ->where('a = :aaid')
-            ->setParameter('aaid',$account);
+            ->setParameter('aaid', $account);
 
         $form = $this->createFormBuilder()
-            ->add('From', 'date', array('required'=> false,'widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('To', 'date', array('required'=> false,'widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('item','entity',array(
-                'required'=> false,
+            ->add('From', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('To', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('item', 'entity', array(
+                'required' => false,
                 'empty_value' => 'All',
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-                'query_builder' => function(EntityRepository $er) use ($account) {
+                'query_builder' => function (EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('i')
-                        ->innerJoin('i.Prices','p')
-                        ->innerJoin('p.Account','a')
+                        ->innerJoin('i.Prices', 'p')
+                        ->innerJoin('p.Account', 'a')
                         ->where('a = :aaid')
-                        ->setParameter('aaid',$account);
+                        ->setParameter('aaid', $account);
                 }
             ))
             ->getForm();
@@ -1562,20 +1470,20 @@ class AccountController extends Controller
             $form->bind($request);
             $data = $form->getData();
 
-            $qb ->join('input.Item','item');
+            $qb->join('input.Item', 'item');
 
-            if($data['item']!=null)
-                $qb = $qb->andWhere($qb->expr()->eq('item',intval($data['item']->getId() )));
+            if ($data['item'] != null)
+                $qb = $qb->andWhere($qb->expr()->eq('item', intval($data['item']->getId())));
 
-            if($data['From']!="")
+            if ($data['From'] != "")
                 $qb = $qb->andWhere("input.dateInsert >= :fromdate")->setParameter('fromdate', $data['From']);
 
-            if($data['To']!="")
+            if ($data['To'] != "")
                 $qb = $qb->andWhere("input.dateInsert <= :todate")->setParameter('todate', $data['To']);
 
         }
 
-        $inputs= $qb->getQuery()->getResult();
+        $inputs = $qb->getQuery()->getResult();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageInputsProv.html.twig', array(
             'form' => $form->createView(),
@@ -1606,18 +1514,18 @@ class AccountController extends Controller
             ->add('Item', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-                'query_builder' => function(EntityRepository $er) use ($Account) {
+                'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('i')
-                        ->innerJoin('i.Prices','p')
-                        ->innerJoin('p.Account','a')
+                        ->innerJoin('i.Prices', 'p')
+                        ->innerJoin('p.Account', 'a')
                         ->where('a = :aaid')
-                        ->setParameter('aaid',$Account)
+                        ->setParameter('aaid', $Account)
                         ->andWhere('p.priceStatus = 1');
                 }
             ))
-            ->add('Batch', 'text',array('required'=>false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
+            ->add('Batch', 'text', array('required' => false))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
             ->add('SerialNumber', 'text', array('data' => '1', 'label' => 'Column Number Pin'))
             ->add('PinCode', 'text', array('data' => '4', 'label' => 'Column Number SN'))
@@ -1640,9 +1548,9 @@ class AccountController extends Controller
         $form = $this->createFormBuilder()
             ->add('File', 'file')
             ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
-            ->add('Batch', 'text',array('required'=>false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text','format' => 'yyyy/MM/dd'))
+            ->add('Batch', 'text', array('required' => false))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
             ->add('SerialNumber', 'text', array('label' => 'Column Number Pin'))
             ->add('PinCode', 'text', array('label' => 'Column Number SN'))
@@ -1761,7 +1669,7 @@ class AccountController extends Controller
             $code->setInput($input);
             $em->persist($code);
 
-            $transaction =  new Transaction();
+            $transaction = new Transaction();
             $transaction->setCode($code);
             $transaction->setAccount($Account);
             $transaction->setUser($user);
@@ -1771,11 +1679,7 @@ class AccountController extends Controller
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
             $em->persist($transaction);
-//            if($count%100 == 0 )
-//            {
-//                $count =0;
-//                $em->flush();
-//            }
+
         }
         $em->flush();
 
@@ -1796,46 +1700,44 @@ class AccountController extends Controller
         $request->getSession()->remove('upload_PinCode');
         $request->getSession()->remove('upload_accountid');
 
-        return $this->redirect($this->generateUrl('ManageInputsProv',array(
+        return $this->redirect($this->generateUrl('ManageInputsProv', array(
             'accountid' => $accountid
         )));
     }
 
     // kamal Prov Start
-    public function MasterProvTransactionAction(Request $request,$id){
+    public function MasterProvTransactionAction(Request $request, $id)
+    {
 
 
         $em = $this->getDoctrine()->getManager();
         $searchForm = $this->createForm(new searchProvTransType());
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $qb = $em->createQueryBuilder()
-            ->select('trans.id','trans.tranDate','trans.tranDescription','trans.tranCredit','trans.tranDebit','acc.accBalance','trans.tranAction','trans.tranAmount')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Transactions','trans')
+            ->select('trans.id', 'trans.tranDate', 'trans.tranDescription', 'trans.tranCredit', 'trans.tranDebit', 'acc.accBalance', 'trans.tranAction', 'trans.tranAmount')
+            ->from('HelloDiDiDistributorsBundle:Account', 'acc')
+            ->innerJoin('acc.Transactions', 'trans')
             ->andwhere('acc.accType =:check')
-            ->setParameter('check',1)
+            ->setParameter('check', 1)
             ->andwhere('acc =:check2')
-            ->setParameter('check2',$account);
+            ->setParameter('check2', $account);
 
-        if($request->isMethod('POST')){
-            if($request->get('trans_id')!= null){
+        if ($request->isMethod('POST')) {
+            if ($request->get('trans_id') != null) {
                 $em = $this->getDoctrine()->getManager();
                 $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($request->get('trans_id'));
                 $em->remove($trans);
                 $em->flush();
-            }
-
-            elseif($request->get('accountid')== null){
+            } elseif ($request->get('accountid') == null) {
                 $searchForm->bind($request);
                 $data = $searchForm->getData();
-                if($data['FromDate']!="")
+                if ($data['FromDate'] != "")
                     $qb = $qb->andWhere("trans.tranDate >= :transdateFrom")->setParameter('transdateFrom', $data['FromDate']);
 
-                if($data['ToDate']!="")
+                if ($data['ToDate'] != "")
                     $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
 
-
-                if($data['type'] != 'All')
+                if ($data['type'] != 'All')
                     $qb = $qb->andWhere($qb->expr()->like('trans.tranAction', $qb->expr()->literal($data['type'])));
             }
         }
@@ -1851,59 +1753,60 @@ class AccountController extends Controller
             20/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',array(
-            'accprov'=>$accProv,'Account' => $account,'idTrans'=>$id,'form' => $searchForm   ->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig', array(
+            'accprov' => $accProv, 'Account' => $account, 'idTrans' => $id, 'form' => $searchForm->createView()));
     }
 
-    public function MasterProvRemovedAction(Request $request,$id){
+    public function MasterProvRemovedAction(Request $request, $id)
+    {
 
 
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $searchForm = $this->createFormBuilder()
-            ->add('FromDate', 'date',array('required'=>false ,'format' => 'yyyy/MM/dd','widget' => 'single_text'))
-            ->add('ToDate', 'date',array('required'=>false,'format' => 'yyyy/MM/dd','widget' => 'single_text'))
-            ->add('item','entity',array(
-                'required'=> false,
+            ->add('FromDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
+            ->add('ToDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
+            ->add('item', 'entity', array(
+                'required' => false,
                 'empty_value' => 'All',
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
-                'query_builder' => function(EntityRepository $er) use ($account) {
+                'query_builder' => function (EntityRepository $er) use ($account) {
                     return $er->createQueryBuilder('i')
-                        ->innerJoin('i.Prices','p')
-                        ->innerJoin('p.Account','a')
+                        ->innerJoin('i.Prices', 'p')
+                        ->innerJoin('p.Account', 'a')
                         ->where('a = :aaid')
-                        ->setParameter('aaid',$account);
+                        ->setParameter('aaid', $account);
                 }
             ))
             ->getForm();
 
         $qb = $em->createQueryBuilder()
             ->select('trans')
-            ->from('HelloDiDiDistributorsBundle:Transaction','trans')
-            ->innerJoin('trans.Code','code')
-            ->innerJoin('code.Item','item')
-            ->innerJoin('trans.Account','acc')
+            ->from('HelloDiDiDistributorsBundle:Transaction', 'trans')
+            ->innerJoin('trans.Code', 'code')
+            ->innerJoin('code.Item', 'item')
+            ->innerJoin('trans.Account', 'acc')
             ->where('trans.tranAction =:check')
-            ->setParameter('check','removed')
+            ->setParameter('check', 'removed')
             ->andwhere('acc =:check2')
-            ->setParameter('check2',$account);
+            ->setParameter('check2', $account);
 
 
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
 
-                $searchForm->bind($request);
-                $data = $searchForm->getData();
+            $searchForm->handleRequest($request);
+            $data = $searchForm->getData();
 
-                if($data['FromDate']!="")
-                    $qb = $qb->andWhere("trans.tranDate >= :transdateFrom")->setParameter('transdateFrom', $data['FromDate']);
+            if ($data['FromDate'] != "")
+                $qb = $qb->andWhere("trans.tranDate >= :transdateFrom")->setParameter('transdateFrom', $data['FromDate']);
 
-                if($data['ToDate']!="")
-                    $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
+            if ($data['ToDate'] != "")
+                $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
 
-                if($data['item'] != "")
-                    $qb = $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['item']->getItemName())));
+            if ($data['item'] != "")
+                $qb = $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['item']->getItemName())));
 
         }
         $qb = $qb->getQuery();
@@ -1915,8 +1818,110 @@ class AccountController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             20/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig',array('id'=>$id,'Account'=>$Account,'accProv'=>$accProv,'form' => $searchForm   ->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig', array('id' => $id, 'Account' => $Account, 'accProv' => $accProv, 'form' => $searchForm->createView()));
     }
 
     // kamal Prov End
+
+
+    #start kazem
+
+
+    public function DistUserAddAction(Request $req, $id)
+    {
+
+
+        $user = new User();
+        $em = $this->getDoctrine()->getManager();
+
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $formrole = $this->createFormBuilder()
+            ->add('roles', 'choice',
+                array(
+                    'choices' =>
+                    array(
+                        'ROLE_MASTER' => 'ROLE_MASTER',
+                        'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN'
+                    )))
+            ->getForm();
+
+        if ($req->isMethod('POST')) {
+            $form->handleRequest($req);
+            $formrole->handleRequest($req);
+            $data = $formrole->getData();
+            if ($form->isValid()) {
+                $user->addRole(($data['roles']));
+                $user->setEntiti($Account->getEntiti());
+                $user->setAccount($Account);
+                $user->setEnabled(1);
+                $em->persist($user);
+                $em->flush();
+                return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $Account->getId())));
+
+            }
+
+        }
+        return $this->render('HelloDiDiDistributorsBundle:Account:DistUserAdd.html.twig', array(
+                'Entiti' => $Account->getEntiti(),
+                'Account' => $Account,
+                'form' => $form->createView(),
+                'formrole' => $formrole->createView())
+        );
+    }
+
+
+    public function DistUsereditAction(Request $req, $id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+
+        if ($req->isMethod('POST')) {
+            $form->handleRequest($req);
+            if ($form->isValid()) {
+                $em->flush();
+                return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $user->getAccount()->getId())));
+            }
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:DistUserEdit.html.twig', array(
+            'Account' => $user->getAccount(),
+            'Entiti' => $user->getEntiti(),
+            'User' => $user,
+            'form' => $form->createView()));
+    }
+
+
+    public function DistUserchangeroleAction($id)
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+        $roles = $user->getRoles();
+        $role = $roles[0];
+        switch ($role) {
+
+            case 'ROLE_DISTRIBUTOR':
+                $user->removeRole('ROLE_DISTRIBUTOR');
+                $user->addRole('ROLE_DISTRIBUTOR_ADMIN');
+                break;
+
+            case 'ROLE_DISTRIBUTOR_ADMIN':
+                $user->removeRole('ROLE_DISTRIBUTOR_ADMIN');
+                $user->addRole('ROLE_DISTRIBUTOR');
+                break;
+        }
+
+        $em->flush();
+        return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $user->getAccount()->getId())));
+
+    }
+
+
+    #end kazem
 }

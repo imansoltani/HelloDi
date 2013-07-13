@@ -166,7 +166,6 @@ class EntitiController extends Controller
             if ($form->isValid())
             {
                 $user->setEntiti($entity);
-                $user->setStatus(1);
                 $em->persist($user);
                 $em->flush();
                 return $this->forward("HelloDiDiDistributorsBundle:Entiti:users", array('entityid' => $id));

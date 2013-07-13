@@ -101,7 +101,7 @@
                         <th>id</th>
                         <th>Date</th>
                         <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                        {#<th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>#}
+                        <th>{{ 'Transaction.Quantity' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
 
@@ -114,7 +114,7 @@
                             <td>{{Tr.id }}</td>
                             <td>{{Tr.tranDate|date }}</td>
                             <td>{{ Tr.Code.Item.itemName}}</td>
-                            {#<td>{{ Tr|length }}</td>#}
+                            <td>{{ Tr|length }}</td>
                             <td>
 
                                 {% set Item=Tr.Code.Item %}

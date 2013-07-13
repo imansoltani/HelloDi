@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AccountProvType extends AbstractType
+class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -15,6 +15,7 @@ class AccountProvType extends AbstractType
             ->add('accCurrency','choice',array('choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
             ->add('accTerms','text',array())
             ->add('accTimeZone','timezone')
+            ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
         ;
     }
 

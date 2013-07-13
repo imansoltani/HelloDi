@@ -18,7 +18,7 @@
         <h3>Users</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a  class="button btn btn-primary btn-large" href="#">Add New User</a>
+    <a  class="button btn btn-primary btn-large" href="{{ path('MasterDistUserAdd',{'id':Account.id}) }}">Add New User</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -27,16 +27,16 @@
                             <p class="title_search">Search Account Users</p>
                         </span>
         </h5>
-        <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUserSearch',{'id':Account.id}) }}" method="post">
+        <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUser',{'id':Account.id}) }}" method="post">
 
             <div class="control-group">
-                {{ form_label(form_searchdistuser.username) }}
-                {{ form_widget(form_searchdistuser.username) }}
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username) }}
             </div>
 
 
 
-            {{ form_widget(form_searchdistuser._token) }}
+            {{ form_widget(form._token) }}
             <hr>
             <input class="btn  btn-primary" type="submit" value="Search">
             <a class="btn " href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
@@ -82,11 +82,11 @@
             <table style="margin-top: 20px" class="table postsend">
                 <thead>
                 <tr>
-
-                    <th>Operation</th>
                     <th>Name</th>
                     <th>UserName</th>
                     <th>Role</th>
+                    <th>Modify</th>
+                    <th>Change Role</th>
 
 
                 </tr>
@@ -94,9 +94,7 @@
                 <tbody>
                 {% for u in pagination %}
                     <tr>
-                        <td class="td-actions">
-                            <a class="btn_actions" href="#"> Manage</a>
-                        </td>
+
                         <td>{{ u.firstname }}</td>
                         <td>{{ u.username }}</td>
                         <td>
@@ -106,6 +104,15 @@
                                     ROLE_DISTRIBUTOR_ADMIN
                             {% endif %}
                         </td>
+
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{path('MasterDistUserEdit',{'id':u.id})  }}"> Manage</a>
+                        </td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{path('MasterDistUserChangeRole',{'id':u.id})  }}"> Change Role</a>
+                        </td>
+
+
                     </tr>
                 {% endfor %}
                 </tbody>
