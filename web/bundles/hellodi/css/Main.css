@@ -113,7 +113,12 @@ li.dropdown i > span{
     font-size: 20px;
     font-weight: bold;
     margin-left: 20px;
-    width: 70%;
+    width: 90%;
+}
+
+.popup h1 li{
+    padding-top: 10px;
+
 }
 
 .popup i{

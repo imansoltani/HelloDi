@@ -113,11 +113,11 @@
         if(type == "alert") $('.messageshow').attr('id','messagealert');
 
         var x  = '<div class="popup messagetop"  >' ;
-        x += '<i class="icon-';
-        if(type == "error") x +='remove';
-        if(type == "success") x +='ok';
-        if(type == "alert") x +='warning-sign';
-        x += '" ></i>';
+        //x += '<i class="icon-';
+        //if(type == "error") x +='remove';
+        //if(type == "success") x +='ok';
+        //if(type == "alert") x +='warning-sign';
+        //x += '" ></i>';
         x += '<h1>'+body+'</h1></div><div class="closedoor messagetop" ></div>' ;
         //x += '<h1>'+subject+'</h1>' ;
         //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
@@ -256,8 +256,8 @@
                                     href="{{ path('RetailerTickets') }}"
 
 
-                                    {#{% else %}#}
-                                        {#href="{{ path('MasterTakeTickets') }}"#}
+                                    {% else %}
+                                        href="{{ path('MasterTickets') }}"
 
                                     {% endif %}
 

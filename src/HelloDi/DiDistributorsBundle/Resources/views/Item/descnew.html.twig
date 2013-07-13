@@ -29,8 +29,7 @@
 
         <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
 
-            {{ form_errors(form.desclang) }}
-            {{ form_errors(form.descdesc) }}
+
             <div class="control-group">
                 {{ form_label(form.desclang) }}
                 <div class="controls" >
@@ -50,7 +49,7 @@
 
 
 
-            {{ form_rest(form) }}
+
 
             <input type="hidden" name="itemid" value="{{ item.id }}"/>
 
@@ -69,6 +68,14 @@
 
 
         $(function(){
+
+            var x = "{{ form_errors(form.desclang) }}{{ form_errors(form.descdesc) }}";
+
+            if(x != "")
+            {
+                messagetop("",x,"error");
+            }
+
             $('#texteditor').htmlarea({
                 toolbar: [
                     "bold", "italic", "underline","strikethrough",

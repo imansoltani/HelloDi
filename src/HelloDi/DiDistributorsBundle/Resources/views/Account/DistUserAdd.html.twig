@@ -1,13 +1,21 @@
-    <div class="span">
-        <div class="widget-content" >
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
+    <span class="link">Add User</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="span" >
+        <div class="widget-content">
             <div class="widget-header">
-                <h3>Add Users</h3>
-            </div> <!-- /widget-header --><br>
-
-
-            {#{% for error in form_errors(form) %}#}
-                      {#{{ error.message  }}#}
-            {#{% endfor %}#}
+                <h3>Add User</h3>
+            </div> <!-- /widget-header -->
+            <br>
 
             <form class="form-horizontal" action="{{ path('MasterDistUserAdd',{'id':Account.id}) }}" method="post" >
                 {{ form_errors(form) }}
@@ -39,7 +47,9 @@
 
                 <div class="control-group">
                     {{ form_label(form.enabled) }}
-                    {{ form_widget(form.enabled) }}
+                    <div class="controls">
+                        {{ form_widget(form.enabled) }}
+                    </div>
                 </div>
 
                 <div class="control-group">
@@ -76,5 +86,7 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
 
 

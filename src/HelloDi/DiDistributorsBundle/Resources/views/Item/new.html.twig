@@ -10,8 +10,9 @@
     <span class="link">New Item</span>
 {% endblock Site_Map %}
 {% block Link_Head %}
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu.css') }}' rel='stylesheet' type='text/css'>
 
-    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block PageTitle %}
@@ -31,86 +32,132 @@
             <div class="widget-content">
                 <div class="widget-header">
                     <h3>Item Info</h3>
-                </div> <!-- /widget-header -->
+                </div>
+                <!-- /widget-header -->
 
-                            <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
-                                <div class="control-group">
-                                    {{ form_label(form.itemName) }}
-                                    {{ form_widget(form.itemName) }}
-                                    {{ form_errors(form.itemName) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(form.itemFaceValue) }}
-                                    {{ form_widget(form.itemFaceValue) }}
-                                    {{ form_errors(form.itemFaceValue) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(form.itemCurrency) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.itemCurrency) }}
-                                    </div>
-                                    {{ form_errors(form.itemCurrency) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(form.itemType) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.itemType) }}
-                                    </div>
-                                    {{ form_errors(form.itemType) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(form.alertMinStock) }}
-                                    {{ form_widget(form.alertMinStock) }}
-                                    {{ form_errors(form.alertMinStock) }}
-                                </div>
-                                <div class="control-group">
-                                    {{ form_label(form.operator) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.operator) }}
-                                    </div>
-                                    {{ form_errors(form.operator) }}
-                                </div>
+                <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.itemName) }}
+                        {{ form_widget(form.itemName) }}
+                        {{ form_errors(form.itemName) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.itemFaceValue) }}
+                        {{ form_widget(form.itemFaceValue) }}
+                        {{ form_errors(form.itemFaceValue) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.itemCurrency) }}
+                        <div class="controls">
+                            {{ form_widget(form.itemCurrency) }}
+                        </div>
+                        {{ form_errors(form.itemCurrency) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.itemType) }}
+                        <div class="controls">
+                            {{ form_widget(form.itemType) }}
+                        </div>
+                        {{ form_errors(form.itemType) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.alertMinStock) }}
+                        {{ form_widget(form.alertMinStock) }}
+                        {{ form_errors(form.alertMinStock) }}
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.operator) }}
+                        <div class="controls">
+                            {{ form_widget(form.operator) }}
+                        </div>
+                        {{ form_errors(form.operator) }}
+                    </div>
 
-                                <div class="control-group">
-                                    {{ form_label(form.Country) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.Country) }}
-                                    </div>
-                                    {{ form_errors(form.Country) }}
-                                </div>
+                    <div class="control-group">
+                        {{ form_label(form.Country) }}
+                        <div class="controls">
+                            {{ form_widget(form.Country) }}
+                        </div>
+                        {{ form_errors(form.Country) }}
+                    </div>
 
-                                <div class="control-group">
-                                    {{ form_label(form.itemCode) }}
-                                    {{ form_widget(form.itemCode) }}
-                                    {{ form_errors(form.itemCode) }}
-                                </div>
+                    <div class="control-group">
+                        {{ form_label(form.itemCode) }}
+                        {{ form_widget(form.itemCode) }}
+                        {{ form_errors(form.itemCode) }}
+                    </div>
 
-                                <div class="control-group">
-                                    {{ form_label(form.ItemDescs[0].desclang) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.ItemDescs[0].desclang) }}
-                                    </div>
-                                    {{ form_errors(form.ItemDescs[0].desclang) }}
-                                </div>
+                    <div class="control-group">
+                        {{ form_label(form.ItemDescs[0].desclang) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemDescs[0].desclang) }}
+                        </div>
+                        {{ form_errors(form.ItemDescs[0].desclang) }}
+                    </div>
 
-                                <div class="control-group">
-                                    {{ form_label(form.ItemDescs[0].descdesc) }}
-                                    <div class="controls">
-                                        {{ form_widget(form.ItemDescs[0].descdesc,{'required':''}) }}
-                                    </div>
-                                    {{ form_errors(form.ItemDescs[0].descdesc) }}
-                                </div>
 
-                                {{ form_widget(form._token) }}
+                    <div class="control-group">
+                        {{ form_label(form.ItemDescs[0].descdesc) }}
+                        <div class="controls">
+                            {{ form_widget(form.ItemDescs[0].descdesc, { 'id': 'texteditor', 'required':'' }) }}
+                        </div>
+                        {{ form_errors(form.ItemDescs[0].descdesc) }}
+                    </div>
 
-                                <div class="form-actions" style="margin-bottom: 0">
-                                    <input type="submit" class="btn btn-primary" value="Add"/>
-                                    <button type="reset" class="btn">Reset</button>
-                                </div>
+                    {{ form_widget(form._token) }}
 
-                            </form>
+                    <div class="form-actions" style="margin-bottom: 0">
+                        <input type="submit" class="btn btn-primary" value="Add"/>
+                        <button type="reset" class="btn">Reset</button>
+                    </div>
+
+                </form>
+
+
+                <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
+                <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
+                <script type="text/javascript">
+
+
+                    $(function () {
+
+                        $('#texteditor').htmlarea({
+                            toolbar: [
+                                "bold", "italic", "underline", "strikethrough",
+                                "|",
+                                "justifyleft", "justifycenter", "justifyright",
+                                "|",
+                                "h1", "h2", "h3",
+                                "|",
+                                "increasefontsize", "decreasefontsize",
+                                "|",
+                                "orderedList  ",
+                                "unorderedList  ",
+                                "|",
+                                "horizontalrule",
+                                "superscript",
+                                "subscript",
+                                "|",
+                                "indent", "outdent",
+                                "|", "forecolor"
+                            ]
+                        });
+
+                        $('.jHtmlArea').removeAttr('style');
+                        $('.jHtmlArea').attr('style', 'max-width:470px');
+                        $('.jHtmlArea .ToolBar').removeAttr('style');
+                        $('.jHtmlArea > div').attr('style', 'width:100%');
+                        $('.jHtmlArea > div > iframe').removeAttr('style');
+                        $('.jHtmlArea > div > iframe').attr('style', 'min-height: 57px;width:100%');
+
+
+                    });
+                </script>
 
             </div>
         </div>
     </div>
+
+
+
 {% endblock %}

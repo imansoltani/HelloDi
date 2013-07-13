@@ -4,7 +4,7 @@
     Tickets
 {% endblock title %}
 
-{% set MU = 'ok' %}
+{% set MU = 'ticket' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
@@ -17,12 +17,14 @@
     Tickets
 {% endblock %}
 
+
+
 {% block Body %}
-    <div class="span" >
+    <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
 
-                <div class="form_search">
+                <div class="form_search" style="border-bottom: 2px solid #a8d5f4;">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
                             <i id="search_logo" class="icon-search"></i>
@@ -30,36 +32,40 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('MasterTickets') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('MasterTickets') }}" method="POST">
 
 
                         <div class="control-group">
-                            <label class="control-label" >Close
+                            <label class="control-label">Close
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Open
+                            <label class="control-label">Open
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Distributors
+                            <label class="control-label">Distributors
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Distributors) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Retailers
+                            <label class="control-label">Retailers
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Retailers) }}
                             </div>
@@ -74,7 +80,7 @@
 
                         <hr>
 
-                    <input class="btn btn-primary" type="submit" value="search">
+                        <input class="btn btn-primary" type="submit" value="search">
 
                     </form>
                     <script type="text/javascript">
@@ -103,98 +109,104 @@
                     </script>
                 </div>
 
-                <div class="tablediv">
-
-
-                        <div class="tab-content">
-                            <table style="margin-top: 20px"
-                                   class="table table-bordered table-striped table-highlight postsend">
-                                <thead>
-                                <tr>
-                                    <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Countact' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.In change' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                {% for Ticket in pagination %}
-                                    <tr>
-                                        <td>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</td>
-
-                                        <td>
-
-                                            {% if Ticket.type==0 %}Payment
-                                            {% elseif Ticket.type==1 %}new item request
-                                            {% elseif Ticket.type==2 %}price change request
-                                            {% elseif Ticket.type==3 %}Payment
-                                            {% elseif Ticket.type==4 %}Payment
-                                                {% endif %}
-                                          </td>
-                                        <td>
-                                            {% if Ticket.status==1 %}
-                                        <a href="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}">
-                                            {{ Ticket.subject }}
-                                        </a>
-                                                {% else %}
-                                                {{ Ticket.subject }}
-                                                {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if Ticket.Accountdist is  null %}
-                                            {{ Ticket.Accountretailer.accName }}
-                                            {% elseif Ticket.Accountretailer is  null %}
-                                                {{ Ticket.Accountdist.accName }}
-                                           {% endif %}
-                                                </td>
-
-                                        <td>
-                                    {% set i=0 %}
-                                            {% for user in usermaster %}
-                                                {% if user.id==Ticket.inchange %}
-                                                     {{ user.username }}
-                                                         {% set i=1 %}
-                                                {% endif %}
-                                            {% endfor %}
-                                                  {% if i==0 %}
-                                                     <a class="btn btn-danger btn-mini" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
-                                                {% endif %}
-                                        </td>
 
 
 
-                                        <td>
-                                            {% set i=0 %}
-                                        {% for Note in Ticket.TicketNotes %}
-                                            {% if Note.view==0 and Note.User!=app.user %}
-                                                {% set i=i+1  %}
-                                            {% endif %}
-                                          {% endfor %}
+                {% for Ticket in pagination %}
 
-                                            {{ i }}
+                    <div class=" container {% if Ticket.status==0 %}
+                                    closet
+                                    {% else %}
+                                    opent
+                                    {% endif %} Ticket">
+                        <a {% if Ticket.status==1 %}
+                            href="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" {% endif %} >
+                            <div class="head">
+                                <div class="items">
+                <span class="new">
+                    {% set i=0 %}
+                    {% for Note in Ticket.TicketNotes %}
+                        {% if Note.view==0 and Note.User!=app.user %}
+                            {% set i=i+1 %}
+                        {% endif %}
+                    {% endfor %}
 
-                                        </td>
+                    {{ i }}
+                </span>
+                <span class="count">
+                    {{ Ticket.TicketNotes.count }}
+                </span>
+                                    <b>
+                                        <i class="{% if Ticket.status==0 %}
+                                    icon-remove
+                                    {% else %}
+                                    icon-ok
+                                    {% endif %}"></i>
+                                    </b>
+                                </div>
 
+                                <div class="header">
+                                    <h1
+                                            >{{ Ticket.subject }}</h1>
+                                </div>
 
-<td>{% if Ticket.status==0 %}
-        <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
-    {% else %}
-        <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
-    {% endif %}</td>
+                            </div>
 
-                                    </tr>
+                            <div class="footer">
+                                <div class="contact">
+                                    {% if Ticket.Accountdist is  null %}
+                                        {{ Ticket.Accountretailer.accName }}
+                                    {% elseif Ticket.Accountretailer is  null %}
+                                        {{ Ticket.Accountdist.accName }}
+                                    {% endif %}
+                                </div>
 
+                                <div class="detail">
+                        <span> {% if Ticket.type==0 %}Payment
+                            {% elseif Ticket.type==1 %}new item request
+                            {% elseif Ticket.type==2 %}price change request
+                            {% elseif Ticket.type==3 %}Payment
+                            {% elseif Ticket.type==4 %}Payment
+                            {% endif %}</span> |
+                                    <span>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="controler">
+                            {% if Ticket.status==0 %}
+                                Close
+                            {% else %}
+                                Open
+                            {% endif %} Ticket -
+                            <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">
+                                Click for Switch to {% if Ticket.status==0 %}
+                                    Open
+                                {% else %}
+                                    Close
+                                {% endif %}
+                            </a>
+
+                            <div>
+
+                                {{ 'Tickets.In change' | trans ({}, "account") }} -
+                                {% set i=0 %}
+                                {% for user in usermaster %}
+                                    {% if user.id==Ticket.inchange %}
+                                        {{ user.username }}
+                                        {% set i=1 %}
+                                    {% endif %}
                                 {% endfor %}
-
-                                </tbody>
-                            </table>
+                                {% if i==0 %}
+                                    <a
+                                       href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
+                                {% endif %}
+                            </div>
                         </div>
+                    </div>
 
-                </div>
+                {% endfor %}
+
 
             </div>
         </div>

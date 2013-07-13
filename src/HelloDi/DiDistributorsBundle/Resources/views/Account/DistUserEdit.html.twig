@@ -1,75 +1,92 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
 
-    <div class="span">
-        <div class="widget-content" >
-            <div class="widget-header">
-                <h3>Edit Users</h3>
-            </div> <!-- /widget-header --><br>
-            {% for  error  in form_errors(form) %}
-                {{ error }}<br>
-            {% endfor %}
-            <form class="form-horizontal" action="{{ path('MasterDistUserEdit',{'id':User.id}) }}" method="post" >
+{% set tab = '4' %}
 
-                <div class="control-group">
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
+    <span class="link">Edit User</span>
+{% endblock Site_Map %}
 
-                    {{ form_label(form.firstname) }}
-                    {{ form_errors(form.firstname) }}
-                    {{ form_widget(form.firstname) }}
+
+{% block Tab %}
+<div class="span" >
+    <div class="widget-content">
+        <div class="widget-header">
+            <h3>Edit User</h3>
+        </div> <!-- /widget-header -->
+        <br>
+
+        {% for  error  in form_errors(form) %}
+            {{ error }}<br>
+        {% endfor %}
+        <form class="form-horizontal" action="{{ path('MasterDistUserEdit',{'id':User.id}) }}" method="post" >
+
+            <div class="control-group">
+
+                {{ form_label(form.firstname) }}
+                {{ form_errors(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+            </div>
+            <div class="control-group">
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.mobile) }}
+                {{ form_widget(form.mobile) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.plainPassword.first) }}
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+
+
+
+
+            <div class="control-group">
+                {{ form_label(form.language) }}
+                <div class="controls">
+                    {{ form_widget(form.language) }}
                 </div>
+            </div>
 
-                <div class="control-group">
-                    {{ form_label(form.lastname) }}
-                    {{ form_widget(form.lastname) }}
+
+            <div class="control-group">
+                {{ form_label(form.enabled) }}
+                <div class="controls">
+                    {{ form_widget(form.enabled) }}
                 </div>
-                <div class="control-group">
-                    {{ form_label(form.username) }}
-                    {{ form_widget(form.username) }}
-                </div>
+            </div>
 
-                <div class="control-group">
-                    {{ form_label(form.mobile) }}
-                    {{ form_widget(form.mobile) }}
-                </div>
+            {{ form_widget(form._token) }}
 
-                <div class="control-group">
-                    {{ form_label(form.email) }}
-                    {{ form_widget(form.email) }}
-                </div>
+            <div class="form-actions" style="margin-bottom: 0" >
+                <input class="btn btn-primary" type="submit"  value="Edit">
 
-                <div class="control-group">
-                    {{ form_label(form.plainPassword.first) }}
-                    {{ form_widget(form.plainPassword.first) }}
-                </div>
+            </div>
 
-                <div class="control-group">
-                    {{ form_label(form.plainPassword.second) }}
-                    {{ form_widget(form.plainPassword.second) }}
-                </div>
+        </form>
+       </div>
+   </div>
+
+{% endblock %}
 
 
-
-
-                <div class="control-group">
-                    {{ form_label(form.language) }}
-                    <div class="controls">
-                        {{ form_widget(form.language) }}
-                    </div>
-                </div>
-
-
-                <div class="control-group">
-                    {{ form_label(form.enabled) }}
-                    <div class="controls">
-                        {{ form_widget(form.enabled) }}
-                    </div>
-                </div>
-
-                {{ form_widget(form._token) }}
-
-                <div class="form-actions" style="margin-bottom: 0" >
-                    <input class="btn btn-primary" type="submit"  value="Edit">
-
-                </div>
-
-            </form>
-        </div>
-    </div>

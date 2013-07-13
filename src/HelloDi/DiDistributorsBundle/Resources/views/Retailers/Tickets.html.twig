@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block Body %}
-    <div class="span" >
+    <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
 
@@ -30,36 +30,40 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST" >
+                    <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST">
 
 
                         <div class="control-group">
-                            <label class="control-label" >Close
+                            <label class="control-label">Close
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Open
+                            <label class="control-label">Open
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Distributors
+                            <label class="control-label">Distributors
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Contact[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Support Team
+                            <label class="control-label">Support Team
                             </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Contact[1]) }}
                             </div>
@@ -74,7 +78,7 @@
 
                         <hr>
 
-                    <input class="btn btn-primary" type="submit" value="search">
+                        <input class="btn btn-primary" type="submit" value="search">
 
                     </form>
                     <script type="text/javascript">
@@ -105,81 +109,93 @@
 
                 <div>
 
-                     {% for Ticket in pagination %}
 
-                         <div class="ticket {% if Ticket.status==0 %}
+                    {% for Ticket in pagination %}
+
+                        <div class=" container {% if Ticket.status==0 %}
                                     closet
                                     {% else %}
                                     opent
-                                    {% endif %}">
-                             <a class="subject" {% if Ticket.status==1 %}  href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" {% endif %}} >
-                                 <i class="{% if Ticket.status==0 %}
+                                    {% endif %} Ticket">
+                            <a {% if Ticket.status==1 %}
+                                href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" {% endif %} >
+                                <div class="head">
+                                    <div class="items">
+                <span class="new">
+                    {% set i=0 %}
+                    {% for Note in Ticket.TicketNotes %}
+                        {% if Note.view==0 and Note.User!=app.user %}
+                            {% set i=i+1 %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {{ i }}
+                </span>
+                <span class="count">
+                    {{ Ticket.TicketNotes.count }}
+                </span>
+                                        <b>
+                                            <i class="{% if Ticket.status==0 %}
                                     icon-remove
                                     {% else %}
                                     icon-ok
-                                    {% endif %}
-                                 " ></i>{{ Ticket.subject }}
-                             </a>
-                             <div class="tables">
-                                 <div class="columns" >
-                                     <div class="rows" >
-                                         <label>{{ 'Tickets.Countact' | trans ({}, "account") }}</label>
-                                         <span>{% if Ticket.Accountdist is not null %}
+                                    {% endif %}"></i>
+                                        </b>
+                                    </div>
+
+                                    <div class="header">
+                                        <h1
+                                                >{{ Ticket.subject }}</h1>
+                                    </div>
+
+                                </div>
+
+                                <div class="footer">
+                                    <div class="contact">
+                                        {% if Ticket.Accountdist is not null %}
                                             {{ Ticket.Accountdist.accName }}
-                                                {% else %}
-                                                 Master
-                                             {% endif %}</span>
-                                     </div>
-                                     <div class="rows" >
-                                         <label>{{ 'Tickets.Date' | trans ({}, "account") }}</label>
-                                         <span>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</span>
-                                     </div>
-                                 </div>
-                                 <div class="columns" >
-                                     <div class="rows" >
-                                         <label>{{ 'Tickets.type' | trans ({}, "account") }}</label>
-                                         <span> {% if Ticket.type==0 %}Payment
-                                             {% elseif Ticket.type==1 %}new item request
-                                             {% elseif Ticket.type==2 %}price change request
-                                             {% elseif Ticket.type==3 %}Payment
-                                             {% elseif Ticket.type==4 %}Payment
-                                             {% endif %}</span>
-                                     </div>
-                                     <div class="rows" >
-                                         <label>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</label>
-                                         <span> {% set i=0 %}
-                                             {% for Note in Ticket.TicketNotes %}
-                                                 {% if Note.view==0 and Note.User!=app.user %}
-                                                     {% set i=i+1  %}
-                                                 {% endif %}
-                                             {% endfor %}
+                                        {% else %}
+                                            Master
+                                        {% endif %}
+                                    </div>
 
-                                             {{ i }}</span>
-                                     </div>
-                                 </div>
-                                 <div class="columns" >
-                                     <div class="rows" >
-                                         <label>{{ 'Tickets.Change Status' | trans ({}, "account") }}</label>
-                                     </div>
-                                     <a  href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}" class="rows manage" >
+                                    <div class="detail">
+                        <span> {% if Ticket.type==0 %}Payment
+                            {% elseif Ticket.type==1 %}new item request
+                            {% elseif Ticket.type==2 %}price change request
+                            {% elseif Ticket.type==3 %}Payment
+                            {% elseif Ticket.type==4 %}Payment
+                            {% endif %}</span> |
+                                        <span>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</span>
+                                    </div>
+                                </div>
+                            </a>
 
-                                         <span>
-                                             {% if Ticket.status==0 %}
-                                             Open
-                                             {% else %}
-                                             Close
-                                             {% endif %}
-                                         </span>
-                                     </a>
-                                 </div>
-                             </div>
-                         </div>
+                            <div class="controler">
+                                {% if Ticket.status==0 %}
+                                    Close
+                                {% else %}
+                                    Open
+                                {% endif %} Ticket -
+                                <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">
+                                    Click for Switch to {% if Ticket.status==0 %}
+                                        Open
+                                    {% else %}
+                                        Close
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
 
-                     {% endfor %}
+
+
+
+
+
+
+                    {% endfor %}
 
                 </div>
-
-
 
 
             </div>

@@ -1,17 +1,61 @@
-{name:'Colors', openWith:'[color=[![Color]!]]', closeWith:'[/color]', dropMenu: [
-{name:'Yellow', openWith:'[color=yellow]', closeWith:'[/color]', className:"col1-1" },
-{name:'Orange', openWith:'[color=orange]', closeWith:'[/color]', className:"col1-2" },
-{name:'Red', openWith:'[color=red]', closeWith:'[/color]', className:"col1-3" },
-{name:'Blue', openWith:'[color=blue]', closeWith:'[/color]', className:"col2-1" },
-{name:'Purple', openWith:'[color=purple]', closeWith:'[/color]', className:"col2-2" },
-{name:'Green', openWith:'[color=green]', closeWith:'[/color]', className:"col2-3" },
-{name:'White', openWith:'[color=white]', closeWith:'[/color]', className:"col3-1" },
-{name:'Gray', openWith:'[color=gray]', closeWith:'[/color]', className:"col3-2" },
-{name:'Black', openWith:'[color=black]', closeWith:'[/color]', className:"col3-3" }
-]},
-{name:'Size', key:'S', openWith:'[size=[![Text size]!]]', closeWith:'[/size]', dropMenu :[
-{name:'Big', openWith:'[size=200]', closeWith:'[/size]' },
-{name:'Normal', openWith:'[size=100]', closeWith:'[/size]' },
-{name:'Small', openWith:'[size=50]', closeWith:'[/size]' }
-]},
+<div class="control-group">
+    {{ form_label(form.itemName) }}
+    {{ form_widget(form.itemName) }}
+    {{ form_errors(form.itemName) }}
+</div>
+<div class="control-group">
+    {{ form_label(form.itemFaceValue) }}
+    {{ form_widget(form.itemFaceValue) }}
+    {{ form_errors(form.itemFaceValue) }}
+</div>
+<div class="control-group">
+    {{ form_label(form.itemCurrency) }}
+    <div class="controls">
+        {{ form_widget(form.itemCurrency) }}
+    </div>
+    {{ form_errors(form.itemCurrency) }}
+</div>
+<div class="control-group">
+    {{ form_label(form.itemType) }}
+    <div class="controls">
+        {{ form_widget(form.itemType) }}
+    </div>
+    {{ form_errors(form.itemType) }}
+</div>
+<div class="control-group">
+    {{ form_label(form.alertMinStock) }}
+    {{ form_widget(form.alertMinStock) }}
+    {{ form_errors(form.alertMinStock) }}
+</div>
+<div class="control-group">
+    {{ form_label(form.operator) }}
+    <div class="controls">
+        {{ form_widget(form.operator) }}
+    </div>
+    {{ form_errors(form.operator) }}
+</div>
 
+<div class="control-group">
+    {{ form_label(form.Country) }}
+    <div class="controls">
+        {{ form_widget(form.Country) }}
+    </div>
+    {{ form_errors(form.Country) }}
+</div>
+
+<div class="control-group">
+    {{ form_label(form.itemCode) }}
+    {{ form_widget(form.itemCode) }}
+    {{ form_errors(form.itemCode) }}
+</div>
+
+<div class="control-group">
+    {{ form_label(form.ItemDescs[0].desclang) }}
+    <div class="controls">
+        {{ form_widget(form.ItemDescs[0].desclang) }}
+    </div>
+    {{ form_errors(form.ItemDescs[0].desclang) }}
+</div>
+
+
+{{ form_rest(form) }}
