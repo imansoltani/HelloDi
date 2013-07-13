@@ -8,6 +8,21 @@
 
 
 @media only screen and (max-width: 980px) {
+
+
+    .ticket .columns{
+        width: 100%;
+    }
+
+    .ticket .columns .rows.manage{
+        padding-bottom: 10px;
+    }
+
+    .ticket .columns .rows{
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
     /* MenuBar
                 ========================================================= */
     .MenuBar .menubar_items ul{
@@ -212,6 +227,12 @@
 
 
 @media only screen and (max-width:550px){
+
+
+
+
+    /* DataTable */
+
     .datatable > div > div:first-child , .datatable > div > div:last-child{
         height: 100px;
 
@@ -234,6 +255,31 @@
 }
 
 @media only screen and (max-width: 450px) {
+
+
+    /* Tickets */
+
+    .ticket .columns{
+        width: 100%;
+    }
+
+    .ticket .columns .rows{
+        width: 100%;
+        display: inline-block;
+    }
+
+    .ticket .columns:last-child .rows:first-child{
+        padding-bottom: 0px;
+
+
+    }
+
+    .ticket .rows.manage{
+        padding-top: 10px;
+    }
+
+
+    /* ------------ */
 
     .containerpop{
         width: 90%;

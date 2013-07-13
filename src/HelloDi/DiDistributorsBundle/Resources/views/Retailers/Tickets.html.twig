@@ -22,7 +22,7 @@
         <div class="widget stacked ">
             <div class="widget-content">
 
-                <div class="form_search">
+                <div class="form_search" style="border-bottom: 2px solid #a8d5f4;">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
                             <i id="search_logo" class="icon-search"></i>
@@ -103,82 +103,84 @@
                     </script>
                 </div>
 
-                <div class="tablediv">
+                <div>
 
+                     {% for Ticket in pagination %}
 
-                        <div class="tab-content">
-                            <table style="margin-top: 20px"
-                                   class="table table-bordered table-striped table-highlight postsend">
-                                <thead>
-                                <tr>
-                                    <th>{{ 'Tickets.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.type' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Subject' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Countact' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tickets.Change Status' | trans ({}, "account") }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                {% for Ticket in pagination %}
-                                    <tr>
-                                        <td>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</td>
-
-                                        <td>
-
-                                            {% if Ticket.type==0 %}Payment
-                                            {% elseif Ticket.type==1 %}new item request
-                                            {% elseif Ticket.type==2 %}price change request
-                                            {% elseif Ticket.type==3 %}Payment
-                                            {% elseif Ticket.type==4 %}Payment
-                                                {% endif %}
-                                          </td>
-                                        <td>
-                                            {% if Ticket.status==1 %}
-                                        <a href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}">
-                                            {{ Ticket.subject }}
-                                        </a>
-                                                {% else %}
-                                                {{ Ticket.subject }}
-                                                {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if Ticket.Accountdist is not null %}
+                         <div class="ticket {% if Ticket.status==0 %}
+                                    closet
+                                    {% else %}
+                                    opent
+                                    {% endif %}">
+                             <a class="subject" {% if Ticket.status==1 %}  href="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" {% endif %}} >
+                                 <i class="{% if Ticket.status==0 %}
+                                    icon-remove
+                                    {% else %}
+                                    icon-ok
+                                    {% endif %}
+                                 " ></i>{{ Ticket.subject }}
+                             </a>
+                             <div class="tables">
+                                 <div class="columns" >
+                                     <div class="rows" >
+                                         <label>{{ 'Tickets.Countact' | trans ({}, "account") }}</label>
+                                         <span>{% if Ticket.Accountdist is not null %}
                                             {{ Ticket.Accountdist.accName }}
                                                 {% else %}
-                                                Master
-                                                  {% endif %}
-                                                </td>
+                                                 Master
+                                             {% endif %}</span>
+                                     </div>
+                                     <div class="rows" >
+                                         <label>{{ 'Tickets.Date' | trans ({}, "account") }}</label>
+                                         <span>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</span>
+                                     </div>
+                                 </div>
+                                 <div class="columns" >
+                                     <div class="rows" >
+                                         <label>{{ 'Tickets.type' | trans ({}, "account") }}</label>
+                                         <span> {% if Ticket.type==0 %}Payment
+                                             {% elseif Ticket.type==1 %}new item request
+                                             {% elseif Ticket.type==2 %}price change request
+                                             {% elseif Ticket.type==3 %}Payment
+                                             {% elseif Ticket.type==4 %}Payment
+                                             {% endif %}</span>
+                                     </div>
+                                     <div class="rows" >
+                                         <label>{{ 'Tickets.Count Notread' | trans ({}, "account") }}</label>
+                                         <span> {% set i=0 %}
+                                             {% for Note in Ticket.TicketNotes %}
+                                                 {% if Note.view==0 and Note.User!=app.user %}
+                                                     {% set i=i+1  %}
+                                                 {% endif %}
+                                             {% endfor %}
 
-                                        <td>
-                                            {% set i=0 %}
-                                        {% for Note in Ticket.TicketNotes %}
-                                            {% if Note.view==0 and Note.User!=app.user %}
-                                                {% set i=i+1  %}
-                                            {% endif %}
-                                          {% endfor %}
+                                             {{ i }}</span>
+                                     </div>
+                                 </div>
+                                 <div class="columns" >
+                                     <div class="rows" >
+                                         <label>{{ 'Tickets.Change Status' | trans ({}, "account") }}</label>
+                                     </div>
+                                     <a  href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}" class="rows manage" >
 
-                                            {{ i }}
+                                         <span>
+                                             {% if Ticket.status==0 %}
+                                             Open
+                                             {% else %}
+                                             Close
+                                             {% endif %}
+                                         </span>
+                                     </a>
+                                 </div>
+                             </div>
+                         </div>
 
-                                        </td>
-
-
-<td>{% if Ticket.status==0 %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
-    {% else %}
-        <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Close</a>
-    {% endif %}</td>
-
-                                    </tr>
-
-                                {% endfor %}
-
-                                </tbody>
-                            </table>
-                        </div>
+                     {% endfor %}
 
                 </div>
+
+
+
 
             </div>
         </div>

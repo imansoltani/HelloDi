@@ -6,6 +6,12 @@
     Items Management
 {% endblock title %}
 
+{% block Link_Head %}
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu.css') }}' rel='stylesheet' type='text/css'>
+
+{% endblock %}
+
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('item') }}">Item</a>
@@ -20,47 +26,21 @@
         <h3>Edit Item Description</h3>
     </div> <!-- /widget-header -->
 
-    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: "textarea",
-            plugins: [
-                "advlist autolink lists image charmap preview anchor",
-                "template paste textcolor",
-                "table "
-            ]
-            ,toolbar1: "insertfile undo redo | styleselect  | bold italic | alignleft aligncenter alignright alignjustify |  fontselect fontsizeselect",
-            toolbar2: "table | preview media | forecolor backcolor | bullist numlist outdent indent | link image",
-            menubar: false,
-            toolbar_items_size: 'small',
 
-            style_formats: [
-                {title: 'Bold text', inline: 'b'},
-                {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
-                {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
-                {title: 'Example 1', inline: 'span', classes: 'example1'},
-                {title: 'Example 2', inline: 'span', classes: 'example2'},
-                {title: 'Table styles'},
-                {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
-            ]
-
-
-
-        });
-
-    </script>
 
 
     <form id="editform" action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
         {{ form_errors(form) }}
         <div class="control-group">
             {{ form_label(form.desclang) }}
-            {{ form_widget(form.desclang) }}
+            <div class="controls" >
+                {{ form_widget(form.desclang) }}
+            </div>
         </div>
         <div class="control-group">
             {{ form_label(form.descdesc) }}
             <div class="controls">
-                {{ form_widget(form.descdesc) }}
+                {{ form_widget(form.descdesc, { 'id': 'texteditor' }) }}
             </div>
         </div>
 
@@ -73,8 +53,43 @@
             <button type="reset" class="btn">Reset</button>
         </div>
 
-    <script type="text/javascript">
-        $(function(){
+
+        <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
+        <script type="text/javascript">
+
+
+            $(function(){
+                $('#texteditor').htmlarea({
+                    toolbar: [
+                        "bold", "italic", "underline","strikethrough",
+                        "|",
+                        "justifyleft","justifycenter","justifyright",
+                        "|",
+                        "h1", "h2", "h3",
+                        "|",
+                        "increasefontsize","decreasefontsize",
+                        "|",
+                        "orderedList  ",
+                        "unorderedList  ",
+                        "|",
+                        "horizontalrule",
+                        "superscript",
+                        "subscript",
+                        "|",
+                        "indent","outdent",
+                        "|","forecolor"
+                    ]
+                });
+
+                $('.jHtmlArea').removeAttr('style');
+                $('.jHtmlArea').attr('style','max-width:470px');
+                $('.jHtmlArea .ToolBar').removeAttr('style');
+                $('.jHtmlArea > div').attr('style','width:100%');
+                $('.jHtmlArea > div > iframe').removeAttr('style');
+                $('.jHtmlArea > div > iframe').attr('style','min-height: 57px;width:100%');
+
+
             /*var x = $("#editform body").html();
             $("#editform").submit(function(e){
                 var x = $(".mce-content-body").html();

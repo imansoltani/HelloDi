@@ -936,3 +936,155 @@ body .sort_item div.active{
     background: #eeeeee;
     color: #2c5580;
 }
+
+
+
+
+/* Tickets */
+.ticket{
+    display: block;
+    width: 95%;
+    margin: 0px auto;
+    padding-left: 10px;
+    border:solid thin #daedfa;
+    border-top-width:0px ;
+    color: #868686;
+
+
+    /* Note: This gradient may render differently in browsers that don't support the unprefixed gradient syntax */
+
+    /* IE10 Consumer Preview */
+    background-image: -ms-linear-gradient(top left, #F9F9F9 0%, #FFFFFF 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top left, #F9F9F9 0%, #FFFFFF 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(top left, #F9F9F9 0%, #FFFFFF 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #F9F9F9), color-stop(1, #FFFFFF));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top left, #F9F9F9 0%, #FFFFFF 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to bottom right, #F9F9F9 0%, #FFFFFF 100%);
+
+    transition: background 0.25s , border 0.1s  ;
+    -webkit-transition: background 0.25s , border 0.1s ;
+}
+
+.ticket:hover , .ticket:nth-child(2n+1):hover{
+    background: #FFFFFF;
+    border-bottom-width: 3px ;
+    color: #000000;
+}
+
+
+.ticket.closet{
+
+background: #eeebeb;
+
+}
+
+.ticket:nth-child(2n+1)
+{
+
+}
+
+
+
+.ticket a:hover ,.ticket a:active{
+    text-decoration: none;
+}
+
+
+
+.ticket:first-child{
+    border-top-width:thin ;
+}
+
+.ticket .subject{
+    display: block;
+    color: #a8d5f4;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
+
+    transition: color 0.25s , text-shadow 0.2s  ;
+    -webkit-transition: color 0.25s , text-shadow 0.2s ;
+}
+
+.ticket.opent .subject{
+    cursor: pointer;
+}
+
+.ticket:hover .subject{
+    color: #2a75a8;
+}
+
+.ticket.opent .subject:hover{
+    color: #154464;
+    text-shadow: 0px 0px 1px #5392bd;
+
+}
+
+.ticket.opent .subject:active{
+    color: #12364f;
+    text-shadow: 0px 0px 0px #5392bd;
+}
+
+
+
+.ticket .subject i{
+    padding-right: 10px;
+}
+
+.ticket .tables{
+
+}
+
+.ticket .columns{
+    width: 32%;
+    display: inline-block;
+}
+
+.ticket .columns .rows{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.ticket .columns .rows Label{
+    width: 45%;
+    display: inline-block;
+    cursor: default;
+}
+
+.ticket .columns .rows span{
+    font-weight: bold;
+}
+
+
+
+.ticket .rows.manage{
+    font-size: 20px;
+    text-align: center;
+    padding-bottom: 10px;
+    display: block;
+    width: 100%;
+
+    color: #65e8d1;
+    text-shadow: 0px 2px 2px #FFF;
+
+    transition : color 0.15s ;
+    -webkit-transition : color 0.1s ;
+}
+
+.ticket:hover .rows.manage{
+    color: #2db29a;
+}
+
+.ticket .rows.manage:hover{
+    color: #166d5e;
+}
