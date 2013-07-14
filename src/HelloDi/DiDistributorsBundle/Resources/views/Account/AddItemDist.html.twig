@@ -27,7 +27,7 @@
 
             <div class="control-group">
                 {{ form_label(form.price) }}
-                <div class="controls" >{{ form_widget(form.price) }} {{ Account.accCurrency }}</div>
+                <div class="controls money" >{{ form_widget(form.price) }} | {{ Account.accCurrency }}</div>
                 {{ form_errors(form.price) }}
             </div>
 

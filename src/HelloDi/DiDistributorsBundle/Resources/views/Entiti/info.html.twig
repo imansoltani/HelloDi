@@ -13,54 +13,75 @@
         <h3>Entity Info</h3>
     </div> <!-- /widget-header -->
 
-    <form style="margin-top: 20px" action="{{ path('Ent_InfoSubmit') }}" method="post" class="form-horizontal" >
+    <form  action="{{ path('Ent_InfoSubmit') }}" method="post" class="form-horizontal" >
         <fieldset>
 
 
 
 
-            {{ form_label(edit_form.entName) }}
-            {{ form_widget(edit_form.entName,{'attr':{'readonly':''}}) }}
-            </br>
+            <div class="control-group">
+                {{ form_label(edit_form.entName) }}
+                {{ form_widget(edit_form.entName,{'attr':{'readonly':''}}) }}
+            </div>
 
-            {{ form_label(edit_form.entVatNumber) }}
-            {{ form_widget(edit_form.entVatNumber,{'attr':{'readonly':''}}) }}
-            </br>
+            <div class="control-group">
+                {{ form_label(edit_form.entVatNumber) }}
+                {{ form_widget(edit_form.entVatNumber,{'attr':{'readonly':''}}) }}
+            </div>
 
-            {{ form_label(edit_form.entTel1) }}
-            {{ form_widget(edit_form.entTel1) }}
-            </br>
 
-            {{ form_label(edit_form.entTel2) }}
-            {{ form_widget(edit_form.entTel2) }}
-            </br>
 
-            {{ form_label(edit_form.entFax) }}
-            {{ form_widget(edit_form.entFax) }}
-            </br>
+            <div class="control-group">
+                {{ form_label(edit_form.entTel1) }}
+                {{ form_widget(edit_form.entTel1) }}
+            </div>
 
-            {{ form_label(edit_form.entWebsite) }}
-            {{ form_widget(edit_form.entWebsite) }}
 
-            </br>
+            <div class="control-group">
+                {{ form_label(edit_form.entTel2) }}
+                {{ form_widget(edit_form.entTel2) }}
+            </div>
+
+
+            <div class="control-group">
+                {{ form_label(edit_form.entFax) }}
+                {{ form_widget(edit_form.entFax) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(edit_form.entWebsite) }}
+                {{ form_widget(edit_form.entWebsite) }}
+            </div>
+
+            <div class="control-group">
             {{ form_label(edit_form.entAdrs1) }}
-            {{ form_widget(edit_form.entAdrs1) }}
-            </br>
+            {{ form_widget(edit_form.entAdrs1) }}</div>
 
-            {{ form_label(edit_form.entAdrs2) }}
-            {{ form_widget(edit_form.entAdrs2) }}
-            </br>
 
+            <div class="control-group">
+                {{ form_label(edit_form.entAdrs2) }}
+                {{ form_widget(edit_form.entAdrs2) }}
+            </div>
+
+
+            <div class="control-group">
             {{ form_label(edit_form.entAdrs3) }}
-            {{ form_widget(edit_form.entAdrs3) }}
-            </br>
+            {{ form_widget(edit_form.entAdrs3) }}</div>
 
-            {{ form_label(edit_form.entCity) }}
-            {{ form_widget(edit_form.entCity) }}
-            </br>
 
-            {{ form_label(edit_form.Country) }}
-            {{ form_widget(edit_form.Country) }}
+
+            <div class="control-group">
+                {{ form_label(edit_form.entCity) }}
+                {{ form_widget(edit_form.entCity) }}
+            </div>
+
+           <div class="control-group">
+               {{ form_label(edit_form.Country) }}
+               <div class="controls">
+                   {{ form_widget(edit_form.Country) }}
+               </div>
+           </div>
+
             {{ form_widget(edit_form._token) }}
 
             <input type="hidden" name="entityid" value="{{ entityid }}"/>

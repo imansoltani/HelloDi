@@ -11,46 +11,101 @@
 {% block Tab %}
 
 
-    <div class="tablediv">
-        <div class="contenttitle">
-            <h4>Entity Info</h4>
+
+
+
+    <div class="widget-header">
+        <h3>Entity Info</h3>
+
+    </div> <!-- /widget-header -->
+
+
+
+
+
+    <form class="form-horizontal">
+
+        <div class="control-group">
+            <label class="control-label">
+                Name
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entName }}">
+            </div>
         </div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table postsend">
-                <thead>
-                <tr>
 
-                    <th>Name</th>
-                    <th>VatNumber</th>
-                    <th>NP</th>
-                    <th>Tel1</th>
-                    <th>Fax</th>
-                    <th>City</th>
-
-                    <th>Address</th>
-                    <th>Country</th>
-                    <th>Website</th>
-
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>{{ entiti.entName }}</td>
-                    <td>{{ entiti.entVatNumber }}</td>
-                    <td>{{ entiti.entNp}}</td>
-                    <td>{{ entiti.entTel1 }}</td>
-                    <td>{{ entiti.entFax }}</td>
-                    <td>{{ entiti.entCity }}</td>
-                    <td>{{ entiti.entAdrs1 }}/{{ entiti.entAdrs2 }}/{{ entiti.entAdrs3}}</td>
-                    <td>{{ entiti.Country.iso }}</td>
-                    <td>{{ entiti.entWebsite }}</td>
-
-                </tr>
-                </tbody>
-            </table>
+        <div class="control-group">
+            <label class="control-label">
+                VatNumber
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entVatNumber }}">
+            </div>
         </div>
-    </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                NP
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entNp}}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Tel1
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entTel1 }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Fax
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entFax }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                City
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entCity }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Address
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entAdrs1 }}/{{ entiti.entAdrs2 }}/{{ entiti.entAdrs3}}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Country
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.Country.iso }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Website
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entWebsite }}">
+            </div>
+        </div>
+    </form>
 
     <hr>
     </div>

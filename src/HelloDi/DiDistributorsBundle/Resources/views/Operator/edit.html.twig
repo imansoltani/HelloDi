@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block PageTitle %}
-    <i class="icon-tags"></i>
+    <i class="icon-align-justify"></i>
     Edit Operator
 {% endblock %}
 
@@ -32,9 +32,13 @@
             {{ form_errors(edit_form.name) }}
         </div>
 
-        <div class="span">
-            Logo:
-            <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
+        <div class="control">
+            <label class="control-label">
+                Logo
+            </label>
+            <div class="controls">
+                <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
+            </div>
         </div>
 
         <div class="control-group">

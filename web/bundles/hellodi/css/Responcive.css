@@ -431,6 +431,12 @@
         width: 100%;
     }
 
+    form .control-group .controls.money > .controls{
+        margin-top: 5px;
+        margin-left: 0px;
+        width: 70%;
+    }
+
     form .control-group .controls > .controls input{
         margin-left: 0px;
     }
@@ -448,6 +454,10 @@
 
     .form-horizontal .controls input {
         width: 97%;
+    }
+
+    .form-horizontal .controls.money input {
+        width: 100%;
     }
     .main select{
         width: 97%;

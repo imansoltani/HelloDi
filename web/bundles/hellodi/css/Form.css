@@ -348,6 +348,10 @@ form .control-group .controls > .controls{
 
 }
 
+form .control-group .controls.money > .controls{
+    margin-left: 0px;
+}
+
 /* Tabs */
 
 .main .pagetop .tabbar{

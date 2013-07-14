@@ -1,15 +1,13 @@
-{#{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}#}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
 
-{#{% set tab = '2' %}#}
+{% set tab = '3' %}
 
-{#{% block Site_Map %}#}
-    {#<a class="link" href="{{ path('loginsuccess') }}">Home</a>#}
-    {#<a class="link" href="{{ path('Ent_Main') }}">Entities</a>#}
-    {#<a class="link" href="#">{{User.Entiti.entName }}</a>#}
-    {#<span class="link">Users</span>#}
-{#{% endblock Site_Map %}#}
-
-{#{% block Tab %}#}
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
+    <span class="link">Edit Address</span>
+{% endblock Site_Map %}
+{% block Tab %}
 
 <div class="widget-header">
     <h3>Manage Address</h3>
@@ -44,12 +42,19 @@
 
     <div class="control-group">
     {{ form_label(form_edit.Country) }}
-    {{ form_widget(form_edit.Country) }}
+    <div class="controls">
+        {{ form_widget(form_edit.Country) }}
+    </div>
     </div>
 
    {#// <input type="hidden" value="{{ entity.id }}">#}
     {{ form_widget(form_edit._token) }}
 
-    <input type="submit" value="edit">
+
+
+    <div class="form-actions" style="margin-bottom: 0" >
+        <input class="btn btn-primary" type="submit"  value="edit">
+
+    </div>
 </form>
-{#{% endblock %}#}
+{% endblock %}
