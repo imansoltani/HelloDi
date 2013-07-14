@@ -1789,7 +1789,7 @@ if($request->isMethod('post'))
 }
         $pagination = $paginator->paginate(
             $qb,
-             $request->get('search_page',1), /*page number*/
+             $request->get('page',1), /*page number*/
             10/*limit per page*/
         );
 
