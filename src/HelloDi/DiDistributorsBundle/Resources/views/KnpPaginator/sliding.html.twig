@@ -1,12 +1,17 @@
 {# default Sliding pagination control implementation #}
 
 {% if pageCount > 1 %}
+
+
+
 <div class="pagination">
+
+
 
         <span><a
                 {% if first is defined and current != first %}
-                    href="{{ path(route, query|merge({(pageParameterName): first})) }}"
                     class=" btn"
+                    onclick="PagingAction(event,{{ first }}});"
                 {% endif %}
                     class="btn dis">
                 <span>First</span>
@@ -16,8 +21,8 @@
 
 
         <span><a
-                    {% if previous is defined %}
-                        href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class=" btn"
+                    {% if previous is defined %} class=" btn"
+                        onclick="PagingAction({{ previous }});"
                     {% endif %}
                     class="btn dis"
             >
@@ -29,8 +34,9 @@
     {% for page in pagesInRange %}
             <span>
                 <a
+
                         {% if page != current %}
-                            href="{{ path(route, query|merge({(pageParameterName): page})) }}"
+                            onclick="PagingAction({{ page }});"
                             class="btn"
                         {% else %}
                             class="btn btn-primary current"
@@ -44,7 +50,7 @@
 
         <span><a
                     {% if next is defined %}
-                        href="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                        onclick="PagingAction({{ next }});"
                          class="btn"
                     {% endif %}
                     class="btn dis"
@@ -57,7 +63,7 @@
 
         <span><a
                     {% if last is defined and current != last %}
-                        href="{{ path(route, query|merge({(pageParameterName): last})) }}"
+                        onclick="PagingAction({{ last }});"
                          class="btn"
                     {% endif %}
                     class="btn dis"
@@ -67,4 +73,17 @@
                     </a></span>
 
 </div>
+
+
+    <script type="text/javascript" >
+
+        function PagingAction(x)
+        {
+
+            $('#search_page').val(x);
+            $('.SearchForm').submit();
+        }
+
+    </script>
+
 {% endif %}

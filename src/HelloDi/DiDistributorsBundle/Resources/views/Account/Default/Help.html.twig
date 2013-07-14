@@ -1,61 +1,90 @@
-<div class="control-group">
-    {{ form_label(form.itemName) }}
-    {{ form_widget(form.itemName) }}
-    {{ form_errors(form.itemName) }}
-</div>
-<div class="control-group">
-    {{ form_label(form.itemFaceValue) }}
-    {{ form_widget(form.itemFaceValue) }}
-    {{ form_errors(form.itemFaceValue) }}
-</div>
-<div class="control-group">
-    {{ form_label(form.itemCurrency) }}
-    <div class="controls">
-        {{ form_widget(form.itemCurrency) }}
-    </div>
-    {{ form_errors(form.itemCurrency) }}
-</div>
-<div class="control-group">
-    {{ form_label(form.itemType) }}
-    <div class="controls">
-        {{ form_widget(form.itemType) }}
-    </div>
-    {{ form_errors(form.itemType) }}
-</div>
-<div class="control-group">
-    {{ form_label(form.alertMinStock) }}
-    {{ form_widget(form.alertMinStock) }}
-    {{ form_errors(form.alertMinStock) }}
-</div>
-<div class="control-group">
-    {{ form_label(form.operator) }}
-    <div class="controls">
-        {{ form_widget(form.operator) }}
-    </div>
-    {{ form_errors(form.operator) }}
-</div>
+{# default Sliding pagination control implementation #}
 
-<div class="control-group">
-    {{ form_label(form.Country) }}
-    <div class="controls">
-        {{ form_widget(form.Country) }}
-    </div>
-    {{ form_errors(form.Country) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.itemCode) }}
-    {{ form_widget(form.itemCode) }}
-    {{ form_errors(form.itemCode) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.ItemDescs[0].desclang) }}
-    <div class="controls">
-        {{ form_widget(form.ItemDescs[0].desclang) }}
-    </div>
-    {{ form_errors(form.ItemDescs[0].desclang) }}
-</div>
+{% if pageCount > 1 %}
 
 
-{{ form_rest(form) }}
+
+    <div class="pagination">
+
+
+
+        <span><a
+                    {% if first is defined and current != first %}
+                        href="{{ path(route, query|merge({(pageParameterName): first})) }}"
+                        class=" btn"
+                        onclick="PagingAction(event,'1');"
+                    {% endif %}
+                    class="btn dis">
+                <span>First</span>
+                <i class="icon-step-backward" ></i>
+            </a></span>
+
+
+
+        <span><a
+                    {% if previous is defined %}
+                        href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class=" btn"
+                        onclick="PagingAction(event,{{ current }} - 1);"
+                    {% endif %}
+                    class="btn dis"
+                    >
+                <span>Prev</span>
+                <i class="icon-backward" ></i>
+            </a></span>
+
+
+        {% for page in pagesInRange %}
+            <span>
+                <a
+                        {% if page != current %}
+                            href="{{ path(route, query|merge({(pageParameterName): page})) }}"
+                            class="btn"
+                        {% else %}
+                            class="btn btn-primary current"
+                        {% endif %}
+                        >{{ page }}</a>
+            </span>
+
+
+        {% endfor %}
+
+
+        <span><a
+                    {% if next is defined %}
+                        href="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                        class="btn"
+                    {% endif %}
+                    class="btn dis"
+                    >
+                <span>Next</span>
+                <i class="icon-forward" ></i>
+            </a></span>
+
+
+
+        <span><a
+                    {% if last is defined and current != last %}
+                        href="{{ path(route, query|merge({(pageParameterName): last})) }}"
+                        class="btn"
+                    {% endif %}
+                    class="btn dis"
+                    >
+                <span>Last</span>
+                <i class="icon-step-forward" ></i>
+            </a></span>
+
+    </div>
+
+
+    <script type="text/javascript" >
+
+        function PagingAction(e,x)
+        {
+            e.preventDefault();
+            $('#search_page').val(x);
+            $('.SearchForm').submit();
+        }
+
+    </script>
+
+{% endif %}
