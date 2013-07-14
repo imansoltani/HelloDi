@@ -48,7 +48,7 @@ class AccountController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/
+            $request->get('page',1) /*page number*/
 
         );
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
@@ -392,7 +392,7 @@ $qb=array();
 
         $pagination = $paginator->paginate(
             $qb,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -681,7 +681,7 @@ $qb=array();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $result,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -937,7 +937,7 @@ $qb=array();
 
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -1004,7 +1004,7 @@ $qb=array();
 
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/
+            $request->get('page',1) /*page number*/
         /*limit per page*/
         );
 
@@ -1089,7 +1089,7 @@ $qb=array();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $request->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -1133,7 +1133,7 @@ $qb=array();
 
         $pagination = $paginator->paginate(
             $result,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $request->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -1764,6 +1764,7 @@ $qb=array();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 $qb=array();
+
 if($request->isMethod('post'))
 {
 
@@ -1781,17 +1782,23 @@ if($request->isMethod('post'))
         $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));
 
 
+
     $qb=$qb->getQuery();
 
     $count = count($qb->getResult());
     $qb->setHint('knp_paginator.count', $count);
 
 }
+
+
+//die('sas'.$request->get('page'));
+
         $pagination = $paginator->paginate(
             $qb,
              $request->get('page',1), /*page number*/
             10/*limit per page*/
         );
+
 
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',

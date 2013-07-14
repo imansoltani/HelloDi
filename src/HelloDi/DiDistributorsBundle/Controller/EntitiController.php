@@ -68,7 +68,7 @@ class EntitiController extends Controller
         $query = $query->setHint('knp_paginator.count', $count);
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $request->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -125,7 +125,7 @@ class EntitiController extends Controller
 
         $pagination = $paginator->paginate(
             $Users,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $request->get('page',1) /*page number*/,
             6/*limit per page*/
         );
         // die('sas'.count($pagination));

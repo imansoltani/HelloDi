@@ -34,7 +34,7 @@
                             <td>{{ Trans.tranDate|date('Y-m-d') }}</td>
                             {% if Trans.tranAmount > 0 %}
                                 <td>
-                                    {{ Trans.tranCredit }}
+                                    {{ Trans.tranAmount }}
 
                                 </td>
 
@@ -46,7 +46,7 @@
                             {% else  %}
 
                                 <td>
-                                    {{ -Trans.tranDebit }}
+                                    {{ -Trans.tranAmount }}
                                 </td>
 
                                 <td>

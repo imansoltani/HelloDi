@@ -11,7 +11,7 @@
         <span><a
                 {% if first is defined and current != first %}
                     class=" btn"
-                    onclick="PagingAction(event,{{ first }}});"
+                    onclick="PagingAction({{ first }});"
                 {% endif %}
                     class="btn dis">
                 <span>First</span>

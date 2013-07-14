@@ -51,7 +51,7 @@
                 <input type="hidden" value="1" name="page" id="search_page" >
 
                 <hr>
-                <input class="btn btn-primary" onclick="$('#search_page').val(1);" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="Search">
             </fieldset>
         </form>
         <script type="text/javascript">
@@ -107,9 +107,9 @@
                             <td>{{ tran.tranDate|date('Y-m-d') }}</td>
                             <td>{{ tran.tranDescription }}</td>
 
-                        {% if tran.tranAmount > 0 %}
+                        {% if tran.tranAmount >= 0 %}
                             <td>
-                            {{ tran.tranCredit }}
+                            {{ tran.tranAmount}}
 
                             </td>
 
@@ -121,7 +121,7 @@
                             {% else  %}
 
                                 <td>
-                                    {{ -tran.tranDebit }}
+                                    {{ -tran.tranAmount }}
                                 </td>
 
                                 <td>
