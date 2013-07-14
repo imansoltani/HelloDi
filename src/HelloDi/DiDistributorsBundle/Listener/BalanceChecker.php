@@ -36,6 +36,15 @@ class BalanceChecker
 
    }
 
+    public function isAccCreditLimitPlus(Account $account,$value)
+    {
+        if(($account->getAccCreditLimit()-$value)>=0)
+            return true;
+        throw new \Exception('اعتبار نمی تواند منفی باشد');
+
+    }
+
+
     private function currenciesMatch($accountCurr, $priceCurr)
     {
         if (strcasecmp($accountCurr, $priceCurr) == 0) {

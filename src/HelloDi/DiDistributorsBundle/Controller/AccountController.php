@@ -343,8 +343,8 @@ $qb=array();
                     'pmt' => 'credit distributor,s account',
                     'amdt' => 'debit distributor,s account',
                     'com_pmt' => 'debit distributor,s account for the commisson payments',
-                    'pmt' => 'ogone payment on its own account',
-                     'tran'=>'transfer credit from distributors account to a retailer,s account',
+                    'ogo_pmt' => 'ogone payment on its own account',
+                    'tran'=>'transfer credit from distributors account to a retailer,s account',
                     'crtl'=>'increase retailer,s credit limit'
 
                 )))
@@ -432,8 +432,10 @@ $qb=array();
             ->add('As', 'choice', array(
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'Credit' => 'Credit',
-                    'Debit' => 'Debit')
+                    'pmt' => 'Credit',
+                    'amdt' => 'Debit',
+                     'com_pmt' =>'Debit distributor,s account for the commission payments'
+                )
             ))
             ->add('Description', 'textarea',
                 array(
@@ -445,7 +447,7 @@ $qb=array();
             ->add('Amount', 'text')
             ->add('As', 'choice', array(
                 'preferred_choices' => array('Credit'),
-                'preferred_choices' => array('Credit'),
+                 'preferred_choices' => array('Credit'),
                 'choices' => array('Credit' => 'Credit', 'Debit' => 'Debit')
             ))->getForm();
 
@@ -472,13 +474,17 @@ $qb=array();
             ->add('As', 'choice', array(
                 'preferred_choices' => array('Credit'),
                 'choices'
-                => array('Credit' => 'Credit', 'Debit' => 'Debit')))
+                => array(
+                    'pmt' => 'Credit distributor,s account',
+                    'amdt' => 'Debit distributor,s account',
+                    'com_pmt'=>'Debit distributor,s account for the commission payments'
+                )))
             ->add('Description', 'textarea', array('required' => false))
             ->getForm();
 
         if ($req->isMethod('post')) {
             $trandist = new Transaction();
-            $formapplay->bind($req);
+            $formapplay->handleRequest($req);
             $data = $formapplay->getData();
 
             //objeavt transaction//
@@ -493,31 +499,48 @@ $qb=array();
             $trandist->setTranDescription($data['Description']);
 
 
-            if ($data['As'] == 'Credit') {
-                $trandist->setTranType(1);
+            if ($data['As'] == 'pmt') {
+                $trandist->setTranTypCredite(1);
                 if ($data['Amount'] != '') {
                     $trandist->setTranAmount(+$data['Amount']);
-                    $trandist->setTranAction('pmt');
+                    $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
                     $em->flush();
                 }
             }
-        }
 
 
-        if ($data['As'] == 'Debit') {
+
+        elseif ($data['As'] == 'amdt') {
             $trandist->setTranType(0);
             if ($data['Amount'] != '') {
 
                 if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
                     $trandist->setTranAmount(-$data['Amount']);
-                    $trandist->setTranAction('amdt');
+                    $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
                     $em->flush();
                 }
             }
+
         }
 
+            elseif ($data['As'] == 'com_pmt') {
+                $trandist->setTranType(0);
+                if ($data['Amount'] != '') {
+
+                    if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                        $trandist->setTranAmount(-$data['Amount']);
+                        $trandist->setTranAction($data['As']);
+                        $em->persist($trandist);
+                        $em->flush();
+                    }
+                }
+
+            }
+
+
+        }
 
         return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
 
@@ -527,7 +550,7 @@ $qb=array();
     {
 
         $em = $this->getDoctrine()->getManager();
-
+        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formupdate = $this->createFormBuilder()
             ->add('Amount', 'text')
@@ -543,7 +566,13 @@ $qb=array();
                 $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
 
             elseif ($data['As'] == 'Debit')
-                $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
+            {
+                if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
+                {
+                    $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
+                }
+            }
+
 
             $em->flush();
         }

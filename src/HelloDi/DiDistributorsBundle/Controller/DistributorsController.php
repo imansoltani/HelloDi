@@ -293,7 +293,7 @@ class DistributorsController extends Controller
 
         if($req->isMethod('POST'))
         {
-            $formupdate->bind($req);
+            $formupdate->handleRequest($req);
             $data=$formupdate->getData();
 
             $trandist=new Transaction();
@@ -305,26 +305,35 @@ class DistributorsController extends Controller
 
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-
+            $trandist->setTranAction('crtl');
+            $trandist->setTranType(0);
+            $trandist->setTranAmount(-$data['Amount']);
+            $trandist->setAccount($Account->getParent());
 
             if($data['As']=='Credit')
             {
                if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                {
-                $trandist->setTranAction('crtl');
-                $trandist->setTranType(0);
-                $trandist->setTranAmount(-$data['Amount']);
-                $trandist->setAccount($Account->getParent());
+
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
                 $em->persist($trandist);
+                $em->flush();
                }
                }
+
             elseif($data['As']=='Debit')
             {
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
-            }
 
-            $em->flush();
+                if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
+                {
+
+                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+
+                }
+
+           }
+
+
         }
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
     }
