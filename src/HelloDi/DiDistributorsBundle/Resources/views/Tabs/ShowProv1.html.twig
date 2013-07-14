@@ -72,6 +72,15 @@
             </a>
     </li>
 
+
+    <li {% if tab == '7' %}class="active"{% endif %} >
+
+        <a href="{{ path('MasterProvEntiti',{'id':Account.id }) }}">
+
+            <input type="submit" value="Entity" >
+        </a>
+    </li>
+
 {% endblock Tabs %}
 
 

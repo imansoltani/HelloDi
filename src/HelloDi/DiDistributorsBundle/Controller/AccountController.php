@@ -32,6 +32,7 @@ use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use HelloDi\DiDistributorsBundle\Form\searchProvTransType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class AccountController extends Controller
@@ -330,9 +331,10 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $qb = $em->createQueryBuilder();
-        $result = array();
 
+
+
+$qb=array();
         $form = $this->createFormBuilder()
             ->add('Type', 'choice', array(
                 'choices' =>
@@ -340,8 +342,11 @@ class AccountController extends Controller
                     'All' => 'All',
                     'pmt' => 'credit distributor,s account',
                     'amdt' => 'debit distributor,s account',
-                    'tran' => 'transfer credit from provider,s account to a distributors account',
-                    'add' => 'add new code to system'
+                    'com_pmt' => 'debit distributor,s account for the commisson payments',
+                    'pmt' => 'ogone payment on its own account',
+                     'tran'=>'transfer credit from distributors account to a retailer,s account',
+                    'crtl'=>'increase retailer,s credit limit'
+
                 )))
             ->add('DateStart', 'date', array())
             ->add('DateEnd', 'date', array())
@@ -355,36 +360,38 @@ class AccountController extends Controller
 
 
         if ($req->isMethod('POST')) {
-            $form->bind($req);
+            $form->handleRequest($req);
             $data = $form->getData();
+            $qb = $em->createQueryBuilder();
             $qb->select('Tran')
                 ->from('HelloDiDiDistributorsBundle:Transaction', 'Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc', $Account);
-
             if ($data['TypeDate'] == 0) {
-                $qb = $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-                $qb = $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+              $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+              $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
             }
 
             if ($data['TypeDate'] == 1) {
 
-                $qb = $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-                $qb = $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+                $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             }
 
             if ($data['Type'] != 'All') {
-                $qb = $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Type'])));
+                 $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Type'])));
 
             }
 
-            $result = $qb->getQuery()->getResult();
+
+            $qb = $qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
 
         }
 
-
         $pagination = $paginator->paginate(
-            $result,
+            $qb,
             $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
@@ -1701,56 +1708,101 @@ class AccountController extends Controller
     }
 
     // kamal Prov Start
+
+
     public function MasterProvTransactionAction(Request $request, $id)
     {
 
 
-        $em = $this->getDoctrine()->getManager();
-        $searchForm = $this->createForm(new searchProvTransType());
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $qb = $em->createQueryBuilder()
-            ->select('trans.id', 'trans.tranDate', 'trans.tranDescription', 'trans.tranCredit', 'trans.tranDebit', 'acc.accBalance', 'trans.tranAction', 'trans.tranAmount')
-            ->from('HelloDiDiDistributorsBundle:Account', 'acc')
-            ->innerJoin('acc.Transactions', 'trans')
-            ->andwhere('acc.accType =:check')
-            ->setParameter('check', 1)
-            ->andwhere('acc =:check2')
-            ->setParameter('check2', $account);
-
-        if ($request->isMethod('POST')) {
-            if ($request->get('trans_id') != null) {
-                $em = $this->getDoctrine()->getManager();
-                $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($request->get('trans_id'));
-                $em->remove($trans);
-                $em->flush();
-            } elseif ($request->get('accountid') == null) {
-                $searchForm->bind($request);
-                $data = $searchForm->getData();
-                if ($data['FromDate'] != "")
-                    $qb = $qb->andWhere("trans.tranDate >= :transdateFrom")->setParameter('transdateFrom', $data['FromDate']);
-
-                if ($data['ToDate'] != "")
-                    $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
-
-                if ($data['type'] != 'All')
-                    $qb = $qb->andWhere($qb->expr()->like('trans.tranAction', $qb->expr()->literal($data['type'])));
-            }
-        }
-
-        $qb = $qb->getQuery();
-        $accProv = $qb->getResult();
-
+        $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
+        $form= $this->createFormBuilder()
+            ->add('FromDate','date')
+            ->add('ToDate','date')
+            ->add('type','choice',array(
+                'choices'=> array(
+                    'All'=>'All',
+                    'pmt'=>'credit provider,s account',
+                    'amdt'=>'debit provider,s account',
+                    'add'=>'add new codes to system',
+                    'rmv'=>'remove codes from the system'
+                )))->getForm();
 
-        $accProv = $paginator->paginate(
-            $accProv,
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+$qb=array();
+if($request->isMethod('post'))
+{
+
+    $form->handleRequest($request);
+    $data = $form->getData();
+    $qb = $em->createQueryBuilder();
+
+    $qb->select('Tr')
+        ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+        ->where('Tr.Account = :Acc')->setParameter('Acc',$Account)
+        ->andWhere("Tr.tranDate >= :transdateFrom")->setParameter('transdateFrom',$data['FromDate'])
+        ->andWhere("Tr.tranDate <= :transdateTo")->setParameter('transdateTo',$data['ToDate'] );
+
+    if ($data['type'] != 'All')
+        $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));
+
+
+    $qb=$qb->getQuery();
+
+    $count = count($qb->getResult());
+    $qb->setHint('knp_paginator.count', $count);
+
+}
+        $pagination = $paginator->paginate(
+            $qb,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            20/*limit per page*/
+            10/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig', array(
-            'accprov' => $accProv, 'Account' => $account, 'idTrans' => $id, 'form' => $searchForm->createView()));
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',
+        array(
+            'Trans' => $pagination,
+            'Account' => $Account,
+            'form' => $form->createView()
+    ));
+
     }
+#kazem alan
+
+
+public  function MasterProvTransactionDetailsAction($id){
+
+    $em = $this->getDoctrine()->getEntityManager();
+
+
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+
+    return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
+        array(
+            'Trans' => $tran,
+            'Account' =>$tran->getAccount()
+        ));
+}
+
+
+public  function MasterProvTransactionDeleteAction($id){
+    $em = $this->getDoctrine()->getEntityManager();
+
+
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+    $em->remove($tran);
+    $em->flush();
+
+    return $this->redirect($this->generateUrl('MasterProvTransaction',array('id'=>$tran->getAccount()->getId())));
+
+
+}
+
+#end alan
+
 
     public function MasterProvRemovedAction(Request $request, $id)
     {
@@ -1917,6 +1969,36 @@ class AccountController extends Controller
 
     }
 
+public  function  MasterProvEntitiAction($id)
+{
 
+  $em=$this->getDoctrine()->getEntityManager();
+
+  $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+  $Entiti=$Account->getEntiti();
+
+    return $this->render('HelloDiDiDistributorsBundle:Account:ManageProvEntiti.html.twig', array(
+        'Account' => $Account,
+        'entiti' => $Entiti
+        ));
+
+}
+
+    public  function  MasterDistEntitiAction($id)
+    {
+
+        $em=$this->getDoctrine()->getEntityManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $Entiti=$Account->getEntiti();
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistEntiti.html.twig', array(
+            'Account' => $Account,
+            'entiti' => $Entiti
+        ));
+
+    }
     #end kazem
 }

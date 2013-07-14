@@ -11,7 +11,7 @@ class BalanceChecker
     {
 
         if ($this->currenciesMatch($account->getAccCurrency(), $price->getPriceCurrency())) {
-            return ($account->getAccBalance() + $account->getAccCreditLimit() >= ($price->getPrice()*$count));
+            return  ($account->getAccBalance() + $account->getAccCreditLimit() >= ($price->getPrice()*$count));
         } else {
             throw new \Exception('The Currencies are NOT matched!');
         }

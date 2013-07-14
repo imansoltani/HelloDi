@@ -103,6 +103,19 @@
 
     </li>
 
+
+    <li {% if tab == '8' %}class="active"{% endif %} >
+        <a href="{{ path('MasterDistEntiti',{'id':Account.id}) }}">
+
+
+            <input type="submit" value="Entity" >
+
+
+        </a>
+
+    </li>
+
+
 {% endblock Tabs %}
 
 {% block Body %}

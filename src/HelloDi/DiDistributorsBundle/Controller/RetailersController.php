@@ -610,8 +610,14 @@ class RetailersController extends Controller
             ->getQuery();
         $operator = $qb->getResult();
 
-       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array('itemlist' => $item , 'operator'=>$operator ,'account'=>$Account));
-    }
+       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array
+       (
+           'itemlist' => $item ,
+           'operator'=>$operator ,
+           'account'=>$Account
+              ));
+
+        }
 
     public function PrintCodeAction(Request $request){
 
@@ -624,14 +630,23 @@ class RetailersController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $logger = $this->get('logger');
                 $logger->info('test1');
+
                 $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
                 $user = $this->get('security.context')->getToken()->getUser();
+
                 $accountParent = $this->get('security.context')->getToken()->getUser()->getAccount()->getParent();
+
                 $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+
                 $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+
                 $codeselector = $this->get('hello_di_di_distributors.codeselector');
-                $code = $codeselector->lookForAvailableCode($account, $price,$itemlist,$request->get('numberOfsale'));
+
+                $code = $codeselector->lookForAvailableCode($account,$price,$itemlist,$request->get('numberOfsale'));
+
                 $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account' => $accountParent));
+
                 $tranProfit = $price->getprice() - $priceParent->getprice();
 
 
@@ -644,7 +659,8 @@ class RetailersController extends Controller
                 $currentBalanceParent = $accountParent->getAccBalance();
                 $tranFinalProfit =  $currentBalanceParent + $tranProfit;
 
-                foreach($code as $value){
+                foreach($code as $value)
+                {
 
                     $transaction = new Transaction();
                     $transaction->setAccount($account);

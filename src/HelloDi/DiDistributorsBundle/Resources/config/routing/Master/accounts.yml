@@ -54,6 +54,10 @@ ShowMyAccountDist:
 #    pattern:  distributors/subaccounts
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistTransaction" }
 
+MasterDistEntiti:
+    pattern:  distributors/{id}/entity
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterDistEntiti" }
+
 ManageDistChildren:
     pattern:  distributors/{id}/subaccounts
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
@@ -186,6 +190,7 @@ ListUsersInRetailers:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ListUsersInRetailers" }
 
 #------strat kamal transaction Root-----#
+
 MasterProvTransaction:
     pattern:  /providers/{id}/transactions
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransaction" }
@@ -196,3 +201,14 @@ MasterProvRemoved:
 
 
 #------End kamal transaction Root-----#
+MasterProvEntiti:
+    pattern:  /providers/{id}/entity
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvEntiti" }
+
+MasterProvTransactionDetails:
+    pattern:  /providers/{id}/transactions/details
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDetails" }
+
+MasterProvTransactionDelete:
+    pattern:  /providers/{id}/delete/transaction
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDelete" }

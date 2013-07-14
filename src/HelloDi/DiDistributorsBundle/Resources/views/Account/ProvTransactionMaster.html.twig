@@ -26,7 +26,7 @@
                 <p class="title_search">Search Transactions</p>
             </span>
         </h5>
-        <form class="form-horizontal SearchForm" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}"
+        <form class="form-horizontal SearchForm" action="{{ path('MasterProvTransaction',{'id':Account.id}) }}"
               method="post">
             <fieldset>
                 <div class="control-group">
@@ -47,6 +47,7 @@
                         {{ form_widget(form.type) }}
                     </div>
                 </div>
+
                 <hr>
                 <input class="btn btn-primary" type="submit" value="Search">
             </fieldset>
@@ -88,44 +89,59 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
+
                         <th>Date</th>
                         <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
-
+                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
                         <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
 
                     </tr>
                     </thead>
                     <tbody>
-                    {% for tran in accprov %}
+                    {% for tran in Trans %}
                         <tr>
                             <td>{{ tran.tranDate|date('Y-m-d') }}</td>
-
                             <td>{{ tran.tranDescription }}</td>
-                            <td>{{ tran.tranAmount }}</td>
-                            <td>{{ tran.accBalance }}</td>
-                            <td>{{ tran.tranCredit }}</td>
-                            <td>{{ tran.tranDebit }}</td>
 
+                        {% if tran.tranAmount > 0 %}
+                            <td>
+                            {{ tran.tranCredit }}
+
+                            </td>
+
+                            <td>
+
+                               -----------
+                            </td>
+
+                            {% else  %}
+
+                                <td>
+                                    {{ -tran.tranDebit }}
+                                </td>
+
+                                <td>
+
+                                   ------------
+                                </td>
+
+                             {% endif %}
+
+                            <td>{{ tran.Account.accBalance }}</td>
                             <td class="td-actions">
+<a href="{{ path('MasterProvTransactionDetails',{'id':tran.id}) }}">Details</a>|
 
-                                <a class="btn_actions">
-                                    <input type="submit" value="Show" >
-                                </a><br>
-                                <form method="post" action="{{ path('MasterProvTransaction',{'id':idTrans}) }}" >
-                                    <input type="hidden" name="trans_id" value="{{ tran.id }}">
-                                    <input type="submit" value="Delete" >
-                                </form>
+<a href="{{ path('MasterProvTransactionDelete',{'id':tran.id}) }}">Delete</a>
+
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-                <div class="navigation">
-                    {{ knp_pagination_render(accprov) }}
+                <div >
+                    {{ knp_pagination_render(Trans) }}
                 </div>
             </div>
         </form>

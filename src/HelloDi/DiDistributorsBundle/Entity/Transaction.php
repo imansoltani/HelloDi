@@ -428,11 +428,13 @@ switch ($this->getTranAction()) {
                 $currentBalance = $this->getAccount()->getAccBalance();
                 $this->getAccount()->setAccBalance($currentBalance + $amount);
 
+
                 break;
 
 
             case 'add':
                 break;
+
             case 'Profit':
                 $amount = $this->getTranAmount();
                 $currentBalance = $this->getAccount()->getAccBalance();

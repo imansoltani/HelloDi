@@ -1,0 +1,73 @@
+
+
+    <div class="widget-header">
+        <h3>Provider Transactions</h3>
+    </div> <!-- /widget-header -->
+
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i>
+                <p class="title_search">Search Transactions</p>
+            </span>
+        </h5>
+            <div class="tab-content">
+                <table style="margin-top: 20px"
+                       class="table table-bordered table-striped table-highlight postsend">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Date</th>
+                        <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
+                        <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>{{ Trans.id}}</td>
+                            <td>{{ Trans.tranDate|date('Y-m-d') }}</td>
+                            {% if Trans.tranAmount > 0 %}
+                                <td>
+                                    {{ Trans.tranCredit }}
+
+                                </td>
+
+                                <td>
+
+                                    -----------
+                                </td>
+
+                            {% else  %}
+
+                                <td>
+                                    {{ -Trans.tranDebit }}
+                                </td>
+
+                                <td>
+
+                                    ------------
+                                </td>
+
+                            {% endif %}
+                            <td>{{ Trans.tranDescription }}</td>
+                            <td>{{ Trans.Account.accBalance }}</td>
+                            <td>{{ Trans.User.username }}</td>
+                            <td >
+
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </form>
+    </div>
+
