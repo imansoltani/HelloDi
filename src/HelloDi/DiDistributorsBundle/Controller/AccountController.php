@@ -432,8 +432,8 @@ $qb=array();
             ->add('As', 'choice', array(
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'pmt' => 'Credit',
-                    'amdt' => 'Debit',
+                    'pmt' => 'Credit distributor,s account',
+                    'amdt' => 'Debit distributor,s account',
                      'com_pmt' =>'Debit distributor,s account for the commission payments'
                 )
             ))
@@ -472,7 +472,7 @@ $qb=array();
         $formapplay = $this->createFormBuilder()
             ->add('Amount')
             ->add('As', 'choice', array(
-                'preferred_choices' => array('Credit'),
+                'preferred_choices' => array('pmt'),
                 'choices'
                 => array(
                     'pmt' => 'Credit distributor,s account',
@@ -500,12 +500,11 @@ $qb=array();
 
 
             if ($data['As'] == 'pmt') {
-                $trandist->setTranTypCredite(1);
+                $trandist->setTranType(1);
                 if ($data['Amount'] != '') {
                     $trandist->setTranAmount(+$data['Amount']);
                     $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
-                    $em->flush();
                 }
             }
 
@@ -519,7 +518,6 @@ $qb=array();
                     $trandist->setTranAmount(-$data['Amount']);
                     $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
-                    $em->flush();
                 }
             }
 
@@ -533,12 +531,13 @@ $qb=array();
                         $trandist->setTranAmount(-$data['Amount']);
                         $trandist->setTranAction($data['As']);
                         $em->persist($trandist);
-                        $em->flush();
+
                     }
                 }
 
             }
 
+            $em->flush();
 
         }
 
@@ -555,11 +554,13 @@ $qb=array();
         $formupdate = $this->createFormBuilder()
             ->add('Amount', 'text')
             ->add('As', 'choice', array('preferred_choices' => array('Credit'),
-                'choices' => array('Credit' => 'Credit', 'Debit' => 'Debit')
+                'choices' => array(
+                    'Credit' => 'Credit',
+                     'Debit' => 'Debit')
             ))->getForm();
 
         if ($req->isMethod('POST')) {
-            $formupdate->bind($req);
+            $formupdate->handleRequest($req);
             $data = $formupdate->getData();
 
             if ($data['As'] == 'Credit')
@@ -1151,7 +1152,7 @@ $qb=array();
 
 
         if ($request->isMethod('POST')) {
-            $form_edit->bind($request);
+            $form_edit->handleRequest($request);
             if ($form_edit->isValid()) {
                 $em->flush();
             }
@@ -1176,7 +1177,7 @@ $qb=array();
 
         if ($request->isMethod('POST')) {
 
-            $edit_form->bind($request);
+            $edit_form->handleRequest($request);
             if ($edit_form->isValid()) {
 
                 $em->flush();
@@ -1255,7 +1256,7 @@ $qb=array();
             ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
             ->add('price')
             ->getForm();
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($price);
 
@@ -1299,7 +1300,7 @@ $qb=array();
 
         $form = $this->createForm(new PriceEditType(), $price);
 
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             if ($price->getPrice() != $oldprice) {
                 $pricehistory = new PriceHistory();
@@ -1397,7 +1398,7 @@ $qb=array();
             ->add('price')
             ->getForm();
 
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($price);
 
@@ -1441,7 +1442,7 @@ $qb=array();
 
         $form = $this->createForm(new PriceEditType(), $price);
 
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             if ($price->getPrice() != $oldprice) {
                 $pricehistory = new PriceHistory();
@@ -1498,7 +1499,7 @@ $qb=array();
             ->getForm();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             $data = $form->getData();
 
             $qb->join('input.Item', 'item');
@@ -1587,7 +1588,7 @@ $qb=array();
             ->add('PinCode', 'text', array('label' => 'Column Number SN'))
             ->getForm();
 
-        $form->bind($request);
+        $form->handleRequest($request);
         $data = $form->getData();
 
         $errors = null;

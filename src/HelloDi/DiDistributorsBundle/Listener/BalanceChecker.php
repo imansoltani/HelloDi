@@ -32,7 +32,7 @@ class BalanceChecker
    {
        if(($account->getAccBalance()-$value)>=$account->getAccCreditLimit())
            return true;
-       throw new \Exception('از اعتبار کمتر میشود');
+       throw new \Exception('موجودی از اعتبار کمتر می شود');
 
    }
 

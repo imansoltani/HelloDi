@@ -371,8 +371,8 @@ class DistributorsController extends Controller
             ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $formrole->bind($request);
+            $form->handleRequest($request);
+            $formrole->handleRequest($request);
             $data = $formrole->getData();
             $user->addRole(($data['roles']));
             $user->setAccount($Account);
@@ -407,7 +407,7 @@ class DistributorsController extends Controller
         $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 if ($user->getStatus() == 0)
                     $user->setStatus(0);
@@ -606,7 +606,7 @@ class DistributorsController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            $form->bind($request);
+            $form->handleRequest($request);
 
             //if ($form->isValid()) {
 
@@ -676,7 +676,7 @@ class DistributorsController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            $form_search->bind($request);
+            $form_search->handleRequest($request);
             $data= $form_search->getData();
 
             if ($data['CityName'] != '')
@@ -977,7 +977,7 @@ class DistributorsController extends Controller
 
 
         $editForm = $this->createForm(new EntitiType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
 
         $em->persist($entity);
@@ -1026,7 +1026,7 @@ class DistributorsController extends Controller
             ->getForm();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
                 $newprice = $data['NewPrice'];
@@ -1132,7 +1132,7 @@ class DistributorsController extends Controller
             ->add('price')
             ->getForm();
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($price);
 
@@ -1169,7 +1169,7 @@ class DistributorsController extends Controller
         $form = $this->createForm(new PriceEditType(), $price);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 if ($price->getPrice() != $oldprice) {
                     $pricehistory = new PriceHistory();
@@ -1179,7 +1179,6 @@ class DistributorsController extends Controller
                     $em->persist($pricehistory);
                 }
                 $em->flush();
-
 
                 return $this->forward('HelloDiDiDistributorsBundle:Distributors:RetailerItems', array(
                         'id' => $price->getAccount()->getId()
