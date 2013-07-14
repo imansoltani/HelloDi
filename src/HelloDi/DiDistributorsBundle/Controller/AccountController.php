@@ -348,8 +348,8 @@ $qb=array();
                     'crtl'=>'increase retailer,s credit limit'
 
                 )))
-            ->add('DateStart', 'date', array())
-            ->add('DateEnd', 'date', array())
+            ->add('DateStart', 'date', array('widget'=>'single_text','disabled'=>false))
+            ->add('DateEnd', 'date', array('widget'=>'single_text','disabled'=>false))
             ->add('TypeDate', 'choice', array(
                 'expanded' => true,
                 'choices' => array(
@@ -627,8 +627,8 @@ $qb=array();
                 ))
 
 
-            ->add('DateStart', 'date', array())
-            ->add('DateEnd', 'date', array())
+            ->add('DateStart', 'date', array('widget'=>'single_text','disabled'=>false))
+            ->add('DateEnd', 'date', array('widget'=>'single_text','disabled'=>false))
 
             ->add('GroupBy', 'choice', array(
                 'choices' => array(
@@ -826,7 +826,7 @@ $qb=array();
             ->add('Amount', 'text', array(
                 'data' => 0, 'required' => false
             ))
-            ->add('TradeDate', 'date', array())
+            ->add('TradeDate', 'date',array('widget'=>'single_text'))
             ->add('Description', 'textarea', array('required' => false))
             ->add('Fees', 'text', array('required' => false))->getForm();
 
@@ -888,8 +888,8 @@ $qb=array();
         $query=array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'date', array())
-            ->add('DateEnd', 'date', array())
+            ->add('DateStart', 'date', array('widget'=>'single_text','disabled'=>false))
+            ->add('DateEnd', 'date', array('widget'=>'single_text','disabled'=>false))
             ->add('ItemType', 'choice',
                 array('choices' =>
                 array(
@@ -1751,8 +1751,8 @@ $qb=array();
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
-            ->add('FromDate','date',array('widget'=>'single_text'))
-            ->add('ToDate','date',array('widget'=>'single_text'))
+            ->add('FromDate','date',array('widget'=>'single_text','disabled'=>false))
+            ->add('ToDate','date',array('widget'=>'single_text','disabled'=>false))
             ->add('type','choice',array(
                 'choices'=> array(
                     'All'=>'All',
