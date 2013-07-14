@@ -448,7 +448,11 @@ $qb=array();
             ->add('As', 'choice', array(
                 'preferred_choices' => array('Credit'),
                  'preferred_choices' => array('Credit'),
-                'choices' => array('Credit' => 'Credit', 'Debit' => 'Debit')
+                'choices' =>
+                array(
+                    'Credit' => 'inscrease distributor,s credit limit',
+                    'Debit' => 'descrease distributor,s credit limit'
+                )
             ))->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:Funding.html.twig',
