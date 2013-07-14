@@ -137,7 +137,7 @@ class DistributorsController extends Controller
 
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
            10/*limit per page*/
         );
 
@@ -448,7 +448,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function DistRetailerUserAction($id)
+    public function DistRetailerUserAction(Request $req,$id)
     {
         $this->check_ChildAccount($id);
         $paginator = $this->get('knp_paginator');
@@ -460,7 +460,7 @@ class DistributorsController extends Controller
 
         $pagination = $paginator->paginate(
             $users,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -693,7 +693,7 @@ class DistributorsController extends Controller
 
         $pagination = $paginator->paginate(
             $qb,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $request->get('page',1)/*page number*/,
             5/*limit per page*/
         );
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array (
@@ -781,7 +781,7 @@ class DistributorsController extends Controller
 
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -884,7 +884,7 @@ class DistributorsController extends Controller
 
     $pagination = $paginator->paginate(
         $query,
-        $this->get('request')->query->get('page', 1) /*page number*/,
+        $req->get('page',1) /*page number*/,
         10/*limit per page*/
     );
 

@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\User;
@@ -21,16 +22,28 @@ class EntitiController extends Controller
         $paginator = $this->get('knp_paginator');
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.context')->getToken()->getUser();
+        $formsearch = $this->createFormBuilder()
+            ->add('entName', 'text',array('required'=>false))
+            ->add('Country', 'entity', array(
+                    'class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property' => 'name',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                            ->orderBy('u.name', 'ASC');
+                    })
+            )
+            ->add('HaveAccount', 'choice',array('choices'=>array(2=>'Both',1=>'Provider',0=>'Distributors')))->getForm()
+        ;
+
+
         $qb = $em->createQueryBuilder();
                      $qb->select('Ent')
                         ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
-                        ->where('Ent != :ent')->setParameter('ent',$user->getEntiti())->getQuery();
+                        ->innerJoin('Ent.Accounts', 'EntAcc')
+                         ->innerJoin('Ent.Country', 'EntCoun')
+                         ->where('Ent != :ent')->setParameter('ent',$user->getEntiti())->getQuery();
 
 
 
-
-
-        $formsearch = $this->createForm(new EntitiesSearchType());
 
 
         if ($request->isMethod('POST'))
@@ -39,12 +52,7 @@ class EntitiController extends Controller
             $formsearch->handleRequest($request);
             $data = $formsearch->getData();
 
-            $qb->select('Ent')
-                ->from('HelloDiDiDistributorsBundle:Entiti', 'Ent')
-                ->innerJoin('Ent.Accounts', 'EntAcc')
-                ->innerJoin('Ent.Country', 'EntCoun');
             if ($data['Country']->getName() != 'All') {
-
                 $qb->where('EntCoun.iso=:iso');
                 $qb->setParameter('iso', $data['Country']->getIso());
             }
@@ -57,17 +65,17 @@ class EntitiController extends Controller
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
             }
 
-
-
-
         }
 
-        $query = $qb->getQuery();
 
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
+//        die('as'.$qb->getQuery()->getResult());
+        $qb = $qb->getQuery();
+        $count = count($qb);
+        $qb->setHint('knp_paginator.count', $count);
+
+
         $pagination = $paginator->paginate(
-            $query,
+            $qb,
             $request->get('page',1) /*page number*/,
             10/*limit per page*/
         );

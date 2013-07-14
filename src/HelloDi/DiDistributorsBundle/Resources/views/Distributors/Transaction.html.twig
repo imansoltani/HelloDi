@@ -39,7 +39,7 @@
                         <div class="control-group">
                             {{ form_label(form.TypeDate[0]) }}
                             <div class="controls">
-                                {{ form_widget(form.TypeDate[0],{'attr':{'checked':'checked'}}) }}
+                                {{ form_widget(form.TypeDate[0]) }}
                             </div>
                         </div>
 
@@ -72,6 +72,7 @@
                         </div>
 
                         <hr>
+                        <input type="hidden" value="1" name="page" id="search_page" >
                         <input class="btn btn-primary" type="submit" value="Search">
 
                     </fieldset>

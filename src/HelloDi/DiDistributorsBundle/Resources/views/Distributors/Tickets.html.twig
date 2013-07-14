@@ -57,7 +57,7 @@
                         </div>
 
                         <hr>
-
+                        <input type="hidden" value="1" name="page" id="search_page" >
                         <input class="btn btn-primary" type="submit" value="search">
 
                     </form>
@@ -174,7 +174,9 @@
                 {% endfor %}
 
 
-
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
 
             </div>
         </div>
