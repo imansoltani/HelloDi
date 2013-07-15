@@ -90,6 +90,7 @@ class User extends BaseUser
         $this->Tickets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->TicketNotes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
     /**
@@ -398,12 +399,12 @@ class User extends BaseUser
     /**
      * Add Ogone
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone
      * @return User
      */
-    public function addOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    public function addOgone(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone)
     {
-        $this->Ogone[] = $ogone;
+        $this->OgonePayment[] = $ogone;
     
         return $this;
     }
@@ -411,11 +412,11 @@ class User extends BaseUser
     /**
      * Remove Ogone
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone
      */
-    public function removeOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    public function removeOgone(OgonePayment $ogone)
     {
-        $this->Ogone->removeElement($ogone);
+        $this->OgonePayment->removeElement($ogone);
     }
 
     /**
@@ -425,7 +426,7 @@ class User extends BaseUser
      */
     public function getOgone()
     {
-        return $this->Ogone;
+        return $this->OgonePayment;
     }
 
     /**
@@ -434,7 +435,7 @@ class User extends BaseUser
      * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
      * @return User
      */
-    public function addOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    public function addOgonePayment(OgonePayment $ogonePayment)
     {
         $this->OgonePayment[] = $ogonePayment;
     
