@@ -388,6 +388,7 @@ class Transaction
     /**
      * @ORM\PrePersist
      */
+
     public function updateAccountBalance()
     {
 #this switch for function money

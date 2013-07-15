@@ -675,6 +675,7 @@ $qb=array();
             $result = $qb->getQuery();
             $count = count($result->getResult());
             $result->setHint('knp_paginator.count', $count);
+
         }
 
 
