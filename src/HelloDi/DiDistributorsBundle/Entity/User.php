@@ -6,6 +6,10 @@ use FOS\UserBundle\Entity\User as BaseUser;
 /** 
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @ORM\AttributeOverrides({
+ * @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
+ * @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
+ * })
  */
 class User extends BaseUser
 {

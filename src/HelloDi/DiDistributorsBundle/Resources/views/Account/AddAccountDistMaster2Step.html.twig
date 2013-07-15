@@ -5,7 +5,7 @@
         <div class="widget-header">
             <h3>Create Entity</h3>
         </div>
-
+{{ form_errors(form2step) }}
         <div class="control-group entName">
             {{ form_label(form2step.entName) }}
             {{ form_widget(form2step.entName, { 'attr' : { 'placeholder': 'important'} }) }}
@@ -190,7 +190,7 @@
             {{ form_label(form2step.Users[0].plainPassword.second) }}
             {{ form_widget(form2step.Users[0].plainPassword.second, { 'attr' : { 'placeholder': 'important'} }) }}
         </div>
-
+        {{form_widget(form2step._token)}}
         <div class="control-group">
             {{ form_label(form2step.Users[0].language) }}
             <div class="controls">
@@ -205,5 +205,6 @@
         </div>
 
      </div>
+
 
 {% endblock %}

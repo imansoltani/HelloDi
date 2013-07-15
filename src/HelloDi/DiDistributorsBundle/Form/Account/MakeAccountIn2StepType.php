@@ -32,7 +32,8 @@ class MakeAccountIn2StepType extends AbstractType
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name',
                     'query_builder' => function(EntityRepository $er) {
-                     return $er->createQueryBuilder('u');
+                     return $er->createQueryBuilder('u')
+                                ->where('u.id !=250');
                             }))
             ->add('Accounts','collection',array('type'=>new AccountType()))
             ->add('Users','collection',array('type'=>new NewUserType('HelloDi\DiDistributorsBundle\Entity\User')))
