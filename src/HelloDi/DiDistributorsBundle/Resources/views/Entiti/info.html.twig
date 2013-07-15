@@ -72,9 +72,13 @@
 
             <div class="control-group">
             {{ form_label(edit_form.Country) }}
-            {{ form_widget(edit_form.Country) }}
-            {{ form_widget(edit_form._token) }}
+                <div class="controls">
+                    {{ form_widget(edit_form.Country) }}
                 </div>
+
+                </div>
+
+            {{ form_widget(edit_form._token) }}
 
             <input type="hidden" name="entityid" value="{{ entityid }}"/>
             <div class="form-actions" style="margin-bottom: 0" >

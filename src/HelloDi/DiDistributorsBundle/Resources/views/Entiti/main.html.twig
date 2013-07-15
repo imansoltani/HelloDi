@@ -112,7 +112,7 @@
 
                                         <td class="td-actions">
 
-                                            <a href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
+                                            <a class="btn_actions" href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
 
                                         </td>
                                         <td>{{ entity.entName }}</td>
@@ -144,15 +144,17 @@
                                 </tbody>
                             </table>
 
-                        <div class="navigation">
-                            {{ knp_pagination_render(pagination) }}
-                        </div>
+
 
 
                     </div>
 
                     </form>
 
+                </div>
+
+                <div class="navigation" style="text-align: center">
+                    {{ knp_pagination_render(pagination) }}
                 </div>
 
 
