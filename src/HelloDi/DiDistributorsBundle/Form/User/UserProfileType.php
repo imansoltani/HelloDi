@@ -19,7 +19,6 @@ class UserProfileType extends BaseType
             ->add('language','choice', array(
                 'choices' => array(
                     'en' => 'Languages.English',
-                    'fa' => 'Languages.Persian',
                     'fr' => 'Languages.French',
                 ),
                 'required'  => true,
