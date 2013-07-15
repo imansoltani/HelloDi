@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\User;
 
+
 class Taketickets
 {
     private $em;

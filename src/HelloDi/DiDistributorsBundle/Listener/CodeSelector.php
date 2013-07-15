@@ -20,6 +20,7 @@ class CodeSelector
 
     public function lookForAvailableCode(Account $account, Price $price, Item $item, $count = 1)
     {
+
         if ($this->balancecheker->isBalanceEnough($account, $price, $count))
         {
             $em = $this->em;

@@ -52,9 +52,10 @@ services:
             class: HelloDi\DiDistributorsBundle\Listener\Taketickets
             arguments: [@doctrine.orm.default_entity_manager]
 
-    hello_di_di_distributors.GetOrderNumber:
-            class: HelloDi\DiDistributorsBundle\Listener\GetOrderNumber
-            arguments: [@doctrine.orm.default_entity_manager]
+   
+    hello_di_di_distributors.Client:
+            class: HelloDi\DiDistributorsBundle\Listener\Client
+            arguments: [@doctrine.orm.default_entity_manager,@Router,%ogone_pspid%,%ogone_sha_in%,%ogone_sha_out%,%ogone_submit_url%]
 
 
 

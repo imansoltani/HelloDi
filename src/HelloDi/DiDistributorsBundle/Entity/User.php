@@ -73,10 +73,10 @@ class User extends BaseUser
      */
     private $Account;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ogone", mappedBy="User")
-//     */
-//    private $Ogone;
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\OgonePayment", mappedBy="User")
+     */
+    private $OgonePayment;
 
 
     /**
@@ -395,5 +395,69 @@ class User extends BaseUser
         return $this->Account;
     }
 
+    /**
+     * Add Ogone
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     * @return User
+     */
+    public function addOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    {
+        $this->Ogone[] = $ogone;
+    
+        return $this;
+    }
 
+    /**
+     * Remove Ogone
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Ogone $ogone
+     */
+    public function removeOgone(\HelloDi\DiDistributorsBundle\Entity\Ogone $ogone)
+    {
+        $this->Ogone->removeElement($ogone);
+    }
+
+    /**
+     * Get Ogone
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOgone()
+    {
+        return $this->Ogone;
+    }
+
+    /**
+     * Add OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @return User
+     */
+    public function addOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment[] = $ogonePayment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     */
+    public function removeOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment->removeElement($ogonePayment);
+    }
+
+    /**
+     * Get OgonePayment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOgonePayment()
+    {
+        return $this->OgonePayment;
+    }
 }

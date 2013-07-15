@@ -17,8 +17,6 @@ class Transaction
      */
     private $id;
 
-
-    private $entityManager;
     /**
      * @ORM\Column(type="decimal", nullable=true)
      */
@@ -96,6 +94,10 @@ class Transaction
      * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=true)
      */
     private $Code;
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\OgonePayment", mappedBy="Transaction")
+     */
+    private $OgonePayment;
 
     /**
      * Get id
@@ -404,7 +406,7 @@ class Transaction
 
                   }
 #this switch for function code
-switch ($this->getTranAction()) {
+    switch ($this->getTranAction()) {
             case 'tran':
 
                 break;
@@ -424,10 +426,6 @@ switch ($this->getTranAction()) {
 
 
             case 'sale':
-                $amount = $this->getTranCredit();
-                $currentBalance = $this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance + $amount);
-
 
                 break;
 
@@ -436,9 +434,7 @@ switch ($this->getTranAction()) {
                 break;
 
             case 'Profit':
-                $amount = $this->getTranAmount();
-                $currentBalance = $this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance + $amount);
+//
                 break;
         }
     }
@@ -469,6 +465,46 @@ switch ($this->getTranAction()) {
     public function getTranAmount()
     {
         return $this->tranAmount;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @return Transaction
+     */
+    public function addOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment[] = $ogonePayment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     */
+    public function removeOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment->removeElement($ogonePayment);
+    }
+
+    /**
+     * Get OgonePayment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOgonePayment()
+    {
+        return $this->OgonePayment;
     }
 
     /**

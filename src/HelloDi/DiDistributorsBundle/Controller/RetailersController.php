@@ -625,15 +625,12 @@ class RetailersController extends Controller
 //        $code = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
 
         if($request->isMethod('POST')){
-            //$logger = $this->get('logger'); // Log
-            try{
-                $em = $this->getDoctrine()->getManager();
-                $logger = $this->get('logger');
-                $logger->info('test1');
 
-                $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+                try{
+                $em = $this->getDoctrine()->getManager();
 
                 $user = $this->get('security.context')->getToken()->getUser();
+                $account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
                 $accountParent = $this->get('security.context')->getToken()->getUser()->getAccount()->getParent();
 
@@ -649,22 +646,12 @@ class RetailersController extends Controller
 
                 $tranProfit = $price->getprice() - $priceParent->getprice();
 
-
-                $accParentBalance = $account->getAccBalance();
-
-
-                $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$account,'Item'=>$itemlist));
-
-                $pricesParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=>$accountParent,'Item'=>$itemlist));
-                $currentBalanceParent = $accountParent->getAccBalance();
-                $tranFinalProfit =  $currentBalanceParent + $tranProfit;
-
                 foreach($code as $value)
                 {
 
                     $transaction = new Transaction();
                     $transaction->setAccount($account);
-                    $transaction->setTranAmount($price->getPrice());
+                    $transaction->setTranAmount(-($price->getPrice()));
                     $transaction->setTranFees(0);
                     $transaction->setTranCurrency($price->getPriceCurrency());
                     $transaction->setTranDate(new \DateTime('now'));
@@ -689,10 +676,10 @@ class RetailersController extends Controller
                 }
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
 
+        }
 
-            }
             catch(\Exception $e){
-                print "A problem";
+                print  $e->getMessage();
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>null));
             }
         }

@@ -51,3 +51,18 @@ retailer_shop:
 retailer_items:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/items.yml"
     prefix:   /items
+
+# ---- Ogone Start ---- #
+retailer_OgoneTransactions:
+    pattern:  /transactions/new
+    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:new }
+
+retailer_OgoneTransactions_validate:
+    pattern:  /transactions/{id}/validate
+    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Validate }
+
+retailer_OgoneTransactions_Accept:
+    pattern:  /transactions/accept
+    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Accept }
+
+# ---- Ogone End ---- #
