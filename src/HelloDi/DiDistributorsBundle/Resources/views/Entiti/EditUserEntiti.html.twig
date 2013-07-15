@@ -56,11 +56,13 @@
         <div class="controls">
             {{ form_widget(form_edit.enabled) }}
         </div>
+    </div>
 
     <div class="control-group">
     {{ form_label(form_edit.language) }}
     <div class="controls">
         {{ form_widget(form_edit.language) }}
+    </div>
     </div>
 
         <div class="control-group">
@@ -68,6 +70,7 @@
             <div class="controls">
                 {{ form_widget(form_edit.Account,{ 'attr' : { 'placeholder': 'important'}}) }}
             </div>
+        </div>
 
     </div>
    {#// <input type="hidden" value="{{ entity.id }}">#}
