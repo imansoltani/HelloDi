@@ -1,25 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
-
-
-{% block title %}
-    Profile
-{% endblock title %}
-
-{% set MU = 'home' %}
-
-{% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">User Profile</span>
-{% endblock Site_Map %}
-
-
-{% block PageTitle %}
-    <i class="icon-user"></i>
-    User Profile
-{% endblock %}
-
-{% block Body %}
     <div class="span">
         <div class="widget stacked ">
 
@@ -27,6 +6,7 @@
                 <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST"
                       id="edit-profile" class="form-horizontal">
                     <fieldset>
+
                         {{ form_widget(form) }}
 
                         <div class="form-actions">
@@ -46,4 +26,4 @@
         });
     </script>
 
-{% endblock Body %}
+
