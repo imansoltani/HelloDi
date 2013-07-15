@@ -25,18 +25,22 @@ class NewUserDistributorsRetailerInEntityType extends BaseType
         parent::buildForm($builder, $options);
         $builder
             ->add('firstname')
-            ->add('lastname')
-            ->add('mobile')
+            ->add('lastname',null,array('required'=>false))
+            ->add('mobile',null,array('required'=>false))
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
              ->add('Account', 'entity', array(
                      'class'    => 'HelloDiDiDistributorsBundle:Account',
                      'property' => 'accName',
+
                      'query_builder' => function(EntityRepository $er)use ($entity) {
                          return $er->createQueryBuilder('u')
-                             ->where('u.accType != 1')
+                             ->where('u.accType != 1 ')
                              ->andwhere('u.Entiti=:ent')->setParameter('ent',$entity);
                      }
-                 ))
+                ,'required'=>true
+                 )
+
+            )
         ;
 
 

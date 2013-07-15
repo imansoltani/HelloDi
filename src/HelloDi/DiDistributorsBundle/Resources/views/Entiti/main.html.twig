@@ -53,6 +53,7 @@
                             <input type="hidden" value="1" name="page" id="search_page" >
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
+                            <a href="{{ path('Ent_Main') }}">Reset</a>
                         </fieldset>
 
                     </form>
@@ -88,7 +89,7 @@
                     <div class="contenttitle">
                         <h4>Entities</h4>
                     </div>
-                    <form  action="{{ path('Ent_Accounts',{}) }}" method="post">
+                    {#<form  action="{{ path('Ent_Accounts',{}) }}" method="post">#}
                     <div class="tab-content">
 
                             <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
@@ -110,8 +111,8 @@
                                         <td style="font-weight: bold">{{ entity.id }}</td>
 
                                         <td class="td-actions">
-                                                <input type="submit" value="Manage"
-                                                       onclick="$('.entityid').val('{{ entity.id }}');"/>
+
+                                            <a href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
 
                                         </td>
                                         <td>{{ entity.entName }}</td>
@@ -142,7 +143,11 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                            <input type="hidden" name="entityid" value="" class="entityid"/>
+
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+
 
                     </div>
 

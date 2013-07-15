@@ -115,16 +115,20 @@ class DistributorsControllerTest extends WebTestCase
 //
 //    }
 
+private  $x;
+ private  $y;
+
 public  function testA()
 {
+
 
   $dist=new TestController();
     $client=static::createClient();
 
-   $client->request(
+    $crowler =$client->request(
         'get',
 
-        '/test',
+        '/login',
 
         array('name'=>' Kazem   ','family'=>'  Taghandiky'),
 
@@ -137,12 +141,30 @@ public  function testA()
         true
     );
 
-    $crowler=$client->getRequest();
 
-    print $client->getResponse();
-//    print $dist->A_1Action($client->getRequest());
+    print $crowler->filter('a')->count();
+    print $dist->A_1Action($client->getRequest(),2);
 
+//    print 'vasat';
+
+//    $this->markTestIncomplete('in camel nist');
 }
+
+
+    public  function setUp()
+    {
+        $this->x=10;
+
+        print 'x : '.$this->x.'      ';
+    }
+
+    public  function tearDown()
+    {
+        $this->y=$this->x+10;
+
+        print 'x : '.$this->y.'      ';
+    }
+
 
 }
 

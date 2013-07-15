@@ -9,13 +9,28 @@
 {% endblock Site_Map %}
 
 {% block Tab %}
+
     <div class="widget-header">
         <h3>Entity Users</h3>
     </div> <!-- /widget-header --><br>
+{% set i=0 %}
+{% for EntAcc in entity.Accounts %}
+
+    {% if EntAcc.accType==1 %}{% set i=i+1 %}{% endif %}
+
+{% endfor %}
+
+    {% if i==entity.Accounts|length %}
+
+      <b>  This Account have not user !</b>
+
+
+    {% else %}
 
 
     <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
         {{ 'User.Add' | trans ({}, "user") }}
+
     </a>
 
     <div class="tablediv" >
@@ -74,4 +89,7 @@
             </div>
         </div>
     </div>
+
+    {% endif %}
 {% endblock %}
+

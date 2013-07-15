@@ -8,6 +8,7 @@
     <span class="link">Users</span>
 {% endblock Site_Map %}
 
+
 {% block Tab %}
 
 
@@ -21,7 +22,7 @@
 
     <div class="control-group">
         {{ form_label(form.firstname) }}
-        {{ form_widget(form.firstname) }}
+        {{ form_widget(form.firstname ,{ 'attr' : { 'placeholder': 'important'} }) }}
     </div>
 
     <div class="control-group">
@@ -30,7 +31,7 @@
     </div>
     <div class="control-group">
     {{ form_label(form.username) }}
-    {{ form_widget(form.username) }}
+    {{ form_widget(form.username,{ 'attr' : { 'placeholder': 'important'} }) }}
     </div>
 
     <div class="control-group">
@@ -40,18 +41,18 @@
 
     <div class="control-group">
     {{ form_label(form.email) }}
-    {{ form_widget(form.email) }}
+    {{ form_widget(form.email,{ 'attr' : { 'placeholder': 'important'} }) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form.plainPassword.first) }}
-        {{ form_widget(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first,{ 'attr' : { 'placeholder': 'important'} }) }}
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
     <div class="control-group">
         {{ form_label(form.plainPassword.second) }}
-        {{ form_widget(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second,{ 'attr' : { 'placeholder': 'important'} }) }}
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
@@ -59,7 +60,7 @@
     <div class="control-group">
     {{ form_label(form.Account) }}
     <div class="controls">
-        {{ form_widget(form.Account) }}
+        {{ form_widget(form.Account,{ 'attr' : { 'placeholder': 'important'} }) }}
     </div>
      </div>
 
@@ -69,6 +70,7 @@
             {{ form_widget(form.language) }}
         </div>
     </div>
+
     <div class="control-group">
         {{ form_label(formrole.roles) }}
         <div class="controls">

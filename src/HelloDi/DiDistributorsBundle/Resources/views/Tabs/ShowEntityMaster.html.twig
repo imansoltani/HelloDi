@@ -18,21 +18,26 @@
 {% set hornav = '38px' %}
 {% block Tabs %}
     <li {% if tab == '1' %}class="active"{% endif %}  >
-        <a href=""  >
-            <form id="accounts" action="{{ path('Ent_Accounts') }}" method="post">
-                <input type="hidden" name="entityid" value="{{ entity.id }}"/>
-                <input type="submit" value="Accounts"/>
-            </form>
+
+
+        <a href="{{ path('Ent_Accounts',{'id':entity.id}) }}">
+
+            <input type="submit" value="Accounts" >
         </a>
+
+
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a>
-            <form id="usertab" action="{{ path('Ent_Users') }}" method="post">
-                <input type="hidden" name="entityid" value="{{ entity.id }}"/>
-                <input type="submit" value="Users"/>
-            </form>
+
+
+        <a href="{{ path('Ent_Users',{'id':entity.id}) }}">
+
+            <input type="submit" value="Users" >
         </a>
+
+
     </li>
+
 
     <li {% if tab == '3' %}class="active"{% endif %} >
 
@@ -45,14 +50,18 @@
 
     </li>
 
+
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('Ent_Info') }}" method="post">
-                <input type="hidden" name="entityid" value="{{ entity.id }}"/>
-                <input type="submit" value="Info"/>
-            </form>
+
+
+        <a href="{{ path('Ent_Info',{'id':entity.id}) }}">
+
+            <input type="submit" value="Info" >
         </a>
+
     </li>
+
+
 {% endblock %}
 
 {% block Body %}

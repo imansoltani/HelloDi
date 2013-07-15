@@ -19,7 +19,7 @@ pdf:
     defaults: { _controller: HelloDiDiDistributorsBundle:Account:pdf}
 
 test:
-    pattern:  /test
+    pattern:  /{id}/test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:test1}
 
 ogonetest:

@@ -8,6 +8,7 @@ use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
+use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiesSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityType;
@@ -20,8 +21,11 @@ class EntitiController extends Controller
     public function ListEntitiesAction(Request $request)
     {
         $paginator = $this->get('knp_paginator');
+
         $em = $this->getDoctrine()->getEntityManager();
+
         $user=$this->get('security.context')->getToken()->getUser();
+
         $formsearch = $this->createFormBuilder()
             ->add('entName', 'text',array('required'=>false))
             ->add('Country', 'entity', array(
@@ -31,19 +35,22 @@ class EntitiController extends Controller
                             ->orderBy('u.name', 'ASC');
                     })
             )
-            ->add('HaveAccount', 'choice',array('choices'=>array(2=>'Both',1=>'Provider',0=>'Distributors')))->getForm()
+            ->add('HaveAccount', 'choice',
+                array(
+                    'choices'=>
+                         array(
+                             2=>'Both',
+                             1=>'Provider',
+                             0=>'Distributors')
+                ))->getForm()
         ;
 
+//die('sdd'.$user->getEntiti()->getId());
 
         $qb = $em->createQueryBuilder();
                      $qb->select('Ent')
                         ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
-                        ->innerJoin('Ent.Accounts', 'EntAcc')
-                         ->innerJoin('Ent.Country', 'EntCoun')
-                         ->where('Ent != :ent')->setParameter('ent',$user->getEntiti())->getQuery();
-
-
-
+                        ->where('Ent.id != :ent')->setParameter('ent',$user->getEntiti()->getId());
 
 
         if ($request->isMethod('POST'))
@@ -52,15 +59,13 @@ class EntitiController extends Controller
             $formsearch->handleRequest($request);
             $data = $formsearch->getData();
 
-            if ($data['Country']->getName() != 'All') {
-                $qb->where('EntCoun.iso=:iso');
-                $qb->setParameter('iso', $data['Country']->getIso());
-            }
+            $qb->innerJoin('Ent.Accounts','EntAcc');
+            if ($data['Country']->getName() != 'All')
+                $qb->where('Ent.Country= :cun')->setParameter('cun',$data['Country']);
+
             if ($data['HaveAccount'] != 2)
                 $qb->andwhere($qb->expr()->eq('EntAcc.accType', $data['HaveAccount']));
-            if ($data['HaveAccount'] == 2) {
-                $qb->andwhere($qb->expr()->neq('EntAcc.accType', 2));
-            }
+
             if ($data['entName'] != '') {
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
             }
@@ -68,36 +73,29 @@ class EntitiController extends Controller
         }
 
 
-//        die('as'.$qb->getQuery()->getResult());
         $qb = $qb->getQuery();
-        $count = count($qb);
+        $count = count($qb->getResult());
+
         $qb->setHint('knp_paginator.count', $count);
 
 
         $pagination = $paginator->paginate(
             $qb,
             $request->get('page',1) /*page number*/,
-            10/*limit per page*/
+            13/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:main.html.twig', array(
-            'pagination' => $pagination, 'formsearch' => $formsearch->createView()
+            'pagination' => $pagination,
+            'formsearch' => $formsearch->createView()
         ));
 
     }
 
 
-    public function indexAction($id)
+    public function accountsAction(Request $request,$id)
     {
-        return $this->render("HelloDiDiDistributorsBundle:Entiti:index.html.twig", array(
-            'entityid' => $id
-        ));
-    }
 
-
-    public function accountsAction(Request $request)
-    {
-        $id = $request->get('entityid');
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
@@ -118,10 +116,10 @@ class EntitiController extends Controller
     }
 
 
-    public function usersAction(Request $request)
+    public function usersAction(Request $request,$id)
     {
 
-        $id = $request->get('entityid');
+
 
         $em = $this->getDoctrine()->getManager();
 
@@ -129,14 +127,13 @@ class EntitiController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
-        $Users= $entity->getUsers();
 
         $pagination = $paginator->paginate(
-            $Users,
+          $entity->getUsers(),
             $request->get('page',1) /*page number*/,
             6/*limit per page*/
         );
-        // die('sas'.count($pagination));
+
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
             'pagination' => $pagination,
             'entity' => $entity,
@@ -158,13 +155,36 @@ class EntitiController extends Controller
          array('cascade_validation' => true)
         );
 
-            $formrole=$this->createFormBuilder()
-              ->add('roles','choice',
-                    array('choices'=>array
-                    (
-                        'ROLE_RETAILER'=>'ROLE_RETAILER',
-                        'ROLE_RETAILER_ADMIN'=>'ROLE_RETAILER_ADMIN'))
-                )->getForm();
+
+        $formrole = $this->createFormBuilder();
+
+
+        if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
+                    'Entiti' => $entity,
+                    'accType' => 2))
+            ) ==1
+        )
+        {
+
+            $formrole = $formrole->add('roles', 'choice',
+                array('choices' => array
+                (
+                    'ROLE_RETAILER' => 'ROLE_RETAILER',
+                    'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
+
+
+        }
+
+        else {
+
+            $formrole = $formrole->add('roles', 'choice',
+                array('choices' => array
+                (
+
+                    'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
+                    'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
+        }
+
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -176,7 +196,7 @@ class EntitiController extends Controller
                 $user->setEntiti($entity);
                 $em->persist($user);
                 $em->flush();
-                return $this->forward("HelloDiDiDistributorsBundle:Entiti:users", array('entityid' => $id));
+                return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
             }
 
         }
@@ -191,14 +211,23 @@ class EntitiController extends Controller
     }
 
 
-    public function infoAction(Request $request)
+    public function infoAction(Request $request,$id)
     {
-        $id = $request->get('entityid');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
         $edit_form = $this->createForm(new EntitiType(), $entity);
+
+
+        if ($request->isMethod('POST')) {
+            $edit_form->handleRequest($request);
+            if ($edit_form->isValid()) {
+                $em->flush($entity);
+
+            }
+        }
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:info.html.twig', array(
             'edit_form' => $edit_form->createView(),
@@ -208,38 +237,14 @@ class EntitiController extends Controller
     }
 
 
-    public function infoSubmitAction(Request $request)
+    public function addressesAction(Request $request,$id)
     {
-        $id = $request->get('entityid');
+
         $em = $this->getDoctrine()->getManager();
-
-        $Entiti = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-        $edit_form = $this->createForm(new EntitiType(), $Entiti);
-
-        if ($request->isMethod('POST')) {
-            $edit_form->handleRequest($request);
-            if ($edit_form->isValid()) {
-                $em->flush($Entiti);
-                return $this->forward("HelloDiDiDistributorsBundle:Entiti:info");
-            }
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:info.html.twig',
-            array(
-            'edit_form' => $edit_form->createView(),
-            'entityid' => $id,
-            'entity' => $Entiti
-        ));
-
-    }
-
-    public function addressesAction(Request $request)
-    {
-        $id = $request->get('entityid');
-        $em = $this->getDoctrine()->getManager();
-
-        $addresses = $em->getRepository('HelloDiDiDistributorsBundle:Address')->findBy(array('Entiti' => $id, 'adrsEnd' => null));
-
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+
+        $addresses = $em->getRepository('HelloDiDiDistributorsBundle:Address')->findBy(array('Entiti' => $entity));
+
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:addresses.html.twig', array(
             'addresses' => $addresses, 'entity' => $entity
@@ -258,18 +263,16 @@ class EntitiController extends Controller
         $acc->setAccType(1);
         $acc->setAccCreditLimit(0);
         $acc->setAccTimeZone(null); /////=========*******
+        $acc->getAccDefaultLanguage(null);
 
-        $form = $this->createForm(new AccountProvType(), $acc);
+        $form = $this->createForm(new AccountType(), $acc);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($acc);
                 $em->flush($acc);
-                return $this->forward("HelloDiDiDistributorsBundle:Entiti:accounts",
-                    array(
-                        'entityid' => $id
-                    ));
+                return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
         return $this->render('HelloDiDiDistributorsBundle:Entiti:AddProv.html.twig',
@@ -289,17 +292,16 @@ class EntitiController extends Controller
         $acc->setAccBalance(0);
         $acc->setAccType(0);
         $acc->setAccCreditLimit(0);
-        $form = $this->createForm(new AccountDistMasterType(), $acc);
+        $acc->setAccTerms(null);
+        $form = $this->createForm(new AccountType(), $acc);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $em->persist($acc);
                 $em->flush($acc);
-                return $this->forward("HelloDiDiDistributorsBundle:Entiti:accounts",
-                    array('entityid' => $id
-                    ));
+                return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
         return $this->render('HelloDiDiDistributorsBundle:Entiti:AddDist.html.twig',
@@ -324,9 +326,7 @@ public function  EditUserEntitiesAction(Request $request,$id)
     {
 
         $em->flush();
-        return $this->forward("HelloDiDiDistributorsBundle:Entiti:users",
-            array('entityid' => $user->getEntiti()->getId()
-            ));
+
 
     }
 }
@@ -370,10 +370,8 @@ public function  EditUserEntitiesAction(Request $request,$id)
              break;
          }
 
-     $em->flush();
-     return $this->forward("HelloDiDiDistributorsBundle:Entiti:users",
-         array('entityid' => $user->getEntiti()->getId()
-         ));
+        $em->flush();
+        return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$user->getEntiti()->getId())));
 
             }
 

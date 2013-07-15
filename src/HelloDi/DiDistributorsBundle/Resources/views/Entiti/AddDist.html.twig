@@ -17,21 +17,31 @@
 
     <div class="control-group">
         {{ form_label(form.accName) }}
-        {{ form_widget(form.accName) }}
+        {{ form_widget(form.accName, { 'attr' : { 'placeholder': 'important'} }) }}
         {{ form_errors(form.accName) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form.accCurrency) }}
         <div class="controls" >
-            {{ form_widget(form.accCurrency) }}
+            {{ form_widget(form.accCurrency,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )'} }) }}
         </div>
         {{ form_errors(form.accCurrency) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form.accTerms) }}
-        {{ form_widget(form.accTerms) }}
+        {{ form_widget(form.accTerms,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )'} }) }}
         {{ form_errors(form.accTerms) }}
     </div>
 

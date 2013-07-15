@@ -13,7 +13,7 @@
         <h3>Entity Info</h3>
     </div> <!-- /widget-header -->
 
-    <form  action="{{ path('Ent_InfoSubmit') }}" method="post" class="form-horizontal" >
+    <form style="margin-top: 20px" action="{{ path('Ent_Info',{'id':entity.id}) }}" method="post" class="form-horizontal" >
         <fieldset>
 
 
@@ -30,59 +30,51 @@
             </div>
 
 
+            <div class="control-group">
+            {{ form_label(edit_form.entTel1) }}
+            {{ form_widget(edit_form.entTel1) }}
+           </div>
 
             <div class="control-group">
-                {{ form_label(edit_form.entTel1) }}
-                {{ form_widget(edit_form.entTel1) }}
-            </div>
-
-
-            <div class="control-group">
-                {{ form_label(edit_form.entTel2) }}
-                {{ form_widget(edit_form.entTel2) }}
-            </div>
-
-
-            <div class="control-group">
-                {{ form_label(edit_form.entFax) }}
-                {{ form_widget(edit_form.entFax) }}
+            {{ form_label(edit_form.entTel2) }}
+            {{ form_widget(edit_form.entTel2) }}
             </div>
 
             <div class="control-group">
-                {{ form_label(edit_form.entWebsite) }}
-                {{ form_widget(edit_form.entWebsite) }}
+            {{ form_label(edit_form.entFax) }}
+            {{ form_widget(edit_form.entFax) }}
+            </div>
+
+            <div class="control-group">
+            {{ form_label(edit_form.entWebsite) }}
+            {{ form_widget(edit_form.entWebsite) }}
             </div>
 
             <div class="control-group">
             {{ form_label(edit_form.entAdrs1) }}
-            {{ form_widget(edit_form.entAdrs1) }}</div>
-
-
-            <div class="control-group">
-                {{ form_label(edit_form.entAdrs2) }}
-                {{ form_widget(edit_form.entAdrs2) }}
+            {{ form_widget(edit_form.entAdrs1,{ 'attr' : { 'placeholder': 'important'}}) }}
             </div>
 
+            <div class="control-group">
+            {{ form_label(edit_form.entAdrs2) }}
+            {{ form_widget(edit_form.entAdrs2) }}
+            </div>
 
             <div class="control-group">
             {{ form_label(edit_form.entAdrs3) }}
-            {{ form_widget(edit_form.entAdrs3) }}</div>
-
-
-
-            <div class="control-group">
-                {{ form_label(edit_form.entCity) }}
-                {{ form_widget(edit_form.entCity) }}
+            {{ form_widget(edit_form.entAdrs3) }}
             </div>
 
-           <div class="control-group">
-               {{ form_label(edit_form.Country) }}
-               <div class="controls">
-                   {{ form_widget(edit_form.Country) }}
-               </div>
-           </div>
+            <div class="control-group">
+            {{ form_label(edit_form.entCity) }}
+            {{ form_widget(edit_form.entCity,{ 'attr' : { 'placeholder': 'important'}}) }}
+            </div>
 
+            <div class="control-group">
+            {{ form_label(edit_form.Country) }}
+            {{ form_widget(edit_form.Country) }}
             {{ form_widget(edit_form._token) }}
+                </div>
 
             <input type="hidden" name="entityid" value="{{ entityid }}"/>
             <div class="form-actions" style="margin-bottom: 0" >

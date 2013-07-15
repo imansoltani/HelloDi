@@ -225,18 +225,20 @@ public function test1Action()
 
 #kazem testing
 
-    public  function A_1Action(Request $request)
+
+
+    public  function A_1Action(Request $request,$id)
     {
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'post') {
 
             $name= $request->request->get('name');
             $family= $request->request->get('family');
 
             die('Name :'.$name.'Family :'.$family);
 
-
-
-
         }
+
+die('dsd'.$id);
+
     }
 }

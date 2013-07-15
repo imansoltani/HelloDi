@@ -10,17 +10,17 @@ class EntitiType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entName', 'text',array('label' => 'Entiti.Name','translation_domain' => 'entity'))
-            ->add('entVatNumber', 'text',array('label' => 'Entiti.VatNumber','translation_domain' => 'entity'))
-            ->add('entTel1', 'text',array('label' => 'Entiti.Tel1','translation_domain' => 'entity'))
+            ->add('entName', 'text',array('required'=>true,'label' => 'Entiti.Name','translation_domain' => 'entity'))
+            ->add('entVatNumber', 'text',array('required'=>false,'label' => 'Entiti.VatNumber','translation_domain' => 'entity'))
+            ->add('entTel1', 'text',array('required'=>false,'label' => 'Entiti.Tel1','translation_domain' => 'entity'))
             ->add('entTel2', 'text',array('required'=>false,'label' => 'Entiti.Tel2','translation_domain' => 'entity'))
             ->add('entFax', 'text',array('required'=>false,'label' => 'Entiti.Fax','translation_domain' => 'entity'))
             ->add('entWebsite', 'text',array('required'=>false,'label' => 'Entiti.WebSite','translation_domain' => 'entity'))
-            ->add('entAdrs1')
-            ->add('entAdrs2')
-            ->add('entAdrs3')
-            ->add('entNp')
-            ->add('entCity')
+            ->add('entAdrs1',null,array('required'=>true))
+            ->add('entAdrs2',null,array('required'=>false))
+            ->add('entAdrs3',null,array('required'=>false))
+            ->add('entNp',null,array('required'=>true))
+            ->add('entCity',null,array('required'=>true))
             ->add('Country','entity',
                 array(
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
