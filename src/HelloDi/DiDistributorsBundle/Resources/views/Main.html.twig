@@ -66,23 +66,9 @@
         $('.popupshow').hide();
         $('#popuptop').hide();
 
-        {% if errors is defined  %}
-            {% if errors|length != 0 %}
-                var x = "" ;
-                {% for error in errors %}
-                    x = "- {{ error }}<br>" ;
-                {% endfor %}
-                messagetop('hi',x,'error');
-            {% endif %}
-        {% endif %}
 
-        {% if alarm is defined  %}
-            messagetop('hi','{{ alarm }}','success');
-        {% endif %}
 
-        {% if alarm is defined  %}
-        messagetop('hi','{{ success }}','success');
-        {% endif %}
+
         //messagetop('hi','how','error');
 
         $('* .messagetop ,.messageshow ').click(function(){
@@ -99,7 +85,7 @@
             });
         });
 
-
+        
 
         //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
 
