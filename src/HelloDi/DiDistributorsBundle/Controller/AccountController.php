@@ -1763,8 +1763,8 @@ $qb=array();
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
-            ->add('FromDate','date',array('widget'=>'single_text','disabled'=>false))
-            ->add('ToDate','date',array('widget'=>'single_text','disabled'=>false))
+            ->add('FromDate','text',array('disabled'=>false))
+            ->add('ToDate','text',array('disabled'=>false))
             ->add('type','choice',array(
                 'choices'=> array(
                     'All'=>'All',

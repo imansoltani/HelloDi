@@ -19,8 +19,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-    <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito'
+          rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
 
 
@@ -34,7 +36,7 @@
 
     <link href="{{ asset('bundles/hellodi/css/ui-lightness/jquery-ui-1.10.0.custom.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}" rel="stylesheet"  >
+    <link href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -58,53 +60,81 @@
 </div>
 
 
-
 <script type="text/javascript">
-    $(function(){
+    $(function () {
 
         $('.messageshow').hide();
         $('.popupshow').hide();
         $('#popuptop').hide();
 
 
+        {% if app.session.flashbag.peekAll()|length > 0 %}
+
+            {% if app.session.flashbag.peek('error')|length > 0 %}
+
+                var x = '{% for flashMessage in app.session.flashbag.get('error') %}{{ flashMessage }}<br>{% endfor %}' ;
+
+                messagetop("",x,"error");
 
 
-        //messagetop('hi','how','error');
 
-        $('* .messagetop ,.messageshow ').click(function(){
-            $('.messageshow').fadeOut('fast',function(){
-                $('.messageshow').html('');
-                $('.messageshow').removeAttr('id');
-            });
+                {% else %}
+                    {% if app.session.flashbag.peek('success')|length > 0 %}
+
+                        var x = '{% for flashMessage in app.session.flashbag.get('success') %}{{ flashMessage }}<br>{% endfor %}' ;
+
+                        messagetop("",x,"success");
+
+                    {% else %}
+                        {% if app.session.flashbag.peek('warning')|length > 0 %}
+
+                            var x = '{% for flashMessage in app.session.flashbag.get('warning') %}{{ flashMessage }}<br>{% endfor %}' ;
+
+                            messagetop("",x,"alert");
+
+                        {% endif %}
+                    {% endif %}
+
+            {% endif %}
+
+        {% endif %}
+
+
+    //messagetop('hi','how','error');
+
+    $('* .messagetop ,.messageshow ').click(function () {
+        $('.messageshow').fadeOut('fast', function () {
+            $('.messageshow').html('');
+            $('.messageshow').removeAttr('id');
         });
-
-        $('* .messagetop ,.messageshow ').click(function(){
-            $('.messageshow').fadeOut('fast',function(){
-                $('.messageshow').html('');
-                $('.messageshow').removeAttr('id');
-            });
-        });
-
-        
-
-        //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
-
-
     });
 
-    function messagetop(subject,body,type)
-    {
-        if(type == "error") $('.messageshow').attr('id','messageerror');
-        if(type == "success") $('.messageshow').attr('id','messagesuccess');
-        if(type == "alert") $('.messageshow').attr('id','messagealert');
+    $('* .messagetop ,.messageshow ').click(function () {
+        $('.messageshow').fadeOut('fast', function () {
+            $('.messageshow').html('');
+            $('.messageshow').removeAttr('id');
+        });
+    });
 
-        var x  = '<div class="popup messagetop"  >' ;
+
+    //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
+
+
+    })
+    ;
+
+    function messagetop(subject, body, type) {
+        if (type == "error") $('.messageshow').attr('id', 'messageerror');
+        if (type == "success") $('.messageshow').attr('id', 'messagesuccess');
+        if (type == "alert") $('.messageshow').attr('id', 'messagealert');
+
+        var x = '<div class="popup messagetop"  >';
         //x += '<i class="icon-';
         //if(type == "error") x +='remove';
         //if(type == "success") x +='ok';
         //if(type == "alert") x +='warning-sign';
         //x += '" ></i>';
-        x += '<h1>'+body+'</h1></div><div class="closedoor messagetop" ></div>' ;
+        x += '<h1>' + body + '</h1></div><div class="closedoor messagetop" ></div>';
         //x += '<h1>'+subject+'</h1>' ;
         //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
 
@@ -116,15 +146,13 @@
 
     }
 
-    function Popuptop(text)
-    {
-        var element = document.getElementsByClassName(text) ;
-        var name = $(element).attr('id') ;
-        if(name = "popuptop")
-        {
+    function Popuptop(text) {
+        var element = document.getElementsByClassName(text);
+        var name = $(element).attr('id');
+        if (name = "popuptop") {
 
-            var body = '<div class="bodypopup poptop"  >' ;
-            body += $(element).html()+'</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>' ;
+            var body = '<div class="bodypopup poptop"  >';
+            body += $(element).html() + '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
 
             $('.popupshow').html(body);
             $('.bodypopup').hide();
@@ -133,34 +161,30 @@
         }
     }
 
-    function PopuptopClose(e)
-    {
+    function PopuptopClose(e) {
         e.preventDefault();
-        $('.popupshow').fadeOut('fast',function(){
+        $('.popupshow').fadeOut('fast', function () {
             $('.popupshow').html('');
             $('.popupshow').removeAttr('id');
         });
     }
 
 
-    function CheckData(x)
-    {
-        var y = false ;
-        $(x).each(function() {
+    function CheckData(x) {
+        var y = false;
+        $(x).each(function () {
             if ($(this).val() == '') {
-                y = true ;
-                $(this).attr('style','border:thin #FF0000 solid');
+                y = true;
+                $(this).attr('style', 'border:thin #FF0000 solid');
             }
         });
-        if(y)
-        {
-            messagetop('Error','Fill required inputs','error');
+        if (y) {
+            messagetop('Error', 'Fill required inputs', 'error');
             return false
         }
-        return true ;
+        return true;
     }
 </script>
-
 
 
 <!-- Nav Bar -->
@@ -172,14 +196,15 @@
 
 
             <a class="brand" id="brand" href="{{ path('layout') }}">
-                Hello <span >Di</span>
+                Hello <span>Di</span>
             </a>
 
 
             <ul class="nav pull-right">
 
                 <li class="dropdown">
-                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold" data-toggle="dropdown">
+                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
+                       data-toggle="dropdown">
                         <i class="icon-exclamation-sign"></i>
                         {% block Alert_Number %}{% endblock %}
                     </a>
@@ -200,16 +225,16 @@
                        data-toggle="dropdown">
                         <i class="icon-comment">
 
-                            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
                                 {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
-                            <span>
+                                    <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
                             </span>
-                            {% endif %}
+                                {% endif %}
 
 
 
-                            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
                                 {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
                                     <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
@@ -218,7 +243,7 @@
 
 
 
-                            {%  else %}
+                            {% else %}
                                 {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
                                     <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
@@ -228,18 +253,18 @@
                         </i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a  href="#myModal0123" data-toggle="modal">
+                        <li><a href="#myModal0123" data-toggle="modal">
 
                                 New Ticket
 
                             </a></li>
                         <li><a
-                                    {%  if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
 
-                                    href="{{ path('DistTickets') }}"
+                                        href="{{ path('DistTickets') }}"
 
-                                    {%  elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
-                                    href="{{ path('RetailerTickets') }}"
+                                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                                        href="{{ path('RetailerTickets') }}"
 
 
                                     {% else %}
@@ -255,7 +280,8 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="{{ path('fos_user_profile_edit') }}" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold;font-size: 20px;">
+                    <a href="{{ path('fos_user_profile_edit') }}" id="lang_ico" class="dropdown-toggle lang_ico"
+                       style="font-weight:bold;font-size: 20px;">
                         Er
                     </a>
                 </li>
@@ -275,7 +301,9 @@
                         <li id="user_icon_menu" class="divider"></li>
                         <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
 
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                        </li>
                     </ul>
 
                 </li>
@@ -293,7 +321,7 @@
 
 <!-- MenuBar
         ================================================== -->
-<div class="MenuBar" id="MenuBar1" >
+<div class="MenuBar" id="MenuBar1">
     <div class="menubar_inner" id="menubar_inner1">
         <div class="container">
             <div class="menubar_items">
@@ -315,15 +343,15 @@
 
 
 <div class="main">
-    <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%" >
+    <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%">
         <div class="sitemappath">
-            <div class="container" >
+            <div class="container">
                 {% block Site_Map %}{% endblock %}
             </div>
         </div>
 
         <div class="container">
-            <div class="pagetitle" >
+            <div class="pagetitle">
                 {% block PageTitle %}{% endblock %}
             </div>
 
@@ -333,25 +361,22 @@
             {% endblock %}
 
 
-
         </div>
 
 
-        {% if hornav is defined  %}
-                <div class="tabbar" >
-                    <div class="container">
-                        <ul class="hornav"  >
-                            {% block Tabs %}{% endblock %}
-                        </ul>
-                    </div>
+        {% if hornav is defined %}
+            <div class="tabbar">
+                <div class="container">
+                    <ul class="hornav">
+                        {% block Tabs %}{% endblock %}
+                    </ul>
                 </div>
+            </div>
         {% endif %}
 
 
-
-
     </div>
-    <div class="pagetop second" style="background: none;display: block;position: absolute;z-index: 11;width:100%" >
+    <div class="pagetop second" style="background: none;display: block;position: absolute;z-index: 11;width:100%">
         <div class="container">
             {% block Dist2 %}
             {% endblock %}
@@ -359,30 +384,27 @@
     </div>
 
 
-        <div class="row {% if hornav is not defined  %}bordertop{% endif %}">
-            <div class="container">
-                {% block Body %}{% endblock %}
-            </div>
+    <div class="row {% if hornav is not defined %}bordertop{% endif %}">
+        <div class="container">
+            {% block Body %}{% endblock %}
         </div>
+    </div>
 
 </div>
-
-
 
 
 <div class="footer">
 
 
+    <div id="footer-copyright" class="span6">
+        &copy; 2013-4 yAs UI.
+    </div>
+    <!-- /span6 -->
 
-            <div id="footer-copyright" class="span6">
-                &copy; 2013-4 yAs UI.
-            </div>
-            <!-- /span6 -->
-
-            <div id="footer-terms" class="span6">
-                Programing by <a href="http://pnsadeghy.ir" target="_blank">Pnsadeghy</a>
-            </div>
-            <!-- /.span6 -->
+    <div id="footer-terms" class="span6">
+        Programing by <a href="http://pnsadeghy.ir" target="_blank">Pnsadeghy</a>
+    </div>
+    <!-- /.span6 -->
 
 
     <!-- /container -->
@@ -403,9 +425,9 @@
         <h3 id="myModalLabel">New Ticket</h3>
     </div>
     <form class="form-horizontal"
-            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
-          action="{{ path('RetailerTicketsNew') }}"
-            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                action="{{ path('RetailerTicketsNew') }}"
+            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
                 action="{{ path('DistTicketsNew') }}"
             {% endif %}
           method="POST">
@@ -413,15 +435,13 @@
         <div class="modal-body">
 
 
-            {%  if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
                 {#{{ render(controller('HelloDiDiDistributorsBundle:Retailers:ticketsnew')) }}#}
                 {#{% include "HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig" %}#}
-            {%  elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
                 {#{{ render(controller('HelloDiDiDistributorsBundle:Distributors:ticketsnew')) }}#}
                 {#{% include "HelloDiDiDistributorsBundle:Retailers:Distributors.html.twig" %}#}
             {% endif %}
-
-
 
 
         </div>
@@ -434,7 +454,11 @@
 
 
 <script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+
+
 <script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+
+
 
 {% block Link_Footer %}
 
@@ -444,6 +468,24 @@
 <script type="text/javascript">
     {% block Alert_Color %}{% endblock %}
     {% block Noti_Color %}{% endblock %}
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker1 input').removeAttr('id');
+        $('.datepicker1 input').attr('id', 'pickdate1');
+        $('.datepicker2 input').removeAttr('id');
+        $('.datepicker2 input').attr('id', 'pickdate2');
+        $('.datepicker3 input').removeAttr('id');
+        $('.datepicker3 input').attr('id', 'pickdate3');
+
+        $('#pickdate1').datepicker({ dateFormat: 'yy/mm/dd' });
+        //$('#pickdate1').disable();
+        $('#pickdate2').datepicker({ dateFormat: 'yy/mm/dd' });
+        //$('#pickdate2').disable();
+        $('#pickdate3').datepicker({ dateFormat: 'yy/mm/dd' });
+
+    });
 </script>
 
 

@@ -29,18 +29,22 @@
         <form class="form-horizontal SearchForm" action="{{ path('MasterProvTransaction',{'id':Account.id}) }}"
               method="post">
             <fieldset>
-                <div class="control-group">
+                <div class="control-group datepicker1">
                     {{ form_label(form.FromDate) }}
-                    <div class="controls">
-                        {{ form_widget(form.FromDate) }}
-                    </div>
+
+                        {{ form_widget(form.FromDate ) }}
+
                 </div>
-                <div class="control-group">
+
+
+
+                <div class="control-group datepicker2">
                     {{ form_label(form.ToDate) }}
-                    <div class="controls">
-                        {{ form_widget(form.ToDate) }}
-                    </div>
+
+                        {{ form_widget(form.ToDate ) }}
                 </div>
+
+
                 <div class="control-group">
                     {{ form_label(form.type) }}
                     <div class="controls">
@@ -133,20 +137,21 @@
 
                             <td>{{ tran.Account.accBalance }}</td>
                             <td class="td-actions">
-<a href="{{ path('MasterProvTransactionDetails',{'id':tran.id}) }}">Details</a>|
+<a class="btn_actions" href="{{ path('MasterProvTransactionDetails',{'id':tran.id}) }}">Details</a> |
 
-<a href="{{ path('MasterProvTransactionDelete',{'id':tran.id}) }}">Delete</a>
+<a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':tran.id}) }}">Delete</a>
 
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-                <div >
-                    {{ knp_pagination_render(Trans) }}
-                </div>
             </div>
         </form>
     </div>
+                <div class="navigation" style="text-align: center" >
+                    {{ knp_pagination_render(Trans) }}
+                </div>
+
 
 {% endblock %}
