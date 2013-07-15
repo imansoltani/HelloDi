@@ -37,6 +37,7 @@
                     <th>Code</th>
                     <th>Type</th>
                     <th>Price (Currency)</th>
+                    <th>Status</th>
                     <th>Management</th>
                 </tr>
                 </thead>
@@ -50,6 +51,7 @@
                         <td>{{ price.item.itemCode }}</td>
                         <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
                         <td>{{ price.price }} {{ price.priceCurrency }}</td>
+                        <td>{% if price.priceStatus == 1 %}Active{% else %}Inactive{% endif %}</td>
                         <td class="td-actions" >
                             <form method="post" action="{{ path('EditItemProv') }}">
                                 <input type="hidden" name="priceid" value="{{ price.id }}"/>

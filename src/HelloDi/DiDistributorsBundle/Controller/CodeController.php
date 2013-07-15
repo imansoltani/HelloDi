@@ -59,7 +59,7 @@ class CodeController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $this->get('request')->query->get('page', 1),
+            $request->get('page'),
             10,
             array('distinct' => false)
         );

@@ -1560,8 +1560,8 @@ $qb=array();
                 }
             ))
             ->add('Batch', 'text', array('required' => false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
             ->add('SerialNumber', 'text', array('data' => '1', 'label' => 'Column Number Pin'))
             ->add('PinCode', 'text', array('data' => '4', 'label' => 'Column Number SN'))
@@ -1613,43 +1613,54 @@ $qb=array();
 
             $fileName = $input->getFileName();
             $inputfind = $em->getRepository('HelloDiDiDistributorsBundle:Input')->findOneBy(array('fileName' => $fileName));
-//$f= fopen("d:\\a.txt","w+");
+//          $f= fopen("d:\\a.txt","w+");
             if (!$inputfind) {
-                $file = fopen($input->getAbsolutePath(), 'r+');
+                try {
+                    $file = fopen($input->getAbsolutePath(), 'r+');
 
-                if ($line = fgets($file)) {
-                    $ok = true;
-                    $count = 0;
-                    while ($line = fgets($file)) {
-                        $count++;
-                        $lineArray = explode($data['delimiter'], $line);
+                    if ($line = fgets($file)) {
+                        $ok = true;
+                        $count = 1;
+                        while ($line = fgets($file)) {
+                            $count++;
+                            $lineArray = explode($data['delimiter'], $line);
 //                        fwrite($f,$count.','.$lineArray[$data['SerialNumber'] - 1].'\n');
-                        $codefind = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOneBy(array('serialNumber' => $lineArray[$data['SerialNumber'] - 1]));
-                        if ($codefind) {
-                            $errors[] = "Codes are duplicate.";
-                            $ok = false;
-                            break;
+                            $codefind = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOneBy(
+                                array('serialNumber' => $lineArray[$data['SerialNumber'] - 1])
+                            );
+                            if ($codefind) {
+                                $errors[] = "Codes are duplicate.";
+                                $ok = false;
+                                break;
+                            }
                         }
-                    }
-                    if ($ok) {
-                        $request->getSession()->set('upload_Name', $input->getFileName());
-                        $request->getSession()->set('upload_Itemid', $input->getItem()->getId());
-                        $request->getSession()->set('upload_Batch', $data['Batch']);
-                        $request->getSession()->set('upload_Production', $data['ProductionDate']);
-                        $request->getSession()->set('upload_Expiry', $data['ExpireDate']);
-                        $request->getSession()->set('upload_delimiter', $data['delimiter']);
-                        $request->getSession()->set('upload_SerialNumber', $data['SerialNumber']);
-                        $request->getSession()->set('upload_PinCode', $data['PinCode']);
-                        $request->getSession()->set('upload_accountid', $accountid);
+                        if ($ok) {
+                            $request->getSession()->set('upload_Name', $input->getFileName());
+                            $request->getSession()->set('upload_Itemid', $input->getItem()->getId());
+                            $request->getSession()->set('upload_Batch', $data['Batch']);
+                            $request->getSession()->set('upload_Production', $data['ProductionDate']);
+                            $request->getSession()->set('upload_Expiry', $data['ExpireDate']);
+                            $request->getSession()->set('upload_delimiter', $data['delimiter']);
+                            $request->getSession()->set('upload_SerialNumber', $data['SerialNumber']);
+                            $request->getSession()->set('upload_PinCode', $data['PinCode']);
+                            $request->getSession()->set('upload_accountid', $accountid);
 
-                        return $this->render('HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit.html.twig', array(
-                            'Account' => $Account,
-                            'count' => $count,
-                            'input' => $input
-                        ));
+                            return $this->render(
+                                'HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit.html.twig',
+                                array(
+                                    'Account' => $Account,
+                                    'count' => $count,
+                                    'input' => $input
+                                )
+                            );
+                        }
+                    } else {
+                        $errors[] = "File is empty.";
                     }
-                } else {
-                    $errors[] = "File is empty.";
+                }
+                catch (\Exception $ex)
+                {
+                    $errors[] = "Error in Reading File.";
                 }
             } else {
                 $errors[] = "File is duplicate.";
@@ -1714,6 +1725,7 @@ $qb=array();
             $transaction->setTranAction('add');
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
+            $transaction->setTranType(1);
             $em->persist($transaction);
 
         }
