@@ -32,9 +32,6 @@ EditUserEntities:
     pattern:  /entities/user/{id}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:EditUserEntities" }
 
-ChangeRoleUserEntities:
-    pattern:  /entities/user/{id}/roleedit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ChangeRoleUserEntities" }
 
 AddProv:
     pattern:  /entities/{id}/new/provoder

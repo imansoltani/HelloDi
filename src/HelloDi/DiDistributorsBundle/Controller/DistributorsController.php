@@ -404,15 +404,11 @@ class DistributorsController extends Controller
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                if ($user->getStatus() == 0)
-                    $user->setStatus(0);
-                else
-                    $user->setStatus(1);
                 $em->flush();
                 return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
             }
@@ -422,31 +418,7 @@ class DistributorsController extends Controller
 
     }
 
-    public function DistChangeRoleAction($id)
-    {
-        $this->check_User($id);
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $roles = $user->getRoles();
-        $role = $roles[0];
-        switch ($role) {
-
-            case 'ROLE_DISTRIBUTOR':
-                $user->removeRole('ROLE_DISTRIBUTOR');
-                $user->addRole('ROLE_DISTRIBUTOR_ADMIN');
-                break;
-
-            case 'ROLE_DISTRIBUTOR_ADMIN':
-                $user->removeRole('ROLE_DISTRIBUTOR_ADMIN');
-                $user->addRole('ROLE_DISTRIBUTOR');
-                break;
-        }
-
-        $em->flush();
-        return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
-
-    }
 
     public function DistRetailerUserAction(Request $req,$id)
     {
@@ -477,10 +449,9 @@ class DistributorsController extends Controller
     {
         $this->check_ChildUser($id);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
-        $user = new User();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -509,19 +480,11 @@ class DistributorsController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'),$user);
-        $formrole = $this->createFormBuilder()
-               ->add('roles', 'choice',
-                        array(
-                            'choices' =>
-                                     array('ROLE_RETAILER' => 'ROLE_RETAILER',
-                                            'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2),$user);
+
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            $formrole->handleRequest($request);
-            $data = $formrole->getData();
-            $user->addRole(($data['roles']));
             $user->setAccount($Account);
             $user->setEntiti($Entiti);
             if ($form->isValid())
@@ -537,36 +500,10 @@ class DistributorsController extends Controller
                 'retailerAccount' =>$Account,
                 'Account' => $myaccount,
                 'form' => $form->createView(),
-                'formrole' => $formrole->createView()
             ));
 
     }
 
-    public function DistRetailerUserChangeRoleAction($id)
-    {
-        $this->check_ChildUser($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $roles = $user->getRoles();
-        $role = $roles[0];
-        switch ($role) {
-
-            case 'ROLE_RETAILER':
-                $user->removeRole('ROLE_RETAILER');
-                $user->addRole('ROLE_RETAILER_ADMIN');
-                break;
-
-            case 'ROLE_RETAILER_ADMIN':
-                $user->removeRole('ROLE_RETAILER_ADMIN');
-                $user->addRole('ROLE_RETAILER');
-                break;
-        }
-
-        $em->flush();
-        return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $user->getAccount()->getId())));
-
-    }
 
     public function DistNewRetailerAction(Request $request)
     {

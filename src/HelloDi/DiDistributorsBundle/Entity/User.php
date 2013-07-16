@@ -19,7 +19,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+    protected $roles = array();
     /** 
      * @ORM\Column(type="string", length=45, nullable=false, name="firstName")
      */

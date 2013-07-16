@@ -43,7 +43,7 @@
             {{ form_widget(form2step.entWebsite) }}
             {{ form_errors(form2step.entWebsite) }}
         </div>
-
+        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
     </div>
 
     <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
@@ -85,7 +85,7 @@
             </div>
             {{ form_errors(form2step.Country) }}
         </div>
-
+        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
     </div>
 
     <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
@@ -142,7 +142,7 @@
 
         {{ form_errors(form2step.Accounts[0].accDefaultLanguage) }}
     </div>
-
+        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
     </div>
 
     <div style="display: none;position: absolute;z-index: 11" class="content" id="step-4">
@@ -198,12 +198,12 @@
             </div>
         </div>
         <div class="control-group">
-            {{ form_label(formrole.roles) }}
+            {{ form_label(form2step.Users[0].roles[0]) }}
             <div class="controls">
-                {{ form_widget(formrole.roles) }}
+                {{ form_widget(form2step.Users[0].roles[0]) }}
             </div>
         </div>
-
+        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
      </div>
 
 

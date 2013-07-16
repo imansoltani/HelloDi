@@ -18,13 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RegistrationFormType extends AbstractType
 {
     private $class;
-
+    private $type;
     /**
      * @param string $class The User class name
      */
-    public function __construct($class)
+    public function __construct($class,$type=null)
     {
         $this->class = $class;
+        $this->type=$type;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,8 +40,47 @@ class RegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
-            ->add('enabled','choice',array('choices'=>array(1=>'Enabled',0=>'Disabled')));
-        ;
+            ->add('enabled','choice',array('choices'=>array(1=>'Enabled',0=>'Disabled'),'preferred_choices'=>array(1)));
+            if($this->type==2)
+            {
+               $builder->add('roles', 'collection', array(
+                'type'   => 'choice',
+                'options'  => array('label'=>'Role',
+                    'choices'  => array(
+                        'ROLE_RETAILER' => 'ROLE_RETAILER',
+                        'ROLE_RETAILER_ADMIN'     => 'ROLE_RETAILER_ADMIN',
+                    ),
+                ),
+            ))           ;
+            }
+
+
+            elseif($this->type==0)
+            {
+                $builder->add('roles', 'collection', array(
+                    'type'   => 'choice',
+                    'options'  => array('label'=>'Role',
+                        'choices'  => array(
+                            'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
+                            'ROLE_DISTRIBUTOR_ADMIN'     => 'ROLE_DISTRIBUTOR_ADMIN',
+                        ),
+                    ),
+                ))        ;
+            }
+
+        elseif($this->type==1)
+        {
+            $builder->add('roles', 'collection', array(
+                'type'   => 'choice',
+                'options'  => array('label'=>'Role',
+                    'choices'  => array(
+                        'ROLE_MASTER' => 'ROLE_MASTER',
+                        'ROLE_MASTER_ADMIN'     => 'ROLE_MASTER_ADMIN',
+                    ),
+                ),
+            ))        ;
+        }
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

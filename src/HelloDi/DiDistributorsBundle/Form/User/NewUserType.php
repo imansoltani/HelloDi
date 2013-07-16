@@ -12,9 +12,11 @@ use HelloDi\DiDistributorsBundle\Entity\Entiti;
 
 class NewUserType extends BaseType
 {
+
+
+
     public function buildForm(FormBuilderInterface $builder, array $options,Entiti $ent=null)
     {
-
 
         parent::buildForm($builder, $options);
         $builder

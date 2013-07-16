@@ -9,7 +9,3 @@ MasterStaffAdd:
 MasterStaffEdit:
     pattern:  /staff/{id}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staffedit"}
-
-MasterChangeRole:
-    pattern:  /staff/{id}/changerole
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:changerole" }

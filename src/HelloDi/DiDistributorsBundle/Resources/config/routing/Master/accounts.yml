@@ -82,9 +82,6 @@ MasterDistUserEdit:
     pattern:  distributors/user/{id}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserEdit"}
 
-MasterDistUserChangeRole:
-    pattern:  distributors/user/{id}/changerole
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserchangerole" }
 
 ManageDistSettings:
     pattern:  distributors/{id}/Settings

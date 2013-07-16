@@ -72,6 +72,13 @@
             </div>
         </div>
 
+    <div class="control-group">
+        {{ form_label(form_edit.roles[0]) }}
+        <div class="controls">
+            {{ form_widget(form_edit.roles[0]) }}
+        </div>
+    </div>
+
     </div>
    {#// <input type="hidden" value="{{ entity.id }}">#}
     {{ form_widget(form_edit._token) }}

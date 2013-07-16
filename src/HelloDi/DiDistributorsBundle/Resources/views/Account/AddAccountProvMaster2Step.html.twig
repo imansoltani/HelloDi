@@ -51,6 +51,7 @@
             {{ form_widget(form2step.entWebsite) }}
             {{ form_errors(form2step.entWebsite) }}
         </div>
+        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
     </div>
 
         <!-- Address -->
@@ -98,7 +99,7 @@
                 </div>
                 {{ form_errors(form2step.Country) }}
             </div>
-
+            <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
         </div>
 
         <!-- Account -->
@@ -143,6 +144,7 @@
 
                 {{ form_errors(form2step.Accounts[0].accDefaultLanguage) }}
             </div>
+            <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
         </div>
 
         {{ form_widget(form2step._token) }}

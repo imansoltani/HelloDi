@@ -13,9 +13,9 @@ class NewUserDistributorsRetailerInEntityType extends BaseType
 {
     protected $Entity;
     private $class;
-    public function __construct ($class,Entiti $entity)
+    public function __construct ($class,Entiti $entity,$type)
     {
-        parent::__construct($class);
+        parent::__construct($class,$type);
         $this->Entity =$entity;
     }
 
@@ -28,6 +28,7 @@ class NewUserDistributorsRetailerInEntityType extends BaseType
             ->add('lastname',null,array('required'=>false))
             ->add('mobile',null,array('required'=>false))
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
+
              ->add('Account', 'entity', array(
                      'class'    => 'HelloDiDiDistributorsBundle:Account',
                      'property' => 'accName',

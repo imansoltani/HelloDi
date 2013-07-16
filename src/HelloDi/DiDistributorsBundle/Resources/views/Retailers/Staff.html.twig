@@ -38,14 +38,15 @@
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
                             <tr>
-                                <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Entiti' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
-                                <th>{{ 'Change Role' | trans ({}, "account") }}</th>
+
+                                <th>{{ 'Id' | trans ({}, "account") }}</th>
+                                <th>{{ 'Name' | trans ({}, "account") }}</th>
+                                <th>{{ 'Username' | trans ({}, "account") }}</th>
+                                <th>{{ 'Entiti' | trans ({}, "account") }}</th>
+                                <th>{{ 'Status' | trans ({}, "account") }}</th>
+                                <th>{{ 'Role' | trans ({}, "account") }}</th>
+                                <th>{{ 'Manage' | trans ({}, "account") }}</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -57,7 +58,7 @@
                                     <td>{{ user.username }}</td>
                                     <td>{{ user.Entiti.entName }}</td>
                                     <td>
-                                        {% if user.status==0 %}
+                                        {% if user.enabled==0 %}
                                             InActive
                                         {% else %}
                                             Active
@@ -69,12 +70,6 @@
 
 
                                         <a class="btn_actions" href="{{ path('RetailerStaffEdit',{'id':user.id }) }}">Modify</a>
-
-                                    </td>
-                                    <td class="td-actions">
-
-
-                                        <a class="btn_actions" href="{{ path('RetailerChangeRole',{'id': user.id }) }}">Change Role</a>
 
                                     </td>
                                 </tr>

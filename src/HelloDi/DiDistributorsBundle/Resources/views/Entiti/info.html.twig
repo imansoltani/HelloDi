@@ -40,6 +40,8 @@
             {{ form_widget(edit_form.entTel2) }}
             </div>
 
+
+
             <div class="control-group">
             {{ form_label(edit_form.entFax) }}
             {{ form_widget(edit_form.entFax) }}
@@ -80,7 +82,7 @@
 
             {{ form_widget(edit_form._token) }}
 
-            <input type="hidden" name="entityid" value="{{ entityid }}"/>
+
             <div class="form-actions" style="margin-bottom: 0" >
                 <button class="btn btn-primary" type="submit">{{'Entiti.Edit' | trans ({}, "entity")}}</button>
 

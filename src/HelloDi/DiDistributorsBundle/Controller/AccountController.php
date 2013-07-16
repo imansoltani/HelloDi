@@ -260,18 +260,13 @@ class AccountController extends Controller
             array(
                 'cascade_validation' => true
             ));
-        $formrole = $this->createFormBuilder()
-            ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
 
         if ($request->isMethod('POST')) {
             $form2step->handleRequest($request);
-            $formrole->handleRequest($request);
             if ($form2step->isValid()) {
-                $data = $formrole->getData();
                 $em->persist($Entiti);
                 $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
-                $User->addRole($data['roles']);
                 $em->persist($User);
                 $AdrsDetai->setAdrsDate(new \DateTime('now'));
                 $AdrsDetai->setEntiti($Entiti);
@@ -291,7 +286,7 @@ class AccountController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster2Step.html.twig', array(
             'form2step' => $form2step->createView(),
-            'formrole' => $formrole->createView()
+
         ));
     }
 
@@ -1914,23 +1909,12 @@ public  function MasterProvTransactionDeleteAction($id){
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
-        $formrole = $this->createFormBuilder()
-            ->add('roles', 'choice',
-                array(
-                    'choices' =>
-                    array(
-                        'ROLE_MASTER' => 'ROLE_MASTER',
-                        'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN'
-                    )))
-            ->getForm();
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
+
 
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
-            $formrole->handleRequest($req);
-            $data = $formrole->getData();
             if ($form->isValid()) {
-                $user->addRole(($data['roles']));
                 $user->setEntiti($Account->getEntiti());
                 $user->setAccount($Account);
                 $user->setEnabled(1);
@@ -1945,7 +1929,7 @@ public  function MasterProvTransactionDeleteAction($id){
                 'Entiti' => $Account->getEntiti(),
                 'Account' => $Account,
                 'form' => $form->createView(),
-                'formrole' => $formrole->createView())
+           )
         );
     }
 
@@ -1955,7 +1939,7 @@ public  function MasterProvTransactionDeleteAction($id){
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
 
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
@@ -1974,31 +1958,6 @@ public  function MasterProvTransactionDeleteAction($id){
     }
 
 
-    public function DistUserchangeroleAction($id)
-    {
-
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $roles = $user->getRoles();
-        $role = $roles[0];
-        switch ($role) {
-
-            case 'ROLE_DISTRIBUTOR':
-                $user->removeRole('ROLE_DISTRIBUTOR');
-                $user->addRole('ROLE_DISTRIBUTOR_ADMIN');
-                break;
-
-            case 'ROLE_DISTRIBUTOR_ADMIN':
-                $user->removeRole('ROLE_DISTRIBUTOR_ADMIN');
-                $user->addRole('ROLE_DISTRIBUTOR');
-                break;
-        }
-
-        $em->flush();
-        return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $user->getAccount()->getId())));
-
-    }
 
 public  function  MasterProvEntitiAction($id)
 {

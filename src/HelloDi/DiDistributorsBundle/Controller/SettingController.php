@@ -39,28 +39,14 @@ public  function staffaddAction(Request $req,$id)
     $Entiti= $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
 
-    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
-    $formrole = $this->createFormBuilder()
-        ->add('roles', 'choice',
-            array(
-                'choices' =>
-                array(
-                    'ROLE_MASTER' => 'ROLE_MASTER',
-                    'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN'
-                )))
-        ->getForm();
+    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',1), $user, array('cascade_validation' => true));
 
     if ($req->isMethod('POST')) {
         $form->handleRequest($req);
-        $formrole->handleRequest($req);
-        $data = $formrole->getData();
-
 
         $user->setStatus(1);
         if ($form->isValid()) {
-            $user->addRole(($data['roles']));
             $user->setEntiti($Entiti);
-            $user->setEnabled(1);
             $em->persist($user);
             $em->flush();
             return $this->redirect($this->generateUrl('MasterStaff'));
@@ -71,8 +57,7 @@ public  function staffaddAction(Request $req,$id)
     return $this->render('HelloDiDiDistributorsBundle:Setting:StaffAdd.html.twig', array(
     'Entiti'=>$Entiti,
     'form' => $form->createView(),
-    'formrole' => $formrole->createView())
-    );
+    )  );
 }
 
 
@@ -84,10 +69,10 @@ public  function staffeditAction(Request $req,$id)
 
     $em = $this->getDoctrine()->getManager();
     $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+    $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',1), $user, array('cascade_validation' => true));
 
     if ($req->isMethod('POST')) {
-        $form->bind($req);
+        $form->handleRequest($req);
         if ($form->isValid()) {
             $em->flush();
             return $this->redirect($this->generateUrl('MasterStaff'));
@@ -101,32 +86,6 @@ public  function staffeditAction(Request $req,$id)
     'form' => $form->createView()));
 }
 
-
-public function changeroleAction($id)
-{
-
-
-    $em = $this->getDoctrine()->getManager();
-    $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-    $roles = $user->getRoles();
-    $role = $roles[0];
-    switch ($role) {
-
-        case 'ROLE_MASTER':
-            $user->removeRole('ROLE_MASTER');
-            $user->addRole('ROLE_MASTER_ADMIN');
-            break;
-
-        case 'ROLE_MASTER_ADMIN':
-            $user->removeRole('ROLE_MASTER_ADMIN');
-            $user->addRole('ROLE_MASTER');
-            break;
-    }
-
-    $em->flush();
-    return $this->redirect($this->generateUrl('MasterStaff'));
-
-}
 
 
 }

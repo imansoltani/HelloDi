@@ -48,7 +48,7 @@
                     <th>{{ 'User.Account' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Privilege' | trans ({}, "user") }}</th>
                     <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
-                    <th>{{ 'User.ChangeROLE' | trans ({}, "user") }}</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -76,9 +76,6 @@
                             </td>
                             <td class="td-actions" >
                                 <a class="btn_actions" href="{{ path('EditUserEntities',{'id':User.id}) }}">Manage</a>
-                            </td>
-                            <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('ChangeRoleUserEntities',{'id':User.id}) }}">Change Role</a>
                             </td>
                         </tr>
 

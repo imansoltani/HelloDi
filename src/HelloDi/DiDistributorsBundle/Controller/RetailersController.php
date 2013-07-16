@@ -78,15 +78,9 @@ class RetailersController extends Controller
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
-        $formrole = $this->createFormBuilder()
-            ->add('roles', 'choice', array('choices' => array('ROLE_RETAILER' => 'ROLE_RETAILER', 'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
-
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
         if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $formrole->bind($request);
-            $data = $formrole->getData();
-            $user->addRole(($data['roles']));
+            $form->handleRequest($request);
             $user->setAccount($Account);
             $user->setEntiti($Entiti);
             $user->setStatus(1);
@@ -99,7 +93,10 @@ class RetailersController extends Controller
             }
 
         }
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:StaffAdd.html.twig', array('Entiti' => $Account->getEntiti(), 'Account' => $Account, 'form' => $form->createView(), 'formrole' => $formrole->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:StaffAdd.html.twig', array(
+            'Entiti' => $Account->getEntiti(),
+            'Account' => $Account,
+            'form' => $form->createView(),));
 
     }
 
@@ -109,49 +106,25 @@ class RetailersController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
-                if ($user->getStatus() == 0)
-                    $user->setStatus(0);
-                else
-                    $user->setStatus(1);
                 $em->flush();
                 return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));
             }
 
         }
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:StaffEdit.html.twig', array('Account' => $user->getAccount(), 'Entiti' => $user->getEntiti(), 'userid' => $id, 'form' => $form->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:StaffEdit.html.twig',
+            array(
+                'Account' => $user->getAccount(),
+                'Entiti' => $user->getEntiti(),
+                'userid' => $id,
+                'form' => $form->createView()));
 
     }
 
-    public function RetailerChangeRoleAction($id)
-    {
-        $this->check_User($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $roles = $user->getRoles();
-        $role = $roles[0];
-        switch ($role) {
-
-            case 'ROLE_RETAILER':
-                $user->removeRole('ROLE_RETAILER');
-                $user->addRole('ROLE_RETAILER_ADMIN');
-                break;
-
-            case 'ROLE_RETAILER_ADMIN':
-                $user->removeRole('ROLE_RETAILER_ADMIN');
-                $user->addRole('ROLE_RETAILER');
-                break;
-        }
-
-        $em->flush();
-        return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));
-
-    }
 
     public function TransactionAction(Request $req)
     {
