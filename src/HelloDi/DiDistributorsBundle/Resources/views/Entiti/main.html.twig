@@ -38,12 +38,14 @@
                                 {{ form_label(formsearch.entName) }}
                                 {{ form_widget(formsearch.entName) }}
                             </div>
-
+                            {% for Acc in formsearch.HaveAccount %}
                             <div class="control-group">
-                                {{ form_label(formsearch.HaveAccount) }}
-                                <div class="controls" >{{ form_widget(formsearch.HaveAccount) }}</div>
-                            </div>
 
+                                {{ form_label(Acc) }}
+                                <div class="controls" >{{ form_widget(Acc) }}</div>
+
+                            </div>
+                            {% endfor %}
                             <div class="control-group">
                                 {{ form_label(formsearch.Country) }}
                                 <div class="controls">{{ form_widget(formsearch.Country) }}</div>
@@ -95,18 +97,19 @@
                             <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Entiti.Id' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.Manage' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.Name' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.Country' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.City' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.Distributors' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Entiti.Provider' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Id' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Manage' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Name' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'City' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Count Distributors' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Count Provider' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Count Retailer' | trans ({}, "entity") }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for entity in pagination %}
-                                    {% set p,d=0,0 %}
+                                    {% set p,d,r=0,0,0 %}
                                     <tr>
                                         <td style="font-weight: bold">{{ entity.id }}</td>
 
@@ -130,6 +133,9 @@
                                                     {% set p=p+1 %}
                                                 {% elseif EA.accType==0 %}
                                                     {% set d=d+1 %}
+
+                                                {% elseif EA.accType==2 %}
+                                                    {% set r=r+1 %}
                                                 {% endif %}
                                             {% endfor %}
 
@@ -138,6 +144,10 @@
 
                                         <td>
                                             {{ d }}
+                                        </td>
+
+                                        <td>
+                                            {{ r }}
                                         </td>
                                     </tr>
                                 {% endfor %}

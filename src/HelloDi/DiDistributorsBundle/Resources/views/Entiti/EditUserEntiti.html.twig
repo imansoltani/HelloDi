@@ -38,7 +38,7 @@
 
     <div class="control-group">
     {{ form_label(form_edit.email) }}
-    {{ form_widget(form_edit.email,{ 'attr' : { 'placeholder': 'important'}}) }}
+    {{ form_widget(form_edit.email) }}
     </div>
 
     <div class="control-group">
@@ -77,7 +77,7 @@
     {{ form_widget(form_edit._token) }}
     <div class="form-actions" style="margin-bottom: 0" >
         <input type="submit" class="btn btn-primary btn-medium" value="Edit">
-        <a class="btn" onclick="GoWhere(1)"  >Back</a>
+        <a class="btn" href="{{ path('Ent_Users',{'id':entity.id}) }}">Cancel</a>
         <script type="text/javascript">
             function GoWhere(x)
             {

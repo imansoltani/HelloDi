@@ -21,7 +21,7 @@ class Entiti
     private $entName;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="ebt_vat_number")
+     * @ORM\Column(type="string", length=45, nullable=true, name="ebt_vat_number")
      */
     private $entVatNumber;
 

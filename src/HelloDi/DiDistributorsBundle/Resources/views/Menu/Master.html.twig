@@ -71,7 +71,9 @@
         </a>
         <ul class="dropdown-menu">
             <li><a href="">Profile</a></li>
+            {% if is_granted('ROLE_MASTRE_ADMIN') %}
             <li><a href="{{ path('MasterStaff') }}">Staff</a></li>
+        {% endif %}
         </ul>
     </li>
 
