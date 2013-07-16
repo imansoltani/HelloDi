@@ -38,7 +38,7 @@ class NewRetailersType extends AbstractType
                       )
 
                       ->add('entWebsite', 'text',array('required'=>false,'label' => 'Entiti.WebSite','translation_domain' => 'entity'))
-                      ->add('users','collection',array('type' => new UserRegistrationType('HelloDi\DiDistributorsBundle\Entity\User'),'label' => 'Entiti.Users','translation_domain' => 'entity'))
+                      ->add('users','collection',array('type' => new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDi\DiDistributorsBundle\Entity\User',2),'label' => 'Entiti.Users','translation_domain' => 'entity'))
                       ->add('accounts','collection',array('type' => new AccountDistRetailerType() ,'label' => 'Entiti.Accounts','translation_domain' => 'entity'))
 
                   ;
