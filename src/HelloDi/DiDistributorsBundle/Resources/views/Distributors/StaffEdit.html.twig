@@ -53,7 +53,9 @@
 
             <div class="control-group">
                 {{ form_label(form.enabled) }}
-                {{ form_widget(form.enabled) }}
+                <div class="controls">
+                    {{ form_widget(form.enabled) }}
+                </div>
             </div>
             <div class="control-group">
                 {{ form_label(form.email) }}
@@ -61,8 +63,13 @@
             </div>
 
             <div class="control-group">
-                {{ form_label(form.plainPassword) }}
-                {{ form_widget(form.plainPassword) }}
+                {{ form_label(form.plainPassword.first) }}
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second) }}
             </div>
 
 
