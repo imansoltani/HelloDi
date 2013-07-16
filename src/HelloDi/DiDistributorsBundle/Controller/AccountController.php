@@ -1402,9 +1402,9 @@ $qb=array();
         ));
     }
 
-    public function EditItemDistAction(Request $request,$itemid)
+    public function EditItemDistAction(Request $request,$id,$itemid)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
         $oldprice = $price->getPrice();
 
@@ -1419,6 +1419,18 @@ $qb=array();
                     $pricehistory->setPrice($price->getPrice());
                     $pricehistory->setPrices($price);
                     $em->persist($pricehistory);
+                }
+                if($price->getPriceStatus() == 0)
+                {
+                    $RetAccs = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id)->getChildrens()->toArray();
+                    $em ->createQueryBuilder()
+                        ->update('HelloDiDiDistributorsBundle:Price','pr')
+                        ->where('pr.Account IN (:retaccs)')->setParameter('retaccs',$RetAccs)
+                        ->andWhere('pr.Item = :item')->setParameter('item',$price->getItem())
+                        ->set("pr.priceStatus",0)
+                        ->getQuery()
+                        ->execute()
+                        ;
                 }
                 $em->flush();
 
