@@ -16,19 +16,19 @@ class MakeAccountIn2StepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entName', 'text',array('required'=>false))
-            ->add('entVatNumber', 'text',array())
-            ->add('entTel1', 'text',array())
-            ->add('entTel2', 'text',array('required'=>false))
-            ->add('entFax', 'text',array('required'=>false))
-            ->add('entWebsite', 'text',array('required'=>false))
-            ->add('entAdrs1', 'text',array())
-            ->add('entAdrs2', 'text',array('required'=>false))
-            ->add('entAdrs3', 'text',array('required'=>false))
-            ->add('entCity', 'text',array('required'=>false))
-            ->add('entNP', 'text',array())
+            ->add('entName', 'text',array('required'=>false,'label' => 'Name','translation_domain' => 'Entity'))
+            ->add('entVatNumber', 'text',array('label' => 'VatNumber','translation_domain' => 'Entity'))
+            ->add('entTel1', 'text',array('label' => 'Tel1','translation_domain' => 'Entity'))
+            ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'Entity'))
+            ->add('entFax', 'text',array('required'=>false,'label' => 'Fax','translation_domain' => 'Entity'))
+            ->add('entWebsite', 'text',array('required'=>false,'label' => 'Website','translation_domain' => 'Entity'))
+            ->add('entAdrs1', 'text',array('label' => 'Town','translation_domain' => 'Entity'))
+            ->add('entAdrs2', 'text',array('required'=>false,'label' => 'Street','translation_domain' => 'Entity'))
+            ->add('entAdrs3', 'text',array('required'=>false,'label' => 'Additional','translation_domain' => 'Entity'))
+            ->add('entCity', 'text',array('required'=>false,'label' => 'City','translation_domain' => 'Entity'))
+            ->add('entNP', 'text',array('label' => 'PostCode','translation_domain' => 'Entity'))
             ->add('Country','entity',
-                array(
+                array('label' => 'Country','translation_domain' => 'Country',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name',
                     'query_builder' => function(EntityRepository $er) {

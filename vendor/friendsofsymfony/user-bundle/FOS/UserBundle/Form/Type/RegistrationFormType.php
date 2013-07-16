@@ -41,7 +41,12 @@ class RegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
-            ->add('enabled', 'choice', array('choices' => array(1 => 'Enabled', 0 => 'Disabled'), 'preferred_choices' => array(1)));
+            ->add('enabled', 'choice', array(
+                'choices' =>
+                array(
+                    0 => 'Disabled', 1 => 'Enabled'
+
+                )));
         if ($this->type == 2) {
             $builder->add('roles', 'collection', array(
                 'type' => 'choice',

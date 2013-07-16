@@ -6,17 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AccountDistMasterType extends AbstractType
+class EditProvType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('accName','text',array('label'=>'Name'))
-            ->add('accBalance','text',array('label'=>'Balance','disabled'=>true))
-            ->add('accCurrency','choice',array('label'=>'Currency','choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
-            ->add('accTimeZone','timezone',array('label'=>'TimeZone'))
             ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-            ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
+
+
+
     ;
     }
 
@@ -29,6 +27,6 @@ class AccountDistMasterType extends AbstractType
 
     public function getName()
     {
-        return 'AccountDistMaster';
+        return 'EditProvType';
     }
 }

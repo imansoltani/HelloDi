@@ -69,6 +69,7 @@
 
         </form>
     </div>
+    {% if is_granted('ROLE_MASTER_ADMIN') %}
     <div class="span5 LeftSpan">
         {#//----Form update----//#}
         <div class="widget-header">
@@ -118,5 +119,7 @@
 
         </form>
     </div>
-</div>
+
+        {% endif %}
+        </div>
 {% endblock %}

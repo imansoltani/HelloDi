@@ -26,7 +26,8 @@
 						|| (event.keyCode==46) )'} }) }}
             {{ form_errors(form2step.entVatNumber) }}
         </div>
-
+        <hr>
+Details:
         <div class="control-group">
             {{ form_label(form2step.entTel1) }}
             {{ form_widget(form2step.entTel1) }}
@@ -51,7 +52,7 @@
             {{ form_widget(form2step.entWebsite) }}
             {{ form_errors(form2step.entWebsite) }}
         </div>
-        <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
+
     </div>
 
         <!-- Address -->
@@ -83,7 +84,7 @@
             </div>
             <div class="control-group entNP">
                 {{ form_label(form2step.entNP) }}
-                {{ form_widget(form2step.entNP,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
+                {{ form_widget(form2step.entNP,{ 'attr' : {'placeholder': 'important','onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
 						|| (95<event.keyCode && event.keyCode<106)
 						|| (event.keyCode==8) || (event.keyCode==9)
@@ -99,7 +100,7 @@
                 </div>
                 {{ form_errors(form2step.Country) }}
             </div>
-            <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
+
         </div>
 
         <!-- Account -->
@@ -144,7 +145,7 @@
 
                 {{ form_errors(form2step.Accounts[0].accDefaultLanguage) }}
             </div>
-            <a class="btn" href="{{ path('ShowMyAccountDist') }}">Cancel</a>
+
         </div>
 
         {{ form_widget(form2step._token) }}

@@ -10,19 +10,19 @@ class EntitiType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entName', 'text',array('required'=>true,'label' => 'Entiti.Name','translation_domain' => 'entity'))
-            ->add('entVatNumber', 'text',array('required'=>false,'label' => 'Entiti.VatNumber','translation_domain' => 'entity'))
-            ->add('entTel1', 'text',array('required'=>false,'label' => 'Entiti.Tel1','translation_domain' => 'entity'))
-            ->add('entTel2', 'text',array('required'=>false,'label' => 'Entiti.Tel2','translation_domain' => 'entity'))
-            ->add('entFax', 'text',array('required'=>false,'label' => 'Entiti.Fax','translation_domain' => 'entity'))
-            ->add('entWebsite', 'text',array('required'=>false,'label' => 'Entiti.WebSite','translation_domain' => 'entity'))
-            ->add('entAdrs1',null,array('required'=>true))
-            ->add('entAdrs2',null,array('required'=>false))
-            ->add('entAdrs3',null,array('required'=>false))
-            ->add('entNp',null,array('required'=>true))
-            ->add('entCity',null,array('required'=>true))
+            ->add('entName', 'text',array('required'=>true,'label' => 'Name','translation_domain' => 'entity'))
+            ->add('entVatNumber', 'text',array('required'=>false,'label' => 'VatNumber','translation_domain' => 'entity'))
+            ->add('entTel1', 'text',array('required'=>false,'label' => 'Tel1','translation_domain' => 'entity'))
+            ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))
+            ->add('entFax', 'text',array('required'=>false,'label' => 'Fax','translation_domain' => 'entity'))
+            ->add('entWebsite', 'text',array('required'=>false,'label' => 'WebSite','translation_domain' => 'entity'))
+            ->add('entAdrs1',null,array('required'=>true,'label' => 'Street','translation_domain' => 'entity'))
+            ->add('entAdrs2',null,array('required'=>false,'label' => 'Additional','translation_domain' => 'entity'))
+            ->add('entAdrs3',null,array('required'=>false,'label' => 'Town','translation_domain' => 'entity'))
+            ->add('entNp',null,array('required'=>true,'label' => 'PostaCode','translation_domain' => 'entity'))
+            ->add('entCity',null,array('required'=>true,'label' => 'City','translation_domain' => 'entity'))
             ->add('Country','entity',
-                array(
+                array('label' => 'Country','translation_domain' => 'Country',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name'
                 )

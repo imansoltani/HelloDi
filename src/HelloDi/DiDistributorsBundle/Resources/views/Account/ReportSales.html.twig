@@ -99,12 +99,13 @@
                     <thead>
                     <tr>
                         <th>id</th>
-                        <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Retailers' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "account") }}</th>
+                        <th>{{ 'Item' | trans ({}, "account") }}</th>
+                        <th>{{ 'Quantity' | trans ({}, "account") }}</th>
+                        <th>{{ 'Retailers' | trans ({}, "account") }}</th>
+                        <th>{{ 'Selling Price' | trans ({}, "account") }}</th>
+                        <th>{{ 'Vat' | trans ({}, "account") }}</th>
+                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -115,9 +116,10 @@
                             <td>{{ Tr.id}}</td>
                             <td>{{ Tr.tranDate|date('y-M-d') }}</td>
                             <td>{{ Tr.Code.Item.itemName}}</td>
+                            <td>Quantity</td>
                             <td>{{ Tr.tranAmount}}|{{Account.accCurrency}}</td>
-                            <td>{{ Tr.User.username }}</td>
-                            <td>{{ Tr.User.Entiti.entVatNumber }}</td>
+                            <td>Selling price</td>
+                            <td>Task</td>
                             <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
 
                         </tr>

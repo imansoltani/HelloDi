@@ -77,7 +77,12 @@
             {{ form_widget(form.roles[0]) }}
         </div>
     </div>
-
+    <div class="control-group">
+        {{ form_label(form.enabled) }}
+        <div class="controls">
+            {{ form_widget(form.enabled) }}
+        </div>
+    </div>
 
     {{ form_widget(form._token) }}
     <input type="hidden" value="{{ entity.id }}">

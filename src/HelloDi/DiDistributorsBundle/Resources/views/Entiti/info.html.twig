@@ -17,70 +17,45 @@
         <fieldset>
 
 
-
-
             <div class="control-group">
-                {{ form_label(edit_form.entName) }}
-                {{ form_widget(edit_form.entName,{'attr':{'readonly':''}}) }}
+                <label class="control-label" >Name</label>
+                <div class="controls">
+                    <input type="text" disabled class="input-large" value="{{ entity.entName }}" >
+                </div>
             </div>
 
             <div class="control-group">
-                {{ form_label(edit_form.entVatNumber) }}
-                {{ form_widget(edit_form.entVatNumber,{'attr':{'readonly':''}}) }}
+                <label class="control-label" >VatNumber</label>
+                <div class="controls">
+                    <input type="text" disabled class="input-large" value="{{ entity.entVatNumber }}" >
+                </div>
             </div>
 
 
+
             <div class="control-group">
-            {{ form_label(edit_form.entTel1) }}
+            {{ form_label(edit_form.entTel1,'Tel1') }}
             {{ form_widget(edit_form.entTel1) }}
            </div>
 
             <div class="control-group">
-            {{ form_label(edit_form.entTel2) }}
+            {{ form_label(edit_form.entTel2,'Tel2') }}
             {{ form_widget(edit_form.entTel2) }}
             </div>
 
 
 
             <div class="control-group">
-            {{ form_label(edit_form.entFax) }}
+            {{ form_label(edit_form.entFax,'Fax') }}
             {{ form_widget(edit_form.entFax) }}
             </div>
 
             <div class="control-group">
-            {{ form_label(edit_form.entWebsite) }}
+            {{ form_label(edit_form.entWebsite,'WebSite') }}
             {{ form_widget(edit_form.entWebsite) }}
             </div>
 
-            <div class="hide">
-            <div class="control-group">
-            {{ form_label(edit_form.entAdrs1) }}
-            {{ form_widget(edit_form.entAdrs1,{ 'attr' : { 'placeholder': 'important'}}) }}
-            </div>
 
-            <div class="control-group">
-            {{ form_label(edit_form.entAdrs2) }}
-            {{ form_widget(edit_form.entAdrs2) }}
-            </div>
-
-            <div class="control-group">
-            {{ form_label(edit_form.entAdrs3) }}
-            {{ form_widget(edit_form.entAdrs3) }}
-            </div>
-
-            <div class="control-group">
-            {{ form_label(edit_form.entCity) }}
-            {{ form_widget(edit_form.entCity,{ 'attr' : { 'placeholder': 'important'}}) }}
-            </div>
-
-            <div class="control-group">
-            {{ form_label(edit_form.Country) }}
-                <div class="controls">
-                    {{ form_widget(edit_form.Country) }}
-            </div>
-
-                </div>
-</div>
             {{ form_widget(edit_form._token) }}
 
 

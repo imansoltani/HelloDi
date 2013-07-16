@@ -9,6 +9,8 @@ use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditAddressEntitiType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiesSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityType;
@@ -209,7 +211,7 @@ class EntitiController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
-        $edit_form = $this->createForm(new EntitiType(), $entity);
+        $edit_form = $this->createForm(new EditEntitiType(), $entity);
 
         if ($request->isMethod('POST')) {
 
@@ -240,7 +242,8 @@ class EntitiController extends Controller
 
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:addresses.html.twig', array(
-            'addresses' => $addresses, 'entity' => $entity
+            'addresses' => $addresses,
+            'entity' => $entity
         ));
     }
 
@@ -365,21 +368,16 @@ public function  EditUserEntitiesAction(Request $request,$id)
     public  function addressAction($id)
     {
 
-        $paginator = $this->get('knp_paginator');
+
         $em=$this->getDoctrine()->getEntityManager();
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $Address=$entity->getDetailHistories();
 
 
 
-        $pagination = $paginator->paginate(
-            $Address,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            6/*limit per page*/
-        );
         // die('sas'.count($pagination));
         return $this->render('HelloDiDiDistributorsBundle:Entiti:Address.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $Address,
             'entity' => $entity,
         ));
 
@@ -392,7 +390,14 @@ public function  EditUserEntitiesAction(Request $request,$id)
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
         $DetaHis=new DetailHistory();
-        $form=$this->createForm(new EntitiType(),$entity);
+        $form=$this->createForm(new EditAddressEntitiType(),$entity);
+
+        $entname=$entity->getEntName();
+        $entvatnumber=$entity->getEntVatNumber();
+        $enttel1=$entity->getEntTel1();
+        $enttel2=$entity->getEntTel2();
+        $entfax=$entity->getEntFax();
+        $entweb=$entity->getEntWebsite();
 
         if($req->isMethod('POST'))
         {
@@ -400,6 +405,13 @@ public function  EditUserEntitiesAction(Request $request,$id)
             $form->handleRequest($req);
             if($form->isValid($form))
             {
+                $entity->setEntName($entname);
+                $entity->setEntVatNumber($entvatnumber);
+                $entity->setEntTel1($enttel1);
+                $entity->setEntTel2($enttel2);
+                $entity->setEntFax($entfax);
+                $entity->setEntWebsite($entweb);
+
                 $DetaHis->setAdrs1($entity->getEntAdrs1());
                 $DetaHis->setAdrs2($entity->getEntAdrs2());
                 $DetaHis->setAdrs3($entity->getEntAdrs3());

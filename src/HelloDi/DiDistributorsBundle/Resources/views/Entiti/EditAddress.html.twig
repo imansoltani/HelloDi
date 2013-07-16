@@ -15,6 +15,18 @@
 
 <form class="form-horizontal"  action="{{ path('Ent_Edit_Address',{'id':entity.id}) }}" method="post" >
 
+
+    <div class="control-group">
+        {{ form_label(form_edit.Country) }}
+        <div class="controls">
+            {{ form_widget(form_edit.Country) }}
+        </div>
+
+    <div class="control-group">
+        {{ form_label(form_edit.entCity) }}
+        {{ form_widget(form_edit.entCity,{ 'attr' : { 'placeholder': 'important'} }) }}
+    </div>
+
     <div class="control-group">
         {{ form_label(form_edit.entAdrs1) }}
         {{ form_widget(form_edit.entAdrs1 ,{ 'attr' : { 'placeholder': 'important'} }) }}
@@ -48,16 +60,7 @@
     ) }}
     </div>
 
-    <div class="control-group">
-    {{ form_label(form_edit.entCity) }}
-    {{ form_widget(form_edit.entCity,{ 'attr' : { 'placeholder': 'important'} }) }}
-    </div>
 
-    <div class="control-group">
-    {{ form_label(form_edit.Country) }}
-    <div class="controls">
-        {{ form_widget(form_edit.Country) }}
-    </div>
     </div>
 
    {#// <input type="hidden" value="{{ entity.id }}">#}

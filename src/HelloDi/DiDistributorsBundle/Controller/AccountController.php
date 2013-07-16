@@ -20,6 +20,8 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
+use HelloDi\DiDistributorsBundle\Form\Account\EditDistType;
+use HelloDi\DiDistributorsBundle\Form\Account\EditProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
 use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
@@ -218,6 +220,8 @@ class AccountController extends Controller
                 $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountProv'));
             }
 
@@ -278,7 +282,9 @@ class AccountController extends Controller
                 $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountDist'));
+
             }
 
         }
@@ -299,19 +305,24 @@ class AccountController extends Controller
     public function EditAccountProvAction(Request $request, $id)
     {
 
-
+        $account=new Account();
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountType(), $account);
+        $edit_form = $this->createForm(new EditProvType(), $account);
+
+
+
         if ($request->isMethod('post')) {
+
             $edit_form->handleRequest($request);
             if ($edit_form->isValid()) {
+
                 $em->flush($account);
             }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:EditAccountProv.html.twig', array(
-                'edit_form' => $edit_form->createView(),
+                'form_edit' => $edit_form->createView(),
                 'Account' => $account,
                 'id' => $id)
         );
@@ -1152,13 +1163,14 @@ $qb=array();
 
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_edit = $this->createForm(new AccountDistMasterType(), $Account);
+        $form_edit = $this->createForm(new EditDistType,$Account);
 
 
         if ($request->isMethod('POST')) {
             $form_edit->handleRequest($request);
             if ($form_edit->isValid()) {
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
 
         }
@@ -1949,7 +1961,8 @@ public  function MasterProvTransactionDeleteAction($id){
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
-                return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $user->getAccount()->getId())));
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
             }
 
         }

@@ -20,13 +20,13 @@
         <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
             <thead>
             <tr>
-                <th>{{ 'Address.adrs1' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.adrs2' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.adrs3' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.adrsNp' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.adrsCity' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.Country.Iso' | trans ({}, "user") }}</th>
-                <th>{{ 'Address.Manage' | trans ({}, "user") }}</th>
+                <th>{{ 'Town' | trans ({}, "user") }}</th>
+                <th>{{ 'Street' | trans ({}, "user") }}</th>
+                <th>{{ 'Aditional' | trans ({}, "user") }}</th>
+                <th>{{ 'PostCode' | trans ({}, "user") }}</th>
+                <th>{{ 'City' | trans ({}, "user") }}</th>
+                <th>{{ 'Country' | trans ({}, "user") }}</th>
+                <th>{{ 'Manage' | trans ({}, "user") }}</th>
             </tr>
             </thead>
             <tbody>
@@ -61,14 +61,14 @@
             <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
                 <thead>
                 <tr>
-                    <th>{{ 'Address.Id' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrsDate' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrs1' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrs2' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrs3' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrsNp' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.adrsCity' | trans ({}, "user") }}</th>
-                    <th>{{ 'Address.Country.Iso' | trans ({}, "user") }}</th>
+                    <th>{{ 'Id' | trans ({}, "user") }}</th>
+                    <th>{{ 'DateChange' | trans ({}, "user") }}</th>
+                    <th>{{ 'Town' | trans ({}, "user") }}</th>
+                    <th>{{ 'Street' | trans ({}, "user") }}</th>
+                    <th>{{ 'Additional' | trans ({}, "user") }}</th>
+                    <th>{{ 'PostCode' | trans ({}, "user") }}</th>
+                    <th>{{ 'City' | trans ({}, "user") }}</th>
+                    <th>{{ 'Country' | trans ({}, "user") }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,10 +90,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {#{button pagination}#}
-            <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
-            </div>
+
         </div>
     </div>
 {% endblock %}
