@@ -218,6 +218,7 @@ class EntitiController extends Controller
             if ($edit_form->isValid()) {
 
                 $em->flush($entity);
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
         }
 
@@ -264,6 +265,7 @@ class EntitiController extends Controller
             if ($form->isValid()) {
                 $em->persist($acc);
                 $em->flush($acc);
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
@@ -293,6 +295,7 @@ class EntitiController extends Controller
             if ($form->isValid()) {
                 $em->persist($acc);
                 $em->flush($acc);
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
@@ -343,6 +346,7 @@ public function  EditUserEntitiesAction(Request $request,$id)
     if($form_edit->isValid())
     {
         $em->flush();
+        $this->get('session')->getFlashBag()->add('success','this operation done success !');
     }
 }
 
@@ -355,41 +359,7 @@ public function  EditUserEntitiesAction(Request $request,$id)
 }
 
 
-    public function  ChangeRoleUserEntitiesAction($id)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
 
-        $roles = $user->getRoles();
-        $role = $roles[0];
-
-        switch($role){
-
-            case 'ROLE_RETAILER':
-             $user->removeRole('ROLE_RETAILER');
-             $user->addRole('ROLE_RETAILER_ADMIN');
-            break;
-
-            case 'ROLE_RETAILER_ADMIN':
-                $user->removeRole('ROLE_RETAILER_ADMIN');
-                $user->addRole('ROLE_RETAILER');
-            break;
-
-            case 'ROLE_DISTRIBUTOR':
-                $user->removeRole('ROLE_DISTRIBUTOR');
-                $user->addRole('ROLE_DISTRIBUTOR_ADMIN');
-            break;
-
-            case 'ROLE_DISTRIBUTOR_ADMIN':
-                $user->removeRole('ROLE_DISTRIBUTOR_ADMIN');
-                $user->addRole('ROLE_DISTRIBUTOR');
-             break;
-         }
-
-        $em->flush();
-        return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$user->getEntiti()->getId())));
-
-            }
 
 
     public  function addressAction($id)
@@ -440,7 +410,7 @@ public function  EditUserEntitiesAction(Request $request,$id)
                 $DetaHis->setAdrsDate(new \DateTime('now'));
                 $em->persist($DetaHis);
                 $em->flush();
-  return $this->redirect($this->generateUrl('Ent_Address',array('id'=>$id)));
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
         }
 
