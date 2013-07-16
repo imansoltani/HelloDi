@@ -734,6 +734,7 @@ $qb=array();
             ->add('Amount', 'text', array('data' => 0))
             ->add('Accounts', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Account',
+                'property'=>'accName',
                 'expanded' => 'true',
                 'multiple' => false,
                 'query_builder' => function (EntityRepository $er) use ($Account) {
@@ -786,6 +787,7 @@ $qb=array();
                     $em->persist($trandist);
                     $em->persist($tranprov);
                     $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig', array(
@@ -849,12 +851,14 @@ $qb=array();
                 $tran->setTranAmount(+$data['Amount']);
                 $em->persist($tran);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             } elseif ($data['CreditDebit'] == 0) {
                     $tran->setTranAction('amdt');
                     $tran->setTranType(0);
                     $tran->setTranAmount(-$data['Amount']);
                     $em->persist($tran);
                     $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
 
             }
 

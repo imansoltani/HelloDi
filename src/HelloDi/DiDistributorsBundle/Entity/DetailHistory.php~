@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="detailhistory")
  */
 class DetailHistory
 {
@@ -20,7 +21,7 @@ class DetailHistory
     private $adrsDate;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false)
+     * @ORM\Column(type="string", length=45, nullable=true)
      */
     private $adrs1;
 
@@ -35,7 +36,7 @@ class DetailHistory
     private $adrs3;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false)
+     * @ORM\Column(type="string", length=45, nullable=true)
      */
     private $adrsNp;
 

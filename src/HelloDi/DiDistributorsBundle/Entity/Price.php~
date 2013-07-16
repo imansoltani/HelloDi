@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
+ * @ORM\Table(name="price")
  */
 class Price
 {
@@ -18,6 +19,11 @@ class Price
      * @ORM\Column(type="decimal", nullable=false, name="price")
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
+     */
+    private $isFavourite;
 
     /** 
      * @ORM\Column(type="string", length=3, nullable=false, name="price_currency")
@@ -248,5 +254,33 @@ class Price
     public function getAccount()
     {
         return $this->Account;
+    }
+
+    public function __toString()
+    {
+        return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
+    }
+
+    /**
+     * Set isFavourite
+     *
+     * @param boolean $isFavourite
+     * @return Price
+     */
+    public function setIsFavourite($isFavourite)
+    {
+        $this->isFavourite = $isFavourite;
+    
+        return $this;
+    }
+
+    /**
+     * Get isFavourite
+     *
+     * @return boolean 
+     */
+    public function getIsFavourite()
+    {
+        return $this->isFavourite;
     }
 }

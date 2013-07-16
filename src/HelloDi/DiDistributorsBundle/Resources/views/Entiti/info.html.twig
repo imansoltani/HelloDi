@@ -52,6 +52,7 @@
             {{ form_widget(edit_form.entWebsite) }}
             </div>
 
+            <div class="hide">
             <div class="control-group">
             {{ form_label(edit_form.entAdrs1) }}
             {{ form_widget(edit_form.entAdrs1,{ 'attr' : { 'placeholder': 'important'}}) }}
@@ -76,10 +77,10 @@
             {{ form_label(edit_form.Country) }}
                 <div class="controls">
                     {{ form_widget(edit_form.Country) }}
-                </div>
+            </div>
 
                 </div>
-
+</div>
             {{ form_widget(edit_form._token) }}
 
 

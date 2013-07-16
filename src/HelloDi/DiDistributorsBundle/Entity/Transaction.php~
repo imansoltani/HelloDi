@@ -1,86 +1,108 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as CTRL;
 
-/** 
+/**
  * @ORM\Entity
+ * @ORM\Table(name="transaction")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Transaction
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=true)
      */
+
     private $tranBookingValue;
 
-    /** 
+
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+
+    private $tranType;
+
+    /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
      */
+
     private $tranCredit;
 
-    /** 
+    /**
+     * @ORM\Column(type="decimal", nullable=true, name="tran_Amount")
+     */
+    private $tranAmount;
+
+    /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
      */
     private $tranDebit;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
      */
     private $tranFees;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=3, nullable=false, name="tran_currency")
      */
     private $tranCurrency;
 
-    /** 
+    /**
      * @ORM\Column(type="date", nullable=false, name="tran_date")
      */
     private $tranDate;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=true, name="tran_insert")
      */
     private $tranInsert;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=true, name="tran_description")
      */
     private $tranDescription;
 
-    /** 
-     * @ORM\Column(type="string", length=4, nullable=false)
+    /**
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $tranAction;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Transactions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $User;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", inversedBy="Transactions")
-     * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=true)
      */
     private $Code;
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\OgonePayment", mappedBy="Transaction")
+     */
+    private $OgonePayment;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,14 +118,14 @@ class Transaction
     public function setTranBookingValue($tranBookingValue)
     {
         $this->tranBookingValue = $tranBookingValue;
-    
+
         return $this;
     }
 
     /**
      * Get tranBookingValue
      *
-     * @return float 
+     * @return float
      */
     public function getTranBookingValue()
     {
@@ -119,14 +141,14 @@ class Transaction
     public function setTranCredit($tranCredit)
     {
         $this->tranCredit = $tranCredit;
-    
+
         return $this;
     }
 
     /**
      * Get tranCredit
      *
-     * @return float 
+     * @return float
      */
     public function getTranCredit()
     {
@@ -142,14 +164,14 @@ class Transaction
     public function setTranDebit($tranDebit)
     {
         $this->tranDebit = $tranDebit;
-    
+
         return $this;
     }
 
     /**
      * Get tranDebit
      *
-     * @return float 
+     * @return float
      */
     public function getTranDebit()
     {
@@ -165,14 +187,14 @@ class Transaction
     public function setTranFees($tranFees)
     {
         $this->tranFees = $tranFees;
-    
+
         return $this;
     }
 
     /**
      * Get tranFees
      *
-     * @return float 
+     * @return float
      */
     public function getTranFees()
     {
@@ -188,14 +210,14 @@ class Transaction
     public function setTranCurrency($tranCurrency)
     {
         $this->tranCurrency = $tranCurrency;
-    
+
         return $this;
     }
 
     /**
      * Get tranCurrency
      *
-     * @return string 
+     * @return string
      */
     public function getTranCurrency()
     {
@@ -211,14 +233,14 @@ class Transaction
     public function setTranDate($tranDate)
     {
         $this->tranDate = $tranDate;
-    
+
         return $this;
     }
 
     /**
      * Get tranDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTranDate()
     {
@@ -234,14 +256,14 @@ class Transaction
     public function setTranInsert($tranInsert)
     {
         $this->tranInsert = $tranInsert;
-    
+
         return $this;
     }
 
     /**
      * Get tranInsert
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTranInsert()
     {
@@ -257,14 +279,14 @@ class Transaction
     public function setTranDescription($tranDescription)
     {
         $this->tranDescription = $tranDescription;
-    
+
         return $this;
     }
 
     /**
      * Get tranDescription
      *
-     * @return string 
+     * @return string
      */
     public function getTranDescription()
     {
@@ -280,14 +302,14 @@ class Transaction
     public function setTranAction($tranAction)
     {
         $this->tranAction = $tranAction;
-    
+
         return $this;
     }
 
     /**
      * Get tranAction
      *
-     * @return string 
+     * @return string
      */
     public function getTranAction()
     {
@@ -303,14 +325,14 @@ class Transaction
     public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
     {
         $this->Account = $account;
-    
+
         return $this;
     }
 
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Account
      */
     public function getAccount()
     {
@@ -326,14 +348,14 @@ class Transaction
     public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
     {
         $this->User = $user;
-    
+
         return $this;
     }
 
     /**
      * Get User
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
+     * @return \HelloDi\DiDistributorsBundle\Entity\User
      */
     public function getUser()
     {
@@ -349,17 +371,163 @@ class Transaction
     public function setCode(\HelloDi\DiDistributorsBundle\Entity\Code $code)
     {
         $this->Code = $code;
-    
+
         return $this;
     }
 
     /**
      * Get Code
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Code 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Code
      */
     public function getCode()
     {
         return $this->Code;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function updateAccountBalance()
+    {
+#this switch for function money
+        switch ($this->getTranType()) {
+            case 1:# 1 for credit
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+            case 0: #0 for debit
+                $amount=$this->getTranAmount();
+                $currentBalance=$this->getAccount()->getAccBalance();
+                $this->getAccount()->setAccBalance($currentBalance+$amount);
+                break;
+
+                  }
+#this switch for function code
+    switch ($this->getTranAction()) {
+            case 'tran':
+
+                break;
+
+            case 'crtl':
+
+                break;
+
+            case 'pmt':
+
+                break;
+
+
+            case 'amdt':
+
+                break;
+
+
+            case 'sale':
+
+                break;
+
+
+            case 'add':
+                break;
+
+            case 'Profit':
+//
+                break;
+        }
+    }
+
+//    public function __construct($entityManager)
+//    {
+//        $this->entityManager = $entityManager;
+//    }
+
+    /**
+     * Set tranAmount
+     *
+     * @param float $tranAmount
+     * @return Transaction
+     */
+    public function setTranAmount($tranAmount)
+    {
+        $this->tranAmount = $tranAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranAmount
+     *
+     * @return float 
+     */
+    public function getTranAmount()
+    {
+        return $this->tranAmount;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @return Transaction
+     */
+    public function addOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment[] = $ogonePayment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove OgonePayment
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     */
+    public function removeOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    {
+        $this->OgonePayment->removeElement($ogonePayment);
+    }
+
+    /**
+     * Get OgonePayment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOgonePayment()
+    {
+        return $this->OgonePayment;
+    }
+
+    /**
+     * Set tranType
+     *
+     * @param integer $tranType
+     * @return Transaction
+     */
+    public function setTranType($tranType)
+    {
+        $this->tranType = $tranType;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranType
+     *
+     * @return integer 
+     */
+    public function getTranType()
+    {
+        return $this->tranType;
     }
 }

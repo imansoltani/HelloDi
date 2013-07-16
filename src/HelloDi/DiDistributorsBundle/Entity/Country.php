@@ -24,7 +24,20 @@ class Country
      * @ORM\Column(type="string", length=45, nullable=false, name="Name")
      */
     private $name;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", mappedBy="Country")
+     */
+    private $Entities;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Entities= new \Doctrine\Common\Collections\ArrayCollection();
+
+    }
+
     /**
      * Get id
      *
@@ -181,4 +194,37 @@ class Country
     }
 
 
+
+    /**
+     * Add Entities
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Entiti $entities
+     * @return Country
+     */
+    public function addEntitie(\HelloDi\DiDistributorsBundle\Entity\Entiti $entities)
+    {
+        $this->Entities[] = $entities;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Entities
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Entiti $entities
+     */
+    public function removeEntitie(\HelloDi\DiDistributorsBundle\Entity\Entiti $entities)
+    {
+        $this->Entities->removeElement($entities);
+    }
+
+    /**
+     * Get Entities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEntities()
+    {
+        return $this->Entities;
+    }
 }

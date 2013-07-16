@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
+ * @ORM\Table(name="account")
  */
 class Account
 {
@@ -15,15 +16,23 @@ class Account
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=false, name="accdefaultlanguage")
+     * @ORM\Column(type="string", length=2, nullable=true, name="accdefaultlanguage")
      */
     private $accDefaultLanguage;
+
+    public function getLabel()
+    {
+        return $this->accName .', '. $this->accDefaultLanguage ;
+    }
 
     /** 
      * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
      */
     private $accName;
 
+    public  function  __toString(){
+        return $this->getAccName();
+    }
     /** 
      * @ORM\Column(type="decimal", nullable=false, name="acc_balance")
      */
@@ -45,12 +54,12 @@ class Account
     private $accCreationDate;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="acc_time_zone")
+     * @ORM\Column(type="string", length=45, nullable=true, name="acc_time_zone")
      */
     private $accTimeZone;
 
     /** 
-     * @ORM\Column(type="integer", nullable=false, name="acc_terms")
+     * @ORM\Column(type="integer", nullable=true, name="acc_terms")
      */
     private $accTerms;
 
@@ -91,7 +100,7 @@ class Account
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Accounts")
-     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=true)
      */
     private $Entiti;
 

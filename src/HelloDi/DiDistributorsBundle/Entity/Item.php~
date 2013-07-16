@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
+ * @ORM\Table(name="item")
  */
 class Item
 {
@@ -18,6 +19,11 @@ class Item
      * @ORM\Column(type="string", length=45, nullable=false, name="item_name")
      */
     private $itemName;
+
+    function __toString()
+    {
+        return $this->getItemName();
+    }
 
     /** 
      * @ORM\Column(type="string", length=45, nullable=false, name="item_face_value")
@@ -35,12 +41,13 @@ class Item
     private $itemType;
 
     /** 
-     * @ORM\Column(type="integer", unique=true, nullable=false, name="alert_min_stock")
+     * @ORM\Column(type="integer", nullable=false, name="alert_min_stock")
      */
     private $alertMinStock;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="operator")
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Operator", inversedBy="Item")
+     * @ORM\JoinColumn(name="Operator_id", referencedColumnName="id", nullable=false)
      */
     private $operator;
 
@@ -48,6 +55,11 @@ class Item
      * @ORM\Column(type="string", length=45, nullable=true, name="item_code")
      */
     private $itemCode;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="item_date_insert")
+     */
+    private $itemDateInsert;
 
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", mappedBy="Item")
@@ -409,5 +421,28 @@ class Item
     public function getCountry()
     {
         return $this->Country;
+    }
+
+    /**
+     * Set itemDateInsert
+     *
+     * @param \DateTime $itemDateInsert
+     * @return Item
+     */
+    public function setItemDateInsert($itemDateInsert)
+    {
+        $this->itemDateInsert = $itemDateInsert;
+    
+        return $this;
+    }
+
+    /**
+     * Get itemDateInsert
+     *
+     * @return \DateTime 
+     */
+    public function getItemDateInsert()
+    {
+        return $this->itemDateInsert;
     }
 }
