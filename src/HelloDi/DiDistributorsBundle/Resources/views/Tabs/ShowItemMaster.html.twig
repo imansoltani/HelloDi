@@ -27,8 +27,8 @@
     </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a href="#"  >
-            <input type="submit" value="price setting" >
+        <a href="{{ path('item_price',{'id':item.id}) }}"  >
+            <input type="submit" value="Price Setting" >
         </a>
     </li>
 

@@ -1329,9 +1329,8 @@ $qb=array();
     }
 
     //items dist
-    public function ManageItemsDistAction(Request $request)
+    public function ManageItemsDistAction($id)
     {
-        $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $prices = $account->getPrices();
@@ -1342,9 +1341,8 @@ $qb=array();
         ));
     }
 
-    public function AddItemDistAction(Request $request)
+    public function AddItemDistAction(Request $request,$id)
     {
-        $id = $request->get('accountid');
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
@@ -1380,87 +1378,54 @@ $qb=array();
             ->add('price')
             ->getForm();
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemDist.html.twig', array(
-            'Account' => $account,
-            'form' => $form->createView()
-        ));
-    }
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->persist($price);
 
-    public function AddItemDistSubmitAction(Request $request)
-    {
-        $id = $request->get('accountid');
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-        $price = new Price();
-        $price->setPriceCurrency($account->getAccCurrency());
-        $price->setPriceStatus(1);
-        $price->setIsFavourite(false);
-        $price->setAccount($account);
-
-        $form = $this->createFormBuilder($price)
-            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
-            ->add('price')
-            ->getForm();
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em->persist($price);
-
-            $pricehistory = new PriceHistory();
-            $pricehistory->setDate(new \DateTime('now'));
-            $pricehistory->setPrice($price->getPrice());
-            $pricehistory->setPrices($price);
-            $em->persist($pricehistory);
-
-            $em->flush();
-            return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
-                'id' => $price->getAccount()->getId()
-            ));
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemDist.html.twig', array(
-            'Account' => $account,
-            'form' => $form->createView()
-        ));
-    }
-
-    public function EditItemDistAction(Request $request)
-    {
-        $id = $request->get('priceid');
-        $em = $this->getDoctrine()->getManager();
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($id);
-        $form = $this->createForm(new PriceEditType(), $price);
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:EditItemDist.html.twig', array(
-            'Account' => $price->getAccount(),
-            'price' => $price,
-            'form' => $form->createView()
-        ));
-    }
-
-    public function EditItemDistSubmitAction(Request $request)
-    {
-        $id = $request->get('priceid');
-        $em = $this->getDoctrine()->getManager();
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($id);
-        $oldprice = $price->getPrice();
-
-        $form = $this->createForm(new PriceEditType(), $price);
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            if ($price->getPrice() != $oldprice) {
                 $pricehistory = new PriceHistory();
                 $pricehistory->setDate(new \DateTime('now'));
                 $pricehistory->setPrice($price->getPrice());
                 $pricehistory->setPrices($price);
                 $em->persist($pricehistory);
-            }
-            $em->flush();
 
-            return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
-                'id' => $price->getAccount()->getId()
-            ));
+                $em->flush();
+                return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
+                        'id' => $price->getAccount()->getId()
+                    ));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemDist.html.twig', array(
+            'Account' => $account,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function EditItemDistAction(Request $request,$itemid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
+        $oldprice = $price->getPrice();
+
+        $form = $this->createForm(new PriceEditType(), $price);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                if ($price->getPrice() != $oldprice) {
+                    $pricehistory = new PriceHistory();
+                    $pricehistory->setDate(new \DateTime('now'));
+                    $pricehistory->setPrice($price->getPrice());
+                    $pricehistory->setPrices($price);
+                    $em->persist($pricehistory);
+                }
+                $em->flush();
+
+                return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
+                        'id' => $price->getAccount()->getId()
+                    ));
+            }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:EditItemDist.html.twig', array(

@@ -145,24 +145,16 @@ EditItemProvSubmit:
 
 #---- items dist
 ManageItemsDist:
-    pattern:  /distributors/Items
+    pattern:  /distributors/{id}/Items
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsDist" }
 
 AddItemDist:
-    pattern:  /distributors/Items/add
+    pattern:  /distributors/{id}/Items/add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDist" }
 
-AddItemDistSubmit:
-    pattern:  /distributors/Items/addSubmit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDistSubmit" }
-
 EditItemDist:
-    pattern:  /distributors/Items/edit
+    pattern:  /distributors/{id}/Items/{itemid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDist" }
-
-EditItemDistSubmit:
-    pattern:  /distributors/Items/editSubmit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDistSubmit" }
 
 #---- inputs prov
 ManageInputsProv:

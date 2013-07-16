@@ -14,6 +14,10 @@ item_edit:
     pattern:  /{id}/details/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:edit" }
 
+item_price:
+    pattern:  /{id}/item-per-distributors
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:ItemPerDist" }
+
 #description
 item_desc:
     pattern:  /{id}/description

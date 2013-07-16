@@ -2,7 +2,10 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
+use HelloDi\DiDistributorsBundle\Entity\Price;
+use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Form\ItemDescType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,6 +96,74 @@ class ItemController extends Controller
         ));
     }
 
+    public function ItemPerDistAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+
+        $form = $this->createFormBuilder()
+            ->add('checks', 'entity', array(
+                    'class' => 'HelloDiDiDistributorsBundle:Account',
+                    'expanded' => 'true',
+                    'multiple' => 'true',
+                    'query_builder' => function(EntityRepository $er) use ($item) {
+                        return $er->createQueryBuilder('u')
+                            ->leftJoin('u.Prices','prices','WITH','prices.Item = :item')
+                            ->andWhere('u.accType = 0')
+                            ->setParameter('item',$item)
+                            ;
+                    }
+                ))
+            ->add('NewPrice','text')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $newprice = $data['NewPrice'];
+                foreach ($data['checks'] as $accountretailer)
+                {
+                    if(count($accountretailer->getPrices())!=0)
+                    {
+                        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
+                        $price->setPrice($newprice);
+
+                        $pricehistory = new PriceHistory();
+                        $pricehistory->setPrice($newprice);
+                        $pricehistory->setDate(new \DateTime('now'));
+                        $pricehistory->setPrices($price);
+                        $em->persist($pricehistory);
+                    }
+                    else
+                    {
+                        $price = new Price();
+                        $price->setPrice($newprice);
+                        $price->setPriceCurrency($accountretailer->getAccCurrency());
+                        $price->setPriceStatus(true);
+                        $price->setIsFavourite(true);
+                        $price->setItem($item);
+                        $price->setAccount($accountretailer);
+                        $em->persist($price);
+
+                        $pricehistory = new PriceHistory();
+                        $pricehistory->setPrice($newprice);
+                        $pricehistory->setDate(new \DateTime('now'));
+                        $pricehistory->setPrices($price);
+                        $em->persist($pricehistory);
+                    }
+                }
+                $em->flush();
+//                return $this->forward("HelloDiDiDistributorsBundle:Item:index");
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Item:ItemsPerDistributors.html.twig', array(
+                'form' => $form->createView(),
+                'itemid' => $id,
+                'item'      => $item
+            ));
+    }
     //item desc
 
     public function descIndexAction($id)

@@ -1,0 +1,117 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowItemMaster.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block title %}
+    Items Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('item') }}">Item</a>
+    <span class="link">Price Setting</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="span">
+        <div class="widget-content">
+
+
+            <form action="#" method="post" class="form-horizontal">
+                <div class="tablediv">
+
+
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>Retailer Account</th>
+                                <th>Retailer Price</th>
+                                <th>Status</th>
+                                <th><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.checks %}
+                                <tr>
+                                    <td>
+                                        {{ form.checks.vars.choices[row.vars.value].data.accName }}
+                                    </td>
+                                    <td>
+                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
+                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
+                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].price }}
+                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].priceCurrency }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
+                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
+                                                {% if form.checks.vars.choices[row.vars.value].data.prices[0].priceStatus==1 %}
+                                                    true
+                                                {% else %}
+                                                    false
+                                                {% endif %}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td class="checkboxs">
+                                        {{ form_widget(row) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+                <script type="text/javascript"
+                        src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
+
+                <script type="text/javascript"
+                        src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        Fix_Size();
+
+
+                    });
+
+
+                    function CheckAll() {
+                        var clickall = document.getElementById('clickall').checked;
+                        $('* .checkboxs > input').prop("checked", clickall);
+                    }
+
+                </script>
+
+
+                <div style="margin-top: 15px" class="control-group">
+                    {{ form_label(form.NewPrice) }}
+                    {{ form_widget(form.NewPrice) }} {#{{ Account.accCurrency }}#}
+                    {{ form_errors(form.NewPrice) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Approve"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -13,12 +13,12 @@
     <div class="widget-header">
         <h3>Distributor Items</h3>
     </div> <!-- /widget-header -->
-
-
-    <form method="post" action="{{ path('AddItemDist') }}">
-        <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-        <input class=" btn btn-large btn-primary" type="submit" value="Add new Item"/>
-    </form>
+    <br/>
+    <a class=" btn btn-primary btn-large" href="{{ path('AddItemDist',{'id':Account.id}) }}">
+        Add new Item
+    </a>
+    <br/>
+    <br/>
 
     <div class="tablediv">
         <div class="contenttitle">
@@ -35,6 +35,7 @@
                     <th>Code</th>
                     <th>Type</th>
                     <th>Price (Currency)</th>
+                    <th>Status</th>
                     <th>Management</th>
                 </tr>
                 </thead>
@@ -48,11 +49,9 @@
                         <td>{{ price.item.itemCode }}</td>
                         <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
                         <td>{{ price.price }} {{ price.priceCurrency }}</td>
+                        <td>{% if price.priceStatus == 1 %}Active{% else %}Inactive{% endif %}</td>
                         <td class="td-actions" >
-                            <form method="post" action="{{ path('EditItemDist') }}">
-                                <input type="hidden" name="priceid" value="{{ price.id }}"/>
-                                <input type="submit" value="Edit Price"/>
-                            </form>
+                            <a class="btn_actions" href="{{ path('EditItemDist',{'id':Account.id,'itemid':price.id}) }}">Manage</a>
                         </td>
                     </tr>
                 {% endfor %}
