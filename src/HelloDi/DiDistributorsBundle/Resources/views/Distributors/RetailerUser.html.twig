@@ -22,12 +22,12 @@
                 <table id="example" class="table postsend">
                     <thead>
                     <tr>
-                        <th>{{ 'User.Id' | trans ({}, "user") }}</th>
-                        <th>{{ 'User.Name' | trans ({}, "user") }}</th>
-                        <th>{{ 'User.UserName' | trans ({}, "user") }}</th>
-                        <th>{{ 'User.Role' | trans ({}, "user") }}</th>
-                        <th>{{ 'User.Modify' | trans ({}, "user") }}</th>
-                        <th>{{ 'User.ChangeRole' | trans ({}, "user") }}</th>
+                        <th>{{ 'Id' | trans ({}, "user") }}</th>
+                        <th>{{ 'Name' | trans ({}, "user") }}</th>
+                        <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                        <th>{{ 'Role' | trans ({}, "user") }}</th>
+                        <th>{{ 'Modify' | trans ({}, "user") }}</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -46,10 +46,6 @@
                                 <a class="btn_actions" href="{{ path('DistRetailerUserEdit',{'id':User.id}) }}">Edit</a>
                             </td>
 
-
-                            <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('DistRetailerUserChangeRole',{'id':User.id}) }}">ChangeRole</a>
-                            </td>
                         </tr>
 
                     {% endfor %}

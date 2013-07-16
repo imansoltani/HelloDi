@@ -156,15 +156,6 @@ class EntitiController extends Controller
 
         $user = new User();
 
-        $form = $this->createForm(new NewUserDistributorsRetailerInEntityType('HelloDiDiDistributorsBundle\Entity\User',$entity)
-        , $user,
-         array('cascade_validation' => true)
-        );
-
-
-        $formrole = $this->createFormBuilder();
-
-
         if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
                     'Entiti' => $entity,
                     'accType' => 2))
@@ -172,31 +163,26 @@ class EntitiController extends Controller
         )
         {
 
-            $formrole = $formrole->add('roles', 'choice',
-                array('choices' => array
-                (
-                    'ROLE_RETAILER' => 'ROLE_RETAILER',
-                    'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN')))->getForm();
-
-
+            $form = $this->createForm(new NewUserDistributorsRetailerInEntityType
+                ('HelloDiDiDistributorsBundle\Entity\User',$entity,2)
+                , $user,
+                array('cascade_validation' => true)
+            );
         }
 
-        else {
 
-            $formrole = $formrole->add('roles', 'choice',
-                array('choices' => array
-                (
+        else
+        {
 
-                    'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
-                    'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
+            $form = $this->createForm(new NewUserDistributorsRetailerInEntityType
+                ('HelloDiDiDistributorsBundle\Entity\User',$entity,0)
+                , $user,
+                array('cascade_validation' => true)
+            );
         }
-
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            $formrole->handleRequest($request);
-            $data=$formrole->getData();
-            $user->addRole($data['roles']);
             if ($form->isValid())
             {
                 $user->setEntiti($entity);
@@ -211,7 +197,6 @@ class EntitiController extends Controller
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
-                'formrole'=> $formrole->createView()
             ));
 
     }
@@ -226,12 +211,13 @@ class EntitiController extends Controller
 
         $edit_form = $this->createForm(new EntitiType(), $entity);
 
-
         if ($request->isMethod('POST')) {
-            $edit_form->handleRequest($request);
-            if ($edit_form->isValid()) {
-                $em->flush($entity);
 
+            $edit_form->handleRequest($request);
+
+            if ($edit_form->isValid()) {
+
+                $em->flush($entity);
             }
         }
 
@@ -323,22 +309,46 @@ public function  EditUserEntitiesAction(Request $request,$id)
 
     $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
 
-        $form_edit=$this->createForm(New  NewUserDistributorsRetailerInEntityType('HelloDiDiDistributorsBundle\Entity\User',$user->getEntiti()), $user, array('cascade_validation' => true));
+
+    if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
+                'Entiti' => $user->getEntiti(),
+                'accType' => 2))
+        ) ==1
+    )
+    {
+
+        $form_edit = $this->createForm(new NewUserDistributorsRetailerInEntityType
+            ('HelloDiDiDistributorsBundle\Entity\User',$user->getEntiti(),$type=2)
+            , $user,
+            array('cascade_validation' => true)
+        );
+    }
+
+
+    else
+    {
+
+        $form_edit = $this->createForm(new NewUserDistributorsRetailerInEntityType
+            ('HelloDiDiDistributorsBundle\Entity\User',$user->getEntiti(),$type=0)
+            , $user,
+            array('cascade_validation' => true)
+        );
+    }
+
+
 
     if($request->isMethod('POST'))
 {
     $form_edit->handleRequest($request);
     if($form_edit->isValid())
     {
-
         $em->flush();
-
-
     }
 }
 
     return $this->render('HelloDiDiDistributorsBundle:Entiti:EditUserEntiti.html.twig',
-        array('form_edit'=>$form_edit->createView(),
+        array(
+            'form_edit'=>$form_edit->createView(),
             'entity'=>$user->getEntiti(),
             'User'=>$user
         ));

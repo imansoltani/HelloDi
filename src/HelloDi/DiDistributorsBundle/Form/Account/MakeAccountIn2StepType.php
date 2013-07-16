@@ -36,7 +36,7 @@ class MakeAccountIn2StepType extends AbstractType
                                 ->where('u.id !=250');
                             }))
             ->add('Accounts','collection',array('type'=>new AccountType()))
-            ->add('Users','collection',array('type'=>new NewUserType('HelloDi\DiDistributorsBundle\Entity\User')))
+            ->add('Users','collection',array('type'=>new NewUserType('HelloDi\DiDistributorsBundle\Entity\User',0)))
         ;
     }
 

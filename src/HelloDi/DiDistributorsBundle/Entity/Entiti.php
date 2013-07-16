@@ -87,7 +87,7 @@ class Entiti
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Entitis")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     private $Country;
     /**
@@ -471,7 +471,7 @@ class Entiti
     public function setCountry(\HelloDi\DiDistributorsBundle\Entity\Country $country)
     {
         $this->Country = $country;
-    
+
         return $this;
     }
 

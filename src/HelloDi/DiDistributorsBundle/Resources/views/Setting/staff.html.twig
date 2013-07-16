@@ -46,7 +46,7 @@
                                 <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
                                 <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
                                 <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
-                                <th>{{ 'Change Role' | trans ({}, "account") }}</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -71,12 +71,7 @@
                                         <a class="btn_actions" href="{{ path('MasterStaffEdit',{'id':user.id }) }}">Modify</a>
 
                                     </td>
-                                    <td class="td-actions">
 
-
-                                        <a class="btn_actions" href="{{ path('MasterChangeRole',{'id': user.id }) }}">Change Role</a>
-
-                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
