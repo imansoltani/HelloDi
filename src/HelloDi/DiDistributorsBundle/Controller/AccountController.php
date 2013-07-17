@@ -318,6 +318,8 @@ class AccountController extends Controller
             if ($edit_form->isValid()) {
 
                 $em->flush($account);
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
             }
         }
 
@@ -354,8 +356,8 @@ $qb=array();
                     'crtl'=>'increase retailer,s credit limit'
 
                 )))
-            ->add('DateStart', 'text')
-            ->add('DateEnd', 'text')
+            ->add('DateStart', 'text',array('required'=>false))
+            ->add('DateEnd', 'text',array('required'=>false))
             ->add('TypeDate', 'choice', array(
                 'expanded' => true,
                 'choices' => array(
@@ -373,13 +375,16 @@ $qb=array();
                 ->from('HelloDiDiDistributorsBundle:Transaction', 'Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc', $Account);
             if ($data['TypeDate'] == 0) {
-              $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-              $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+                if($data['DateStart']!='')
+                $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                if($data['DateEnd']!='')
+                $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
             }
 
             if ($data['TypeDate'] == 1) {
-
+                if($data['DateStart']!='')
                 $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                if($data['DateEnd']!='')
                 $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             }
@@ -635,8 +640,8 @@ $qb=array();
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled'=>false))
-            ->add('DateEnd', 'text', array('disabled'=>false))
+            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false))
+            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false))
 
             ->add('GroupBy', 'choice', array(
                 'choices' => array(
@@ -658,9 +663,11 @@ $qb=array();
                 /**/
 
                 ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')))
-                ->andWhere($qb->expr()->isNotNull('Tr.Code'))
-                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart'])
-                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+                ->andWhere($qb->expr()->isNotNull('Tr.Code'));
+            if($data['DateStart']!='')
+                $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+             if($data['DateEnd']!='')
+                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             if ($data['Account'] != 'All')
 
@@ -907,8 +914,8 @@ $qb=array();
         $query=array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'text', array('disabled'=>false))
-            ->add('DateEnd', 'text', array('disabled'=>false))
+            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false))
+            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false))
             ->add('ItemType', 'choice',
                 array('choices' =>
                 array(
@@ -938,9 +945,10 @@ $qb=array();
 
                 $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
             }
-
-             $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart'])
-                ->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+              if( $data['DateStart']!='')
+             $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+              if( $data['DateEnd']!='')
+             $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
             if ($data['ItemType'] != 3)
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
             if ($data['ItemName'] != 'All')
@@ -1712,8 +1720,8 @@ $qb=array();
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
-            ->add('FromDate','text', array('disabled'=>false))
-            ->add('ToDate','text',array('disabled'=>false))
+            ->add('FromDate','text', array('disabled'=>false,'required'=>false))
+            ->add('ToDate','text',array('disabled'=>false,'required'=>false))
             ->add('type','choice',array(
                 'choices'=> array(
                     'All'=>'All',
@@ -1736,9 +1744,11 @@ if($request->isMethod('post'))
 
     $qb->select('Tr')
         ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-        ->where('Tr.Account = :Acc')->setParameter('Acc',$Account)
-        ->andWhere("Tr.tranDate >= :transdateFrom")->setParameter('transdateFrom',$data['FromDate'])
-        ->andWhere("Tr.tranDate <= :transdateTo")->setParameter('transdateTo',$data['ToDate'] );
+        ->where('Tr.Account = :Acc')->setParameter('Acc',$Account);
+    if($data['FromDate']!='')
+        $qb->andWhere("Tr.tranDate >= :transdateFrom")->setParameter('transdateFrom',$data['FromDate']);
+    if($data['FromDate']!='')
+        $qb->andWhere("Tr.tranDate <= :transdateTo")->setParameter('transdateTo',$data['ToDate'] );
 
     if ($data['type'] != 'All')
         $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));

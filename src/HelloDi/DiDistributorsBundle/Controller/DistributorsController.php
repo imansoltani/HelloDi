@@ -11,8 +11,10 @@ use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
+use HelloDi\DiDistributorsBundle\Form\Account\EditRetailerType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
@@ -185,7 +187,7 @@ class DistributorsController extends Controller
         $em=$this->getDoctrine()->getManager();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $formapplay=$this->createFormBuilder()
             ->add('Amount',null,array('data'=>0))
             ->add('Communications','textarea',array('required'=>false))
@@ -196,16 +198,19 @@ class DistributorsController extends Controller
             ->add('Amount','text',array('data'=>0))
             ->add('As','choice',array(
                 'preferred_choices'=>array('Credit'),
-                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+                'choices'=>
+                array(
+                    'Credit'=>'increase retailer,s credit limit',
+                    'Debit'=>'decrease retailer,s credit limit')
             ))->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',
             array(
                 'Entiti'=>$Account->getEntiti(),
-                'Account'=>$Account,
+                'Account'=>$Account->getParent(),
+                'retailerAccount'=>$Account,
                 'formapplay'=>$formapplay->createView(),
                 'formupdate'=>$formupdate->createView(),
-                'retailerAccount'=>$retailerAccount,
 
             ));
     }
@@ -230,13 +235,15 @@ class DistributorsController extends Controller
 
             $trandist=new Transaction();
             $tranretailer=new Transaction();
+
             $formtransfer->handleRequest($req);
+
             $data=$formtransfer->getData();
 
            #transaction for dist#
 
             $trandist->setTranDate(new \DateTime('now'));
-            $trandist->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
             $trandist->setTranInsert(new \DateTime('now'));
             $trandist->setAccount($Account->getParent());
             $trandist->setUser($User);
@@ -266,6 +273,7 @@ class DistributorsController extends Controller
                     $em->persist($trandist);
                     $em->persist($tranretailer);
                     $em->flush();
+                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 }
 
             }
@@ -282,13 +290,17 @@ class DistributorsController extends Controller
         $this->check_ChildAccount($id);
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
+
         $em=$this->getDoctrine()->getManager();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
         $formupdate=$this->createFormBuilder()
             ->add('Amount','text')
             ->add('As','choice',array('preferred_choices'=>array('Credit'),
-                'choices'=>array('Credit'=>'Credit','Debit'=>'Debit')
+                'choices'=>array(
+                    'Credit'=>'increase retailer,s credit limit',
+                    'Debit'=>'decrease retailer,s credit limit')
             ))->getForm();
 
         if($req->isMethod('POST'))
@@ -299,7 +311,7 @@ class DistributorsController extends Controller
             $trandist=new Transaction();
 
             $trandist->setTranDate(new \DateTime('now'));
-            $trandist->setTranCurrency($Account->getAccCurrency());
+            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
 
             $trandist->setTranInsert(new \DateTime('now'));
 
@@ -318,6 +330,7 @@ class DistributorsController extends Controller
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
                 $em->persist($trandist);
                 $em->flush();
+                   $this->get('session')->getFlashBag()->add('success','this operation done success !');
                }
                }
 
@@ -328,6 +341,9 @@ class DistributorsController extends Controller
                 {
 
                 $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+                $em->flush();
+                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
 
                 }
 
@@ -348,15 +364,24 @@ class DistributorsController extends Controller
 
     public function DistStaffAction()
     {
-        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
-        $users = $Account->getUsers();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $users,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            6/*limit per page*/
-        );
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'pagination' => $pagination));
+        $em=$this->getDoctrine()->getEntityManager();
+        $user= $this->get('security.context')->getToken()->getUser();
+
+         $Account=$user->getAccount();
+
+        $users =$em->createQueryBuilder()
+            ->select('USR')
+            ->from('HelloDiDiDistributorsBundle:User','USR')
+            ->where('USR.Account = :Acc')->setParameter('Acc',$Account)
+            ->andWhere('USR != :US ')->setParameter('US',$user);
+
+        $users=$users->getQuery()->getResult();
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig',
+            array(
+                'Entiti' => $Account->getEntiti(),
+                'Users' => $users));
     }
 
     public function DistStaffAddAction(Request $request)
@@ -423,24 +448,18 @@ class DistributorsController extends Controller
     public function DistRetailerUserAction(Request $req,$id)
     {
         $this->check_ChildAccount($id);
-        $paginator = $this->get('knp_paginator');
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+
         $em = $this->getDoctrine()->getManager();
-        $retailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $users = $retailerAccount->getUsers();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $users = $Account->getUsers();
 
 
-        $pagination = $paginator->paginate(
-            $users,
-            $req->get('page',1) /*page number*/,
-            10/*limit per page*/
-        );
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerUser.html.twig', array(
-                'Entiti' => $retailerAccount->getEntiti(),
-                'retailerAccount' => $retailerAccount,
-                'Account' => $myaccount,
-                'pagination' => $pagination
+                'Entiti' => $Account->getEntiti(),
+            'Account' => $Account->getParent(),
+            'retailerAccount' => $Account,
+                'Users' => $users
             ));
 
     }
@@ -457,7 +476,7 @@ class DistributorsController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
-                return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $user->getAccount()->getId())));
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
 
         }
@@ -491,6 +510,7 @@ class DistributorsController extends Controller
             {
                 $em->persist($user);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
             }
 
@@ -580,50 +600,68 @@ class DistributorsController extends Controller
     public function ShowRetaierAccountAction(Request $request)
     {
         $paginator = $this->get('knp_paginator');
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
-        $pr = $user->getAccount()->getId();
-
+       $qb=array();
         $form_search= $this->createFormBuilder()
-                       ->add('CityName','text',
+                       ->add('CityName','entity',
                               array(
-                                  'required'=>false)
+                                  'required'=>false,
+                                  'class' => 'HelloDiDiDistributorsBundle:Entiti',
+                                  'property'=>'entCity',
+                                  'empty_value'=>'All',
+                                  'query_builder' => function(EntityRepository $er) use ($Account) {
+                                      return $er->createQueryBuilder('E')
+                                          ->innerJoin('E.Accounts','EA')
+                                          ->andWhere('EA.Parent = :parent')->setParameter('parent',$Account);
+                                  })
+
                                                     )
                        ->add('Balance','choice',
                                array(
                                    'choices'=>(array(
-                                       0=>'Lower Than',
-                                       1=>'More Than')
-                                                     ),'preferred_choices'=>array(1)))
+                                       0=>'<',
+                                       1=>'>',
+                                       2=>'=' )
+                                                     )))
                        ->add('BalanceValue','text',
                                 array(
                                     'required'=>false)
                                                       )->getForm();
 
 
-
-
-        $qb = $em->createQueryBuilder()
-            ->select('retailer')
-            ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
-            ->innerJoin('retailer.Entiti', 'Ent')
-            ->where('retailer.Parent =:reprn')
-            ->setParameter('reprn',$pr);
-
         if ($request->isMethod('POST')) {
 
             $form_search->handleRequest($request);
             $data= $form_search->getData();
-
-            if ($data['CityName'] != '')
-                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($data['retCityName'] . '%')));
-            if ($data['Balance'] == 1)
+                $qb = $em->createQueryBuilder()
+                    ->select('retailer')
+                    ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
+                    ->innerJoin('retailer.Entiti', 'Ent')
+                    ->where('retailer.Parent = :prn')
+                    ->setParameter('prn',$Account);
+            if($data['CityName'])
+                $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($data['CityName']->getEntCity())));
+            switch($data['Balance'])
+            {
+                case 1:
                 if ($data['BalanceValue'] != '')
-                    $qb->andwhere($qb->expr()->gte('retailer.accBalance', $data['BalanceValue']));
-            if ($data['Balance'] == 0)
-                if ($data['BalanceValue'])
-                    $qb->andwhere($qb->expr()->lte('retailer.accBalance', $data['BalanceValue']));
+                    $qb->andwhere($qb->expr()->gt('retailer.accBalance', $data['BalanceValue']));
+                break;
+                case 0:
+                if ($data['BalanceValue']!= '')
+                    $qb->andwhere($qb->expr()->lt('retailer.accBalance', $data['BalanceValue']));
+                 break;
+           case 2:
+                if ($data['BalanceValue']!= '')
+                    $qb->andwhere($qb->expr()->eq('retailer.accBalance', $data['BalanceValue']));
+                 break;
+            }
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
+
         }
 
 
@@ -631,7 +669,7 @@ class DistributorsController extends Controller
         $pagination = $paginator->paginate(
             $qb,
             $request->get('page',1)/*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array (
             'Retailers' => $pagination,
@@ -646,15 +684,14 @@ class DistributorsController extends Controller
     public function RetailersTransactionAction(Request $req,$id)
     {
         $em=$this->getDoctrine()->getManager();
-        $qb=$em->createQueryBuilder();
+
         $paginator = $this->get('knp_paginator');
 
         $this->check_ChildAccount($id);
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account));
+       $qb=array();
 
         $form=$this->createFormBuilder()
             ->add('Type','choice',
@@ -663,14 +700,13 @@ class DistributorsController extends Controller
                                 'All'=>'All',
                                 'tran'=>'transfer credit from its own account to a retailer,s account',
                                 'pmt'=>'ogone payment on its own account',
-                                'sale'=>'debit balance whene the retailer sells a code',
+                                'sale'=>'debit balance when the retailer sells a code',
                                 )
                                        )
                                          )
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
+            ->add('DateStart','text',array('required'=>false))
+            ->add('DateEnd','text',array('required'=>false))
             ->add('TypeDate','choice', array(
-                'preferred_choices'=>array(0),
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'Trade Date',
@@ -686,21 +722,24 @@ class DistributorsController extends Controller
         {
             $form->handleRequest($req);
             $data=$form->getData();
+            $qb=$em->createQueryBuilder();
             $qb->select('Tran')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
             if($data['TypeDate']==0)
             {
-
+                if($data['DateStart']!='')
                 $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                if($data['DateEnd']!='')
                 $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             }
 
             if($data['TypeDate']==1)
             {
-
+                if($data['DateStart']!='')
                $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                if($data['DateEnd']!='')
                $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             }
@@ -711,13 +750,13 @@ class DistributorsController extends Controller
 
             }
 
-            $query=$qb->getQuery();
-            $count = count($query->getResult());
-            $query = $query->setHint('knp_paginator.count', $count);
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
         }
 
         $pagination = $paginator->paginate(
-            $query,
+            $qb,
             $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
@@ -726,7 +765,7 @@ class DistributorsController extends Controller
         array(
             'pagination'=>$pagination,
             'form'=>$form->createView(),
-            'Account' =>$myaccount,
+            'Account' => $Account->getParent(),
             'retailerAccount' => $Account,
             'Entiti' =>$Account->getEntiti()
         ));
@@ -753,10 +792,10 @@ class DistributorsController extends Controller
 {
     $paginator = $this->get('knp_paginator');
     $em=$this->getDoctrine()->getManager();
-    $qb=$em->createQueryBuilder();
+
     $Account=$this->get('security.context')->getToken()->getUser()->getAccount();
 
-    $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account));
+    $qb=array();
 
     $form=$this->createFormBuilder()
         ->add('Type','choice',
@@ -771,8 +810,8 @@ class DistributorsController extends Controller
                                'tran'=>'transfer credit from its own account to a retailer,s account',
                                'com'=>'credit commission when a retailer sells a code'
                            )))
-        ->add('DateStart','date',array())
-        ->add('DateEnd','date',array())
+        ->add('DateStart','text',array('required'=>false))
+        ->add('DateEnd','text',array('required'=>false))
         ->add('TypeDate','choice', array(
             'empty_value'=>'Trade Date',
             'expanded'   => true,
@@ -788,23 +827,26 @@ class DistributorsController extends Controller
         $form->handleRequest($req);
         $data=$form->getData();
 
+        $qb=$em->createQueryBuilder();
         $qb->select('Tran')
             ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
             ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
 
         if($data['TypeDate']==0)
         {
-
+          if($data['DateStart']!='')
             $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+            if($data['DateEnd']!='')
             $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
         }
 
         if($data['TypeDate']==1)
         {
-
+            if($data['DateStart']!='')
            $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-           $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+            if($data['DateEnd']!='')
+            $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
         }
 
@@ -813,14 +855,14 @@ class DistributorsController extends Controller
             $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
         }
 
-        $query=$qb->getQuery();
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
+        $qb=$qb->getQuery();
+        $count = count($qb->getResult());
+        $qb->setHint('knp_paginator.count', $count);
 
     }
 
     $pagination = $paginator->paginate(
-        $query,
+        $qb,
         $req->get('page',1) /*page number*/,
         10/*limit per page*/
     );
@@ -856,72 +898,54 @@ class DistributorsController extends Controller
     {
         $this->check_ChildAccount($id);
 
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
-
         $em = $this->getDoctrine()->getManager();
 
         $Account= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form = $this->createForm(new AccountType(),$Account);
+        $form = $this->createForm(new EditRetailerType(),$Account);
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerSetting.html.twig', array(
             'Entiti' => $Account->getEntiti(),
-            'Account' => $myaccount,
+            'Account' => $Account->getParent(),
             'retailerAccount' => $Account,
             'form' => $form->createView()
         ));
     }
 
-    public function DetailsAction($id)
+    public function DetailsAction(Request $req,$id)
     {
         $this->check_ChildAccount($id);
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $entity = $account->getEntiti();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('Entiti' => $entity, 'accType' => 0));
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Entiti entity.');
+        $entity = $Account->getEntiti();
+
+        $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
+
+        if($req->isMethod('post'))
+        {
+            $editForm->handleRequest($req);
+         if($editForm->isValid())
+         {
+             $em->flush();
+             $this->get('session')->getFlashBag()->add('success','this operation done success !');
+         }
         }
 
-        $editForm = $this->createForm(new EntitiType(), $entity);
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailersDetails.html.twig', array(
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:Details.html.twig', array(
-            'account' => $Account,
-            'Account' => $account,
-            'retailerAccount' =>$account,
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-        ));
-    }
-
-    public function editRetailersAction(Request $request, $id)
-    {
-        $this->check_ChildEntity($id);
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Entiti entity.');
-        }
-
-
-        $editForm = $this->createForm(new EntitiType(), $entity);
-        $editForm->handleRequest($request);
-
-
-        $em->persist($entity);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $id)));
-
+            'Account' => $Account->getParent(),
+            'retailerAccount' => $Account,
+         ));
     }
 
     //items

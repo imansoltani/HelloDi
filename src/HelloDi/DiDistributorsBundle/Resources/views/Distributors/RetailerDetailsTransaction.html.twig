@@ -25,7 +25,10 @@
                                     {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
                                     {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
                                     {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
-                                    {{ 'Balance' | trans ({}, "account") }}: {{ tran.Account.accBalance }}</br>
+                                    {{ 'Balance' | trans ({}, "account") }}:
+                            {% set balance=tran.tranBalance+tran.tranAmount %}
+                            {{ balance }}
+                            </br>
 
                             {{ 'Action' | trans ({}, "account") }}:
                             {% if tran.tranAction=='Sale' %}Sale

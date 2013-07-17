@@ -7,6 +7,11 @@ use HelloDi\DiDistributorsBundle\Entity\Price;
 
 class BalanceChecker
 {
+    private  $session;
+    function  __construct($sesion)
+    {
+        $this->session=$sesion;
+    }
     public function isBalanceEnough(Account $account, Price $price, $count = 1)
     {
 
@@ -23,16 +28,17 @@ class BalanceChecker
         if ($account->getAccBalance() >= $value  ) {
             return true;
         } else {
-            throw new \Exception('The Currencies are NOT matched!');
+            $this->session->getFlashBag()->add('error','this operation done with error!');
         }
     }
+
 
 
    public function isMoreThanCreditLimit(Account $account,$value)
    {
        if(($account->getAccBalance()-$value)>=$account->getAccCreditLimit())
            return true;
-       throw new \Exception('موجودی از اعتبار کمتر می شود');
+       $this->session->getFlashBag()->add('error','this operation done with error!');
 
    }
 
@@ -40,7 +46,7 @@ class BalanceChecker
     {
         if(($account->getAccCreditLimit()-$value)>=0)
             return true;
-        throw new \Exception('اعتبار نمی تواند منفی باشد');
+        $this->session->getFlashBag()->add('error','this operation done with error!');
 
     }
 

@@ -113,12 +113,12 @@
                                class="table table-bordered table-striped table-highlight postsend">
                             <thead>
                             <tr>
-                                <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Amount' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Action' | trans ({}, "account") }}</th>
-                                <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+                                <th>{{ 'Date' | trans ({}, "account") }}</th>
+                                <th>{{ 'Description' | trans ({}, "account") }}</th>
+                                <th>{{ 'Amount' | trans ({}, "account") }}</th>
+                                <th>{{ 'Balance' | trans ({}, "account") }}</th>
+                                <th>{{ 'Action' | trans ({}, "account") }}</th>
+                                <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
                             </tr>
                             </thead>
@@ -130,7 +130,10 @@
 
                                     <td>{{ tran.tranDescription}}</td>
                                     <td>{{ tran.tranAmount}}</td>
-                                    <td>{{ tran.Account.accBalance }}</td>
+                                    <td>
+                                        {% set balance=tran.tranBalance+tran.tranAmount %}
+                                        {{ balance }}
+                                    </td>
                                     <td>
 
                                         {% if tran.tranAction=='Sale' %}Sale

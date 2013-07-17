@@ -39,9 +39,6 @@ Retailer_details:
     pattern:  /{id}/details
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Details }
 
-Retailer_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:editRetailers }
 
 #start
 

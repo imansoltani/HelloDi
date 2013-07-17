@@ -7,8 +7,8 @@ use FOS\UserBundle\Entity\User as BaseUser;
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  * @ORM\AttributeOverrides({
- * @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
- * @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
+ *      @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
+ *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
  * })
  */
 class User extends BaseUser
@@ -31,7 +31,6 @@ class User extends BaseUser
     private $lastName;
 
 
-
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="mobile")
      */
@@ -46,6 +45,7 @@ class User extends BaseUser
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $status;
+
 
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="User")

@@ -27,6 +27,7 @@ class NewUserType extends BaseType
             ->add('mobile',null,array('required'=>false))
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
 
+
 ;
 
 

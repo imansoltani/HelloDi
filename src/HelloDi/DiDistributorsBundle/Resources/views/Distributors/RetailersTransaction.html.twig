@@ -28,27 +28,21 @@
         <form class="form-horizontal SearchForm" action="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}"
               method="POST">
             <fieldset>
-                <div class="control-group">
+                <div class="control-group datepicker1">
                     {{ form_label(form.TypeDate[0]) }}
-                    <div class="controls">
+                    <div class="controls ">
                         {{ form_widget(form.TypeDate[0],{ 'attr': {'checked':'checked'}}) }}
                     </div>
                 </div>
 
 
-                <div class="control-group">
+                <div class="control-group datepicker2">
                     {{ form_label(form.TypeDate[1]) }}
-                    <div class="controls">
+                    <div class="controls ">
                         {{ form_widget(form.TypeDate[1]) }}
                     </div>
                 </div>
 
-                <div class="control-group">
-                    {{ form_label(form.Type) }}
-                    <div class="controls">
-                        {{ form_widget(form.Type) }}
-                    </div>
-                </div>
 
                 <div class="control-group">
                     {{ form_label(form.DateStart) }}
@@ -62,6 +56,14 @@
                         {{ form_widget(form.DateEnd) }}
                     </div>
                 </div>
+
+                <div class="control-group">
+                    {{ form_label(form.Type) }}
+                    <div class="controls">
+                        {{ form_widget(form.Type) }}
+                    </div>
+                </div>
+
                 <input type="hidden" value="1" name="page" id="search_page" >
                 <hr>
                 <input class="btn btn-primary" type="submit" value="Search">
@@ -105,12 +107,12 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
-                        <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "account") }}</th>
+                        <th>{{ 'Description' | trans ({}, "account") }}</th>
+                        <th>{{ 'Credit' | trans ({}, "account") }}</th>
+                        <th>{{ 'Debit' | trans ({}, "account") }}</th>
+                        <th>{{ 'Balance' | trans ({}, "account") }}</th>
+                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
                     </tr>
                     </thead>
@@ -130,7 +132,14 @@
                                  <td>{{ -tran.tranAmount }}</td>
                             {% endif %}
 
-                            <td>{{ tran.Account.accBalance }}</td>
+                            <td>
+
+
+                                {% set balance=tran.tranBalance+tran.tranAmount %}
+
+
+                                {{ balance }}
+                            </td>
                             <td class="td-actions">
 
 

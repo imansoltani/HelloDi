@@ -55,13 +55,20 @@
                                 {{ form_label(form_search.Balance) }}
                                 <div class="controls">
                                     {{ form_widget(form_search.Balance) }}
-                                    {{ form_widget(form_search.BalanceValue) }}
+
                                 </div>
                              </div>
+                            <div class="control-group">
+                            {{ form_label(form_search.BalanceValue,'Balance Value') }}
+                            <div class="controls">
+                            {{ form_widget(form_search.BalanceValue) }}
+                </div>
+            </div>
 
                             <input type="hidden" value="1" name="page" id="search_page" >
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
+
                         </fieldset>
 
                     </form>
@@ -96,7 +103,7 @@
 
                 <div style="margin-top: 5px" class="tablediv">
 
-                    <form action="{{ path('ManageItemsProv') }}" method="post">
+                    {#<form action="{{ path('ManageItemsProv') }}" method="post">#}
                         <div class="tab-content datatable">
                             <table id="example" class="table postsend">
                                 <thead>
@@ -134,7 +141,7 @@
                         </div>
                         <input type="hidden" name="accountid" class="accountid" value=""/>
 
-                    </form>
+                    {#</form>#}
                 </div>
                 <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
 

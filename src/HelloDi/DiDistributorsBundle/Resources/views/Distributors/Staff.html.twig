@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for user in pagination %}
+                            {% for user in Users %}
                                 <tr>
                                     <td>{{ user.id }}</td>
 
@@ -78,9 +78,9 @@
                         {#{button pagination}#}
                     </div>
                 </form>
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
+                {#<div class="navigation">#}
+                    {#{{ knp_pagination_render(pagination) }}#}
+                {#</div>#}
             </div>
         </div>
     </div>

@@ -1,6 +1,90 @@
-    <form action="{{ path('Retailer_edit',{'id':entity.id}) }}" method="POST">
-        {{ form_label(edit_form) }}
-        {{ form_widget(edit_form) }}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
 
-        <button>save</button>
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <span class="link">Details</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+<div class="widget-header">
+    <h3>Retailer Details</h3>
+</div> <!-- /widget-header -->
+<br>
+
+<form action="{{ path('Retailer_details',{'id':retailerAccount.id}) }}" method="POST">
+
+
+    <div class="control-group">
+        {{ form_label(edit_form.entName) }}
+        {{ form_widget(edit_form.entName) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entVatNumber) }}
+        {{ form_widget(edit_form.entVatNumber) }}
+    </div>
+<hr>
+    Address:<br>
+
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs1) }}
+        {{ form_widget(edit_form.entAdrs1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs2) }}
+        {{ form_widget(edit_form.entAdrs2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entAdrs3) }}
+        {{ form_widget(edit_form.entAdrs3) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entNp) }}
+        {{ form_widget(edit_form.entNp) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entCity) }}
+        {{ form_widget(edit_form.entCity) }}
+    </div>
+
+
+    <div class="control-group">
+        {{ form_label(edit_form.Country) }}
+        {{ form_widget(edit_form.Country) }}
+    </div>
+    <hr>
+Additional details:<br>
+    <div class="control-group">
+        {{ form_label(edit_form.entTel1) }}
+        {{ form_widget(edit_form.entTel1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entTel2) }}
+        {{ form_widget(edit_form.entTel2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entFax) }}
+        {{ form_widget(edit_form.entFax) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(edit_form.entWebsite) }}
+        {{ form_widget(edit_form.entWebsite) }}
+    </div>
+
+
+        <input type="submit" value="Edit">
     </form>
+
+{% endblock %}
