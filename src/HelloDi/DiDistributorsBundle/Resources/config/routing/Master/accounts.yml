@@ -121,24 +121,16 @@ MasterDistPurchases:
 
 #---- items prov
 ManageItemsProv:
-    pattern:  /providers/Items
+    pattern:  /providers/{id}/Items
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsProv" }
 
 AddItemProv:
-    pattern:  /providers/Items/add
+    pattern:  /providers/{id}/Items/add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProv" }
 
-AddItemProvSubmit:
-    pattern:  /providers/Items/addSubmit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProvSubmit" }
-
 EditItemProv:
-    pattern:  /providers/Items/edit
+    pattern:  /providers/{id}/Items/{itemid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProv" }
-
-EditItemProvSubmit:
-    pattern:  /providers/Items/editSubmit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProvSubmit" }
 
 #---- items dist
 ManageItemsDist:
@@ -155,23 +147,23 @@ EditItemDist:
 
 #---- inputs prov
 ManageInputsProv:
-    pattern:  /providers/Inputs
+    pattern:  /providers/{id}/Inputs
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageInputsProv" }
 
 UploadInputProv:
-    pattern:  /providers/Inputs/Upload
+    pattern:  /providers/{id}/Items/{itemid}/Upload
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProv" }
 
 UploadInputProvSubmit:
-    pattern:  /providers/Inputs/UploadSubmit
+    pattern:  /providers/{id}/Items/{itemid}/UploadSubmit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit" }
 
 UploadInputProvSubmitAccepted:
-    pattern:  /providers/Inputs/UploadSubmitAccepted
+    pattern:  /providers/{id}/Items/{itemid}/UploadSubmitAccepted
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitAccepted" }
 
 UploadInputProvSubmitCanceled:
-    pattern:  /providers/Inputs/UploadSubmitCanceled
+    pattern:  /providers/{id}/Items/{itemid}/UploadSubmitCanceled
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }
 #-------Retailers--------------#
 ListUsersInRetailers:

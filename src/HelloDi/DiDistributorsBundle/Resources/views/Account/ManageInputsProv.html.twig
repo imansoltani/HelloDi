@@ -16,10 +16,6 @@
         <h3>Input List</h3>
 
     </div> <!-- /widget-header -->
-    <form method="post" action="{{ path('UploadInputProv') }}">
-        <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-        <input class="button btn btn-large btn-primary" type="submit" value="Upload Input File"/>
-    </form>
 
 
     <div class="form_search">
@@ -49,8 +45,6 @@
                         {{ form_widget(form.item) }}
                     </div>
                 </div>
-
-                <input type="hidden" name="accountid" value="{{ Account.id }}">
 
                 {{ form_rest(form) }}
                 <hr>

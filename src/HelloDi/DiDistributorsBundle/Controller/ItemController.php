@@ -209,7 +209,6 @@ class ItemController extends Controller
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
                 if($finddesc)

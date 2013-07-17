@@ -15,12 +15,12 @@
     <div class="widget-header">
         <h3>Provider Items</h3>
     </div> <!-- /widget-header -->
-
-
-    <form method="post" action="{{ path('AddItemProv') }}">
-        <input type="hidden" name="accountid" value="{{ Account.id }}"/>
-        <input class="button btn btn-large btn-primary" type="submit" value="Add new Item"/>
-    </form>
+    <br/>
+    <a class=" btn btn-primary btn-large" href="{{ path('AddItemProv',{'id':Account.id}) }}">
+        Add new Item
+    </a>
+    <br/>
+    <br/>
 
     <div class="tablediv">
         <div class="contenttitle">
@@ -53,10 +53,9 @@
                         <td>{{ price.price }} {{ price.priceCurrency }}</td>
                         <td>{% if price.priceStatus == 1 %}Active{% else %}Inactive{% endif %}</td>
                         <td class="td-actions" >
-                            <form method="post" action="{{ path('EditItemProv') }}">
-                                <input type="hidden" name="priceid" value="{{ price.id }}"/>
-                                <input type="submit" value="Edit Price"/>
-                            </form>
+                            <a class="btn_actions" href="{{ path('EditItemProv',{'id':Account.id,'itemid':price.id}) }}">Manage</a>
+                            <br/>
+                            <a class="btn_actions" href="{{ path('UploadInputProv',{'id':Account.id,'itemid':price.item.id}) }}">Upload Code</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -14,7 +14,7 @@
         <h3>Edit Item</h3>
     </div> <!-- /widget-header -->
 
-        <form id="editprice" action="{{ path('EditItemProvSubmit') }}" method="post" class="form-horizontal">
+        <form id="editprice" action="#" method="post" class="form-horizontal">
 
             <div class="control-group">
                 <label class="control-label">
@@ -67,9 +67,6 @@
 
 
             {{form_widget(form._token)}}
-
-            <input type="hidden" name="accountid" value="{{ Account.id }}" />
-            <input type="hidden" name="priceid" value="{{ price.id }}" />
 
             <div class="form-actions" style="margin-bottom: 0" >
                 <input type="submit" class="btn btn-primary  " onclick="$('#gowhere').val('0')" value="Edit" />

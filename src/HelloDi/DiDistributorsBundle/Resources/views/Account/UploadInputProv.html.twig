@@ -1,6 +1,6 @@
 {% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
 
-{% set tab = '3' %}
+{% set tab = '1' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
@@ -15,7 +15,14 @@
 
 
 
-        <form action="{{ path("UploadInputProvSubmit") }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        <form action="{{ path("UploadInputProvSubmit",{'id':Account.id,'itemid':item.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+
+            <div class="control-group">
+                <label class="control-label">Item</label>
+                <div class="controls">
+                    <input class="input-large" type="text" value="{{ item.itemName }}" disabled/>
+                </div>
+            </div>
 
             <div class="control-group">
                 {{ form_label(form.File) }}
@@ -25,13 +32,6 @@
             <div class="control-group">
             {{ form_label(form.Batch) }}
             {{ form_widget(form.Batch) }}
-            </div>
-
-            <div class="control-group">
-            {{ form_label(form.Item) }}
-            <div class="controls" >
-                {{ form_widget(form.Item) }}
-            </div>
             </div>
 
             <div class="control-group">
@@ -60,8 +60,6 @@
             {{ form_label(form.PinCode) }}
             {{ form_widget(form.PinCode) }}
             </div>
-
-            <input type="hidden" name="accountid" value="{{ Account.id }}">
 
             {{ form_rest(form) }}
 

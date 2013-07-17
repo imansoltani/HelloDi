@@ -38,21 +38,15 @@
     </li>
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
-        <a>
-            <form id="Item" action="{{ path('ManageItemsProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+        <a href="{{ path('ManageItemsProv',{id:Account.id}) }}">
                 <input type="submit" value="Item"/>
-            </form>
         </a>
     </li>
 
 
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a>
-            <form action="{{ path('ManageInputsProv') }}" method="post">
-                <input type="hidden" name="accountid" value="{{ Account.id }}"/>
+        <a href="{{ path('ManageInputsProv',{id:Account.id}) }}">
                 <input type="submit" value="Input"/>
-            </form>
         </a>
     </li>
 

@@ -1206,9 +1206,8 @@ $qb=array();
     }
 
     //items prov
-    public function ManageItemsProvAction(Request $request)
+    public function ManageItemsProvAction($id)
     {
-        $id = $request->get('accountid');
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $prices = $account->getPrices();
@@ -1219,9 +1218,8 @@ $qb=array();
         ));
     }
 
-    public function AddItemProvAction(Request $request)
+    public function AddItemProvAction(Request $request,$id)
     {
-        $id = $request->get('accountid');
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
@@ -1250,86 +1248,54 @@ $qb=array();
             ->add('price')
             ->getForm();
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemProv.html.twig', array(
-            'Account' => $account,
-            'form' => $form->createView()
-        ));
-    }
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->persist($price);
 
-    public function AddItemProvSubmitAction(Request $request)
-    {
-        $id = $request->get('accountid');
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-        $price = new Price();
-        $price->setPriceCurrency($account->getAccCurrency());
-        $price->setPriceStatus(1);
-        $price->setIsFavourite(false);
-        $price->setAccount($account);
-
-        $form = $this->createFormBuilder($price)
-            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
-            ->add('price')
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em->persist($price);
-
-            $pricehistory = new PriceHistory();
-            $pricehistory->setDate(new \DateTime('now'));
-            $pricehistory->setPrice($price->getPrice());
-            $pricehistory->setPrices($price);
-            $em->persist($pricehistory);
-
-            $em->flush();
-            return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
-                'accountid' => $price->getAccount()->getId()
-            ));
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemProv.html.twig', array(
-            'Account' => $account,
-            'form' => $form->createView()
-        ));
-    }
-
-    public function EditItemProvAction(Request $request)
-    {
-        $id = $request->get('priceid');
-        $em = $this->getDoctrine()->getManager();
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($id);
-        $form = $this->createForm(new PriceEditType(), $price);
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:EditItemProv.html.twig', array(
-            'Account' => $price->getAccount(),
-            'price' => $price,
-            'form' => $form->createView()
-        ));
-    }
-
-    public function EditItemProvSubmitAction(Request $request)
-    {
-        $id = $request->get('priceid');
-        $em = $this->getDoctrine()->getManager();
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($id);
-        $oldprice = $price->getPrice();
-
-        $form = $this->createForm(new PriceEditType(), $price);
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            if ($price->getPrice() != $oldprice) {
                 $pricehistory = new PriceHistory();
                 $pricehistory->setDate(new \DateTime('now'));
                 $pricehistory->setPrice($price->getPrice());
                 $pricehistory->setPrices($price);
                 $em->persist($pricehistory);
-            }
-            $em->flush();
 
-            return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
-                'accountid' => $price->getAccount()->getId()
-            ));
+                $em->flush();
+                return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
+                        'id' => $price->getAccount()->getId()
+                    ));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:AddItemProv.html.twig', array(
+            'Account' => $account,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function EditItemProvAction(Request $request,$itemid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
+        $oldprice = $price->getPrice();
+
+        $form = $this->createForm(new PriceEditType(), $price);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                if ($price->getPrice() != $oldprice) {
+                    $pricehistory = new PriceHistory();
+                    $pricehistory->setDate(new \DateTime('now'));
+                    $pricehistory->setPrice($price->getPrice());
+                    $pricehistory->setPrices($price);
+                    $em->persist($pricehistory);
+                }
+                $em->flush();
+
+                return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
+                        'id' => $price->getAccount()->getId()
+                    ));
+            }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:EditItemProv.html.twig', array(
@@ -1415,7 +1381,7 @@ $qb=array();
 
     public function EditItemDistAction(Request $request,$id,$itemid)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
         $oldprice = $price->getPrice();
 
@@ -1459,12 +1425,11 @@ $qb=array();
     }
 
     //Inputs prov
-    public function ManageInputsProvAction(Request $request)
+    public function ManageInputsProvAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $accountid = $request->get('accountid');
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $qb = $em->createQueryBuilder()
             ->select('input')
@@ -1527,27 +1492,14 @@ $qb=array();
             return new Response('--');
     }
 
-    public function UploadInputProvAction(Request $request, $errors = null)
+    public function UploadInputProvAction(Request $request, $id, $itemid)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $accountid = $request->get('accountid');
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
 
         $form = $this->createFormBuilder()
             ->add('File', 'file')
-            ->add('Item', 'entity', array(
-                'class' => 'HelloDiDiDistributorsBundle:Item',
-                'property' => 'itemName',
-                'query_builder' => function (EntityRepository $er) use ($Account) {
-                    return $er->createQueryBuilder('i')
-                        ->innerJoin('i.Prices', 'p')
-                        ->innerJoin('p.Account', 'a')
-                        ->where('a = :aaid')
-                        ->setParameter('aaid', $Account)
-                        ->andWhere('p.priceStatus = 1');
-                }
-            ))
             ->add('Batch', 'text', array('required' => false))
             ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
             ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
@@ -1557,9 +1509,9 @@ $qb=array();
             ->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:UploadInputProv.html.twig', array(
+            'item' => $Item,
             'Account' => $Account,
-            'form' => $form->createView(),
-            'errors' => $errors
+            'form' => $form->createView()
         ));
     }
 
