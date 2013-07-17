@@ -78,6 +78,11 @@ class Transaction
     private $tranAction;
 
     /**
+     * @ORM\Column(type="decimal", nullable=true, name="tran_balance")
+     */
+    private $tranBalance;
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
@@ -394,14 +399,17 @@ class Transaction
 #this switch for function money
         switch ($this->getTranType()) {
             case 1:# 1 for credit
+
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
+                $this->setTranBalance($currentBalance);
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
             case 0: #0 for debit
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
+                $this->setTranBalance($currentBalance);
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
                 break;
 
@@ -529,5 +537,28 @@ class Transaction
     public function getTranType()
     {
         return $this->tranType;
+    }
+
+    /**
+     * Set tranBalance
+     *
+     * @param float $tranBalance
+     * @return Transaction
+     */
+    public function setTranBalance($tranBalance)
+    {
+        $this->tranBalance = $tranBalance;
+    
+        return $this;
+    }
+
+    /**
+     * Get tranBalance
+     *
+     * @return float 
+     */
+    public function getTranBalance()
+    {
+        return $this->tranBalance;
     }
 }

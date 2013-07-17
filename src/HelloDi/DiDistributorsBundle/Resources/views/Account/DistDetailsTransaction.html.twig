@@ -16,9 +16,7 @@
         </h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="btn-large button btn btn-primary " href="#">
-        Recharge
-    </a>
+
 
 
 
@@ -36,20 +34,46 @@
                     <tr>
                         <th>{{ 'id' | trans ({}, "account") }}</th>
                         <th>{{ 'Date' | trans ({}, "account") }}</th>
+                        <th>{{ 'function' | trans ({}, "account") }}</th>
+                        <th>{{ 'Account name' | trans ({}, "account") }} </th>
+                        <th>{{ 'Balance' | trans ({}, "account") }}</th>
                         <th>{{ 'User' | trans ({}, "account") }}</th>
                         <th>{{ 'Item Name' | trans ({}, "account") }}</th>
-                        <th>{{ 'Account name' | trans ({}, "account") }} </th>
+
                     </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>{{ tran.id}}</td>
                             <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                            <td>
+
+                                Function
+
+
+                            </td>
+
+                            <td> {{ tran.Account.accName }} </td>
+                            <td>
+
+                                {% set balance=tran.tranBalance+tran.tranAmount %}
+
+
+                                {{ balance }}
+
+
+                            </td>
 
                             <td> {{ tran.User.username }} </td>
 
-                            <td> {{ tran.Code.Item.itemName }} </td>
-                            <td> {{ tran.Account.accName }} </td>
+                            <td>
+                                {% if tran.Code is not null  %}
+                                {{ tran.Code.Item.itemName }}
+                               {% else %}
+                                    not have code
+                                  {% endif %}
+                            </td>
+
 
                         </tr>
 

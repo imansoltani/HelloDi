@@ -109,11 +109,11 @@ MasterDistFunding:
 
 MasterDistApplayFunding:
     pattern:  distributors/{id}/transactions/funding/applay
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingApplay"}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdateBalance"}
 
 MasterDistUpdateFunding:
     pattern:  distributors/{id}/transactions/funding/update
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdate"}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:FundingUpdateCredilimit"}
 
 MasterDistPurchases:
     pattern:  distributors/{id}/purchases

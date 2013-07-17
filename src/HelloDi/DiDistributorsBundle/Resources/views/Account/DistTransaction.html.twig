@@ -124,7 +124,11 @@
                         <tr>
                             <td>{{ tran.tranDate|date('y-M-d') }}</td>
 
-                            <td>{{ tran.tranDescription}}</td>
+                            <td>{{ tran.tranDescription}}
+                            {% if tran.tranAction=='sale'%}
+                            |{{ tran.id }}
+                            {% endif %}
+                            </td>
 
 
 
@@ -136,11 +140,14 @@
                                 <td>{{ -tran.tranAmount }}</td>
                             {% endif %}
 
-                            <td>{{ tran.Account.accBalance }}</td>
+                            <td>             {% set balance=tran.tranBalance+tran.tranAmount %}
+
+
+                                {{ balance }}</td>
                             <td class="td-actions">
-{% if tran.Code is not  null %}
+
                             <a class="btn_actions" href="{{ path('DetailsMasterDistTransaction',{'id':tran.id}) }}">Details</a>
-{% endif %}
+
                             </td>
 
                         </tr>

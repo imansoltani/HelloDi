@@ -56,7 +56,14 @@
 
                             {% endif %}
                             <td>{{ Trans.tranDescription }}</td>
-                            <td>{{ Trans.Account.accBalance }}</td>
+                            <td>
+
+                                {% set balance=Trans.tranBalance+Trans.tranAmount %}
+
+
+                                {{ balance }}
+
+                            </td>
                             <td>{{ Trans.User.username }}</td>
                             <td >
 

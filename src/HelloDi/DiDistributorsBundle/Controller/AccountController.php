@@ -471,7 +471,7 @@ $qb=array();
             ));
     }
 
-    public function  FundingApplayAction(Request $req, $id)
+    public function  FundingUpdateBalanceAction(Request $req, $id)
     {
         $balancechecker = $this->get('hello_di_di_distributors.balancechecker');
 
@@ -515,6 +515,7 @@ $qb=array();
                     $trandist->setTranAmount(+$data['Amount']);
                     $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
+                    $em->flush();
                 }
             }
 
@@ -528,6 +529,7 @@ $qb=array();
                     $trandist->setTranAmount(-$data['Amount']);
                     $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
+                    $em->flush();
                 }
             }
 
@@ -541,13 +543,13 @@ $qb=array();
                         $trandist->setTranAmount(-$data['Amount']);
                         $trandist->setTranAction($data['As']);
                         $em->persist($trandist);
-
+                        $em->flush();
                     }
                 }
 
             }
 
-            $em->flush();
+
 
         }
 
@@ -555,7 +557,7 @@ $qb=array();
 
     }
 
-    public function  FundingUpdateAction(Request $req, $id)
+    public function  FundingUpdateCredilimitAction(Request $req, $id)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -772,7 +774,7 @@ $qb=array();
 
 
         if ($req->isMethod('POST')) {
-            $form->bind($req);
+            $form->handleRequest($req);
             $data = $form->getData();
 
             #transaction for prov#
@@ -856,14 +858,20 @@ $qb=array();
 
             $tran->setTranDescription($data['Description']);
 
-            if ($data['CreditDebit'] == 1) {
-                $tran->setTranAction('pmt');
-                $tran->setTranType(1);
-                $tran->setTranAmount(+$data['Amount']);
-                $em->persist($tran);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
-            } elseif ($data['CreditDebit'] == 0) {
+           switch($data['CreditDebit'])
+
+           {
+              case 1:
+                   $tran->setTranAction('pmt');
+                   $tran->setTranType(1);
+                   $tran->setTranAmount(+$data['Amount']);
+                   $em->persist($tran);
+                   $em->flush();
+                   $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                   break;
+
+
+              case 0:
                     $tran->setTranAction('amdt');
                     $tran->setTranType(0);
                     $tran->setTranAmount(-$data['Amount']);
@@ -871,7 +879,7 @@ $qb=array();
                     $em->flush();
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
 
-            }
+                break;
 
         }
 
@@ -882,7 +890,7 @@ $qb=array();
                 'User' => $User,
                 'Entity' => $Account->getEntiti(),
             ));
-
+}
     }
 
     public function PurchasesAction($id, Request $req)
@@ -1704,7 +1712,7 @@ $qb=array();
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
-            ->add('FromDate','text',array('disabled'=>false))
+            ->add('FromDate','text', array('disabled'=>false))
             ->add('ToDate','text',array('disabled'=>false))
             ->add('type','choice',array(
                 'choices'=> array(
@@ -1712,7 +1720,8 @@ $qb=array();
                     'pmt'=>'credit provider,s account',
                     'amdt'=>'debit provider,s account',
                     'add'=>'add new codes to system',
-                    'rmv'=>'remove codes from the system'
+                    'rmv'=>'remove codes from the system',
+                    'tran'=>'transfer credit from provider,s account to distributors account'
                 )))->getForm();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
