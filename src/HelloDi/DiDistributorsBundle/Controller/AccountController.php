@@ -339,7 +339,7 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
+       $datetype=0;
 
 
 $qb=array();
@@ -382,6 +382,7 @@ $qb=array();
             }
 
             if ($data['TypeDate'] == 1) {
+                $datetype=1;
                 if($data['DateStart']!='')
                 $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
                 if($data['DateEnd']!='')
@@ -393,7 +394,7 @@ $qb=array();
                  $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Type'])));
 
             }
-
+            $qb->addOrderBy('Tran.tranInsert','desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -413,7 +414,8 @@ $qb=array();
                 'pagination' => $pagination,
                 'form' => $form->createView(),
                 'Account' => $Account,
-                'Entiti' => $Account->getEntiti()
+                'Entiti' => $Account->getEntiti(),
+                'datetype'=>$datetype
             ));
 
     }
@@ -601,7 +603,7 @@ $qb=array();
     public function  SaleAction(Request $req, $id)
     {
 
-
+        $datetype=0;
         $em = $this->getDoctrine()->getEntityManager();
         $result = array();
         //load first list search
@@ -643,8 +645,8 @@ $qb=array();
             ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
             ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
 
-            ->add('GroupBy', 'choice', array(
-                'choices' => array('label'=>'GroupBy:',
+            ->add('GroupBy', 'choice', array('label'=>'GroupBy:',
+                'choices' => array(
                     'NotGroupBy' => 'NotGroupBy',
                     'TrCoIt.itemName' => 'Item Name',
                     'TrAc.accName' => 'Retainer Name'
@@ -685,7 +687,7 @@ $qb=array();
             if ($data['GroupBy'] != 'NotGroupBy') {
                  $qb->GroupBy($data['GroupBy']);
             }
-
+            $qb->addOrderBy('Tr.tranInsert','desc');
 
             $result = $qb->getQuery();
             $count = count($result->getResult());
@@ -764,8 +766,8 @@ $qb=array();
                         ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
                 }
             ))
-            ->add('Description', 'textarea', array('required' => false))
-            ->add('Communications', 'textarea', array('required' => false))
+            ->add('Description', 'textarea', array('required' => true))
+            ->add('Communications', 'textarea', array('required' => true))
             ->getForm();
 
         $tranprov = new Transaction();
@@ -836,17 +838,17 @@ $qb=array();
                 'expanded' => true,
                 'choices' => array(
 
-                    1 => 'Credit',
-                    0 => 'Debit'
+                    1 => 'Credit:',
+                    0 => 'Debit:'
                 )
 
             ))
             ->add('Amount', 'text', array(
-                'required' => true
+                'required' => true,'label'=>'Amount:',
             ))
-            ->add('TradeDate', 'text',array())
-            ->add('Description', 'textarea', array('required' => true))
-            ->add('Fees', 'text', array('required' => false))->getForm();
+            ->add('TradeDate', 'text',array('label'=>'Trade Date:'))
+            ->add('Description', 'textarea', array('required' => true,'label'=>'Description:',))
+            ->add('Fees', 'text', array('required' => false,'label'=>'Fees:',))->getForm();
 
         if ($Req->isMethod('POST')) {
             $form->submit($Req);
@@ -955,6 +957,7 @@ $qb=array();
             if ($data['ItemName'] != 'All')
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName'])));
 //            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+            $qb->addOrderBy('Tr.tranInsert','desc');
             $query = $qb->getQuery();
             $count = count($query->getResult());
             $query->setHint('knp_paginator.count', $count);
@@ -1717,7 +1720,7 @@ $qb=array();
     public function MasterProvTransactionAction(Request $request, $id)
     {
 
-
+$datetype=0;
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
@@ -1759,6 +1762,7 @@ if($request->isMethod('post'))
             $qb->andwhere('Tran.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
     }
     elseif ($data['TypeDate'] == 1) {
+        $datetype=1;
             if($data['FromDate']!='')
                 $qb->andwhere('Tran.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
             if($data['ToDate']!='')
@@ -1767,7 +1771,7 @@ if($request->isMethod('post'))
     if ($data['type'] != 'All')
         $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));
 
-
+    $qb->addOrderBy('Tr.tranInsert','desc');
 
     $qb=$qb->getQuery();
 
@@ -1791,7 +1795,8 @@ if($request->isMethod('post'))
         array(
             'Trans' => $pagination,
             'Account' => $Account,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'datetype'=>$datetype
     ));
 
     }

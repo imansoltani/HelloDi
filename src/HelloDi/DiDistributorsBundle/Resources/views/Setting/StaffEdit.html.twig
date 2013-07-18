@@ -28,9 +28,7 @@
             <div class="widget-header">
                 <h3>Edit Users</h3>
             </div> <!-- /widget-header --><br>
-            {% for  error  in form_errors(form) %}
-                {{ error }}<br>
-            {% endfor %}
+
             <form class="form-horizontal" action="{{ path('MasterStaffEdit',{'id':userid}) }}" method="post" >
 
                 <div class="control-group">

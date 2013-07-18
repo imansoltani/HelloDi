@@ -31,7 +31,7 @@
 
                         <tr>
                             <td>{{ Trans.id}}</td>
-                            <td>{{ Trans.tranDate|date('Y-m-d') }}</td>
+                            <td>{{ Trans.tranInsert|date('y-M-d H:m:s') }}</td>
                             {% if Trans.tranAmount > 0 %}
                                 <td>
                                     {{ Trans.tranAmount }}

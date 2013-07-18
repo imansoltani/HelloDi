@@ -129,7 +129,13 @@
                     <tbody>
                     {% for tran in Trans %}
                         <tr>
-                            <td>{{ tran.tranDate|date('Y-m-d') }}</td>
+                            <td>
+                                {% if datetype==0 %}
+                                {{ tran.tranDate|date('y-M-d') }}
+                                   {% else %}
+                                    {{ tran.tranInsert|date('y-M-d H:m:s') }}
+                                    {% endif %}
+                             </td>
                             <td>{{ tran.tranDescription }}</td>
 
                         {% if tran.tranAmount >= 0 %}

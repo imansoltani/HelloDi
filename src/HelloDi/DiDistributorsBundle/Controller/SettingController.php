@@ -49,6 +49,7 @@ public  function staffaddAction(Request $req,$id)
             $user->setEntiti($Entiti);
             $em->persist($user);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
             return $this->redirect($this->generateUrl('MasterStaff'));
 
         }
@@ -75,6 +76,7 @@ public  function staffeditAction(Request $req,$id)
         $form->handleRequest($req);
         if ($form->isValid()) {
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
             return $this->redirect($this->generateUrl('MasterStaff'));
         }
 

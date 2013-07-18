@@ -114,7 +114,7 @@
 
                         <tr>
                             <td>{{ Tr.id}}</td>
-                            <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                            <td>{{ Tr.tranInsert|date('y-M-d H:m:s') }}</td>
                             <td>{{ Tr.Code.Item.itemName}}</td>
                             <td>Quantity</td>
                             <td>{{ Tr.tranAmount}}|{{Account.accCurrency}}</td>
