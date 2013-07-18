@@ -23,8 +23,6 @@ class Transaction
 
     private $tranBookingValue;
 
-
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
