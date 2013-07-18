@@ -46,19 +46,9 @@ class DistributorsController extends Controller
         $Account=$User->getAccount();
         $em=$this->getDoctrine()->getEntityManager();
 
-        $qb=$em->createQueryBuilder();
 
-        $qb->select('Tr')
-            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-            ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
-            ->andwhere($qb->expr()->isNotNull('Tr.Code'));
-        foreach($Account->getChildrens() as $child)
-        {
-            $qb->orwhere('Tr.Account=:ac')->setParameter('ac',$child);
 
-        }
-
-        $query=$qb->getQuery();
+        $qb=array();
 
 
         $form=$this->createFormBuilder()
@@ -69,11 +59,13 @@ class DistributorsController extends Controller
                     1=>'Item.TypeChioce.Internet',
                     2 =>'Item.TypeChioce.Tel',
                     3=>'All'
+
                       )))
 
             ->add('ItemName', 'entity',
                 array(
-                    'empty_data' => 'All',
+                    'empty_value'=>'All',
+                    'required'=>false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
                 ))
@@ -82,7 +74,8 @@ class DistributorsController extends Controller
                 array(
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
-                    'empty_data'=>'All',
+                    'empty_value'=>'All',
+                    'required'=>false,
                     'query_builder' => function(EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('a')
                             ->where('a.Parent = :ap')
@@ -90,55 +83,58 @@ class DistributorsController extends Controller
                             ->setParameter('ap',$Account);
                     }
                           ))
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
-            ->add('GroupBy','choice',array('choices'=>array('NotGroupBy'=>'NotGroupBy','TrCoIt.itemName'=>'Item Name','TrAc.accName'=>'Retainer Name')))
+            ->add('DateStart','text',array('required'=>false))
+            ->add('DateEnd','text',array('required'=>false))
+
             ->getForm();
 
         if($req->isMethod('POST'))
         {
             $form->handleRequest($req);
             $data=$form->getData();
+
             $qb=$em->createQueryBuilder();
+
             $qb->select('Tr')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
+                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc');
                 /**/
 
-                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
-                ->andWhere($qb->expr()->isNotNull('Tr.tranType'))
-                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+                $qb->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+                if($data['DateStart']!='')
+                $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                elseif($data['DateEnd']!='')
+                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-            if($data['Account']!='All')
+            if($data['Account'])
+                foreach($Account->getChildrens() as $child)
+                {
+                    $qb->orwhere('Tr.Account=:ac')->setParameter('ac',$child);
 
-                $qb=$qb->andwhere('Tr.Account =:account')->setParameter('account',$data['Account']);
+                }
+            else
+                 $qb=$qb->andwhere('Tr.Account =:account')->setParameter('account',$data['Account']);
 
 
-            if($data['ItemType']!=3)
+            if($data['ItemType']!='All')
 
                 $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
-            if($data['ItemName']!='All')
+            if($data['ItemName'])
                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
 
-            if($data['GroupBy']!='NotGroupBy')
-            {
-                $qb=$qb->GroupBy($data['GroupBy']);
-            }
 
 
-            $query=$qb->getQuery();
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+           $qb->setHint('knp_paginator.count', $count);
 
         }
 
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
 
         $pagination = $paginator->paginate(
-            $query,
+            $qb,
             $req->get('page',1) /*page number*/,
            10/*limit per page*/
         );
@@ -531,10 +527,8 @@ class DistributorsController extends Controller
         $Account = $user->getAccount();
 
         $em = $this->getDoctrine()->getManager();
-        $userget = $this->container->get('security.context')->getToken()->getUser();
-        $need = $userget->getAccount();
-        $Currency = $need->getAccCurrency();
-
+        $user= $this->get('security.context')->getToken()->getUser();
+        $currency=$user->getAccount()->getAccCurrency();
         $user = new User();
         $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
@@ -542,18 +536,22 @@ class DistributorsController extends Controller
 
         $Account->setAccCreditLimit(0);
         $Account->setAccCreationDate(new \DateTime('now'));
-        $Account->setAccTimeZone('Africa/Abidjan');
+        $Account->setAccTimeZone(null);
         $Account->setAccType(2);
         $Account->setAccBalance(0);
-        $Account->setAccCurrency($Currency);
-        $Account->setParent($need);
+
+
+        $Account->setAccCurrency($currency);
+        $Account->setParent($user->getAccount());
 
 
         $Account->setEntiti($Entiti);
+        $Entiti->addAccount($Account);
+
         $user->setEntiti($Entiti);
         $Entiti->addUser($user);
 
-        $Entiti->addAccount($Account);
+
 
         $user->setAccount($Account);
         $user->setStatus(1);
@@ -581,12 +579,11 @@ class DistributorsController extends Controller
             $AdrsDetai->setEntiti($Entiti);
             $em->persist($AdrsDetai);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
+            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
 
 
-            //  return $this->redirect($this->generateUrl('ShowMyAccount'));
-
-            return $this->redirect($this->generateUrl('Retailer_Transaction', array('id' => $Entiti->getId())));
-            //}
 
         }
 
@@ -690,7 +687,7 @@ class DistributorsController extends Controller
         $this->check_ChildAccount($id);
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
+        $typedate=0;
        $qb=array();
 
         $form=$this->createFormBuilder()
@@ -702,10 +699,11 @@ class DistributorsController extends Controller
                                 'pmt'=>'ogone payment on its own account',
                                 'sale'=>'debit balance when the retailer sells a code',
                                 )
+                          ,'label'=>'Type:'
                                        )
                                          )
-            ->add('DateStart','text',array('required'=>false))
-            ->add('DateEnd','text',array('required'=>false))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
             ->add('TypeDate','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
@@ -736,7 +734,7 @@ class DistributorsController extends Controller
             }
 
             if($data['TypeDate']==1)
-            {
+            {$typedate=1;
                 if($data['DateStart']!='')
                $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
@@ -767,7 +765,8 @@ class DistributorsController extends Controller
             'form'=>$form->createView(),
             'Account' => $Account->getParent(),
             'retailerAccount' => $Account,
-            'Entiti' =>$Account->getEntiti()
+            'Entiti' =>$Account->getEntiti(),
+            'typedate'=>$typedate
         ));
 
 
@@ -821,7 +820,7 @@ class DistributorsController extends Controller
             )
         ))->getForm();
 
-
+    $typedate=0;
     if($req->isMethod('POST'))
     {
         $form->handleRequest($req);
@@ -834,6 +833,7 @@ class DistributorsController extends Controller
 
         if($data['TypeDate']==0)
         {
+            $typedate=0;
           if($data['DateStart']!='')
             $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
             if($data['DateEnd']!='')
@@ -842,7 +842,7 @@ class DistributorsController extends Controller
         }
 
         if($data['TypeDate']==1)
-        {
+        {$typedate=1;
             if($data['DateStart']!='')
            $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
             if($data['DateEnd']!='')
@@ -872,7 +872,8 @@ class DistributorsController extends Controller
             'pagination'=>$pagination,
             'form'=>$form->createView(),
             'Account' =>$Account,
-            'Entiti' =>$Account->getEntiti()
+            'Entiti' =>$Account->getEntiti(),
+            'typedate'=>$typedate
         ));
 
 }
@@ -931,7 +932,7 @@ class DistributorsController extends Controller
 
         if($req->isMethod('post'))
         {
-            $editForm->handleRequest($req);
+         $editForm->handleRequest($req);
          if($editForm->isValid())
          {
              $em->flush();

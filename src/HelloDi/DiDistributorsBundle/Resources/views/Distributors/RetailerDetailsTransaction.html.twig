@@ -1,52 +1,128 @@
+<div class="widget-header">
+    <h3>Details</h3>
+</div> <!-- /widget-header -->
 
-    <div class="span" >
-        <div class="widget stacked ">
-            <div class="widget-content">
+<form class="form-horizontal">
 
+    <fieldset>
 
-                <div class="form_search">
-                    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Filter List</p>
-                        </span>
-                    </h5>
-                                  </div>
-
-                <div class="tablediv">
-
-                    <div class="contenttitle">
-                        <h4>History</h4>
-                    </div>
-                    <form>
-                        <div class="tab-content">
-
-                                    {{ 'id' | trans ({}, "account") }}:{{ tran.id}}</br>
-                                    {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
-                                    {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
-                                    {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
-                                    {{ 'Balance' | trans ({}, "account") }}:
-                            {% set balance=tran.tranBalance+tran.tranAmount %}
-                            {{ balance }}
-                            </br>
-
-                            {{ 'Action' | trans ({}, "account") }}:
-                            {% if tran.tranAction=='Sale' %}Sale
-                        {% elseif tran.tranAction=='Tran' %}Transfer
-                        {% elseif tran.tranAction=='Paym' %}Payment
-                        {% elseif tran.tranAction=='Regis' %}Register
-                        {% elseif tran.tranAction=='Fund' %}Funding
-                            {% endif %}</br>
-                             {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                            {{ 'ItemName' | trans ({}, "account") }}: {% if tran.code is not null %}{{ tran.Code.Item.itemName }}{% else %} -- {% endif %}</br>
-                            {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
-
-
-
-                        </div>
-                    </form>
-                </div>
-
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'id' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ tran.id}}" >
             </div>
         </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Date' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Description' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ tran.tranDescription}}">
+            </div>
+        </div>
+        {% set credit,debit='','' %}
+
+        {% if  tran.tranAmount>0 %}
+            {% set credit=tran.tranAmount %}
+        {% elseif  tran.tranAmount<0 %}
+            {% set debit=tran.tranAmount %}
+        {% endif %}
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Credit' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="
+                {{ credit }}
+                                ">
+            </div>
+        </div>
+
+
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Debit' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="
+
+                             {{ debit }}
+                                ">
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Balance' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                {% set balance=tran.tranBalance+tran.tranAmount %}
+                <input type="text" disabled="" value=" {{ balance }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'User' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ tran.User.username }}">
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Accountname' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ tran.Account.accName }}">
+            </div>
+        </div>
+{% set itemname='' %}
+        {% if tran.code is not null %}{%  set itemname=tran.Code.Item.itemName %} {% endif %}
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'ItemName' | trans ({}, "account") }}
+            </label>
+            <div class="controls">
+                <input type="text" disabled="" value="{{ itemname }}">
+            </div>
+        </div>
+
+    </fieldset>
+
+    <div class="form-actions">
+        <a href="{{ path('Retailer_Transaction',{'id':tran.Account.id}) }}" class="btn btn-primary">
+            Return
+        </a>
     </div>
+</form>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+

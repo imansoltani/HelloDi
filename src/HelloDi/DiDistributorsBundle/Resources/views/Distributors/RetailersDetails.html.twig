@@ -19,11 +19,13 @@
 
 
     <div class="control-group">
+        {{ form_errors(edit_form.entName) }}
         {{ form_label(edit_form.entName) }}
         {{ form_widget(edit_form.entName) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entVatNumber) }}
         {{ form_label(edit_form.entVatNumber) }}
         {{ form_widget(edit_form.entVatNumber) }}
     </div>
@@ -32,57 +34,67 @@
 
 
     <div class="control-group">
+        {{ form_errors(edit_form.entAdrs1) }}
         {{ form_label(edit_form.entAdrs1) }}
         {{ form_widget(edit_form.entAdrs1) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entAdrs2) }}
         {{ form_label(edit_form.entAdrs2) }}
         {{ form_widget(edit_form.entAdrs2) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entAdrs3) }}
         {{ form_label(edit_form.entAdrs3) }}
         {{ form_widget(edit_form.entAdrs3) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entNp) }}
         {{ form_label(edit_form.entNp) }}
         {{ form_widget(edit_form.entNp) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entCity) }}
         {{ form_label(edit_form.entCity) }}
         {{ form_widget(edit_form.entCity) }}
     </div>
 
 
     <div class="control-group">
+        {{ form_errors(edit_form.Country) }}
         {{ form_label(edit_form.Country) }}
         {{ form_widget(edit_form.Country) }}
     </div>
     <hr>
 Additional details:<br>
     <div class="control-group">
+        {{ form_errors(edit_form.entTel1) }}
         {{ form_label(edit_form.entTel1) }}
         {{ form_widget(edit_form.entTel1) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entTel2) }}
         {{ form_label(edit_form.entTel2) }}
         {{ form_widget(edit_form.entTel2) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entFax) }}
         {{ form_label(edit_form.entFax) }}
         {{ form_widget(edit_form.entFax) }}
     </div>
 
     <div class="control-group">
+        {{ form_errors(edit_form.entWebsite) }}
         {{ form_label(edit_form.entWebsite) }}
         {{ form_widget(edit_form.entWebsite) }}
     </div>
-
+    {{ form_widget(edit_form._token) }}
 
         <input type="submit" value="Edit">
     </form>

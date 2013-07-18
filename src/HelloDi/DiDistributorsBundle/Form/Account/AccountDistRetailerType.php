@@ -12,9 +12,6 @@ class AccountDistRetailerType extends AbstractType
     {
         $builder
             ->add('accName','text',array('label'=>'Name'))
-            ->add('accBalance','text',array('label'=>'Balance','disabled'=>true))
-            // ->add('accCurrency','choice',array('label'=>'Currency','choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
-            // ->add('accTimeZone','timezone',array('label'=>'TimeZone'))
             ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
             ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
         ;

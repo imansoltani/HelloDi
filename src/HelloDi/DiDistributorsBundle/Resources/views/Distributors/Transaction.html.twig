@@ -36,38 +36,39 @@
                 <form class="form-horizontal SearchForm" action="{{ path('DistTransaction') }}"
                       method="POST">
                     <fieldset>
-                        <div class="control-group">
-                            {{ form_label(form.TypeDate[0]) }}
+                        <div class="control-group ">
+                            {{ form_label(form.TypeDate[0],'Trade Date') }}
                             <div class="controls">
                                 {{ form_widget(form.TypeDate[0]) }}
                             </div>
                         </div>
 
 
-                        <div class="control-group">
-                            {{ form_label(form.TypeDate[1]) }}
+                        <div class="control-group ">
+                            {{ form_label(form.TypeDate[1],'Looking Date') }}
                             <div class="controls">
                                 {{ form_widget(form.TypeDate[1],{'attr':{'checked':'checked'}}) }}
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            {{ form_label(form.Type) }}
-                            <div class="controls">
-                                {{ form_widget(form.Type) }}
-                            </div>
-                        </div>
 
-                        <div class="control-group">
-                            {{ form_label(form.DateStart) }}
+                        <div class="control-group datepicker1">
+                            {{ form_label(form.DateStart,'From:') }}
                             <div class="controls">
                                 {{ form_widget(form.DateStart) }}
                             </div>
                         </div>
-                        <div class="control-group">
-                            {{ form_label(form.DateEnd) }}
+                        <div class="control-group datepicker2">
+                            {{ form_label(form.DateEnd,'To:') }}
                             <div class="controls">
                                 {{ form_widget(form.DateEnd) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            {{ form_label(form.Type,'Type:') }}
+                            <div class="controls">
+                                {{ form_widget(form.Type) }}
                             </div>
                         </div>
 
@@ -117,7 +118,6 @@
                                 <th>{{ 'Description' | trans ({}, "account") }}</th>
                                 <th>{{ 'Amount' | trans ({}, "account") }}</th>
                                 <th>{{ 'Balance' | trans ({}, "account") }}</th>
-                                <th>{{ 'Action' | trans ({}, "account") }}</th>
                                 <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
                             </tr>
@@ -126,32 +126,25 @@
 
                             {% for tran in pagination %}
                                 <tr>
-                                    <td>{{ tran.tranDate|date('y-M-d') }}</td>
-
+                                    <td>
+                                        {% if typedate==0 %}
+                                        {{ tran.tranDate|date('Y-m-d') }}</td>
+                                        {% else %}
+                                            {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                     {% endif %}
                                     <td>{{ tran.tranDescription}}</td>
                                     <td>{{ tran.tranAmount}}</td>
                                     <td>
                                         {% set balance=tran.tranBalance+tran.tranAmount %}
                                         {{ balance }}
                                     </td>
-                                    <td>
-
-                                        {% if tran.tranAction=='Sale' %}Sale
-                                        {% elseif tran.tranAction=='Tran' %}Transfer
-                                        {% elseif tran.tranAction=='Paym' %}Payment
-                                        {% elseif tran.tranAction=='Regis' %}Register
-                                        {% elseif tran.tranAction=='Fund' %}Funding
-                                        {% elseif tran.tranAction=='Add' %}Add
-                                        {% endif %}</td>
 
                                     <td class="td-actions">
-                                        {% if (tran.Code!='' and  tran.Code.id != 0) %}
+
                                             <a class="btn_actions" href="{{ path('DistDetailsTransaction',{'id':tran.id}) }}">
 
-                                                Details</a>
-                                        {% else %}
                                             Details
-                                        {% endif %}
+
 
                                     </td>
 

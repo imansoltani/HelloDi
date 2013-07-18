@@ -28,29 +28,29 @@
         <form class="form-horizontal SearchForm" action="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}"
               method="POST">
             <fieldset>
-                <div class="control-group datepicker1">
-                    {{ form_label(form.TypeDate[0]) }}
+                <div class="control-group ">
+                    {{ form_label(form.TypeDate[0],'Trade Date') }}
                     <div class="controls ">
                         {{ form_widget(form.TypeDate[0],{ 'attr': {'checked':'checked'}}) }}
                     </div>
                 </div>
 
 
-                <div class="control-group datepicker2">
-                    {{ form_label(form.TypeDate[1]) }}
+                <div class="control-group ">
+                    {{ form_label(form.TypeDate[1],'Looking Date') }}
                     <div class="controls ">
                         {{ form_widget(form.TypeDate[1]) }}
                     </div>
                 </div>
 
 
-                <div class="control-group">
+                <div class="control-group datepicker1">
                     {{ form_label(form.DateStart) }}
                     <div class="controls">
                         {{ form_widget(form.DateStart) }}
                     </div>
                 </div>
-                <div class="control-group">
+                <div class="control-group datepicker2">
                     {{ form_label(form.DateEnd) }}
                     <div class="controls">
                         {{ form_widget(form.DateEnd) }}
@@ -120,7 +120,13 @@
 
                     {% for tran in pagination %}
                         <tr>
-                            <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                            <td>
+                                {% if typedate==0 %}
+                                {{ tran.tranDate|date('Y-m-d') }}</td>
+                            {% else %}
+                                {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
+                            {% endif %}
+                              </td>
 
                             <td>{{ tran.tranDescription }}</td>
 

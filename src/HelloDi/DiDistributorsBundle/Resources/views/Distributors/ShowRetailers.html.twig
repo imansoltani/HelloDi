@@ -46,22 +46,22 @@
 
 
                             <div class="control-group">
-                                {{ form_label(form_search.CityName) }}
+                                {{ form_label(form_search.CityName,'City:') }}
                                 {{ form_widget(form_search.CityName) }}
                             </div>
 
                             <div class="control-group">
 
-                                {{ form_label(form_search.Balance) }}
+                                {{ form_label(form_search.Balance,'Balance:') }}
                                 <div class="controls">
                                     {{ form_widget(form_search.Balance) }}
 
                                 </div>
                              </div>
                             <div class="control-group">
-                            {{ form_label(form_search.BalanceValue,'Balance Value') }}
+                            {{ form_label(form_search.BalanceValue,'Value:') }}
                             <div class="controls">
-                            {{ form_widget(form_search.BalanceValue) }}
+                            {{ form_widget(form_search.BalanceValue) }}|{{ Account.accCurrency }}
                 </div>
             </div>
 

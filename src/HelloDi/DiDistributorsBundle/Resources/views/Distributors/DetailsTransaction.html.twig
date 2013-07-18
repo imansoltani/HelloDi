@@ -49,7 +49,7 @@
                                 {{ 'Date' | trans ({}, "account") }}
                             </label>
                             <div class="controls">
-                                <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d') }}">
+                                <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">
                             </div>
                         </div>
 
@@ -61,22 +61,46 @@
                                 <input type="text" disabled="" value="{{ tran.tranDescription}}">
                             </div>
                         </div>
+{% set credit,debit='','' %}
+
+                        {% if  tran.tranAmount>0 %}
+                            {% set credit=tran.tranAmount %}
+                        {% elseif  tran.tranAmount<0 %}
+                            {% set debit=tran.tranAmount %}
+                        {% endif %}
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Credit' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="
+                {{ credit }}
+                                ">
+                            </div>
+                        </div>
+
+
 
                         <div class="control-group">
                             <label class="control-label">
-                                {{ 'Amount' | trans ({}, "account") }}
+                                {{ 'Debit' | trans ({}, "account") }}
                             </label>
                             <div class="controls">
-                                <input type="text" disabled="" value="{{ tran.tranAmount}}">
+                                <input type="text" disabled="" value="
+
+                             {{ debit }}
+                                ">
                             </div>
                         </div>
+
 
                         <div class="control-group">
                             <label class="control-label">
                                 {{ 'Balance' | trans ({}, "account") }}
                             </label>
                             <div class="controls">
-                                <input type="text" disabled="" value="{{ tran.Account.accBalance }}">
+                                {% set balance=tran.tranBalance+tran.tranAmount %}
+                                <input type="text" disabled="" value=" {{ balance }}">
                             </div>
                         </div>
 
@@ -86,15 +110,6 @@
                             </label>
                             <div class="controls">
                                 <input type="text" disabled="" value="{{ tran.User.username }}">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">
-                                {{ 'ItemName' | trans ({}, "account") }}
-                            </label>
-                            <div class="controls">
-                                <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
                             </div>
                         </div>
 

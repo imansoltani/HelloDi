@@ -19,17 +19,19 @@ class NewRetailersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
                   $builder
-                      ->add('entName', 'text',array('label' => 'Entiti.Name','translation_domain' => 'entity'))
-                      ->add('entVatNumber', 'text',array('required'=>false,'label' => 'Entiti.VatNumber','translation_domain' => 'entity'))
-                      ->add('entTel1', 'text',array('required'=>false,'label' => 'Entiti.Tel1','translation_domain' => 'entity'))
-                      ->add('entTel2', 'text',array('required'=>false,'label' => 'Entiti.Tel2','translation_domain' => 'entity'))
-                      ->add('entFax', 'text',array('required'=>false,'label' => 'Entiti.Fax','translation_domain' => 'entity'))
-                      ->add('entCity')
-                      ->add('entNP')
-                       ->add('entAdrs1')
-                      ->add('entAdrs2','text',array('required'=>false))
-                      ->add('entAdrs3')
+                      ->add('entName', 'text',array('label' => 'Name','translation_domain' => 'entity'))
+                      ->add('entVatNumber', 'text',array('required'=>false,'label' => 'VatNumber','translation_domain' => 'entity'))
+                      ->add('entTel1', 'text',array('required'=>false,'label' => 'Tel1','translation_domain' => 'entity'))
+                      ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))
+                      ->add('entFax', 'text',array('required'=>false,'label' => 'Fax','translation_domain' => 'entity'))
+                      ->add('entWebsite', 'text',array('required'=>false,'label' => 'WebSite','translation_domain' => 'entity'))
+                      ->add('entCity','text',array('required'=>false,'label' => 'City','translation_domain' => 'entity'))
+                      ->add('entNP','text',array('required'=>false,'label' => 'PostCode','translation_domain' => 'entity'))
+                       ->add('entAdrs1','text',array('required'=>false,'label' => 'Town','translation_domain' => 'entity'))
+                      ->add('entAdrs2','text',array('required'=>false,'label' => 'Additional','translation_domain' => 'entity'))
+                      ->add('entAdrs3','text',array('required'=>false,'label' => 'Additional','translation_domain' => 'entity'))
                       ->add('Country', 'entity', array(
+                              'label'=>'Country',
                               'class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property' => 'name',
                               'query_builder' => function(EntityRepository $er) {
                                   return $er->createQueryBuilder('u')
@@ -37,7 +39,7 @@ class NewRetailersType extends AbstractType
                               })
                       )
 
-                      ->add('entWebsite', 'text',array('required'=>false,'label' => 'Entiti.WebSite','translation_domain' => 'entity'))
+
                       ->add('users','collection',array('type' => new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDi\DiDistributorsBundle\Entity\User',2),'label' => 'Entiti.Users','translation_domain' => 'entity'))
                       ->add('accounts','collection',array('type' => new AccountDistRetailerType() ,'label' => 'Entiti.Accounts','translation_domain' => 'entity'))
 
