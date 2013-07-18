@@ -344,7 +344,7 @@ class AccountController extends Controller
 
 $qb=array();
         $form = $this->createFormBuilder()
-            ->add('Type', 'choice', array(
+            ->add('Type', 'choice', array('label'=>'Type:',
                 'choices' =>
                 array(
                     'All' => 'All',
@@ -356,8 +356,8 @@ $qb=array();
                     'crtl'=>'increase retailer,s credit limit'
 
                 )))
-            ->add('DateStart', 'text',array('required'=>false))
-            ->add('DateEnd', 'text',array('required'=>false))
+            ->add('DateStart', 'text',array('required'=>false,'label'=>'From:'))
+            ->add('DateEnd', 'text',array('required'=>false,'label'=>'To:'))
             ->add('TypeDate', 'choice', array(
                 'expanded' => true,
                 'choices' => array(
@@ -439,8 +439,8 @@ $qb=array();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay = $this->createFormBuilder()
-            ->add('Amount')
-            ->add('As', 'choice', array(
+            ->add('Amount',null,array('label'=>'Amount:'))
+            ->add('As', 'choice', array('label'=>'As:',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
                     'pmt' => 'Credit distributor,s account',
@@ -449,14 +449,14 @@ $qb=array();
                 )
             ))
             ->add('Description', 'textarea',
-                array(
+                array('label'=>'Description:',
                     'required' => false
                 ))
             ->getForm();
 
         $formupdate = $this->createFormBuilder()
-            ->add('Amount', 'text')
-            ->add('As', 'choice', array(
+            ->add('Amount', 'text',array('label'=>'Amount:'))
+            ->add('As', 'choice', array('label'=>'As:',
                 'preferred_choices' => array('Credit'),
                  'preferred_choices' => array('Credit'),
                 'choices' =>
@@ -610,7 +610,7 @@ $qb=array();
         $form = $this->createFormBuilder()
 
             ->add('ItemType', 'choice',
-                array('choices' =>
+                array('label'=>'Type:','choices' =>
                 array(
                     0 => 'Item.TypeChioce.Mobile',
                     1 => 'Item.TypeChioce.Internet',
@@ -619,7 +619,7 @@ $qb=array();
                 )))
 
             ->add('ItemName', 'entity',
-                array(
+                array('label'=>'Name:',
                     'empty_data' => 'All',
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
@@ -627,7 +627,7 @@ $qb=array();
 
 
             ->add('Account', 'entity',
-                array(
+                array('label'=>'Retailer(s):',
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
                     'empty_data' => 'All',
@@ -640,11 +640,11 @@ $qb=array();
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false))
-            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false))
+            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
+            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
 
             ->add('GroupBy', 'choice', array(
-                'choices' => array(
+                'choices' => array('label'=>'GroupBy:',
                     'NotGroupBy' => 'NotGroupBy',
                     'TrCoIt.itemName' => 'Item Name',
                     'TrAc.accName' => 'Retainer Name'
@@ -842,10 +842,10 @@ $qb=array();
 
             ))
             ->add('Amount', 'text', array(
-                'data' => 0, 'required' => false
+                'required' => true
             ))
             ->add('TradeDate', 'text',array())
-            ->add('Description', 'textarea', array('required' => false))
+            ->add('Description', 'textarea', array('required' => true))
             ->add('Fees', 'text', array('required' => false))->getForm();
 
         if ($Req->isMethod('POST')) {
@@ -889,6 +889,7 @@ $qb=array();
                 break;
 
         }
+        }
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
@@ -897,7 +898,7 @@ $qb=array();
                 'User' => $User,
                 'Entity' => $Account->getEntiti(),
             ));
-}
+
     }
 
     public function PurchasesAction($id, Request $req)
@@ -914,10 +915,10 @@ $qb=array();
         $query=array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false))
-            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false))
+            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
+            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
             ->add('ItemType', 'choice',
-                array('choices' =>
+                array('label'=>'Type:','choices' =>
                 array(
                     3 => 'All',
                     1 => 'Item.TypeChioce.Internet',
@@ -925,7 +926,7 @@ $qb=array();
                     2 => 'Item.TypeChioce.Tel')
                 ))
             ->add('ItemName', 'entity',
-                array(
+                array('label'=>'Item:',
                     'empty_data' => 'All',
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
@@ -1720,6 +1721,12 @@ $qb=array();
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form= $this->createFormBuilder()
+            ->add('TypeDate', 'choice', array(
+                'expanded' => true,
+                'choices' => array(
+                    0 => 'Trade Date',
+                    1 => 'Looking Date',
+                )))
             ->add('FromDate','text', array('disabled'=>false,'required'=>false))
             ->add('ToDate','text',array('disabled'=>false,'required'=>false))
             ->add('type','choice',array(
@@ -1745,11 +1752,18 @@ if($request->isMethod('post'))
     $qb->select('Tr')
         ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
         ->where('Tr.Account = :Acc')->setParameter('Acc',$Account);
-    if($data['FromDate']!='')
-        $qb->andWhere("Tr.tranDate >= :transdateFrom")->setParameter('transdateFrom',$data['FromDate']);
-    if($data['FromDate']!='')
-        $qb->andWhere("Tr.tranDate <= :transdateTo")->setParameter('transdateTo',$data['ToDate'] );
-
+    if ($data['TypeDate'] == 0) {
+        if($data['FromDate']!='')
+            $qb->andwhere('Tran.tranDate >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+        if($data['ToDate']!='')
+            $qb->andwhere('Tran.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+    }
+    elseif ($data['TypeDate'] == 1) {
+            if($data['FromDate']!='')
+                $qb->andwhere('Tran.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+            if($data['ToDate']!='')
+                $qb->andwhere('Tran.tranInsert <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+    }
     if ($data['type'] != 'All')
         $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));
 
