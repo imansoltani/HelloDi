@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class OgonePayment
 {
-    const OGONE_RESULT_ACCPETED     = 5;
+    const OGONE_RESULT_ACCPETED     = 9;
     const OGONE_RESULT_CANCELED     = 1;
     const OGONE_RESULT_DECLINED     = 2;
-    const OGONE_RESULT_EXCEPTION    = 52;
+    const OGONE_RESULT_EXCEPTION    = 92;
 
     const STATUS_ACCEPTED           = 'accepted';
     const STATUS_CANCELED           = 'canceled';
