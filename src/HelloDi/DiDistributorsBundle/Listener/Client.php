@@ -80,8 +80,12 @@ class Client
     }
 
     private function generateHashOut($parametr,$sin){
+
         $id = substr($parametr['ORDERID'],10);
         $OgonePayment = $this->em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
+
+        print '<br>';
+
         if($OgonePayment->getStatus()!= OgonePayment::STATUS_PENDING){
             return false;
         }
@@ -93,7 +97,6 @@ class Client
         }
         array_shift($fields);
         array_push($fields,'');
-
         if(strtoupper(sha1(implode($this->shaout,$fields))) == $sin)
         {
             return true ;

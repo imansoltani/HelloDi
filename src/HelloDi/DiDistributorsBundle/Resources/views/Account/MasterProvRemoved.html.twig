@@ -111,7 +111,7 @@
                             <td>{{ trans.tranDescription }}</td>
                             <td>{{ trans.tranDate|date('Y/m/d') }}</td>
                             <td class="td-actions" >
-                                <a href="#" class="btn_actions" >History</a>
+                                <a href="{{ path('code_history',{id:trans.Code.id}) }}" class="btn_actions" >History</a>
                             </td>
                         </tr>
                     {% endfor %}

@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>
+        Ogone Transaction New
+    </title>
+    <body>
+    Is Start Transaction New of OGONE!
+    <form action="{{ path('retailer_OgoneTransactions') }}" method="POST">
+        {{ form_widget(formOgone) }}
+        {{ form_widget(formOgone.paymentCurrencyISO) }}
+        <button >OK</button>
+    </form>
+    </body>
+</head>
+</html>
