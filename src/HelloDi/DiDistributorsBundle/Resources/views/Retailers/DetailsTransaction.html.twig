@@ -1,41 +1,92 @@
 
-    <div class="span" >
-        <div class="widget stacked ">
-            <div class="widget-content">
 
 
-                <div class="form_search">
 
-                                  </div>
 
-                <div class="tablediv">
 
-                    <div class="contenttitle">
-                        <h4>History</h4>
-                    </div>
-                    <form>
-                        <div class="tab-content">
 
-                            {{ 'id' | trans ({}, "account") }}:{{ tran.id}}</br>
-                            {{ 'Date' | trans ({}, "account") }}:{{ tran.tranDate|date('y-M-d') }}</br>
-                            {{ 'Description' | trans ({}, "account") }}: {{ tran.tranDescription}}</br>
-                            {{ 'Amount' | trans ({}, "account") }}:{{ tran.tranAmount}}</br>
-                            {{ 'Balance' | trans ({}, "account") }}: {{ tran.Account.accBalance }}</br>
+<div class="tablediv">
 
-                            {{ 'Action' | trans ({}, "account") }}:
-                            {% if tran.tranAction=='Sale' %}Sale
-                            {% elseif tran.tranAction=='Transfer' %}Transfer
-                            {% elseif tran.tranAction=='Payment' %}Payment
-                            {% elseif tran.tranAction=='CreditNote' %}CreditNote
-                            {% endif %}</br>
-                             {{ 'User' | trans ({}, "account") }}: {{ tran.User.username }}</br>
-                            {{ 'ItemName' | trans ({}, "account") }}: {{ tran.Code.Item.itemName }}</br>
-                            {{ 'Accountname' | trans ({}, "account") }} :  {{ tran.Account.accName }}</br>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
+    <div class="contenttitle">
+        <h4>History</h4>
     </div>
+    <form>
+        <div class="tab-content">
+            <table style="margin-top: 20px"
+                   class="table table-bordered table-striped table-highlight postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'id' | trans ({}, "account") }}</th>
+                    <th>{{ 'Date' | trans ({}, "account") }}</th>
+                    <th>{{ 'function' | trans ({}, "account") }}</th>
+                    <th>{{ 'Account name' | trans ({}, "account") }} </th>
+                    <th>{{ 'Credit' | trans ({}, "account") }} </th>
+                    <th>{{ 'Debit' | trans ({}, "account") }} </th>
+                    <th>{{ 'Balance' | trans ({}, "account") }}</th>
+                    <th>{{ 'User' | trans ({}, "account") }}</th>
+                    <th>{{ 'Item Name' | trans ({}, "account") }}</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ tran.id}}</td>
+                    <td> {{ tran.tranInsert|date('y-M-d H:m:s') }}</td>
+                    <td>
+
+                        Function
+
+
+                    </td>
+
+                    <td> {{ tran.Account.accName }} </td>
+                    {% if tran.tranAmount>0 %}
+                        <td>
+                            {{ tran.tranAmount }}
+
+                        </td>
+                        <td>
+                            --------
+
+                        </td>
+                    {% elseif tran.tranAmount<0 %}
+
+                        <td>
+                            --------
+
+                        </td>
+                        <td>
+                            {{ -tran.tranAmount }}
+
+                        </td>
+                    {% endif %}
+
+                    <td>
+
+                        {% set balance=tran.tranBalance+tran.tranAmount %}
+
+
+                        {{ balance }}
+
+
+                    </td>
+
+                    <td> {{ tran.User.username }} </td>
+
+                    <td>
+                        {% if tran.Code is not null  %}
+                            {{ tran.Code.Item.itemName }}
+                        {% else %}
+                            not have code
+                        {% endif %}
+                    </td>
+
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+

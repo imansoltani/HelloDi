@@ -344,18 +344,7 @@ class AccountController extends Controller
 
 $qb=array();
         $form = $this->createFormBuilder()
-            ->add('Type', 'choice', array('label'=>'Type:',
-                'choices' =>
-                array(
-                    'All' => 'All',
-                    'pmt' => 'credit distributor,s account',
-                    'amdt' => 'debit distributor,s account',
-                    'com_pmt' => 'debit distributor,s account for the commisson payments',
-                    'ogo_pmt' => 'ogone payment on its own account',
-                    'tran'=>'transfer credit from distributors account to a retailer,s account',
-                    'crtl'=>'increase retailer,s credit limit'
 
-                )))
             ->add('DateStart', 'text',array('required'=>false,'label'=>'From:'))
             ->add('DateEnd', 'text',array('required'=>false,'label'=>'To:'))
             ->add('TypeDate', 'choice', array(
@@ -364,7 +353,29 @@ $qb=array();
                     0 => 'Trade Date',
                     1 => 'Looking Date',
                 )
-            ))->getForm();
+            ))
+            ->add('Type','choice',array('label'=>'Type:',
+                'choices'=> array(
+                    2=>'All',
+                    1=>'Credit',
+                    0=>'Debit'
+                )))
+            ->add('Action', 'choice', array('label'=>'Action:',
+                'choices' =>
+                array(
+                    'All' => 'All',
+                    'pmt' => 'credit distributor,s account',
+                    'amdt' => 'debit distributor,s account',
+                    'crnt'=>'issue a credit note for a sold code',
+                    'com_pmt' => 'debit distributor,s account for the commisson payments',
+                    'pmt' => 'ogone payment on its own account',
+                    'tran'=>'transfer credit from provider,s account to a distributor,s account',
+                    'tran'=>'transfer credit from distributors account to a retailer,s account',
+                    'crtl'=>'increase retailer,s credit limit',
+                    'com'=>'credit commissons when a retailer sells a code'
+
+                )))
+            ->getForm();
 
 
         if ($req->isMethod('POST')) {
@@ -390,10 +401,13 @@ $qb=array();
 
             }
 
-            if ($data['Type'] != 'All') {
-                 $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Type'])));
+            if ($data['Type'] != 2)
+                 $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
 
-            }
+            if($data['Action']!='All')
+                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+
+
             $qb->addOrderBy('Tran.tranInsert','desc');
 
             $qb = $qb->getQuery();
@@ -443,28 +457,28 @@ $qb=array();
         $formapplay = $this->createFormBuilder()
             ->add('Amount',null,array('label'=>'Amount:'))
             ->add('As', 'choice', array('label'=>'As:',
+                'empty_value'=>'choice a action',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'pmt' => 'Credit distributor,s account',
-                    'amdt' => 'Debit distributor,s account',
-                     'com_pmt' =>'Debit distributor,s account for the commission payments'
+                    'pmt' => 'Credit',
+                    'amdt' => 'Debit',
+                     'com_pmt' =>'Debit (commission)'
                 )
             ))
             ->add('Description', 'textarea',
                 array('label'=>'Description:',
-                    'required' => false
+                    'required' =>true
                 ))
             ->getForm();
 
         $formupdate = $this->createFormBuilder()
             ->add('Amount', 'text',array('label'=>'Amount:'))
             ->add('As', 'choice', array('label'=>'As:',
-                'preferred_choices' => array('Credit'),
-                 'preferred_choices' => array('Credit'),
+                'empty_value'=>'choice a action',
                 'choices' =>
                 array(
-                    'Credit' => 'inscrease distributor,s credit limit',
-                    'Debit' => 'descrease distributor,s credit limit'
+                    'Credit' => 'Increase',
+                    'Debit' => 'Decrease'
                 )
             ))->getForm();
 
@@ -492,11 +506,11 @@ $qb=array();
                 'preferred_choices' => array('pmt'),
                 'choices'
                 => array(
-                    'pmt' => 'Credit distributor,s account',
-                    'amdt' => 'Debit distributor,s account',
-                    'com_pmt'=>'Debit distributor,s account for the commission payments'
+                    'pmt' => 'Credit',
+                    'amdt' => 'Debit',
+                    'com_pmt'=>'Debit (commission)'
                 )))
-            ->add('Description', 'textarea', array('required' => false))
+            ->add('Description', 'textarea', array('required' => true))
             ->getForm();
 
         if ($req->isMethod('post')) {
@@ -537,6 +551,7 @@ $qb=array();
                     $trandist->setTranAction($data['As']);
                     $em->persist($trandist);
                     $em->flush();
+                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 }
             }
 
@@ -551,6 +566,7 @@ $qb=array();
                         $trandist->setTranAction($data['As']);
                         $em->persist($trandist);
                         $em->flush();
+                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
                     }
                 }
 
@@ -574,8 +590,8 @@ $qb=array();
             ->add('Amount', 'text')
             ->add('As', 'choice', array('preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'Credit' => 'Credit',
-                     'Debit' => 'Debit')
+                    'Credit' => 'Increase',
+                     'Debit' => 'Decrease')
             ))->getForm();
 
         if ($req->isMethod('POST')) {
@@ -751,14 +767,20 @@ $qb=array();
         $User = $this->get('security.context')->getToken()->getUser();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
+        $countisprov=0;
+        $isprove=$em->createQueryBuilder();
+             $isprove->select('Acc')
+             ->from('HelloDiDiDistributorsBundle:Account','Acc')
+            ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
+            ->andWhere('Acc.accType =0')
+            ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
+$countisprov=count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
             ->add('Amount', 'text', array('data' => 0))
             ->add('Accounts', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Account',
-                'property'=>'accName',
-                'expanded' => 'true',
-                'multiple' => false,
+                'property'=>'NamewithCurrency',
                 'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
                         ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
@@ -816,8 +838,9 @@ $qb=array();
             'Account' => $Account,
             'User' => $User,
             'Entity' => $Account->getEntiti(),
-            'form' => $form->createView()
-        ));
+            'form' => $form->createView(),
+             'CountProv'=>$countisprov
+         ));
 
 
     }
@@ -1732,18 +1755,29 @@ $datetype=0;
                 )))
             ->add('FromDate','text', array('disabled'=>false,'required'=>false))
             ->add('ToDate','text',array('disabled'=>false,'required'=>false))
-            ->add('type','choice',array(
+            ->add('type','choice',array('label'=>'Type:',
                 'choices'=> array(
-                    'All'=>'All',
-                    'pmt'=>'credit provider,s account',
-                    'amdt'=>'debit provider,s account',
-                    'add'=>'add new codes to system',
-                    'rmv'=>'remove codes from the system',
-                    'tran'=>'transfer credit from provider,s account to distributors account'
+                     2=>'All',
+                     1=>'Credit',
+                     0=>'Debit'
+                )))
+
+            ->add('Action','choice',array('label'=>'Action:',
+                'choices'=> array(
+        'All'=>'All' ,
+        'add'=>'add new codes to system',
+        'pmt'=>'credit provider,s account',
+        'amdt'=>'an amount is credited to correct the price of a code',
+        'amdt'=>'an amount is debited to correct the price of a code',
+        'rmv'=>'remove codes from to system',
+        'amdt'=>'debit provider,s account',
+        'tran'=>'transfer credit from provider,s account to a distributor,s account',
+
                 )))->getForm();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-$qb=array();
+
+        $qb=array();
 
 if($request->isMethod('post'))
 {
@@ -1757,19 +1791,24 @@ if($request->isMethod('post'))
         ->where('Tr.Account = :Acc')->setParameter('Acc',$Account);
     if ($data['TypeDate'] == 0) {
         if($data['FromDate']!='')
-            $qb->andwhere('Tran.tranDate >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+            $qb->andwhere('Tr.tranDate >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
         if($data['ToDate']!='')
-            $qb->andwhere('Tran.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+            $qb->andwhere('Tr.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
     }
     elseif ($data['TypeDate'] == 1) {
         $datetype=1;
             if($data['FromDate']!='')
-                $qb->andwhere('Tran.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+                $qb->andwhere('Tr.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
             if($data['ToDate']!='')
-                $qb->andwhere('Tran.tranInsert <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+                $qb->andwhere('Tr.tranInsert <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
     }
-    if ($data['type'] != 'All')
-        $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['type'])));
+
+    if ($data['type'] != 2)
+        $qb->andWhere($qb->expr()->eq('Tr.tranType',$data['type']));
+
+
+    if($data['Action']!='All')
+        $qb->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal($data['Action'])));
 
     $qb->addOrderBy('Tr.tranInsert','desc');
 
@@ -1996,6 +2035,91 @@ public  function  MasterProvEntitiAction($id)
             'entiti' => $Entiti
         ));
 
+    }
+
+
+    public function  LoadActionProvAction(Request $req)
+    {
+        $id=$req->get('id',0);
+        $value='';
+        $value.='<option value="All">'.'All'.'</option>';
+
+        switch($id)
+        {
+            case 0:
+
+                    $value.='<option value="rmv">'.'remove codes from the system'.'</option>';
+                    $value.='<option value="amdt">'.'debit provider,s account'.'</option>';
+                    $value.='<option value="amdt">'.'an amount is debited to correct the price of a code'.'</option>';
+                    $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+
+             break;
+
+            case 1:
+
+                $value.='<option value="add">'.'add new codes to system'.'</option>';
+                $value.='<option value="pmt">'.'credit provider,s account'.'</option>';
+                $value.='<option value="amdt">'.'an amount is credited to correct the price of a code'.'</option>';
+
+             break;
+
+            case 2:
+                $value.='<option value="rmv">'.'remove codes from the system'.'</option>';
+                $value.='<option value="amdt">'.'debit provider,s account'.'</option>';
+                $value.='<option value="amdt">'.'an amount is debited to correct the price of a code'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+
+                $value.='<option value="add">'.'add new codes to system'.'</option>';
+                $value.='<option value="pmt">'.'credit provider,s account'.'</option>';
+                $value.='<option value="amdt">'.'an amount is credited to correct the price of a code'.'</option>';
+                break;
+        }
+        return new Response($value);
+    }
+
+
+    public function  LoadActionDistAction(Request $req)
+    {
+        $id=$req->get('id',0);
+        $value='';
+        $value.='<option value="All">'.'All'.'</option>';
+
+        switch($id)
+        {
+            case 0:
+
+                $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+                $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+
+                break;
+
+            case 1:
+
+                $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
+                $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+                $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+                $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+
+
+                break;
+
+            case 2:
+                $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+                $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+
+                $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
+                $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+                $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+                $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+                break;
+        }
+        return new Response($value);
     }
     #end kazem
 }

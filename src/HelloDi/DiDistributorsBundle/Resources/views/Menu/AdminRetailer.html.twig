@@ -97,7 +97,9 @@
         </a>
         <ul class="dropdown-menu">
             <li><a href="{{ path('RetailerProfile') }}">Profile</a></li>
+            {% if is_granted('ROLE_RETAILER_ADMIN') %}
             <li><a href="{{ path('RetailerStaff') }}">Stuff</a></li>
+           {% endif %}
         </ul>
     </li>
     <li class=" {% if MU == 'support' %}active{% endif %} dropdown">

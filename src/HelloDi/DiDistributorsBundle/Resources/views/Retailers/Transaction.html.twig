@@ -51,6 +51,18 @@
                                 {{ form_widget(form.TypeDate[1]) }}
                             </div>
                         </div>
+                        <div class="control-group datepicker1">
+                            {{ form_label(form.DateStart) }}
+                            <div class="controls">
+                                {{ form_widget(form.DateStart) }}
+                            </div>
+                        </div>
+                        <div class="control-group datepicker2">
+                            {{ form_label(form.DateEnd) }}
+                            <div class="controls">
+                                {{ form_widget(form.DateEnd) }}
+                            </div>
+                        </div>
 
                         <div class="control-group">
                             {{ form_label(form.Type) }}
@@ -58,26 +70,40 @@
                                 {{ form_widget(form.Type) }}
                             </div>
                         </div>
+                        <div class="control-group">
+                            {{ form_label(form.Action) }}
+                            <div class="controls">
+                                {{ form_widget(form.Action) }}
+                            </div>
+                        </div>
 
-                        <div class="control-group">
-                            {{ form_label(form.DateStart) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateStart) }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ form_label(form.DateEnd) }}
-                            <div class="controls">
-                                {{ form_widget(form.DateEnd) }}
-                            </div>
-                        </div>
 
                         <hr>
+                        <input type="hidden" value="1" name="page" id="search_page" >
                         <input class="btn btn-primary" type="submit" value="Search">
 
                     </form>
                     <script type="text/javascript">
+
+                        $("#form_Type").change(function(){
+                            val= $("#form_Type").val();
+                            $("#form_Action").html('<option value="All">Please wait ...</option>');
+                            $.post('{{ path("RetailerLoadActiowOwn") }}',{id: val},function(result){
+                                $("#form_Action").html(result);
+                            })
+                        });
+
                         $(function () {
+
+
+
+                                val= $("#form_Type").val();
+                                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                                $.post('{{ path("RetailerLoadActiowOwn") }}',{id: val},function(result){
+                                    $("#form_Action").html(result);
+                                })
+
+
                             $(".SearchForm").hide();
                             $('.TitleShow1').click(function () {
                                 $('.SearchForm').slideToggle();
@@ -113,12 +139,12 @@
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Manage' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Description' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Credit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Debit' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Balance' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
                                 </tr>
                                 </thead>
@@ -126,7 +152,14 @@
 
                                 {% for tran in pagination %}
                                     <tr>
-                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                                        <td>
+
+                                            {% if typedate==0 %}
+                                            {{ tran.tranDate|date('Y-m-d') }}</td>
+                                        {% else %}
+                                        {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                        {% endif %}
+                                          </td>
 
                                         <td>{{ tran.tranDescription}}</td>
 
@@ -137,10 +170,14 @@
                                             <td>------</td>
                                             <td>{{ -tran.tranAmount }}</td>
                                         {% endif %}
-                                        <td>{{ tran.Account.accBalance }}</td>
+                                        <td>
+
+                                            {% set balance=tran.tranBalance+tran.tranAmount %}
+                                            {{ balance }}
+
+                                        </td>
 
                                         <td class="td-actions">
-
 
                                             <a class="btn_actions" href="{{ path('RetailerDetailsTransaction',{'id':tran.id }) }}">Details</a>
 

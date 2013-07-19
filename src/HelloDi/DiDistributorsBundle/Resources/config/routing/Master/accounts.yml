@@ -1,3 +1,16 @@
+LoadActionProv:
+    pattern:  /providers/loadprov
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
+
+LoadActionDist:
+    pattern:  /providers/loaddist
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionDist" }
+
+#
+#LoadActionProv:
+#    pattern:  /providers/pop
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
+
 ShowMyAccountProv:
     pattern:  /providers
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccountProv" }

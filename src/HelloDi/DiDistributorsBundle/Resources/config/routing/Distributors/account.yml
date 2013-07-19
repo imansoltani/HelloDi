@@ -24,3 +24,11 @@ DistTransaction:
 DistDetailsTransaction:
     pattern:  /transaction/{id}/details
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsTransaction }
+
+DistLoadActionOwn:
+    pattern:  /transaction/loadd
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionOwn }
+
+DistLoadActionRetailer:
+    pattern:  /transaction/loadr
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionRetailer }

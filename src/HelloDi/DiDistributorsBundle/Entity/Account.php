@@ -18,6 +18,7 @@ class Account
     /**
      * @ORM\Column(type="string", length=2, nullable=true, name="accdefaultlanguage")
      */
+
     private $accDefaultLanguage;
 
     public function getLabel()
@@ -25,7 +26,14 @@ class Account
         return $this->accName .', '. $this->accDefaultLanguage ;
     }
 
-    /** 
+    public function getNamewithCurrency()
+    {
+
+        return $this->getAccName() .' |  '. $this->getAccCurrency() ;
+
+    }
+
+    /**
      * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
      */
     private $accName;
