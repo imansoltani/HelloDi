@@ -691,19 +691,6 @@ class DistributorsController extends Controller
        $qb=array();
 
         $form=$this->createFormBuilder()
-            ->add('Type','choice',
-                      array('choices'=>
-                            array(
-                                'All'=>'All',
-                                'tran'=>'transfer credit from its own account to a retailer,s account',
-                                'pmt'=>'ogone payment on its own account',
-                                'sale'=>'debit balance when the retailer sells a code',
-                                )
-                          ,'label'=>'Type:'
-                                       )
-                                         )
-            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
             ->add('TypeDate','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
@@ -712,6 +699,26 @@ class DistributorsController extends Controller
                 )
 
             ))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
+
+            ->add('Type','choice',
+                array('choices'=>
+                array(
+                    2=>'All',
+                    0=>'Debit',
+                    1=>'Credit',
+                )))
+
+            ->add('Action', 'choice', array('label'=>'Action:',
+                'choices' =>
+                array(
+                    'All'=>'All',
+                    'crnt'=>'debit balance when the retailer sell a code',
+                    'crnt'=>'issue a credit note for a sold code',
+                    'tran'=>'transfer credit from distributor,s account to a retailer,s account',
+                    'pmt'=>'ogone payment on its own account'
+                )))
 
             ->getForm();
 
@@ -742,11 +749,13 @@ class DistributorsController extends Controller
 
             }
 
-            if($data['Type']!='All')
-            {
-                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
+            if ($data['Type'] != 2)
+                $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
 
-            }
+            if($data['Action']!='All')
+                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+
+            $qb->addOrderBy('Tran.tranInsert','desc');
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
@@ -797,18 +806,32 @@ class DistributorsController extends Controller
     $qb=array();
 
     $form=$this->createFormBuilder()
+
         ->add('Type','choice',
-                 array('choices'=>
-                           array(
-                               'All'=>'All',
-                               'crlt'=>'increase retailer,s credit limit',
-                               'pmt'=>'credit distributor,s account',
-                               'amdt'=>'debit distributor,s account',
-                               'tran'=>'transfer credit from provider,s account to a distributors account',
-                               'pmt'=>'ogon payment on its own account',
-                               'tran'=>'transfer credit from its own account to a retailer,s account',
-                               'com'=>'credit commission when a retailer sells a code'
-                           )))
+            array('choices'=>
+            array(
+                  2=>'All',
+                  0=>'Debit',
+                  1=>'Credit',
+            )))
+
+        ->add('Action', 'choice', array('label'=>'Action:',
+            'choices' =>
+              array(
+
+                  'All' => 'All',
+                  'pmt' => 'credit distributor,s account',
+                  'amdt' => 'debit distributor,s account',
+                  'crnt'=>'issue a credit note for a sold code',
+                  'com_pmt' => 'debit distributor,s account for the commisson payments',
+                  'pmt' => 'ogone payment on its own account',
+                  'tran'=>'transfer credit from provider,s account to a distributor,s account',
+                  'tran'=>'transfer credit from distributors account to a retailer,s account',
+                  'crtl'=>'increase retailer,s credit limit',
+                  'com'=>'credit commissons when a retailer sells a code'
+
+              )))
+
         ->add('DateStart','text',array('required'=>false))
         ->add('DateEnd','text',array('required'=>false))
         ->add('TypeDate','choice', array(
@@ -849,11 +872,13 @@ class DistributorsController extends Controller
             $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
         }
+        if ($data['Type'] != 2)
+            $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
 
-        if($data['Type']!='All')
-        {
-            $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
-        }
+        if($data['Action']!='All')
+            $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+
+        $qb->addOrderBy('Tran.tranInsert','desc');
 
         $qb=$qb->getQuery();
         $count = count($qb->getResult());
@@ -1275,13 +1300,16 @@ class DistributorsController extends Controller
 
     public  function  ticketsAction(Request $req)
     {
+        $paginator = $this->get('knp_paginator');
 
         $em=$this->getDoctrine()->getEntityManager();
+
         $User=$this->get('security.context')->getToken()->getUser();
+
         $Account=$User->getAccount();
 
         $form=$this->createFormBuilder()
-            ->add('Type','choice',array(
+            ->add('Type','choice',array('label'=>'Type:',
                 'choices'=>array(
                     5=>'All',
                     0=>'Payment issue',
@@ -1289,7 +1317,7 @@ class DistributorsController extends Controller
                     2=>'price change request')
             ))
 
-            ->add('Status','choice',array(
+            ->add('Status','choice',array('label'=>'Status:',
                     'expanded'=>true,
                     'choices'=>array(
                         0=>'Close',
@@ -1311,8 +1339,14 @@ class DistributorsController extends Controller
                 ->andWhere('Tic.Accountdist = :Acc')->setParameter('Acc',$Account);
             if($data['Type']!=5)
                 $tickets->andWhere('Tic.type = :type')->setParameter('type',$data['Type']);
-            $tickets=$tickets->getQuery()->getResult();
+            $tickets=$tickets->getQuery();
         }
+
+        $pagination = $paginator->paginate(
+            $tickets,
+            $req->get('page',1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Tickets.html.twig',array(
             'Account'=>$Account,
@@ -1490,5 +1524,85 @@ class DistributorsController extends Controller
     {
         return $a + $b;
     }
+
+
+ public function DistLoadActionOwnAction(Request $req)
+ {
+     $id=$req->get('id',0);
+     $value='';
+     $value.='<option value="All">'.'All'.'</option>';
+
+     switch($id)
+     {
+         case 0:
+
+             $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
+             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+             $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+
+             break;
+
+         case 1:
+
+             $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
+             $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
+             $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+             $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+
+
+             break;
+
+         case 2:
+             $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
+             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+             $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+
+             $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
+             $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
+             $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+             $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+             break;
+     }
+     return new Response($value);
+ }
+
+public function DistLoadActionRetailerAction(Request $req)
+{
+    $id=$req->get('id',0);
+    $value='';
+
+
+    switch($id)
+    {
+        case 0:
+
+            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+
+
+            break;
+
+        case 1:
+            $value.='<option value="All">'.'All'.'</option>';
+            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+
+
+            break;
+
+        case 2:
+            $value.='<option value="All">'.'All'.'</option>';
+            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+            break;
+    }
+    return new Response($value);
+}
 }
 

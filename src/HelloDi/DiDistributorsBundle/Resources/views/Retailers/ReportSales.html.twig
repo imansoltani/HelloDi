@@ -32,13 +32,13 @@
                     <form class="form-horizontal SearchForm" action="{{ path('RetailerSale') }}" method="post" {{ form_enctype(form) }}>
 
                         <fieldset>
-                            <div class="control-group">
+                            <div class="control-group datepicker1">
                                 {{ form_label(form.DateStart) }}
                                <div class="controls">
                                    {{ form_widget(form.DateStart) }}
                                </div>
                             </div>
-                            <div class="control-group">
+                            <div class="control-group datepicker2">
                                 {{ form_label(form.DateEnd) }}
                                 <div class="controls">
                                 {{ form_widget(form.DateEnd) }}
@@ -67,6 +67,7 @@
                                 {% endif %}
                             </div>
                             <hr>
+                            <input type="hidden" value="1" name="page" id="search_page" >
                             <input class="btn btn-primary" type="submit" value="Search">
                         </fieldset>
                     </form>
@@ -110,13 +111,13 @@
                                        class="table table-bordered table-striped table-highlight postsend">
                                     <thead>
                                     <tr>
-                                        <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.Item' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.FaceValue' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.Buying Price' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.Serial Number' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.Seller' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Transaction.Vat' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Date' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Item' | trans ({}, "account") }}</th>
+                                        <th>{{ 'FaceValue' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Buying Price' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Serial Number' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Seller' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Vat' | trans ({}, "account") }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -124,7 +125,7 @@
                                     {% for Tr in pagination %}
                                         <tr>
 
-                                            <td>{{ Tr.tranDate|date('y-M-d') }}</td>
+                                            <td>{{ Tr.tranDate|date('Y-m-d H:i:s') }}</td>
                                             <td>{{ Tr.Code.Item.itemName}}</td>
                                             <td>{{ Tr.Code.Item.itemFaceValue}}</td>
                                             <td>{{ Tr.tranAmount }}</td>

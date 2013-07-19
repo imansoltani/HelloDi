@@ -73,6 +73,12 @@
                     </div>
                 </div>
 
+                <div class="control-group">
+                    {{ form_label(form.Action) }}
+                    <div class="controls">
+                        {{ form_widget(form.Action) }}
+                    </div>
+                </div>
                 <input type="hidden" value="1" name="page" id="search_page" >
 
                 <hr>
@@ -80,7 +86,34 @@
             </fieldset>
         </form>
         <script type="text/javascript">
+
+
+
+                    $("#form_type").change(function(){
+                        val= $("#form_type").val();
+                        $("#form_Action").html('<option value="All">Please wait ...</option>');
+                        $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
+
+                            $("#form_Action").html(result);
+                        })
+                    });
+
+
+
+
+
+
             $(function () {
+
+
+                    val= $("#form_type").val();
+                    $("#form_Action").html('<option value="All">Please wait ...</option>');
+                    $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
+
+                        $("#form_Action").html(result);
+                    });
+
+
                 $(".SearchForm").hide();
                 $('.TitleShow1').click(function () {
                     $('.SearchForm').slideToggle();

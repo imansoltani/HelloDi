@@ -87,7 +87,7 @@ class RetailersController extends Controller
             if ($form->isValid()) {
                 $em->persist($user);
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $Account->getId())));
 
             }
@@ -112,6 +112,7 @@ class RetailersController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));
             }
 
@@ -128,62 +129,99 @@ class RetailersController extends Controller
 
     public function TransactionAction(Request $req)
     {
+        $paginator = $this->get('knp_paginator');
         $User= $this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
-        $em=$this->getDoctrine()->getManager();
-        $query=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Account'=>$Account,'User'=>$User));
+        $em=$this->getDoctrine()->getEntityManager();
+        $qb=array();
 
         $form=$this->createFormBuilder()
-            ->add('Type','choice',array('choices'=>array('All'=>'All','Sale'=>'Sale','Paym'=>'Payment','Cred'=>'CreditNotes','Tras'=>'Transfer','Add'=>'Add')))
-            ->add('DateStart','date',array())
-            ->add('DateEnd','date',array())
+
             ->add('TypeDate','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'Trade Date',
                     1 => 'Looking Date',
-                )
-            ))->getForm();
+                )))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
 
+            ->add('Type','choice',array('label'=>'Type:',
+                'choices'=> array(
+                    2=>'All',
+                    1=>'Credit',
+                    0=>'Debit'
+                )))
+
+            ->add('Action','choice',array('label'=>'Action:',
+                'choices'=> array(
+                    'All'=>'All',
+                    'crnt'=>'debit balance when the retailer sell a code',
+                    'crnt'=>'issue a credit note for a sold code',
+                    'tran'=>'transfer credit from distributor,s account to a retailer,s account',
+                    'pmt'=>'ogone payment on its own account'
+                )))->getForm();
+$datetype=0;
         if($req->isMethod('POST'))
         {
-            $form->bind($req);
+            $datetype=1;
+
+            $form->handleRequest($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select('Tran')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tran');
+                ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
+                ->where('Tran.Account =:Acc')->setParameter('Acc',$Account);
             if($data['TypeDate']==0)
             {
-
-                $qb=$qb->where('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+             if($data['DateStart']!='')
+                $qb->where('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+             if($data['DateEnd']!='')
+                $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             }
 
             if($data['TypeDate']==1)
             {
-
-                $qb=$qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                $qb=$qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            }
-
-            if($data['Type']!='All')
-            {
-                $qb=$qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Type'])));
+                $datetype=1;
+                if($data['DateStart']!='')
+                $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                if($data['DateEnd']!='')
+                $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
             }
 
-            $query=$qb->getQuery();
+            if($data['Type']!=2)
+                 $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
+
+            if($data['Action']!='All')
+                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+
+
+            $qb->addOrderBy('Tran.tranInsert','desc');
+
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+             $qb->setHint('knp_paginator.count', $count);
+
+
+
         }
-        $paginator = $this->get('knp_paginator');
+
         $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            $qb,
+            $req->get('page') /*page number*/,
+            10/*limit per page*/
         );
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig', array('pagination'=>$pagination,'form'=>$form->createView(),'Account' =>$Account, 'Entiti' =>$User->getEntiti()));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:Transaction.html.twig',
+            array(
+                'pagination'=>$pagination,
+                'form'=>$form->createView(),
+                'Account' =>$Account,
+                'Entiti' =>$User->getEntiti(),
+                'typedate'=>$datetype
+            ));
 
     }
 
@@ -207,27 +245,21 @@ class RetailersController extends Controller
         $User= $this->get('security.context')->getToken()->getUser();
 
         $em=$this->getDoctrine()->getManager();
-         $query=null;
+         $qb=array();
         //load first list search
 
-        $qb=$em->createQueryBuilder();
-        $qb->select('Tr')
-            ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-            /*for GroupBy*/  ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')
-            ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
-            ->andwhere('Tr.User=:ur')->setParameter('ur',$User);
-             $query=$qb->getQuery();
+
 
 
 
         $form=$this->createFormBuilder()
 
             ->add('ItemType','choice',
-            array('choices'=>
+            array('label'=>'Type:','choices'=>
             array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
 
             ->add('ItemName', 'entity',
-                  array(
+                  array('label'=>'Item:',
                  'empty_data' => 'All',
                 'class' => 'HelloDiDiDistributorsBundle:Item',
                 'property' => 'itemName',
@@ -253,8 +285,8 @@ class RetailersController extends Controller
   }
 
 
-  $form=$form->add('DateStart','date',array())
-             ->add('DateEnd','date',array())->getForm();
+  $form=$form->add('DateStart','text',array('required'=>false,'label'=>'From:'))
+             ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))->getForm();
 
         if($req->isMethod('POST'))
         {
@@ -279,17 +311,17 @@ class RetailersController extends Controller
                  $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
 
 
-            $query=$qb->getQuery();
-
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+             $qb->setHint('knp_paginator.count', $count);
         }
 
-        $count = count($query->getResult());
-        $query = $query->setHint('knp_paginator.count', $count);
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            $qb,
+            $req->get('page', 1) /*page number*/,
+            10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ReportSales.html.twig',
@@ -782,6 +814,50 @@ class RetailersController extends Controller
             throw new \Exception("You haven't permission to access this Ticket !");
         }
     }
-// end checks
+// end check
+
+
+//kezem
+
+public function RetailerLoadActiowOwnAction(Request $req)
+{
+    $id=$req->get('id',0);
+    $value='';
+
+
+    switch($id)
+    {
+        case 0:
+
+            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+
+
+            break;
+
+        case 1:
+
+            $value.='<option value="All">'.'All'.'</option>';
+            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+
+            break;
+
+        case 2:
+
+            $value.='<option value="All">'.'All'.'</option>';
+            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+
+            break;
+    }
+    return new Response($value);
+}
+
+
+
+
 }
 

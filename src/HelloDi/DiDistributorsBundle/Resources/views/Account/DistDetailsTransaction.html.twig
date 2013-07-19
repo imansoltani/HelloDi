@@ -36,6 +36,8 @@
                         <th>{{ 'Date' | trans ({}, "account") }}</th>
                         <th>{{ 'function' | trans ({}, "account") }}</th>
                         <th>{{ 'Account name' | trans ({}, "account") }} </th>
+                        <th>{{ 'Credit' | trans ({}, "account") }} </th>
+                        <th>{{ 'Debit' | trans ({}, "account") }} </th>
                         <th>{{ 'Balance' | trans ({}, "account") }}</th>
                         <th>{{ 'User' | trans ({}, "account") }}</th>
                         <th>{{ 'Item Name' | trans ({}, "account") }}</th>
@@ -54,6 +56,27 @@
                             </td>
 
                             <td> {{ tran.Account.accName }} </td>
+                            {% if tran.tranAmount>0 %}
+                                <td>
+                                    {{ tran.tranAmount }}
+
+                                </td>
+                                <td>
+                                    --------
+
+                                </td>
+                            {% elseif tran.tranAmount<0 %}
+
+                                <td>
+                                    --------
+
+                                </td>
+                                <td>
+                                    {{ -tran.tranAmount }}
+
+                                </td>
+                            {% endif %}
+
                             <td>
 
                                 {% set balance=tran.tranBalance+tran.tranAmount %}

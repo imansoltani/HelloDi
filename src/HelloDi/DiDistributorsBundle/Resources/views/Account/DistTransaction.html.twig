@@ -47,33 +47,61 @@
                     {{ form_widget(form.TypeDate[1]) }}
                 </div>
             </div>
+            <div class="control-group datepicker1"">
+            {{ form_label(form.DateStart) }}
 
-            <div class="control-group "">
+            {{ form_widget(form.DateStart) }}
+
+    </div>
+
+    <div class="control-group datepicker2">
+        {{ form_label(form.DateEnd) }}
+        <div class="controls">
+            {{ form_widget(form.DateEnd) }}
+        </div>
+    </div>
+
+    <div class="control-group "">
                 {{ form_label(form.Type) }}
 
                     {{ form_widget(form.Type) }}
 
             </div>
+    <div class="control-group "">
+    {{ form_label(form.Action) }}
 
-            <div class="control-group datepicker1"">
-                {{ form_label(form.DateStart) }}
+    {{ form_widget(form.Action) }}
 
-                    {{ form_widget(form.DateStart) }}
+    </div>
 
-            </div>
-            <div class="control-group datepicker2">
-                {{ form_label(form.DateEnd) }}
-                <div class="controls">
-                    {{ form_widget(form.DateEnd) }}
-                </div>
-            </div>
 
             <input type="hidden" value="1" name="page" id="search_page" >
             <input class="btn btn-primary" type="submit" value="Search">
 
         </form>
         <script type="text/javascript">
+
+
+
+            $("#form_Type").change(function(){
+                val= $("#form_Type").val();
+                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $.post('{{ path("LoadActionDist") }}',{id: val},function(result){
+                    $("#form_Action").html(result);
+                })
+            });
+
+
             $(function () {
+
+
+                    val= $("#form_Type").val();
+                    $("#form_Action").html('<option value="All">Please wait ...</option>');
+                    $.post('{{ path("LoadActionDist") }}',{id: val},function(result){
+                        $("#form_Action").html(result);
+                    });
+
+
                 $(".SearchForm").hide();
                 $('.TitleShow1').click(function () {
                     $('.SearchForm').slideToggle();

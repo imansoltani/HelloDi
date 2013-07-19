@@ -72,6 +72,13 @@
                             </div>
                         </div>
 
+                        <div class="control-group">
+                            {{ form_label(form.Action,'Action:') }}
+                            <div class="controls">
+                                {{ form_widget(form.Action) }}
+                            </div>
+                        </div>
+
                         <hr>
                         <input type="hidden" value="1" name="page" id="search_page" >
                         <input class="btn btn-primary" type="submit" value="Search">
@@ -79,7 +86,29 @@
                     </fieldset>
                 </form>
                 <script type="text/javascript">
+
+
+
+                    $("#form_Type").change(function(){
+                        val= $("#form_Type").val();
+                        $("#form_Action").html('<option value="All">Please wait ...</option>');
+                        $.post('{{ path("DistLoadActionOwn") }}',{id: val},function(result){
+                            $("#form_Action").html(result);
+                        })
+                    });
+
                     $(function () {
+
+
+
+
+                            val= $("#form_Type").val();
+                            $("#form_Action").html('<option value="All">Please wait ...</option>');
+                            $.post('{{ path("DistLoadActionOwn") }}',{id: val},function(result){
+                                $("#form_Action").html(result);
+                            });
+
+
                         $(".SearchForm").hide();
                         $('.TitleShow1').click(function () {
                             $('.SearchForm').slideToggle();
@@ -116,7 +145,8 @@
                             <tr>
                                 <th>{{ 'Date' | trans ({}, "account") }}</th>
                                 <th>{{ 'Description' | trans ({}, "account") }}</th>
-                                <th>{{ 'Amount' | trans ({}, "account") }}</th>
+                                <th>{{ 'Credit' | trans ({}, "account") }}</th>
+                                <th>{{ 'Debit' | trans ({}, "account") }}</th>
                                 <th>{{ 'Balance' | trans ({}, "account") }}</th>
                                 <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
@@ -133,7 +163,28 @@
                                             {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
                                      {% endif %}
                                     <td>{{ tran.tranDescription}}</td>
-                                    <td>{{ tran.tranAmount}}</td>
+
+                                    {% if tran.tranAmount>0 %}
+                                    <td>
+                                    {{ tran.tranAmount }}
+
+                                    </td>
+                                        <td>
+                                          --------
+
+                                        </td>
+                                    {% elseif tran.tranAmount<0 %}
+
+                                        <td>
+                                            --------
+
+                                        </td>
+                                        <td>
+                                            {{ -tran.tranAmount }}
+
+                                        </td>
+                                    {% endif %}
+
                                     <td>
                                         {% set balance=tran.tranBalance+tran.tranAmount %}
                                         {{ balance }}
