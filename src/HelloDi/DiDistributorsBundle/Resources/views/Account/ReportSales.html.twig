@@ -38,18 +38,21 @@
                 {{ form_widget(form.DateEnd) }}
             </div>
 
-            <div class="control-group">
-                {{ form_label(form.ItemType) }}
-                <div class="controls">
-                    {{ form_widget(form.ItemType) }}
-                </div>
-            </div>
+
             <div class="control-group">
                 {{ form_label(form.ItemName) }}
                 <div class="controls">
                     {{ form_widget(form.ItemName) }}
                 </div>
             </div>
+
+            <div class="control-group">
+                {{ form_label(form.ItemType) }}
+                <div class="controls">
+                    {{ form_widget(form.ItemType) }}
+                </div>
+            </div>
+
 
             <div class="control-group">
                 {{ form_label(form.Account) }}
@@ -59,9 +62,16 @@
             </div>
 
             <div class="control-group">
-                {{ form_label(form.GroupBy) }}
+                {{ form_label(form.GroupBy[0]) }}
                 <div class="controls">
-                    {{ form_widget(form.GroupBy) }}
+                    {{ form_widget(form.GroupBy[0]) }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                {{ form_label(form.GroupBy[1]) }}
+                <div class="controls">
+                    {{ form_widget(form.GroupBy[1]) }}
                 </div>
             </div>
             <input type="hidden" value="1" name="page" id="search_page" >
@@ -125,8 +135,8 @@
                             <td>{{ Tr.tranInsert|date('y-M-d H:m:s') }}</td>
                             <td>{{ Tr.Code.Item.itemName}}</td>
                             <td>Quantity</td>
-                            <td>{{ Tr.tranAmount}}|{{Account.accCurrency}}</td>
-                            <td>Selling price</td>
+                            <td>{{ Tr.Account.Entiti.EntName }}</td>
+                            <td>{{ -Tr.tranAmount}}|{{Account.accCurrency}}</td>
                             <td>Task</td>
                             <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.id}) }}">Details</a></td>
 
