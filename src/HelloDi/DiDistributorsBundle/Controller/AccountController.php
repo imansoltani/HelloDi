@@ -1836,12 +1836,12 @@ if($request->isMethod('post'))
 #kazem alan
 
 
-public  function MasterProvTransactionDetailsAction($id){
+public  function MasterProvTransactionDetailsAction($tranid){
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
 
 
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
 
     return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
@@ -1852,11 +1852,11 @@ public  function MasterProvTransactionDetailsAction($id){
 }
 
 
-public  function MasterProvTransactionDeleteAction($id){
-    $em = $this->getDoctrine()->getEntityManager();
+public  function MasterProvTransactionDeleteAction($tranid){
+    $em = $this->getDoctrine()->getManager();
 
 
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
     $em->remove($tran);
     $em->flush();

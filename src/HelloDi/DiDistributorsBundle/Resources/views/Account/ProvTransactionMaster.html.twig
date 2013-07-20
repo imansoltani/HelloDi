@@ -204,9 +204,9 @@
                             {{ balance }}
                             </td>
                             <td class="td-actions">
-<a class="btn_actions" href="{{ path('MasterProvTransactionDetails',{'id':tran.id}) }}">Details</a> |
+                                <a class="btn_actions" href="{{ path('MasterProvTransactionDetails',{'id':Account.id,'tranid':tran.id}) }}">Details</a> |
 
-<a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':tran.id}) }}">Delete</a>
+                                <a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':Account.id,'tranid':tran.id}) }}">Delete</a>
 
                             </td>
                         </tr>

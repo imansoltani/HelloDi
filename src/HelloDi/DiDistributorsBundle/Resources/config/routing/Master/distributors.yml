@@ -11,6 +11,10 @@ MasterDistTransaction:
     pattern:  /{id}/transactions
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistTransaction"}
 
+LoadActionDist:
+    pattern:  /loaddist
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionDist" }
+
 DetailsMasterDistTransaction:
     pattern:  /{id}/transactions/{tranid}/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}

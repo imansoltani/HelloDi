@@ -2,80 +2,80 @@ ShowMyAccountProv:
     pattern:  /
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ShowMyAccountProv" }
 
-LoadActionProv:
-    pattern:  /loadprov
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
-
-LoadActionDist:
-    pattern:  /loaddist
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionDist" }
-
-EditAccountProv:
-    pattern:  /{id}/Info
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditAccountProv" }
-
 AddAccountProveMaster2Step:
-    pattern:  /entity/new
+    pattern:  /new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddAccountProveMaster2Step" }
 
-ProvTransfer:
-    pattern:  /{id}/transaction/transfer
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTransfer" }
-
-ProvRegister:
-    pattern:  /{id}/transaction/register
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Provregister" }
-#---- items prov
-ManageItemsProv:
-    pattern:  /{id}/Items
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsProv" }
-
-AddItemProv:
-    pattern:  /{id}/Items/add
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProv" }
-
-EditItemProv:
-    pattern:  /{id}/Items/{itemid}/edit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProv" }
-
-#---- inputs prov
-ManageInputsProv:
-    pattern:  /{id}/Inputs
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageInputsProv" }
-
-UploadInputProv:
-    pattern:  /{id}/Items/{itemid}/Upload
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProv" }
-
-UploadInputProvSubmit:
-    pattern:  /{id}/Items/{itemid}/UploadSubmit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit" }
-
-UploadInputProvSubmitAccepted:
-    pattern:  /{id}/Items/{itemid}/UploadSubmitAccepted
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitAccepted" }
-
-UploadInputProvSubmitCanceled:
-    pattern:  /{id}/Items/{itemid}/UploadSubmitCanceled
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }
-#------strat kamal transaction Root-----#
+#transactions--------------
 MasterProvTransaction:
     pattern:  /{id}/transactions
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransaction" }
 
+LoadActionProv:
+    pattern:  /loadprov
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
+
+ProvTransfer:
+    pattern:  /{id}/transactions/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTransfer" }
+
+ProvRegister:
+    pattern:  /{id}/transactions/register
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Provregister" }
+
+MasterProvTransactionDetails:
+    pattern:  /{id}/transactions/{tranid}/details
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDetails" }
+
+MasterProvTransactionDelete:
+    pattern:  /{id}/transactions/{tranid}/delete
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDelete" }
+
+#items---------------------
+ManageItemsProv:
+    pattern:  /{id}/items
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsProv" }
+
+AddItemProv:
+    pattern:  /{id}/items/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemProv" }
+
+EditItemProv:
+    pattern:  /{id}/items/{itemid}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemProv" }
+
+UploadInputProv:
+    pattern:  /{id}/items/{itemid}/upload
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProv" }
+
+UploadInputProvSubmit:
+    pattern:  /{id}/items/{itemid}/uploadSubmit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit" }
+
+UploadInputProvSubmitAccepted:
+    pattern:  /{id}/items/{itemid}/uploadSubmitAccepted
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitAccepted" }
+
+UploadInputProvSubmitCanceled:
+    pattern:  /{id}/items/{itemid}/uploadSubmitCanceled
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled" }
+
+#inputs--------------------
+ManageInputsProv:
+    pattern:  /{id}/inputs
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageInputsProv" }
+
+#removed-------------------
 MasterProvRemoved:
     pattern:  /{id}/removed
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvRemoved" }
 
-#------End kamal transaction Root-----#
+#info----------------------
+EditAccountProv:
+    pattern:  /{id}/Info
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditAccountProv" }
+
+#entity--------------------
 MasterProvEntiti:
     pattern:  /{id}/entity
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvEntiti" }
-
-MasterProvTransactionDetails:
-    pattern:  /{id}/transactions/details
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDetails" }
-
-MasterProvTransactionDelete:
-    pattern:  /{id}/delete/transaction
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransactionDelete" }
