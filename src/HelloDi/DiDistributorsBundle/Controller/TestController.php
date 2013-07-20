@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
+use HelloDi\DiDistributorsBundle\Form\testType;
 use HelloDi\DiDistributorsBundle\Form\TransactionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -241,4 +243,8 @@ public function test1Action()
 die('dsd'.$id);
 
     }
+
+
+
+
 }
