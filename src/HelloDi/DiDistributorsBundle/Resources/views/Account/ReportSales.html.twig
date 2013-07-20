@@ -128,7 +128,7 @@
                             <td>{{ Tr.tranAmount}}|{{Account.accCurrency}}</td>
                             <td>Selling price</td>
                             <td>Task</td>
-                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Tr.id}) }}">Details</a></td>
+                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.id}) }}">Details</a></td>
 
                         </tr>
 

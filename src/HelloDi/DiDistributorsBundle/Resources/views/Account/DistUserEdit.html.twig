@@ -18,7 +18,7 @@
         <br>
 
 
-        <form class="form-horizontal" action="{{ path('MasterDistUserEdit',{'id':User.id}) }}" method="post" >
+        <form class="form-horizontal" action="{{ path('MasterDistUserEdit',{'id':Account.id,'userid':User.id}) }}" method="post" >
 
             <div class="control-group">
                 {{ form_errors(form.firstname) }}

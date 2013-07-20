@@ -6,9 +6,13 @@ master_entities:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/entities.yml"
     prefix:   /entities
 
-master_account:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/accounts.yml"
-    prefix:   /accounts
+master_dist:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/distributors.yml"
+    prefix:   /distributors
+
+master_prov:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/providers.yml"
+    prefix:   /providers
 
 master_items:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"

@@ -434,11 +434,11 @@ $qb=array();
 
     }
 
-    public function  DetailsTransactionAction(Request $req, $id)
+    public function  DetailsTransactionAction($tranid)
     {
 
         $em = $this->getDoctrine()->getManager();
-        $Tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $Tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         $Account = $Tran->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
             array(
@@ -730,12 +730,12 @@ $qb=array();
 
     }
 
-    public function  DetailsSaleAction(Request $req, $id)
+    public function  DetailsSaleAction($tranid)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
         $Account = $tran->getAccount();
 
@@ -1049,12 +1049,6 @@ $countisprov=count($isprove->getQuery()->getResult());
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 0));
 
         $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
-        );
-
 
         $pagination = $paginator->paginate(
             $query,
@@ -1842,12 +1836,12 @@ if($request->isMethod('post'))
 #kazem alan
 
 
-public  function MasterProvTransactionDetailsAction($id){
+public  function MasterProvTransactionDetailsAction($tranid){
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
 
 
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
 
     return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
@@ -1858,11 +1852,11 @@ public  function MasterProvTransactionDetailsAction($id){
 }
 
 
-public  function MasterProvTransactionDeleteAction($id){
-    $em = $this->getDoctrine()->getEntityManager();
+public  function MasterProvTransactionDeleteAction($tranid){
+    $em = $this->getDoctrine()->getManager();
 
 
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
     $em->remove($tran);
     $em->flush();
@@ -1979,11 +1973,11 @@ public  function MasterProvTransactionDeleteAction($id){
     }
 
 
-    public function DistUsereditAction(Request $req, $id)
+    public function DistUsereditAction(Request $req, $userid)
     {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
         $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
 
         if ($req->isMethod('POST')) {
