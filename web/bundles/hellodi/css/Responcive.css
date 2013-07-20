@@ -118,9 +118,7 @@
             =============================================================== */
 @media only screen and (max-width: 767px) {
 
-    .datatable table{
-        display: block;
-    }
+
 
     .main .span {
         width: 95%;
@@ -207,13 +205,20 @@
 
     /* Datatable */
     body .tablediv table.table tr td , body .tablediv table.table tr th {
-        padding: 5px 3px;
+        /*padding: 5px 3px;*/
     }
+
+
 
 
 }
 
 @media only screen and (max-width:670px){
+
+    .datatable table{
+        display: block;
+    }
+
 
     /* Ticket */
     .Ticket .head .header {
@@ -296,17 +301,26 @@
 
 @media only screen and (max-width:550px){
 
+
+
     .popup h1{
         font-size: 16px;
     }
 
 
+
+
     /* DataTable */
 
-    .datatable > div > div:first-child , .datatable > div > div:last-child{
+
+    body .tablediv table.table tr td , body .tablediv table.table tr th {
+        font-size: 12px;
+    }
+
+    /*.datatable > div > div:first-child , .datatable > div > div:last-child{
         height: 100px;
 
-    }
+    }*/
 
 
     .main .pagetop.first .pagedisc{
@@ -328,7 +342,6 @@
 
 
     /*Ticket*/
-
 
 
 

@@ -33,9 +33,10 @@
 
                 <div class="control-group">
                     <label class="control-label" >
+                        {{ form_label(form.TypeDate[0]) }}
                     </label>
                     <div class="controls">
-                        {{ form_label(form.TypeDate[0]) }}
+
                         {{ form_widget(form.TypeDate[0],{'attr':{'checked':'checked'}}) }}
                     </div>
                 </div>
@@ -43,9 +44,10 @@
 
                 <div class="control-group">
                     <label class="control-label" >
+                        {{ form_label(form.TypeDate[1]) }}
                     </label>
                     <div class="controls">
-                        {{ form_label(form.TypeDate[1]) }}
+
                         {{ form_widget(form.TypeDate[1]) }}
                     </div>
                 </div>

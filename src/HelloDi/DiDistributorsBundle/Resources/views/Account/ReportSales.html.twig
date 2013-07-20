@@ -40,21 +40,29 @@
 
             <div class="control-group">
                 {{ form_label(form.ItemType) }}
-                {{ form_widget(form.ItemType) }}
+                <div class="controls">
+                    {{ form_widget(form.ItemType) }}
+                </div>
             </div>
             <div class="control-group">
                 {{ form_label(form.ItemName) }}
-                {{ form_widget(form.ItemName) }}
+                <div class="controls">
+                    {{ form_widget(form.ItemName) }}
+                </div>
             </div>
 
             <div class="control-group">
                 {{ form_label(form.Account) }}
-                {{ form_widget(form.Account) }}
+                <div class="controls">
+                    {{ form_widget(form.Account) }}
+                </div>
             </div>
 
             <div class="control-group">
                 {{ form_label(form.GroupBy) }}
-                {{ form_widget(form.GroupBy) }}
+                <div class="controls">
+                    {{ form_widget(form.GroupBy) }}
+                </div>
             </div>
             <input type="hidden" value="1" name="page" id="search_page" >
             <hr>

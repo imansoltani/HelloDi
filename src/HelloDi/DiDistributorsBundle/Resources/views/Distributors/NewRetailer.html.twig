@@ -177,9 +177,19 @@
 
 
         <div class="control-group users">
+            {{ form_label(form_Relaited_New.users[0].enabled) }}
+            <div class="controls">
+                {{ form_widget(form_Relaited_New.users[0].enabled) }}
+            </div>
+            {{ form_errors(form_Relaited_New.users[0].enabled) }}
+        </div>
 
-            {{ form_widget(form_Relaited_New.users[0]) }}
-            {{ form_errors(form_Relaited_New.users[0]) }}
+        <div class="control-group users">
+            {{ form_label(form_Relaited_New.users[0].roles[0]) }}
+            <div class="controls">
+                {{ form_widget(form_Relaited_New.users[0].roles[0]) }}
+            </div>
+            {{ form_errors(form_Relaited_New.users[0].roles[0]) }}
         </div>
 
 

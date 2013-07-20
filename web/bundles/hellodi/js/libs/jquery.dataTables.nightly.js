@@ -12107,35 +12107,52 @@
 function Fix_Size()
 {
 
+    var oTable;
 
-
-    $('#example').dataTable( {
-        "sDom": "<''<''l><''f>r>t<''<''i><''p>>"
-        ,"sPaginationType": "full_numbers"
-        ,"aaSorting": [[ 0, "asc" ]]
+    /* Add the events etc before DataTables hides a column */
+    $("thead input").keyup( function () {
+        /* Filter on the column (the index) of this element */
+        oTable.fnFilter( this.value, oTable.oApi._fnVisibleToColumnIndex(
+            oTable.fnSettings(), $("thead input").index(this) ) );
     } );
 
+    /*
+     * Support functions to provide a little bit of 'user friendlyness' to the textboxes
+     */
+    $("thead input").each( function (i) {
+        this.initVal = this.value;
+    } );
 
+    $("thead input").focus( function () {
+        if ( this.className == "search_init" )
+        {
+            this.className = "";
+            this.value = "";
+        }
+    } );
+
+    $("thead input").blur( function (i) {
+        if ( this.value == "" )
+        {
+            this.className = "search_init";
+            this.value = this.initVal;
+        }
+    } );
+
+    oTable = $('#example').dataTable( {
+        "sDom": "<''<''l><''f>r>t<''<''i><''p>>",
+        "oLanguage": {
+            "sSearch": "Search all columns:"
+        },
+        "bSortCellsTop": true
+    } );
 
     $.extend( $.fn.dataTableExt.oStdClasses, {
         "sWrapper": "dataTables_wrapper form-inline"
 
     } );
 
-    /*$('.dataTables_wrapper > div').removeAttr('class') ;
-    $('.dataTables_wrapper > div > div').removeAttr('class') ;
-    $('.dataTables_wrapper > div > div > div').removeAttr('class') ;*/
+
     $('.dataTables_wrapper > div > div > div').attr('class','control-group') ;
-
-
-    /*var table1 = $('.postsend').html();
-    var myAnchor = document.getElementById("example");
-    var mySpan = document.createElement("div");
-    var table1 = "<table style='overflow: auto; min-width: 500px;' aria-describedby='example_info' id='example' class='table postsend dataTable'>" + table1 + "</table>" ;
-
-    myAnchor.parentNode.replaceChild(mySpan, myAnchor);
-
-    $('.dataTables_wrapper >  div:eq(1)').html(table1);
-    $('.dataTables_wrapper >  div:eq(1)').attr('class','tab-content') ;*/
 }
 

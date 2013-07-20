@@ -17,7 +17,23 @@
     Item per list of retailers
 {% endblock %}
 
-{% block Link_Footer %}
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
 
 {% endblock %}
 
@@ -37,8 +53,22 @@
                                 <th>Retailer Account</th>
                                 <th>Retailer Price</th>
                                 <th>Status</th>
-                                <th><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
+                                <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
                             </tr>
+
+
+                            <tr class="input" >
+                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
+                                    <input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
+                                    <input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
+                                    <input type="text"id="text_id2" placeholder="Search Account"  />
+                                </td>
+                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" /></td>
+                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" /></td>
+                                <td><input type="text" name="search_Account"  disabled="" value="Search Account" class="search_init" /></td>
+                            </tr>
+
+
                             </thead>
                             <tbody>
                             {% for row in form.checks %}
@@ -86,30 +116,14 @@
 
                 </div>
 
-                <script type="text/javascript"
-                        src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
 
-                <script type="text/javascript"
-                        src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        Fix_Size();
-
-
-                    });
-
-
-                    function CheckAll() {
-                        var clickall = document.getElementById('clickall').checked;
-                        $('* .checkboxs > input').prop("checked", clickall);
-                    }
-
-                </script>
 
 
                 <div style="margin-top: 15px" class="control-group">
                     {{ form_label(form.NewPrice) }}
-                    {{ form_widget(form.NewPrice) }} {{ Account.accCurrency }}
+                    <div class="controls money">
+                        {{ form_widget(form.NewPrice) }} | {{ Account.accCurrency }}
+                    </div>
                     {{ form_errors(form.NewPrice) }}
                 </div>
 

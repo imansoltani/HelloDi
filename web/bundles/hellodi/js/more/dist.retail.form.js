@@ -117,12 +117,12 @@ function Page(x , y)
             $('#step1').removeAttr('class');
             $('#step1').attr('class','selected');
             if($('#step1').attr('isdone') == 0 )$('#step1').attr('isdone','1');
-            $('.buttonPrevious').attr('style','display:none');
+            //$('.buttonPrevious').attr('style','display:none');
             return true ;
         }
         $('#step1').removeAttr('class');
         $('#step1').attr('class','done');
-        $('.buttonPrevious').removeAttr('style');
+        //$('.buttonPrevious').removeAttr('style');
 
         return true ;
     }

@@ -28,13 +28,13 @@
         </h5>
         <form class="form-horizontal SearchForm" action="{{ path('MasterProvRemoved',{ 'id':id }) }}" method="post">
             <fieldset>
-                <div class="control-group">
+                <div class="control-group datepicker1">
                     {{ form_label(form.FromDate) }}
 
                         {{ form_widget(form.FromDate) }}
 
                 </div>
-                <div class="control-group">
+                <div class="control-group datepicker2">
                     {{ form_label(form.ToDate) }}
 
                         {{ form_widget(form.ToDate) }}

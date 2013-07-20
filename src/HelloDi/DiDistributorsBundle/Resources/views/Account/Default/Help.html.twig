@@ -1,90 +1,36 @@
-{# default Sliding pagination control implementation #}
+----
+<div class="controls money">
+    {{ form_widget(form2step.entName, { 'attr' : { 'placeholder': 'Your Entity Name'} }) }} <span class="icon-certificate" ></span>
+</div>
+---
 
-{% if pageCount > 1 %}
+{% block Link_Head %}
 
-
-
-    <div class="pagination">
-
-
-
-        <span><a
-                    {% if first is defined and current != first %}
-                        href="{{ path(route, query|merge({(pageParameterName): first})) }}"
-                        class=" btn"
-                        onclick="PagingAction(event,'1');"
-                    {% endif %}
-                    class="btn dis">
-                <span>First</span>
-                <i class="icon-step-backward" ></i>
-            </a></span>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
 
 
+    <script type="text/javascript">
 
-        <span><a
-                    {% if previous is defined %}
-                        href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class=" btn"
-                        onclick="PagingAction(event,{{ current }} - 1);"
-                    {% endif %}
-                    class="btn dis"
-                    >
-                <span>Prev</span>
-                <i class="icon-backward" ></i>
-            </a></span>
-
-
-        {% for page in pagesInRange %}
-            <span>
-                <a
-                        {% if page != current %}
-                            href="{{ path(route, query|merge({(pageParameterName): page})) }}"
-                            class="btn"
-                        {% else %}
-                            class="btn btn-primary current"
-                        {% endif %}
-                        >{{ page }}</a>
-            </span>
-
-
-        {% endfor %}
-
-
-        <span><a
-                    {% if next is defined %}
-                        href="{{ path(route, query|merge({(pageParameterName): next})) }}"
-                        class="btn"
-                    {% endif %}
-                    class="btn dis"
-                    >
-                <span>Next</span>
-                <i class="icon-forward" ></i>
-            </a></span>
-
-
-
-        <span><a
-                    {% if last is defined and current != last %}
-                        href="{{ path(route, query|merge({(pageParameterName): last})) }}"
-                        class="btn"
-                    {% endif %}
-                    class="btn dis"
-                    >
-                <span>Last</span>
-                <i class="icon-step-forward" ></i>
-            </a></span>
-
-    </div>
-
-
-    <script type="text/javascript" >
-
-        function PagingAction(e,x)
-        {
-            e.preventDefault();
-            $('#search_page').val(x);
-            $('.SearchForm').submit();
-        }
+        $(document).ready(function() {
+            Fix_Size();
+        } );
 
     </script>
 
-{% endif %}
+{% endblock %}
+
+
+<tr class="input" >
+    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+    <td><input type="text" name="search_Balance" value="Search Balance" class="search_init" /></td>
+    <td><input type="text" name="search_Entity_Name" value="Search Entity Name" class="search_init" /></td>
+</tr>
+
+-------

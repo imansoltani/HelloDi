@@ -42,7 +42,9 @@
 
             <div class="control-group">
                 {{ form_label(form.accBalance) }}
-                    {{ form_widget(form.accBalance) }}
+                    <div class="controls">
+                        {{ form_widget(form.accBalance) }}
+                    </div>
             </div>
 
 
@@ -51,9 +53,9 @@
 
             <div class="control-group">
                 {{ form_label(form.accBalanceValue) }}
-                <div class="controls">
+
                     {{ form_widget(form.accBalanceValue) }}
-                </div>
+
             </div>
             {{ form_rest(form) }}
             <hr>

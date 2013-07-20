@@ -38,7 +38,13 @@
                                 {{ form_label(formsearch.entName) }}
                                 {{ form_widget(formsearch.entName) }}
                             </div>
-                           Have Account :<br>
+
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Have Account
+                                </label>
+                            </div>
+
                             {% for Acc in formsearch.HaveAccount %}
                             <div class="control-group">
 
@@ -55,8 +61,8 @@
 
                             <input type="hidden" value="1" name="page" id="search_page" >
                             <hr>
-                            <input class="btn btn-primary" type="submit" value="Search">
-                            <a href="{{ path('Ent_Main') }}">Reset</a>
+                           <input  class="btn btn-primary" type="submit" value="Search">
+                            <a class="btn" href="{{ path('Ent_Main') }}">Reset</a>
                         </fieldset>
 
                     </form>

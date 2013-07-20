@@ -133,6 +133,10 @@
     border-radius: 0px;
 }
 
+.tablediv table tr {
+     width: 100%;
+}
+
 
 
 .tablediv table tr th{
@@ -151,6 +155,17 @@
 
 .tablediv table tr th:first-child{
     border-left: 1px solid rgb(221, 221, 221);
+}
+
+.tablediv table tr td input{
+    width: 90%;
+    margin: 0;
+    font-size: 10px;
+    margin: 0 auto;
+}
+
+.tablediv table tr td input:disabled{
+    display: none;
 }
 
 body .tablediv table.table tr td{
@@ -350,6 +365,13 @@ form .control-group .controls > .controls{
 
 form .control-group .controls.money > .controls{
     margin-left: 0px;
+}
+
+form .control-group .controls.money span{
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
 /* Tabs */
@@ -593,8 +615,8 @@ form .control-group .controls.money > .controls{
 }
 
 .datatable > div > div > div:last-child{
-    float: right;
-
+    /*float: right;*/
+    display: none;
  }
 
 .datatable > div > div:last-child > div > div{

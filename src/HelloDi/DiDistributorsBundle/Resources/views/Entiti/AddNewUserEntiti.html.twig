@@ -5,7 +5,8 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Users</span>
+    <a class="link" >Users</a>
+    <span class="link">Create a new user</span>
 {% endblock Site_Map %}
 
 
@@ -22,16 +23,25 @@
 
     <div class="control-group">
         {{ form_label(form.firstname) }}
-        {{ form_widget(form.firstname ,{ 'attr' : { 'placeholder': 'important'} }) }}
+        <div class="controls money">
+            {{ form_widget(form.firstname ) }} <span class="icon-certificate">
+            </span>
+        </div>
     </div>
 
     <div class="control-group">
     {{ form_label(form.lastname) }}
-    {{ form_widget(form.lastname) }}
+        <div class="controls money">
+            {{ form_widget(form.lastname ) }} <span class="icon-certificate">
+            </span>
+        </div>
     </div>
     <div class="control-group">
     {{ form_label(form.username) }}
-    {{ form_widget(form.username,{ 'attr' : { 'placeholder': 'important'} }) }}
+        <div class="controls money">
+            {{ form_widget(form.username ) }} <span class="icon-certificate">
+            </span>
+        </div>
     </div>
 
     <div class="control-group">
@@ -46,21 +56,32 @@
 
     <div class="control-group">
         {{ form_label(form.plainPassword.first) }}
-        {{ form_widget(form.plainPassword.first,{ 'attr' : { 'placeholder': 'important'} }) }}
+        <div class="controls money">
+            {{ form_widget(form.plainPassword.first ) }} <span class="icon-certificate">
+            </span>
+        </div>
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
     <div class="control-group">
         {{ form_label(form.plainPassword.second) }}
-        {{ form_widget(form.plainPassword.second,{ 'attr' : { 'placeholder': 'important'} }) }}
+        <div class="controls money">
+            {{ form_widget(form.plainPassword.second ) }} <span class="icon-certificate">
+            </span>
+        </div>
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
 
     <div class="control-group">
     {{ form_label(form.Account) }}
-    <div class="controls">
-        {{ form_widget(form.Account,{ 'attr' : { 'placeholder': 'important'} }) }}
+    <div class="controls money">
+
+            <div class="controls">
+                {{ form_widget(form.Account ) }}
+            </div> <span class="icon-certificate">
+            </span>
+
     </div>
      </div>
 
