@@ -2,15 +2,6 @@ code:
     pattern:  /
     defaults: { _controller: "HelloDiDiDistributorsBundle:Code:index" }
 
-code_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Code:edit" }
-
-code_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Code:update" }
-    requirements: { _method: post|put }
-
 code_history:
     pattern:  /{id}/history
     defaults: { _controller: "HelloDiDiDistributorsBundle:Code:history" }
