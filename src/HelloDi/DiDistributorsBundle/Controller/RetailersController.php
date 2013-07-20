@@ -60,15 +60,24 @@ class RetailersController extends Controller
 
     public function RetailerStaffAction()
     {
-        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
-        $users = $Account->getUsers();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $users,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            6/*limit per page*/
-        );
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:Staff.html.twig', array('Entiti' => $Account->getEntiti(), 'pagination' => $pagination));
+        $em=$this->getDoctrine()->getEntityManager();
+        $user=$this->get('security.context')->getToken()->getUser();
+
+        $qb=$em->createQueryBuilder()
+                  ->select('USR')
+                  ->from('HelloDiDiDistributorsBundle:User','USR')
+                  ->Where('USR.Account = :Acc')->setParameter('Acc',$user->getAccount())
+                  ->andWhere('USR.Entiti = :Ent')->setParameter('Ent',$user->getEntiti())
+                 ->andwhere('USR != :u')->setParameter('u',$user);
+        $qb=$qb->getQuery();
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:Staff.html.twig',
+            array(
+                'Entiti' => $user->getEntiti(),
+                'pagination' => $qb->getResult(),
+                'Account'=>$user->getAccount()
+            ));
+
     }
 
     public function RetailerStaffAddAction(Request $request)
@@ -83,7 +92,6 @@ class RetailersController extends Controller
             $form->handleRequest($request);
             $user->setAccount($Account);
             $user->setEntiti($Entiti);
-            $user->setStatus(1);
             if ($form->isValid()) {
                 $em->persist($user);
                 $em->flush();
@@ -255,14 +263,29 @@ $datetype=0;
         $form=$this->createFormBuilder()
 
             ->add('ItemType','choice',
-            array('label'=>'Type:','choices'=>
-            array('3'=>'All','1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel')))
+            array('label'=>'Type:',
+                'choices'=>array(
+                    'All' => 'All',
+                     'dmtu'=>'mobile',
+                     'clcd'=>'calling card',
+                     'empt'=>'e-payment'
+                  )))
 
             ->add('ItemName', 'entity',
-                  array('label'=>'Item:',
-                 'empty_data' => 'All',
-                'class' => 'HelloDiDiDistributorsBundle:Item',
-                'property' => 'itemName',
+                  array(
+                      'required'=>false,
+                 'label'=>'Item:',
+                 'empty_data' => '',
+                 'empty_value'=>'All',
+                 'class' => 'HelloDiDiDistributorsBundle:Item',
+                 'property' => 'itemName',
+                      'query_builder' => function(EntityRepository $er) use ($User) {
+                          return $er->createQueryBuilder('u')
+                               ->innerJoin('u.Prices','up')
+                              ->where('up.Account = :Acc')->setParameter('Acc',$User->getAccount())
+                              ->andWhere('up.priceStatus = 1');
+                      }
+
             ));
 
   $roles = $User->getRoles() ;
@@ -278,7 +301,6 @@ $datetype=0;
                            ->where('u.Account = :ua')
                            ->orderBy('u.username', 'ASC')
                            ->setParameter('ua',$User->getAccount());
-
                 }
                 ));
 
@@ -290,31 +312,40 @@ $datetype=0;
 
         if($req->isMethod('POST'))
         {
-            $form->bind($req);
+            $form->handleRequest($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select(array('Tr'))
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc')->innerJoin('Tr.User','TrUs')
+                ->innerJoin('Tr.Code','TrCo')
+                ->innerJoin('TrCo.Item','TrCoIt')
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')))
-                ->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart'])
-                ->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd'])
-                ->andWhere($qb->expr()->like('TrUs.username',$qb->expr()->literal($data['Staff'].'%')));
+                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+            if($data['DateStart'])
+                $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+            if($data['DateEnd'])
+                $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-            if($data['ItemType']!=3)
-                $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+            if($roles[0]=='ROLE_RETAILER_ADMIN')
+            {
+                $qb->andWhere('Tr.User = :usr')->setParameter('usr',$data['Staff']);
+            }
+//
+            if($data['ItemType']!='All')
+                $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
 
-            if($data['ItemName']!='All')
-                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+            if($data['ItemName']!='')
+                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
 
+            $qb->orderBy('Tr.tranInsert','desc');
 
-            $qb=$qb->getQuery();
+             $qb=$qb->getQuery();
             $count = count($qb->getResult());
+
              $qb->setHint('knp_paginator.count', $count);
-        }
+          }
 
 
         $paginator = $this->get('knp_paginator');

@@ -32,7 +32,7 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('username', null, array('required'=>true,'label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
             ->add('email', 'email', array('required' => false, 'label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             ->add('plainPassword', 'repeated', array(
                 'type' => 'password',
@@ -41,12 +41,22 @@ class RegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
-            ->add('enabled', 'choice', array('label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
+            ->add('enabled', 'choice',
+                array(
+
+                    'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
                 'choices' =>
                 array(
-                    0 => 'Disabled', 1 => 'Enabled'
+                   ''=>'select user status',
+                    0 => 'Disabled',
+                    1 => 'Enabled'
 
-                )));
+                )
+
+                ,'data'=>''
+
+
+                ));
         if ($this->type == 2) {
             $builder->add('roles', 'collection', array(
                 'type' => 'choice',

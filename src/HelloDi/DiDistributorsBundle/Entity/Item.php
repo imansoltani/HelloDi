@@ -36,7 +36,7 @@ class Item
     private $itemCurrency;
 
     /** 
-     * @ORM\Column(type="smallint", nullable=false, name="item_type")
+     * @ORM\Column(type="string", nullable=false, name="item_type")
      */
     private $itemType;
 

@@ -1,0 +1,11 @@
+RetailerTransaction:
+    pattern:  /history
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Transaction}
+
+RetailerDetailsTransaction:
+    pattern:  /history/{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:DetailsTransaction}
+
+RetailerLoadActiowOwn:
+    pattern:  /Action/load
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerLoadActiowOwn }

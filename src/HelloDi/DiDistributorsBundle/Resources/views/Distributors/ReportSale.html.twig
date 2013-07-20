@@ -144,27 +144,46 @@
                                         </td>
 
                                         <td>
+                                            {% set priceretailer=0 %}
+                                            {% set pricedist=0 %}
 
-                                            {% for Acc in tr.Account.Parent.Price %}
-                                                {% for Itm in tr.Code.item.Price %}
-                                                      {% if Acc.id==Itm.id %}
-                                                           {{ Acc.price }}
-                                                          {% set pricedist=Acc.price %}
+                                            {% for P in Tr.Account.Parent.Prices %}
+
+                                                      {% if
+
+                                                      P.Item==Tr.Code.Item
+                                                      and
+                                                      P.priceStatus!=0
+                                                      and
+                                                       P.Account==Tr.Account.Parent
+
+                                                      %}
+                                                           {{ P.price }}
+
+                                                          {% set pricedist=P.price %}
                                                       {% endif %}
-                                                {% endfor %}
+
                                             {% endfor %}
                                         </td>
+
                                         <td>
 
-                                            {% for Acc in tr.Account.Price %}
-                                                {% for Itm in tr.Code.item.Price %}
-                                                    {% if Acc.id==Itm.id %}
-                                                        {{ Acc.price }}
-                                                        {% set priceretailer=Acc.price %}
-                                                    {% endif %}
-                                                {% endfor %}
+                                            {% for P in Tr.Account.Prices %}
+                                                {%
+                                                if P.Item==Tr.Code.Item
+                                                and
+                                                  P.priceStatus!=0
+                                                and
+                                                  P.Account==Tr.Account
+                                                %}
+                                                    {{ P.price }}
+
+                                                    {% set priceretailer=P.price %}
+                                                {% endif %}
                                             {% endfor %}
+
                                         </td>
+
 
                                         <td>{{ Tr.User.username }}</td>
 

@@ -3,49 +3,27 @@ retailers_dashboard:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
 
 ritailers_account:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/setting.yml"
     prefix:   /admin/account-setting
 
-RetailerTransaction:
-    pattern:  /transaction/history
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Transaction}
+retailer_report:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/report.yml"
+    prefix:   /report
 
-RetailerDetailsTransaction:
-    pattern:  /transaction/history/{id}/details
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:DetailsTransaction}
+retailer_transaction:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/report.yml"
+    prefix:   /report
 
-RetailerSale:
-    pattern:  /report/sale
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Sale}
+retailer_transaction:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/transaction.yml"
+    prefix:   /transaction
 
-
-RetailerTickets:
-    pattern:  /tickets
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:tickets }
-
-RetailerTicketsNote:
-    pattern:  /tickets/{id}/notes
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnote }
-
-RetailerTicketsClose:
-    pattern:  /tickets/{id}/close
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclose }
-
-RetailerTicketsNew:
-    pattern:  /tickets/new
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew }
-
-RetailerTicketsChangeStatus:
-    pattern:  /{id}/change/status
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketschangestatus }
-
-RetailerTicketsStatus:
-    pattern:  /{id}/change/
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsstatus }
-
+retailer_ticket:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/tickets.yml"
+    prefix:   /tickets
 
 retailer_shop:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/account.yml"
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/shop.yml"
     prefix:   /shop
 
 retailer_items:

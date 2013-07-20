@@ -53,27 +53,41 @@ class DistributorsController extends Controller
 
         $form=$this->createFormBuilder()
             ->add('ItemType','choice',
-                array('choices'=>
-                array(
-                    0 =>'Item.TypeChioce.Mobile',
-                    1=>'Item.TypeChioce.Internet',
-                    2 =>'Item.TypeChioce.Tel',
-                    3=>'All'
-
-                      )))
+                array('label'=>'Type:',
+                    'choices'=>array(
+                        'All' => 'All',
+                        'dmtu'=>'mobile',
+                        'clcd'=>'calling card',
+                        'empt'=>'e-payment'
+                    )))
 
             ->add('ItemName', 'entity',
                 array(
+                    'label'=>'Item:',
+                    'empty_data' => '',
                     'empty_value'=>'All',
                     'required'=>false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
+                    'query_builder' => function(EntityRepository $er) use ($Account) {
+                        return $er->createQueryBuilder('u')
+                            ->innerJoin('u.Prices','up');
+                        foreach($Account->getChildrens() as $acc )
+                        {
+                            $er->orwhere('up.Account = :Acc')->setParameter('Acc',$acc);
+
+                        }
+                        $er->andWhere('up.priceStatus = 1');
+                    }
+
+
                 ))
 
             ->add('Account', 'entity',
                 array(
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
+                     'empty_data'=>'',
                     'empty_value'=>'All',
                     'required'=>false,
                     'query_builder' => function(EntityRepository $er) use ($Account) {
@@ -98,7 +112,7 @@ class DistributorsController extends Controller
             $qb->select('Tr')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt')->innerJoin('Tr.Account','TrAc');
+                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt');
                 /**/
 
                 $qb->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
@@ -107,14 +121,21 @@ class DistributorsController extends Controller
                 elseif($data['DateEnd']!='')
                  $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-            if($data['Account'])
-                foreach($Account->getChildrens() as $child)
+             if($data['Account'])
+             {
+                 $qb->andwhere('Tr.Account=:ac')->setParameter('ac',$data['Account']);
+
+             }
+
+            else
+            {
+                foreach($Account->getChildrens() as $acc )
                 {
-                    $qb->orwhere('Tr.Account=:ac')->setParameter('ac',$child);
+                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
 
                 }
-            else
-                 $qb=$qb->andwhere('Tr.Account =:account')->setParameter('account',$data['Account']);
+
+            }
 
 
             if($data['ItemType']!='All')
@@ -125,6 +146,7 @@ class DistributorsController extends Controller
                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
 
 
+       $qb->orderBy('Tr.tranInsert','desc');
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
@@ -196,8 +218,8 @@ class DistributorsController extends Controller
                 'preferred_choices'=>array('Credit'),
                 'choices'=>
                 array(
-                    'Credit'=>'increase retailer,s credit limit',
-                    'Debit'=>'decrease retailer,s credit limit')
+                    'Credit'=>'Increase',
+                    'Debit'=>'Decrease')
             ))->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',

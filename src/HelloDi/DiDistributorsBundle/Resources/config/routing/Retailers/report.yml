@@ -1,0 +1,3 @@
+RetailerSale:
+    pattern:  /report/sale
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Sale}
