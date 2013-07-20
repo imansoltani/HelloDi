@@ -1003,7 +1003,7 @@ $countisprov=count($isprove->getQuery()->getResult());
             $data = $form->getData();
 
             $qb = $em->createQueryBuilder();
-
+//            'Count(Tr.tranDate) as q'
             $qb->select('Tr');
             $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
                 ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')
@@ -1023,7 +1023,8 @@ $countisprov=count($isprove->getQuery()->getResult());
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName'])));
 
-            $qb->addOrderBy('Tr.tranInsert','desc');
+            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+            $qb->addOrderBy('Tr.tranDate','desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
