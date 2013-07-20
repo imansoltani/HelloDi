@@ -40,7 +40,7 @@
                 <td>{{ entity.entCity }}</td>
                 <td>{{ entity.Country.Iso }}|{{ entity.Country.name}}</td>
                 <td>
-                    <a class="btn_actions" href="{{ path('Ent_Edit_Address',{'id':entity.id}) }}">Manage</a>
+                    <a class="btn_actions" href="{{ path('Ent_Edit_Address',{'id':entity.id,'addrid':entity.id}) }}">Manage</a>
                 </td>
             </tr>
 

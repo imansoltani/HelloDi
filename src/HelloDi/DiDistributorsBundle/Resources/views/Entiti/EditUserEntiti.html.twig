@@ -14,7 +14,7 @@
     <h3>Manage Users</h3>
 </div> <!-- /widget-header --><br>
 
-<form class="form-horizontal"  action="{{ path('EditUserEntities',{'id':User.id}) }}" method="post" >
+<form class="form-horizontal"  action="{{ path('EditUserEntities',{'id':entity.id,'userid':User.id}) }}" method="post" >
 
     <div class="control-group">
         {{ form_label(form_edit.firstname) }}

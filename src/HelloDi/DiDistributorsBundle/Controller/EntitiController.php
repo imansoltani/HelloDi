@@ -309,11 +309,11 @@ class EntitiController extends Controller
     }
 
 
-public function  EditUserEntitiesAction(Request $request,$id)
+public function  EditUserEntitiesAction(Request $request,$userid)
 {
     $em=$this->getDoctrine()->getManager();
 
-    $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+    $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
 
 
     if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
@@ -383,11 +383,11 @@ public function  EditUserEntitiesAction(Request $request,$id)
 
     }
 
-    public  function EditAddressAction(Request $req,$id)
+    public  function EditAddressAction(Request $req,$addrid)
     {
 
         $em=$this->getDoctrine()->getEntityManager();
-        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($addrid);
 
         $DetaHis=new DetailHistory();
         $form=$this->createForm(new EditAddressEntitiType(),$entity);

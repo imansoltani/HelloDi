@@ -2,49 +2,42 @@ Ent_Main:
     pattern:  /
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ListEntities" }
 
-
+#accounts------------------
 Ent_Accounts:
     pattern:  /{id}/accounts
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:accounts" }
 
+AddProv:
+    pattern:  /{id}/new-provider
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddProv"}
+
+AddDist:
+    pattern:  /{id}/new-distibutor
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddDist"}
+
+#users---------------------
+Ent_Users:
+    pattern:  /{id}/users
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:users" }
+
+AddNewUserEntiti:
+    pattern:  /{id}/users/add
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti" }
+
+EditUserEntities:
+    pattern:  /{id}/users/{userid}/edit
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:EditUserEntities" }
+
+#address-------------------
 Ent_Address:
     pattern:  /{id}/address
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:address" }
 
 Ent_Edit_Address:
-    pattern:  /address/{id}/edit
+    pattern:  /{id}/address/{addrid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:editaddress" }
 
-Ent_Users:
-    pattern:  /{id}/users
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:users" }
-
+#info----------------------
 Ent_Info:
     pattern:  /{id}/info
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:info" }
-
-
-AddNewUserEntiti:
-    pattern:  /entities/{id}/user/add
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti" }
-
-EditUserEntities:
-    pattern:  /entities/user/{id}/edit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:EditUserEntities" }
-
-
-AddProv:
-    pattern:  /entities/{id}/new/provoder
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddProv"}
-
-AddDist:
-    pattern:  /entities/{id}/new/distibutors
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:AddDist"}
-
-ProvTransaction:
-    pattern:  /provider/{id}/transaction
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ProvTransaction"}
-
-DistTransaction:
-    pattern:  /distributors/{id}/transaction
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:ProvTransaction"}
