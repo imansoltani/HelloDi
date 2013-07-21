@@ -48,23 +48,26 @@ Current Status:{% if Ticket.status==0 %}
        {% endif %}
 <br>
 In change:
-  {% set ismaster='false' %}
-  {% set istake='take' %}
+
+  {% set istake='' %}
  {% if Ticket.Inchange==app.user.id %}
                    <a class="btn btn-mini btn-danger" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>
-{% else %}
+     {% set istake='take' %}
+ {% else %}
 
+     {% set istake='notake' %}
 
     {% for user in usermaster %}
         {% if user.id==Ticket.inchange %}
          <b style="color: red">   {{ user.username }}</b>
-            {% set ismaster='true' %}
+
+            {% set istake='notake' %}
         {% endif %}
 
     {% endfor %}
 
-    {% if ismaster=='false' %}
-        {% set istake='notake' %}
+    {% if Ticket.inchange is null %}
+
         <a class="btn btn-mini btn-danger" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
     {% endif %}
 {% endif %}
@@ -90,7 +93,7 @@ In change:
 
 <hr>
 
-    {% if ismaster=='true' or istake=='take' or Ticket.inchange is null  %}
+    {% if istake=='take' %}
 
         <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" method="POST">
 
