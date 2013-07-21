@@ -1405,7 +1405,7 @@ class DistributorsController extends Controller
         {
             $tickets=new Ticket();
             $note=new TicketNote();
-            $form->submit($req);
+            $form->handleRequest($req);
             $data=$form->getData();
 
             $tickets->setAccountdist($Account);
@@ -1447,6 +1447,7 @@ class DistributorsController extends Controller
             ->add('Description','textarea',array('required'=>true))->getForm();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
+
         if($req->isMethod('POST'))
         {
             $form->submit($req);

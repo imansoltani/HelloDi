@@ -43,6 +43,7 @@ public  function  ticketsAction(Request $req)
          )))
         ->add('Distributors','checkbox',array(
             'required'=>false    ))
+
         ->add('Retailers','checkbox',array(
             'required'=>false ))
         ->getForm();
@@ -69,19 +70,28 @@ if($req->isMethod('POST'))
      $tickets->select('Tic')
          ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
          ->Where('Tic.Status = :status')->setParameter('status',$data['Status']);
-    if($data['Distributors']==1 and $data['Retailers']==0)
-        $tickets->andWhere($tickets->expr()->isNull('Tic.Accountretailer'));
-    elseif($data['Retailers']==1 and $data['Distributors']==0)
-        $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
-    elseif(($data['Retailers']==0 and $data['Distributors']==0)or($data['Retailers']==1 and $data['Distributors']==1))
+if(($data['Retailers']==0 and $data['Distributors']==0)or($data['Retailers']==1 and $data['Distributors']==1))
     {
         $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
         $tickets->orWhere($tickets->expr()->isNull('Tic.Accountretailer'));
+    }
+    elseif($data['Distributors']==1 and $data['Retailers']==0)
+    {
+
+
+        $tickets->andWhere($tickets->expr()->isNull('Tic.Accountretailer'));
+    }
+
+    elseif($data['Retailers']==1 and $data['Distributors']==0)
+    {
+        $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
+
     }
 
     if($data['Type']!=5)
 
          $tickets->andWhere('Tic.type = :type')->setParameter('type',$data['Type']);
+
          $tickets->orWhere($tickets->expr()->isnotNull('Tic.inchange'));
 
 }
@@ -102,12 +112,14 @@ if($req->isMethod('POST'))
 public  function ticketsnoteAction(Request $req,$id)
 {
     $em=$this->getDoctrine()->getEntityManager();
-    $usermaster=$em->getRepository('HelloDiDiDistributorsBundle:User')->findBy(array('Account'=>null));
+
+//    $usermaster=$em->getRepository('HelloDiDiDistributorsBundle:User')->findBy(array('Account'=>null));
 
 
     $note=new TicketNote();
 
     $User=$this->get('security.context')->getToken()->getUser();
+    $usermaster=$User->getEntiti()->getUsers();
     $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
 

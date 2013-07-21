@@ -393,14 +393,18 @@ $datetype=0;
             ))
             ->getForm();
 
-        $tickets=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->findBy(array('Accountretailer'=>$User->getAccount()));
+        $tickets=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->findBy(
+            array(
+                'Accountretailer'=>$User->getAccount()
+            ));
 
 
         if($req->isMethod('POST'))
         {
-            $form->submit($req);
+            $form->handleRequest($req);
             $data=$form->getData();
             $tickets=$em->createQueryBuilder();
+
             $tickets->select('Tic')
                 ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
                 ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status'])
@@ -414,7 +418,7 @@ $datetype=0;
             $tickets=$tickets->getQuery();
 
             $count = count($tickets->getResult());
-            $tickets = $tickets->setHint('knp_paginator.count', $count);
+            $tickets->setHint('knp_paginator.count', $count);
 
         }
 
@@ -423,7 +427,7 @@ $datetype=0;
         $pagination = $paginator->paginate(
             $tickets,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+           10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:Tickets.html.twig',array(
@@ -457,12 +461,12 @@ $datetype=0;
                     2=>'price change request'
                 )
             ))
-            ->add('Description','textarea')
+            ->add('Description','textarea',array('required'=>true))
             ->getForm();
 
         if($req->isMethod('POST'))
         {
-            $form->submit($req);
+            $form->handleRequest($req);
             $data=$form->getData();
 
             $Tick->setUser($User);
@@ -512,13 +516,14 @@ $datetype=0;
 
 
         $form=$this->createFormBuilder()
-            ->add('Description','textarea',array('required'=>false,
-                'label'=>'New note'
+            ->add('Description','textarea',array('required'=>true,
+                'label'=>'Description:'
             ))->getForm();
 
         if($req->isMethod('POST'))
         {
-            $form->submit($req);
+
+            $form->handleRequest($req);
             $data=$form->getData();
             $ticketNote->setTicket($ticket);
             $ticketNote->setDescription($data['Description']);

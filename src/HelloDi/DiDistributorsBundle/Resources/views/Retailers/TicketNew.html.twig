@@ -20,31 +20,29 @@
     <div class="span" >
         <div class="widget stacked ">
             <div class="widget-content">
-                <a class="btn-large button btn btn-primary " href="#">
-                    Recharge
-                </a>
+
 
 
 
                     <form class="form-horizontal SearchForm" action="{{ path('RetailerTicketsNew') }}" method="POST" >
 
-
+Attention To:
                         <div class="control-group">
-                            {{ form_label(form.Contact[0]) }}
+                            {{ form_label(form.Contact[0],'Distributors:') }}
                             <div class="controls">
                                 {{ form_widget(form.Contact[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Contact[1]) }}
+                            {{ form_label(form.Contact[1],'Supoprt team:') }}
                             <div class="controls">
                                 {{ form_widget(form.Contact[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Subject) }}
+                            {{ form_label(form.Subject,'Subject:') }}
                             <div class="controls">
                                 {{ form_widget(form.Subject) }}
                             </div>
@@ -52,7 +50,7 @@
 
 
                         <div class="control-group">
-                            {{ form_label(form.Type) }}
+                            {{ form_label(form.Type,'Type:') }}
                             <div class="controls">
                                 {{ form_widget(form.Type) }}
                             </div>
@@ -62,7 +60,7 @@
 
 
                         <div class="control-group">
-                            {{ form_label(form.Description) }}
+                            {{ form_label(form.Description,'Description:') }}
                             <div class="controls">
                                 {{ form_widget(form.Description) }}
                             </div>

@@ -71,6 +71,18 @@ In change:
         <a class="btn btn-mini btn-danger" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
     {% endif %}
 {% endif %}
+<hr>
+                {% if istake=='take' %}
+
+                    <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" method="POST">
+
+                        {{form_label(form.Description)}}
+                        {{form_widget(form.Description)}}
+
+                        <input type="submit" value="Send" >
+                    </form>
+
+                {% endif %}
 
                 <div class="tab-content">
                     <table style="margin-top: 20px"
@@ -93,17 +105,7 @@ In change:
 
 <hr>
 
-    {% if istake=='take' %}
 
-        <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" method="POST">
-
-        {{form_label(form.Description)}}
-        {{form_widget(form.Description)}}
-
-    <input type="submit" value="Send" >
-</form>
-
-                {% endif %}
 
             </div>
         </div>
