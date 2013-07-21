@@ -152,8 +152,7 @@
                                                       {% if
 
                                                       P.Item==Tr.Code.Item
-                                                      and
-                                                      P.priceStatus!=0
+
                                                       and
                                                        P.Account==Tr.Account.Parent
 
@@ -171,8 +170,7 @@
                                             {% for P in Tr.Account.Prices %}
                                                 {%
                                                 if P.Item==Tr.Code.Item
-                                                and
-                                                  P.priceStatus!=0
+
                                                 and
                                                   P.Account==Tr.Account
                                                 %}

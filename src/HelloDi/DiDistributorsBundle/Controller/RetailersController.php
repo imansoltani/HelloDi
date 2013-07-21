@@ -611,9 +611,18 @@ $datetype=0;
 
         public function DmtuAction(){
 
-        $em = $this->getDoctrine()->getManager();
-        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
-        $check = $Account->getId();
+        $em = $this->getDoctrine()->getEntityManager();
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+//            $qb = $em->createQueryBuilder()
+//                ->select('Opr')
+//                ->from('HelloDiDiDistributorsBundle:Operator','Opr')
+//                ->innerJoin('Opr.Items','OI')->innerJoin('OI.Prices','OIP')
+//                ->where('OIP.Account = :Acc')->setParameter('Acc',$Account)
+//                ->groupBy('Opr.name');
+
+
+         $check = $Account->getId();
         $qb = $em->createQueryBuilder()
             ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency','price.id as pid')
             ->from('HelloDiDiDistributorsBundle:Account','acc')
@@ -623,7 +632,7 @@ $datetype=0;
             ->where('acc.id =:check')
             ->setParameter('check',$check)
             ->andwhere('item.itemType =:check2')
-            ->setParameter('check2',0)
+            ->setParameter('check2','dmtu')
             ->OrderBy('item.itemName')
 
 

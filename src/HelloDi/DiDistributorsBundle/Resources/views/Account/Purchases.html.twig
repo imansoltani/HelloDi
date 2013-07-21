@@ -38,12 +38,6 @@
 
             </div>
 
-            <div class="control-group">
-                {{ form_label(form.ItemType) }}
-                <div class="controls">
-                    {{ form_widget(form.ItemType) }}
-                </div>
-            </div>
 
 
             <div class="control-group">
@@ -52,6 +46,15 @@
                     {{ form_widget(form.ItemName) }}
                 </div>
             </div>
+
+            <div class="control-group">
+                {{ form_label(form.ItemType) }}
+                <div class="controls">
+                    {{ form_widget(form.ItemType) }}
+                </div>
+            </div>
+
+
             <input type="hidden" value="1" name="page" id="search_page" >
                 <hr>
                 <input class="btn btn-primary" type="submit" value="Search">
@@ -97,8 +100,8 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>Date</th>
+
+
                         <th>{{ 'Item' | trans ({}, "account") }}</th>
                         <th>{{ 'Quantity' | trans ({}, "account") }}</th>
                         <th>{{ 'Buying Price' | trans ({}, "account") }}</th>
@@ -108,25 +111,26 @@
                     </thead>
                     <tbody>
 
+
+
                     {% for Tr in pagination %}
+
                         <tr>
-                            <td>{{Tr.id }}</td>
-                            <td>{{ Tr.tranInsert|date('y-M-d H:m:s') }}</td>
+
                             <td>{{ Tr.Code.Item.itemName}}</td>
-                            <td>{{ Tr|length }}</td>
+                            <td>-----</td>
                             <td>
 
-                                {% set Item=Tr.Code.Item %}
-                                {% set Account=Tr.Account.Parent %}
+                                {% for p in Tr.Account.Parent.Prices %}
 
-                                {% for Acc in Account.Prices %}
-                                    {% for Itm in Item.Prices %}
-                                        {% if Acc.id==Itm.id  %}
-                                            {{ Acc.price  }}
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% if
+                                    p.Item==Tr.Code.Item
+                                    and
+                                    p.Account==Tr.Account.Parent
+                                    %}
+                                        {{ p.price }}
+                                    {% endif %}
                                 {% endfor %}
-
 
                             </td>
                             <td>Task</td>

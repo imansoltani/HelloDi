@@ -621,7 +621,7 @@ $qb=array();
 
         $datetype=0;
         $em = $this->getDoctrine()->getEntityManager();
-        $result = array();
+        $qb = array();
         //load first list search
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
@@ -630,17 +630,33 @@ $qb=array();
             ->add('ItemType', 'choice',
                 array('label'=>'Type:','choices' =>
                 array(
-                    0 => 'Item.TypeChioce.Mobile',
-                    1 => 'Item.TypeChioce.Internet',
-                    2 => 'Item.TypeChioce.Tel',
-                    3 => 'All'
+                    'All'=> 'All',
+                    'dmtu' => 'Mobile',
+                    'clcd' => 'calling card',
+                    'empt' => 'e-payment',
+
                 )))
 
             ->add('ItemName', 'entity',
                 array('label'=>'Name:',
-                    'empty_data' => 'All',
+                    'empty_data' => '',
+                    'empty_value'=>'All',
+                    'required'=>false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
+
+                    'query_builder'=>function(EntityRepository $er) use ($Account)
+                    {
+                        return $er->createQueryBuilder('i')
+                             ->innerJoin('i.Prices','ip')
+                             ->where('ip.priceStatus = 1');
+                        foreach($Account->getChildrens() as $child)
+                        {
+                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc',$Account);
+                        }
+
+
+                    }
                 ))
 
 
@@ -648,7 +664,9 @@ $qb=array();
                 array('label'=>'Retailer(s):',
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
-                    'empty_data' => 'All',
+                    'required'=>false,
+                    'empty_value'=>'All',
+                    'empty_data' => '',
                     'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('a')
                             ->where('a.Parent = :ap')
@@ -662,10 +680,10 @@ $qb=array();
             ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
 
             ->add('GroupBy', 'choice', array('label'=>'GroupBy:',
+                'expanded'=>true,
                 'choices' => array(
-                    'NotGroupBy' => 'NotGroupBy',
-                    'TrCoIt.itemName' => 'Item Name',
-                    'TrAc.accName' => 'Retainer Name'
+                    2=>'no groupby',
+                    1 =>'daily sales grouped by item and retailer',
                 )))
 
             ->getForm();
@@ -680,41 +698,47 @@ $qb=array();
                 ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')->innerJoin('Tr.Account', 'TrAc')
                 /**/
 
-                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')))
-                ->andWhere($qb->expr()->isNotNull('Tr.Code'));
+                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
             if($data['DateStart']!='')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
              if($data['DateEnd']!='')
                  $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
-            if ($data['Account'] != 'All')
-
+            if ($data['Account'])
                 $qb->andwhere('Tr.Account =:account')->setParameter('account', $data['Account']);
+          else
+          {
+              foreach($Account->getChildrens() as $acc )
+              {
+                  $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
 
+              }
+          }
 
-            if ($data['ItemType'] != 3)
+            if ($data['ItemType'] != 'All')
 
                  $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType', $data['ItemType']);
 
 
-            if ($data['ItemName'] != 'All')
+            if ($data['ItemName'])
                  $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName'])));
 
-            if ($data['GroupBy'] != 'NotGroupBy') {
-                 $qb->GroupBy($data['GroupBy']);
-            }
+                if($data['GroupBy']==1)
+                    $qb->GroupBy('Tr.tranInsert')->addGroupBy('TrCo.Item');
+
+
             $qb->addOrderBy('Tr.tranInsert','desc');
 
-            $result = $qb->getQuery();
-            $count = count($result->getResult());
-            $result->setHint('knp_paginator.count', $count);
+            $qb = $qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
 
         }
 
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $result,
+            $qb,
             $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );
@@ -774,13 +798,17 @@ $qb=array();
             ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
             ->andWhere('Acc.accType =0')
             ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
+
 $countisprov=count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
             ->add('Amount', 'text', array('data' => 0))
             ->add('Accounts', 'entity', array(
+                'empty_value'=>'select a account',
+                'empty_data'=>'',
                 'class' => 'HelloDiDiDistributorsBundle:Account',
                 'property'=>'NamewithCurrency',
+                'required'=>true,
                 'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
                         ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
@@ -936,8 +964,8 @@ $countisprov=count($isprove->getQuery()->getResult());
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $qb = $em->createQueryBuilder();
-        $query=array();
+
+        $qb=array();
 
         $form = $this->createFormBuilder()
             ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
@@ -945,52 +973,73 @@ $countisprov=count($isprove->getQuery()->getResult());
             ->add('ItemType', 'choice',
                 array('label'=>'Type:','choices' =>
                 array(
-                    3 => 'All',
-                    1 => 'Item.TypeChioce.Internet',
-                    0 => 'Item.TypeChioce.Mobile',
-                    2 => 'Item.TypeChioce.Tel')
-                ))
+                    'All'=> 'All',
+                    'dmtu' => 'Mobile',
+                    'clcd' => 'calling card',
+                    'empt' => 'e-payment',
+
+                )))
+
             ->add('ItemName', 'entity',
-                array('label'=>'Item:',
-                    'empty_data' => 'All',
+                array('label'=>'Name:',
+                    'empty_data' => '',
+                    'empty_value'=>'All',
+                    'required'=>false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
+
+                    'query_builder'=>function(EntityRepository $er) use ($Account)
+                    {
+                        return $er->createQueryBuilder('i')
+                            ->innerJoin('i.Prices','ip')
+                            ->where('ip.priceStatus = 1');
+                        foreach($Account->getChildrens() as $child)
+                        {
+                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc',$Account);
+                        }
+
+
+                    }
                 ))->getForm();
 
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             $data = $form->getData();
-            $qb = $em->createQueryBuilder();
 
+            $qb = $em->createQueryBuilder();
+//            ,Count(Tr.tranDate) as c
             $qb->select('Tr');
             $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
                 ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')
-                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')))
-                ->andWhere($qb->expr()->isNotNull('Tr.Code'));
+                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+
             foreach ($Account->getChildrens() as $child) {
 
                 $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
             }
+
               if( $data['DateStart']!='')
              $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
               if( $data['DateEnd']!='')
              $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
-            if ($data['ItemType'] != 3)
+            if ($data['ItemType'] !='All')
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
-            if ($data['ItemName'] != 'All')
-                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName'])));
-//            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
-            $qb->addOrderBy('Tr.tranInsert','desc');
-            $query = $qb->getQuery();
-            $count = count($query->getResult());
-            $query->setHint('knp_paginator.count', $count);
+            if ($data['ItemName'])
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
+
+            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+            $qb->addOrderBy('Tr.tranDate','desc');
+
+            $qb = $qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
 
         }
 
 
 
         $pagination = $paginator->paginate(
-            $query,
+            $qb,
             $req->get('page',1) /*page number*/,
             10/*limit per page*/
         );

@@ -143,7 +143,7 @@ class DistributorsController extends Controller
                 $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
             if($data['ItemName'])
-                $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName'])));
+                $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
 
 
        $qb->orderBy('Tr.tranInsert','desc');

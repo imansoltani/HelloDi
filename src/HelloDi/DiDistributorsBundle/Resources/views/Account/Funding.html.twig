@@ -23,6 +23,15 @@
             <br>
         </div> <!-- /widget-header -->
 
+
+
+<div id="popuptop" class="modal">
+
+    are you for increase balance sure !
+</div>
+
+
+
         <form style="margin-top: 20px" action="{{ path('MasterDistApplyFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
             <fieldset>
@@ -47,14 +56,14 @@
                 <div class="control-group ">
                     {{ form_label(formapplay.As) }}
                     <div class="controls">
-                        {{ form_widget(formapplay.As)  }}
+                        {{ form_widget(formapplay.As)  }}<span class="icon-certificate"></span>
                     </div>
                 </div>
 
                 <div class="control-group ">
                     {{ form_label(formapplay.Description ) }}
                     <div class="controls">
-                        {{ form_widget(formapplay.Description )  }}
+                        {{ form_widget(formapplay.Description )  }}<span class="icon-certificate"></span>
                     </div>
                 </div>
 
@@ -105,7 +114,7 @@
                 <div class="control-group">
                     {{ form_label(formupdate.As) }}
                     <div class="controls">
-                        {{ form_widget(formupdate.As)  }}
+                        {{ form_widget(formupdate.As)  }}<span class="icon-certificate"></span>
                     </div>
                 </div>
 
@@ -122,4 +131,30 @@
 
         {% endif %}
         </div>
+
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("* #item_buy").click(function () {
+                Popuptop('modal');
+
+                $('.popupshow #operator').val($(" #operator1", this).val());
+                $('.popupshow #itemname').val($(" #item_name1", this).val());
+                $('.popupshow #facevalue').val($(" #face_value1", this).val());
+                $('.popupshow #showsum').val($(" #face_value1", this).val());
+                $('.popupshow #itemcount').val(1);
+
+                $('.popupshow #itemid').val($(" #item_id1", this).val());
+                $('.popupshow #priceid').val($(" #price_id1", this).val());
+            });
+
+
+            $('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});
+
+        });
+    </script>
+
 {% endblock %}

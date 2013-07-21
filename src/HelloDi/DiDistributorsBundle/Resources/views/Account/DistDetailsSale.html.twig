@@ -25,13 +25,13 @@
                                 <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>{{ 'Transaction.Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.ItemName' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Buying price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Selling price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Account' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Transaction.Code' | trans ({}, "account") }} </th>
+                                    <th>{{ 'Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'ItemName' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Buying price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Selling price' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Account' | trans ({}, "account") }}</th>
+                                    <th>{{ 'User' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Code' | trans ({}, "account") }} </th>
 
                                 </tr>
                                 </thead>
@@ -39,10 +39,23 @@
 
                                     <tr>
                                         <td>{{ tran.id}}</td>
-                                        <td>{{ tran.tranDate|date('y-M-d') }}</td>
+                                        <td>{{ tran.tranDate|date('y-M-d H:m:s') }}</td>
                                         <td>{{ tran.Code.Item.itemName}}</td>
-                                        <td>{{ BuPrice}}</td>
-                                        <td>{{ tran.tranAmount }}</td>
+                                        <td>
+
+                                            {% for p in tran.Account.Parent.Prices %}
+
+                                                {% if
+                                                p.Item==tran.Code.Item
+                                                    and
+                                                p.Account==tran.Account.Parent
+                                                %}
+                                                    {{ p.price }}
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </td>
+                                        <td>{{ -tran.tranAmount }}</td>
                                         <td>{{ tran.Account.accName }}</td>
                                         <td>{{ tran.User.username }}</td>
                                         <td> {{ tran.Code.id }} </td>
