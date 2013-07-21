@@ -3,7 +3,7 @@ item:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:index" }
 
 item_new:
-    pattern:  /new
+    pattern:  /add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:new" }
 
 item_show:
@@ -20,13 +20,13 @@ item_price:
 
 #description
 item_desc:
-    pattern:  /{id}/description
+    pattern:  /{id}/descriptions
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descIndex" }
 
 item_desc_new:
-    pattern:  /{id}/description/new
+    pattern:  /{id}/descriptions/new
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descNew" }
 
 item_desc_edit:
-    pattern:  /{id}/description/{descid}/edit
+    pattern:  /{id}/descriptions/{descid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }

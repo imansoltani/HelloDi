@@ -3,7 +3,7 @@ operator:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Operator:index" }
 
 operator_new:
-    pattern:  /new
+    pattern:  /add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Operator:new" }
 
 operator_edit:

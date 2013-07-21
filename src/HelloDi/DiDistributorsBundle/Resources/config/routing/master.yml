@@ -28,7 +28,7 @@ master_codes:
 
 master_settings:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/setting.yml"
-    prefix:   /settings
+    prefix:   /admin/settings
 
 master_print:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/print.yml"

@@ -3,7 +3,7 @@ MasterStaff:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staff" }
 
 MasterStaffAdd:
-    pattern:  /staff/{id}/add
+    pattern:  /staff/add
     defaults: { _controller: "HelloDiDiDistributorsBundle:Setting:staffadd" }
 
 MasterStaffEdit:

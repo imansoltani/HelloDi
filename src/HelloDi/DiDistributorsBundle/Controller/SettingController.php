@@ -30,13 +30,12 @@ public  function staffAction(){
 }
 
 
-public  function staffaddAction(Request $req,$id)
+public  function staffaddAction(Request $req)
 {
 
 
     $user = new User();
-    $em = $this->getDoctrine()->getManager();
-    $Entiti= $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+    $Entiti= $this->get('security.context')->getToken()->getUser()->getEntiti();
 
 
     $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',1), $user, array('cascade_validation' => true));
@@ -47,6 +46,7 @@ public  function staffaddAction(Request $req,$id)
         $user->setStatus(1);
         if ($form->isValid()) {
             $user->setEntiti($Entiti);
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','this operation done success !');
