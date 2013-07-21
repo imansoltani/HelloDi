@@ -10,11 +10,10 @@ DistTicketsNew:
     pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:tickestnew }
 
-
 DistTicketsChangeStatus:
-    pattern:  /{id}/change/status
+    pattern:  /{id}/changestatus
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketschangestatus }
 
 DistTicketsStatus:
-    pattern:  /{id}/change/
+    pattern:  /{id}/change
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketsstatus }

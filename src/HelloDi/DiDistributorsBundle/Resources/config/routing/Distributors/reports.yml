@@ -1,6 +1,3 @@
 DistSale:
     pattern:  /sales
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:Sale }
-DistDetailsSale:
-    pattern:  /Details/{id}/sales
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsSale }
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:sale }

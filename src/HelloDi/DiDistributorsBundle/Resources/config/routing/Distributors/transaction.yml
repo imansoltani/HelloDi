@@ -1,0 +1,15 @@
+DistTransaction:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistTransaction }
+
+DistDetailsTransaction:
+    pattern:  /{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsTransaction }
+
+DistLoadActionOwn:
+    pattern:  /loadd
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionOwn }
+
+DistLoadActionRetailer:
+    pattern:  /loadr
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionRetailer }

@@ -11,24 +11,5 @@ DistStaffAdd:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaffAdd }
 
 DistStaffEdit:
-    pattern:  /{id}/staff/edit
+    pattern:  /staff/{id}/edit
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistStaffEdit }
-
-DistChangeRole:
-    pattern:  /{id}/staff/ChangeRole
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistChangeRole }
-
-DistTransaction:
-    pattern:  /transaction
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistTransaction }
-DistDetailsTransaction:
-    pattern:  /transaction/{id}/details
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsTransaction }
-
-DistLoadActionOwn:
-    pattern:  /transaction/loadd
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionOwn }
-
-DistLoadActionRetailer:
-    pattern:  /transaction/loadr
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistLoadActionRetailer }

@@ -4,7 +4,11 @@ distributors_dashboard:
 
 distributors_account:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/account.yml"
-    prefix:   /account-setting
+    prefix:   /admin/account-settings
+
+distributors_transaction:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/transaction.yml"
+    prefix:   /transactions
 
 distributors_retailer:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml"
