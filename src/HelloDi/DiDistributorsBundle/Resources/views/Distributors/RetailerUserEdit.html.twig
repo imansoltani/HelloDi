@@ -15,7 +15,7 @@
         <h3>Edit User</h3>
     </div> <!-- /widget-header -->
 
-    <form class="form-horizontal" action="{{ path('DistRetailerUserEdit',{'id':userid}) }}" method="post" >
+    <form class="form-horizontal" action="{{ path('DistRetailerUserEdit',{'id':retailerAccount.id,'userid':userid}) }}" method="post" >
 
         <div class="control-group">
             {{ form_errors(form.firstname) }}

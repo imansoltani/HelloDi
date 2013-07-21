@@ -482,12 +482,12 @@ class DistributorsController extends Controller
 
     }
 
-    public function DistRetailerUserEditAction(Request $request, $id)
+    public function DistRetailerUserEditAction(Request $request, $userid)
     {
-        $this->check_ChildUser($id);
+        $this->check_ChildUser($userid);
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
         $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
@@ -502,7 +502,7 @@ class DistributorsController extends Controller
                 'retailerAccount' => $user->getAccount(),
                 'Account' => $myaccount,
                 'Entiti' => $user->getEntiti(),
-                'userid' => $id,
+                'userid' => $userid,
                 'form' => $form->createView()
             ));
 
@@ -803,13 +803,13 @@ class DistributorsController extends Controller
 
     }
 
-    public function DetailsRetailerTransactionAction($id)
+    public function DetailsRetailerTransactionAction($tranid)
     {
-        $this->check_ChildTransaction($id);
+        $this->check_ChildTransaction($tranid);
 
         $em=$this->getDoctrine()->getManager();
 
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerDetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
