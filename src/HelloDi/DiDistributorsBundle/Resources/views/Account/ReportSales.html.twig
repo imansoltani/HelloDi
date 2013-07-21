@@ -61,19 +61,16 @@
                 </div>
             </div>
 
-            <div class="control-group">
-                {{ form_label(form.GroupBy[0]) }}
-                <div class="controls">
-                    {{ form_widget(form.GroupBy[0]) }}
-                </div>
-            </div>
 
-            <div class="control-group">
-                {{ form_label(form.GroupBy[1]) }}
-                <div class="controls">
-                    {{ form_widget(form.GroupBy[1]) }}
-                </div>
+
+    {% for group in form.GroupBy %}
+        <div class="control-group">
+            <label class="control-label">{{ form_label(group) }}</label>
+            <div class="controls">
+                {{ form_widget(group) }}
             </div>
+        </div>
+
             <input type="hidden" value="1" name="page" id="search_page" >
             <hr>
             <input class="btn btn-primary" type="submit" value="Search">

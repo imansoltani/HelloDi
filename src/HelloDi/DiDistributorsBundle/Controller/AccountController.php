@@ -798,13 +798,17 @@ $qb=array();
             ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
             ->andWhere('Acc.accType =0')
             ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
+
 $countisprov=count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
             ->add('Amount', 'text', array('data' => 0))
             ->add('Accounts', 'entity', array(
+                'empty_value'=>'select a account',
+                'empty_data'=>'',
                 'class' => 'HelloDiDiDistributorsBundle:Account',
                 'property'=>'NamewithCurrency',
+                'required'=>true,
                 'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
                         ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
@@ -1003,7 +1007,7 @@ $countisprov=count($isprove->getQuery()->getResult());
             $data = $form->getData();
 
             $qb = $em->createQueryBuilder();
-//            'Count(Tr.tranDate) as q'
+//            ,Count(Tr.tranDate) as c
             $qb->select('Tr');
             $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
                 ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')
@@ -1021,7 +1025,7 @@ $countisprov=count($isprove->getQuery()->getResult());
             if ($data['ItemType'] !='All')
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
             if ($data['ItemName'])
-                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName'])));
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
             $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
             $qb->addOrderBy('Tr.tranDate','desc');
