@@ -28,7 +28,7 @@ class Operator
     private $Logo;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", mappedBy="Operator")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", mappedBy="operator")
      */
     private $Item;
 

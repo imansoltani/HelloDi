@@ -112,6 +112,7 @@
 
 
     </script>
+
     <div class="span">
         <div class="widget stacked">
             <div class="widget-content itemshow">
@@ -122,12 +123,14 @@
                             All Operator
                         </div>
 
-                        {% for opr in operator %}
-                            <div class="filter" data-filter="{{ opr.name }}">
-                                {{ opr.name }}
+                        {% for opr in Operators %}
+                            <div class="filter" data-filter="{{ opr.oprname }}">
+                                {{ opr.oprname }}
+
                             </div>
                         {% endfor %}
                 </div>
+
 
                 <!--<div class="filter_Div sort_item">
                         <div class="sort active" data-sort="default" data-order="desc">Default</div>
@@ -139,32 +142,30 @@
 
                <div class="list_items" >
                    <ul id="Grid" class="itemulshow">
-                       {% for opr in operator %}
-                           {% for item in itemlist %}
-                               {% if( item.name == opr.name) %}
+                       {% for opritm in Operators %}
 
-                                   <li id="item_buy" class="mix {{ opr.name }}" sfield="{{ item.itemFaceValue }}" >
+                                   <li id="item_buy" class="mix {{ opritm.oprname }}" sfield="{{ opritm.itemfv }}" >
                                        <a  >
-                                           <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opr.Logo }}')" class="item_show">
-                                               <div class="header">{{ item.itemName }}</div>
+                                           <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opritm.oprlogo }}')" class="item_show">
+                                               <div class="header">{{ opritm.itemname }}</div>
                                                <div class="body">
                                                    <div class="price">
-                                                       {{ item.itemFaceValue }}
+                                                       {{ opritm.itemfv }}
 
                                                    </div>
                                                    <div class="type">
-                                                       {{ item.itemCurrency }}
+                                                       {{ opritm.itemcur }}
                                                    </div>
 
                                                </div>
                                            </div>
 
-                                           <input type="hidden" id="item_name1" value="{{ item.itemName }}">
-                                           <input type="hidden" id="face_value1" value="{{ item.itemFaceValue }}">
-                                           <input type="hidden" id="currency1" value="{{ item.itemCurrency }}">
-                                           <input type="hidden" id="operator1" value="{{ item.name }}">
-                                           <input type="hidden" id="item_id1" value="{{ item.id }}">
-                                           <input type="hidden" id="price_id1" value="{{ item.pid }}">
+                                           <input type="hidden" id="item_name1" value="{{ opritm.itemname }}">
+                                           <input type="hidden" id="face_value1" value="{{ opritm.itemfv }}">
+                                           <input type="hidden" id="currency1" value="{{ opritm.itemcur }}">
+                                           <input type="hidden" id="operator1" value="{{ opritm.oprname }}">
+                                           <input type="hidden" id="item_id1" value="{{ opritm.itemid }}">
+                                           <input type="hidden" id="price_id1" value="{{ opritm.priceid }}">
 
                                        </a>
                                    </li>
@@ -173,8 +174,7 @@
 
 
                                    {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
-                               {% endif %}
-                           {% endfor %}
+
 
                        {% endfor %}
                    </ul>
@@ -197,7 +197,6 @@
                         $('.popupshow #facevalue').val($(" #face_value1", this).val());
                         $('.popupshow #showsum').val($(" #face_value1", this).val());
                         $('.popupshow #itemcount').val(1);
-
                         $('.popupshow #itemid').val($(" #item_id1", this).val());
                         $('.popupshow #priceid').val($(" #price_id1", this).val());
                     });

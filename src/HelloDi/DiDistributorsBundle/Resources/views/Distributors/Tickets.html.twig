@@ -34,23 +34,23 @@
 
 
                         <div class="control-group">
-                            <label class="control-label" >Close
+                            <label class="control-label" >
                             </label>
-                            <div class="controls">
+                            <div class="controls">Open:
                                 {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Open
+                            <label class="control-label" >
                             </label>
-                            <div class="controls">
+                            <div class="controls">Close:
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Type) }}
+                            {{ form_label(form.Type,'Type:') }}
                             <div class="controls">
                                 {{ form_widget(form.Type) }}
                             </div>

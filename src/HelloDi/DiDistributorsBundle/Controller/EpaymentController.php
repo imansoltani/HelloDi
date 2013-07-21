@@ -42,6 +42,7 @@ class EpaymentController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Retailers:OgoneTransactionNew.html.twig',array('id'=>1,'accCurency'=>$accCurency,'formOgone'=>$ogonePaymentForm->createView()));
     }
 
+
     public function ValidateAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
@@ -73,7 +74,6 @@ class EpaymentController extends Controller
             'PM'      =>$request->get('PM'),
             'STATUS'     => $request->get('STATUS')
         );
-
 
 
         $ogonePmt = $this->get('hello_di_di_distributors.Client');

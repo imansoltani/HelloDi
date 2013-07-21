@@ -25,10 +25,15 @@
 
 
 
-<div id="popuptop" class="modal">
+{#<div id="popuptop" class="modal">#}
 
-    are you for increase balance sure !
-</div>
+    {#are you for increase balance sure !#}
+
+    {#<a class="btn" href="{{ path('MasterDistApplyFunding',{'id':Account.id}) }}" >Ok</a>#}
+    {#<button class="btn" onclick="PopuptopClose(event)">Close</button>#}
+
+
+{#</div>#}
 
 
 
@@ -69,7 +74,7 @@
 
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <button class="btn btn-primary" type="submit">Apply</button>
+                    <button class="btn btn-primary" id="Applay" type="submit">Apply</button>
                     <a class="btn" href="{{ path('MasterDistTransaction',{'id':Account.id}) }}">Cancel</a>
                 </div>
 
@@ -132,29 +137,25 @@
         {% endif %}
         </div>
 
-    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $("* #item_buy").click(function () {
-                Popuptop('modal');
-
-                $('.popupshow #operator').val($(" #operator1", this).val());
-                $('.popupshow #itemname').val($(" #item_name1", this).val());
-                $('.popupshow #facevalue').val($(" #face_value1", this).val());
-                $('.popupshow #showsum').val($(" #face_value1", this).val());
-                $('.popupshow #itemcount').val(1);
-
-                $('.popupshow #itemid').val($(" #item_id1", this).val());
-                $('.popupshow #priceid').val($(" #price_id1", this).val());
-            });
+    {#<script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>#}
+    {#<script type="text/javascript"#}
+            {#src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>#}
 
 
-            $('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});
+    {#<script type="text/javascript">#}
 
-        });
-    </script>
+        {#$(function () {#}
+            {#$("* #Applay").click(function () {#}
+                {#Popuptop('modal');#}
+            {#});#}
+            {#$('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});#}
+
+            {#$("* #hidepopuptop").click(function () {#}
+               {#('#popuptop').hideModal();#}
+            {#});#}
+        {#});#}
+
+
+    {#</script>#}
 
 {% endblock %}

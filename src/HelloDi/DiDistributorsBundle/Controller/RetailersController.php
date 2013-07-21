@@ -608,118 +608,106 @@ $datetype=0;
 //--------endkazem--------//
 
 // Start kamal
-
         public function DmtuAction(){
+
 
         $em = $this->getDoctrine()->getEntityManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-//            $qb = $em->createQueryBuilder()
-//                ->select('Opr')
-//                ->from('HelloDiDiDistributorsBundle:Operator','Opr')
-//                ->innerJoin('Opr.Items','OI')->innerJoin('OI.Prices','OIP')
-//                ->where('OIP.Account = :Acc')->setParameter('Acc',$Account)
-//                ->groupBy('Opr.name');
+            $qb = $em->createQueryBuilder();
+            $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+                ->from('HelloDiDiDistributorsBundle:Operator','O')
+                ->innerJoin('O.Item','OI')
+                ->innerJoin('OI.Prices','OIP')
+                ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('dmtu')))
+                ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
+                ->andwhere('OIP.priceStatus = 1');
+            $qb=$qb->getQuery();
+            $qb=$qb->getResult();
 
-
-         $check = $Account->getId();
-        $qb = $em->createQueryBuilder()
-            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency','price.id as pid')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Prices','price')
-            ->innerJoin('price.Item','item')
-            ->innerJoin('item.operator','operator')
-            ->where('acc.id =:check')
-            ->setParameter('check',$check)
-            ->andwhere('item.itemType =:check2')
-            ->setParameter('check2','dmtu')
-            ->OrderBy('item.itemName')
-
-
-            ->getQuery();
-
-        $item = $qb->getResult();
-
-        $qb = $em->createQueryBuilder()
-            ->select('DISTINCT operator.id','operator.name','operator.Logo')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Prices','price')
-            ->innerJoin('price.Item','item')
-            ->innerJoin('item.operator','operator')
-            ->where('acc.id =:check')
-            ->setParameter('check',$check)
-            ->andwhere('item.itemType =:check2')
-            ->setParameter('check2',0)
-
-
-            ->getQuery();
-        $operator = $qb->getResult();
 
        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array
        (
-           'itemlist' => $item ,
-           'operator'=>$operator ,
-           'account'=>$Account
+            'Operators'=>$qb,
+            'Account'=>$Account,
               ));
 
         }
 
-    public function PrintCodeAction(Request $request){
-
-//        $codeselector = $this->get('hello_di_di_distributors.codeselector');
-//        $code = $codeselector->lookForAvailableCode($account, $price, $price->getItem());
+    public function PrintCodeAction(Request $request)
+    {
+        $codeselector = $this->get('hello_di_di_distributors.codeselector');
 
         if($request->isMethod('POST')){
 
                 try{
                 $em = $this->getDoctrine()->getManager();
 
-                $user = $this->get('security.context')->getToken()->getUser();
-                $account = $this->get('security.context')->getToken()->getUser()->getAccount();
+               $user=$this->container->get('security.context')->getToken()->getUser();
 
-                $accountParent = $this->get('security.context')->getToken()->getUser()->getAccount()->getParent();
 
-                $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+                $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+                $Account =$priceChild->getAccount();
+                $item= $priceChild->getItem();
 
-                $itemlist = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+                $codes = $codeselector->lookForAvailableCode($Account,$priceChild,$item,$request->get('numberOfsale'));
 
-                $codeselector = $this->get('hello_di_di_distributors.codeselector');
+                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')
+                    ->findOneBy(array(
+                        'Account' =>$Account->getParent(),
+                        'Item'=>$item,
+                    )
+                );
 
-                $code = $codeselector->lookForAvailableCode($account,$price,$itemlist,$request->get('numberOfsale'));
+                $com = $priceChild->getprice() - $priceParent->getprice();
 
-                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account' => $accountParent));
-
-                $tranProfit = $price->getprice() - $priceParent->getprice();
-
-                foreach($code as $value)
+                foreach($codes as $code)
                 {
 
-                    $transaction = new Transaction();
-                    $transaction->setAccount($account);
-                    $transaction->setTranAmount(-($price->getPrice()));
-                    $transaction->setTranFees(0);
-                    $transaction->setTranCurrency($price->getPriceCurrency());
-                    $transaction->setTranDate(new \DateTime('now'));
-                    $transaction->setCode($value);
-                    $transaction->setTranAction('sale');
-                    $transaction->setUser($user);
-                    $em->persist($transaction);
-                    $em->flush();
-                    // For Parent
-                    $transaction = new Transaction();
-                    $transaction->setAccount($accountParent);
-                    $transaction->setTranAmount($tranProfit);
-                    $transaction->setTranFees(0);
-                    $transaction->setTranCurrency($price->getPriceCurrency());
-                    $transaction->setTranDate(new \DateTime('now'));
-                    $transaction->setCode($value);
-                    $transaction->setTranAction('Profit');
-                    $transaction->setUser($user);
-                    $em->persist($transaction);
+
+                    $tranretailer = new Transaction();
+                    $trandist = new Transaction();
+                    //   for retailer
+                    $tranretailer->setAccount($Account);
+                    $tranretailer->setTranAmount(-($priceChild->getPrice()));
+                    $tranretailer->setTranFees(0);
+                    $tranretailer->setTranDescription(null);
+                    $tranretailer->setTranCurrency($priceChild->getPriceCurrency());
+                    $tranretailer->setTranDate(new \DateTime('now'));
+                    $tranretailer->setTranInsert(new \DateTime('now'));
+                    $tranretailer->setCode($code);
+                    $tranretailer->setTranAction('sale');
+                    $tranretailer->setTranType(0);
+                    $tranretailer->setUser($user);
+                    $tranretailer->setTranBookingValue(null);
+                    $tranretailer->setTranBalance($Account->getAccBalance());
+
+
+
+                    // For distributors
+                    $trandist->setAccount($Account->getParent());
+                    $trandist->setTranAmount($com);
+                    $trandist->setTranFees(0);
+                    $trandist->setTranDescription(null);
+                    $trandist->setTranCurrency($priceParent->getPriceCurrency());
+                    $trandist->setTranDate(new \DateTime('now'));
+                    $trandist->setTranInsert(new \DateTime('now'));
+                    $trandist->setCode($code);
+                    $trandist->setTranAction('com');
+                    $trandist->setTranType(1);
+                    $trandist->setUser($user);
+                    $trandist->setTranBookingValue(null);
+                    $tranretailer->setTranBalance($Account->getParent()->getAccBalance());
+
+                    $em->persist($tranretailer);
+                    $em->persist($trandist);
+
                     $em->flush();
 
                 }
-                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>$code));
+                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+                    'code'=>$code,
+                ));
 
         }
 
