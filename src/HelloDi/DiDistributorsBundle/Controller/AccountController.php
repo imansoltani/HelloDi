@@ -536,7 +536,6 @@ $qb=array();
                 switch($data['As'])
                 {
 
-
               case 'pmt':
 
                 $trandist->setTranType(1);

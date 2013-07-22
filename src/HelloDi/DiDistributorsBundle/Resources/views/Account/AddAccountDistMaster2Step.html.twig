@@ -92,7 +92,7 @@
         <div class="control-group">
             {{ form_label(form2step.Country) }}
             <div class="controls">
-                {{ form_widget(form2step.Country) }}
+                {{ form_widget(form2step.Country) }} <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form2step.Country) }}
         </div>
@@ -116,7 +116,7 @@
         <div class="control-group">
             {{ form_label(form2step.Accounts[0].accCurrency) }}
             <div class="controls">
-                {{ form_widget(form2step.Accounts[0].accCurrency) }}
+                {{ form_widget(form2step.Accounts[0].accCurrency) }} <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form2step.Accounts[0].accCurrency) }}
         </div>
@@ -175,7 +175,7 @@
         <div class="control-group lastname">
             {{ form_label(form2step.Users[0].lastname) }}
             <div class="controls money">
-            {{ form_widget(form2step.Users[0].lastname) }} <span class="icon-certificate"></span>
+            {{ form_widget(form2step.Users[0].lastname) }}
                 </div>
         </div>
         <div class="control-group username">
@@ -193,7 +193,7 @@
         <div class="control-group email">
             {{ form_label(form2step.Users[0].email) }}
             <div class="controls money">
-            {{ form_widget(form2step.Users[0].email) }} <span class="icon-certificate"></span>
+            {{ form_widget(form2step.Users[0].email) }}
                 </div>
         </div>
 
@@ -227,7 +227,7 @@
         <div class="control-group">
             {{ form_label(form2step.Users[0].roles[0]) }}
             <div class="controls">
-                {{ form_widget(form2step.Users[0].roles[0]) }}
+                {{ form_widget(form2step.Users[0].roles[0]) }} <span class="icon-certificate"></span>
             </div>
         </div>
 
