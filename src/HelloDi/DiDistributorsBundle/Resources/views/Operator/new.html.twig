@@ -37,7 +37,9 @@
                 <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
                     <div class="control-group">
                         {{ form_label(form.name) }}
-                        {{ form_widget(form.name) }}
+                        <div class="controls money">
+                            {{ form_widget(form.name) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.name) }}
                     </div>
                     <div class="control-group">

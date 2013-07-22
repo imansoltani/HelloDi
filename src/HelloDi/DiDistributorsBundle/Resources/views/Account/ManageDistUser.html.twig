@@ -5,7 +5,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
-    <span class="link">User</span>
+    <span class="link">Users</span>
 {% endblock Site_Map %}
 
 
@@ -23,7 +23,7 @@
         <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
                             <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Search Account Users</p>
+                            <p class="title_search"></p>
                         </span>
         </h5>
         <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUser',{'id':Account.id}) }}" method="post">
@@ -44,26 +44,8 @@
 
         <script type="text/javascript">
             $(function () {
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class') ;
 
-                    if($('.title_search').html() == 'Search Account Users')
-                    {
-                        $('.title_search').html('Close Search') ;
-                        $('#search_logo').attr('class','icon-remove') ;
-                    }
-                    else{
-                        $('.title_search').html('Search Account Users') ;
-                        $('#search_logo').attr('class','icon-search') ;
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
+                Form_Search(0,"Search Account Users");
 
             });
         </script>

@@ -471,6 +471,27 @@
 </script>
 
 <script type="text/javascript">
+
+    var open = 0 ;
+    var header = "" ;
+
+    function Form_Search(close,title){
+        header = title ;
+        open = close ;
+
+        if (open == 0 ) // want be close
+        {
+            $(".SearchForm").hide();
+            $('.title_search').html(header);
+            $('#search_logo').attr('class', 'icon-search');
+        }
+        else
+        {
+            $('.title_search').html("Close Search");
+            $('#search_logo').attr('class', 'icon-remove');
+        }
+    }
+
     $(function () {
         $('.datepicker1 input').removeAttr('id');
         $('.datepicker1 input').attr('id', 'pickdate1');
@@ -485,7 +506,34 @@
         //$('#pickdate2').disable();
         $('#pickdate3').datepicker({ dateFormat: 'yy/mm/dd' });
 
+
+
+
+        // Search Form
+        $('.TitleShow1').click(function () {
+            $('.SearchForm').slideToggle();
+            $('#search_logo').removeAttr('class');
+
+            if (open == 0) {
+                $('.title_search').html('Close Search');
+                $('#search_logo').attr('class', 'icon-remove');
+                open = 1 ;
+            }
+            else {
+                open = 0 ;
+                $('.title_search').html(header);
+                $('#search_logo').attr('class', 'icon-search');
+            }
+
+            var x = $('.form_search').offset().top - 20;
+            $('body,html').animate({
+                scrollTop: x
+            }, 800);
+        });
+
     });
+
+
 
 
 </script>

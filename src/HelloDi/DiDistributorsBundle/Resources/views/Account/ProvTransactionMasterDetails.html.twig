@@ -1,80 +1,93 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProv1.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
+    <a class="link" href="">Transactions</a>
+    <span class="link">Transaction Details</span>
+{% endblock Site_Map %}
+
+
+
+{% block Tab %}
+
 
 
     <div class="widget-header">
-        <h3>Provider Transactions</h3>
+        <h3>Transaction Details</h3>
     </div> <!-- /widget-header -->
 
-    <div class="form_search">
-        <h5 style="cursor:pointer;" class="TitleShow1">
-            <span>
-                <i id="search_logo" class="icon-search"></i>
-                <p class="title_search">Search Transactions</p>
-            </span>
-        </h5>
-            <div class="tab-content">
-                <table style="margin-top: 20px"
-                       class="table table-bordered table-striped table-highlight postsend">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Date</th>
-                        <th>{{ 'Transaction.Credit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Debit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Transaction.User' | trans ({}, "account") }}</th>
 
 
-                    </tr>
-                    </thead>
-                    <tbody>
+   <form method="post" class="form-horizontal">
+      <fieldset>
+          <div class="control-group">
+              <label class="control-label">
+                  ID
+              </label>
+              <div class="controls">
+                  <input type="text" value="{{ Trans.id}}" disabled="" >
+              </div>
+          </div>
 
-                        <tr>
-                            <td>{{ Trans.id}}</td>
-                            <td>{{ Trans.tranInsert|date('y-M-d H:m:s') }}</td>
-                            {% if Trans.tranAmount > 0 %}
-                                <td>
-                                    {{ Trans.tranAmount }}
+          <div class="control-group">
+              <label class="control-label">
+                  Date
+              </label>
+              <div class="controls">
+                  <input type="text" value="{{ Trans.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
+              </div>
+          </div>
 
-                                </td>
+          <div class="control-group">
+              <label class="control-label">
+                  {{ 'Transaction.Credit' | trans ({}, "account") }}
+              </label>
+              <div class="controls">
+                  <input type="text" value="{% if Trans.tranAmount > 0 %}  {{ Trans.tranAmount }} {% else %} ---------------  {% endif %}" disabled="" >
+              </div>
+          </div>
 
-                                <td>
+          <div class="control-group">
+              <label class="control-label">
+                  {{ 'Transaction.Debit' | trans ({}, "account") }}
+              </label>
+              <div class="controls">
+                  <input type="text" value="{% if Trans.tranAmount > 0 %}  --------------- {% else %} {{ -Trans.tranAmount }}  {% endif %}" disabled="" >
+              </div>
+          </div>
 
-                                    -----------
-                                </td>
+          <div class="control-group">
+              <label class="control-label">
+                  {{ 'Transaction.Description' | trans ({}, "account") }}
+              </label>
+              <div class="controls">
+                  <input type="text" value="{{ Trans.tranDescription }}" disabled="" >
+              </div>
+          </div>
 
-                            {% else  %}
+          <div class="control-group">
+              <label class="control-label">
+                  {{ 'Transaction.Balance' | trans ({}, "account") }}
+              </label>
+              <div class="controls">
+                  <input type="text" value="{% set balance=Trans.tranBalance+Trans.tranAmount %}{{ balance }}" disabled="" >
+              </div>
+          </div>
 
-                                <td>
-                                    {{ -Trans.tranAmount }}
-                                </td>
-
-                                <td>
-
-                                    ------------
-                                </td>
-
-                            {% endif %}
-                            <td>{{ Trans.tranDescription }}</td>
-                            <td>
-
-                                {% set balance=Trans.tranBalance+Trans.tranAmount %}
-
-
-                                {{ balance }}
-
-                            </td>
-                            <td>{{ Trans.User.username }}</td>
-                            <td >
+          <div class="control-group">
+              <label class="control-label">
+                  {{ 'Transaction.User' | trans ({}, "account") }}
+              </label>
+              <div class="controls">
+                  <input type="text" value="{{ Trans.User.username }}" disabled="" >
+              </div>
+          </div>
+      </fieldset>
+   </form>
 
 
-                            </td>
-                        </tr>
 
-                    </tbody>
-                </table>
-
-            </div>
-        </form>
-    </div>
-
+{% endblock %}

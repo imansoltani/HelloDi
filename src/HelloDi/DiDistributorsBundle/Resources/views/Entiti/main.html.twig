@@ -27,7 +27,7 @@
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
                             <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Search Entities</p>
+                            <p class="title_search"></p>
                         </span>
                     </h5>
 
@@ -68,26 +68,8 @@
                     </form>
                     <script type="text/javascript">
                         $(function () {
-                            $(".SearchForm").hide();
-                            $('.TitleShow1').click(function () {
-                                $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class') ;
 
-                                if($('.title_search').html() == 'Search Entities')
-                                {
-                                    $('.title_search').html('Close Search') ;
-                                    $('#search_logo').attr('class','icon-remove') ;
-                                }
-                                else{
-                                    $('.title_search').html('Search Entities') ;
-                                    $('#search_logo').attr('class','icon-search') ;
-                                }
-
-                                var x = $('.form_search').offset().top - 20;
-                                $('body,html').animate({
-                                    scrollTop: x
-                                }, 800);
-                            });
+                            Form_Search(0,"Search Entities");
 
                         });
                     </script>
