@@ -394,54 +394,10 @@ class Transaction
 
     public function updateAccountBalance()
     {
-#this switch for function code
-        switch ($this->getTranAction()) {
-            case 'rmv':
-
-                break;
-
-
-            case 'sale':
-
-                  $Amount=$this->getTranAmount();
-                  $this->setTranBalance($this->getAccount()->getAccBalance());
-                  $this->getAccount()->setAccBalance(($this->getAccount()->getAccBalance())+$Amount);
-
-                break;
-
-
-            case 'add':
-                break;
-
-            case 'com':
-                $Amount=$this->getTranAmount();
-                $this->setTranBalance($this->getAccount()->getAccBalance());
-                $this->getAccount()->setAccBalance(($this->getAccount()->getAccBalance())+$Amount);
-                break;
-
-        }
-
-
-
-#this switch for function money
-        switch ($this->getTranType()) {
-            case 1:# 1 for credit
 
                 $amount=$this->getTranAmount();
                 $currentBalance=$this->getAccount()->getAccBalance();
-                $this->setTranBalance($currentBalance);
                 $this->getAccount()->setAccBalance($currentBalance+$amount);
-                break;
-
-            case 0: #0 for debit
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->setTranBalance($currentBalance);
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
-                break;
-
-                  }
-
 
     }
 

@@ -207,19 +207,19 @@ class DistributorsController extends Controller
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
-            ->add('Amount',null,array('data'=>0))
-            ->add('Communications','textarea',array('required'=>false))
-            ->add('Description','textarea',array('required'=>false))
+            ->add('Amount',null,array())
+            ->add('Communications','textarea',array('required'=>true))
+            ->add('Description','textarea',array('required'=>true))
             ->getForm();
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text',array('data'=>0))
+            ->add('Amount','text',array())
             ->add('As','choice',array(
                 'preferred_choices'=>array('Credit'),
                 'choices'=>
                 array(
-                    'Credit'=>'Increase',
-                    'Debit'=>'Decrease')
+                    1=>'Increase',
+                    0=>'Decrease')
             ))->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',
@@ -268,8 +268,10 @@ class DistributorsController extends Controller
             $trandist->setTranFees(0);
             $trandist->setTranAction('tran');
             $trandist->setTranType(0);
-            $trandist->setTranAmount(-$data['Amount']);
             $trandist->setTranDescription($data['Description']);
+
+
+
 
             #transaction for retailer#
 
@@ -279,15 +281,16 @@ class DistributorsController extends Controller
             $tranretailer->setAccount($Account);
             $tranretailer->setUser($User);
             $tranretailer->setTranFees(0);
-            $tranretailer->setTranAmount(+$data['Amount']);
             $tranretailer->setTranAction('tran');
             $trandist->setTranType(1);
             $tranretailer->setTranDescription($data['Communications']);
 
-            if($data['Amount']!='')
+            if($data['Amount']>0)
             {
                 if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
                 {
+                    $tranretailer->setTranAmount(+$data['Amount']);
+                    $trandist->setTranAmount(-$data['Amount']);
                     $em->persist($trandist);
                     $em->persist($tranretailer);
                     $em->flush();
@@ -295,7 +298,8 @@ class DistributorsController extends Controller
                 }
 
             }
-
+else
+    $this->get('session')->getFlashBag()->add('error','this operation done error !');
 
         }
 
@@ -317,8 +321,8 @@ class DistributorsController extends Controller
             ->add('Amount','text')
             ->add('As','choice',array('preferred_choices'=>array('Credit'),
                 'choices'=>array(
-                    'Credit'=>'increase retailer,s credit limit',
-                    'Debit'=>'decrease retailer,s credit limit')
+                    1=>'Increase',
+                    0=>'Decrease')
             ))->getForm();
 
         if($req->isMethod('POST'))
@@ -337,38 +341,38 @@ class DistributorsController extends Controller
             $trandist->setTranFees(0);
             $trandist->setTranAction('crtl');
             $trandist->setTranType(0);
-            $trandist->setTranAmount(-$data['Amount']);
             $trandist->setAccount($Account->getParent());
+if($data['Amount']>0)
+{
 
-            if($data['As']=='Credit')
-            {
-               if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
-               {
-
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
-                $em->persist($trandist);
-                $em->flush();
-                   $this->get('session')->getFlashBag()->add('success','this operation done success !');
-               }
-               }
-
-            elseif($data['As']=='Debit')
-            {
-
-                if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
-                {
-
-                $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
-                $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
-
-
-                }
-
-           }
-
-
+    if($data['As']==1)
+    {
+        if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
+        {
+            $trandist->setTranAmount(-$data['Amount']);
+            $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
+            $em->persist($trandist);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
         }
+    }
+
+    elseif($data['As']==0)
+    {
+
+        if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
+        {
+            $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+        }
+    }
+
+}
+else
+    $this->get('session')->getFlashBag()->add('error','this operation done error !');
+
+}
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
     }
 
