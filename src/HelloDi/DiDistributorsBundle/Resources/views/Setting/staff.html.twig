@@ -11,6 +11,27 @@
     <span class="link">Staff</span>
 {% endblock Site_Map %}
 
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
 {% block PageTitle %}
     <i class="icon-th-large"></i>
     Account Staff
@@ -31,13 +52,11 @@
             <a class="btn-large button btn btn-primary " href="{{ path('MasterStaffAdd') }}">Add New
                 user</a><br>
 
-            <div class="tablediv">
-                <div class="contenttitle">
-                    <h4>Accounts</h4>
-                </div>
-                <form>
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
+            <div style="margin-top: 5px" class="tablediv">
+
+
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
                             <thead>
                             <tr>
                                 <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
@@ -48,6 +67,17 @@
                                 <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
 
                             </tr>
+
+
+                            <tr class="input" >
+                                <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                                <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                                <td><input type="text" name="search_Username" value="Search Username" class="search_init" /></td>
+                                <td><input type="text" name="search_Status" value="Search Status" class="search_init" /></td>
+                                <td><input type="text" name="search_Role" value="Search Role" class="search_init" /></td>
+                                <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                            </tr>
+
                             </thead>
                             <tbody>
                             {% for user in pagination %}
@@ -78,10 +108,8 @@
                         </table>
                         {#{button pagination}#}
                     </div>
-                </form>
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
+
+
             </div>
         </div>
     </div>
