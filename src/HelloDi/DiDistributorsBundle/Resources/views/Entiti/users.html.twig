@@ -8,6 +8,27 @@
     <span class="link">Users</span>
 {% endblock Site_Map %}
 
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
 {% block Tab %}
 
     <div class="widget-header">
@@ -33,12 +54,11 @@
 
     </a>
 
-    <div class="tablediv" >
-        <div class="contenttitle">
-            <h4>Users</h4>
-        </div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
+        <div style="margin-top: 5px" class="tablediv">
+
+
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
                 <thead>
                 <tr>
                     <th>{{ 'Id' | trans ({}, "user") }}</th>
@@ -50,6 +70,17 @@
                     <th>{{ 'Modify' | trans ({}, "user") }}</th>
 
                 </tr>
+
+                <tr class="input" >
+                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                    <td><input type="text" name="search_UserName" value="Search UserName" class="search_init" /></td>
+                    <td><input type="text" name="search_Email" value="Search Email" class="search_init" /></td>
+                    <td><input type="text" name="search_Account" value="Search Account" class="search_init" /></td>
+                    <td><input type="text" name="search_Role" value="Search Role" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                </tr>
+
                 </thead>
                 <tbody>
 
@@ -82,10 +113,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {#{button pagination}#}
-            <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
-            </div>
+
         </div>
     </div>
 

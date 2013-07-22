@@ -32,9 +32,9 @@
 
                     <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST">
 
-
+                        status:
                         <div class="control-group">
-                            <label class="control-label">Close
+                            <label class="control-label">Close:
                             </label>
 
                             <div class="controls">
@@ -43,16 +43,17 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Open
+                            <label class="control-label">Open:
                             </label>
 
                             <div class="controls">
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
-
+<hr>
+countact:
                         <div class="control-group">
-                            <label class="control-label">Distributors
+                            <label class="control-label">Distributors:
                             </label>
 
                             <div class="controls">
@@ -61,16 +62,16 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Support Team
+                            <label class="control-label">Support Team:
                             </label>
 
                             <div class="controls">
                                 {{ form_widget(form.Contact[1]) }}
                             </div>
                         </div>
-
+<hr>
                         <div class="control-group">
-                            {{ form_label(form.Type) }}
+                            {{ form_label(form.Type,'Type:') }}
                             <div class="controls">
                                 {{ form_widget(form.Type) }}
                             </div>

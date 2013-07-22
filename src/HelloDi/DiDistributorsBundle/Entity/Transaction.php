@@ -394,6 +394,35 @@ class Transaction
 
     public function updateAccountBalance()
     {
+#this switch for function code
+        switch ($this->getTranAction()) {
+            case 'rmv':
+
+                break;
+
+
+            case 'sale':
+
+                  $Amount=$this->getTranAmount();
+                  $this->setTranBalance($this->getAccount()->getAccBalance());
+                  $this->getAccount()->setAccBalance(($this->getAccount()->getAccBalance())+$Amount);
+
+                break;
+
+
+            case 'add':
+                break;
+
+            case 'com':
+                $Amount=$this->getTranAmount();
+                $this->setTranBalance($this->getAccount()->getAccBalance());
+                $this->getAccount()->setAccBalance(($this->getAccount()->getAccBalance())+$Amount);
+                break;
+
+        }
+
+
+
 #this switch for function money
         switch ($this->getTranType()) {
             case 1:# 1 for credit
@@ -412,38 +441,8 @@ class Transaction
                 break;
 
                   }
-#this switch for function code
-    switch ($this->getTranAction()) {
-            case 'tran':
-
-                break;
-
-            case 'crtl':
-
-                break;
-
-            case 'pmt':
-
-                break;
 
 
-            case 'amdt':
-
-                break;
-
-
-            case 'sale':
-
-                break;
-
-
-            case 'add':
-                break;
-
-            case 'Profit':
-//
-                break;
-        }
     }
 
 //    public function __construct($entityManager)

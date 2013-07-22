@@ -29,6 +29,7 @@ class BalanceChecker
             return true;
         } else {
             $this->session->getFlashBag()->add('error','this operation done with error!');
+            return false;
         }
     }
 

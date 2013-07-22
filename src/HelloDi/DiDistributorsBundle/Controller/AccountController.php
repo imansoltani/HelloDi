@@ -1205,40 +1205,22 @@ $countisprov=count($isprove->getQuery()->getResult());
 
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createFormBuilder()
-            ->add('username', null, array('required' => false))->getForm();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $result = $Account->getUsers();
 
-        if ($request->isMethod('post')) {
-            $form->handleRequest($request);
-            $data = $form->getData();
 
             $qb = $em->createQueryBuilder();
             $qb->select('Usr')
                 ->from('HelloDiDiDistributorsBundle:User', 'Usr')
-                ->where('Usr.Account = :Acc')->setParameter('Acc', $Account)
-                ->andwhere('Usr.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
-                ->andWhere($qb->expr()->like('Usr.username', $qb->expr()->literal($data['username'] . '%')));
-            $result = $qb->getQuery();
-            $count = count($qb->getQuery()->getResult());
-            $result->setHint('knp_paginator.count', $count);
-
-        }
-
-        $pagination = $paginator->paginate(
-            $result,
-            $request->get('page',1) /*page number*/,
-            10/*limit per page*/
-        );
+                ->where('Usr.Account = :Acc')->setParameter('Acc', $Account);
+             $qb=$qb->getQuery();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig',
 
             array(
-                'pagination' => $pagination,
-                'form' => $form->createView(),
+                'pagination' => $qb->getResult(),
                 'Account' => $Account
             ));
 

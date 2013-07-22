@@ -622,7 +622,13 @@ class DistributorsController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
-       $qb=array();
+        $qb = $em->createQueryBuilder()
+            ->select('retailer')
+            ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
+            ->innerJoin('retailer.Entiti', 'Ent')
+            ->where('retailer.Parent = :prn')
+            ->setParameter('prn',$Account);
+
         $form_search= $this->createFormBuilder()
                        ->add('CityName','entity',
                               array(
@@ -654,12 +660,6 @@ class DistributorsController extends Controller
 
             $form_search->handleRequest($request);
             $data= $form_search->getData();
-                $qb = $em->createQueryBuilder()
-                    ->select('retailer')
-                    ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
-                    ->innerJoin('retailer.Entiti', 'Ent')
-                    ->where('retailer.Parent = :prn')
-                    ->setParameter('prn',$Account);
             if($data['CityName'])
                 $qb->andwhere($qb->expr()->like('Ent.entCity', $qb->expr()->literal($data['CityName']->getEntCity())));
             switch($data['Balance'])
@@ -677,14 +677,14 @@ class DistributorsController extends Controller
                     $qb->andwhere($qb->expr()->eq('retailer.accBalance', $data['BalanceValue']));
                  break;
             }
-            $qb=$qb->getQuery();
-            $count = count($qb->getResult());
-            $qb->setHint('knp_paginator.count', $count);
+
 
         }
 
 
-
+        $qb=$qb->getQuery();
+        $count = count($qb->getResult());
+        $qb->setHint('knp_paginator.count', $count);
         $pagination = $paginator->paginate(
             $qb,
             $request->get('page',1)/*page number*/,
@@ -809,10 +809,13 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
 
+
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $Account = $Tran->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerDetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
+                'retailerAccount'=>$Account,
             ));
 
     }
@@ -932,9 +935,12 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
+
             ));
 
     }
@@ -1351,7 +1357,7 @@ class DistributorsController extends Controller
 
         if($req->isMethod('POST'))
         {
-            $form->submit($req);
+            $form->handleRequest($req);
             $data=$form->getData();
 
             $tickets=$em->createQueryBuilder();
@@ -1373,7 +1379,7 @@ class DistributorsController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Tickets.html.twig',array(
             'Account'=>$Account,
             'form'=>$form->createView(),
-            'pagination'=>$tickets
+            'pagination'=>$pagination
         ));
 
     }
@@ -1389,8 +1395,8 @@ class DistributorsController extends Controller
         $Account=$User->getAccount();
 
         $form=$this->createFormBuilder()
-            ->add('Subject','text',array())
-            ->add('Type','choice',array(
+            ->add('Subject','text',array('label'=>'Subject:'))
+            ->add('Type','choice',array('label'=>'Type:',
                 'choices'=>array(
                     5=>'All',
                     0=>'Payment issue',
@@ -1399,13 +1405,13 @@ class DistributorsController extends Controller
                 )
 
             ))
-            ->add('Description','textarea',array('required'=>true))->getForm();
+            ->add('Description','textarea',array('required'=>true,'label'=>'Description:'))->getForm();
 
         if($req->isMethod('POST'))
         {
             $tickets=new Ticket();
             $note=new TicketNote();
-            $form->submit($req);
+            $form->handleRequest($req);
             $data=$form->getData();
 
             $tickets->setAccountdist($Account);
@@ -1447,6 +1453,7 @@ class DistributorsController extends Controller
             ->add('Description','textarea',array('required'=>true))->getForm();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
+
         if($req->isMethod('POST'))
         {
             $form->submit($req);

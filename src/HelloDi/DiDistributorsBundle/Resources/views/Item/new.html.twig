@@ -38,12 +38,16 @@
                 <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
                     <div class="control-group">
                         {{ form_label(form.itemName) }}
-                        {{ form_widget(form.itemName) }}
+                        <div class="controls money">
+                            {{ form_widget(form.itemName) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.itemName) }}
                     </div>
                     <div class="control-group">
                         {{ form_label(form.itemFaceValue) }}
-                        {{ form_widget(form.itemFaceValue) }}
+                        <div class="controls money">
+                            {{ form_widget(form.itemFaceValue) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.itemFaceValue) }}
                     </div>
                     <div class="control-group">
@@ -62,7 +66,9 @@
                     </div>
                     <div class="control-group">
                         {{ form_label(form.alertMinStock) }}
-                        {{ form_widget(form.alertMinStock) }}
+                        <div class="controls money">
+                            {{ form_widget(form.alertMinStock) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.alertMinStock) }}
                     </div>
                     <div class="control-group">
@@ -83,7 +89,9 @@
 
                     <div class="control-group">
                         {{ form_label(form.itemCode) }}
-                        {{ form_widget(form.itemCode) }}
+                        <div class="controls money">
+                            {{ form_widget(form.itemCode) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.itemCode) }}
                     </div>
 

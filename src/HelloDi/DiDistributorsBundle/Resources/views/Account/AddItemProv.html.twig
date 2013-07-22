@@ -5,7 +5,8 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Items</span>
+    <a class="link" href="">Items</a>
+    <span class="link">Add New Items</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
@@ -20,8 +21,8 @@
 
             <div class="control-group">
                 {{ form_label(form.Item) }}
-                <div class="controls">
-                    {{ form_widget(form.Item) }}
+                <div class="controls money">
+                    {{ form_widget(form.Item) }} <span class="icon-certificate"></span>
                 </div>
                 {{ form_errors(form.Item) }}
             </div>

@@ -3,8 +3,8 @@ Retailer_Shop_dmtu:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
 
 Retailer_Shop_dmtu_code:
-    pattern:  /code
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:PrintCode }
+    pattern:  /buy
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Buy }
 
 Retailer_Shop_callingCard:
     pattern:  /calling-cards

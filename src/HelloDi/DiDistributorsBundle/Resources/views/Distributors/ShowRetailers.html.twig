@@ -28,9 +28,9 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             Fix_Size();
-        } );
+        });
 
     </script>
 
@@ -38,7 +38,7 @@
 
 {% block Body %}
 
-    <div class="span" >
+    <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
 
@@ -49,39 +49,41 @@
                 <div class="form_search">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
-                            <i id="search_logo" class="icon-search" ></i>
-                            <p class="title_search" >Search Retailer</p>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">Search Retailer</p>
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="{{ path('retailer_show',{}) }}" method="post" >
+                    <form class="form-horizontal SearchForm" action="{{ path('retailer_show',{}) }}" method="post">
 
                         <fieldset>
 
 
-
-
                             <div class="control-group">
                                 {{ form_label(form_search.CityName,'City:') }}
-                                {{ form_widget(form_search.CityName) }}
+                                <div class="controls">
+                                    {{ form_widget(form_search.CityName) }}
+                                </div>
                             </div>
 
                             <div class="control-group">
 
                                 {{ form_label(form_search.Balance,'Balance:') }}
-                                <div class="controls">
-                                    {{ form_widget(form_search.Balance) }}
 
-                                </div>
-                             </div>
+                                    <div class="controls">
+                                        {{ form_widget(form_search.Balance) }}
+                                    </div>
+
+
+                            </div>
                             <div class="control-group">
-                            {{ form_label(form_search.BalanceValue,'Value:') }}
-                            <div class="controls">
-                            {{ form_widget(form_search.BalanceValue) }}|{{ Account.accCurrency }}
-                </div>
-            </div>
+                                {{ form_label(form_search.BalanceValue,'Value:') }}
+                                <div class="controls money">
+                                    {{ form_widget(form_search.BalanceValue) }} | {{ Account.accCurrency }}
+                                </div>
+                            </div>
 
-                            <input type="hidden" value="1" name="page" id="search_page" >
+                            <input type="hidden" value="1" name="page" id="search_page">
                             <hr>
                             <input class="btn btn-primary" type="submit" value="Search">
 
@@ -90,26 +92,7 @@
                     </form>
                     <script type="text/javascript">
                         $(function () {
-                            $(".SearchForm").hide();
-                            $('.TitleShow1').click(function () {
-                                $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class') ;
-
-                                if($('.title_search').html() == 'Search Retailer')
-                                {
-                                    $('.title_search').html('Close Search') ;
-                                    $('#search_logo').attr('class','icon-remove') ;
-                                }
-                                else{
-                                    $('.title_search').html('Search Retailer') ;
-                                    $('#search_logo').attr('class','icon-search') ;
-                                }
-
-                                var x = $('.form_search').offset().top - 20;
-                                $('body,html').animate({
-                                    scrollTop: x
-                                }, 800);
-                            });
+                            Form_Search(0, "Search Retailer");
 
                         });
                     </script>
@@ -120,54 +103,59 @@
                 <div style="margin-top: 5px" class="tablediv">
 
                     {#<form action="{{ path('ManageItemsProv') }}" method="post">#}
-                        <div class="tab-content datatable">
-                            <table id="example" class="table postsend">
-                                <thead>
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Entity</th>
+                                <th>Balance</th>
+                                <th>Credit Limit</th>
+                                <th>Manage</th>
+                            </tr>
+
+
+                            <tr class="input">
+                                <td><input type="text" name="search_Id" value="Search Id" class="search_init"/></td>
+
+                                <td><input type="text" name="search_Name" value="Search Name" class="search_init"/></td>
+                                <td><input type="text" name="search_Entity_Name" value="Search Entity Name"
+                                           class="search_init"/></td>
+                                <td><input type="text" name="search_Balance" value="Search Balance"
+                                           class="search_init"/></td>
+
+                                <td><input type="text" disabled="" name="search_Operation" value=""
+                                           class="search_init"/></td>
+                                <td><input type="text" disabled="" name="search_Operation" value=""
+                                           class="search_init"/></td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for myAccount in Retailers %}
                                 <tr>
-                                    <th  >Id</th>
-                                    <th>Name</th>
-                                    <th>Entity</th>
-                                    <th>Balance</th>
-                                    <th>Credit Limit</th>
-                                    <th>Manage</th>
+                                    <td style="font-weight: bold">{{ myAccount.id }}</td>
+
+                                    <td>{{ myAccount.accName }}</td>
+                                    <td>{{ myAccount.Entiti.entName }}</td>
+                                    <td>{{ myAccount.accBalance }}|<b>{{ myAccount.accCurrency }}</b></td>
+                                    <td>{{ myAccount.accCreditLimit }}</td>
+                                    <td class="td-actions">
+                                        <a class="btn_actions"
+                                           href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
+                                        {#<br/>#}
+                                        {#<a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>#}
+                                    </td>
                                 </tr>
-
-
-                                <tr class="input" >
-                                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-
-                                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                                    <td><input type="text" name="search_Entity_Name" value="Search Entity Name" class="search_init" /></td>
-                                    <td><input type="text" name="search_Balance" value="Search Balance" class="search_init" /></td>
-
-                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                {% for myAccount in Retailers %}
-                                    <tr>
-                                        <td style="font-weight: bold" >{{ myAccount.id }}</td>
-
-                                        <td>{{ myAccount.accName }}</td>
-                                        <td>{{ myAccount.Entiti.entName }}</td>
-                                        <td>{{ myAccount.accBalance }}|<b>{{ myAccount.accCurrency }}</b></td>
-                                        <td>{{ myAccount.accCreditLimit }}</td>
-                                        <td class="td-actions" >
-                                            <a class="btn_actions" href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
-                                            {#<br/>#}
-                                            {#<a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>#}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            <div class="navigation">
-                                {{ knp_pagination_render(Retailers) }}
-                            </div>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="navigation">
+                            {{ knp_pagination_render(Retailers) }}
                         </div>
-                        <input type="hidden" name="accountid" class="accountid" value=""/>
+                    </div>
+                    <input type="hidden" name="accountid" class="accountid" value=""/>
 
                     {#</form>#}
                 </div>

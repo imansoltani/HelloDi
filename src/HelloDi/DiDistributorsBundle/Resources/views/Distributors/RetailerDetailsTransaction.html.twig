@@ -1,3 +1,18 @@
+
+
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('retailer_show') }}">Transactions</a>
+    <span class="link">Transaction Details</span>
+{% endblock Site_Map %}
+{% block Tab %}
+
+
 <div class="widget-header">
     <h3>Details</h3>
 </div> <!-- /widget-header -->
@@ -44,9 +59,7 @@
                 {{ 'Credit' | trans ({}, "account") }}
             </label>
             <div class="controls">
-                <input type="text" disabled="" value="
-                {{ credit }}
-                                ">
+                <input type="text" disabled="" value="{{ credit }}">
             </div>
         </div>
 
@@ -57,10 +70,7 @@
                 {{ 'Debit' | trans ({}, "account") }}
             </label>
             <div class="controls">
-                <input type="text" disabled="" value="
-
-                             {{ debit }}
-                                ">
+                <input type="text" disabled="" value="{{ debit }}">
             </div>
         </div>
 
@@ -118,6 +128,8 @@
 
 
 </div>
+
+{% endblock %}
 
 
 

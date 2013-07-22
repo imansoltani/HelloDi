@@ -23,7 +23,7 @@
         <h5 style="cursor:pointer;" class="TitleShow1">
             <span>
                 <i id="search_logo" class="icon-search"></i>
-                <p class="title_search">Search Transactions</p>
+                <p class="title_search"></p>
             </span>
         </h5>
         <form class="form-horizontal SearchForm" action="{{ path('MasterProvTransaction',{'id':Account.id}) }}"
@@ -107,6 +107,7 @@
 
             $(function () {
 
+                Form_Search(1,"Search Transactions");
 
                     val= $("#form_type").val();
                     $("#form_Action").html('<option value="All">Please wait ...</option>');
@@ -116,25 +117,7 @@
                     });
 
 
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class');
 
-                    if ($('.title_search').html() == 'Search Transactions') {
-                        $('.title_search').html('Close Search');
-                        $('#search_logo').attr('class', 'icon-remove');
-                    }
-                    else {
-                        $('.title_search').html('Search Transactions');
-                        $('#search_logo').attr('class', 'icon-search');
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
 
             });
         </script>

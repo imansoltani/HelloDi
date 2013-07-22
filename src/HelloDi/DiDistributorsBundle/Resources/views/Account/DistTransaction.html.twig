@@ -43,39 +43,48 @@
             <div class="control-group">
                 <label class="control-label" >Looking Date
                 </label>
-                <div class="controls">
-                    {{ form_widget(form.TypeDate[1]) }}
-                </div>
+
+                    <div class="controls">
+                        {{ form_widget(form.TypeDate[1]) }}
+                    </div>
+
             </div>
             <div class="control-group datepicker1"">
             {{ form_label(form.DateStart) }}
 
-            {{ form_widget(form.DateStart) }}
+
+                {{ form_widget(form.DateStart) }}
 
     </div>
 
     <div class="control-group datepicker2">
         {{ form_label(form.DateEnd) }}
-        <div class="controls">
+
             {{ form_widget(form.DateEnd) }}
-        </div>
+
     </div>
 
     <div class="control-group "">
                 {{ form_label(form.Type) }}
 
-                    {{ form_widget(form.Type) }}
+                    <div class="controls">
+                        {{ form_widget(form.Type) }}
+                        </div>
 
             </div>
     <div class="control-group "">
     {{ form_label(form.Action) }}
 
-    {{ form_widget(form.Action) }}
+    <div class="controls">
+        {{ form_widget(form.Action) }}
+        </div>
 
     </div>
 
 
             <input type="hidden" value="1" name="page" id="search_page" >
+
+            <hr>
             <input class="btn btn-primary" type="submit" value="Search">
 
         </form>
@@ -94,6 +103,7 @@
 
             $(function () {
 
+                Form_Search(1,"Search Transactions");
 
                     val= $("#form_Type").val();
                     $("#form_Action").html('<option value="All">Please wait ...</option>');
@@ -102,25 +112,7 @@
                     });
 
 
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class');
 
-                    if ($('.title_search').html() == 'Filter List') {
-                        $('.title_search').html('Close Search');
-                        $('#search_logo').attr('class', 'icon-remove');
-                    }
-                    else {
-                        $('.title_search').html('Filter List');
-                        $('#search_logo').attr('class', 'icon-search');
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
 
             });
         </script>

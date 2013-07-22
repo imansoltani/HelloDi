@@ -7,6 +7,28 @@
     <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
     <span class="link">Address</span>
 {% endblock Site_Map %}
+
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
 {% block Tab %}
 
 
@@ -53,12 +75,12 @@
 
 <hr>
 
-    <div class="tablediv" >
-        <div class="contenttitle">
-            <h4>Adresses</h4>
-        </div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
+
+    <div style="margin-top: 5px" class="tablediv">
+
+
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
                 <thead>
                 <tr>
                     <th>{{ 'Id' | trans ({}, "user") }}</th>
@@ -70,6 +92,23 @@
                     <th>{{ 'City' | trans ({}, "user") }}</th>
                     <th>{{ 'Country' | trans ({}, "user") }}</th>
                 </tr>
+
+                <tr class="input" >
+                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                    <td><input type="text" id="search_DateChange" name="search_DateChange" value="Search DateChange" class="search_init" /></td>
+
+
+
+                    <td><input type="text" name="search_Town" value="Search Town" class="search_init" /></td>
+                    <td><input type="text" name="search_Street" value="Search Street" class="search_init" /></td>
+                    <td><input type="text" name="search_Additional" value="Search Additional" class="search_init" /></td>
+                    <td><input type="text" name="search_PostCode" value="Search PostCode" class="search_init" /></td>
+                    <td><input type="text" name="search_City" value="Search City" class="search_init" /></td>
+                    <td><input type="text" name="search_Country" value="Search Country" class="search_init" /></td>
+
+
+                </tr>
+
                 </thead>
                 <tbody>
 
@@ -93,4 +132,14 @@
 
         </div>
     </div>
+{% endblock %}
+
+{% block Link_Footer %}
+
+    <script type="text/javascript">
+        $(function(){
+            //$('#search_DateChange').datepicker({ dateFormat: 'mm-yy-dd' });
+        });
+    </script>
+
 {% endblock %}

@@ -34,23 +34,23 @@
 
 
                         <div class="control-group">
-                            <label class="control-label" >Close
+                            <label class="control-label" >
                             </label>
-                            <div class="controls">
+                            <div class="controls">Open:
                                 {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" >Open
+                            <label class="control-label" >
                             </label>
-                            <div class="controls">
+                            <div class="controls">Close:
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Type) }}
+                            {{ form_label(form.Type,'Type:') }}
                             <div class="controls">
                                 {{ form_widget(form.Type) }}
                             </div>
@@ -63,25 +63,8 @@
                     </form>
                     <script type="text/javascript">
                         $(function () {
-                            $(".SearchForm").hide();
-                            $('.TitleShow1').click(function () {
-                                $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class');
 
-                                if ($('.title_search').html() == 'Filter List') {
-                                    $('.title_search').html('Close Search');
-                                    $('#search_logo').attr('class', 'icon-remove');
-                                }
-                                else {
-                                    $('.title_search').html('Filter List');
-                                    $('#search_logo').attr('class', 'icon-search');
-                                }
-
-                                var x = $('.form_search').offset().top - 20;
-                                $('body,html').animate({
-                                    scrollTop: x
-                                }, 800);
-                            });
+                            Form_Search(0,"Filter List");
 
                         });
                     </script>

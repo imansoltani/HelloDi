@@ -45,6 +45,16 @@ Current Status:{% if Ticket.status==0 %}
        {% else %}
         <a href="{{ path('RetailerTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
        {% endif %}
+<hr>
+                {% if Ticket.Status!=0 %}
+                    <form action="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" method="POST">
+
+                        {{form_label(form.Description,'Description:')}}
+                        {{form_widget(form.Description)}}
+
+                        <input type="submit" value="Send">
+                    </form>
+                {% endif %}
 
                 <div class="tab-content">
                     <table style="margin-top: 20px"
@@ -67,15 +77,7 @@ Current Status:{% if Ticket.status==0 %}
 
 
 <hr>
-                {% if Ticket.Status!=0 %}
-<form action="{{ path('RetailerTicketsNote',{'id':Ticket.id}) }}" method="POST">
 
-        {{form_label(form.Description)}}
-        {{form_widget(form.Description)}}
-
-    <input type="submit" value="Send">
-</form>
-                    {% endif %}
 
             </div>
         </div>

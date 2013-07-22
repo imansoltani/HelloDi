@@ -29,16 +29,16 @@ class EntitiController extends Controller
         $user=$this->get('security.context')->getToken()->getUser();
 
         $formsearch = $this->createFormBuilder()
-            ->add('entName', 'text',array('required'=>false))
-            ->add('Country', 'entity', array(
+            ->add('entName', 'text',array('required'=>false,'label'=>'Entity Name:'))
+            ->add('Country', 'entity', array('label'=>'Country:',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property' => 'name',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('u');
-
-                    })
+                     'empty_value'=>'All',
+                     'empty_data'=>'',
+                     'required'=>false
+                )
             )
             ->add('HaveAccount', 'choice',
-                array(
+                array('label'=>'Have Account:',
                     'expanded'=>true,
                     'multiple'=>true,
                     'choices'=>
@@ -57,7 +57,7 @@ class EntitiController extends Controller
                      $qb->select('Ent')
                         ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
                          ->innerJoin('Ent.Accounts','EntAcc')
-                         ->andWhere('Ent!=1');
+                         ->andWhere('Ent != :E')->setParameter('E',$user->getEntiti());
 
 
         if ($request->isMethod('POST'))
@@ -66,21 +66,16 @@ class EntitiController extends Controller
             $formsearch->handleRequest($request);
             $data = $formsearch->getData();
 
-
-            if ($data['Country']->getName() != 'All')
+            if ($data['Country'])
                 $qb->where('Ent.Country= :cun')->setParameter('cun',$data['Country']);
 
-            foreach($data['HaveAccount'] as $value)
-            {
-                $qb->orwhere($qb->expr()->eq('EntAcc.accType', $value));
-            }
-
-            if ($data['entName'] != '') {
+            if ($data['entName'] != '')
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
-            }
+
+            foreach($data['HaveAccount'] as $acc)
+               $qb->andwhere($qb->expr()->eq('EntAcc.accType',$acc));
 
         }
-
 
         $qb = $qb->getQuery();
         $count = count($qb->getResult());
@@ -136,14 +131,8 @@ class EntitiController extends Controller
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
 
-        $pagination = $paginator->paginate(
-          $entity->getUsers(),
-            $request->get('page',1) /*page number*/,
-            100/*limit per page*/
-        );
-
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $entity->getUsers(),
             'entity' => $entity,
         ));
     }

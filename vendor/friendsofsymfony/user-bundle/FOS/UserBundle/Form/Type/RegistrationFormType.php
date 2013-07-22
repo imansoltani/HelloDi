@@ -47,7 +47,6 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
                 'choices' =>
                 array(
-                   ''=>'select user status',
                     0 => 'Disabled',
                     1 => 'Enabled'
 
@@ -62,6 +61,7 @@ class RegistrationFormType extends AbstractType
                 'type' => 'choice',
                 'options' => array('label' => 'Role:',
                     'choices' => array(
+                        ''=>'select a role',
                         'ROLE_RETAILER' => 'ROLE_RETAILER',
                         'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
                     ),
@@ -72,6 +72,7 @@ class RegistrationFormType extends AbstractType
                 'type' => 'choice',
                 'options' => array('label' => 'Role',
                     'choices' => array(
+                        ''=>'select a role',
                         'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
                         'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
                     ),
@@ -82,6 +83,7 @@ class RegistrationFormType extends AbstractType
                 'type' => 'choice',
                 'options' => array('label' => 'Role',
                     'choices' => array(
+                        ''=>'select a role',
                         'ROLE_MASTER' => 'ROLE_MASTER',
                         'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
                     ),

@@ -5,9 +5,29 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
-    <span class="link">User</span>
+    <span class="link">Users</span>
 {% endblock Site_Map %}
 
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
 
 {% block Tab %}
 
@@ -19,65 +39,15 @@
     <br>
     <a  class="button btn btn-primary btn-large" href="{{ path('MasterDistUserAdd',{'id':Account.id}) }}">Add New User</a>
 
-    <div class="form_search">
-        <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search"></i>
-                            <p class="title_search">Search Account Users</p>
-                        </span>
-        </h5>
-        <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUser',{'id':Account.id}) }}" method="post">
-
-            <div class="control-group">
-                {{ form_label(form.username) }}
-                {{ form_widget(form.username) }}
-            </div>
-            <input type="hidden" value="1" name="page" id="search_page" >
-
-            {{ form_widget(form._token) }}
-            <hr>
-            <input class="btn  btn-primary" type="submit" value="Search">
-            <a class="btn " href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
-
-        </form>
-        {#{% set  route=app.request.get('_route')   %}#}
-
-        <script type="text/javascript">
-            $(function () {
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class') ;
-
-                    if($('.title_search').html() == 'Search Account Users')
-                    {
-                        $('.title_search').html('Close Search') ;
-                        $('#search_logo').attr('class','icon-remove') ;
-                    }
-                    else{
-                        $('.title_search').html('Search Account Users') ;
-                        $('#search_logo').attr('class','icon-search') ;
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
-
-            });
-        </script>
-    </div>
 
 
 
-    <div class="tablediv" >
-        <div class="contenttitle">
-            <h4>Account Users</h4>
-        </div>
 
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table postsend">
+    <div style="margin-top: 5px" class="tablediv">
+
+
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -87,6 +57,14 @@
 
 
                 </tr>
+
+                <tr class="input" >
+                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                    <td><input type="text" name="search_UserName" value="Search UserName" class="search_init" /></td>
+                    <td><input type="text" name="search_Role" value="Search Role" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                </tr>
+
                 </thead>
                 <tbody>
                 {% for u in pagination %}
@@ -113,10 +91,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    {#{button pagination}#}
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
     </div>
 
 

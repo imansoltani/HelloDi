@@ -5,6 +5,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
+    <a class="link" href="">Users</a>
     <span class="link">Add User</span>
 {% endblock Site_Map %}
 
@@ -21,17 +22,25 @@
                 {{ form_errors(form) }}
                 <div class="control-group">
                     {{ form_label(form.firstname) }}
-                    {{ form_widget(form.firstname) }}
+
+
+                    <div class="controls money">
+                        {{ form_widget(form.firstname) }} <span class="icon-certificate" ></span>
+                    </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.lastname) }}
-                    {{ form_widget(form.lastname) }}
+                    <div class="controls money">
+                        {{ form_widget(form.lastname) }} <span class="icon-certificate" ></span>
+                    </div>
                 </div>
                 <div class="control-group">
                     {#{{ form_errors(form.username) }}#}
                     {{ form_label(form.username) }}
-                    {{ form_widget(form.username) }}
+                    <div class="controls money">
+                        {{ form_widget(form.username) }} <span class="icon-certificate" ></span>
+                    </div>
                 </div>
 
                 <div class="control-group">
@@ -47,19 +56,27 @@
 
                 <div class="control-group">
                     {{ form_label(form.enabled) }}
-                    <div class="controls">
-                        {{ form_widget(form.enabled) }}
+
+
+                    <div class="controls money">
+                        {{ form_widget(form.enabled) }} <span class="icon-certificate" ></span>
                     </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.plainPassword.first) }}
-                    {{ form_widget(form.plainPassword.first) }}
+
+                    <div class="controls money">
+                        {{ form_widget(form.plainPassword.first) }} <span class="icon-certificate" ></span>
+                    </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.plainPassword.second) }}
-                    {{ form_widget(form.plainPassword.second) }}
+
+                    <div class="controls money">
+                        {{ form_widget(form.plainPassword.second) }} <span class="icon-certificate" ></span>
+                    </div>
                 </div>
 
                 <div class="control-group">

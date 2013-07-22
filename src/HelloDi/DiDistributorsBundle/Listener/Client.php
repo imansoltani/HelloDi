@@ -40,11 +40,12 @@ class Client
         $this->submitUrl    = $submitUrl;
 
         //generate(string $name, mixed $parameters = array(), Boolean $absolute = false)
-        $this->resultUrl    = $router->generate('retailer_OgoneTransactions_Accept', [], true);
+        $this->resultUrl  = $router->generate('retailer_OgoneTransactions_Accept', [], true);
 //        $this->catalogUrl   = $router->generate('hellodi_transactions_new', [], true);
 //        $this->homeUrl  = $router->generate('hellodi_index', [], true);
 //        $this->ogoneTemplateUrl   = $router->generate('', [], true);
     }
+
 
     private  function getSortedParameters(OgonePayment $payment)
     {

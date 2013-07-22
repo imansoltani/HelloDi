@@ -8,6 +8,25 @@
     <span class="link">Accounts</span>
 {% endblock Site_Map %}
 
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
 
 {% block Tab %}
     <div class="widget-header">
@@ -30,12 +49,11 @@
     {% endif %}
 
 
-    <div class="tablediv" >
-        <div class="contenttitle">
-            <h4>Accounts</h4>
-        </div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
+<div style="margin-top: 5px" class="tablediv">
+
+
+    <div class="tab-content datatable">
+        <table id="example" class="table postsend">
                 <thead>
                 <tr>
                     <th>{{'Account.Id' | trans ({}, "account")}}</th>
@@ -48,6 +66,16 @@
                     <th>{{'Account.Balance' | trans ({}, "account")}}</th>
                     <th>{{'Account.CreditLimit' | trans ({}, "account")}}</th>
                     <th>{{'Account.Manage' | trans ({}, "account")}}</th>
+                </tr>
+
+                <tr class="input" >
+                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                    <td><input type="text" name="search_ChildNumber" value="Search ChildNumber" class="search_init" /></td>
+                    <td><input type="text" name="search_Type" value="Search Type" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                 </tr>
 
                 </thead>

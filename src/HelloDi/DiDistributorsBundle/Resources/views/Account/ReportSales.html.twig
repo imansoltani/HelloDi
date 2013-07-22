@@ -78,25 +78,8 @@
         </form>
         <script type="text/javascript">
             $(function () {
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class');
 
-                    if ($('.title_search').html() == 'Filter List') {
-                        $('.title_search').html('Close Search');
-                        $('#search_logo').attr('class', 'icon-remove');
-                    }
-                    else {
-                        $('.title_search').html('Filter List');
-                        $('#search_logo').attr('class', 'icon-search');
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
+                Form_Search(0,"Filter List");
 
             });
         </script>
@@ -149,4 +132,6 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
+
+    {% endfor %}
 {% endblock %}

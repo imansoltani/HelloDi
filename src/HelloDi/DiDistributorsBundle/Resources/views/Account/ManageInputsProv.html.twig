@@ -48,31 +48,13 @@
 
                 {{ form_rest(form) }}
                 <hr>
-                <input class="btn btn-large btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="Search">
             </fieldset>
         </form>
         <script type="text/javascript">
             $(function () {
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class') ;
 
-                    if($('.title_search').html() == 'Search Input File')
-                    {
-                        $('.title_search').html('Close Search') ;
-                        $('#search_logo').attr('class','icon-remove') ;
-                    }
-                    else{
-                        $('.title_search').html('Search Input File') ;
-                        $('#search_logo').attr('class','icon-search') ;
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
+                Form_Search(0,"Search Input File");
 
             });
         </script>
