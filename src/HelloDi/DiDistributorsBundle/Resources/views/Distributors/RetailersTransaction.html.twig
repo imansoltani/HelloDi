@@ -46,15 +46,15 @@
 
                 <div class="control-group datepicker1">
                     {{ form_label(form.DateStart) }}
-                    <div class="controls">
+
                         {{ form_widget(form.DateStart) }}
-                    </div>
+
                 </div>
                 <div class="control-group datepicker2">
                     {{ form_label(form.DateEnd) }}
-                    <div class="controls">
+
                         {{ form_widget(form.DateEnd) }}
-                    </div>
+
                 </div>
 
                 <div class="control-group">
@@ -100,25 +100,7 @@
                     })
 
 
-                $(".SearchForm").hide();
-                $('.TitleShow1').click(function () {
-                    $('.SearchForm').slideToggle();
-                    $('#search_logo').removeAttr('class');
-
-                    if ($('.title_search').html() == 'Search Transactions') {
-                        $('.title_search').html('Close Search');
-                        $('#search_logo').attr('class', 'icon-remove');
-                    }
-                    else {
-                        $('.title_search').html('Search Transactions');
-                        $('#search_logo').attr('class', 'icon-search');
-                    }
-
-                    var x = $('.form_search').offset().top - 20;
-                    $('body,html').animate({
-                        scrollTop: x
-                    }, 800);
-                });
+               Form_Search(1,"Search Transactions");
 
             });
         </script>

@@ -15,7 +15,7 @@
 </div> <!-- /widget-header -->
 <br>
 
-<form action="{{ path('Retailer_details',{'id':retailerAccount.id}) }}" method="POST">
+<form class="form-horizontal" action="{{ path('Retailer_details',{'id':retailerAccount.id}) }}" method="POST">
 
 
     <div class="control-group">
@@ -30,8 +30,11 @@
         {{ form_widget(edit_form.entVatNumber) }}
     </div>
 <hr>
-    Address:<br>
-
+    <div class="control-group">
+        <label class="control-label">
+            Address:
+        </label>
+    </div>
 
     <div class="control-group">
         {{ form_errors(edit_form.entAdrs1) }}
@@ -67,10 +70,18 @@
     <div class="control-group">
         {{ form_errors(edit_form.Country) }}
         {{ form_label(edit_form.Country) }}
-        {{ form_widget(edit_form.Country) }}
+        <div class="controls">
+            {{ form_widget(edit_form.Country) }}
+        </div>
     </div>
     <hr>
-Additional details:<br>
+
+
+    <div class="control-group">
+        <label class="control-label">
+            Additional details:
+        </label>
+    </div>
     <div class="control-group">
         {{ form_errors(edit_form.entTel1) }}
         {{ form_label(edit_form.entTel1) }}
@@ -96,7 +107,10 @@ Additional details:<br>
     </div>
     {{ form_widget(edit_form._token) }}
 
-        <input type="submit" value="Edit">
+    <div class="form-actions">
+        <input type="submit" value="Edit" class="btn btn-primary" >
+    </div>
+
     </form>
 
 {% endblock %}

@@ -5,8 +5,8 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
-
-    <span class="link">Items</span>
+    <a class="link" href="">Items</a>
+    <span class="link">New Items</span>
 {% endblock Site_Map %}
 
 
@@ -19,15 +19,20 @@
 
         <div class="control-group">
             {{ form_label(form.Item) }}
-            <div class="controls">
-                {{ form_widget(form.Item) }}
+            <div class="controls money">
+                <div class="controls">
+                    {{ form_widget(form.Item) }}
+                </div>
+                <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form.Item) }}
         </div>
 
         <div class="control-group">
             {{ form_label(form.price) }}
-            <div class="controls" >{{ form_widget(form.price) }} {{ retailerAccount.accCurrency }}</div>
+            <div class="controls money" >{{ form_widget(form.price) }} | {{ retailerAccount.accCurrency }}
+            <span class="icon-certificate"></span>
+            </div>
             {{ form_errors(form.price) }}
         </div>
 

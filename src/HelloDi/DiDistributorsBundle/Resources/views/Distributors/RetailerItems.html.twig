@@ -8,6 +8,26 @@
     <span class="link">Items</span>
 {% endblock Site_Map %}
 
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
 
 {% block Tab %}
     <div class="widget-header">
@@ -29,6 +49,16 @@
                         <th>Price(Currency)</th>
                         <th>Manage</th>
                     </tr>
+
+                    <tr class="input" >
+                        <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                        <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                        <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                        <td><input type="text" name="search_Type" value="Search Type" class="search_init" /></td>
+                        <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                        <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    </tr>
+
                     </thead>
                     <tbody>
                     {% for price in prices %}
@@ -49,14 +79,6 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            Fix_Size();
-        } );
-
-    </script>
 
 {% endblock %}

@@ -809,10 +809,13 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
 
+
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $Account = $Tran->getAccount();
         return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerDetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
+                'retailerAccount'=>$Account,
             ));
 
     }
@@ -932,9 +935,12 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
+
             ));
 
     }
