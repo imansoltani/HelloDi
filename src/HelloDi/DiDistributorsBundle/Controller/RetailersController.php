@@ -639,7 +639,7 @@ $datetype=0;
 
         }
 
-    public function PrintCodeAction(Request $request)
+    public function BuyAction(Request $request)
     {
         $codeselector = $this->get('hello_di_di_distributors.codeselector');
 
@@ -685,7 +685,6 @@ $datetype=0;
                     $tranretailer->setTranType(0);
                     $tranretailer->setUser($user);
                     $tranretailer->setTranBookingValue(null);
-                    $tranretailer->setTranBalance($Account->getAccBalance());
 
 
 
@@ -702,7 +701,6 @@ $datetype=0;
                     $trandist->setTranType(1);
                     $trandist->setUser($user);
                     $trandist->setTranBookingValue(null);
-                    $tranretailer->setTranBalance($Account->getParent()->getAccBalance());
 
                     $em->persist($tranretailer);
                     $em->persist($trandist);
@@ -726,60 +724,26 @@ $datetype=0;
 
     public function CallingCardAction() {
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
-        $check = $Account->getId();
-        $qb = $em->createQueryBuilder()
-            ->select('item.itemName','item.id','operator.name','item.itemFaceValue','item.itemCurrency','price.id as pid')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Prices','price')
-            ->innerJoin('price.Item','item')
-            ->innerJoin('item.operator','operator')
-            ->where('acc.id =:check')
-            ->setParameter('check',$check)
-            ->andwhere('item.itemType =:check2')
-            ->setParameter('check2',2)
-            ->OrderBy('item.itemName')
-            ->getQuery();
-            $item = $qb->getResult();
+        $qb = $em->createQueryBuilder();
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+            ->from('HelloDiDiDistributorsBundle:Operator','O')
+            ->innerJoin('O.Item','OI')
+            ->innerJoin('OI.Prices','OIP')
+            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('clcd')))
+            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
+            ->andwhere('OIP.priceStatus = 1');
+        $qb=$qb->getQuery();
+        $qb=$qb->getResult();
 
-        $qb = $em->createQueryBuilder()
-            ->select('DISTINCT operator.id','operator.name')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Prices','price')
-            ->innerJoin('price.Item','item')
-            ->innerJoin('item.operator','operator')
-            ->where('acc.id =:check')
-            ->andwhere('item.itemType =:check2')
-            ->setParameter('check2',2)
-            ->setParameter('check',$check)
-            ->getQuery();
 
-            $operator = $qb->getResult();
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array('itemlist' => $item , 'operator'=>$operator,'account'=>$Account));
-
-    }
-
-    public function FavouritesAction(){
-        $em = $this->getDoctrine()->getManager();
-
-        $Account = $this->container->get('security.context')->getToken()->getUser()->getAccount();
-        $check = $Account->getId();
-        $qb = $em->createQueryBuilder()
-            ->select('item.itemName','item.id')
-            ->from('HelloDiDiDistributorsBundle:Account','acc')
-            ->innerJoin('acc.Prices','price')
-            ->innerJoin('price.Item','item')
-            ->innerJoin('item.operator','operator')
-            ->where('acc.id =:check')
-            ->setParameter('check',$check)
-            ->andwhere('price.isFavourite =:check2')
-            ->setParameter('check2',1)
-            ->getQuery();
-
-        $itemFavourite = $qb->getResult();
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:favourite.html.twig',array('listFavourite'=>$itemFavourite));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array
+        (
+            'Operators'=>$qb,
+            'Account'=>$Account,
+        ));
 
     }
 

@@ -33,10 +33,11 @@ class NewUserDistributorsRetailerInEntityType extends BaseType
                      'class'    => 'HelloDiDiDistributorsBundle:Account',
                      'property' => 'accName',
 
-                     'query_builder' => function(EntityRepository $er)use ($entity) {
+                'query_builder' => function(EntityRepository $er)use ($entity) {
                          return $er->createQueryBuilder('u')
-                             ->where('u.accType != 1 ')
-                             ->andwhere('u.Entiti=:ent')->setParameter('ent',$entity);
+                              ->where('u.accType != 1 ')
+                             ->andwhere('u.Entiti=:ent')->setParameter('ent',$entity)
+                             ;
                      }
                 ,'required'=>true
                  )
