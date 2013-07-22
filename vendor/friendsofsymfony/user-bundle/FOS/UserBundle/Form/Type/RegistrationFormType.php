@@ -47,7 +47,6 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
                 'choices' =>
                 array(
-                   ''=>'select user status',
                     0 => 'Disabled',
                     1 => 'Enabled'
 
