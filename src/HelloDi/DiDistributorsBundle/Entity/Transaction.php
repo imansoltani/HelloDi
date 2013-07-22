@@ -418,6 +418,7 @@ class Transaction
                 $this->setTranBalance($this->getAccount()->getAccBalance());
                 $this->getAccount()->setAccBalance(($this->getAccount()->getAccBalance())+$Amount);
                 break;
+
         }
 
 

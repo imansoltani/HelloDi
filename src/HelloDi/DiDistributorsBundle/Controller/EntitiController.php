@@ -131,14 +131,8 @@ class EntitiController extends Controller
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
 
-        $pagination = $paginator->paginate(
-          $entity->getUsers(),
-            $request->get('page',1) /*page number*/,
-            100/*limit per page*/
-        );
-
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $entity->getUsers(),
             'entity' => $entity,
         ));
     }

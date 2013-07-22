@@ -682,7 +682,7 @@ $datetype=0;
                     $tranretailer->setTranInsert(new \DateTime('now'));
                     $tranretailer->setCode($code);
                     $tranretailer->setTranAction('sale');
-                    $tranretailer->setTranType(0);
+                    $tranretailer->setTranType(2);
                     $tranretailer->setUser($user);
                     $tranretailer->setTranBookingValue(null);
 
@@ -698,7 +698,7 @@ $datetype=0;
                     $trandist->setTranInsert(new \DateTime('now'));
                     $trandist->setCode($code);
                     $trandist->setTranAction('com');
-                    $trandist->setTranType(1);
+                    $trandist->setTranType(2);
                     $trandist->setUser($user);
                     $trandist->setTranBookingValue(null);
 

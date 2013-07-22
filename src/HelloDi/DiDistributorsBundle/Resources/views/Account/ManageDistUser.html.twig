@@ -26,20 +26,7 @@
                             <p class="title_search"></p>
                         </span>
         </h5>
-        <form class="form-horizontal SearchForm"  action="{{ path('ManageDistUser',{'id':Account.id}) }}" method="post">
 
-            <div class="control-group">
-                {{ form_label(form.username) }}
-                {{ form_widget(form.username) }}
-            </div>
-            <input type="hidden" value="1" name="page" id="search_page" >
-
-            {{ form_widget(form._token) }}
-            <hr>
-            <input class="btn  btn-primary" type="submit" value="Search">
-            <a class="btn " href="{{ path('ManageDistUser',{'id':Account.id}) }}">Reset</a>
-
-        </form>
         {#{% set  route=app.request.get('_route')   %}#}
 
         <script type="text/javascript">
@@ -95,10 +82,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    {#{button pagination}#}
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
     </div>
 
 
