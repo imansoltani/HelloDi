@@ -1924,7 +1924,6 @@ public  function MasterProvTransactionDeleteAction($tranid){
 
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $searchForm = $this->createFormBuilder()
             ->add('FromDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
             ->add('ToDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
@@ -1947,11 +1946,11 @@ public  function MasterProvTransactionDeleteAction($tranid){
             ->select('trans')
             ->from('HelloDiDiDistributorsBundle:Transaction', 'trans')
             ->innerJoin('trans.Code', 'code')
-            ->innerJoin('code.Item', 'item')
-            ->innerJoin('trans.Account', 'acc')
+            ->innerJoin('code.Input', 'input')
+            ->innerJoin('input.Account', 'acc')
             ->where('trans.tranAction =:check')
             ->setParameter('check', 'removed')
-            ->andwhere('acc =:check2')
+            ->andwhere('acc = :check2')
             ->setParameter('check2', $account);
 
 
@@ -1967,7 +1966,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
                 $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
 
             if ($data['item'] != "")
-                $qb = $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['item']->getItemName())));
+                $qb = $qb->andWhere('code.Item = :item')->setParameter('item', $data['item']);
 
         }
         $qb = $qb->getQuery();
@@ -1979,7 +1978,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
             $this->get('request')->query->get('page', 1) /*page number*/,
             20/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig', array('id' => $id, 'Account' => $Account, 'accProv' => $accProv, 'form' => $searchForm->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig', array('id' => $id, 'Account' => $account, 'accProv' => $accProv, 'form' => $searchForm->createView()));
     }
 
     // kamal Prov End
