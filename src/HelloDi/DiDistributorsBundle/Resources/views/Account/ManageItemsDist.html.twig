@@ -8,6 +8,26 @@
     <span class="link">Items</span>
 {% endblock Site_Map %}
 
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
 {% block Tab %}
 
     <div class="widget-header">
@@ -18,12 +38,10 @@
         Add new Item
     </a>
     <br><br>
-    <div class="tablediv">
-        <div class="contenttitle">
-            <h4>Items</h4>
-        </div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table postsend">
+    <div style="margin-top: 5px" class="tablediv">
+
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
 
                 <thead>
                 <tr>
@@ -35,6 +53,18 @@
                     <th>Price (Currency)</th>
                     <th>Status</th>
                     <th>Management</th>
+                </tr>
+
+                <tr class="input" >
+                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><input type="text" name="search_Code" value="Search Code" class="search_init" /></td>
+                    <td><input type="text" name="search_Type" value="Search Type" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><input type="text" name="search_Status" value="Search Status" class="search_init" /></td>
+                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+
                 </tr>
                 </thead>
 
