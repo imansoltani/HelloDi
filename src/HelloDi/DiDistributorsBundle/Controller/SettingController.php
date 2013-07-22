@@ -16,15 +16,10 @@ public  function staffAction(){
 
     $User=$this->get('security.context')->getToken()->getUser();
     $Users=$User->getEntiti()->getUsers();
-    $paginator = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        $Users,
-        $this->get('request')->query->get('page', 1) /*page number*/,
-        6/*limit per page*/
-    );
+
     return $this->render('HelloDiDiDistributorsBundle:Setting:staff.html.twig',array(
     'Entiti'=>$User->getEntiti(),
-    'pagination'=>$pagination
+    'users'=>$Users
     ));
 
 }
