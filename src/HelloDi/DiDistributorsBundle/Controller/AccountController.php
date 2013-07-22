@@ -477,8 +477,8 @@ $qb=array();
                 'empty_value'=>'choice a action',
                 'choices' =>
                 array(
-                    'Credit' => 'Increase',
-                    'Debit' => 'Decrease'
+                    1 => 'Increase',
+                    0 => 'Decrease'
                 )
             ))->getForm();
 
@@ -514,6 +514,7 @@ $qb=array();
             ->getForm();
 
         if ($req->isMethod('post')) {
+
             $trandist = new Transaction();
             $formapplay->handleRequest($req);
             $data = $formapplay->getData();
@@ -522,57 +523,65 @@ $qb=array();
 
             $trandist->setTranDate(new \DateTime('now'));
             $trandist->setTranCurrency($Account->getAccCurrency());
-
             $trandist->setTranInsert(new \DateTime('now'));
             $trandist->setAccount($Account);
             $trandist->setUser($User);
             $trandist->setTranFees(0);
             $trandist->setTranDescription($data['Description']);
+            $trandist->setTranBalance($Account->getAccBalance());
 
 
-            if ($data['As'] == 'pmt') {
+            if(($data['Amount'] > 0))
+            {
+                switch($data['As'])
+                {
+
+              case 'pmt':
+
                 $trandist->setTranType(1);
-                if ($data['Amount'] != '') {
-                    $trandist->setTranAmount(+$data['Amount']);
-                    $trandist->setTranAction($data['As']);
-                    $em->persist($trandist);
-                    $em->flush();
-                }
-            }
+                $trandist->setTranAmount(+$data['Amount']);
+                $trandist->setTranAction($data['As']);
+                  $em->persist($trandist);
+                  $em->flush();
+                  $this->get('session')->getFlashBag()->add('success','this operation done success !');
+              break;
 
 
 
-        elseif ($data['As'] == 'amdt') {
-            $trandist->setTranType(0);
-            if ($data['Amount'] != '') {
 
-                if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-                    $trandist->setTranAmount(-$data['Amount']);
-                    $trandist->setTranAction($data['As']);
-                    $em->persist($trandist);
-                    $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
-                }
-            }
-
-        }
-
-            elseif ($data['As'] == 'com_pmt') {
-                $trandist->setTranType(0);
-                if ($data['Amount'] != '') {
+            case 'amdt':
 
                     if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                        $trandist->setTranType(0);
+                        $trandist->setTranAmount(-$data['Amount']);
+                         $trandist->setTranAction($data['As']);
+                        $em->persist($trandist);
+                        $em->flush();
+                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                       }
+                break;
+
+
+            case 'com_pmt':
+
+
+                    if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                        $trandist->setTranType(0);
                         $trandist->setTranAmount(-$data['Amount']);
                         $trandist->setTranAction($data['As']);
                         $em->persist($trandist);
                         $em->flush();
                         $this->get('session')->getFlashBag()->add('success','this operation done success !');
                     }
-                }
+           break;
+
 
             }
 
 
+            }
+         else
+             $this->get('session')->getFlashBag()->add('error','this operation done error !');
 
         }
 
@@ -598,10 +607,10 @@ $qb=array();
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
 
-            if ($data['As'] == 'Credit')
+            if ($data['As'] == 1)
                 $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
 
-            elseif ($data['As'] == 'Debit')
+            elseif ($data['As'] == 0)
             {
                 if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
                 {
@@ -831,36 +840,46 @@ $countisprov=count($isprove->getQuery()->getResult());
         $trandist->setTranDate(new \DateTime('now'));
         $trandist->setTranInsert(new \DateTime('now'));
 
+        $trandist->setTranAction('tran');
+        $tranprov->setTranAction('tran');
 
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             $data = $form->getData();
 
             #transaction for prov#
-            $tranprov->setTranAction('tran');
+
             $tranprov->setTranAmount(-$data['Amount']);
             $tranprov->setAccount($Account);
             $tranprov->setUser($User);
             $tranprov->setTranDescription($data['Description']);
             $tranprov->setTranFees(0);
             $tranprov->setTranCurrency($Account->getAccCurrency());
-            $tranprov->setTranType(0); #0 for debit
+            $tranprov->setTranType(0);
+            $tranprov->setTranBalance($Account->getAccBalance());
+            #0 for debit
+
             #transaction for dist#
             $trandist->setTranAmount(+$data['Amount']);
-            $trandist->setTranAction('tran');
             $trandist->setTranType(1); #1 for credit
             $trandist->setAccount($data['Accounts']);
             $trandist->setUser($User);
             $trandist->setTranDescription($data['Communications']);
             $trandist->setTranFees(0);
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
+            $trandist->setTranBalance($data['Accounts']->getAccBalance());
 
-            if ($data['Amount'] != '')
-                    $em->persist($trandist);
-                    $em->persist($tranprov);
-                    $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            if ($data['Amount'] > 0)
+            {
+                $em->persist($trandist);
+                $em->persist($tranprov);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            }
+
+        else  $this->get('session')->getFlashBag()->add('error','this operation done error !');
         }
+
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig', array(
             'Account' => $Account,
@@ -910,14 +929,16 @@ $countisprov=count($isprove->getQuery()->getResult());
             $tran->setAccount($Account);
             $tran->setTranDate(new \DateTime('now'));
             $tran->setTranInsert(new \DateTime('now'));
+            $tran->setTranBalance($Account->getAccBalance());
+            $tran->setTranDescription($data['Description']);
 
             if ($data['Fees'] != '')
                 $tran->setTranFees($data['Fees']);
             else
                 $tran->setTranFees(0);
 
-            $tran->setTranDescription($data['Description']);
-
+if($data['Amount']>0)
+{
            switch($data['CreditDebit'])
 
            {
@@ -943,7 +964,9 @@ $countisprov=count($isprove->getQuery()->getResult());
 
         }
         }
-
+            else
+            $this->get('session')->getFlashBag()->add('error','this operation done error !');
+        }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
                 'form' => $form->createView(),
@@ -1906,7 +1929,6 @@ public  function MasterProvTransactionDeleteAction($tranid){
 
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $searchForm = $this->createFormBuilder()
             ->add('FromDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
             ->add('ToDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
@@ -1929,11 +1951,11 @@ public  function MasterProvTransactionDeleteAction($tranid){
             ->select('trans')
             ->from('HelloDiDiDistributorsBundle:Transaction', 'trans')
             ->innerJoin('trans.Code', 'code')
-            ->innerJoin('code.Item', 'item')
-            ->innerJoin('trans.Account', 'acc')
+            ->innerJoin('code.Input', 'input')
+            ->innerJoin('input.Account', 'acc')
             ->where('trans.tranAction =:check')
             ->setParameter('check', 'removed')
-            ->andwhere('acc =:check2')
+            ->andwhere('acc = :check2')
             ->setParameter('check2', $account);
 
 
@@ -1949,7 +1971,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
                 $qb = $qb->andWhere("trans.tranDate <= :transdateTo")->setParameter('transdateTo', $data['ToDate']);
 
             if ($data['item'] != "")
-                $qb = $qb->andWhere($qb->expr()->like('item.itemName', $qb->expr()->literal($data['item']->getItemName())));
+                $qb = $qb->andWhere('code.Item = :item')->setParameter('item', $data['item']);
 
         }
         $qb = $qb->getQuery();
@@ -1961,7 +1983,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
             $this->get('request')->query->get('page', 1) /*page number*/,
             20/*limit per page*/
         );
-        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig', array('id' => $id, 'Account' => $Account, 'accProv' => $accProv, 'form' => $searchForm->createView()));
+        return $this->render('HelloDiDiDistributorsBundle:Account:MasterProvRemoved.html.twig', array('id' => $id, 'Account' => $account, 'accProv' => $accProv, 'form' => $searchForm->createView()));
     }
 
     // kamal Prov End
