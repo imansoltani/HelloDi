@@ -50,7 +50,7 @@ MasterDistSale:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Sale"}
 
 MasterDistDetailsSale:
-    pattern:  /sales/{id}/details
+    pattern:  /{id}/sales/{tranid}/details
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
 
 #purchases-----------------

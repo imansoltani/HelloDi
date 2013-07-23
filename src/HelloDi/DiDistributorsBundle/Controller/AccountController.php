@@ -754,12 +754,12 @@ class AccountController extends Controller
 
     }
 
-    public function  DetailsSaleAction($id)
+    public function  DetailsSaleAction($tranid)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
         $Account = $tran->getAccount()->getParent();
 

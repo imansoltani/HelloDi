@@ -98,8 +98,17 @@ class ItemController extends Controller
 
     public function ItemPerDistAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        $qb = $em->createQueryBuilder()
+            ->select("prc")
+            ->from("HelloDiDiDistributorsBundle:Price","prc")
+            ->innerJoin("prc.Account","acc")
+            ->where("acc.accType = 1")
+            ->where("prc.priceStatus = 1")
+            ->where("prc.Item = :itm")->setParameter("itm",$item)
+            ->getQuery();
+        $haspriceforprov = (count($qb->getResult())>0);
 
         $form = $this->createFormBuilder()
             ->add('checks', 'entity', array(
@@ -114,36 +123,58 @@ class ItemController extends Controller
                             ;
                     }
                 ))
-            ->add('NewPrice','text')
+            ->add('NewPrice','text',array('required'=>true))
             ->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
+                $actiontype = $request->get("actiontype");
                 $newprice = $data['NewPrice'];
-                foreach ($data['checks'] as $accountretailer)
+                foreach ($data['checks'] as $accountdist)
                 {
-                    if(count($accountretailer->getPrices())!=0)
+                    $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountdist));
+                    if($actiontype == "1")
                     {
-                        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
-                        $price->setPrice($newprice);
+                        if($price != null)
+                        {
+                            $price->setPriceStatus(0);
+                            $RetAccs = $accountdist->getChildrens()->toArray();
+//                            die("--".count($RetAccs)."--");
+                            $em ->createQueryBuilder()
+                                ->update('HelloDiDiDistributorsBundle:Price','pr')
+                                ->where('pr.Account IN (:retaccs)')->setParameter('retaccs',$RetAccs)
+                                ->andWhere('pr.Item = :item')->setParameter('item',$item)
+                                ->set("pr.priceStatus",0)
+                                ->getQuery()
+                                ->execute()
+                            ;
+                        }
+                    }
+                    else if($price != null)
+                    {
+                        if($price->getPrice() != $newprice)
+                        {
+                            $price->setPrice($newprice);
+                            $price->setPriceStatus(1);
 
-                        $pricehistory = new PriceHistory();
-                        $pricehistory->setPrice($newprice);
-                        $pricehistory->setDate(new \DateTime('now'));
-                        $pricehistory->setPrices($price);
-                        $em->persist($pricehistory);
+                            $pricehistory = new PriceHistory();
+                            $pricehistory->setPrice($newprice);
+                            $pricehistory->setDate(new \DateTime('now'));
+                            $pricehistory->setPrices($price);
+                            $em->persist($pricehistory);
+                        }
                     }
                     else
                     {
                         $price = new Price();
                         $price->setPrice($newprice);
-                        $price->setPriceCurrency($accountretailer->getAccCurrency());
+                        $price->setPriceCurrency($accountdist->getAccCurrency());
                         $price->setPriceStatus(true);
                         $price->setIsFavourite(true);
                         $price->setItem($item);
-                        $price->setAccount($accountretailer);
+                        $price->setAccount($accountdist);
                         $em->persist($price);
 
                         $pricehistory = new PriceHistory();
@@ -154,14 +185,15 @@ class ItemController extends Controller
                     }
                 }
                 $em->flush();
-//                return $this->forward("HelloDiDiDistributorsBundle:Item:index");
+                return $this->redirect($this->generateUrl('item_price', array('id' => $id)));
             }
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Item:ItemsPerDistributors.html.twig', array(
                 'form' => $form->createView(),
                 'itemid' => $id,
-                'item'      => $item
+                'item'      => $item,
+                'haspriceforprov' => $haspriceforprov
             ));
     }
     //item desc

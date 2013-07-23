@@ -15,6 +15,15 @@
 {% set MU = 'item' %}
 
 {% block Tab %}
+    <div class="widget-header">
+        <h3>Item Per Distributors</h3>
+    </div> <!-- /widget-header -->
+
+    {% if haspriceforprov == false %}
+        <div class="span">
+            This item has not price on any provider account.
+        </div>
+    {% else %}
     <div class="span">
         <div class="widget-content">
 
@@ -35,35 +44,35 @@
                             </thead>
                             <tbody>
                             {% for row in form.checks %}
+
+                                {% set pricerow = null %}
+                                {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
+                                    {% if price.item.id == itemid %}
+                                        {% set pricerow = price %}
+                                    {% endif %}
+                                {% endfor %}
+
                                 <tr>
                                     <td>
                                         {{ form.checks.vars.choices[row.vars.value].data.accName }}
                                     </td>
                                     <td>
-                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
-                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
-                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].price }}
-                                                {{ form.checks.vars.choices[row.vars.value].data.prices[0].priceCurrency }}
-                                            {% else %}
-                                                N/A
-                                            {% endif %}
-                                        {% else %}
+                                        {% if pricerow is null %}
                                             N/A
+                                        {% else %}
+                                            {{ pricerow.price }}
                                         {% endif %}
+                                        ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
                                     </td>
                                     <td>
-                                        {% if form.checks.vars.choices[row.vars.value].data.prices.count > 0 %}
-                                            {% if form.checks.vars.choices[row.vars.value].data.prices[0].item.id == itemid %}
-                                                {% if form.checks.vars.choices[row.vars.value].data.prices[0].priceStatus==1 %}
-                                                    true
-                                                {% else %}
-                                                    false
-                                                {% endif %}
-                                            {% else %}
-                                                N/A
-                                            {% endif %}
-                                        {% else %}
+                                        {% if pricerow is null %}
                                             N/A
+                                        {% else %}
+                                            {% if pricerow.priceStatus==1 %}
+                                            true
+                                            {% else %}
+                                            false
+                                            {% endif %}
                                         {% endif %}
                                     </td>
                                     <td class="checkboxs">
@@ -103,17 +112,26 @@
                 <div style="margin-top: 15px" class="control-group">
                     {{ form_label(form.NewPrice) }}
 
-                        {{ form_widget(form.NewPrice) }} {#{{ Account.accCurrency }}#}
+                    {{ form_widget(form.NewPrice, {'required':'' }) }}
 
                     {{ form_errors(form.NewPrice) }}
                 </div>
 
                 {{ form_rest(form) }}
 
+                <input type="hidden" name="actiontype" id="actiontype" value="0"/>
+
                 <div class="form-actions">
-                    <input type="submit" class="btn btn-primary" value="Approve"/>
+                    Apply the new price to the selected accounts:<br/>
+                    <input type="submit" class="btn btn-primary" value="Approve"/><br/>
+                    <br/>
+
+                    Inactive the item on the selected accounts:<br/>
+                    <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);" value="Inactive"/>
+                    This change will be affect the retailers of the distributor.
                 </div>
             </form>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
