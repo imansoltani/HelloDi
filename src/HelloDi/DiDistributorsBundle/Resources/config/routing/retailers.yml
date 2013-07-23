@@ -1,6 +1,8 @@
+
 retailers_dashboard:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
+
 
 ritailers_account:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/setting.yml"
@@ -18,6 +20,10 @@ retailer_transaction:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/transaction.yml"
     prefix:   /transaction
 
+retailer_transaction_recharge:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/recharge.yml"
+    prefix:   /admin/transaction
+
 retailer_ticket:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/tickets.yml"
     prefix:   /tickets
@@ -31,16 +37,16 @@ retailer_items:
     prefix:   /items
 
 # ---- Ogone Start ---- #
-retailer_OgoneTransactions:
-    pattern:  /transactions/new
-    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:new }
-
-retailer_OgoneTransactions_validate:
-    pattern:  /transactions/{id}/validate
-    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Validate }
-
-retailer_OgoneTransactions_Accept:
-    pattern:  /transactions/accept
-    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Accept }
-
-# ---- Ogone End ---- #
+#retailer_OgoneTransactions:
+#    pattern:  /transactions/new
+#    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:new }
+#
+#retailer_OgoneTransactions_validate:
+#    pattern:  /transactions/{id}/validate
+#    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Validate }
+#
+#retailer_OgoneTransactions_Accept:
+#    pattern:  /transactions/accept
+#    defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:Accept }
+#
+##---- Ogone End ---- #

@@ -50,7 +50,7 @@ class AccountController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $request->get('page',1) /*page number*/
+            $request->get('page', 1) /*page number*/
 
         );
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
@@ -221,7 +221,7 @@ class AccountController extends Controller
                 $em->persist($AdrsDetai);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountProv'));
             }
 
@@ -282,7 +282,7 @@ class AccountController extends Controller
                 $AdrsDetai->setEntiti($Entiti);
                 $em->persist($AdrsDetai);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountDist'));
 
             }
@@ -305,11 +305,10 @@ class AccountController extends Controller
     public function EditAccountProvAction(Request $request, $id)
     {
 
-        $account=new Account();
+        $account = new Account();
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $edit_form = $this->createForm(new EditProvType(), $account);
-
 
 
         if ($request->isMethod('post')) {
@@ -318,7 +317,7 @@ class AccountController extends Controller
             if ($edit_form->isValid()) {
 
                 $em->flush($account);
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
 
             }
         }
@@ -339,14 +338,14 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-       $datetype=0;
+        $datetype = 0;
 
 
-$qb=array();
+        $qb = array();
         $form = $this->createFormBuilder()
 
-            ->add('DateStart', 'text',array('required'=>false,'label'=>'From:'))
-            ->add('DateEnd', 'text',array('required'=>false,'label'=>'To:'))
+            ->add('DateStart', 'text', array('required' => false, 'label' => 'From:'))
+            ->add('DateEnd', 'text', array('required' => false, 'label' => 'To:'))
             ->add('TypeDate', 'choice', array(
                 'expanded' => true,
                 'choices' => array(
@@ -354,25 +353,25 @@ $qb=array();
                     1 => 'Looking Date',
                 )
             ))
-            ->add('Type','choice',array('label'=>'Type:',
-                'choices'=> array(
-                    2=>'All',
-                    1=>'Credit',
-                    0=>'Debit'
+            ->add('Type', 'choice', array('label' => 'Type:',
+                'choices' => array(
+                    2 => 'All',
+                    1 => 'Credit',
+                    0 => 'Debit'
                 )))
-            ->add('Action', 'choice', array('label'=>'Action:',
+            ->add('Action', 'choice', array('label' => 'Action:',
                 'choices' =>
                 array(
                     'All' => 'All',
                     'pmt' => 'credit distributor,s account',
                     'amdt' => 'debit distributor,s account',
-                    'crnt'=>'issue a credit note for a sold code',
+                    'crnt' => 'issue a credit note for a sold code',
                     'com_pmt' => 'debit distributor,s account for the commisson payments',
                     'pmt' => 'ogone payment on its own account',
-                    'tran'=>'transfer credit from provider,s account to a distributor,s account',
-                    'tran'=>'transfer credit from distributors account to a retailer,s account',
-                    'crtl'=>'increase retailer,s credit limit',
-                    'com'=>'credit commissons when a retailer sells a code'
+                    'tran' => 'transfer credit from provider,s account to a distributor,s account',
+                    'tran' => 'transfer credit from distributors account to a retailer,s account',
+                    'crtl' => 'increase retailer,s credit limit',
+                    'com' => 'credit commissons when a retailer sells a code'
 
                 )))
             ->getForm();
@@ -386,29 +385,29 @@ $qb=array();
                 ->from('HelloDiDiDistributorsBundle:Transaction', 'Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc', $Account);
             if ($data['TypeDate'] == 0) {
-                if($data['DateStart']!='')
-                $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-                if($data['DateEnd']!='')
-                $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+                if ($data['DateStart'] != '')
+                    $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                if ($data['DateEnd'] != '')
+                    $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
             }
 
             if ($data['TypeDate'] == 1) {
-                $datetype=1;
-                if($data['DateStart']!='')
-                $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-                if($data['DateEnd']!='')
-                $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+                $datetype = 1;
+                if ($data['DateStart'] != '')
+                    $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+                if ($data['DateEnd'] != '')
+                    $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             }
 
             if ($data['Type'] != 2)
-                 $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
+                $qb->andWhere($qb->expr()->eq('Tran.tranType', $data['Type']));
 
-            if($data['Action']!='All')
-                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+            if ($data['Action'] != 'All')
+                $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Action'])));
 
 
-            $qb->addOrderBy('Tran.tranInsert','desc');
+            $qb->addOrderBy('Tran.tranInsert', 'desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -418,7 +417,7 @@ $qb=array();
 
         $pagination = $paginator->paginate(
             $qb,
-            $req->get('page',1) /*page number*/,
+            $req->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -429,7 +428,7 @@ $qb=array();
                 'form' => $form->createView(),
                 'Account' => $Account,
                 'Entiti' => $Account->getEntiti(),
-                'datetype'=>$datetype
+                'datetype' => $datetype
             ));
 
     }
@@ -455,26 +454,26 @@ $qb=array();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay = $this->createFormBuilder()
-            ->add('Amount',null,array('label'=>'Amount:'))
-            ->add('As', 'choice', array('label'=>'As:',
-                'empty_value'=>'choice a action',
+            ->add('Amount', null, array('label' => 'Amount:'))
+            ->add('As', 'choice', array('label' => 'As:',
+                'empty_value' => 'choice a action',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
                     'pmt' => 'Credit',
                     'amdt' => 'Debit',
-                     'com_pmt' =>'Debit (commission)'
+                    'com_pmt' => 'Debit (commission)'
                 )
             ))
             ->add('Description', 'textarea',
-                array('label'=>'Description:',
-                    'required' =>true
+                array('label' => 'Description:',
+                    'required' => true
                 ))
             ->getForm();
 
         $formupdate = $this->createFormBuilder()
-            ->add('Amount', 'text',array('label'=>'Amount:'))
-            ->add('As', 'choice', array('label'=>'As:',
-                'empty_value'=>'choice a action',
+            ->add('Amount', 'text', array('label' => 'Amount:'))
+            ->add('As', 'choice', array('label' => 'As:',
+                'empty_value' => 'choice a action',
                 'choices' =>
                 array(
                     1 => 'Increase',
@@ -508,7 +507,7 @@ $qb=array();
                 => array(
                     'pmt' => 'Credit',
                     'amdt' => 'Debit',
-                    'com_pmt'=>'Debit (commission)'
+                    'com_pmt' => 'Debit (commission)'
                 )))
             ->add('Description', 'textarea', array('required' => true))
             ->getForm();
@@ -531,57 +530,53 @@ $qb=array();
             $trandist->setTranBalance($Account->getAccBalance());
 
 
-            if(($data['Amount'] > 0))
-            {
-                switch($data['As'])
-                {
+            if (($data['Amount'] > 0)) {
+                switch ($data['As']) {
 
-              case 'pmt':
+                    case 'pmt':
 
-                $trandist->setTranType(1);
-                $trandist->setTranAmount(+$data['Amount']);
-                $trandist->setTranAction($data['As']);
-                  $em->persist($trandist);
-                  $em->flush();
-                  $this->get('session')->getFlashBag()->add('success','this operation done success !');
-              break;
-
-
-
-
-            case 'amdt':
-
-                    if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-                        $trandist->setTranType(0);
-                        $trandist->setTranAmount(-$data['Amount']);
-                         $trandist->setTranAction($data['As']);
-                        $em->persist($trandist);
-                        $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
-                       }
-                break;
-
-
-            case 'com_pmt':
-
-
-                    if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-                        $trandist->setTranType(0);
-                        $trandist->setTranAmount(-$data['Amount']);
+                        $trandist->setTranType(1);
+                        $trandist->setTranAmount(+$data['Amount']);
                         $trandist->setTranAction($data['As']);
                         $em->persist($trandist);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
-                    }
-           break;
+                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+
+                        break;
 
 
-            }
+                    case 'amdt':
+
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                            $trandist->setTranType(0);
+                            $trandist->setTranAmount(-$data['Amount']);
+                            $trandist->setTranAction($data['As']);
+                            $em->persist($trandist);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        }
+                        break;
 
 
-            }
-         else
-             $this->get('session')->getFlashBag()->add('error','this operation done error !');
+                    case 'com_pmt':
+
+
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                            $trandist->setTranType(0);
+                            $trandist->setTranAmount(-$data['Amount']);
+                            $trandist->setTranAction($data['As']);
+                            $em->persist($trandist);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        }
+                        break;
+
+
+                }
+
+
+            } else
+                $this->get('session')->getFlashBag()->add('error', ' zero isn,t accept !');
 
         }
 
@@ -593,14 +588,14 @@ $qb=array();
     {
 
         $em = $this->getDoctrine()->getManager();
-        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
+        $balancechecker = $this->get('hello_di_di_distributors.balancechecker');
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $formupdate = $this->createFormBuilder()
             ->add('Amount', 'text')
             ->add('As', 'choice', array('preferred_choices' => array('Credit'),
                 'choices' => array(
                     'Credit' => 'Increase',
-                     'Debit' => 'Decrease')
+                    'Debit' => 'Decrease')
             ))->getForm();
 
         if ($req->isMethod('POST')) {
@@ -610,10 +605,8 @@ $qb=array();
             if ($data['As'] == 1)
                 $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
 
-            elseif ($data['As'] == 0)
-            {
-                if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
-                {
+            elseif ($data['As'] == 0) {
+                if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
                     $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
                 }
             }
@@ -628,7 +621,7 @@ $qb=array();
     public function  SaleAction(Request $req, $id)
     {
 
-        $datetype=0;
+        $group = 0;
         $em = $this->getDoctrine()->getEntityManager();
         $qb = array();
         //load first list search
@@ -637,9 +630,9 @@ $qb=array();
         $form = $this->createFormBuilder()
 
             ->add('ItemType', 'choice',
-                array('label'=>'Type:','choices' =>
+                array('label' => 'Type:', 'choices' =>
                 array(
-                    'All'=> 'All',
+                    'All' => 'All',
                     'dmtu' => 'Mobile',
                     'clcd' => 'calling card',
                     'empt' => 'e-payment',
@@ -647,34 +640,28 @@ $qb=array();
                 )))
 
             ->add('ItemName', 'entity',
-                array('label'=>'Name:',
+                array('label' => 'Name:',
                     'empty_data' => '',
-                    'empty_value'=>'All',
-                    'required'=>false,
+                    'empty_value' => 'All',
+                    'required' => false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
 
-                    'query_builder'=>function(EntityRepository $er) use ($Account)
-                    {
+                    'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('i')
-                             ->innerJoin('i.Prices','ip')
-                             ->where('ip.priceStatus = 1');
-                        foreach($Account->getChildrens() as $child)
-                        {
-                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc',$Account);
+                            ->innerJoin('i.Prices', 'ip')
+                            ->where('ip.priceStatus = 1')
+                            ->andwhere('ip.Account = :Acc')->setParameter('Acc',$Account);
                         }
-
-
-                    }
                 ))
 
 
             ->add('Account', 'entity',
-                array('label'=>'Retailer(s):',
+                array('label' => 'Retailer(s):',
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
-                    'required'=>false,
-                    'empty_value'=>'All',
+                    'required' => false,
+                    'empty_value' => 'All',
                     'empty_data' => '',
                     'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('a')
@@ -685,14 +672,14 @@ $qb=array();
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
-            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
+            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From:'))
+            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To:'))
 
-            ->add('GroupBy', 'choice', array('label'=>'GroupBy:',
-                'expanded'=>true,
+            ->add('GroupBy', 'choice', array('label' => 'GroupBy:',
+                'expanded' => true,
+                 'multiple'=>true,
                 'choices' => array(
-                    2=>'no groupby',
-                    1 =>'daily sales grouped by item and retailer',
+                    1 => 'daily sales grouped by item and retailer',
                 )))
 
             ->getForm();
@@ -701,42 +688,45 @@ $qb=array();
             $form->handleRequest($req);
             $data = $form->getData();
             $qb = $em->createQueryBuilder();
-            $qb->select('Tr')
-                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
-                /*for groupBy*/
-                ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')->innerJoin('Tr.Account', 'TrAc')
-                /**/
 
+                $qb->select('Tr.id as TrId,TrCoIt.itemName as ItemName,Tr.tranDate as TrDate,TrAcEn.entName as TrEntName,Tr.tranAmount as TrAmount,COUNT(Tr) as Quantity')
+                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
+//                /*for groupBy*/,
+                ->innerJoin('Tr.Code', 'TrCo')
+                ->innerJoin('Tr.Account', 'TrAc')
+                ->innerJoin('TrCo.Item', 'TrCoIt')
+                ->innerJoin('TrAc.Entiti', 'TrAcEn')
+                /**/
                 ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
-            if($data['DateStart']!='')
+            if ($data['DateStart'] != '')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-             if($data['DateEnd']!='')
-                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+            if ($data['DateEnd'] != '')
+                $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
             if ($data['Account'])
                 $qb->andwhere('Tr.Account =:account')->setParameter('account', $data['Account']);
-          else
-          {
-              foreach($Account->getChildrens() as $acc )
-              {
-                  $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
+            else
+            {
+                $child=$Account->getChildrens();
+                foreach ($child as $acc) {
+                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc', $acc);
 
-              }
-          }
+                }
+            }
 
             if ($data['ItemType'] != 'All')
-
-                 $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType', $data['ItemType']);
-
+                $qb->andwhere( $qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal( $data['ItemType'])));
 
             if ($data['ItemName'])
-                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName'])));
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-                if($data['GroupBy']==1)
-                    $qb->GroupBy('Tr.tranInsert')->addGroupBy('TrCo.Item');
+            if ($data['GroupBy'])
+            {
+                $qb->GroupBy('Tr.tranDate')->addGroupBy('TrCoIt.itemName');
+                $group=1;
+            }
 
-
-            $qb->addOrderBy('Tr.tranInsert','desc');
+            $qb->addOrderBy('Tr.tranDate', 'desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -748,7 +738,7 @@ $qb=array();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $req->get('page',1) /*page number*/,
+            $req->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -758,35 +748,27 @@ $qb=array();
                 'pagination' => $pagination,
                 'form' => $form->createView(),
                 'Account' => $Account,
+                'group'=>$group,
                 'Entiti' => $Account->getEntiti()));
 
 
     }
 
-    public function  DetailsSaleAction($tranid)
+    public function  DetailsSaleAction($id)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
 
-        $Account = $tran->getAccount();
+        $Account = $tran->getAccount()->getParent();
 
-        $BuPrice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-            'Account' => $tran->getAccount()->getParent()
-          , 'Item' => $tran->getCode()->getItem()));
-
-        $SePrice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-            'Account' => $tran->getAccount()
-        , 'Item' => $tran->getCode()->getItem()));
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
 
             array(
                 'Account' => $Account,
                 'tran' => $tran,
-                'BuPrice' => $BuPrice->getPrice(),
-                'SePrice' => $SePrice->getPrice()
             ));
 
     }
@@ -800,24 +782,24 @@ $qb=array();
         $User = $this->get('security.context')->getToken()->getUser();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $countisprov=0;
-        $isprove=$em->createQueryBuilder();
-             $isprove->select('Acc')
-             ->from('HelloDiDiDistributorsBundle:Account','Acc')
+        $countisprov = 0;
+        $isprove = $em->createQueryBuilder();
+        $isprove->select('Acc')
+            ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
             ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
             ->andWhere('Acc.accType =0')
             ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
 
-$countisprov=count($isprove->getQuery()->getResult());
+        $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
             ->add('Amount', 'text', array('data' => 0))
             ->add('Accounts', 'entity', array(
-                'empty_value'=>'select a account',
-                'empty_data'=>'',
+                'empty_value' => 'select a account',
+                'empty_data' => '',
                 'class' => 'HelloDiDiDistributorsBundle:Account',
-                'property'=>'NamewithCurrency',
-                'required'=>true,
+                'property' => 'NamewithCurrency',
+                'required' => true,
                 'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
                         ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
@@ -869,15 +851,12 @@ $countisprov=count($isprove->getQuery()->getResult());
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
             $trandist->setTranBalance($data['Accounts']->getAccBalance());
 
-            if ($data['Amount'] > 0)
-            {
+            if ($data['Amount'] > 0) {
                 $em->persist($trandist);
                 $em->persist($tranprov);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
-            }
-
-        else  $this->get('session')->getFlashBag()->add('error','this operation done error !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+            } else  $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
         }
 
 
@@ -886,8 +865,8 @@ $countisprov=count($isprove->getQuery()->getResult());
             'User' => $User,
             'Entity' => $Account->getEntiti(),
             'form' => $form->createView(),
-             'CountProv'=>$countisprov
-         ));
+            'CountProv' => $countisprov
+        ));
 
 
     }
@@ -914,11 +893,11 @@ $countisprov=count($isprove->getQuery()->getResult());
 
             ))
             ->add('Amount', 'text', array(
-                'required' => true,'label'=>'Amount:',
+                'required' => true, 'label' => 'Amount:',
             ))
-            ->add('TradeDate', 'text',array('label'=>'Trade Date:'))
-            ->add('Description', 'textarea', array('required' => true,'label'=>'Description:',))
-            ->add('Fees', 'text', array('required' => false,'label'=>'Fees:',))->getForm();
+            ->add('TradeDate', 'text', array('label' => 'Trade Date:'))
+            ->add('Description', 'textarea', array('required' => true, 'label' => 'Description:',))
+            ->add('Fees', 'text', array('required' => false, 'label' => 'Fees:',))->getForm();
 
         if ($Req->isMethod('POST')) {
             $form->submit($Req);
@@ -937,35 +916,31 @@ $countisprov=count($isprove->getQuery()->getResult());
             else
                 $tran->setTranFees(0);
 
-if($data['Amount']>0)
-{
-           switch($data['CreditDebit'])
-
-           {
-              case 1:
-                   $tran->setTranAction('pmt');
-                   $tran->setTranType(1);
-                   $tran->setTranAmount(+$data['Amount']);
-                   $em->persist($tran);
-                   $em->flush();
-                   $this->get('session')->getFlashBag()->add('success','this operation done success !');
-                   break;
+            if ($data['Amount'] > 0) {
+                switch ($data['CreditDebit']) {
+                    case 1:
+                        $tran->setTranAction('pmt');
+                        $tran->setTranType(1);
+                        $tran->setTranAmount(+$data['Amount']);
+                        $em->persist($tran);
+                        $em->flush();
+                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        break;
 
 
-              case 0:
-                    $tran->setTranAction('amdt');
-                    $tran->setTranType(0);
-                    $tran->setTranAmount(-$data['Amount']);
-                    $em->persist($tran);
-                    $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                    case 0:
+                        $tran->setTranAction('amdt');
+                        $tran->setTranType(0);
+                        $tran->setTranAmount(-$data['Amount']);
+                        $em->persist($tran);
+                        $em->flush();
+                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
 
-                break;
+                        break;
 
-        }
-        }
-            else
-            $this->get('session')->getFlashBag()->add('error','this operation done error !');
+                }
+            } else
+                $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept !');
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
@@ -988,15 +963,15 @@ if($data['Amount']>0)
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
 
-        $qb=array();
+        $qb = array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'text', array('disabled'=>false,'required'=>false,'label'=>'From:'))
-            ->add('DateEnd', 'text', array('disabled'=>false,'required'=>false,'label'=>'To:'))
+            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From:'))
+            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To:'))
             ->add('ItemType', 'choice',
-                array('label'=>'Type:','choices' =>
+                array('label' => 'Type:', 'choices' =>
                 array(
-                    'All'=> 'All',
+                    'All' => 'All',
                     'dmtu' => 'Mobile',
                     'clcd' => 'calling card',
                     'empt' => 'e-payment',
@@ -1004,21 +979,19 @@ if($data['Amount']>0)
                 )))
 
             ->add('ItemName', 'entity',
-                array('label'=>'Name:',
+                array('label' => 'Name:',
                     'empty_data' => '',
-                    'empty_value'=>'All',
-                    'required'=>false,
+                    'empty_value' => 'All',
+                    'required' => false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
 
-                    'query_builder'=>function(EntityRepository $er) use ($Account)
-                    {
+                    'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('i')
-                            ->innerJoin('i.Prices','ip')
+                            ->innerJoin('i.Prices', 'ip')
                             ->where('ip.priceStatus = 1');
-                        foreach($Account->getChildrens() as $child)
-                        {
-                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc',$Account);
+                        foreach ($Account->getChildrens() as $child) {
+                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc', $Account);
                         }
 
 
@@ -1041,17 +1014,17 @@ if($data['Amount']>0)
                 $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
             }
 
-              if( $data['DateStart']!='')
-             $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-              if( $data['DateEnd']!='')
-             $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
-            if ($data['ItemType'] !='All')
+            if ($data['DateStart'] != '')
+                $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
+            if ($data['DateEnd'] != '')
+                $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
+            if ($data['ItemType'] != 'All')
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
             $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
-            $qb->addOrderBy('Tr.tranDate','desc');
+            $qb->addOrderBy('Tr.tranDate', 'desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -1060,10 +1033,9 @@ if($data['Amount']>0)
         }
 
 
-
         $pagination = $paginator->paginate(
             $qb,
-            $req->get('page',1) /*page number*/,
+            $req->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -1124,7 +1096,7 @@ if($data['Amount']>0)
 
         $pagination = $paginator->paginate(
             $query,
-            $request->get('page',1) /*page number*/
+            $request->get('page', 1) /*page number*/
         /*limit per page*/
         );
 
@@ -1155,27 +1127,24 @@ if($data['Amount']>0)
     }
 
 
-    public function ManageDistChildrenAction(Request $request,$id)
+    public function ManageDistChildrenAction(Request $request, $id)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $form= $this->createFormBuilder()
-            ->add('accName','text',array('required'=>false))
-            ->add('accCreditLimit','choice',array('choices'=>(array(0=>'Have Not',1=>'Have'))))
-            ->add('accBalance','choice',array('choices'=>(array(0=>'Lower Than',1=>'More Than'))))
-            ->add('accBalanceValue','text',array('required'=>false))->getForm()
-
-        ;
+        $form = $this->createFormBuilder()
+            ->add('accName', 'text', array('required' => false))
+            ->add('accCreditLimit', 'choice', array('choices' => (array(0 => 'Have Not', 1 => 'Have'))))
+            ->add('accBalance', 'choice', array('choices' => (array(0 => 'Lower Than', 1 => 'More Than'))))
+            ->add('accBalanceValue', 'text', array('required' => false))->getForm();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $query=array();
+        $query = array();
         $query = $Account->getChildrens();
 
-        if($request->isMethod('post'))
-        {
+        if ($request->isMethod('post')) {
             $form->handleRequest($request);
-            $data=$form->getData();
-                $qb = $em->createQueryBuilder()
+            $data = $form->getData();
+            $qb = $em->createQueryBuilder()
                 ->select('Acc')
                 ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
                 ->Where('Acc.Parent=:AccountParent')
@@ -1209,7 +1178,7 @@ if($data['Amount']>0)
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $request->get('page',1) /*page number*/,
+            $request->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -1234,11 +1203,11 @@ if($data['Amount']>0)
         $result = $Account->getUsers();
 
 
-            $qb = $em->createQueryBuilder();
-            $qb->select('Usr')
-                ->from('HelloDiDiDistributorsBundle:User', 'Usr')
-                ->where('Usr.Account = :Acc')->setParameter('Acc', $Account);
-             $qb=$qb->getQuery();
+        $qb = $em->createQueryBuilder();
+        $qb->select('Usr')
+            ->from('HelloDiDiDistributorsBundle:User', 'Usr')
+            ->where('Usr.Account = :Acc')->setParameter('Acc', $Account);
+        $qb = $qb->getQuery();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig',
 
@@ -1249,19 +1218,19 @@ if($data['Amount']>0)
 
     }
 
-    public function ManageDistSettingsAction(Request $request,$id)
+    public function ManageDistSettingsAction(Request $request, $id)
     {
 
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_edit = $this->createForm(new EditDistType,$Account);
+        $form_edit = $this->createForm(new EditDistType, $Account);
 
 
         if ($request->isMethod('POST')) {
             $form_edit->handleRequest($request);
             if ($form_edit->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
             }
 
         }
@@ -1309,7 +1278,7 @@ if($data['Amount']>0)
         ));
     }
 
-    public function AddItemProvAction(Request $request,$id)
+    public function AddItemProvAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -1352,8 +1321,8 @@ if($data['Amount']>0)
 
                 $em->flush();
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
-                        'id' => $price->getAccount()->getId()
-                    ));
+                    'id' => $price->getAccount()->getId()
+                ));
             }
         }
 
@@ -1363,7 +1332,7 @@ if($data['Amount']>0)
         ));
     }
 
-    public function EditItemProvAction(Request $request,$itemid)
+    public function EditItemProvAction(Request $request, $itemid)
     {
         $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
@@ -1384,8 +1353,8 @@ if($data['Amount']>0)
                 $em->flush();
 
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
-                        'id' => $price->getAccount()->getId()
-                    ));
+                    'id' => $price->getAccount()->getId()
+                ));
             }
         }
 
@@ -1409,7 +1378,7 @@ if($data['Amount']>0)
         ));
     }
 
-    public function AddItemDistAction(Request $request,$id)
+    public function AddItemDistAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -1459,8 +1428,8 @@ if($data['Amount']>0)
 
                 $em->flush();
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
-                        'id' => $price->getAccount()->getId()
-                    ));
+                    'id' => $price->getAccount()->getId()
+                ));
             }
         }
 
@@ -1470,7 +1439,7 @@ if($data['Amount']>0)
         ));
     }
 
-    public function EditItemDistAction(Request $request,$id,$itemid)
+    public function EditItemDistAction(Request $request, $id, $itemid)
     {
         $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
@@ -1488,23 +1457,21 @@ if($data['Amount']>0)
                     $pricehistory->setPrices($price);
                     $em->persist($pricehistory);
                 }
-                if($price->getPriceStatus() == 0)
-                {
+                if ($price->getPriceStatus() == 0) {
                     $RetAccs = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id)->getChildrens()->toArray();
-                    $em ->createQueryBuilder()
-                        ->update('HelloDiDiDistributorsBundle:Price','pr')
-                        ->where('pr.Account IN (:retaccs)')->setParameter('retaccs',$RetAccs)
-                        ->andWhere('pr.Item = :item')->setParameter('item',$price->getItem())
-                        ->set("pr.priceStatus",0)
+                    $em->createQueryBuilder()
+                        ->update('HelloDiDiDistributorsBundle:Price', 'pr')
+                        ->where('pr.Account IN (:retaccs)')->setParameter('retaccs', $RetAccs)
+                        ->andWhere('pr.Item = :item')->setParameter('item', $price->getItem())
+                        ->set("pr.priceStatus", 0)
                         ->getQuery()
-                        ->execute()
-                        ;
+                        ->execute();
                 }
                 $em->flush();
 
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
-                        'id' => $price->getAccount()->getId()
-                    ));
+                    'id' => $price->getAccount()->getId()
+                ));
             }
         }
 
@@ -1516,7 +1483,7 @@ if($data['Amount']>0)
     }
 
     //Inputs prov
-    public function ManageInputsProvAction(Request $request,$id)
+    public function ManageInputsProvAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1592,8 +1559,8 @@ if($data['Amount']>0)
         $form = $this->createFormBuilder()
             ->add('File', 'file')
             ->add('Batch', 'text', array('required' => false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd','data'=>new \DateTime('now')))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now')))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now')))
             ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
             ->add('SerialNumber', 'text', array('data' => '1', 'label' => 'Column Number Pin'))
             ->add('PinCode', 'text', array('data' => '4', 'label' => 'Column Number SN'))
@@ -1689,9 +1656,7 @@ if($data['Amount']>0)
                     } else {
                         $errors[] = "File is empty.";
                     }
-                }
-                catch (\Exception $ex)
-                {
+                } catch (\Exception $ex) {
                     $errors[] = "Error in Reading File.";
                 }
             } else {
@@ -1791,134 +1756,134 @@ if($data['Amount']>0)
     public function MasterProvTransactionAction(Request $request, $id)
     {
 
-$datetype=0;
+        $datetype = 0;
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
-        $form= $this->createFormBuilder()
+        $form = $this->createFormBuilder()
             ->add('TypeDate', 'choice', array(
                 'expanded' => true,
                 'choices' => array(
                     0 => 'Trade Date',
                     1 => 'Looking Date',
                 )))
-            ->add('FromDate','text', array('disabled'=>false,'required'=>false))
-            ->add('ToDate','text',array('disabled'=>false,'required'=>false))
-            ->add('type','choice',array('label'=>'Type:',
-                'choices'=> array(
-                     2=>'All',
-                     1=>'Credit',
-                     0=>'Debit'
+            ->add('FromDate', 'text', array('disabled' => false, 'required' => false))
+            ->add('ToDate', 'text', array('disabled' => false, 'required' => false))
+            ->add('type', 'choice', array('label' => 'Type:',
+                'choices' => array(
+                    2 => 'All',
+                    1 => 'Credit',
+                    0 => 'Debit'
                 )))
 
-            ->add('Action','choice',array('label'=>'Action:',
-                'choices'=> array(
-        'All'=>'All' ,
-        'add'=>'add new codes to system',
-        'pmt'=>'credit provider,s account',
-        'amdt'=>'an amount is credited to correct the price of a code',
-        'amdt'=>'an amount is debited to correct the price of a code',
-        'rmv'=>'remove codes from to system',
-        'amdt'=>'debit provider,s account',
-        'tran'=>'transfer credit from provider,s account to a distributor,s account',
+            ->add('Action', 'choice', array('label' => 'Action:',
+                'choices' => array(
+                    'All' => 'All',
+                    'add' => 'add new codes to system',
+                    'pmt' => 'credit provider,s account',
+                    'amdt' => 'an amount is credited to correct the price of a code',
+                    'amdt' => 'an amount is debited to correct the price of a code',
+                    'rmv' => 'remove codes from to system',
+                    'amdt' => 'debit provider,s account',
+                    'tran' => 'transfer credit from provider,s account to a distributor,s account',
 
                 )))->getForm();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $qb=array();
+        $qb = array();
 
-if($request->isMethod('post'))
-{
+        if ($request->isMethod('post')) {
 
-    $form->handleRequest($request);
-    $data = $form->getData();
-    $qb = $em->createQueryBuilder();
+            $form->handleRequest($request);
+            $data = $form->getData();
+            $qb = $em->createQueryBuilder();
 
-    $qb->select('Tr')
-        ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
-        ->where('Tr.Account = :Acc')->setParameter('Acc',$Account);
-    if ($data['TypeDate'] == 0) {
-        if($data['FromDate']!='')
-            $qb->andwhere('Tr.tranDate >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
-        if($data['ToDate']!='')
-            $qb->andwhere('Tr.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
-    }
-    elseif ($data['TypeDate'] == 1) {
-        $datetype=1;
-            if($data['FromDate']!='')
-                $qb->andwhere('Tr.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
-            if($data['ToDate']!='')
-                $qb->andwhere('Tr.tranInsert <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
-    }
+            $qb->select('Tr')
+                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
+                ->where('Tr.Account = :Acc')->setParameter('Acc', $Account);
+            if ($data['TypeDate'] == 0) {
+                if ($data['FromDate'] != '')
+                    $qb->andwhere('Tr.tranDate >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+                if ($data['ToDate'] != '')
+                    $qb->andwhere('Tr.tranDate <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+            } elseif ($data['TypeDate'] == 1) {
+                $datetype = 1;
+                if ($data['FromDate'] != '')
+                    $qb->andwhere('Tr.tranInsert >= :transdateFrom')->setParameter('transdateFrom', $data['FromDate']);
+                if ($data['ToDate'] != '')
+                    $qb->andwhere('Tr.tranInsert <= :transdateTo')->setParameter('transdateTo', $data['ToDate']);
+            }
 
-    if ($data['type'] != 2)
-        $qb->andWhere($qb->expr()->eq('Tr.tranType',$data['type']));
+            if ($data['type'] != 2)
+                $qb->andWhere($qb->expr()->eq('Tr.tranType', $data['type']));
 
 
-    if($data['Action']!='All')
-        $qb->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal($data['Action'])));
+            if ($data['Action'] != 'All')
+                $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['Action'])));
 
-    $qb->addOrderBy('Tr.tranInsert','desc');
+            $qb->addOrderBy('Tr.tranInsert', 'desc');
 
-    $qb=$qb->getQuery();
+            $qb = $qb->getQuery();
 
-    $count = count($qb->getResult());
-    $qb->setHint('knp_paginator.count', $count);
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
 
-}
+        }
 
 
 //die('sas'.$request->get('page'));
 
         $pagination = $paginator->paginate(
             $qb,
-             $request->get('page',1), /*page number*/
+            $request->get('page', 1), /*page number*/
             10/*limit per page*/
         );
 
 
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMaster.html.twig',
-        array(
-            'Trans' => $pagination,
-            'Account' => $Account,
-            'form' => $form->createView(),
-            'datetype'=>$datetype
-    ));
+            array(
+                'Trans' => $pagination,
+                'Account' => $Account,
+                'form' => $form->createView(),
+                'datetype' => $datetype
+            ));
 
     }
+
 #kazem alan
 
 
-public  function MasterProvTransactionDetailsAction($tranid){
+    public function MasterProvTransactionDetailsAction($tranid)
+    {
 
-    $em = $this->getDoctrine()->getManager();
-
-
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $em = $this->getDoctrine()->getManager();
 
 
-    return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
-        array(
-            'Trans' => $tran,
-            'Account' =>$tran->getAccount()
-        ));
-}
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
 
-public  function MasterProvTransactionDeleteAction($tranid){
-    $em = $this->getDoctrine()->getManager();
+        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
+            array(
+                'Trans' => $tran,
+                'Account' => $tran->getAccount()
+            ));
+    }
 
 
-    $tran= $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-
-    $em->remove($tran);
-    $em->flush();
-
-    return $this->redirect($this->generateUrl('MasterProvTransaction',array('id'=>$tran->getAccount()->getId())));
+    public function MasterProvTransactionDeleteAction($tranid)
+    {
+        $em = $this->getDoctrine()->getManager();
 
 
-}
+        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+
+        $em->remove($tran);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('MasterProvTransaction', array('id' => $tran->getAccount()->getId())));
+
+
+    }
 
 #end alan
 
@@ -2001,7 +1966,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User', 0), $user, array('cascade_validation' => true));
 
 
         if ($req->isMethod('POST')) {
@@ -2021,7 +1986,7 @@ public  function MasterProvTransactionDeleteAction($tranid){
                 'Entiti' => $Account->getEntiti(),
                 'Account' => $Account,
                 'form' => $form->createView(),
-           )
+            )
         );
     }
 
@@ -2031,13 +1996,13 @@ public  function MasterProvTransactionDeleteAction($tranid){
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User', 0), $user, array('cascade_validation' => true));
 
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
 
             }
 
@@ -2051,31 +2016,30 @@ public  function MasterProvTransactionDeleteAction($tranid){
     }
 
 
-
-public  function  MasterProvEntitiAction($id)
-{
-
-  $em=$this->getDoctrine()->getEntityManager();
-
-  $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-  $Entiti=$Account->getEntiti();
-
-    return $this->render('HelloDiDiDistributorsBundle:Account:ManageProvEntiti.html.twig', array(
-        'Account' => $Account,
-        'entiti' => $Entiti
-        ));
-
-}
-
-    public  function  MasterDistEntitiAction($id)
+    public function  MasterProvEntitiAction($id)
     {
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
-        $Entiti=$Account->getEntiti();
+        $Entiti = $Account->getEntiti();
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:ManageProvEntiti.html.twig', array(
+            'Account' => $Account,
+            'entiti' => $Entiti
+        ));
+
+    }
+
+    public function  MasterDistEntitiAction($id)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $Entiti = $Account->getEntiti();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistEntiti.html.twig', array(
             'Account' => $Account,
@@ -2087,38 +2051,37 @@ public  function  MasterProvEntitiAction($id)
 
     public function  LoadActionProvAction(Request $req)
     {
-        $id=$req->get('id',0);
-        $value='';
-        $value.='<option value="All">'.'All'.'</option>';
+        $id = $req->get('id', 0);
+        $value = '';
+        $value .= '<option value="All">' . 'All' . '</option>';
 
-        switch($id)
-        {
+        switch ($id) {
             case 0:
 
-                    $value.='<option value="rmv">'.'remove codes from the system'.'</option>';
-                    $value.='<option value="amdt">'.'debit provider,s account'.'</option>';
-                    $value.='<option value="amdt">'.'an amount is debited to correct the price of a code'.'</option>';
-                    $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+                $value .= '<option value="rmv">' . 'remove codes from the system' . '</option>';
+                $value .= '<option value="amdt">' . 'debit provider,s account' . '</option>';
+                $value .= '<option value="amdt">' . 'an amount is debited to correct the price of a code' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
 
-             break;
+                break;
 
             case 1:
 
-                $value.='<option value="add">'.'add new codes to system'.'</option>';
-                $value.='<option value="pmt">'.'credit provider,s account'.'</option>';
-                $value.='<option value="amdt">'.'an amount is credited to correct the price of a code'.'</option>';
+                $value .= '<option value="add">' . 'add new codes to system' . '</option>';
+                $value .= '<option value="pmt">' . 'credit provider,s account' . '</option>';
+                $value .= '<option value="amdt">' . 'an amount is credited to correct the price of a code' . '</option>';
 
-             break;
+                break;
 
             case 2:
-                $value.='<option value="rmv">'.'remove codes from the system'.'</option>';
-                $value.='<option value="amdt">'.'debit provider,s account'.'</option>';
-                $value.='<option value="amdt">'.'an amount is debited to correct the price of a code'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
+                $value .= '<option value="rmv">' . 'remove codes from the system' . '</option>';
+                $value .= '<option value="amdt">' . 'debit provider,s account' . '</option>';
+                $value .= '<option value="amdt">' . 'an amount is debited to correct the price of a code' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
 
-                $value.='<option value="add">'.'add new codes to system'.'</option>';
-                $value.='<option value="pmt">'.'credit provider,s account'.'</option>';
-                $value.='<option value="amdt">'.'an amount is credited to correct the price of a code'.'</option>';
+                $value .= '<option value="add">' . 'add new codes to system' . '</option>';
+                $value .= '<option value="pmt">' . 'credit provider,s account' . '</option>';
+                $value .= '<option value="amdt">' . 'an amount is credited to correct the price of a code' . '</option>';
                 break;
         }
         return new Response($value);
@@ -2127,43 +2090,42 @@ public  function  MasterProvEntitiAction($id)
 
     public function  LoadActionDistAction(Request $req)
     {
-        $id=$req->get('id',0);
-        $value='';
-        $value.='<option value="All">'.'All'.'</option>';
+        $id = $req->get('id', 0);
+        $value = '';
+        $value .= '<option value="All">' . 'All' . '</option>';
 
-        switch($id)
-        {
+        switch ($id) {
             case 0:
 
-                $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-                $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+                $value .= '<option value="amdt">' . 'debit distributor,s account' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from distributor,s account to a retailer,s account' . '</option>';
+                $value .= '<option value="crnt">' . 'issue a credit note for a sold code' . '</option>';
+                $value .= '<option value="com_pmt">' . 'debit distributor,s account for the commisson payments' . '</option>';
 
                 break;
 
             case 1:
 
-                $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
-                $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
-                $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
-                $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+                $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
+                $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
+                $value .= '<option value="pmt">' . 'ogone payment on its own account' . '</option>';
+                $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
 
 
                 break;
 
             case 2:
-                $value.='<option value="amdt">'.'debit distributor,s account'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-                $value.='<option value="com_pmt">'.'debit distributor,s account for the commisson payments'.'</option>';
+                $value .= '<option value="amdt">' . 'debit distributor,s account' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from distributor,s account to a retailer,s account' . '</option>';
+                $value .= '<option value="crnt">' . 'issue a credit note for a sold code' . '</option>';
+                $value .= '<option value="com_pmt">' . 'debit distributor,s account for the commisson payments' . '</option>';
 
-                $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
-                $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
-                $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
-                $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
+                $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
+                $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
+                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
+                $value .= '<option value="pmt">' . 'ogone payment on its own account' . '</option>';
+                $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
                 break;
         }
         return new Response($value);

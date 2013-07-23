@@ -161,10 +161,10 @@ class RetailersController extends Controller
                     0=>'Debit'
                 )))
 
-            ->add('Action','choice',array('label'=>'Action:',
+            ->add('Action','choice',array('label'=>'Action:','data'=>'20',
                 'choices'=> array(
                     'All'=>'All',
-                    'crnt'=>'debit balance when the retailer sell a code',
+                    'sale'=>'debit balance when the retailer sell a code',
                     'crnt'=>'issue a credit note for a sold code',
                     'tran'=>'transfer credit from distributor,s account to a retailer,s account',
                     'pmt'=>'ogone payment on its own account'
@@ -677,7 +677,7 @@ $datetype=0;
                     $tranretailer->setTranAmount(-($priceChild->getPrice()));
                     $tranretailer->setTranFees(0);
                     $tranretailer->setTranDescription(null);
-                    $tranretailer->setTranCurrency($priceChild->getPriceCurrency());
+                    $tranretailer->setTranCurrency($Account->getAccCurrency());
                     $tranretailer->setTranDate(new \DateTime('now'));
                     $tranretailer->setTranInsert(new \DateTime('now'));
                     $tranretailer->setCode($code);
@@ -685,6 +685,7 @@ $datetype=0;
                     $tranretailer->setTranType(0);
                     $tranretailer->setUser($user);
                     $tranretailer->setTranBookingValue(null);
+                    $tranretailer->setTranBalance($Account->getAccBalance());
 
 
 
@@ -693,7 +694,7 @@ $datetype=0;
                     $trandist->setTranAmount($com);
                     $trandist->setTranFees(0);
                     $trandist->setTranDescription(null);
-                    $trandist->setTranCurrency($priceParent->getPriceCurrency());
+                    $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
                     $trandist->setTranDate(new \DateTime('now'));
                     $trandist->setTranInsert(new \DateTime('now'));
                     $trandist->setCode($code);
@@ -701,7 +702,7 @@ $datetype=0;
                     $trandist->setTranType(1);
                     $trandist->setUser($user);
                     $trandist->setTranBookingValue(null);
-
+                    $trandist->setTranBalance($Account->getParent()->getAccBalance());
                     $em->persist($tranretailer);
                     $em->persist($trandist);
 
@@ -826,7 +827,7 @@ public function RetailerLoadActiowOwnAction(Request $req)
     {
         case 0:
 
-            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
 
 
             break;
@@ -843,7 +844,7 @@ public function RetailerLoadActiowOwnAction(Request $req)
         case 2:
 
             $value.='<option value="All">'.'All'.'</option>';
-            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';

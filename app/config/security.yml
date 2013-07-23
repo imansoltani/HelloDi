@@ -26,7 +26,7 @@ security:
         - { path: ^/app/m, roles: ROLE_MASTER }
         - { path: ^/app/d/admin, roles: ROLE_DISTRIBUTOR_ADMIN }
         - { path: ^/app/d, roles: ROLE_DISTRIBUTOR }
-        - { path: ^/app/r/admin, roles: ROLE_RITAILER_ADMIN }
+        - { path: ^/app/r/admin, roles: ROLE_RETAILER_ADMIN }
         - { path: ^/app/r, roles: ROLE_RETAILER }
 
     role_hierarchy:

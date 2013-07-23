@@ -20,7 +20,7 @@
     <div class="span" >
         <div class="widget stacked ">
             <div class="widget-content">
-                <a class="btn-large button btn btn-primary " href="#">
+                <a class="btn-large button btn btn-primary " href="{{ path('hellodi_transactions_new') }}">
                     Recharge
                 </a>
 
@@ -93,15 +93,6 @@
                         });
 
                         $(function () {
-
-
-
-                                val= $("#form_Type").val();
-                                $("#form_Action").html('<option value="All">Please wait ...</option>');
-                                $.post('{{ path("RetailerLoadActiowOwn") }}',{id: val},function(result){
-                                    $("#form_Action").html(result);
-                                })
-
 
                             Form_Search(1,"Filter List");
 

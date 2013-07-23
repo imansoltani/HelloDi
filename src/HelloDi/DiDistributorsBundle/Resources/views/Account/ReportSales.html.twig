@@ -70,19 +70,13 @@
                 {{ form_widget(group) }}
             </div>
         </div>
-
+     {% endfor %}
             <input type="hidden" value="1" name="page" id="search_page" >
             <hr>
             <input class="btn btn-primary" type="submit" value="Search">
 
         </form>
-        <script type="text/javascript">
-            $(function () {
 
-                Form_Search(0,"Filter List");
-
-            });
-        </script>
     </div>
 
     <div class="tablediv">
@@ -111,14 +105,21 @@
                     {% for Tr in pagination %}
 
                         <tr>
-                            <td>{{ Tr.id}}</td>
-                            <td>{{ Tr.tranInsert|date('y-M-d H:m:s') }}</td>
-                            <td>{{ Tr.Code.Item.itemName}}</td>
-                            <td>Quantity</td>
-                            <td>{{ Tr.Account.Entiti.EntName }}</td>
-                            <td>{{ -Tr.tranAmount}}|{{Account.accCurrency}}</td>
+                            <td>{{ Tr.TrId}}</td>
+                            <td>{{ Tr.TrDate|date('y-M-d') }}</td>
+                            <td>{{ Tr.ItemName}}</td>
+                            <td>
+                            {% if group==0 %}
+                                1
+                           {% else %}
+                             {{ Tr.Quantity }}
+                         {% endif %}
+
+                            </td>
+                            <td>{{ Tr.TrEntName }}</td>
+                            <td>{{ -Tr.TrAmount}}|{{Account.accCurrency}}</td>
                             <td>Task</td>
-                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.id}) }}">Details</a></td>
+                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Tr.TrId}) }}">Details</a></td>
 
                         </tr>
 
@@ -133,5 +134,4 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
-    {% endfor %}
 {% endblock %}

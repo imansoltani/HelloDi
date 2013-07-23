@@ -1,17 +1,19 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="OgonePayment")
+ * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\OgonePaymentRepository")
+ * @ORM\Table(name="ogone_payment")
  */
+
 class OgonePayment
 {
-    const OGONE_RESULT_ACCPETED     = 9;
+    const OGONE_RESULT_ACCPETED     = 5;
     const OGONE_RESULT_CANCELED     = 1;
     const OGONE_RESULT_DECLINED     = 2;
-    const OGONE_RESULT_EXCEPTION    = 92;
+    const OGONE_RESULT_EXCEPTION    = 52;
 
     const STATUS_ACCEPTED           = 'accepted';
     const STATUS_CANCELED           = 'canceled';
@@ -21,65 +23,73 @@ class OgonePayment
     const STATUS_UNKNOWN            = 'unknown';
 
     /**
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(name="payment_amount", type="float" , nullable=false)
+     * @ORM\Column(name="payment_amount", type="float")
+     * @Assert\Range(min=100)
+     * @Assert\NotBlank
      */
     private $paymentAmount;
 
     /**
-     * @ORM\Column(name="payment_currency_iso", type="string", length=3 ,nullable=true)
+     * @ORM\Column(name="payment_currency_iso", type="string", length=3)
+     * @Assert\NotBlank
      */
     private $paymentCurrencyISO;
 
     /**
-     * @ORM\Column(name="payment_status", type="string" , nullable=true)
+     * @ORM\Column(name="payment_status", type="string")
+     * @Assert\NotBlank
      */
     private $status;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime" , nullable=true)
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="OgonePayment")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\Column(name="ogone_ref", type="string", length=10, nullable=true)
+     */
+    private $ogoneRef;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="OgonePayment")
+     * @ORM\JoinColumn(name="related_user", referencedColumnName="id", nullable=true)
      */
     private $User;
-    /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", inversedBy="OgonePayment")
-     * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
-     */
-    private $Transactions;
 
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @ORM\OneToOne(targetEntity="Transaction")
+     * @ORM\JoinColumn(name="related_transaction", referencedColumnName="id", nullable=true)
      */
+    private $transaction;
+
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set paymentAmount
-     *
-     * @param float $paymentAmount
-     * @return OgonePayment
-     */
+    public function getPaymentAmount()
+    {
+        return $this->paymentAmount;
+    }
+
     public function setPaymentAmount($paymentAmount)
     {
-        $this->paymentAmount = round($paymentAmount, 2);
-    
-        return $this;
+       $this->paymentAmount = round($paymentAmount, 2);
     }
 
     public function getOgoneAmount()
@@ -87,102 +97,18 @@ class OgonePayment
         return $this->paymentAmount * 100;
     }
 
-    /**
-     * Get paymentAmount
-     *
-     * @return float 
-     */
-    public function getPaymentAmount()
-    {
-        return $this->paymentAmount;
-    }
-
-    /**
-     * Set paymentCurrencyISO
-     *
-     * @param string $paymentCurrencyISO
-     * @return OgonePayment
-     */
-    public function setPaymentCurrencyISO($paymentCurrencyISO)
-    {
-        $this->paymentCurrencyISO = $paymentCurrencyISO;
-    
-        return $this;
-    }
-
-    /**
-     * Get paymentCurrencyISO
-     *
-     * @return string 
-     */
     public function getPaymentCurrencyISO()
     {
         return $this->paymentCurrencyISO;
     }
 
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return OgonePayment
-     */
-    public function setStatus($status)
+    public function setPaymentCurrencyISO($paymentCurrencyISO)
     {
-        $this->status = $status;
-    
-        return $this;
+        $this->paymentCurrencyISO = $paymentCurrencyISO;
     }
 
     /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return OgonePayment
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set User
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
-     * @return OgonePayment
-     */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
-    {
-        $this->User = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get User
-     *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
+     * @return \HelloDi\DiDistributorsBundle\Entity\User
      */
     public function getUser()
     {
@@ -190,31 +116,62 @@ class OgonePayment
     }
 
     /**
-     * Set Transactions
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
-     * @return OgonePayment
+     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
      */
-    public function setTransactions(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
     {
-        $this->Transactions = $transactions;
-    
-        return $this;
+        $this->User = $user;
     }
 
-    /**
-     * Get Transactions
-     *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Transaction 
-     */
-    public function getTransactions()
+    public function getStatus()
     {
-        return $this->Transactions;
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getOgoneRef()
+    {
+        return $this->ogoneRef;
+    }
+
+    public function setOgoneRef($ogoneRef)
+    {
+        $this->ogoneRef = $ogoneRef;
     }
 
     public function getOrderReference()
     {
         return $this->getCreatedAt()->format('ymdHi') . $this->id;
+    }
+
+    /**
+     * @return \HelloDi\DiDistributorsBundle\Entity\Transaction
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
+    }
+
+    /**
+     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transaction
+     */
+    public function setTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transaction)
+    {
+        $this->transaction = $transaction;
     }
 
     public function isProcessed()

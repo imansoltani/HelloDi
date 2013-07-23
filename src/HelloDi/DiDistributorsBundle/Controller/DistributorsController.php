@@ -131,7 +131,7 @@ class DistributorsController extends Controller
             {
                 foreach($Account->getChildrens() as $acc )
                 {
-                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
+                    $qb->andwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
 
                 }
 
@@ -139,7 +139,6 @@ class DistributorsController extends Controller
 
 
             if($data['ItemType']!='All')
-
                 $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
 
             if($data['ItemName'])
@@ -299,7 +298,7 @@ class DistributorsController extends Controller
 
             }
 else
-    $this->get('session')->getFlashBag()->add('error','this operation done error !');
+    $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
 
         }
 
@@ -370,7 +369,7 @@ if($data['Amount']>0)
 
 }
 else
-    $this->get('session')->getFlashBag()->add('error','this operation done error !');
+    $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
 
 }
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
@@ -740,7 +739,7 @@ else
                 'choices' =>
                 array(
                     'All'=>'All',
-                    'crnt'=>'debit balance when the retailer sell a code',
+                    'sale'=>'debit balance when the retailer sell a code',
                     'crnt'=>'issue a credit note for a sold code',
                     'tran'=>'transfer credit from distributor,s account to a retailer,s account',
                     'pmt'=>'ogone payment on its own account'
@@ -1613,7 +1612,7 @@ public function DistLoadActionRetailerAction(Request $req)
     {
         case 0:
 
-            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
 
 
             break;
@@ -1629,7 +1628,7 @@ public function DistLoadActionRetailerAction(Request $req)
 
         case 2:
             $value.='<option value="All">'.'All'.'</option>';
-            $value.='<option value="crnt">'.'debit balance when the retailer sell a code'.'</option>';
+            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';

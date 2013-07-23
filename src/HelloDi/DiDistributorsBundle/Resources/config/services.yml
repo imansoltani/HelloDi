@@ -49,15 +49,12 @@ services:
             arguments: [@doctrine.orm.default_entity_manager,@hello_di_di_distributors.balancechecker]
 
     hello_di_di_distributors.Tickets:
-            class: HelloDi\DiDistributorsBundle\Listener\Taketickets
-            arguments: [@doctrine.orm.default_entity_manager]
+        class: HelloDi\DiDistributorsBundle\Listener\Taketickets
+        arguments: [@doctrine.orm.default_entity_manager]
 
-   
-    hello_di_di_distributors.Client:
-            class: HelloDi\DiDistributorsBundle\Listener\Client
-            arguments: [@doctrine.orm.default_entity_manager,@Router,%ogone_pspid%,%ogone_sha_in%,%ogone_sha_out%,%ogone_submit_url%]
-
-
+    hello_di_di_distributors.ogone.client:
+        class:  HelloDi\DiDistributorsBundle\Ogone\Client
+        arguments: [@router, @doctrine.orm.default_entity_manager, %ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%]
 
     acme.twig.extension.loader:
         class:        Twig_Extension_StringLoader

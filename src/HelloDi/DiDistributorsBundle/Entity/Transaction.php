@@ -97,10 +97,7 @@ class Transaction
      * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=true)
      */
     private $Code;
-    /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\OgonePayment", mappedBy="Transaction")
-     */
-    private $OgonePayment;
+
 
     /**
      * Get id
