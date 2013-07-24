@@ -48,11 +48,12 @@ class Client
         $this->resultUrl    = $router->generate('hellodi_transactions_result', [], true);
         $this->catalogUrl   = $router->generate('hellodi_transactions_new', [], true);
         $this->homeUrl  = $router->generate('hellodi_index', [], true);
-        $this->ogoneTemplateUrl   = $router->generate('', [], true);
+        $this->ogoneTemplateUrl   = $router->generate('hellodi_transactions_ogone_template', [], true);
     }
 
     private function getSortedParameters(OgonePayment $payment)
     {
+
         return [
             'ACCEPTURL'     => $this->resultUrl,
             'AMOUNT'        => $payment->getOgoneAmount(),
@@ -78,7 +79,7 @@ class Client
         }
         $fields[] = '';
 
-        return sha1(implode($this->shaIn), $fields);
+        return sha1(implode($this->shaIn, $fields));
     }
 
     public function processResult(User $user, $fields)
@@ -157,6 +158,6 @@ class Client
         $fields[] = sprintf('<input="hidden" name="SHASIGN" value="%s" />', $this->generateHashIn($payment));
         $fields[] = '</form>';
 
-        return implode(''. $fields);
+        return implode('', $fields);
     }
 }

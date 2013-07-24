@@ -50,7 +50,7 @@ class EpaymentController extends Controller
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle::Epaymentnew.html.twig',
+        return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentNew.html.twig',
             [
                 'form' => $ogonePaymentForm->createView(),
             ]);
@@ -70,7 +70,7 @@ class EpaymentController extends Controller
         $ogonePaymentValidateform = $this->get('hello_di_di_distributors.ogone.client')->generateForm($ogonePayment);
 
         return $this->render(
-            'HelloDiDiDistributorsBundle:Epayment.validate.html.twig',
+            'HelloDiDiDistributorsBundle:Ogone:EpaymentValidate.html.twig',
             [   'ogonePayment' => $ogonePayment,
                 'form' => $ogonePaymentValidateform
             ]
@@ -93,7 +93,7 @@ class EpaymentController extends Controller
             return $this->redirect($this->generateUrl('index_page'));
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Epayment.result.html.twig', ['ogonePayment' => $ogonePayment]);
+        return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentResult.html.twig', ['ogonePayment' => $ogonePayment]);
     }
 
 
