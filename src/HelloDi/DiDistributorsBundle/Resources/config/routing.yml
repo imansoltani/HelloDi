@@ -29,3 +29,9 @@ ogonetest:
 ogonetestaccept:
     pattern:  /ogonetest/accept
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTestAccept }
+
+hellodi_transactions_ogone_template:
+    pattern:   hellodi/ogone-template
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig'

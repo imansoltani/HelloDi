@@ -105,9 +105,9 @@
                     {% for Tr in pagination %}
 
                         <tr>
-                            <td>{{ Tr.TrId}}</td>
-                            <td>{{ Tr.TrDate|date('y-M-d') }}</td>
-                            <td>{{ Tr.ItemName}}</td>
+                            <td>{{ Tr.TR.id}}</td>
+                            <td>{{ Tr.TR.tranDate|date('y-M-d') }}</td>
+                            <td>{{ Tr.TR.Code.Item.itemName}}</td>
                             <td>
                             {% if group==0 %}
                                 1
@@ -116,10 +116,10 @@
                          {% endif %}
 
                             </td>
-                            <td>{{ Tr.TrEntName }}</td>
-                            <td>{{ -Tr.TrAmount}}|{{Account.accCurrency}}</td>
+                            <td>{{ Tr.TR.Account.Entiti.entName }}</td>
+                            <td>{{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}</td>
                             <td>Task</td>
-                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.id}) }}">Details</a></td>
+                            <td class="tab-actions" ><a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.TR.id}) }}">Details</a></td>
 
                         </tr>
 

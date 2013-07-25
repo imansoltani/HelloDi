@@ -689,8 +689,15 @@ class AccountController extends Controller
             $data = $form->getData();
             $qb = $em->createQueryBuilder();
 
-                $qb->select('Tr.id as TrId,TrCoIt.itemName as ItemName,Tr.tranDate as TrDate,TrAcEn.entName as TrEntName,Tr.tranAmount as TrAmount,COUNT(Tr) as Quantity')
-                ->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
+     if ($data['GroupBy'])
+     {
+         $qb->select('Tr as TR','COUNT(Tr.Code) as Quantity')
+         ->GroupBy('Tr.tranDate')->addGroupBy('TrCoIt.itemName');
+         $group=1;
+     }
+            else
+                $qb->select(array('Tr as TR'));
+                $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
 //                /*for groupBy*/,
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
@@ -720,11 +727,6 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            if ($data['GroupBy'])
-            {
-                $qb->GroupBy('Tr.tranDate')->addGroupBy('TrCoIt.itemName');
-                $group=1;
-            }
 
             $qb->addOrderBy('Tr.tranDate', 'desc');
 
@@ -953,7 +955,6 @@ class AccountController extends Controller
     }
 
     public function PurchasesAction($id, Request $req)
-
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -989,11 +990,8 @@ class AccountController extends Controller
                     'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('i')
                             ->innerJoin('i.Prices', 'ip')
-                            ->where('ip.priceStatus = 1');
-                        foreach ($Account->getChildrens() as $child) {
-                            $er->orwhere('ip.Account = :Acc')->setParameter('Acc', $Account);
-                        }
-
+                            ->where('ip.priceStatus = 1')
+                            ->andwhere('ip.Account = :Acc')->setParameter('Acc', $Account);
 
                     }
                 ))->getForm();
@@ -1004,13 +1002,14 @@ class AccountController extends Controller
 
             $qb = $em->createQueryBuilder();
 //            ,Count(Tr.tranDate) as c
-            $qb->select('Tr');
-            $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
-                ->innerJoin('Tr.Code', 'TrCo')->innerJoin('TrCo.Item', 'TrCoIt')
+        $qb->select('Tr,count(Tr.Code) as Quantity')
+                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+                ->innerJoin('Tr.Account', 'TrAcc')
+                ->innerJoin('Tr.Code', 'TrCo')
+                ->innerJoin('TrCo.Item', 'TrCoIt')
                 ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
 
             foreach ($Account->getChildrens() as $child) {
-
                 $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
             }
 
@@ -1023,7 +1022,7 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranDate');
+            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranInsert');
             $qb->addOrderBy('Tr.tranDate', 'desc');
 
             $qb = $qb->getQuery();

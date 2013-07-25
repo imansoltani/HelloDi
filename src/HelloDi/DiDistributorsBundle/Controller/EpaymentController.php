@@ -1,12 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Fils du Soleil
- * Date: 18.07.13
- * Time: 17:28
- * To change this template use File | Settings | File Templates.
- */
-
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
@@ -26,10 +18,10 @@ class EpaymentController extends Controller
         $currency = $this->getUser()->getAccount()->getAccCurrency();
 
         $ogonePayment = new OgonePayment();
-        $tran=new Transaction();
+
 
         $ogonePayment->setUser($user);
-//        $ogonePayment->setTransaction($tran);
+
         $ogonePayment->setPaymentCurrencyISO($currency);
 
         $ogonePayment->setStatus(OgonePayment::STATUS_PENDING);
@@ -40,24 +32,23 @@ class EpaymentController extends Controller
         { $ogonePaymentForm->handleRequest($request);
             if($ogonePaymentForm->isValid())
             {
-
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($ogonePayment);
                 $em->flush();
-                return $this->redirect($this->generateUrl('retailer_OgoneTransactions_validate', ['id'=>$ogonePayment->getId()] ));
+                return $this->redirect($this->generateUrl('retailer_OgoneTransactions_validate',array('id'=>$ogonePayment->getId())));
 
             }
 
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentNew.html.twig',
-            [
-                'form' => $ogonePaymentForm->createView(),
-            ]);
+            array('form' => $ogonePaymentForm->createView(),
+            ));
     }
 
     public function validateAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
         $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
 
@@ -66,20 +57,22 @@ class EpaymentController extends Controller
             $this->get('session')->getFlashBag()->add('Not valide!','Not valide!');
             return $this->redirect($this->generateUrl('index_page'));
         }
+       $cilent=$this->get('hello_di_di_distributors.ogone.client');
 
-        $ogonePaymentValidateform = $this->get('hello_di_di_distributors.ogone.client')->generateForm($ogonePayment);
-
+        $ogonePaymentValidateform = $cilent->generateForm($ogonePayment);
         return $this->render(
             'HelloDiDiDistributorsBundle:Ogone:EpaymentValidate.html.twig',
-            [   'ogonePayment' => $ogonePayment,
+            array(
+                'ogonePayment' => $ogonePayment,
                 'form' => $ogonePaymentValidateform
-            ]
+            )
         );
     }
 
     public function resultAction()
     {
         $digest = $this->getRequest()->query->all();
+
         try
         {
             $ogonePayment = $this->get('hello_di_di_distributors.ogone.client')->processResult(
@@ -90,10 +83,12 @@ class EpaymentController extends Controller
         catch (\HelloDi\DiDistributorsBundle\Exception\OgoneException $excep)
         {
             $this->get('session')->getFlashBag()->add('result is not valide!', $excep->getMessage());
-            return $this->redirect($this->generateUrl('index_page'));
+            return $this->redirect($this->generateUrl('hellodi_transactions_new'));
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentResult.html.twig', ['ogonePayment' => $ogonePayment]);
+
+      return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentResult.html.twig', array('ogonePayment' => $ogonePayment));
+
     }
 
 

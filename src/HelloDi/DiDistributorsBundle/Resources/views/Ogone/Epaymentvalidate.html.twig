@@ -1,19 +1,18 @@
 
-Validate
 <html>
 <head>
 
 </head>
 <body>
+<h1>Validate</h1>
+<hr>
 
+are you for payment
 
-<form action="#" method="post">
-{#{{ form }}#}
-    {{ form_rest(form) }}
-    {{ form_widget(form._token) }}
+<b>{{ ogonePayment.paymentAmount }}</b>
+sure?
+{{ form | raw }}
 
-    <input type="submit" value="go">
-</form>
 </body>
 
 </html>

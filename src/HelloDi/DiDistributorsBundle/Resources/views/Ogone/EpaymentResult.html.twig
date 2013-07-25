@@ -1,1 +1,32 @@
-Result
+{% if ogonePayment.status=='accepted'  %}
+
+the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }}:<br>
+<hr>
+    {%  set ban=ogonePayment.Transaction.tranBalance %}
+    {%  set amount=ogonePayment.paymentAmount %}
+
+  {{ ogonePayment.Transaction.tranBalance }}+<b>{{ ogonePayment.paymentAmount }}</b>=<b style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }})
+    <br>
+<hr>
+<a class="btn" href="{{ path('retailers_dashboard') }}"> Dashboard  </a>
+
+{% elseif ogonePayment.status=='canceled' %}
+
+    canceled
+
+{% elseif ogonePayment.status=='declined' %}
+
+    declined
+
+{% elseif ogonePayment.status=='unknown' %}
+
+    unknown
+
+{% elseif ogonePayment.status=='uncertain' %}
+
+    uncertain
+{% else %}
+
+    {{ ogonePayment.status }}
+
+{% endif %}

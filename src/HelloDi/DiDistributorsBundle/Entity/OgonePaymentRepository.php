@@ -22,7 +22,6 @@ class OgonePaymentRepository extends EntityRepository
          */
         $id = substr($orderRef, 10);
         $payment = $this->find($id);
-
         if (null === $payment || strval($payment->getOrderReference()) !== strval($orderRef))
         {
             return null;

@@ -95,21 +95,21 @@
                     <tbody>
 
 
-
                     {% for Tr in pagination %}
 
                         <tr>
 
-                            <td>{{ Tr.Code.Item.itemName}}</td>
-                            <td>-----</td>
+                            <td>{{ Tr[0].Code.Item}}</td>
+                            <td>{{ Tr.Quantity }}</td>
+
                             <td>
 
-                                {% for p in Tr.Account.Parent.Prices %}
+                                {% for p in Tr[0].Account.Parent.Prices %}
 
                                     {% if
-                                    p.Item==Tr.Code.Item
+                                    p.Item==Tr[0].Code.Item
                                     and
-                                    p.Account==Tr.Account.Parent
+                                    p.Account==Tr[0].Account.Parent
                                     %}
                                         {{ p.price }}
                                     {% endif %}

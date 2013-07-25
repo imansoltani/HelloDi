@@ -36,6 +36,9 @@ retailer_items:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/items.yml"
     prefix:   /items
 
+
+
+
 # ---- Ogone Start ---- #
 #retailer_OgoneTransactions:
 #    pattern:  /transactions/new
