@@ -18,6 +18,7 @@ use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\Retailers\AccountRetailerSettingType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -1045,49 +1046,51 @@ else
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            $data = $form->getData();
+            $newprice = $data['NewPrice'];
+            $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$account))->getPrice();
+            if($newprice < $distprice)
+                $form->get('NewPrice')->addError(new FormError('New price can not less than price on this item in your distributor.'));
             if ($form->isValid()) {
-                $data = $form->getData();
                 $actiontype = $request->get("actiontype");
-                $newprice = $data['NewPrice'];
                 foreach ($data['checks'] as $accountretailer)
                 {
-                    $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
+                    $retprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
                     if($actiontype == "1")
                     {
-                        if($price != null) $price->setPriceStatus(0);
+                        if($retprice != null) $retprice->setPriceStatus(0);
                     }
                     else
                     {
-                        if($price != null)
+                        if($retprice != null)
                         {
-                            if($price->getPrice() != $newprice)
+                            if($retprice->getPrice() != $newprice)
                             {
-                                $price->setPrice($newprice);
-                                $price->setPriceStatus(1);
+                                $retprice->setPrice($newprice);
+                                $retprice->setPriceStatus(1);
 
                                 $pricehistory = new PriceHistory();
                                 $pricehistory->setPrice($newprice);
                                 $pricehistory->setDate(new \DateTime('now'));
-                                $pricehistory->setPrices($price);
+                                $pricehistory->setPrices($retprice);
                                 $em->persist($pricehistory);
                             }
                         }
                         else
                         {
-                            die('--'.$accountretailer->getAccName().'--');
-                            $price = new Price();
-                            $price->setPrice($newprice);
-                            $price->setPriceCurrency($accountretailer->getAccCurrency());
-                            $price->setPriceStatus(true);
-                            $price->setIsFavourite(true);
-                            $price->setItem($item);
-                            $price->setAccount($accountretailer);
-                            $em->persist($price);
+                            $retprice = new Price();
+                            $retprice->setPrice($newprice);
+                            $retprice->setPriceCurrency($accountretailer->getAccCurrency());
+                            $retprice->setPriceStatus(true);
+                            $retprice->setIsFavourite(true);
+                            $retprice->setItem($item);
+                            $retprice->setAccount($accountretailer);
+                            $em->persist($retprice);
 
                             $pricehistory = new PriceHistory();
                             $pricehistory->setPrice($newprice);
                             $pricehistory->setDate(new \DateTime('now'));
-                            $pricehistory->setPrices($price);
+                            $pricehistory->setPrices($retprice);
                             $em->persist($pricehistory);
                         }
                     }
@@ -1160,10 +1163,13 @@ else
                             ;
                     }
                 ))
-            ->add('price')
+            ->add('price','integer')
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$myaccount))->getPrice();
+            if( $price->getPrice()<$distprice)
+                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
             if ($form->isValid()) {
                 $em->persist($price);
 
@@ -1201,6 +1207,9 @@ else
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$myaccount))->getPrice();
+            if( $price->getPrice()<$distprice)
+                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
             if ($form->isValid()) {
                 if ($price->getPrice() != $oldprice) {
                     $pricehistory = new PriceHistory();
