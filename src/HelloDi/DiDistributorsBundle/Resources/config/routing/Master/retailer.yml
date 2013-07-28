@@ -1,0 +1,51 @@
+Master_NewRetailer:
+    pattern:  /new
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterNewRetailer }
+
+#transactions--------------
+Master_Retailer_Transaction:
+    pattern:  /{id}/transactions
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailersTransaction }
+
+Master_Retailer_DetailsTransaction:
+    pattern:  /{id}/transactions/{tranid}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterDetailsRetailerTransaction }
+
+Master_RetailerFunding:
+    pattern:  /{id}/transactions/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFunding"}
+
+Master_RetailerTransferFunding:
+    pattern:  /{id}/transactions/transfer
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFundingTransfer"}
+
+Master_RetailerUpdateFunding:
+    pattern:  /{id}/transactions/transfer/update
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFundingUpdate"}
+
+#users----------------------
+Master_RetailerUser:
+    pattern:  /{id}/users
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUser }
+
+Master_RetailerUserAdd:
+    pattern:  /{id}/users/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUserAdd }
+
+Master_RetailerUserEdit:
+    pattern:  /{id}/users/{userid}/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUserEdit }
+
+#setting-------------------
+Master_RetailerSetting:
+    pattern:  /{id}/settings
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerSetting }
+
+#details-------------------
+Master_Retailer_details:
+    pattern:  /{id}/details
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerDetails }
+
+MasterLoadActionRetailer:
+    pattern:  /loadaction
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterLoadActionRetailer }

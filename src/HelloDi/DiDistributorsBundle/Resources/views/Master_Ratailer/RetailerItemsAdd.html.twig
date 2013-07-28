@@ -1,0 +1,61 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="">Items</a>
+    <span class="link">New Items</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Add new Item</h3>
+    </div> <!-- /widget-header -->
+
+    <form id="addprice" action="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal">
+
+        <div class="control-group">
+            {{ form_label(form.Item) }}
+            <div class="controls money">
+                <div class="controls">
+                    {{ form_widget(form.Item) }}
+                </div>
+                <span class="icon-certificate"></span>
+            </div>
+            {{ form_errors(form.Item) }}
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form.price) }}
+            <div class="controls money" >{{ form_widget(form.price) }} | {{ retailerAccount.accCurrency }}
+            <span class="icon-certificate"></span>
+            </div>
+            {{ form_errors(form.price) }}
+        </div>
+
+        {{form_widget(form._token)}}
+
+        <input type="hidden" name="accountid" value="{{  retailerAccount.id }}" />
+
+        <div class="form-actions" style="margin-bottom: 0" >
+            <input type="submit" class="btn btn-primary" onclick="$('#gowhere').val('0')" value="Add" />
+            <input type="submit" class="btn " onclick="$('#gowhere').val('1')" value="Back" />
+            <input type="hidden" id="gowhere" value="0" />
+            <script type="text/javascript">
+                $(function(){
+                    $('form#addprice').submit(function(e){
+                        if($('#gowhere').val() == '1')
+                        {
+                            e.preventDefault();
+                            $('form#Item').submit();
+                        }
+                    })
+                });
+            </script>
+        </div>
+
+    </form>
+{% endblock %}

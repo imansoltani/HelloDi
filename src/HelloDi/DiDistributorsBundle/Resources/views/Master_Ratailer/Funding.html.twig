@@ -1,0 +1,127 @@
+
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('retailer_show') }}">Transactions</a>
+    <span class="link">Fund Retailer</span>
+{% endblock Site_Map %}
+{% block Tab %}
+    <div class="row">
+        <div class="span5">
+            <div class="widget-header">
+                <h3>
+                    Fund Retailer  Balance
+                </h3>
+            </div> <!-- /widget-header -->
+            <br>
+
+            Retailer Balance : <b>{{ retailerAccount.accBalance }}</b>
+<hr>
+            <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
+
+                <fieldset>
+
+                    <div class="control-group">
+
+                        {{ form_label(formapplay.Amount) }}
+
+
+                        <div class="controls money">
+                            {{ form_widget(formapplay.Amount,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )'} })  }} | {{ Account.accCurrency }} <span class="icon-certificate"></span>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="control-group ">
+                        {{ form_label(formapplay.Communications ) }}
+                        <div class="controls">
+                            {{ form_widget(formapplay.Communications )  }}
+                        </div>
+                    </div>
+
+                    <div class="control-group ">
+                        {{ form_label(formapplay.Description ) }}
+                        <div class="controls">
+                            {{ form_widget(formapplay.Description )  }}
+                        </div>
+                    </div>
+
+
+                    <div class="form-actions" style="margin-bottom: 0" >
+                        <button class="btn btn-primary" type="submit">Transfer</button>
+                        <a href="{{path('Retailer_Transaction',{'id':retailerAccount.id})  }}" class='btn'>Cancel</a>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
+        </div>
+        <div class="span5 LeftSpan">
+            {#//----Form update----//#}
+
+            {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+            <div class="widget-header">
+                <h3>
+                    Update retailer Credit Limit
+                </h3>
+            </div> <!-- /widget-header --><br>
+
+            Retailer CreditLimit : <b>{{ retailerAccount.accCreditlimit }}</b>
+            <hr>
+
+
+            <form style="margin-top: 20px" action="{{ path('DistRetailerUpdateFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
+
+                <fieldset>
+
+                    <div class="control-group">
+
+                        {{ form_label(formupdate.Amount) }}
+
+                        <div class="controls money">
+                            {{ form_widget(formupdate.Amount,
+                            { 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )'} }
+                            )
+                            }} | {{ retailerAccount.Parent.accCurrency }} <span class="icon-certificate"></span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="control-group">
+                        {{ form_label(formupdate.As) }}
+                        <div class="controls">
+                            {{ form_widget(formupdate.As)  }}
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="margin-bottom: 0" >
+                        <button class="btn btn-primary" type="submit">Update</button>
+                        <a href="{{path('Retailer_Transaction',{'id':retailerAccount.id})  }}" class='btn'>Cancel</a>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
+ {% endif %}
+        </div>
+    </div>
+{% endblock %}

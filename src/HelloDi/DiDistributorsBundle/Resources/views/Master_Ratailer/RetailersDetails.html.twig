@@ -1,0 +1,116 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailMaster.html.twig' %}
+
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <span class="link">Details</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+<div class="widget-header">
+    <h3>Retailer Details</h3>
+</div> <!-- /widget-header -->
+<br>
+
+<form class="form-horizontal" action="{{ path('Master_Retailer_details',{'id':retailerAccount.id}) }}" method="POST">
+
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entName) }}
+        {{ form_label(edit_form.entName) }}
+        {{ form_widget(edit_form.entName) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entVatNumber) }}
+        {{ form_label(edit_form.entVatNumber) }}
+        {{ form_widget(edit_form.entVatNumber) }}
+    </div>
+<hr>
+    <div class="control-group">
+        <label class="control-label">
+            Address:
+        </label>
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entAdrs1) }}
+        {{ form_label(edit_form.entAdrs1) }}
+        {{ form_widget(edit_form.entAdrs1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entAdrs2) }}
+        {{ form_label(edit_form.entAdrs2) }}
+        {{ form_widget(edit_form.entAdrs2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entAdrs3) }}
+        {{ form_label(edit_form.entAdrs3) }}
+        {{ form_widget(edit_form.entAdrs3) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entNp) }}
+        {{ form_label(edit_form.entNp) }}
+        {{ form_widget(edit_form.entNp) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entCity) }}
+        {{ form_label(edit_form.entCity) }}
+        {{ form_widget(edit_form.entCity) }}
+    </div>
+
+
+    <div class="control-group">
+        {{ form_errors(edit_form.Country) }}
+        {{ form_label(edit_form.Country) }}
+        <div class="controls">
+            {{ form_widget(edit_form.Country) }}
+        </div>
+    </div>
+    <hr>
+
+
+    <div class="control-group">
+        <label class="control-label">
+            Additional details:
+        </label>
+    </div>
+    <div class="control-group">
+        {{ form_errors(edit_form.entTel1) }}
+        {{ form_label(edit_form.entTel1) }}
+        {{ form_widget(edit_form.entTel1) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entTel2) }}
+        {{ form_label(edit_form.entTel2) }}
+        {{ form_widget(edit_form.entTel2) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entFax) }}
+        {{ form_label(edit_form.entFax) }}
+        {{ form_widget(edit_form.entFax) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_errors(edit_form.entWebsite) }}
+        {{ form_label(edit_form.entWebsite) }}
+        {{ form_widget(edit_form.entWebsite) }}
+    </div>
+    {{ form_widget(edit_form._token) }}
+
+    <div class="form-actions">
+        <input type="submit" value="Edit" class="btn btn-primary" >
+    </div>
+
+    </form>
+
+{% endblock %}

@@ -109,7 +109,8 @@
                                     {% elseif account.accType == 1 %}
 
                                href="{{ path('MasterProvTransaction',{'id': account.id }) }}"
-
+                                   {% else %}
+                                        href="{{ path('Master_Retailer_Transaction',{'id': account.id }) }}"
                                     {% endif %}
 
                                     >
