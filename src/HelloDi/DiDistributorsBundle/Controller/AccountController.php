@@ -462,9 +462,9 @@ class AccountController extends Controller
                 'empty_value' => 'choice a action',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'pmt' => 'Credit',
-                    'amdt' => 'Debit',
-                    'com_pmt' => 'Debit (commission)'
+                    0 => 'Debit',
+                    1 => 'Credit',
+                    2 => 'Debit (commission)'
                 )
             ))
             ->add('Description', 'textarea',
@@ -508,9 +508,9 @@ class AccountController extends Controller
                 'preferred_choices' => array('pmt'),
                 'choices'
                 => array(
-                    'pmt' => 'Credit',
-                    'amdt' => 'Debit',
-                    'com_pmt' => 'Debit (commission)'
+                    0 => 'Debit',
+                    1 => 'Credit',
+                    2 => 'Debit (commission)'
                 )))
             ->add('Description', 'textarea', array('required' => true))
             ->getForm();
@@ -535,50 +535,48 @@ class AccountController extends Controller
 
             if (($data['Amount'] > 0)) {
                 switch ($data['As']) {
+                    case 0:
 
-                    case 'pmt':
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                            $trandist->setTranType(0);
+                            $trandist->setTranAmount(-$data['Amount']);
+                            $trandist->setTranAction('amdt');
+                            $em->persist($trandist);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        }
+
+                        break;
+
+                    case 1:
 
                         $trandist->setTranType(1);
                         $trandist->setTranAmount(+$data['Amount']);
-                        $trandist->setTranAction($data['As']);
+                        $trandist->setTranAction('pmt');
                         $em->persist($trandist);
                         $em->flush();
                         $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
 
                         break;
 
+                    case 2:
 
-                    case 'amdt':
-
-                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount']))
+                        {
                             $trandist->setTranType(0);
                             $trandist->setTranAmount(-$data['Amount']);
-                            $trandist->setTranAction($data['As']);
+                            $trandist->setTranAction('com_pmt');
                             $em->persist($trandist);
                             $em->flush();
                             $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                         }
                         break;
-
-
-                    case 'com_pmt':
-
-
-                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-                            $trandist->setTranType(0);
-                            $trandist->setTranAmount(-$data['Amount']);
-                            $trandist->setTranAction($data['As']);
-                            $em->persist($trandist);
-                            $em->flush();
-                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
-                        }
-                        break;
-
-
                 }
 
 
-            } else
+            }
+            else
+
                 $this->get('session')->getFlashBag()->add('error', ' zero isn,t accept !');
 
         }
@@ -597,25 +595,31 @@ class AccountController extends Controller
             ->add('Amount', 'text')
             ->add('As', 'choice', array('preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'Credit' => 'Increase',
-                    'Debit' => 'Decrease')
+                    1 => 'Increase',
+                    0 => 'Decrease')
             ))->getForm();
 
         if ($req->isMethod('POST')) {
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
 
-            if ($data['As'] == 1)
-                $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
+          switch($data['As'] )
+          {
+              case 0:
+                  if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
+                      $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
+                      $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                  }
+                  break;
+              case 1:
+                  $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
+                  $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                  break;
 
-            elseif ($data['As'] == 0) {
-                if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
-                    $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
-                }
-            }
-
+          }
 
             $em->flush();
+
         }
         return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
     }
@@ -829,7 +833,7 @@ class AccountController extends Controller
         $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
-            ->add('Amount', 'text', array('data' => 0))
+            ->add('Amount', 'text', array())
             ->add('Accounts', 'entity', array(
                 'empty_value' => 'select a account',
                 'empty_data' => '',
@@ -892,7 +896,9 @@ class AccountController extends Controller
                 $em->persist($tranprov);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
-            } else  $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
         }
 
 
@@ -1056,25 +1062,27 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranInsert');
+            $qb->groupBy('TrCoIt.itemName');
 
-            $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id','desc');
+            $qb->addOrderBy('Tr.tranDate', 'desc');
 
             $qb = $qb->getQuery();
-            $count = count($qb->getResult());
-            $qb->setHint('knp_paginator.count', $count);
+            $qb = $qb->getResult();
+
+//            $count = count($qb->getResult());
+//            $qb->setHint('knp_paginator.count', $count);
 
         }
 
 
-        $pagination = $paginator->paginate(
-            $qb,
-            $req->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+//        $pagination = $paginator->paginate(
+//            $qb,
+//            $req->get('page', 1) /*page number*/,
+//            10/*limit per page*/
+//        );
 
         return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $qb,
             'Account' => $Account,
             'User' => $User,
             'Entity' => $Account->getEntiti(),

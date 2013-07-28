@@ -100,7 +100,7 @@
                         <tr>
 
                             <td>{{ Tr.TR.Code.Item}}</td>
-                            <td>{{ Tr.Quantity|length }}</td>
+                            <td>{{ Tr.Quantity }}</td>
 
                             <td>
 
@@ -128,8 +128,8 @@
         </form>
     </div>
 
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
-    </div>
+    {#<div class="navigation">#}
+        {#{{ knp_pagination_render(pagination) }}#}
+    {#</div>#}
 
 {% endblock %}
