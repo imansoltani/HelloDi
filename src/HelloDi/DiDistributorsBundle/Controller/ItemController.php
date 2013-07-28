@@ -152,12 +152,32 @@ class ItemController extends Controller
                             ;
                         }
                     }
-                    else if($price != null)
+                    else
                     {
-                        if($price->getPrice() != $newprice)
+                        if($price != null)
                         {
+                            if($price->getPrice() != $newprice)
+                            {
+                                $price->setPrice($newprice);
+                                $price->setPriceStatus(1);
+
+                                $pricehistory = new PriceHistory();
+                                $pricehistory->setPrice($newprice);
+                                $pricehistory->setDate(new \DateTime('now'));
+                                $pricehistory->setPrices($price);
+                                $em->persist($pricehistory);
+                            }
+                        }
+                        else
+                        {
+                            $price = new Price();
                             $price->setPrice($newprice);
-                            $price->setPriceStatus(1);
+                            $price->setPriceCurrency($accountdist->getAccCurrency());
+                            $price->setPriceStatus(true);
+                            $price->setIsFavourite(true);
+                            $price->setItem($item);
+                            $price->setAccount($accountdist);
+                            $em->persist($price);
 
                             $pricehistory = new PriceHistory();
                             $pricehistory->setPrice($newprice);
@@ -165,23 +185,6 @@ class ItemController extends Controller
                             $pricehistory->setPrices($price);
                             $em->persist($pricehistory);
                         }
-                    }
-                    else
-                    {
-                        $price = new Price();
-                        $price->setPrice($newprice);
-                        $price->setPriceCurrency($accountdist->getAccCurrency());
-                        $price->setPriceStatus(true);
-                        $price->setIsFavourite(true);
-                        $price->setItem($item);
-                        $price->setAccount($accountdist);
-                        $em->persist($price);
-
-                        $pricehistory = new PriceHistory();
-                        $pricehistory->setPrice($newprice);
-                        $pricehistory->setDate(new \DateTime('now'));
-                        $pricehistory->setPrices($price);
-                        $em->persist($pricehistory);
                     }
                 }
                 $em->flush();

@@ -106,38 +106,30 @@
 
                         <tr>
                             <td>
-                                {{ Tr.TR.id}}
+                                {% if group==0 %}{{ Tr.TR.id}}{% else %}--{% endif %}
                             </td>
                             <td>
                                 {{ Tr.TR.tranDate|date('y-M-d') }}
-
-
                             </td>
                             <td>
                                 {{ Tr.TR.Code.Item.itemName}}
                             </td>
                             <td>
-                            {% if group==0 %}
-                                1
-                           {% else %}
-                             {{ Tr.Quantity }}
-                         {% endif %}
-
+                            {% if group==0 %}--{% else %}{{ Tr.Quantity }}{% endif %}
                             </td>
                             <td>
-                                {{ Tr.TR.Account.Entiti.entName }}
+                                {% if group==0 %}{{ Tr.TR.Account.Entiti.entName }}{% else %}--{% endif %}
                             </td>
                             <td>
-                                {{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}
+                                {% if group==0 %}{{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}{% else %}--{% endif %}
                             </td>
                             <td>Task</td>
                             <td class="tab-actions" >
-                        {% if group==0 %}
-                                <a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.TR.id}) }}">Details</a>
-                         {% else %}
-
-                             -------
-                         {% endif %}
+                                {% if group==0 %}
+                                    <a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.TR.id}) }}">Details</a>
+                                {% else %}
+                                    --
+                                {% endif %}
 
                             </td>
 
@@ -151,7 +143,7 @@
         </form>
     </div>
     <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+    {% if group==0 %}{{ knp_pagination_render(pagination) }}{% endif %}
     </div>
 
 {% endblock %}

@@ -1040,47 +1040,60 @@ else
                             ;
                     }
             ))
-            ->add('NewPrice','text')
+            ->add('NewPrice','text',array('required'=>true))
             ->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
+                $actiontype = $request->get("actiontype");
                 $newprice = $data['NewPrice'];
                 foreach ($data['checks'] as $accountretailer)
                 {
-                    if(count($accountretailer->getPrices())!=0)
+                    $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
+                    if($actiontype == "1")
                     {
-                        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountretailer));
-                        $price->setPrice($newprice);
-
-                        $pricehistory = new PriceHistory();
-                        $pricehistory->setPrice($newprice);
-                        $pricehistory->setDate(new \DateTime('now'));
-                        $pricehistory->setPrices($price);
-                        $em->persist($pricehistory);
+                        if($price != null) $price->setPriceStatus(0);
                     }
                     else
                     {
-                        $price = new Price();
-                        $price->setPrice($newprice);
-                        $price->setPriceCurrency($accountretailer->getAccCurrency());
-                        $price->setPriceStatus(true);
-                        $price->setIsFavourite(true);
-                        $price->setItem($item);
-                        $price->setAccount($accountretailer);
-                        $em->persist($price);
+                        if($price != null)
+                        {
+                            if($price->getPrice() != $newprice)
+                            {
+                                $price->setPrice($newprice);
+                                $price->setPriceStatus(1);
 
-                        $pricehistory = new PriceHistory();
-                        $pricehistory->setPrice($newprice);
-                        $pricehistory->setDate(new \DateTime('now'));
-                        $pricehistory->setPrices($price);
-                        $em->persist($pricehistory);
+                                $pricehistory = new PriceHistory();
+                                $pricehistory->setPrice($newprice);
+                                $pricehistory->setDate(new \DateTime('now'));
+                                $pricehistory->setPrices($price);
+                                $em->persist($pricehistory);
+                            }
+                        }
+                        else
+                        {
+                            die('--'.$accountretailer->getAccName().'--');
+                            $price = new Price();
+                            $price->setPrice($newprice);
+                            $price->setPriceCurrency($accountretailer->getAccCurrency());
+                            $price->setPriceStatus(true);
+                            $price->setIsFavourite(true);
+                            $price->setItem($item);
+                            $price->setAccount($accountretailer);
+                            $em->persist($price);
+
+                            $pricehistory = new PriceHistory();
+                            $pricehistory->setPrice($newprice);
+                            $pricehistory->setDate(new \DateTime('now'));
+                            $pricehistory->setPrices($price);
+                            $em->persist($pricehistory);
+                        }
                     }
                 }
                 $em->flush();
-                return $this->forward('HelloDiDiDistributorsBundle:Distributors:ShowItems');
+                return $this->redirect($this->generateUrl('items_item_per_retailers', array('itemid' => $itemid)));
             }
         }
 
