@@ -1,0 +1,139 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    Transactions
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
+    <a class="link" href="{{ path('DistTransaction') }}">Transactions</a>
+    <span class="link">Details</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    Transaction Details
+{% endblock %}
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span" >
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3>Details</h3>
+                </div> <!-- /widget-header -->
+
+                <form class="form-horizontal">
+
+                    <fieldset>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'id' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.id}}" >
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Date' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Description' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.tranDescription}}">
+                            </div>
+                        </div>
+{% set credit,debit='','' %}
+
+                        {% if  tran.tranAmount>0 %}
+                            {% set credit=tran.tranAmount %}
+                        {% elseif  tran.tranAmount<0 %}
+                            {% set debit=tran.tranAmount %}
+                        {% endif %}
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Credit' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ credit }}">
+                            </div>
+                        </div>
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Debit' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ debit }}">
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Balance' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                {% set balance=tran.tranBalance+tran.tranAmount %}
+                                <input type="text" disabled="" value=" {{ balance }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'User' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.User.username }}">
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                {{ 'Accountname' | trans ({}, "account") }}
+                            </label>
+                            <div class="controls">
+                                <input type="text" disabled="" value="{{ tran.Account.accName }}">
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <a href="{{ path('DistTransaction') }}" class="btn btn-primary">
+                            Return
+                        </a>
+                    </div>
+                </form>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

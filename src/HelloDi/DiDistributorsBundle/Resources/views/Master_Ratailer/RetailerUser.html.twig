@@ -1,0 +1,88 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailMaster.html.twig' %}
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+
+    <span class="link">Users</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Users</h3>
+    </div> <!-- /widget-header -->
+    <br>
+    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerUserAdd',{'id':retailerAccount.id}) }}" >Add New User</a>
+    <div style="margin-top: 5px" class="tablediv">
+        <form method="post">
+            <div class="tab-content datatable">
+                <table id="example" class="table postsend">
+                    <thead>
+                    <tr>
+                        <th>{{ 'Id' | trans ({}, "user") }}</th>
+                        <th>{{ 'Name' | trans ({}, "user") }}</th>
+                        <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                        <th>{{ 'Role' | trans ({}, "user") }}</th>
+                        <th>{{ 'Modify' | trans ({}, "user") }}</th>
+
+                    </tr>
+
+                    <tr class="input" >
+                        <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                        <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                        <td><input type="text" name="search_UserName" value="Search User Name" class="search_init" /></td>
+                        <td><input type="text" name="search_Role" value="Search Role" class="search_init" /></td>
+                        <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+
+                    </tr>
+
+                    </thead>
+                    <tbody>
+
+                    {% for User in Users %}
+                        <tr>
+
+                            <td >{{ User.id }}</td>
+                            <td>{{ User.firstName }}</td>
+                            <td>{{ User.username }}</td>
+                            <td>
+                                {{ User.roles[0] }}
+                            </td>
+
+                            <td class="td-actions" >
+                                <a class="btn_actions" href="{{ path('Master_RetailerUserEdit',{'id':retailerAccount.id,'userid':User.id}) }}">Edit</a>
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

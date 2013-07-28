@@ -22,8 +22,11 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditProvType;
+use HelloDi\DiDistributorsBundle\Form\Account\EditRetailerType;
 use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
 use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
+use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
@@ -459,9 +462,9 @@ class AccountController extends Controller
                 'empty_value' => 'choice a action',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'pmt' => 'Credit',
-                    'amdt' => 'Debit',
-                    'com_pmt' => 'Debit (commission)'
+                    0 => 'Debit',
+                    1 => 'Credit',
+                    2 => 'Debit (commission)'
                 )
             ))
             ->add('Description', 'textarea',
@@ -505,9 +508,9 @@ class AccountController extends Controller
                 'preferred_choices' => array('pmt'),
                 'choices'
                 => array(
-                    'pmt' => 'Credit',
-                    'amdt' => 'Debit',
-                    'com_pmt' => 'Debit (commission)'
+                    0 => 'Debit',
+                    1 => 'Credit',
+                    2 => 'Debit (commission)'
                 )))
             ->add('Description', 'textarea', array('required' => true))
             ->getForm();
@@ -532,50 +535,48 @@ class AccountController extends Controller
 
             if (($data['Amount'] > 0)) {
                 switch ($data['As']) {
+                    case 0:
 
-                    case 'pmt':
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                            $trandist->setTranType(0);
+                            $trandist->setTranAmount(-$data['Amount']);
+                            $trandist->setTranAction('amdt');
+                            $em->persist($trandist);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        }
+
+                        break;
+
+                    case 1:
 
                         $trandist->setTranType(1);
                         $trandist->setTranAmount(+$data['Amount']);
-                        $trandist->setTranAction($data['As']);
+                        $trandist->setTranAction('pmt');
                         $em->persist($trandist);
                         $em->flush();
                         $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
 
                         break;
 
+                    case 2:
 
-                    case 'amdt':
-
-                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount']))
+                        {
                             $trandist->setTranType(0);
                             $trandist->setTranAmount(-$data['Amount']);
-                            $trandist->setTranAction($data['As']);
+                            $trandist->setTranAction('com_pmt');
                             $em->persist($trandist);
                             $em->flush();
                             $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                         }
                         break;
-
-
-                    case 'com_pmt':
-
-
-                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-                            $trandist->setTranType(0);
-                            $trandist->setTranAmount(-$data['Amount']);
-                            $trandist->setTranAction($data['As']);
-                            $em->persist($trandist);
-                            $em->flush();
-                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
-                        }
-                        break;
-
-
                 }
 
 
-            } else
+            }
+            else
+
                 $this->get('session')->getFlashBag()->add('error', ' zero isn,t accept !');
 
         }
@@ -594,25 +595,31 @@ class AccountController extends Controller
             ->add('Amount', 'text')
             ->add('As', 'choice', array('preferred_choices' => array('Credit'),
                 'choices' => array(
-                    'Credit' => 'Increase',
-                    'Debit' => 'Decrease')
+                    1 => 'Increase',
+                    0 => 'Decrease')
             ))->getForm();
 
         if ($req->isMethod('POST')) {
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
 
-            if ($data['As'] == 1)
-                $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
+          switch($data['As'] )
+          {
+              case 0:
+                  if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
+                      $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
+                      $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                  }
+                  break;
+              case 1:
+                  $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
+                  $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                  break;
 
-            elseif ($data['As'] == 0) {
-                if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
-                    $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
-                }
-            }
-
+          }
 
             $em->flush();
+
         }
         return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
     }
@@ -826,7 +833,7 @@ class AccountController extends Controller
         $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
-            ->add('Amount', 'text', array('data' => 0))
+            ->add('Amount', 'text', array())
             ->add('Accounts', 'entity', array(
                 'empty_value' => 'select a account',
                 'empty_data' => '',
@@ -889,7 +896,9 @@ class AccountController extends Controller
                 $em->persist($tranprov);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
-            } else  $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
         }
 
 
@@ -1053,25 +1062,27 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranInsert');
+            $qb->groupBy('TrCoIt.itemName');
 
-            $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id','desc');
+            $qb->addOrderBy('Tr.tranDate', 'desc');
 
             $qb = $qb->getQuery();
-            $count = count($qb->getResult());
-            $qb->setHint('knp_paginator.count', $count);
+            $qb = $qb->getResult();
+
+//            $count = count($qb->getResult());
+//            $qb->setHint('knp_paginator.count', $count);
 
         }
 
 
-        $pagination = $paginator->paginate(
-            $qb,
-            $req->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+//        $pagination = $paginator->paginate(
+//            $qb,
+//            $req->get('page', 1) /*page number*/,
+//            10/*limit per page*/
+//        );
 
         return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $qb,
             'Account' => $Account,
             'User' => $User,
             'Entity' => $Account->getEntiti(),
@@ -2173,6 +2184,559 @@ class AccountController extends Controller
         }
         return new Response($value);
     }
-    #end kazem
 
+
+
+
+
+
+//    Master_Retailer
+
+
+
+    public function  MasterRetailerFundingAction($id)
+    {
+        $this->check_ChildAccount($id);
+
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $formapplay=$this->createFormBuilder()
+            ->add('Amount',null,array())
+            ->add('Communications','textarea',array('required'=>true))
+            ->add('Description','textarea',array('required'=>true))
+            ->getForm();
+
+        $formupdate=$this->createFormBuilder()
+            ->add('Amount','text',array())
+            ->add('As','choice',array(
+                'preferred_choices'=>array('Credit'),
+                'choices'=>
+                array(
+                    1=>'Increase',
+                    0=>'Decrease')
+            ))->getForm();
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',
+            array(
+                'Entiti'=>$Account->getEntiti(),
+                'Account'=>$Account->getParent(),
+                'retailerAccount'=>$Account,
+                'formapplay'=>$formapplay->createView(),
+                'formupdate'=>$formupdate->createView(),
+
+            ));
+    }
+
+    public function  MasterRetailerFundingTransferAction(Request $req,$id)
+    {
+
+        $this->check_ChildAccount($id);
+        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
+        $User= $this->get('security.context')->getToken()->getUser();
+        $em=$this->getDoctrine()->getManager();
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $formtransfer=$this->createFormBuilder()
+            ->add('Amount')
+            ->add('Communications','textarea',array('required'=>false))
+            ->add('Description','textarea',array('required'=>false))
+            ->getForm();
+
+        if($req->isMethod('post'))
+        {
+
+            $trandist=new Transaction();
+            $tranretailer=new Transaction();
+
+            $formtransfer->handleRequest($req);
+
+            $data=$formtransfer->getData();
+
+            #transaction for dist#
+
+            $trandist->setTranDate(new \DateTime('now'));
+            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
+            $trandist->setTranInsert(new \DateTime('now'));
+            $trandist->setAccount($Account->getParent());
+            $trandist->setUser($User);
+            $trandist->setTranFees(0);
+            $trandist->setTranAction('tran');
+            $trandist->setTranType(0);
+            $trandist->setTranDescription($data['Description']);
+
+
+
+
+            #transaction for retailer#
+
+            $tranretailer->setTranDate(new \DateTime('now'));
+            $tranretailer->setTranCurrency($Account->getAccCurrency());
+            $tranretailer->setTranInsert(new \DateTime('now'));
+            $tranretailer->setAccount($Account);
+            $tranretailer->setUser($User);
+            $tranretailer->setTranFees(0);
+            $tranretailer->setTranAction('tran');
+            $trandist->setTranType(1);
+            $tranretailer->setTranDescription($data['Communications']);
+
+            if($data['Amount']>0)
+            {
+                if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
+                {
+                    $tranretailer->setTranAmount(+$data['Amount']);
+                    $trandist->setTranAmount(-$data['Amount']);
+                    $em->persist($trandist);
+                    $em->persist($tranretailer);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                }
+
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+
+        }
+
+        return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
+
+    }
+
+    public function  MasterRetailerFundingUpdateAction(Request $req,$id)
+    {
+        $this->check_ChildAccount($id);
+        $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
+        $User= $this->get('security.context')->getToken()->getUser();
+
+        $em=$this->getDoctrine()->getManager();
+
+        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $formupdate=$this->createFormBuilder()
+            ->add('Amount','text')
+            ->add('As','choice',array('preferred_choices'=>array('Credit'),
+                'choices'=>array(
+                    1=>'Increase',
+                    0=>'Decrease')
+            ))->getForm();
+
+        if($req->isMethod('POST'))
+        {
+            $formupdate->handleRequest($req);
+            $data=$formupdate->getData();
+
+            $trandist=new Transaction();
+
+            $trandist->setTranDate(new \DateTime('now'));
+            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
+
+            $trandist->setTranInsert(new \DateTime('now'));
+
+            $trandist->setUser($User);
+            $trandist->setTranFees(0);
+            $trandist->setTranAction('crtl');
+            $trandist->setTranType(0);
+            $trandist->setAccount($Account->getParent());
+            if($data['Amount']>0)
+            {
+
+                if($data['As']==1)
+                {
+                    if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
+                    {
+                        $trandist->setTranAmount(-$data['Amount']);
+                        $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
+                        $em->persist($trandist);
+                        $em->flush();
+                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                    }
+                }
+
+                elseif($data['As']==0)
+                {
+
+                    if($balancechecker->isAccCreditLimitPlus($Account,$data['Amount']))
+                    {
+                        $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
+                        $em->flush();
+                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                    }
+                }
+
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+
+        }
+        return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
+    }
+
+
+
+    public function MasterRetailerUserAction(Request $req,$id)
+    {
+//        $this->check_ChildAccount($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $users = $Account->getUsers();
+
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerUser.html.twig', array(
+            'Entiti' => $Account->getEntiti(),
+            'Account' => $Account->getParent(),
+            'retailerAccount' => $Account,
+            'Users' => $users
+        ));
+
+    }
+
+    public function MasterRetailerUserEditAction(Request $request, $userid)
+    {
+//        $this->check_ChildUser($userid);
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            }
+
+        }
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerUserEdit.html.twig', array(
+            'retailerAccount' => $user->getAccount(),
+            'Entiti' => $user->getEntiti(),
+            'userid' => $userid,
+            'form' => $form->createView()
+        ));
+
+    }
+
+    public function MasterRetailerUserAddAction(Request $request, $id)
+    {
+//        $this->check_ChildAccount($id);
+        $em = $this->getDoctrine()->getManager();
+        $AccountRetailer =  $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $user = new User();
+
+
+        $Entiti = $AccountRetailer->getEntiti();
+
+        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2),$user);
+
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $user->setAccount($AccountRetailer);
+            $user->setEntiti($Entiti);
+            if ($form->isValid())
+            {
+                $em->persist($user);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                return $this->redirect($this->generateUrl('Master_RetailerUser', array('id' => $AccountRetailer->getId())));
+            }
+
+        }
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerUserAdd.html.twig', array(
+            'Entiti' => $Entiti,
+            'retailerAccount' =>$AccountRetailer,
+            'form' => $form->createView(),
+        ));
+
+    }
+
+
+    public function MasterNewRetailerAction(Request $request)
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $Account = $user->getAccount();
+
+        $em = $this->getDoctrine()->getManager();
+        $user= $this->get('security.context')->getToken()->getUser();
+        $currency=$user->getAccount()->getAccCurrency();
+        $user = new User();
+        $AdrsDetai = new DetailHistory();
+        $Entiti = new Entiti();
+        $Account = new Account();
+
+        $Account->setAccCreditLimit(0);
+        $Account->setAccCreationDate(new \DateTime('now'));
+        $Account->setAccTimeZone(null);
+        $Account->setAccType(2);
+        $Account->setAccBalance(0);
+
+
+        $Account->setAccCurrency($currency);
+        $Account->setParent($user->getAccount());
+
+
+        $Account->setEntiti($Entiti);
+        $Entiti->addAccount($Account);
+
+        $user->setEntiti($Entiti);
+        $Entiti->addUser($user);
+
+
+
+        $user->setAccount($Account);
+        $user->setStatus(1);
+
+
+        $form = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
+
+        if ($request->isMethod('POST')) {
+
+            $form->handleRequest($request);
+
+            //if ($form->isValid()) {
+
+            $em->persist($Entiti);
+            $AdrsDetai->setCountry($Entiti->getCountry());
+            $em->persist($Account);
+            $em->persist($user);
+            $AdrsDetai->setAdrsDate(new \DateTime('now'));
+            $AdrsDetai->setEntiti($Entiti);
+            $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
+            $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
+            $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
+            $AdrsDetai->setAdrsCity($Entiti->getEntCity());
+            $AdrsDetai->setAdrsNp($Entiti->getEntNp());
+            $AdrsDetai->setEntiti($Entiti);
+            $em->persist($AdrsDetai);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
+            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
+
+
+
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array(
+            'form_Relaited_New' => $form->createView(),
+            'Account' => $Account
+        ));
+
+    }
+
+    public function MasterRetailersTransactionAction(Request $req,$id)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        $paginator = $this->get('knp_paginator');
+
+//        $this->check_ChildAccount($id);
+
+        $AccountRetailer=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $typedate=0;
+        $qb=array();
+
+        $form=$this->createFormBuilder()
+            ->add('TypeDate','choice', array(
+                'expanded'   => true,
+                'choices'    => array(
+                    0 => 'Trade Date',
+                    1 => 'Looking Date',
+                )
+
+            ))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
+
+            ->add('Type','choice',
+                array('choices'=>
+                array(
+                    2=>'All',
+                    0=>'Debit',
+                    1=>'Credit',
+                )))
+
+            ->add('Action', 'choice', array('label'=>'Action:',
+                'choices' =>
+                array(
+                    'All'=>'All',
+                    'sale'=>'debit balance when the retailer sell a code',
+                    'crnt'=>'issue a credit note for a sold code',
+                    'tran'=>'transfer credit from distributor,s account to a retailer,s account',
+                    'ogn_pmt'=>'ogone payment on its own account'
+                )))
+
+            ->getForm();
+
+
+        if($req->isMethod('POST'))
+        {
+            $form->handleRequest($req);
+            $data=$form->getData();
+            $qb=$em->createQueryBuilder();
+            $qb->select('Tran')
+                ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
+                ->where('Tran.Account = :Acc')->setParameter('Acc',$AccountRetailer);
+            if($data['TypeDate']==0)
+            {
+                if($data['DateStart']!='')
+                    $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                if($data['DateEnd']!='')
+                    $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+
+            }
+
+            if($data['TypeDate']==1)
+            {$typedate=1;
+                if($data['DateStart']!='')
+                    $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                if($data['DateEnd']!='')
+                    $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+
+            }
+
+            if ($data['Type'] != 2)
+                $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
+
+            if($data['Action']!='All')
+                $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+
+            $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');;
+
+            $qb=$qb->getQuery();
+            $count = count($qb->getResult());
+            $qb->setHint('knp_paginator.count', $count);
+        }
+
+        $pagination = $paginator->paginate(
+            $qb,
+            $req->get('page',1) /*page number*/,
+            10/*limit per page*/
+        );
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailersTransaction.html.twig',
+            array(
+                'pagination'=>$pagination,
+                'form'=>$form->createView(),
+                'retailerAccount' => $AccountRetailer,
+                'typedate'=>$typedate
+            ));
+
+
+    }
+
+    public function MasterDetailsRetailerTransactionAction($tranid)
+    {
+//        $this->check_ChildTransaction($tranid);
+
+        $em=$this->getDoctrine()->getManager();
+
+
+        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $AccountRetailer = $Tran->getAccount();
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerDetailsTransaction.html.twig',
+            array(
+                'tran'=>$Tran,
+                'retailerAccount'=>$AccountRetailer,
+            ));
+
+    }
+
+
+    public function MasterRetailerSettingAction(Request $req, $id)
+    {
+//        $this->check_ChildAccount($id);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RetailerAccount= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $form = $this->createForm(new EditRetailerType(),$RetailerAccount);
+        if ($req->isMethod('POST')) {
+            $form->handleRequest($req);
+            if ($form->isValid()) {
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerSetting.html.twig', array(
+            'Entiti' => $RetailerAccount->getEntiti(),
+            'retailerAccount' => $RetailerAccount,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function MasterRetailerDetailsAction(Request $req,$id)
+    {
+//        $this->check_ChildAccount($id);
+        $em = $this->getDoctrine()->getManager();
+
+        $RetailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $entity = $RetailerAccount->getEntiti();
+
+        $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
+
+        if($req->isMethod('post'))
+        {
+            $editForm->handleRequest($req);
+            if($editForm->isValid())
+            {
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailersDetails.html.twig', array(
+
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'retailerAccount' => $RetailerAccount,
+        ));
+    }
+
+
+    public function MasterLoadActionRetailerAction(Request $req)
+    {
+        $id=$req->get('id',0);
+        $value='';
+
+
+        switch($id)
+        {
+            case 0:
+
+                $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
+
+
+                break;
+
+            case 1:
+                $value.='<option value="All">'.'All'.'</option>';
+                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+                $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+
+
+                break;
+
+            case 2:
+                $value.='<option value="All">'.'All'.'</option>';
+                $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
+                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
+                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
+                $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+                break;
+        }
+        return new Response($value);
+    }
+
+
+
+
+
+//    End Retailer
 }
