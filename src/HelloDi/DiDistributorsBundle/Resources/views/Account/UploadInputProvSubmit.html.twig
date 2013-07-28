@@ -14,7 +14,7 @@
     </div>
 
 
-    <form action="{{ path('UploadInputProvSubmitAccepted') }}" method="post"  class="form-horizontal">
+    <form action="{{ path('UploadInputProvSubmitAccepted',{'id':Account.id,'itemid':input.item.id}) }}" method="post"  class="form-horizontal">
 
         <div class="control-group">
             <label class="control-label">
@@ -80,9 +80,8 @@
         </div>
 
         <div class="form-actions" style="margin-bottom: 0">
-            <input type="hidden" name="accountid" value="{{ Account.id }}"/>
             <input type="submit" class="btn btn-primary" value="Accept"/>
-            <a href="{{ path('UploadInputProvSubmitCanceled') }}" class="btn btn-warning">Cancel</a>
+            <a href="{{ path('UploadInputProvSubmitCanceled',{'id':Account.id,'itemid':input.item.id}) }}" class="btn btn-warning">Cancel</a>
         </div>
 
 

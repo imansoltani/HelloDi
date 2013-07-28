@@ -120,7 +120,7 @@
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.pin }}</td>
                                         <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
-                                        <td>{% if code.status==1 %}Not Sale{% else %}Sale{% endif %}</td>
+                                        <td>{% if code.status==1 %}Available{% else %}Not Available{% endif %}</td>
                                         <td>{{ code.Input.Account.accName }}</td>
                                         <td>
                                             <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>

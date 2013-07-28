@@ -1577,7 +1577,7 @@ class AccountController extends Controller
             return new Response('--');
     }
 
-    public function UploadInputProvAction(Request $request, $id, $itemid)
+    public function UploadInputProvAction($id, $itemid)
     {
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -1600,16 +1600,15 @@ class AccountController extends Controller
         ));
     }
 
-    public function UploadInputProvSubmitAction(Request $request)
+    public function UploadInputProvSubmitAction(Request $request,$id, $itemid)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $accountid = $request->get('accountid');
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
+        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
 
         $form = $this->createFormBuilder()
             ->add('File', 'file')
-            ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
             ->add('Batch', 'text', array('required' => false))
             ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
             ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
@@ -1621,19 +1620,31 @@ class AccountController extends Controller
         $form->handleRequest($request);
         $data = $form->getData();
 
-        $errors = null;
-        if (!is_numeric($data['Batch'])) $errors[] = 'Batch is not valid';
-        if (!is_numeric($data['SerialNumber'])) $errors[] = 'SerialNumber is not valid';
-        if (!is_numeric($data['PinCode'])) $errors[] = 'PinCode is not valid';
+        $haserror = false;
+        if (!is_numeric($data['Batch']))
+        {
+            $haserror = true;
+            $this->get('session')->getFlashBag()->add('error', 'Batch is not valid.');
+        }
+        if (!is_numeric($data['SerialNumber']))
+        {
+            $haserror = true;
+            $this->get('session')->getFlashBag()->add('error', 'SerialNumber is not valid.');
+        }
+        if (!is_numeric($data['PinCode']))
+        {
+            $haserror = true;
+            $this->get('session')->getFlashBag()->add('error', 'PinCode is not valid.');
+        }
 
-        if (count($errors) == 0) {
+        if (!$haserror) {
             $em = $this->getDoctrine()->getManager();
 
             $input = new Input();
             $input->setFile($data['File']);
             $input->upload();
             $input->setBatch($data['Batch']);
-            $input->setItem($data['Item']);
+            $input->setItem($Item);
             $input->setDateProduction($data['ProductionDate']);
             $input->setDateExpiry($data['ExpireDate']);
 
@@ -1655,7 +1666,7 @@ class AccountController extends Controller
                                 array('serialNumber' => $lineArray[$data['SerialNumber'] - 1])
                             );
                             if ($codefind) {
-                                $errors[] = "Codes are duplicate.";
+                                $this->get('session')->getFlashBag()->add('error', 'Codes are duplicate.');
                                 $ok = false;
                                 break;
                             }
@@ -1669,7 +1680,7 @@ class AccountController extends Controller
                             $request->getSession()->set('upload_delimiter', $data['delimiter']);
                             $request->getSession()->set('upload_SerialNumber', $data['SerialNumber']);
                             $request->getSession()->set('upload_PinCode', $data['PinCode']);
-                            $request->getSession()->set('upload_accountid', $accountid);
+                            $request->getSession()->set('upload_accountid', $id);
 
                             return $this->render(
                                 'HelloDiDiDistributorsBundle:Account:UploadInputProvSubmit.html.twig',
@@ -1681,19 +1692,18 @@ class AccountController extends Controller
                             );
                         }
                     } else {
-                        $errors[] = "File is empty.";
+                        $this->get('session')->getFlashBag()->add('error', 'File is empty.');
                     }
                 } catch (\Exception $ex) {
-                    $errors[] = "Error in Reading File.";
+                    $this->get('session')->getFlashBag()->add('error', 'Error in Reading File.');
                 }
             } else {
-                $errors[] = "File is duplicate.";
+                $this->get('session')->getFlashBag()->add('error', 'File is duplicate.');
             }
         }
-
         return $this->forward('HelloDiDiDistributorsBundle:Account:UploadInputProv', array(
-            'accountid' => $accountid,
-            'errors' => $errors
+            'id' => $id,
+            'itemid' => $itemid
         ));
     }
 
@@ -1761,6 +1771,7 @@ class AccountController extends Controller
     public function UploadInputProvSubmitCanceledAction(Request $request)
     {
         $accountid = $request->getSession()->get('upload_accountid');
+        $itemid = $request->getSession()->get('upload_Itemid');
 
         $request->getSession()->remove('upload_Name');
         $request->getSession()->remove('upload_Itemid');
@@ -1773,7 +1784,8 @@ class AccountController extends Controller
         $request->getSession()->remove('upload_accountid');
 
         return $this->redirect($this->generateUrl('ManageInputsProv', array(
-            'accountid' => $accountid
+            'id' => $accountid,
+            'itemid' => $itemid
         )));
     }
 
