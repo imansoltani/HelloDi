@@ -206,7 +206,7 @@ $datetype=0;
                 $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
 
 
-            $qb->addOrderBy('Tran.tranInsert','desc');
+            $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());

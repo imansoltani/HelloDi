@@ -1,0 +1,58 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Entities Management
+{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <span class="link">Entities Management</span>
+{% endblock Site_Map %}
+
+{% set MU = 'ent' %}
+
+{% block PageTitle %}
+    <i class="icon-book"></i>
+    Entities Management
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+            <div class="widget-header">
+                <i class="icon-book"></i>
+                <h3>Entities</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+
+                <form action="{{ path('Ent_Accounts') }}" method="post">
+                    <input type="hidden" name="entityid" value="{{ entityid }}"/>
+                    <input type="submit" value="accounts"/>
+                </form>
+
+                <form action="{{ path('Ent_Users') }}" method="post">
+                    <input type="hidden" name="entityid" value="{{ entityid }}"/>
+                    <input type="submit" value="Users"/>
+                </form>
+
+                <form action="{{ path('Ent_Children') }}" method="post">
+                    <input type="hidden" name="entityid" value="{{ entityid }}"/>
+                    <input type="submit" value="Child Entities"/>
+                </form>
+
+                <form action="{{ path('Ent_Info') }}" method="post">
+                    <input type="hidden" name="entityid" value="{{ entityid }}"/>
+                    <input type="submit" value="Info"/>
+                </form>
+
+                <form action="{{ path('Ent_Addresses') }}" method="post">
+                    <input type="hidden" name="entityid" value="{{ entityid }}"/>
+                    <input type="submit" value="Address"/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

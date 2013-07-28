@@ -21,7 +21,7 @@ retailer_transaction:
     prefix:   /transaction
 
 retailer_transaction_recharge:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/recharge.yml"
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Ogone/retailer_recharge.yml"
     prefix:   /admin/transaction
 
 retailer_ticket:

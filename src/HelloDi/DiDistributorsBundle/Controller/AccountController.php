@@ -407,7 +407,7 @@ class AccountController extends Controller
                 $qb->andWhere($qb->expr()->like('Tran.tranAction', $qb->expr()->literal($data['Action'])));
 
 
-            $qb->addOrderBy('Tran.tranInsert', 'desc');
+            $qb->addOrderBy('Tran.tranInsert', 'desc')->addOrderBy('Tran.id','desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -684,27 +684,49 @@ class AccountController extends Controller
 
             ->getForm();
 
+
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
             $data = $form->getData();
+
+//$qb=$em->createQuery("SELECT Tr as TR,count(Tr.id) as Quantity FROM HelloDiDiDistributorsBundle:Transaction Tr
+//JOIN Tr.Code TrCo
+//JOIN Tr.Account TrAc
+//JOIN TrCo.Item TrCoIt
+//JOIN TrAc.Entiti TrAcEn
+//WHERE Tr.tranAction LIKE 'sale'
+//AND Tr.tranDate >= :DateStat
+//AND Tr.tranDate <= :DateEnd
+//AND Tr.Account in ()zz:Acc
+//AND TrCoIt.itemName like :ItemName
+//AND TrCoIt.itemType like :ItemType "
+//            )->setParameters(array(
+//                    'ItemName'=>$data['ItemName']->getItemName(),
+//                    'ItemType'=>$data['ItemType'],
+//                    'DateStart'=>$data['DateStart'],
+//                    'DateEnd'=>$data['DateEnd'],
+//                    'Acc'=>$Account->getChildrens()
+//                ));
+
+
             $qb = $em->createQueryBuilder();
 
      if ($data['GroupBy'])
      {
-         $qb->select('Tr as TR','COUNT(Tr.Code) as Quantity')
-         ->GroupBy('Tr.tranDate')->addGroupBy('TrCoIt.itemName');
+         $qb->select('Tr as TR,count(Tr.tranAction) as Quantity');
          $group=1;
      }
-            else
-                $qb->select(array('Tr as TR'));
+            else{$qb->select('Tr as TR');}
+
+
                 $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
-//                /*for groupBy*/,
+//                /*for groupBy*/
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
                 ->innerJoin('TrCo.Item', 'TrCoIt')
-                ->innerJoin('TrAc.Entiti', 'TrAcEn')
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+               ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+
             if ($data['DateStart'] != '')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
@@ -727,11 +749,16 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName']->getItemName())));
 
+            if ($data['GroupBy'])
+                $qb->GroupBy('Tr.tranDate')->addGroupBy('TrCoIt.itemName');
 
-            $qb->addOrderBy('Tr.tranDate', 'desc');
+            $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id','desc');
+
 
             $qb = $qb->getQuery();
+
             $count = count($qb->getResult());
+
             $qb->setHint('knp_paginator.count', $count);
 
         }
@@ -1002,7 +1029,7 @@ class AccountController extends Controller
 
             $qb = $em->createQueryBuilder();
 //            ,Count(Tr.tranDate) as c
-        $qb->select('Tr,count(Tr.Code) as Quantity')
+        $qb->select('Tr as TR,count(Tr.Code) as Quantity')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 ->innerJoin('Tr.Account', 'TrAcc')
                 ->innerJoin('Tr.Code', 'TrCo')
@@ -1023,7 +1050,8 @@ class AccountController extends Controller
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
             $qb->groupBy('TrCoIt.itemName')->addGroupBy('Tr.tranInsert');
-            $qb->addOrderBy('Tr.tranDate', 'desc');
+
+            $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id','desc');
 
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
@@ -1820,7 +1848,7 @@ class AccountController extends Controller
             if ($data['Action'] != 'All')
                 $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal($data['Action'])));
 
-            $qb->addOrderBy('Tr.tranInsert', 'desc');
+            $qb->addOrderBy('Tr.tranInsert', 'desc')->addOrderBy('Tr.id','desc');
 
             $qb = $qb->getQuery();
 

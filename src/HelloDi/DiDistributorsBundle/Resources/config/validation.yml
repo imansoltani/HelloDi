@@ -22,7 +22,6 @@
 #            - Url:
 #                message: "entity.url.notmatch"
 
-
 HelloDi\DiDistributorsBundle\Entity\User:
     properties:
         firstName:

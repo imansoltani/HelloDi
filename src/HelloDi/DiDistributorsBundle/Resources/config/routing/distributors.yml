@@ -10,6 +10,10 @@ distributors_transaction:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/transaction.yml"
     prefix:   /transactions
 
+distributors_ogone_transaction:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Ogone/dist_recharge.yml"
+    prefix:   admin/transactions
+
 distributors_retailer:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/retailer.yml"
     prefix:   /retailers

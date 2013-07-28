@@ -131,7 +131,7 @@ class DistributorsController extends Controller
             {
                 foreach($Account->getChildrens() as $acc )
                 {
-                    $qb->andwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
+                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
 
                 }
 
@@ -780,7 +780,7 @@ else
             if($data['Action']!='All')
                 $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
 
-            $qb->addOrderBy('Tran.tranInsert','desc');
+            $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');;
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
@@ -906,7 +906,7 @@ else
         if($data['Action']!='All')
             $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
 
-        $qb->addOrderBy('Tran.tranInsert','desc');
+        $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');;
 
         $qb=$qb->getQuery();
         $count = count($qb->getResult());

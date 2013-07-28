@@ -99,17 +99,17 @@
 
                         <tr>
 
-                            <td>{{ Tr[0].Code.Item}}</td>
-                            <td>{{ Tr.Quantity }}</td>
+                            <td>{{ Tr.TR.Code.Item}}</td>
+                            <td>{{ Tr.Quantity|length }}</td>
 
                             <td>
 
-                                {% for p in Tr[0].Account.Parent.Prices %}
+                                {% for p in Tr.TR.Account.Parent.Prices %}
 
                                     {% if
-                                    p.Item==Tr[0].Code.Item
+                                    p.Item==Tr.TR.Code.Item
                                     and
-                                    p.Account==Tr[0].Account.Parent
+                                    p.Account==Tr.TR.Account.Parent
                                     %}
                                         {{ p.price }}
                                     {% endif %}

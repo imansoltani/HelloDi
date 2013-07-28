@@ -1,0 +1,42 @@
+RetailerProfile:
+    pattern:  /profile
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerProfile }
+RetailerStaff:
+    pattern:  /staff
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaff }
+
+RetailerStaffAdd:
+    pattern:  /staff/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaffAdd }
+
+RetailerStaffEdit:
+    pattern:  /{id}/staff/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerStaffEdit }
+
+RetailerChangeRole:
+    pattern:  /{id}/staff/ChangeRole
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerChangeRole }
+
+Retailer_Shop_dmtu:
+    pattern:  /dmtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
+
+Retailer_Shop_dmtu_code:
+    pattern:  /code
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:PrintCode }
+
+Retailer_Shop_callingCard:
+    pattern:  /calling-cards
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:CallingCard }
+
+Retailer_Shop_favourite:
+    pattern:  /favourites
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Favourites }
+
+Retailer_Shop_favourite_code:
+    pattern:  /favourites/code
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:FavouritesCode }
+#    Tickets
+RetailerLoadActiowOwn:
+    pattern:  /Action/load
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:RetailerLoadActiowOwn }
