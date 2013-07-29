@@ -707,9 +707,12 @@ $datetype=0;
                     $em->flush();
 
                 }
+     $description=$em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$user->getLanguage()));
 
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
                     'codes'=>$codes,
+
+                    'description'=>$description
                 ));
 
         }
