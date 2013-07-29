@@ -29,6 +29,13 @@ HelloDi\DiDistributorsBundle\Entity\User:
                 pattern: "/\d/"
                 match:   false
                 message: Your name cannot contain a number
+        mobile:
+            - Regex:
+                pattern: "/\d/"
+                match: true
+                message: 'only numeric'
+
+
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: usernameCanonical
@@ -37,10 +44,19 @@ HelloDi\DiDistributorsBundle\Entity\User:
 
 
 HelloDi\DiDistributorsBundle\Entity\Account:
+    properties:
+        accTerms:
+            - Regex:
+                pattern: "/\d/"
+                match:   true
+                message: only numeric
+
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: accName
             message: 'fos_user.accName.already_used'
+
+
 
 
 #mostafa

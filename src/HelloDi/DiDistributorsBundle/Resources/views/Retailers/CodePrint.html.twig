@@ -41,7 +41,6 @@
 
 <div class="tab-content">
 
-
 {%  if description is not null %}
     {{ include(template_from_string(description.descdesc),{"pin":code.pin, "serial":code.serialNumber}) }}
 {% else %}
