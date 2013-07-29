@@ -4,15 +4,36 @@
     <title>Shop Code</title>
 </head>
 <body>
+<center>
+<div class="tablediv">
+    <div class="contenttitle">
+
+        <h3>
+            {% if codes[0].Item.itemType=='dmtu' %}
+            Mobile
+            {% elseif codes[0].Item.itemType=='empt' %}
+            e-payment
+            {% elseif codes[0].Item.itemType=='clcd' %}
+            calling card
+            {% endif %}
+        </h3>
+    </div>
+    {% for code in codes %}
+
+<div class="tab-content">
 
 
-{% set i=0 %}
-{% for listcode in code %}
-    {{ code[i].serialNumber }}<br>
-    {% set i=i+1 %}
+    Number Serial:{{ code.serialNumber }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+       Expire Le :16/08/2015</br></br>
+
+    Code Secret:{{ code.pin }}</br><hr>
+
+
+
+
+    </div>
 {% endfor %}
-
-
+<center>
 </body>
 </html>

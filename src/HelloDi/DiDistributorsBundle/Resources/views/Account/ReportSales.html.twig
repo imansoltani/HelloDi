@@ -78,12 +78,19 @@
         </form>
 
     </div>
+    <form action="#" method="POST">
+        {{ form_rest(formprint) }}
 
+        <input type="submit" value="Print To PDF">
+    </form>
     <div class="tablediv">
 
         <div class="contenttitle">
             <h4>History</h4>
         </div>
+
+
+
         <form>
             <div class="tab-content">
                 <table style="margin-top: 20px"
@@ -106,7 +113,7 @@
 
                         <tr>
                             <td>
-                                {% if group==0 %}{{ Tr.TR.id}}{% else %}--{% endif %}
+                                {% if group==0 %}{{ Tr.TR.id}}{% else %}----{% endif %}
                             </td>
                             <td>
                                 {{ Tr.TR.tranDate|date('y-M-d') }}
@@ -115,20 +122,20 @@
                                 {{ Tr.TR.Code.Item.itemName}}
                             </td>
                             <td>
-                            {% if group==0 %}--{% else %}{{ Tr.Quantity }}{% endif %}
+                            {% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}
                             </td>
                             <td>
-                                {% if group==0 %}{{ Tr.TR.Account.Entiti.entName }}{% else %}--{% endif %}
+                                {% if group==0 %}{{ Tr.TR.Account.Entiti.entName }}{% else %}----{% endif %}
                             </td>
                             <td>
-                                {% if group==0 %}{{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}{% else %}--{% endif %}
+                                {{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}
                             </td>
                             <td>Task</td>
                             <td class="tab-actions" >
                                 {% if group==0 %}
                                     <a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.TR.id}) }}">Details</a>
                                 {% else %}
-                                    --
+                                    ----
                                 {% endif %}
 
                             </td>

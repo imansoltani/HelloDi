@@ -696,34 +696,12 @@ class AccountController extends Controller
             $form->handleRequest($req);
             $data = $form->getData();
 
-//$qb=$em->createQuery("SELECT Tr as TR,count(Tr.id) as Quantity FROM HelloDiDiDistributorsBundle:Transaction Tr
-//JOIN Tr.Code TrCo
-//JOIN Tr.Account TrAc
-//JOIN TrCo.Item TrCoIt
-//JOIN TrAc.Entiti TrAcEn
-//WHERE Tr.tranAction LIKE 'sale'
-//AND Tr.tranDate >= :DateStat
-//AND Tr.tranDate <= :DateEnd
-//AND Tr.Account in ()zz:Acc
-//AND TrCoIt.itemName like :ItemName
-//AND TrCoIt.itemType like :ItemType "
-//            )->setParameters(array(
-//                    'ItemName'=>$data['ItemName']->getItemName(),
-//                    'ItemType'=>$data['ItemType'],
-//                    'DateStart'=>$data['DateStart'],
-//                    'DateEnd'=>$data['DateEnd'],
-//                    'Acc'=>$Account->getChildrens()
-//                ));
-
-
             $qb = $em->createQueryBuilder();
 
             if ($data['GroupBy']) {
-                $qb->select('Tr as TR','count(Tr.tranAction) as Quantity');
+                $qb->select('Tr as TR','count(Tr.id) as Quantity');
                 $group = 1;
-            } else {
-                $qb->select('Tr as TR');
-            }
+            } else $qb->select('Tr as TR');
 
 
             $qb->from('HelloDiDiDistributorsBundle:Transaction', 'Tr')
@@ -752,10 +730,11 @@ class AccountController extends Controller
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
 //
             if ($data['ItemName'])
-                $qb->andWhere($qb->expr()->like('TrCoIt.itemName', $qb->expr()->literal($data['ItemName']->getItemName())));
+                $qb->andwhere('TrCoIt.itemName = :item')->setParameter('item', $data['ItemName']);
+
 
             if ($data['GroupBy'])
-                $qb->GroupBy('Tr.tranDate','TrCoIt.itemName');
+                $qb->GroupBy('Tr.tranDate','TrCoIt.itemName','Tr.tranAmount');
 
             if (!$data['GroupBy'])
                 $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id', 'desc');
@@ -769,7 +748,7 @@ class AccountController extends Controller
 
         }
 
-        if($data['GroupBy'])
+        if($group==1)
         {
             $pagination = $qb->getResult();
         }
@@ -783,9 +762,20 @@ class AccountController extends Controller
             );
         }
 
+
+        $formprint=$this->createFormBuilder()
+            ->add('obtion','choice',array('label'=>'obtion:',
+
+                'expanded'=>true,
+                'choices'=>array(
+                    0=>'retailer statement',
+                    1=>'retailer turnovec'
+                )
+            ))->getForm();
         return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',array(
                 'pagination' => $pagination,
                 'form' => $form->createView(),
+                'formprint'=>$formprint->createView(),
                 'Account' => $Account,
                 'group'=>$group,
                 'Entiti' => $Account->getEntiti())
@@ -1062,7 +1052,7 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            $qb->groupBy('TrCoIt.itemName');
+            $qb->groupBy('TrCo.Item');
 
             $qb->addOrderBy('Tr.tranDate', 'desc');
 
@@ -2633,7 +2623,6 @@ class AccountController extends Controller
 //        $this->check_ChildTransaction($tranid);
 
         $em=$this->getDoctrine()->getManager();
-
 
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         $AccountRetailer = $Tran->getAccount();

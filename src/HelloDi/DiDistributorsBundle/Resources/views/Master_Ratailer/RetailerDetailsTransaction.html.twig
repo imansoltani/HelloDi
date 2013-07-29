@@ -1,6 +1,4 @@
-
-
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailMaster.html.twig' %}
 
 {% set tab = '1' %}
 
@@ -70,7 +68,7 @@
                 {{ 'Debit' | trans ({}, "account") }}
             </label>
             <div class="controls">
-                <input type="text" disabled="" value="{{ debit }}">
+                <input type="text" disabled="" value="{{ -debit }}">
             </div>
         </div>
 
@@ -117,7 +115,7 @@
     </fieldset>
 
     <div class="form-actions">
-        <a href="{{ path('Retailer_Transaction',{'id':tran.Account.id}) }}" class="btn btn-primary">
+        <a href="{{ path('Master_Retailer_Transaction',{'id':tran.Account.id}) }}" class="btn btn-primary">
             Return
         </a>
     </div>
