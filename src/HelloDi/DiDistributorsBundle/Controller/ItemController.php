@@ -245,7 +245,7 @@ class ItemController extends Controller
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
                 if($finddesc)
-                    $form ->addError(new FormError('language is duplicate.'));
+                    $form->get('desclang')->addError(new FormError('language is duplicate.'));
                 else
                 {
                     $desc->setItem($item);
@@ -268,26 +268,21 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid);
+        $desclang = $desc->getDesclang();
         $langs = $this->container->getParameter('languages');
         $langs = array_combine($langs, $langs);
         $form = $this->createForm(new ItemDescType($langs),$desc);
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
-                $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$desc->getItem(),'desclang'=>$desc->getDesclang()));
-                if($finddesc and $finddesc!=$desc)
-                    $form ->addError(new FormError('language is duplicate.'));
-                else
-                {
-                    $em->persist($desc);
-                    $em->flush();
+                $desc->setDesclang($desclang);
+                $em->persist($desc);
+                $em->flush();
 
-                    return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
-                            'id' => $desc->getItem()->getId()
-                        ));
-                }
+                return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
+                        'id' => $desc->getItem()->getId()
+                    ));
             }
         }
         return $this->render('HelloDiDiDistributorsBundle:Item:descedit.html.twig', array(
