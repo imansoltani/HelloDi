@@ -8,12 +8,12 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <span class="link">Shop Dmtu</span>
+    <span class="link">Favourites</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-mobile-phone"></i>
-    Shop Dmtu
+    Favourites
 {% endblock %}
 
 {% block Link_Footer %}
@@ -123,11 +123,11 @@
                         All Operator
                     </div>
 
-                    {#{% for opr in Operators %}#}
-                        {#<div class="filter" data-filter="{{ opr.oprname }}">#}
-                            {#{{ opr.oprname }}#}
-                        {#</div>#}
-                    {#{% endfor %}#}
+                    {% for opr in Operators %}
+                        <div class="filter" data-filter="{{ opr.oprname }}">
+                            {{ opr.oprname }}
+                        </div>
+                    {% endfor %}
                 </div>
 
 
