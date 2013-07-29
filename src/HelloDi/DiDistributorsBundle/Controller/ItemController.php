@@ -215,9 +215,7 @@ class ItemController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Item:descindex.html.twig', array(
                 'item'      => $item,
-                'itemdescs' => $itemdescs,
-                'pin' => '1234',
-                'serial' => '4321'
+                'itemdescs' => $itemdescs
             ));
     }
 

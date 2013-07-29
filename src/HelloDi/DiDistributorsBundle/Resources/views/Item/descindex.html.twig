@@ -49,7 +49,7 @@
                                 <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">Edit</a>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
-                            <td>{{ include(template_from_string(itemdesc.descdesc)) }}</td>
+                            <td>{{ include(template_from_string(itemdesc.descdesc),{"pin":1234, "serial":4321}) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
