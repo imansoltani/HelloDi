@@ -8,6 +8,7 @@ use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -645,7 +646,6 @@ $datetype=0;
 
         if($request->isMethod('POST')){
 
-                try{
                 $em = $this->getDoctrine()->getManager();
 
                $user=$this->container->get('security.context')->getToken()->getUser();
@@ -665,11 +665,9 @@ $datetype=0;
                 );
 
                 $com = $priceChild->getprice() - $priceParent->getprice();
-
-                foreach($codes as $code)
+          if($codes)
+          {     foreach($codes as $code)
                 {
-
-
                     $tranretailer = new Transaction();
                     $trandist = new Transaction();
                     //   for retailer
@@ -709,17 +707,30 @@ $datetype=0;
                     $em->flush();
 
                 }
+
                 return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-                    'code'=>$code,
+                    'codes'=>$codes,
                 ));
 
         }
 
-            catch(\Exception $e){
-                print  $e->getMessage();
-                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array('code'=>null));
-            }
+
         }
+
+ switch($item->getItemType())
+{
+    case 'dmtu':
+        return  $this->redirect($this->generateUrl('Retailer_Shop_dmtu'));
+    break;
+    case 'empt':
+         return  $this->redirect($this->generateUrl('Retailer_Shop_empt'));
+    break;
+    case 'clcd':
+        return  $this->redirect($this->generateUrl('Retailer_Shop_callingCard'));
+    break;
+}
+
+
 
     }
 
@@ -748,9 +759,32 @@ $datetype=0;
 
     }
 
-    public  function FavouritesCodeAction(Request $request ){
+    public  function FavouritesAction(Request $request ){
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:favouriteCode.html.twig',array('test'=>$request->get('favourite_id')));
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+            ->from('HelloDiDiDistributorsBundle:Operator','O')
+            ->innerJoin('O.Item','OI')
+            ->innerJoin('OI.Prices','OIP')
+            ->where('OIP.isFavourite = 1')
+            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
+            ->andwhere('OIP.priceStatus = 1');
+        $qb=$qb->getQuery();
+        $qb=$qb->getResult();
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:favourite.html.twig',array
+        (
+            'Operators'=>$qb,
+            'Account'=>$Account,
+        ));
+
+
+
     }
  // End kamal
 

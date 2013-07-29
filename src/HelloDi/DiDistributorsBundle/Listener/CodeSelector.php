@@ -11,9 +11,11 @@ class CodeSelector
 {
     private $em;
     private $balancecheker;
+    private  $session;
 
-    public function __construct(EntityManager $entityManager, BalanceChecker $balancecheker)
+    public function __construct($session,EntityManager $entityManager, BalanceChecker $balancecheker)
     {
+        $this->session=$session;
         $this->em = $entityManager;
         $this->balancecheker = $balancecheker;
     }
@@ -29,10 +31,12 @@ class CodeSelector
 
             if($count > $countinitem)
             {
-                throw new \Exception("Code not exist in this item.",1);
+                return    $this->session->getFlashBag()->add('error','Code not exist in this item!');
             }
 
+
             $codes = array();
+
             for($i=1;$i<=$count;$i++)
             {
                 $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOldestAvailableCodeByItem($item);
@@ -40,8 +44,11 @@ class CodeSelector
                 $em->flush();
                 $codes[] = $code;
             }
+
             return $codes;
+
         }
-        throw new \Exception("Balance is not enough.",2);
+    return    $this->session->getFlashBag()->add('error','Balance is not enough!');
+
     }
 }

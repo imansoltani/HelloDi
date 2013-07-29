@@ -46,7 +46,7 @@
 
                     {{ form_label(formapplay.Amount) }}
 
-
+                    {{ form_errors(formapplay.Amount) }}
                     <div class="controls money">
                         {{ form_widget(formapplay.Amount,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)

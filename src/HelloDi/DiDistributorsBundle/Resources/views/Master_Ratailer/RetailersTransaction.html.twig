@@ -16,7 +16,7 @@
     </div> <!-- /widget-header -->
     <br>
 
-    <a class="btn btn-primary btn-large" href="{{ path('DistRetailerFunding',{'id':retailerAccount.id}) }}">Fund Retailers</a>
+    <a class="btn btn-primary btn-large" href="{{ path('Master_RetailerFunding',{'id':retailerAccount.id}) }}">Fund Retailers</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -153,7 +153,7 @@
 
 
                                 <a class="btn_actions"
-                                   href="{{ path('Retailer_DetailsTransaction',{'id':retailerAccount.id,'tranid':tran.id }) }}">Details</a>
+                                   href="{{ path('Master_Retailer_DetailsTransaction',{'id':retailerAccount.id,'tranid':tran.id }) }}">Details</a>
 
                             </td>
 
