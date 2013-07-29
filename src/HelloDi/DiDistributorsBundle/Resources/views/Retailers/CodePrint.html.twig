@@ -10,12 +10,31 @@
 
         <h3>
             {% if codes[0].Item.itemType=='dmtu' %}
+                <a href="{{ path('Retailer_Shop_dmtu') }}">return to shop</a><br>
             Mobile
+
             {% elseif codes[0].Item.itemType=='empt' %}
+                <a href="#">return to shop</a><br>
             e-payment
+
             {% elseif codes[0].Item.itemType=='clcd' %}
-            calling card
-            {% endif %}
+                <a href="{{ path('Retailer_Shop_callingCard') }}">return to shop</a><br>
+                calling card
+
+             {% else %}
+                <a href="{{ path('Retailer_Shop_favourite') }}">return to shop</a>
+                     {% if codes[0].Item.itemType=='dmtu' %}
+
+                     Mobile
+
+                   {% elseif codes[0].Item.itemType=='empt' %}
+                  e-payment
+
+                  {% elseif codes[0].Item.itemType=='clcd' %}
+                     calling card
+                 {% endif %}
+
+         {% endif %}
         </h3>
     </div>
     {% for code in codes %}
@@ -23,14 +42,15 @@
 <div class="tab-content">
 
 
-    Number Serial:{{ code.serialNumber }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{%  if description is not null %}
+    {{ include(template_from_string(description.descdesc),{"pin":code.pin, "serial":code.serialNumber}) }}
+{% else %}
 
-       Expire Le :16/08/2015</br></br>
-
-    Code Secret:{{ code.pin }}</br><hr>
-
+    SerialNumber:code.serialNumber<br><br>
+    Code Secret:code.pin<br><br>
 
 
+{% endif %}
 
     </div>
 {% endfor %}
