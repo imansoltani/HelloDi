@@ -13,3 +13,11 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    ogone_pspid:        hellodi
+    ogone_sha_in:       MySha-In@key765?
+    ogone_sha_out:      MySha-ouT@Key79?
+    ogone_submit_url:   https://secure.ogone.com/ncol/test/orderstandard_utf8.asp
+    languages: [en, fr, de ]
+    currency: [CHF,USD]
+    currencies: [CHF,USD]

@@ -60,7 +60,8 @@ services:
         class:        Twig_Extension_StringLoader
         tags:
          - { name: 'twig.extension' }
-    my_cache_clearer:
-        class: HelloDi\DiDistributorsBundle\Listener\ClearCache
-        tags:
-            - { name: kernel.cache_clearer }
+
+#    my_cache_clearer:
+#        class: HelloDi\DiDistributorsBundle\Listener\ClearCache
+#        tags:
+#            - { name: kernel.cache_clearer }
