@@ -49,15 +49,8 @@ class AccountController extends Controller
 
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 1));
 
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/
-
-        );
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
-        ('pagination' => $pagination));
+        ('pagination' => $query));
 
     }
 
@@ -790,15 +783,20 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-
         $Account = $tran->getAccount()->getParent();
-
+        $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array(
+            'User'=>$tran->getUser(),
+            'Account'=>$Account,
+           'tranAction'=>'com',
+           'Code'=>$tran->getCode()
+        ));
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
 
             array(
                 'Account' => $Account,
                 'tran' => $tran,
+                'com'=>$com->getTranAmount()
             ));
 
     }
@@ -1016,7 +1014,6 @@ class AccountController extends Controller
                     'required' => false,
                     'class' => 'HelloDiDiDistributorsBundle:Item',
                     'property' => 'itemName',
-
                     'query_builder' => function (EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('i')
                             ->innerJoin('i.Prices', 'ip')
@@ -1032,17 +1029,12 @@ class AccountController extends Controller
 
             $qb = $em->createQueryBuilder();
 //            ,Count(Tr.tranDate) as c
-        $qb->select('Tr as TR,count(Tr.Code) as Quantity')
+        $qb->select('Tr as TR, count(Tr.Code) as Quantity,abs(Tr.tranAmount)as BuyingPrice')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 ->innerJoin('Tr.Account', 'TrAcc')
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('TrCo.Item', 'TrCoIt')
-                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
-
-            foreach ($Account->getChildrens() as $child) {
-                $qb->orWhere('Tr.Account = :acc')->setParameter('acc', $child);
-            }
-
+                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('com')));
             if ($data['DateStart'] != '')
                 $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
@@ -1052,7 +1044,7 @@ class AccountController extends Controller
             if ($data['ItemName'])
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
 
-            $qb->groupBy('TrCo.Item');
+            $qb->groupBy('TrCo.Item')->addGroupBy('BuyingPrice');
 
             $qb->addOrderBy('Tr.tranDate', 'desc');
 
@@ -1123,18 +1115,8 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 0));
-
-        $paginator = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/
-        /*limit per page*/
-        );
-
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountDist.html.twig', array
-        ('pagination' => $pagination));
+        ('pagination' => $query));
 
 
     }

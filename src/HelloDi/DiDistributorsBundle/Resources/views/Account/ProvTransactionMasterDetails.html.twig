@@ -25,16 +25,16 @@
       <fieldset>
           <div class="control-group">
               <label class="control-label">
-                  ID
+                  ID:
               </label>
               <div class="controls">
                   <input type="text" value="{{ Trans.id}}" disabled="" >
               </div>
           </div>
-
+{{  }}
           <div class="control-group">
               <label class="control-label">
-                  Date
+                  Date:
               </label>
               <div class="controls">
                   <input type="text" value="{{ Trans.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
@@ -43,7 +43,7 @@
 
           <div class="control-group">
               <label class="control-label">
-                  {{ 'Transaction.Credit' | trans ({}, "account") }}
+                  {{ 'Credit:' | trans ({}, "account") }}
               </label>
               <div class="controls">
                   <input type="text" value="{% if Trans.tranAmount > 0 %}  {{ Trans.tranAmount }} {% else %} ---------------  {% endif %}" disabled="" >
@@ -52,7 +52,7 @@
 
           <div class="control-group">
               <label class="control-label">
-                  {{ 'Transaction.Debit' | trans ({}, "account") }}
+                  {{ 'Debit:' | trans ({}, "account") }}
               </label>
               <div class="controls">
                   <input type="text" value="{% if Trans.tranAmount > 0 %}  --------------- {% else %} {{ -Trans.tranAmount }}  {% endif %}" disabled="" >
@@ -61,7 +61,7 @@
 
           <div class="control-group">
               <label class="control-label">
-                  {{ 'Transaction.Description' | trans ({}, "account") }}
+                  {{ 'Description:' | trans ({}, "account") }}
               </label>
               <div class="controls">
                   <input type="text" value="{{ Trans.tranDescription }}" disabled="" >
@@ -70,7 +70,7 @@
 
           <div class="control-group">
               <label class="control-label">
-                  {{ 'Transaction.Balance' | trans ({}, "account") }}
+                  {{ 'Balance:' | trans ({}, "account") }}
               </label>
               <div class="controls">
                   <input type="text" value="{% set balance=Trans.tranBalance+Trans.tranAmount %}{{ balance }}" disabled="" >
@@ -79,7 +79,7 @@
 
           <div class="control-group">
               <label class="control-label">
-                  {{ 'Transaction.User' | trans ({}, "account") }}
+                  {{ 'User:' | trans ({}, "account") }}
               </label>
               <div class="controls">
                   <input type="text" value="{{ Trans.User.username }}" disabled="" >

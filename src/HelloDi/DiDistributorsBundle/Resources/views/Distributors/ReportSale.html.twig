@@ -138,30 +138,34 @@
                                         </td>
 
                                         <td>
-                                            {% set priceretailer=0 %}
-                                            {% set pricedist=0 %}
 
-                                            {% for P in Tr.Account.Parent.Prices %}
+                                            {% set buyingpric=0 %}
+                                            {% for c in com %}
 
                                                       {% if
-
-                                                      P.Item==Tr.Code.Item
-
+                                                      c.Code==Tr.Code
                                                       and
-                                                       P.Account==Tr.Account.Parent
-
+                                                       c.User==Tr.User
+                                                       and
+                                                      c.Account==Tr.Account.Parent
                                                       %}
-                                                           {{ P.price }}
+                                                     {% set buyingpric=-Tr.tranAmount-c.tranAmount %}
 
-                                                          {% set pricedist=P.price %}
                                                       {% endif %}
-
                                             {% endfor %}
+
+                                            {{ buyingpric }}
+
                                         </td>
 
                                         <td>
 
-                                         {{ -Tr.tranAmount }}
+
+                                            <script type="text/javascript">
+                                                document.write(Math.abs({{Tr.tranAmount }}));
+                                            </script>
+
+
 
                                         </td>
 
@@ -170,7 +174,7 @@
 
                                         <td>
 
-                                            {{ -Tr.tranAmount-pricedist }}
+                                            {{ -Tr.tranAmount-buyingpric }}
 
                                         </td>
 

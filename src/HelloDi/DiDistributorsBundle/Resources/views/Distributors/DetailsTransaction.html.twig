@@ -61,7 +61,7 @@
                                 <input type="text" disabled="" value="{{ tran.tranDescription}}">
                             </div>
                         </div>
-{% set credit,debit='','' %}
+           {% set credit,debit='------','------' %}
 
                         {% if  tran.tranAmount>0 %}
                             {% set credit=tran.tranAmount %}
@@ -84,7 +84,7 @@
                                 {{ 'Debit' | trans ({}, "account") }}
                             </label>
                             <div class="controls">
-                                <input type="text" disabled="" value="{{ debit }}">
+                                <input type="text" disabled="" value="{{ -debit }}">
                             </div>
                         </div>
 

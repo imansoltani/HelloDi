@@ -104,16 +104,7 @@
 
                             <td>
 
-                                {% for p in Tr.TR.Account.Parent.Prices %}
-
-                                    {% if
-                                    p.Item==Tr.TR.Code.Item
-                                    and
-                                    p.Account==Tr.TR.Account.Parent
-                                    %}
-                                        {{ p.price }}
-                                    {% endif %}
-                                {% endfor %}
+                             {{ Tr.BuyingPrice }}
 
                             </td>
                             <td>Task</td>

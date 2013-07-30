@@ -63,6 +63,23 @@ Details:
                 <h3>Address Entity</h3>
             </div>
             <!-- /widget-header -->
+            <div class="control-group">
+                {{ form_label(form2step.Country) }}
+                <div class="controls">
+                    {{ form_widget(form2step.Country) }} <span class="icon-certificate"></span>
+                </div>
+                {{ form_errors(form2step.Country) }}
+            </div>
+
+            <div class="control-group entCity">
+                {{ form_label(form2step.entCity) }}
+                <div class="controls money">
+                    {{ form_widget(form2step.entCity) }} <span class="icon-certificate"></span>
+                </div>
+                {{ form_errors(form2step.entCity) }}
+            </div>
+
+
             <div class="control-group entAdrs1">
                 {{ form_label(form2step.entAdrs1) }}
                 <div class="controls money">
@@ -81,13 +98,7 @@ Details:
                 {{ form_widget(form2step.entAdrs3) }}
                 {{ form_errors(form2step.entAdrs3) }}
             </div>
-            <div class="control-group entCity">
-                {{ form_label(form2step.entCity) }}
-                <div class="controls money">
-                    {{ form_widget(form2step.entCity) }} <span class="icon-certificate"></span>
-                </div>
-                {{ form_errors(form2step.entCity) }}
-            </div>
+
             <div class="control-group entNP">
                 {{ form_label(form2step.entNP) }}
                 <div class="controls money">
@@ -101,13 +112,7 @@ Details:
                 {{ form_errors(form2step.entNP) }}
             </div>
 
-            <div class="control-group">
-                {{ form_label(form2step.Country) }}
-                <div class="controls">
-                    {{ form_widget(form2step.Country) }} <span class="icon-certificate"></span>
-                </div>
-                {{ form_errors(form2step.Country) }}
-            </div>
+
 
         </div>
 

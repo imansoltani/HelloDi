@@ -150,7 +150,7 @@ class RetailersController extends Controller
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'Trade Date',
-                    1 => 'Looking Date',
+                    1 => 'booking Date',
                 )))
             ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
             ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
@@ -168,12 +168,13 @@ class RetailersController extends Controller
                     'sale'=>'debit balance when the retailer sell a code',
                     'crnt'=>'issue a credit note for a sold code',
                     'tran'=>'transfer credit from distributor,s account to a retailer,s account',
-                    'pmt'=>'ogone payment on its own account'
+                    'ogn_pmt'=>'ogone payment on its own account'
                 )))->getForm();
 $datetype=0;
+
         if($req->isMethod('POST'))
         {
-            $datetype=1;
+
 
             $form->handleRequest($req);
             $data=$form->getData();
@@ -191,8 +192,7 @@ $datetype=0;
             }
 
             if($data['TypeDate']==1)
-            {
-                $datetype=1;
+            {$datetype=1;
                 if($data['DateStart']!='')
                 $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
@@ -294,9 +294,11 @@ $datetype=0;
   {
       $form=$form->add('Staff', 'entity',
                 array(
+                   'empty_value'=>'All',
+                   'empty_data'=>'',
+                    'required'=>false,
                 'class' => 'HelloDiDiDistributorsBundle:User',
                 'property' => 'username',
-                 'empty_data'=>$User->getUsername(),
                 'query_builder' => function(EntityRepository $er) use ($User) {
                     return $er->createQueryBuilder('u')
                            ->where('u.Account = :ua')
@@ -328,10 +330,9 @@ $datetype=0;
             if($data['DateEnd'])
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-            if($roles[0]=='ROLE_RETAILER_ADMIN')
-            {
-                $qb->andWhere('Tr.User = :usr')->setParameter('usr',$data['Staff']);
-            }
+            if($data['Staff']!='')
+              $qb->andWhere('Tr.User = :usr')->setParameter('usr',$data['Staff']);
+
 //
             if($data['ItemType']!='All')
                 $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
@@ -674,7 +675,7 @@ $datetype=0;
                     $tranretailer->setAccount($Account);
                     $tranretailer->setTranAmount(-($priceChild->getPrice()));
                     $tranretailer->setTranFees(0);
-                    $tranretailer->setTranDescription(null);
+                    $tranretailer->setTranDescription('Code id is: '.$code->getId());
                     $tranretailer->setTranCurrency($Account->getAccCurrency());
                     $tranretailer->setTranDate(new \DateTime('now'));
                     $tranretailer->setTranInsert(new \DateTime('now'));
@@ -691,7 +692,7 @@ $datetype=0;
                     $trandist->setAccount($Account->getParent());
                     $trandist->setTranAmount($com);
                     $trandist->setTranFees(0);
-                    $trandist->setTranDescription(null);
+                    $trandist->setTranDescription('Code id is: '.$code->getId());
                     $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
                     $trandist->setTranDate(new \DateTime('now'));
                     $trandist->setTranInsert(new \DateTime('now'));
@@ -874,7 +875,7 @@ public function RetailerLoadActiowOwnAction(Request $req)
             $value.='<option value="All">'.'All'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
 
             break;
 
@@ -884,7 +885,7 @@ public function RetailerLoadActiowOwnAction(Request $req)
             $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
 
             break;
     }

@@ -128,7 +128,17 @@
                                 {% if group==0 %}{{ Tr.TR.Account.Entiti.entName }}{% else %}----{% endif %}
                             </td>
                             <td>
-                                {{ -Tr.TR.tranAmount}}|{{Account.accCurrency}}
+
+                                <script type="text/javascript">
+
+                                    document.write(Math.abs({{  Tr.TR.tranAmount }}));
+
+                                </script>
+
+
+
+                                |
+                                {{Account.accCurrency}}
                             </td>
                             <td>Task</td>
                             <td class="tab-actions" >
