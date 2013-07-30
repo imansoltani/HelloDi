@@ -42,17 +42,9 @@
                                         <td>{{ tran.tranDate|date('y-M-d H:m:s') }}</td>
                                         <td>{{ tran.Code.Item.itemName}}</td>
                                         <td>
-
-                                            {% for p in tran.Account.Parent.Prices %}
-
-                                                {% if
-                                                p.Item==tran.Code.Item
-                                                    and
-                                                p.Account==tran.Account.Parent
-                                                %}
-                                                    {{ p.price }}
-                                            {% endif %}
-                                            {% endfor %}
+                                            {% set tranAmount=-tran.tranAmount %}
+                                            {% set com=-com %}
+                                            {{ tranAmount+com }}
 
                                         </td>
                                         <td>{{ -tran.tranAmount }}</td>

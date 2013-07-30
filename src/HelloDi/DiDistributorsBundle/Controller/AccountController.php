@@ -49,15 +49,8 @@ class AccountController extends Controller
 
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 1));
 
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/
-
-        );
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountProv.html.twig', array
-        ('pagination' => $pagination));
+        ('pagination' => $query));
 
     }
 
@@ -790,15 +783,15 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-
         $Account = $tran->getAccount()->getParent();
-
+        $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$tran->getUser(),'Account'=>$Account,'tranAction'=>'com','Code'=>$tran->getCode()));
 
         return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
 
             array(
                 'Account' => $Account,
                 'tran' => $tran,
+                'com'=>$com->getTranAmount()
             ));
 
     }
@@ -1123,18 +1116,8 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array('accType' => 0));
-
-        $paginator = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/
-        /*limit per page*/
-        );
-
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ShowMyAccountDist.html.twig', array
-        ('pagination' => $pagination));
+        ('pagination' => $query));
 
 
     }

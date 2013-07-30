@@ -161,6 +161,8 @@ class DistributorsController extends Controller
            10/*limit per page*/
         );
 
+     $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('tranAction'=>'com','Account'=>$User->getAccount())) ;
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSale.html.twig',
 
             array(
@@ -168,7 +170,9 @@ class DistributorsController extends Controller
                 'form'=>$form->createView(),
                 'User'=>$User,
                 'Account' =>$User->getAccount(),
-                'Entiti' =>$User->getEntiti()));
+                'Entiti' =>$User->getEntiti(),
+                'com'=>$com
+    ));
 
     }
 
@@ -342,6 +346,7 @@ else
             $trandist->setTranAction('crtl');
             $trandist->setTranType(0);
             $trandist->setAccount($Account->getParent());
+            $trandist->setTranDescription('increase retailer,s credit limit ');
 if($data['Amount']>0)
 {
 
@@ -349,6 +354,7 @@ if($data['Amount']>0)
     {
         if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
         {
+            $trandist->setTranBalance($Account->getParent()->getAccBalance());
             $trandist->setTranAmount(-$data['Amount']);
             $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
             $em->persist($trandist);
@@ -939,13 +945,14 @@ else
 
         $em=$this->getDoctrine()->getManager();
         $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
-
-
         return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsTransaction.html.twig',
             array(
                 'tran'=>$Tran,
 
             ));
+
+
+
 
     }
 
