@@ -98,7 +98,7 @@ class ItemController extends Controller
 
     public function ItemPerDistAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
         $qb = $em->createQueryBuilder()
             ->select("prc")
@@ -109,6 +109,15 @@ class ItemController extends Controller
             ->where("prc.Item = :itm")->setParameter("itm",$item)
             ->getQuery();
         $haspriceforprov = (count($qb->getResult())>0);
+
+        $prices = $em->createQueryBuilder()
+            ->select('DISTINCT p.priceCurrency')
+            ->from("HelloDiDiDistributorsBundle:Price","p")
+            ->join('p.Account','a')
+            ->where('p.Item = :item')->setParameter('item',$item)
+            ->andWhere('a.accType = 0')
+            ->getQuery()
+            ->getResult();
 
         $form = $this->createFormBuilder()
             ->add('checks', 'entity', array(
@@ -196,7 +205,8 @@ class ItemController extends Controller
                 'form' => $form->createView(),
                 'itemid' => $id,
                 'item'      => $item,
-                'haspriceforprov' => $haspriceforprov
+                'haspriceforprov' => $haspriceforprov,
+                'prices' => $prices
             ));
     }
     //item desc
@@ -210,7 +220,7 @@ class ItemController extends Controller
         $itemdescs = $item->getItemDescs();
 
         if (!$item) {
-            throw $this->createNotFoundException('Unable to find ItemSesc entity.');
+            throw $this->createNotFoundException('Unable to find ItemDesc entity.');
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Item:descindex.html.twig', array(
