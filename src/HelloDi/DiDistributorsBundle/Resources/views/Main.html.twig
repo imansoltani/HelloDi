@@ -44,6 +44,7 @@
     <![endif]-->
 
     <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/more/Main.js') }}" ></script>
 
     {% block Link_Head %}
 
@@ -60,13 +61,9 @@
 </div>
 
 
+
 <script type="text/javascript">
     $(function () {
-
-        $('.messageshow').hide();
-        $('.popupshow').hide();
-        $('#popuptop').hide();
-
 
         {% if app.session.flashbag.peekAll()|length > 0 %}
 
@@ -100,91 +97,16 @@
         {% endif %}
 
 
-    //messagetop('hi','how','error');
-
-    $('* .messagetop ,.messageshow ').click(function () {
-        $('.messageshow').fadeOut('fast', function () {
-            $('.messageshow').html('');
-            $('.messageshow').removeAttr('id');
-        });
-    });
-
-    $('* .messagetop ,.messageshow ').click(function () {
-        $('.messageshow').fadeOut('fast', function () {
-            $('.messageshow').html('');
-            $('.messageshow').removeAttr('id');
-        });
-    });
-
-
-    //messagetop("","fuck tasdsada asd sad a sdsad asd asd sadas d asd asd as dasd ","alert");
 
 
     })
     ;
 
-    function messagetop(subject, body, type) {
-        if (type == "error") $('.messageshow').attr('id', 'messageerror');
-        if (type == "success") $('.messageshow').attr('id', 'messagesuccess');
-        if (type == "alert") $('.messageshow').attr('id', 'messagealert');
 
-        var x = '<div class="popup messagetop"  >';
-        //x += '<i class="icon-';
-        //if(type == "error") x +='remove';
-        //if(type == "success") x +='ok';
-        //if(type == "alert") x +='warning-sign';
-        //x += '" ></i>';
-        x += '<div class="container" ><h1>' + body + '</h1></div></div><div class="closedoor messagetop" ></div>';
-        //x += '<h1>'+subject+'</h1>' ;
-        //x += '<hr><div><span>'+body+'</span></div></div><div class="closedoor messagetop" ></div>' ;
-
-        $('.messageshow').html(x);
-        $('.messageshow  >.popup').hide();
-        $('.messageshow').fadeIn();
-        $('.popup').slideDown();
-
-
-    }
-
-    function Popuptop(text) {
-        var element = document.getElementsByClassName(text);
-        var name = $(element).attr('id');
-        if (name = "popuptop") {
-
-            var body = '<div class="bodypopup poptop"  >';
-            body += $(element).html() + '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
-
-            $('.popupshow').html(body);
-            $('.bodypopup').hide();
-            $('.popupshow').fadeIn();
-            $('.bodypopup').slideDown();
-        }
-    }
-
-    function PopuptopClose(e) {
-        e.preventDefault();
-        $('.popupshow').fadeOut('fast', function () {
-            $('.popupshow').html('');
-            $('.popupshow').removeAttr('id');
-        });
-    }
-
-
-    function CheckData(x) {
-        var y = false;
-        $(x).each(function () {
-            if ($(this).val() == '') {
-                y = true;
-                $(this).attr('style', 'border:thin #FF0000 solid');
-            }
-        });
-        if (y) {
-            messagetop('Error', 'Fill required inputs', 'error');
-            return false
-        }
-        return true;
-    }
 </script>
+
+
+
 
 
 <!-- Nav Bar -->
@@ -530,6 +452,8 @@
                 scrollTop: x
             }, 800);
         });
+
+        $('#element').tooltip({placement:'bottom'});
 
     });
 

@@ -58,14 +58,11 @@
         </form>
 
 
-
+    <button type="submit" onclick="GOGO()"></button>
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
     <script type="text/javascript">
-
-
         $(function(){
-
             var x = "{{ form_errors(form.desclang) }}{{ form_errors(form.descdesc) }}";
 
             if(x != "")
@@ -75,33 +72,63 @@
 
             $('#texteditor').htmlarea({
                 toolbar: [
-                    "bold", "italic", "underline","strikethrough",
-                    "|",
-                    "justifyleft","justifycenter","justifyright",
-                    "|",
-                    "h1", "h2", "h3",
-                    "|",
-                    "increasefontsize","decreasefontsize",
-                    "|",
-                    "orderedList  ",
-                    "unorderedList  ",
-                    "|",
-                    "horizontalrule",
-                    "superscript",
-                    "subscript",
-                    "|",
-                    "indent","outdent",
-                    "|","forecolor"
+                    ["bold", "italic", "underline","strikethrough"]
+                    ,
+                    ["justifyleft","justifycenter","justifyright"]
+                    ,["h1", "h2", "h3"]
+                    ,["increasefontsize","decreasefontsize"]
+                    ,["orderedList  ","unorderedList  "]
+                    ,["horizontalrule","superscript","subscript"]
+                    ,["indent","outdent"]
+                    ,["forecolor"],
+                    [
+                        {
+                            css: "BorderButton",
+                            text: "Add Pin tag",
+                            action: function(btn) {
+                                var s = this.getSelectedHTML();
+                                this.pasteHTML('<border style="border:solid 2px #000;padding:5px;" >'+s+'</border>');
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            css: "PinButton Button",
+                            text: "Add Pin tag",
+                            action: function(btn) {
+                                this.pasteHTML('&#123;&#123;pin&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "SerialButton Button",
+                            text: "Add Serial tag",
+                            action: function(btn) {
+                                this.pasteHTML('&#123;&#123;serial&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "ExpireButton Button",
+                            text: "Add Expire tag",
+                            action: function(btn) {
+                                this.pasteHTML('&#123;&#123;expire&#125;&#125;');
+                            }
+                        }
+                    ]
                 ]
+
             });
 
+
+
             $('.jHtmlArea').removeAttr('style');
-            $('.jHtmlArea').attr('style','max-width:470px');
+            $('.jHtmlArea').attr('style','max-width:95%');
             $('.jHtmlArea .ToolBar').removeAttr('style');
             $('.jHtmlArea > div').attr('style','width:100%');
             $('.jHtmlArea > div > iframe').removeAttr('style');
-            $('.jHtmlArea > div > iframe').attr('style','min-height: 57px;width:100%');
-
+            $('.jHtmlArea > div > iframe').attr('style','min-height: 200px;width:100%');
+            $('.jHtmlArea .PinButton').html('Pin');
+            $('.jHtmlArea .ExpireButton').html('Expire');
+            $('.jHtmlArea .SerialButton').html('Serial');
 
             /*var x = $("#editform body").html();
              $("#editform").submit(function(e){
@@ -110,9 +137,15 @@
              alert(x);
              });*/
         });
+
+
+
     </script>
 
 
+
+
 {% endblock %}
+
 
 

@@ -58,45 +58,49 @@
         <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
         <script type="text/javascript">
+            var x = "{{ form_errors(form.desclang) }}{{ form_errors(form.descdesc) }}";
 
+            if(x != "")
+            {
+                messagetop("",x,"error");
+            }
 
-            $(function(){
-                $('#texteditor').htmlarea({
-                    toolbar: [
-                        "bold", "italic", "underline","strikethrough",
-                        "|",
-                        "justifyleft","justifycenter","justifyright",
-                        "|",
-                        "h1", "h2", "h3",
-                        "|",
-                        "increasefontsize","decreasefontsize",
-                        "|",
-                        "orderedList  ",
-                        "unorderedList  ",
-                        "|",
-                        "horizontalrule",
-                        "superscript",
-                        "subscript",
-                        "|",
-                        "indent","outdent",
-                        "|","forecolor"
-                    ]
-                });
+            $('#texteditor').htmlarea({
+                toolbar: [
+                    "bold", "italic", "underline","strikethrough",
+                    "|",
+                    "justifyleft","justifycenter","justifyright",
+                    "|",
+                    "h1", "h2", "h3",
+                    "|",
+                    "increasefontsize","decreasefontsize",
+                    "|",
+                    "orderedList  ",
+                    "unorderedList  ",
+                    "|",
+                    "horizontalrule",
+                    "superscript",
+                    "subscript",
+                    "|",
+                    "indent","outdent",
+                    "|","forecolor"
+                ]
+            });
 
-                $('.jHtmlArea').removeAttr('style');
-                $('.jHtmlArea').attr('style','max-width:470px');
-                $('.jHtmlArea .ToolBar').removeAttr('style');
-                $('.jHtmlArea > div').attr('style','width:100%');
-                $('.jHtmlArea > div > iframe').removeAttr('style');
-                $('.jHtmlArea > div > iframe').attr('style','min-height: 57px;width:100%');
+            $('.jHtmlArea').removeAttr('style');
+            $('.jHtmlArea').attr('style','max-width:95%');
+            $('.jHtmlArea .ToolBar').removeAttr('style');
+            $('.jHtmlArea > div').attr('style','width:100%');
+            $('.jHtmlArea > div > iframe').removeAttr('style');
+            $('.jHtmlArea > div > iframe').attr('style','min-height: 57px;width:100%');
 
 
             /*var x = $("#editform body").html();
-            $("#editform").submit(function(e){
-                var x = $(".mce-content-body").html();
-                e.preventDefault();
-                alert(x);
-            });*/
+             $("#editform").submit(function(e){
+             var x = $(".mce-content-body").html();
+             e.preventDefault();
+             alert(x);
+             });*/
         });
     </script>
 

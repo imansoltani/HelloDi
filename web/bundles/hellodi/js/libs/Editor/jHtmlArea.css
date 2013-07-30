@@ -52,7 +52,19 @@ div.jHtmlArea .ToolBar ul li a {
  cursor: pointer; 
  padding: 0px; 
  
- } 
+ }
+
+div.jHtmlArea .ToolBar ul li a.Button , div.jHtmlArea .ToolBar ul li a.Button:hover , div.jHtmlArea .ToolBar ul li a.Button:active {
+    width: auto;
+    color: #000100;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0;
+    padding-right: 2px;
+    padding-left: 2px;
+    text-decoration: none;
+    height: auto;
+}
 
 div.jHtmlArea .ToolBar ul li a.highlighted { 
  border: solid 1px #aaa; 
