@@ -194,6 +194,9 @@ body .tablediv table.table tr td:last-child{
     overflow: hidden;
 }
 
+
+
+
 .btn_actions ,.btn_actions:hover{
     text-decoration: none;
 }
@@ -1106,6 +1109,11 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
     border-left:solid thin #FFFFFF;
 }
 
+
+/* ------------- Show Details -------------- */
+.showDetails span{
+    display: none;
+}
 
 
 

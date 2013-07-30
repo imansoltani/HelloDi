@@ -3,39 +3,7 @@ var time = 0 ;
 
 $(function(){
 
-    $('* #formwithsubmit').submit(function(e){
 
-
-            e.preventDefault();
-
-            var element = $(this);
-
-
-
-            var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
-            body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>' ;
-            body += '<h3 id="myModalLabel">Alert</h3></div>' ;
-            body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">' ;
-            body += '<div>Are You Sure</div>';
-            body += '<div class="Fields_show" >'+$(".Fields",this).html()+'</div>';
-            body += '</div><div class="containerpop form-actions " style="padding-left: 0px">' ;
-            body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm();" >' ;
-            body += '<input type="submit" class="btn" value="No" onclick="PopuptopClose(event)" >' ;
-            body += '</div></form>' ;
-            body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
-            $('.popupshow').html(body);
-            $('.bodypopup').hide();
-            $('.popupshow').fadeIn();
-            $('.bodypopup').slideDown();
-
-
-            $('* input',element).each(function(){
-                $(this).val();
-                var name = ".Fields_show #"+ $(this).attr('name') ;
-            });
-
-
-    });
 
 
     $('.messageshow').hide();
@@ -70,11 +38,10 @@ $(function(){
 function AlertShow(message,fname,event)
 {
     var flag = true ;
-    var element = document.getElementsByName(fname);
-    var form = $(element).attr('id');
+
 
     var i = 0 ;
-    var name = '* .'+form+' input' ;
+    var name = '* .'+fname+' input' ;
     $(name).each(function(){
         if($(this).attr('required') == "required")
         {
@@ -85,7 +52,7 @@ function AlertShow(message,fname,event)
         }
     });
 
-    name = '* .'+form+' select' ;
+    name = '* .'+fname+' select' ;
     $(name).each(function(){
         if($(this).attr('required') == "required")
         {
@@ -105,7 +72,7 @@ function AlertShow(message,fname,event)
         body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">' ;
         body += '<div>'+message+'</div>';
         body += '</div><div class="containerpop form-actions " style="padding-left: 0px">' ;
-        body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm(\''+fname+'\');" >' ;
+        body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm(\'.'+fname+'\');" >' ;
         body += '<input type="submit" class="btn" value="No" onclick="PopuptopClose(event)" >' ;
         body += '</div></form>' ;
         body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
@@ -114,6 +81,12 @@ function AlertShow(message,fname,event)
         $('.popupshow').fadeIn();
         $('.bodypopup').slideDown();
     }
+}
+
+
+function SubmitForm(name){
+   $(name).focus();
+   $(name).submit();
 }
 
 function messagetop(subject, body, type) {
