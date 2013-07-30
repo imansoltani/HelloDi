@@ -38,12 +38,17 @@
     </li>
 
     <li class=" {% if MU == 'trans' %}active{% endif %} dropdown">
-        <a href="{{ path('DistTransaction') }}" class="dropdown-toggle"  >
+        <a href=""  class="dropdown-toggle"  data-toggle="dropdown"   >
             <i class="icon-file"></i>
             <span  id="user_pc_menu"  >Transactions</span>
-
+            <b class="caret"></b>
         </a>
-
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('DistTransaction') }}">History</a></li>
+            {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+            <li><a href="{{ path('distributor_transactions_new') }}">Recharge</a></li>
+            {% endif %}
+        </ul>
 
 
     </li>
