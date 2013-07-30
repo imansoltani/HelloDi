@@ -710,11 +710,19 @@ $datetype=0;
                 }
      $description=$em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$user->getLanguage()));
 
-                return $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+                $html= $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
                     'codes'=>$codes,
 
                     'description'=>$description
                 ));
+              return new Response(
+                  $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+                  200,
+                  array(
+                      'Content-Type'          => 'application/pdf',
+                      'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                  )
+              );
 
         }
 
