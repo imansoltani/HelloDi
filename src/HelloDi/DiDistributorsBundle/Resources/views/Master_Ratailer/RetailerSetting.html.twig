@@ -1,10 +1,11 @@
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailMaster.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailerMaster.html.twig' %}
 
-{% set tab = '4' %}
+{% set tab2 = '4' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
 
     <span class="link">Setting</span>
 {% endblock Site_Map %}

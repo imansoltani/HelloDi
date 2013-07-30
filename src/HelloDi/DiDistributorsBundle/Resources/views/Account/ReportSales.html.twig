@@ -145,22 +145,14 @@
                                 {% if group==0 %}
 
 
-                                    <a class="btn_actions" id="details" href="#">Details</a>
+                                    <a class="btn_actions showDetailsAjax" id="details" href="#">
+                                        Details
+                                        <b id="{{ path("MasterDistDetailsSale") }}" class="{{ Tr.TR.id }}" ></b>
+                                    </a>
 
 
 
 
-                                    <script type="text/javascript">
-
-
-
-                                        $("#details").click(function(){
-                                            $.post('{{ path("MasterDistDetailsSale") }}',{id: Account.id ,tranid: Tr.TR.id },function(result){
-
-                                                $("#form_Action").html(result);
-                                            })
-                                        });
-                                    </script>
 
 
 

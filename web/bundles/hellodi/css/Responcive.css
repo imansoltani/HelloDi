@@ -496,6 +496,16 @@ text-align: left;
         border-bottom:solid 2px #0075cc;
     }
 
+    .main .pagetop .hornav.Tab2{
+        border-top:none;
+    }
+
+    .main .container.Tab2{
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
     .main .pagetop .tabbar{
         height: auto;
         padding: 0;

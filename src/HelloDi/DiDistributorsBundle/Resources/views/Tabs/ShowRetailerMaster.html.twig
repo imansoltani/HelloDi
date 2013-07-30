@@ -1,0 +1,45 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowDistMaster.html.twig' %}
+
+{% set hornav2 = '38px' %}
+
+{% set tab = '2' %}
+
+
+{% block Tabs2 %}
+
+    <li {% if tab2 == '1' %}class="active"{% endif %} >
+        <a href="{{ path('Master_Retailer_Transaction',{'id':retailerAccount.id}) }}"  >
+            <input type="submit" value="Transactions" >
+        </a>
+    </li>
+    <li {% if tab2 == '2' %}class="active"{% endif %}  >
+        <a   >
+            <input type="submit" value="Items" >
+        </a>
+    </li>
+
+
+    <li {% if tab2 == '3' %}class="active"{% endif %} >
+        <a href="{{ path('Master_RetailerUser',{'id':retailerAccount.id}) }}"  >
+            <input type="submit" value="Users" >
+        </a>
+    </li>
+
+    <li {% if tab2 == '4' %}class="active"{% endif %} >
+        <a href="{{ path('Master_RetailerSetting',{'id':retailerAccount.id}) }}"  >
+            <input type="submit" value="Setting" >
+        </a>
+    </li>
+
+    <li {% if tab2 == '5' %}class="active"{% endif %} >
+
+            <a href="{{ path('Master_Retailer_details',{'id':retailerAccount.id}) }}"  >
+                <input type="submit" value="Details" >
+            </a>
+
+    </li>
+
+
+
+{% endblock Tabs2 %}
+

@@ -292,8 +292,19 @@
                         {% block Tabs %}{% endblock %}
                     </ul>
                 </div>
+
+                {% if hornav2 is defined %}
+                        <div class="container Tab2">
+                            <ul class="hornav Tab2">
+                                {% block Tabs2 %}{% endblock %}
+                            </ul>
+                        </div>
+                {% endif %}
+
             </div>
         {% endif %}
+
+
 
 
     </div>
@@ -473,6 +484,29 @@
                 $(this).removeAttr("id");
                 $('.ShowDetailPopUp',this).fadeOut();
                 $('.ShowDetailPopUp',this).remove();
+            }
+        });
+
+        $('* .showDetailsAjax').click(function(){
+            //$('.ShowDetailPopUp',this).remove();
+            //$(this).stop();
+            if($(this).attr("id") != "show")
+            {
+                $(this).attr("id","show") ;
+                $(this).append('<div class="ShowDetailPopUp"></div>');
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
+                $('.ShowDetailPopUp',this).addClass('ShowLoader');
+                $('.ShowDetailPopUp',this).fadeIn();
+
+                var path = $('b',this).attr('id') ;
+                var idtran = $('b',this).attr('class') ;
+
+                $.post(path,{tranid: idtran },function(result){
+                    $('.ShowDetailPopUp',this).fadeOut('fast');
+                    $('.ShowDetailPopUp',this).removeClass('ShowLoader');
+                    $('.ShowDetailPopUp',this).html(result);
+                    $('.ShowDetailPopUp',this).fadeIn('fast');
+                })
             }
         });
     });

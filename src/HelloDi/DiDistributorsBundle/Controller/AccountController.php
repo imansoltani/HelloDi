@@ -778,9 +778,9 @@ class AccountController extends Controller
 
     }
 
-    public function  DetailsSaleAction($tranid)
+    public function  DetailsSaleAction(Request $req)
     {
-
+        $tranid=$req->get('tranid');
         $em = $this->getDoctrine()->getManager();
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
@@ -2435,6 +2435,7 @@ class AccountController extends Controller
             'retailerAccount' => $user->getAccount(),
             'Entiti' => $user->getEntiti(),
             'userid' => $userid,
+            'Account'=>$user->getAccount()->getParent(),
             'form' => $form->createView()
         ));
 
@@ -2472,6 +2473,7 @@ class AccountController extends Controller
             'Entiti' => $Entiti,
             'retailerAccount' =>$AccountRetailer,
             'form' => $form->createView(),
+            'Account'=>$AccountRetailer->getParent(),
         ));
 
     }
@@ -2644,6 +2646,7 @@ class AccountController extends Controller
             array(
                 'pagination'=>$pagination,
                 'form'=>$form->createView(),
+                'Account'=>$AccountRetailer->getParent(),
                 'retailerAccount' => $AccountRetailer,
                 'typedate'=>$typedate
             ));
@@ -2687,6 +2690,7 @@ class AccountController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerSetting.html.twig', array(
             'Entiti' => $RetailerAccount->getEntiti(),
             'retailerAccount' => $RetailerAccount,
+            'Account'=>$RetailerAccount->getParent(),
             'form' => $form->createView()
         ));
     }
@@ -2717,6 +2721,7 @@ class AccountController extends Controller
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'retailerAccount' => $RetailerAccount,
+            'Account'=>$RetailerAccount->getParent(),
         ));
     }
 

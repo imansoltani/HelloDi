@@ -379,6 +379,16 @@ form .control-group .controls.money span{
 
 /* Tabs */
 
+.main .container.Tab2{
+
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: solid thin #003bb3;
+
+}
+
+
+
 .main .pagetop .tabbar{
 
     padding-top: 5px;
@@ -403,9 +413,7 @@ form .control-group .controls.money span{
 
 }
 
-.main .pagetop .hornav .container{
 
-}
 
 .main .pagetop .hornav li{
     display: inline-block;
@@ -1125,6 +1133,14 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
     border: solid thin #000100;
     top: 15%;
     right: 35%;
+}
+
+.tablediv table.table tr td.td-actions div.ShowDetailPopUp.ShowLoader {
+    background: url("../img/ajax-loader.gif") no-repeat center center;
+    background-size: 40px 40px;
+    min-width: 50px;
+    min-height: 50px;
+
 }
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled {
