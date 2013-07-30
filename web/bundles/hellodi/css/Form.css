@@ -188,7 +188,7 @@ body .tablediv table.table tr td:last-child{
     border-right: 1px solid rgb(221, 221, 221);
 }
 
-.tablediv table.table tr td.td-actions div{
+.tablediv table.table tr td.td-actions > div{
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -1111,6 +1111,26 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 
 
 /* ------------- Show Details -------------- */
+
+.tablediv table.table tr td.td-actions div.ShowDetailPopUp {
+    display: none;
+    position: fixed;
+    overflow: auto;
+    z-index: 1000000;
+    background: #ffffff;
+    height: auto;
+    width: auto;
+    max-height: 90%;
+    max-width: 90%;
+    border: solid thin #000100;
+    top: 15%;
+    right: 35%;
+}
+
+.tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled {
+    display: block;
+}
+
 .showDetails span{
     display: none;
 }

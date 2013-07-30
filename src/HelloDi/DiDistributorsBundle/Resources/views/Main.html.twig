@@ -62,6 +62,8 @@
 
 
 
+
+
 <script type="text/javascript">
     $(function () {
 
@@ -452,6 +454,27 @@
 
         $('#element').tooltip({placement:'bottom'});
 
+
+        $('* .showDetails').hover(function(){
+            //$('.ShowDetailPopUp',this).remove();
+            //$(this).stop();
+            if($(this).attr("id") != "show")
+            {
+                $(this).attr("id","show") ;
+                $(this).append('<div class="ShowDetailPopUp"></div>');
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
+
+
+                $('.ShowDetailPopUp',this).fadeIn();
+            }
+        },function(){
+            if($(this).attr("id") == "show")
+            {
+                $(this).removeAttr("id");
+                $('.ShowDetailPopUp',this).fadeOut();
+                $('.ShowDetailPopUp',this).remove();
+            }
+        });
     });
 
 
