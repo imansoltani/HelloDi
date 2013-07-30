@@ -155,7 +155,12 @@
 
                                         </td>
                                         <td>
-                                            {{ -tran.tranAmount }}
+                                            <script type="text/javascript">
+                                                document.write(Math.abs({{ tran.tranAmount  }}));
+                                            </script>
+
+
+
 
                                         </td>
                                     {% endif %}

@@ -47,7 +47,16 @@
                                             {{ tranAmount+com }}
 
                                         </td>
-                                        <td>{{ -tran.tranAmount }}</td>
+                                        <td>
+
+                                            <script type="text/javascript">
+                                                document.write(Math.abs( {{ -tran.tranAmount }}));
+                                            </script>
+
+
+
+
+                                        </td>
                                         <td>{{ tran.Account.accName }}</td>
                                         <td>{{ tran.User.username }}</td>
                                         <td> {{ tran.Code.id }} </td>

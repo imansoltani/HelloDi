@@ -161,7 +161,10 @@ class DistributorsController extends Controller
            10/*limit per page*/
         );
 
-     $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('tranAction'=>'com','Account'=>$User->getAccount())) ;
+     $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
+         'tranAction'=>'com',
+         'Account'=>$User->getAccount()
+     )) ;
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSale.html.twig',
 
@@ -749,7 +752,7 @@ else
                     'sale'=>'debit balance when the retailer sell a code',
                     'crnt'=>'issue a credit note for a sold code',
                     'tran'=>'transfer credit from distributor,s account to a retailer,s account',
-                    'pmt'=>'ogone payment on its own account'
+                    'ogn_pmt'=>'ogone payment on its own account'
                 )))
 
             ->getForm();
@@ -859,7 +862,7 @@ else
                   'amdt' => 'debit distributor,s account',
                   'crnt'=>'issue a credit note for a sold code',
                   'com_pmt' => 'debit distributor,s account for the commisson payments',
-                  'pmt' => 'ogone payment on its own account',
+                  'ogn_pmt' => 'ogone payment on its own account',
                   'tran'=>'transfer credit from provider,s account to a distributor,s account',
                   'tran'=>'transfer credit from distributors account to a retailer,s account',
                   'crtl'=>'increase retailer,s credit limit',
@@ -1609,7 +1612,7 @@ else
              $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
              $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
              $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
-             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+             $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
              $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
 
 
@@ -1624,7 +1627,7 @@ else
              $value.='<option value="crlt">'.'inscrease retailer,s credit limit'.'</option>';
              $value.='<option value="pmt">'.'credit distributor,s account'.'</option>';
              $value.='<option value="tran">'.'transfer credit from provider,s account to a distributor,s account'.'</option>';
-             $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+             $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
              $value.='<option value="com">'.'credit commissons when a retailer sells a code'.'</option>';
              break;
      }
@@ -1650,7 +1653,7 @@ public function DistLoadActionRetailerAction(Request $req)
             $value.='<option value="All">'.'All'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
 
 
             break;
@@ -1660,7 +1663,7 @@ public function DistLoadActionRetailerAction(Request $req)
             $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
             $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
             $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="pmt">'.'ogone payment on its own account'.'</option>';
+            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
             break;
     }
     return new Response($value);

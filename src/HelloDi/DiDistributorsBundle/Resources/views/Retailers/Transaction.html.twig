@@ -129,7 +129,7 @@
                                     <tr>
                                         <td>
 
-                                            {% if typedate==0 %}
+                                       {% if typedate==0 %}
                                             {{ tran.tranDate|date('Y-m-d') }}</td>
                                         {% else %}
                                         {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
@@ -143,7 +143,13 @@
                                             <td>------</td>
                                         {% else %}
                                             <td>------</td>
-                                            <td>{{ -tran.tranAmount }}</td>
+                                            <td>
+
+                                                <script type="text/javascript">
+                                                    document.write(Math.abs({{ tran.tranAmount }}));
+                                                </script>
+
+                                                </td>
                                         {% endif %}
                                         <td>
 

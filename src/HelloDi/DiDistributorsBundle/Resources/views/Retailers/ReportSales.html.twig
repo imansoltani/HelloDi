@@ -111,7 +111,13 @@
                                             <td>{{ Tr.tranDate|date('Y-m-d H:i:s') }}</td>
                                             <td>{{ Tr.Code.Item.itemName}}</td>
                                             <td>{{ Tr.Code.Item.itemFaceValue}}</td>
-                                            <td>{{ -Tr.tranAmount }}</td>
+                                            <td>
+                                            <script type="text/javascript">
+                                                document.write(Math.abs({{ Tr.tranAmount }}));
+                                            </script>
+
+
+                                            </td>
                                             <td>{{ Tr.Code.serialNumber }}</td>
                                             <td>{{ Tr.User.username }}</td>
                                             <td>Vat</td>
