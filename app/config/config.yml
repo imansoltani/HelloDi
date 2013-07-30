@@ -96,4 +96,15 @@ services:
     knp_paginator.subscriber.sortable:
         class: Knp\Component\Pager\Event\Subscriber\Sortable\SortableSubscriber
         tags:
-            - { name: knp_paginator.subscriber }		
+            - { name: knp_paginator.subscriber }
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf
+#        "wkhtmltopdf.exe"
+        options:    []
+    image:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltoimage
+        options:    []
