@@ -126,7 +126,7 @@
                 <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
                 <script type="text/javascript">
                     $(function(){
-                        var x = "{{ form_errors(form.desclang) }}{{ form_errors(form.descdesc) }}";
+                        var x = "{{ form_errors(form.ItemDescs[0].desclang) }}{{ form_errors(form.ItemDescs[0].descdesc) }}";
 
                         if(x != "")
                         {
