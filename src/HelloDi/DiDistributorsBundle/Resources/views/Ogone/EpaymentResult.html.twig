@@ -8,7 +8,19 @@ the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your
   {{ ogonePayment.Transaction.tranBalance }}+<b>{{ ogonePayment.paymentAmount }}</b>=<b style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }})
     <br>
 <hr>
-<a class="btn" href="{{ path('retailers_dashboard') }}"> Dashboard  </a>
+<a class="btn"
+
+   {% if is_granted('ROLE_RETAILER_ADMIN') %}
+
+   href="{{ path('RetailerTransaction') }}"
+
+   {% elseif is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+   href="{{ path('DistTransaction') }}"
+
+    {% endif %}
+   > transaction page  </a>
+
+
 
 {% elseif ogonePayment.status=='canceled' %}
 

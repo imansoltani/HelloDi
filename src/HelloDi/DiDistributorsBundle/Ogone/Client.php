@@ -9,6 +9,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Ogone;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use HelloDi\DiDistributorsBundle\Entity\OgonePayment;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Entity\User;
@@ -23,32 +24,41 @@ class Client
     private $em;
     //private $routePrefix;
 
-    private $user;
-    private $account;
-    private $locale;
+
     private $pspId;
     private $shaIn;
     private $shaOut;
     private $submitUrl;
-
+    private $role;
     private $resultUrl;
     private $catalogUrl;
     private $homeUrl;
     private $ogoneTemplateUrl;
 
-    public function __construct(Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl,$locale)
+    public function __construct(Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl,$role)
     {
         $this->em           = $em;
-        $this->locale       =$locale;
         $this->pspId        = $pspId;
         $this->shaIn        = $shaIn;
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
+        $this->role         =$role;
         //generate(string $name, mixed $parameters = array(), Boolean $absolute = false)
-        $this->resultUrl    = $router->generate('hellodi_transactions_result', array(), true);
-        $this->catalogUrl   = $router->generate('hellodi_transactions_new', array(), true);
-        $this->homeUrl  = $router->generate('hellodi_index', array(), true);
-        $this->ogoneTemplateUrl   = $router->generate('hellodi_transactions_ogone_template',array(), true);
+
+
+        if ($this->role)
+        {
+            $this->resultUrl    = $this->role->resultUrl;
+            $this->catalogUrl   = $this->role->catalogUrl;
+            $this->homeUrl  =$this->role->homeUrl;
+            $this->ogoneTemplateUrl   =$this->role->ogoneTemplateUrl;
+        }
+
+        else
+        {
+            throw new OgoneException('Invalid prefix!');
+        }
+
 
     }
 
@@ -91,7 +101,7 @@ class Client
         {
             throw new OgoneException('Invalid Ogone datas');
         }
-//print_r($fields['orderID']);
+
         $ogonePayment = $this->em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->findOneByOrderReference($fields['orderID']);
 
 
@@ -112,7 +122,6 @@ class Client
             case OgonePayment::OGONE_RESULT_ACCPETED:
 
                 $transaction=new Transaction();
-
                 $transaction->setTranBookingValue(null);
                 $transaction->setTranAmount($ogonePayment->getPaymentAmount());
                 $transaction->setTranCurrency($ogonePayment->getPaymentCurrencyISO());
@@ -151,7 +160,6 @@ class Client
             default:
                 $ogonePayment->setStatus(OgonePayment::STATUS_UNKNOWN);
 
-
         }
 
       $this->em->flush();
@@ -188,6 +196,9 @@ class Client
 
     public function generateForm(OgonePayment $payment)
     {
+
+
+
         $fields[] = sprintf('<form id="form1" name="form1" method="post" action="%s">', $this->submitUrl);
 
         foreach ($this->getSortedParameters($payment) as $name => $value)
@@ -202,4 +213,5 @@ class Client
         return    implode('', $fields);
 
     }
+
 }

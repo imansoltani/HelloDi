@@ -1,20 +1,19 @@
-hellodi_transactions_new:
-    pattern:  /ogon/new
+retailer_transactions_new:
+    pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:new}
 
 retailer_OgoneTransactions_validate:
-    pattern:  /ogon/{id}/validate
+    pattern:  /{id}/validate
     defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:validate}
 
-hellodi_transactions_result:
+retailer_transactions_result:
     pattern:  /result
     defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:result}
 
-hellodi_index:
-    pattern:  /index
+retailer_index:
+    pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
-
-index_page:
-    pattern:  /index/retailer
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
-
+retailer_transactions_ogone_template:
+    path: /ogone-template
+    defaults:
+        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate'

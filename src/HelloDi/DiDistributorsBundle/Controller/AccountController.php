@@ -621,6 +621,7 @@ class AccountController extends Controller
     public function  SaleAction(Request $req, $id)
     {
 
+
         $group = 0;
         $em = $this->getDoctrine()->getEntityManager();
         $qb = array();
@@ -784,21 +785,71 @@ class AccountController extends Controller
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         $Account = $tran->getAccount()->getParent();
+
         $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array(
             'User'=>$tran->getUser(),
             'Account'=>$Account,
-           'tranAction'=>'com',
-           'Code'=>$tran->getCode()
-        ));
+            'tranAction'=>'com',
+            'Code'=>$tran->getCode()   ));
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsSale.html.twig',
+        $details="<form>
+                        <div class='tab-content'>
+                            <table style='margin-top: 20px'
+                                   class='table table-bordered table-striped table-highlight postsend'>
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>{{ 'Date' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'ItemName' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'Buying price' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'Selling price' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'Account' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'User' | trans ({}, 'account') }}</th>
+                                    <th>{{ 'Code' | trans ({}, 'account') }} </th>
 
-            array(
-                'Account' => $Account,
-                'tran' => $tran,
-                'com'=>$com->getTranAmount()
-            ));
+                                </tr>
+                                </thead>
+                                <tbody>
 
+                                    <tr>
+                                        <td>".
+                                               $tran->getId()
+                                       ."</td>
+                                        <td>".
+                                              $tran->getTranInsert()
+                                        ."</td>
+                                        <td>".
+                                        $tran->getCode()->getItem()->getItemName()
+                                        ."</td>
+                                        <td>".
+
+                                      Math.abs($tran->getTranAmount()+$com->getTranAmount())
+
+                                       ."</td>
+                                        <td>".
+
+                                          Math.abs($tran->getTranAmount())
+
+                                        ."</td>
+                                        <td>".
+                                          $tran->getAccount()->getAccName()
+                                        ."</td>
+                                        <td>".
+
+                                     $tran->getUser()->getFirstName()
+                                       ."</td>
+                                        <td>".
+                                      $tran->getCode()->getId()
+                                       ."</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>";
+
+
+
+        return  new Response($details);
     }
 
 

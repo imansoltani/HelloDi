@@ -5,7 +5,13 @@
 <body>
 
 <h1>Epayment_New</h1>
-<form action="{{ path('hellodi_transactions_new') }}" method="post">
+<form action="
+{% if is_granted('ROLE_RETAILER_ADMIN') %}
+{{ path('retailer_transactions_new') }}
+{% else %}
+{{ path('distributor_transactions_new') }}
+{% endif %}
+" method="post">
 
     {{ form_rest(form) }}
     {{ form_widget(form._token) }}

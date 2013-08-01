@@ -143,7 +143,28 @@
                             <td>Task</td>
                             <td class="tab-actions" >
                                 {% if group==0 %}
-                                    <a class="btn_actions" href="{{ path('MasterDistDetailsSale',{'id':Account.id,'tranid':Tr.TR.id}) }}">Details</a>
+
+
+                                    <a class="btn_actions" id="details" href="#">Details</a>
+
+
+
+
+                                    <script type="text/javascript">
+
+
+
+                                        $("#details").click(function(){
+                                            $.post('{{ path("MasterDistDetailsSale") }}',{id: Account.id ,tranid: Tr.TR.id },function(result){
+
+                                                $("#form_Action").html(result);
+                                            })
+                                        });
+                                    </script>
+
+
+
+
                                 {% else %}
                                     ----
                                 {% endif %}
@@ -162,5 +183,6 @@
     <div class="navigation">
     {% if group==0 %}{{ knp_pagination_render(pagination) }}{% endif %}
     </div>
+
 
 {% endblock %}

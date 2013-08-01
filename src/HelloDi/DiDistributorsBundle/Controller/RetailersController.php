@@ -615,6 +615,7 @@ $datetype=0;
 //--------endkazem--------//
 
 // Start kamal
+
         public function DmtuAction(){
 
 
@@ -666,8 +667,10 @@ $datetype=0;
                 );
 
                 $com = $priceChild->getprice() - $priceParent->getprice();
-          if($codes)
-          {     foreach($codes as $code)
+
+        if($codes)
+          {
+              foreach($codes as $code)
                 {
                     $tranretailer = new Transaction();
                     $trandist = new Transaction();

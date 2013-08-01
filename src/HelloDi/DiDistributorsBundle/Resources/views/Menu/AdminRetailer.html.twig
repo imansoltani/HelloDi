@@ -72,7 +72,7 @@
             <ul class="dropdown-menu">
                 <li><a href="{{ path('RetailerTransaction') }}">History</a></li>
                 {% if is_granted('ROLE_RETAILER_ADMIN') %}
-                <li><a href="{{ path('hellodi_transactions_new') }}">Recharge</a></li>
+                <li><a href="{{ path('retailer_transactions_new') }}">Recharge</a></li>
                 {% endif %}
             </ul>
     </li>

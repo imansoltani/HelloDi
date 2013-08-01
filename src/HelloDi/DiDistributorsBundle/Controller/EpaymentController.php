@@ -11,14 +11,18 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class EpaymentController extends Controller
+
 {
+
+
     public function newAction(Request $request)
     {
+        $role=$this->get('hello_di_di_distributors.ogone.role');
+
         $user = $this->getUser();
         $currency = $this->getUser()->getAccount()->getAccCurrency();
 
         $ogonePayment = new OgonePayment();
-
 
         $ogonePayment->setUser($user);
 
@@ -35,28 +39,31 @@ class EpaymentController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($ogonePayment);
                 $em->flush();
-                return $this->redirect($this->generateUrl('retailer_OgoneTransactions_validate',array('id'=>$ogonePayment->getId())));
+                return  $this->redirect($role->Validate($ogonePayment->getId()));
 
             }
 
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentNew.html.twig',
+    return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentNew.html.twig',
             array('form' => $ogonePaymentForm->createView(),
             ));
+
     }
 
     public function validateAction($id)
     {
-
+        $role=$this->get('hello_di_di_distributors.ogone.role');
         $em = $this->getDoctrine()->getManager();
         $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
 
         if( null === $ogonePayment || $this->getUser()->getId() !== $ogonePayment->getUser()->getId() )
         {
             $this->get('session')->getFlashBag()->add('Not valide!','Not valide!');
-            return $this->redirect($this->generateUrl('index_page'));
-        }
+
+            return  $this->redirect($role->IndexPage());
+         }
+
        $cilent=$this->get('hello_di_di_distributors.ogone.client');
 
         $ogonePaymentValidateform = $cilent->generateForm($ogonePayment);
@@ -71,6 +78,8 @@ class EpaymentController extends Controller
 
     public function resultAction()
     {
+        $role=$this->get('hello_di_di_distributors.ogone.role');
+
         $digest = $this->getRequest()->query->all();
 
         try
@@ -83,13 +92,17 @@ class EpaymentController extends Controller
         catch (\HelloDi\DiDistributorsBundle\Exception\OgoneException $excep)
         {
             $this->get('session')->getFlashBag()->add('result is not valide!', $excep->getMessage());
-            return $this->redirect($this->generateUrl('hellodi_transactions_new'));
+
+            return  $this->redirect($role->TransactionNew());
+
         }
 
 
       return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentResult.html.twig', array('ogonePayment' => $ogonePayment));
 
     }
+
+
 
 
 }
