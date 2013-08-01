@@ -17,6 +17,7 @@ use HelloDi\DiDistributorsBundle\Exception\OgoneException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Validator\Constraints\DateTime;
+use HelloDi\DiDistributorsBundle\Ogone\RoutesContainer;
 
 
 class Client
@@ -29,37 +30,24 @@ class Client
     private $shaIn;
     private $shaOut;
     private $submitUrl;
-    private $role;
     private $resultUrl;
     private $catalogUrl;
     private $homeUrl;
     private $ogoneTemplateUrl;
 
-    public function __construct(Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl,$role)
+    public function __construct(Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl,RoutesContainer $routesContainer)
     {
         $this->em           = $em;
         $this->pspId        = $pspId;
         $this->shaIn        = $shaIn;
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
-        $this->role         =$role;
+
         //generate(string $name, mixed $parameters = array(), Boolean $absolute = false)
-
-
-        if ($this->role)
-        {
-            $this->resultUrl    = $this->role->resultUrl;
-            $this->catalogUrl   = $this->role->catalogUrl;
-            $this->homeUrl  =$this->role->homeUrl;
-            $this->ogoneTemplateUrl   =$this->role->ogoneTemplateUrl;
-        }
-
-        else
-        {
-            throw new OgoneException('Invalid prefix!');
-        }
-
-
+        $this->resultUrl    = $router->generate($routesContainer->getResultUrl(), [], true);
+        $this->catalogUrl   = $router->generate($routesContainer->getCatalogUrl(), [], true);
+        $this->homeUrl  = $router->generate($routesContainer->getHomeUrl(), [], true);
+        $this->ogoneTemplateUrl   = $router->generate($routesContainer->getOgoneTemplateUrl(), [], true);
     }
 
     private function getSortedParameters(OgonePayment $payment)

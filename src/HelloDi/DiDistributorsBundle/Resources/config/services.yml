@@ -54,15 +54,14 @@ services:
 
     hello_di_di_distributors.ogone.client:
         class:  HelloDi\DiDistributorsBundle\Ogone\Client
-        arguments: [@router,@doctrine.orm.default_entity_manager,%ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%,@hello_di_di_distributors.ogone.role]
-        scope: request
-# start
-    hello_di_di_distributors.ogone.role:
-        class:  HelloDi\DiDistributorsBundle\Role\Role
-        arguments: [@router,@request]
+        arguments: [@router, @doctrine.orm.default_entity_manager, %ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%,@hello_di_di_distributors.ogone.routescontainer]
         scope: request
 
-# end
+    hello_di_di_distributors.ogone.routescontainer:
+        class:  HelloDi\DiDistributorsBundle\Ogone\RoutesContainer
+        arguments: [@request]
+        scope: request
+
     acme.twig.extension.loader:
         class:        Twig_Extension_StringLoader
         tags:

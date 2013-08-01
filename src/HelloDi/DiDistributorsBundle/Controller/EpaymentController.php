@@ -8,16 +8,22 @@ use Symfony\Component\HttpFoundation\Request;
 use HelloDi\DiDistributorsBundle\Entity\OgonePayment;
 use HelloDi\DiDistributorsBundle\Form\OgonePayment\NewOgonePaymentType;
 use Symfony\Component\Validator\Constraints\DateTime;
-
+use HelloDi\DiDistributorsBundle\Ogone\RoutesContainer;
 
 class EpaymentController extends Controller
 
 {
 
 
+
+
+
+
+
+
     public function newAction(Request $request)
     {
-        $role=$this->get('hello_di_di_distributors.ogone.role');
+        $ePaymentRoutes = new RoutesContainer($request);
 
         $user = $this->getUser();
         $currency = $this->getUser()->getAccount()->getAccCurrency();
@@ -39,7 +45,8 @@ class EpaymentController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($ogonePayment);
                 $em->flush();
-                return  $this->redirect($role->Validate($ogonePayment->getId()));
+
+                return  $this->redirect($this->generateUrl($ePaymentRoutes->getValidateUrl(),array('id'=>$ogonePayment->getId())));
 
             }
 
@@ -53,7 +60,7 @@ class EpaymentController extends Controller
 
     public function validateAction($id)
     {
-        $role=$this->get('hello_di_di_distributors.ogone.role');
+        $ePaymentRoutes = new RoutesContainer($this->getRequest());
         $em = $this->getDoctrine()->getManager();
         $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
 
@@ -61,7 +68,7 @@ class EpaymentController extends Controller
         {
             $this->get('session')->getFlashBag()->add('Not valide!','Not valide!');
 
-            return  $this->redirect($role->IndexPage());
+            return  $this->redirect($this->generateUrl( $ePaymentRoutes->getHomeUrl()));
          }
 
        $cilent=$this->get('hello_di_di_distributors.ogone.client');
@@ -78,8 +85,8 @@ class EpaymentController extends Controller
 
     public function resultAction()
     {
-        $role=$this->get('hello_di_di_distributors.ogone.role');
 
+        $ePaymentRoutes = new RoutesContainer($this->getRequest());
         $digest = $this->getRequest()->query->all();
 
         try
@@ -93,7 +100,7 @@ class EpaymentController extends Controller
         {
             $this->get('session')->getFlashBag()->add('result is not valide!', $excep->getMessage());
 
-            return  $this->redirect($role->TransactionNew());
+            return  $this->redirect($this->generateUrl($ePaymentRoutes->getHomeUrl()));
 
         }
 
@@ -101,8 +108,5 @@ class EpaymentController extends Controller
       return $this->render('HelloDiDiDistributorsBundle:Ogone:EpaymentResult.html.twig', array('ogonePayment' => $ogonePayment));
 
     }
-
-
-
 
 }

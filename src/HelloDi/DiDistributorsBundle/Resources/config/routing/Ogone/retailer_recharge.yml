@@ -2,7 +2,7 @@ retailer_transactions_new:
     pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:new}
 
-retailer_OgoneTransactions_validate:
+retailer_transactions_validate:
     pattern:  /{id}/validate
     defaults: { _controller: HelloDiDiDistributorsBundle:Epayment:validate}
 
