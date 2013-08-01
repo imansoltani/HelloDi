@@ -172,10 +172,113 @@
 
                                     <td class="td-actions">
 
-                                            <a class="btn_actions" href="{{ path('DistDetailsTransaction',{'id':tran.id}) }}">
-
+                                        <a class="btn_actions showDetails">
                                             Details
+                                <span>
 
+                                        <fieldset>
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'id' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.id}}" >
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Date' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Description' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.tranDescription}}">
+                                                </div>
+                                            </div>
+                                            {% set credit,debit='------','------' %}
+
+                                            {% if  tran.tranAmount>0 %}
+                                                {% set credit=tran.tranAmount %}
+                                            {% elseif  tran.tranAmount<0 %}
+                                                {% set debit=tran.tranAmount %}
+                                            {% endif %}
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Credit' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ credit }}">
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Debit' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ -debit }}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Balance' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    {% set balance=tran.tranBalance+tran.tranAmount %}
+                                                    <input type="text" disabled="" value=" {{ balance }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'User' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.User.username }}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Accountname' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.Account.accName }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Code' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled=""
+                                                           {% if tran.Code is not null %}
+                                                           value="{{ tran.Code.id }}"
+                                                            {% else %}
+                                                                value="------------------"
+                                                            {% endif %}
+                                                            >
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+</span>
+                                        </a>
 
                                     </td>
 

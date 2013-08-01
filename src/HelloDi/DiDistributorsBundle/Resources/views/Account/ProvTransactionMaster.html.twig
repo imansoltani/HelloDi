@@ -187,8 +187,105 @@
                             {{ balance }}
                             </td>
                             <td class="td-actions">
-                                <a class="btn_actions" href="{{ path('MasterProvTransactionDetails',{'id':Account.id,'tranid':tran.id}) }}">Details</a> |
+{#detail#}
 
+
+                                <a class="btn_actions showDetails">
+                                    Details
+                                <span>
+
+
+                                           <fieldset>
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       ID:
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{{ tran.id}}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       Date:
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{{ tran.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Credit:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{% if tran.tranAmount > 0 %}  {{ tran.tranAmount }} {% else %} ---------------  {% endif %}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Debit:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{% if tran.tranAmount > 0 %}  --------------- {% else %} {{ -tran.tranAmount }}  {% endif %}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Description:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{{ tran.tranDescription }}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Balance:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{% set balance=tran.tranBalance+tran.tranAmount %}{{ balance }}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'User:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text" value="{{ tran.User.username }}" disabled="" >
+                                                   </div>
+                                               </div>
+
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Code:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text"
+                                                       {% if tran.Code is not null %}
+                                                              value=" {{ tran.Code.id }}"
+                                                       {% else %}
+                                                           value="-----------------"
+                                                       {% endif %}
+
+                                                        disabled="" >
+                                                   </div>
+                                               </div>
+
+                                           </fieldset>
+
+
+
+                                    </span>
+                                </a>
+
+ {#enddetails#}
+
+
+|
                                 <a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':Account.id,'tranid':tran.id}) }}">Delete</a>
 
                             </td>
