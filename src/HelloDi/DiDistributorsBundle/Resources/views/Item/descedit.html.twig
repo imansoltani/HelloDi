@@ -79,12 +79,56 @@
                         ,["forecolor"],
                         [
                             {
+                                css: "RemoveStyleButton",
+                                text: "Remove Style",
+                                action: function() {
+                                    this.iframe[0].contentWindow.focus();
+                                    var node = $.browser.msie
+                                            ? this.getRange().parentElement()
+                                            : this.getRange().startContainer.parentNode;
+                                    var highlightedText = node.innerHTML;
+                                    if( node.tagName.toLowerCase() != 'body' && node.tagName.toLowerCase() != 'html')
+                                    {
+                                        var newNode = this.iframe[0].contentDocument.createTextNode(highlightedText);
+                                        $(newNode).insertBefore(node);
+                                        $(node).remove();
+                                    }
+                                    node.collapse(false);
+                                    node.select();
+                                }
+                            },
+                            {
                                 css: "BorderButton",
-                                text: "Add Pin tag",
-                                action: function(btn) {
-                                    var s = this.getSelectedHTML();
-                                    alert(s);
-                                    this.pasteHTML('<border style="border:solid 2px #000;padding:5px;" >'+s+'</border>');
+                                text: "Add Border Div",
+                                action: function() {
+                                    var html = this.getRange().htmlText;
+                                    this.iframe[0].contentWindow.focus();
+                                    var r = this.getRange();
+                                    if ($.browser.msie) {
+                                        r.pasteHTML('<div style="border:2px solid black">'+html+'</div>');
+                                    } else {
+                                        var newnode =$(this.iframe[0].contentDocument.createElement("div")).css("border", "2px solid black")[0];
+                                        r.surroundContents(newnode);
+                                    }
+                                    r.collapse(false);
+                                    r.select();
+                                }
+                            },
+                            {
+                                css: "BorderButton",
+                                text: "Add Border Span",
+                                action: function() {
+                                    var html = this.getRange().htmlText;
+                                    this.iframe[0].contentWindow.focus();
+                                    var r = this.getRange();
+                                    if ($.browser.msie) {
+                                        r.pasteHTML('<span style="border:2px solid black">'+html+'</span>');
+                                    } else {
+                                        var newnode =$(this.iframe[0].contentDocument.createElement("span")).css("border", "2px solid black")[0];
+                                        r.surroundContents(newnode);
+                                    }
+                                    r.collapse(false);
+                                    r.select();
                                 }
                             }
                         ],
@@ -92,21 +136,21 @@
                             {
                                 css: "PinButton Button",
                                 text: "Add Pin tag",
-                                action: function(btn) {
+                                action: function() {
                                     this.pasteHTML('&#123;&#123;pin&#125;&#125;');
                                 }
                             },
                             {
                                 css: "SerialButton Button",
                                 text: "Add Serial tag",
-                                action: function(btn) {
+                                action: function() {
                                     this.pasteHTML('&#123;&#123;serial&#125;&#125;');
                                 }
                             },
                             {
                                 css: "ExpireButton Button",
                                 text: "Add Expire tag",
-                                action: function(btn) {
+                                action: function() {
                                     this.pasteHTML('&#123;&#123;expire&#125;&#125;');
                                 }
                             }
