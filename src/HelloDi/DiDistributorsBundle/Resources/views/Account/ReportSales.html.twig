@@ -141,20 +141,112 @@
                                 {{Account.accCurrency}}
                             </td>
                             <td>Task</td>
-                            <td class="tab-actions" >
+
+                            <td class="td-actions" >
+
                                 {% if group==0 %}
 
+                                <a class="btn_actions showDetails">
+                                    Details
+                                <span>
 
-                                    <a class="btn_actions showDetailsAjax" id="details" href="#">
-                                        Details
-                                        <b id="{{ path("MasterDistDetailsSale") }}" class="{{ Tr.TR.id }}" ></b>
-                                    </a>
+                                    <fieldset>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'id' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.id}}" disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Date' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Buying Price' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text"
+
+                                                {% for c in com %}
+                                                    {% if
+                                                      c.Code==Tr.TR.Code
+                                                    and
+                                                      c.User==Tr.TR.User
+                                                    and
+                                                      c.Account==Tr.TR.Account.Parent
+                                                    and
+                                                     c.tranDate==Tr.TR.tranDate
+                                                    %}
+                                                   value="{{ -Tr.TR.tranAmount-c.tranAmount }}"
+                                                     {% endif %}
+                                                 {% endfor %}
+
+                                            disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Selling Price' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+
+                                                <input type="text" value="{{ -Tr.TR.tranAmount}}" disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Retailer Account' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.Account.accName }}" disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Retailer User' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.User.username }}" disabled="" >
+                                            </div>
+                                        </div>
 
 
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Code' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.Code.id }}" disabled="" >
+                                            </div>
+                                        </div>
 
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Item Name' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" value="{{ Tr.TR.Code.Item.itemName }}" disabled="" >
+                                            </div>
+                                        </div>
 
+                                    </fieldset>
 
+                                   </span>
 
+                               </a>
 
 
                                 {% else %}

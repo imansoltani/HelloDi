@@ -122,6 +122,7 @@
                                     <th>{{ 'Manage' | trans ({}, "account") }}</th>
 
                                 </tr>
+
                                 </thead>
                                 <tbody>
 
@@ -138,7 +139,7 @@
 
                                         <td>{{ tran.tranDescription}}</td>
 
-                                        {% if tran.tranAmount>=0 %}
+                                        {% if tran.tranAmount>0 %}
                                             <td>{{ tran.tranAmount }}</td>
                                             <td>------</td>
                                         {% else %}
@@ -151,6 +152,7 @@
 
                                                 </td>
                                         {% endif %}
+
                                         <td>
 
                                             {% set balance=tran.tranBalance+tran.tranAmount %}
@@ -164,96 +166,101 @@
                                                 Details
                                                     <span>
 
+                                               <fieldset>
 
-                                               {#<fieldset>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'id' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.id}}" >
+                                                       </div>
+                                                   </div>
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'id' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{{ tran.id}}" >#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Date' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">
+                                                       </div>
+                                                   </div>
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'Date' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{{ tran.tranDate|date('y-M-d H:m:s') }}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'function' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="Function">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
-
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'Account name' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{{ tran.Account.accName }}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Account name' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.Account.accName }}">
+                                                       </div>
+                                                   </div>
 
 
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'Credit' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{% if tran.tranAmount>0 %} {{ tran.tranAmount }} {% elseif tran.tranAmount<0 %}--------{% endif %}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Credit' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{% if tran.tranAmount>0 %} {{ tran.tranAmount }} {% elseif tran.tranAmount<0 %}--------{% endif %}">
+                                                       </div>
+                                                   </div>
 
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'Debit' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#{% set balance=tran.tranBalance+tran.tranAmount %}#}
-                                                           {#<input type="text" disabled="" value="{% if tran.tranAmount>0 %}--------{% elseif tran.tranAmount<0 %}{{ -tran.tranAmount }}{% endif %}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Debit' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#<th>{{ 'Balance' | trans ({}, "account") }}</th>#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{% set balance=tran.tranBalance+tran.tranAmount %}{{ balance }}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                           <input type="text" disabled="" value="{% if tran.tranAmount>0 %}--------{% elseif tran.tranAmount<0 %}{{ -tran.tranAmount }}{% endif %}">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           <th>{{ 'Balance' | trans ({}, "account") }}</th>
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ balance }}">
+                                                       </div>
+                                                   </div>
 
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'User' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{{ tran.User.username }}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'User' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.User.username }}">
+                                                       </div>
+                                                   </div>
 
-                                                   {#<div class="control-group">#}
-                                                       {#<label class="control-label">#}
-                                                           {#{{ 'Item Name' | trans ({}, "account") }}#}
-                                                       {#</label>#}
-                                                       {#<div class="controls">#}
-                                                           {#<input type="text" disabled="" value="{% if tran.Code is not null  %}{{ tran.Code.Item.itemName }}{% else %}not have code{% endif %}">#}
-                                                       {#</div>#}
-                                                   {#</div>#}
 
-                                               {#</fieldset>#}
+                                                   {% if tran.Code is not null  %}
+
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Item Name' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="control-group">
+                                                       <label class="control-label">
+                                                           {{ 'Code' | trans ({}, "account") }}
+                                                       </label>
+                                                       <div class="controls">
+                                                           <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
+                                                       </div>
+                                                   </div>
+
+                                                   {% endif %}
+
+                                               </fieldset>
 
 
 

@@ -249,17 +249,30 @@
                 <input type="text" disabled="" value="{{ tran.Account.accName }}">
             </div>
         </div>
-        {% set itemname='------' %}
-        {% if tran.code is not null %}{%  set itemname=tran.Code.Item.itemName %} {% endif %}
-        <div class="control-group">
+
+        {% if tran.code is not null %}
+
+            <div class="control-group">
+                <label class="control-label">
+                    {{ 'Code' | trans ({}, "account") }}
+                </label>
+                <div class="controls">
+                    <input type="text" disabled="" value="{{ tran.Code.id }}">
+                </div>
+            </div>
+
+            <div class="control-group">
             <label class="control-label">
                 {{ 'ItemName' | trans ({}, "account") }}
             </label>
             <div class="controls">
-                <input type="text" disabled="" value="{{ itemname }}">
+                <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
             </div>
         </div>
 
+
+
+{% endif %}
     </fieldset>
 
 

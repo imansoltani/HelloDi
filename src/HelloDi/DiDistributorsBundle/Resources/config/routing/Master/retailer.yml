@@ -16,7 +16,7 @@ Master_RetailerFunding:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFunding"}
 
 Master_RetailerTransferFunding:
-    pattern:  /{id}/transactions/transfer
+    pattern:  /{id}/transactions/transfermoney
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFundingTransfer"}
 
 Master_RetailerUpdateFunding:

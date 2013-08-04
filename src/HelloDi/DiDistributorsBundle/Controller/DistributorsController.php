@@ -275,6 +275,7 @@ class DistributorsController extends Controller
             $trandist->setTranFees(0);
             $trandist->setTranAction('tran');
             $trandist->setTranType(0);
+            $trandist->setTranBalance($Account->getParent()->getAccBalance());
             $trandist->setTranDescription($data['Description']);
 
 
@@ -289,7 +290,8 @@ class DistributorsController extends Controller
             $tranretailer->setUser($User);
             $tranretailer->setTranFees(0);
             $tranretailer->setTranAction('tran');
-            $trandist->setTranType(1);
+            $tranretailer->setTranType(1);
+            $tranretailer->setTranBalance($Account->getAccBalance());
             $tranretailer->setTranDescription($data['Communications']);
 
             if($data['Amount']>0)

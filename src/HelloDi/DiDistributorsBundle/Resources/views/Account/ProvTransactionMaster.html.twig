@@ -219,7 +219,13 @@
                                                        {{ 'Credit:' | trans ({}, "account") }}
                                                    </label>
                                                    <div class="controls">
-                                                       <input type="text" value="{% if tran.tranAmount > 0 %}  {{ tran.tranAmount }} {% else %} ---------------  {% endif %}" disabled="" >
+                                                       <input type="text"
+                                                       {% if tran.tranAmount > 0 %}
+                                                            value="{{ tran.tranAmount }}"
+                                                         {% else %}
+                                                             value="---------------"
+                                                          {% endif %}
+                                                          disabled="" >
                                                    </div>
                                                </div>
 
@@ -228,7 +234,13 @@
                                                        {{ 'Debit:' | trans ({}, "account") }}
                                                    </label>
                                                    <div class="controls">
-                                                       <input type="text" value="{% if tran.tranAmount > 0 %}  --------------- {% else %} {{ -tran.tranAmount }}  {% endif %}" disabled="" >
+                                                       <input type="text"
+                                                       {% if tran.tranAmount < 0 %}
+                                                           value="{{ -tran.tranAmount }}"
+                                                         {% else %}
+                                                             value="---------------"
+                                                          {% endif %}
+                                                         disabled="" >
                                                    </div>
                                                </div>
 
@@ -246,7 +258,7 @@
                                                        {{ 'Balance:' | trans ({}, "account") }}
                                                    </label>
                                                    <div class="controls">
-                                                       <input type="text" value="{% set balance=tran.tranBalance+tran.tranAmount %}{{ balance }}" disabled="" >
+                                                       <input type="text" value=" {{ balance }}" disabled="" >
                                                    </div>
                                                </div>
 
@@ -258,6 +270,20 @@
                                                        <input type="text" value="{{ tran.User.username }}" disabled="" >
                                                    </div>
                                                </div>
+                                               {% if tran.Code is not null %}
+                                               <div class="control-group">
+                                                   <label class="control-label">
+                                                       {{ 'Item:' | trans ({}, "account") }}
+                                                   </label>
+                                                   <div class="controls">
+                                                       <input type="text"
+
+                                                                   value=" {{ tran.Code.Item.itemName }}"
+
+
+                                                              disabled="" >
+                                                   </div>
+                                               </div>
 
                                                <div class="control-group">
                                                    <label class="control-label">
@@ -265,16 +291,16 @@
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text"
-                                                       {% if tran.Code is not null %}
+
                                                               value=" {{ tran.Code.id }}"
-                                                       {% else %}
-                                                           value="-----------------"
-                                                       {% endif %}
+
+
 
                                                         disabled="" >
                                                    </div>
                                                </div>
 
+                                               {% endif %}
                                            </fieldset>
 
 

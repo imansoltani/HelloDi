@@ -237,7 +237,7 @@
                                                     {{ 'Balance' | trans ({}, "account") }}
                                                 </label>
                                                 <div class="controls">
-                                                    {% set balance=tran.tranBalance+tran.tranAmount %}
+
                                                     <input type="text" disabled="" value=" {{ balance }}">
                                                 </div>
                                             </div>
@@ -261,20 +261,31 @@
                                                 </div>
                                             </div>
 
+                                            {% if tran.Code is not null %}
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Item' | trans ({}, "account") }}
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">
+                                                </div>
+                                            </div>
+
                                             <div class="control-group">
                                                 <label class="control-label">
                                                     {{ 'Code' | trans ({}, "account") }}
                                                 </label>
                                                 <div class="controls">
                                                     <input type="text" disabled=""
-                                                           {% if tran.Code is not null %}
+
                                                            value="{{ tran.Code.id }}"
-                                                            {% else %}
-                                                                value="------------------"
-                                                            {% endif %}
+
                                                             >
                                                 </div>
                                             </div>
+
+                                            {% endif %}
 
                                         </fieldset>
 </span>
