@@ -98,6 +98,11 @@ class Transaction
      */
     private $Code;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\OrderCode", inversedBy="Transactions")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
+     */
+    private $Order;
 
     /**
      * Get id
@@ -510,5 +515,28 @@ class Transaction
     public function getTranBalance()
     {
         return $this->tranBalance;
+    }
+
+    /**
+     * Set Order
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\OrderCode $order
+     * @return Transaction
+     */
+    public function setOrder(\HelloDi\DiDistributorsBundle\Entity\OrderCode $order = null)
+    {
+        $this->Order = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Get Order
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\OrderCode 
+     */
+    public function getOrder()
+    {
+        return $this->Order;
     }
 }

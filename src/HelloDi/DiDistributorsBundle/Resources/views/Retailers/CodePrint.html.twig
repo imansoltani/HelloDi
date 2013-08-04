@@ -1,58 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Shop Code</title>
+    <title>Hello Di . Shop Code</title>
+
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        .item
+        {
+            width: 10cm;
+            margin: auto;
+        }
+        @media print
+        {
+            @page
+            {
+                margin: 0.5cm;
+            }
+            body>*
+            {
+                display: none !important;
+            }
+            .print
+            {
+                display: block !important;
+            }
+            .tab-content
+            {
+                page-break-after: always;
+            }
+        }
+    </style>
 </head>
 <body>
-<center>
-<div class="tablediv">
-    <div class="contenttitle">
-
-        <h3>
-            {% if codes[0].Item.itemType=='dmtu' %}
-                <a href="{{ path('Retailer_Shop_dmtu') }}">return to shop</a><br>
-            Mobile
-
-            {% elseif codes[0].Item.itemType=='empt' %}
-                <a href="#">return to shop</a><br>
-            e-payment
-
-            {% elseif codes[0].Item.itemType=='clcd' %}
-                <a href="{{ path('Retailer_Shop_callingCard') }}">return to shop</a><br>
-                calling card
-
-             {% else %}
-                <a href="{{ path('Retailer_Shop_favourite') }}">return to shop</a>
-                     {% if codes[0].Item.itemType=='dmtu' %}
-
-                     Mobile
-
-                   {% elseif codes[0].Item.itemType=='empt' %}
-                  e-payment
-
-                  {% elseif codes[0].Item.itemType=='clcd' %}
-                     calling card
-                 {% endif %}
-
-         {% endif %}
-        </h3>
-    </div>
-    {% for code in codes %}
-
-<div class="tab-content">
-
-{%  if description is not null %}
-    {{ include(template_from_string(description.descdesc),{"pin":code.pin, "serial":code.serialNumber}) }}
-{% else %}
-
-    SerialNumber:code.serialNumber<br><br>
-    Code Secret:code.pin<br><br>
-
-
+{% if print == 'web' %}
+<div class="printhidden" style="text-align: center;margin: 20px">
+    <a type="button" class="btn" href="javascript:window.print();">Print</a>
+    <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
+</div>
 {% endif %}
+<div class="print">
+    {% for tran in trans %}
 
-    </div>
-{% endfor %}
-<center>
+        <div class="item">
+            {% if duplicate %}<div style="text-align: center;">Duplicate Print Code</div>{% endif %}
+
+            {% if description is not null %}
+                {{ include(template_from_string(description.descdesc),{"pin":tran.Code.pin, "serial":tran.Code.serialNumber}) }}
+            {% else %}
+
+                SerialNumber:{{ tran.Code.serialNumber }}<br><br>
+                Code Secret:{{ tran.Code.pin }}<br><br>
+
+            {% endif %}
+
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>

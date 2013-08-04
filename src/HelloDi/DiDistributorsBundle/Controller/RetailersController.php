@@ -3,6 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\OrderCode;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserType;
@@ -644,109 +645,112 @@ $datetype=0;
 
     public function BuyAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
         $codeselector = $this->get('hello_di_di_distributors.codeselector');
 
-        if($request->isMethod('POST')){
+        $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+        $Account = $priceChild->getAccount();
+        $item = $priceChild->getItem();
 
-                $em = $this->getDoctrine()->getManager();
+        $codes = $codeselector->lookForAvailableCode($Account, $priceChild, $item, $request->get('numberOfsale'));
 
-               $user=$this->container->get('security.context')->getToken()->getUser();
+        $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=> $Account->getParent(),'Item' => $item));
+
+        $com = $priceChild->getprice() - $priceParent->getprice();
+
+        if ($codes) {
+            $ordercode = new OrderCode();
+            $em->persist($ordercode);
+            foreach ($codes as $code) {
+                $tranretailer = new Transaction();
+                $trandist = new Transaction();
+                //   for retailer
+                $tranretailer->setAccount($Account);
+                $tranretailer->setTranAmount(-($priceChild->getPrice()));
+                $tranretailer->setTranFees(0);
+                $tranretailer->setTranDescription('Code id is: ' . $code->getId());
+                $tranretailer->setTranCurrency($Account->getAccCurrency());
+                $tranretailer->setTranDate(new \DateTime('now'));
+                $tranretailer->setTranInsert(new \DateTime('now'));
+                $tranretailer->setCode($code);
+                $tranretailer->setTranAction('sale');
+                $tranretailer->setTranType(0);
+                $tranretailer->setUser($user);
+                $tranretailer->setTranBookingValue(null);
+                $tranretailer->setTranBalance($Account->getAccBalance());
+
+                $tranretailer->setOrder($ordercode);
+                $ordercode->addTransaction($tranretailer);
+
+                // For distributors
+                $trandist->setAccount($Account->getParent());
+                $trandist->setTranAmount($com);
+                $trandist->setTranFees(0);
+                $trandist->setTranDescription('Code id is: ' . $code->getId());
+                $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
+                $trandist->setTranDate(new \DateTime('now'));
+                $trandist->setTranInsert(new \DateTime('now'));
+                $trandist->setCode($code);
+                $trandist->setTranAction('com');
+                $trandist->setTranType(1);
+                $trandist->setUser($user);
+                $trandist->setTranBookingValue(null);
+                $trandist->setTranBalance($Account->getParent()->getAccBalance());
+                $em->persist($tranretailer);
+                $em->persist($trandist);
+
+                $trandist->setOrder($ordercode);
+                $ordercode->addTransaction($trandist);
+            }
+            $em->flush();
+
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item, 'desclang' => $user->getLanguage()));
+
+            $request->getSession()->set('descriptionid', $description->getId());
+            $request->getSession()->set('orderid', $ordercode->getId());
+            $request->getSession()->set('firstprintcode', true);
 
 
-                $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
-                $Account =$priceChild->getAccount();
-                $item= $priceChild->getItem();
-
-                $codes = $codeselector->lookForAvailableCode($Account,$priceChild,$item,$request->get('numberOfsale'));
-
-                $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')
-                    ->findOneBy(array(
-                        'Account' =>$Account->getParent(),
-                        'Item'=>$item,
-                    )
-                );
-
-                $com = $priceChild->getprice() - $priceParent->getprice();
-
-        if($codes)
-          {
-              foreach($codes as $code)
-                {
-                    $tranretailer = new Transaction();
-                    $trandist = new Transaction();
-                    //   for retailer
-                    $tranretailer->setAccount($Account);
-                    $tranretailer->setTranAmount(-($priceChild->getPrice()));
-                    $tranretailer->setTranFees(0);
-                    $tranretailer->setTranDescription('Code id is: '.$code->getId());
-                    $tranretailer->setTranCurrency($Account->getAccCurrency());
-                    $tranretailer->setTranDate(new \DateTime('now'));
-                    $tranretailer->setTranInsert(new \DateTime('now'));
-                    $tranretailer->setCode($code);
-                    $tranretailer->setTranAction('sale');
-                    $tranretailer->setTranType(0);
-                    $tranretailer->setUser($user);
-                    $tranretailer->setTranBookingValue(null);
-                    $tranretailer->setTranBalance($Account->getAccBalance());
-
-
-
-                    // For distributors
-                    $trandist->setAccount($Account->getParent());
-                    $trandist->setTranAmount($com);
-                    $trandist->setTranFees(0);
-                    $trandist->setTranDescription('Code id is: '.$code->getId());
-                    $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
-                    $trandist->setTranDate(new \DateTime('now'));
-                    $trandist->setTranInsert(new \DateTime('now'));
-                    $trandist->setCode($code);
-                    $trandist->setTranAction('com');
-                    $trandist->setTranType(1);
-                    $trandist->setUser($user);
-                    $trandist->setTranBookingValue(null);
-                    $trandist->setTranBalance($Account->getParent()->getAccBalance());
-                    $em->persist($tranretailer);
-                    $em->persist($trandist);
-
-                    $em->flush();
-
-                }
-     $description=$em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$user->getLanguage()));
-
-                $html= $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-                    'codes'=>$codes,
-
-                    'description'=>$description
-                ));
-              return new Response(
-                  $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-                  200,
-                  array(
-                      'Content-Type'          => 'application/pdf',
-                      'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
-                  )
-              );
-
+            return $this->redirect($this->generateUrl('Retailer_Shop_print'));
         }
 
+        return $this->redirect($this->getRequest()->headers->get('referer'));
 
-        }
+    }
 
- switch($item->getItemType())
-{
-    case 'dmtu':
-        return  $this->redirect($this->generateUrl('Retailer_Shop_dmtu'));
-    break;
-    case 'empt':
-         return  $this->redirect($this->generateUrl('Retailer_Shop_empt'));
-    break;
-    case 'clcd':
-        return  $this->redirect($this->generateUrl('Retailer_Shop_callingCard'));
-    break;
-}
+    public function PrintAction(Request $request,$print)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $descriptionid = $request->getSession()->get('descriptionid');
+        $orderid = $request->getSession()->get('orderid');
 
+        $duplicate = !$request->getSession()->has('firstprintcode');
+        $request->getSession()->remove('firstprintcard');
 
+        $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descriptionid);
+        $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$orderid,'tranAction'=>'sale'));
 
+        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+            'trans'=>$trans,
+            'description'=>$description,
+            'duplicate'=>$duplicate,
+            'print' => $print
+        ));
+
+        if($print == 'web')
+            return $html;
+        else
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                )
+            );
     }
 
     public function CallingCardAction() {
