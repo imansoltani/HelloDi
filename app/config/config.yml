@@ -57,7 +57,7 @@ doctrine:
         auto_mapping: true
         dql:
             string_functions:
-                GROUP_CONCAT: Test\MyBundle\Helper\GroupConcat
+                GROUP_CONCAT: HelloDi\DiDistributorsBundle\Helper\GroupConcat
 
 # Swiftmailer Configuration
 swiftmailer:

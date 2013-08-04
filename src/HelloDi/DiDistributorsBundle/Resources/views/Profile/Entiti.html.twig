@@ -1,0 +1,66 @@
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
+    <span class="link">Info</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>Entity Info</h3>
+    </div> <!-- /widget-header -->
+
+    <form style="margin-top: 20px" action="{{ path('MasterProfileEntiti') }}" method="post" class="form-horizontal" >
+        <fieldset>
+
+
+            <div class="control-group">
+                {{ form_label(edit_form.entName,'Name:') }}
+                {{ form_widget(edit_form.entName) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(edit_form.entVatNumber,'VatNumber:') }}
+                {{ form_widget(edit_form.entVatNumber) }}
+            </div>
+
+
+
+            <div class="control-group">
+                {{ form_label(edit_form.entTel1,'Tel1:') }}
+                {{ form_widget(edit_form.entTel1) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(edit_form.entTel2,'Tel2:') }}
+                {{ form_widget(edit_form.entTel2) }}
+            </div>
+
+
+
+            <div class="control-group">
+                {{ form_label(edit_form.entFax,'Fax:') }}
+                {{ form_widget(edit_form.entFax) }}
+            </div>
+
+            <div class="control-group">
+                {{ form_label(edit_form.entWebsite,'WebSite:') }}
+                {{ form_widget(edit_form.entWebsite) }}
+            </div>
+
+
+            {{ form_widget(edit_form._token) }}
+
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <button class="btn btn-primary" type="submit">{{'Entiti.Edit' | trans ({}, "entity")}}</button>
+
+            </div>
+        </fieldset>
+    </form>
+
+
+{% endblock %}

@@ -41,6 +41,9 @@ master_print:
 master_tickets:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/tickets.yml"
     prefix:   /tickets
+master_profile:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/profile.yml"
+    prefix:   /profile
 
 test_index:
     pattern:  /test

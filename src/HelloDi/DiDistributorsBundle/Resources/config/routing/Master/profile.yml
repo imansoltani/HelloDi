@@ -1,0 +1,7 @@
+MasterProfileEntiti:
+    pattern:  /entity
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Profile:Entiti"}
+
+MasterProfileAddress:
+    pattern:  /address/history
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Profile:Address" }
