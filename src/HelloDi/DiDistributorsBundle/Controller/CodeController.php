@@ -60,7 +60,7 @@ class CodeController extends Controller
         $pagination = $paginator->paginate(
             $qb,
             $request->get('page'),
-            10,
+            20,
             array('distinct' => false)
         );
         return $this->render('HelloDiDiDistributorsBundle:Code:index.html.twig', array(

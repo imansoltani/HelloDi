@@ -43,7 +43,7 @@ master_tickets:
     prefix:   /tickets
 master_profile:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/profile.yml"
-    prefix:   /profile
+    prefix:   /admin/profile
 
 test_index:
     pattern:  /test

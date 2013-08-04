@@ -63,6 +63,7 @@
     </li>
 
 
+    {% if is_granted('ROLE_MASTER_ADMIN') %}
     <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-wrench"></i>
@@ -70,14 +71,11 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            {% if is_granted('ROLE_MASTER_ADMIN') %}
             <li><a href="{{ path('MasterProfileEntiti') }}">Profile</a></li>
-            {% endif %}
-            {% if is_granted('ROLE_MASTER_ADMIN') %}
             <li><a href="{{ path('MasterStaff') }}">Staff</a></li>
-        {% endif %}
         </ul>
     </li>
+    {% endif %}
 
     <li class="{% if MU == 'ticket' %}active{% else %}dropdown{% endif %}">
         <a href="{{ path('MasterTickets') }}" >
