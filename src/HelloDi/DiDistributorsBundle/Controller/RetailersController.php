@@ -713,7 +713,6 @@ $datetype=0;
             $request->getSession()->set('orderid', $ordercode->getId());
             $request->getSession()->set('firstprintcode', true);
 
-
             return $this->redirect($this->generateUrl('Retailer_Shop_print'));
         }
 
