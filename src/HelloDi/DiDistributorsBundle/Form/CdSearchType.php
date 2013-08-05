@@ -46,7 +46,7 @@ class CdSearchType extends AbstractType
                 'label' => 'Code.Pin','translation_domain' => 'code
                 '))
             ->add('status','choice',array(
-                'choices'=> array('2' => 'Code.Sale.All' , '0'=>'Code.Sale.Sale', '1'=>'Code.Sale.NotSale'),
+                'choices'=> array('3' => 'Code.Sale.All' , '0'=>'Code.Sale.Sale', '1'=>'Code.Sale.NotSale', '2'=>'Code.Sale.DeadBeat'),
                 'label' => 'Code.Status','translation_domain' => 'code'
             ))
             ->add('insertdate','date',array(

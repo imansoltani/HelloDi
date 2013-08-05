@@ -30,7 +30,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="#" method="get" {{ form_enctype(form) }}>
+                    <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
                         <fieldset>
                             <div class="control-group">
                                 {{ form_label(form.provider) }}
@@ -117,16 +117,17 @@
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.pin }}</td>
                                         <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
-                                        <td>{% if code.status==1 %}Available{% else %}Not Available{% endif %}</td>
+                                        <td>{% if code.status==1 %}Available{% elseif code.status==0 %}Not Available{% else %}Removed{% endif %}</td>
                                         <td>{{ code.Input.Account.accName }}</td>
                                         <td>
                                             <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
                                             <br/>
-                                            {% if code.status==1 %}
-                                                <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">Dead Beat</a>
-                                            {% else %}
-                                                <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">Credit Note</a>
+                                            {% if code.status==0 %}
+                                                <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Credit Node the code?', '{{ path('code_creditnote',{'id':code.id}) }}')" class="btn_actions">Credit Note</a>
+                                            {% elseif code.status==1 %}
+                                                <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Dead Beat the code?', '{{ path('code_deadbeat',{'id':code.id}) }}')" class="btn_actions">Dead Beat</a>
                                             {% endif %}
+                                            <br/>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -138,8 +139,6 @@
                 <div class="navigation" style="text-align: center">
                     {{ knp_pagination_render(pagination) }}
                 </div>
-                <input type="button" value="Reload Page location.reload" onClick="window.location.reload(true)">
-                <input type="button" value="Reload Page history.go" onClick="history.go(0)">
                 <br/>
             </div>
         </div>

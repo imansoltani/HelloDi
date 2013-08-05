@@ -5,3 +5,11 @@ code:
 code_history:
     pattern:  /{id}/history
     defaults: { _controller: "HelloDiDiDistributorsBundle:Code:history" }
+
+code_deadbeat:
+    pattern:  /{id}/deadbeat
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Code:DeadBeat" }
+
+code_creditnote:
+    pattern:  /{id}/creditnote
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Code:CreditNote" }

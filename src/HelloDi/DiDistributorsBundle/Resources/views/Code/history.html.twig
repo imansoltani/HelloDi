@@ -25,6 +25,11 @@
 
             <div class="widget-content">
 
+                {% if code.status==0 %}
+                    <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Credit Node the code?', '{{ path('code_creditnote',{'id':code.id}) }}')" class="btn btn-danger">Credit Note</a><br/><br/>
+                {% elseif code.status==1 %}
+                    <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Dead Beat the code?', '{{ path('code_deadbeat',{'id':code.id}) }}')" class="btn btn-danger">Dead Beat</a><br/><br/>
+                {% endif %}
                 <div class="tablediv">
                     <div class="contenttitle">
                         <h4>Code Info</h4>

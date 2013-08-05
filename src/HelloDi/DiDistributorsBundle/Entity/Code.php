@@ -26,7 +26,7 @@ class Code
     private $pin;
 
     /** 
-     * @ORM\Column(type="boolean", nullable=false, name="status")
+     * @ORM\Column(type="smallint", nullable=false, name="status")
      */
     private $status;
 
@@ -113,7 +113,7 @@ class Code
     /**
      * Set status
      *
-     * @param boolean $status
+     * @param integer $status
      * @return Code
      */
     public function setStatus($status)
@@ -126,7 +126,7 @@ class Code
     /**
      * Get status
      *
-     * @return boolean 
+     * @return integer
      */
     public function getStatus()
     {
