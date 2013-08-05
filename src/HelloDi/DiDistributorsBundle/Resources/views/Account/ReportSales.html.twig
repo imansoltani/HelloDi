@@ -78,6 +78,7 @@
         </form>
 
     </div>
+
     <form action="#" method="POST">
         {{ form_rest(formprint) }}
 
@@ -135,12 +136,16 @@
 
                                 </script>
 
-
-
                                 |
                                 {{Account.accCurrency}}
                             </td>
-                            <td>Task</td>
+                            <td>{% if group==0 %}
+                                {%  set vat= -Tr.TR.tranAmount+(Tr.TR.tranAmount/(1+tax/100)) %}
+                                {{  vat | number_format(2) }}
+                        {% else %}
+                            ------
+                            {% endif %}
+                            </td>
 
                             <td class="td-actions" >
 
@@ -179,7 +184,7 @@
 
                                     {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}
 
-                                              {% set Buying=-Tr.TR.tranAmount-com %}
+                                       {% set Buying=-Tr.TR.tranAmount-com %}
                                             value="{{ Buying }}"
                                             disabled="" >
                                             </div>

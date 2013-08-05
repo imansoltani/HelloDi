@@ -120,7 +120,10 @@
                                             </td>
                                             <td>{{ Tr.Code.serialNumber }}</td>
                                             <td>{{ Tr.User.username }}</td>
-                                            <td>Vat</td>
+                                            <td>
+                                                {%  set vat= -Tr.tranAmount+(Tr.tranAmount/(1+tax/100)) %}
+                                                {{  vat | number_format(2) }}
+                                            </td>
 
                                         </tr>
 

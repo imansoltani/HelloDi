@@ -174,8 +174,16 @@
                         </i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#myModal0123" data-toggle="modal">
+                        <li><a
+                                {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
 
+                                    href="{{ path('DistTicketsNew') }}"
+
+                                {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+
+                                href="{{ path('RetailerTicketsNew') }}"
+                                {% endif %}
+                                                        >
                                 New Ticket
 
                             </a></li>

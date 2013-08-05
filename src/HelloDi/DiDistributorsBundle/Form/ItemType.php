@@ -22,7 +22,7 @@ class ItemType extends AbstractType
             ->add('itemName',null,array('label' => 'Item.Name','translation_domain' => 'item'))
             ->add('itemFaceValue',null,array('label' => 'Item.FaceValue','translation_domain' => 'item'))
             ->add('itemCurrency','choice',array('choices'=> array('USD'=>'USD','CHF' =>'CHF'),'label' => 'Item.Currency','translation_domain' => 'item'))
-            ->add('itemType','choice',array('choices'=> array('1'=>'Item.TypeChioce.Internet','0' =>'Item.TypeChioce.Mobile','2' =>'Item.TypeChioce.Tel'),'label' => 'Item.Type','translation_domain' => 'item'))
+            ->add('itemType','choice',array('choices'=> array('clcd'=>'calling card','dmtu' =>'Mobile','epmy' =>'e-payment'),'label' => 'Item.Type','translation_domain' => 'item'))
             ->add('alertMinStock',null,array('label' => 'Item.AlertMinStock','translation_domain' => 'item'))
             ->add('operator',null,array(
                 'property'=>'name',

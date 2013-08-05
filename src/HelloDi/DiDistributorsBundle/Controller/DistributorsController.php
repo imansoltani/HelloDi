@@ -201,31 +201,6 @@ class DistributorsController extends Controller
     }
 
 
-    public function  DetailsSaleAction($id)
-    {
-        $this->check_ChildTransaction($id);
-
-        $em=$this->getDoctrine()->getManager();
-
-        $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
-
-        $BuPrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-         'Account'=>$tran->getAccount()->getParent()
-        ,'Item'=>$tran->getCode()->getItem()));
-
-        $SePrice=$em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-            'Account'=>$tran->getAccount()
-           ,'Item'=>$tran->getCode()->getItem()));
-
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsReportSale.html.twig',
-            array(
-                'tran'=>$tran,
-                'BuPrice'=>$BuPrice->getPrice(),
-                'SePrice'=>$SePrice->getPrice()
-            ));
-
-    }
-
     public function  FundingAction($id)
     {
         $this->check_ChildAccount($id);
@@ -581,15 +556,16 @@ else
 
     public function DistNewRetailerAction(Request $request)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $Account = $user->getAccount();
+        $userdist = $this->getUser();
 
         $em = $this->getDoctrine()->getManager();
-        $user= $this->get('security.context')->getToken()->getUser();
-        $currency=$user->getAccount()->getAccCurrency();
+
         $user = new User();
+
         $AdrsDetai = new DetailHistory();
+
         $Entiti = new Entiti();
+
         $Account = new Account();
 
         $Account->setAccCreditLimit(0);
@@ -599,11 +575,12 @@ else
         $Account->setAccBalance(0);
 
 
-        $Account->setAccCurrency($currency);
-        $Account->setParent($user->getAccount());
+        $Account->setAccCurrency($userdist->getAccount()->getAccCurrency());
+        $Account->setParent($userdist->getAccount());
 
 
         $Account->setEntiti($Entiti);
+
         $Entiti->addAccount($Account);
 
         $user->setEntiti($Entiti);
@@ -612,7 +589,6 @@ else
 
 
         $user->setAccount($Account);
-        $user->setStatus(1);
 
 
         $form = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
@@ -621,12 +597,15 @@ else
 
             $form->handleRequest($request);
 
-            //if ($form->isValid()) {
+            if ($form->isValid()) {
 
             $em->persist($Entiti);
+
             $AdrsDetai->setCountry($Entiti->getCountry());
+
             $em->persist($Account);
             $em->persist($user);
+
             $AdrsDetai->setAdrsDate(new \DateTime('now'));
             $AdrsDetai->setEntiti($Entiti);
             $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
@@ -638,7 +617,7 @@ else
             $em->persist($AdrsDetai);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','this operation done success !');
-
+            }
             return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
 
 
@@ -799,7 +778,8 @@ else
             }
 
             if($data['TypeDate']==1)
-            {$typedate=1;
+            {
+                $typedate=1;
                 if($data['DateStart']!='')
                $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
@@ -836,23 +816,6 @@ else
             'typedate'=>$typedate
         ));
 
-
-    }
-
-    public function DetailsRetailerTransactionAction($tranid)
-    {
-        $this->check_ChildTransaction($tranid);
-
-        $em=$this->getDoctrine()->getManager();
-
-
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-        $Account = $Tran->getAccount();
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:RetailerDetailsTransaction.html.twig',
-            array(
-                'tran'=>$Tran,
-                'retailerAccount'=>$Account,
-            ));
 
     }
 
@@ -926,10 +889,11 @@ else
         }
 
         if($data['TypeDate']==1)
-        {$typedate=1;
-            if($data['DateStart']!='')
+        {
+            $typedate=1;
+        if($data['DateStart']!='')
            $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-            if($data['DateEnd']!='')
+        if($data['DateEnd']!='')
             $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
         }
@@ -964,23 +928,6 @@ else
 
 }
 
-
-    public function DetailsTransactionAction($id)
-    {
-        $this->check_Transaction($id);
-
-        $em=$this->getDoctrine()->getManager();
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:DetailsTransaction.html.twig',
-            array(
-                'tran'=>$Tran,
-
-            ));
-
-
-
-
-    }
 
 
 

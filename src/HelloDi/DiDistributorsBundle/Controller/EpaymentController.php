@@ -17,10 +17,6 @@ class EpaymentController extends Controller
 
 
 
-
-
-
-
     public function newAction(Request $request)
     {
         $ePaymentRoutes = new RoutesContainer($request);

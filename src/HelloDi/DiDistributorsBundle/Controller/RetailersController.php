@@ -235,20 +235,6 @@ $datetype=0;
 
     }
 
-
-    public function DetailsTransactionAction($id)
-    {
-        $this->check_Transaction($id);
-
-        $em=$this->getDoctrine()->getManager();
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:DetailsTransaction.html.twig',
-            array(
-                'tran'=>$Tran,
-            ));
-
-    }
-
     ////function Report/Sales
     public  function SaleAction(Request $req)
     {
@@ -450,6 +436,7 @@ $datetype=0;
         $em=$this->getDoctrine()->getEntityManager();
         $Tick=new Ticket();
         $TickNote=new TicketNote();
+
         $form=$this->createFormBuilder()
             ->add('Contact','choice',array(
                 'expanded'=>true,
@@ -459,7 +446,7 @@ $datetype=0;
             ->add('Subject','text')
             ->add('Type','choice',array(
                 'choices'=>array(
-                    0=>'Payment',
+                    0=>'Payment issue',
                     1=>'new item request',
                     2=>'price change request'
                 )
@@ -500,6 +487,7 @@ $datetype=0;
         return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig',array(
 
             'form'=>$form->createView(),
+            
             'User'=>$User,
             'Account'=>$User->getAccount()
         ));
@@ -539,9 +527,11 @@ $datetype=0;
 
         }
 
+        $noteslist=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array(
+            'Ticket'=>$ticket,
 
 
-        $noteslist=$em->getRepository('HelloDiDiDistributorsBundle:TicketNote')->findBy(array('Ticket'=>$ticket));
+        ));
 
 
 ///update vi
@@ -552,8 +542,6 @@ $datetype=0;
             ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
             ->andWhere('Note.view = 0')
             ->getQuery()->execute();
-
-
 
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNote.html.twig',array(

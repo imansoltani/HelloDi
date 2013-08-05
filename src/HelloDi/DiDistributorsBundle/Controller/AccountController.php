@@ -429,18 +429,7 @@ class AccountController extends Controller
 
     }
 
-    public function  DetailsTransactionAction($tranid)
-    {
 
-        $em = $this->getDoctrine()->getManager();
-        $Tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-        $Account = $Tran->getAccount();
-        return $this->render('HelloDiDiDistributorsBundle:Account:DistDetailsTransaction.html.twig',
-            array(
-                'Account' => $Account,
-                'tran' => $Tran,
-            ));
-    }
 
     public function  FundingAction($id)
     {
@@ -757,12 +746,12 @@ class AccountController extends Controller
 
 
         $formprint=$this->createFormBuilder()
-            ->add('obtion','choice',array('label'=>'obtion:',
+            ->add('option','choice',array('label'=>'option:',
 
                 'expanded'=>true,
                 'choices'=>array(
-                    0=>'retailer statement',
-                    1=>'retailer turnovec'
+                    0=>'retailer statements',
+                    1=>'retailer revenues'
                 )
             ))->getForm();
 
@@ -975,7 +964,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
                 }
             } else
-                $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept !');
+                $this->get('session')->getFlashBag()->add('error', 'more than zero is accept !');
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
@@ -1890,22 +1879,6 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 #kazem alan
 
 
-    public function MasterProvTransactionDetailsAction($tranid)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:ProvTransactionMasterDetails.html.twig',
-            array(
-                'Trans' => $tran,
-                'Account' => $tran->getAccount()
-            ));
-    }
-
 
     public function MasterProvTransactionDeleteAction($tranid)
     {
@@ -2435,21 +2408,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
     }
 
-    public function MasterDetailsRetailerTransactionAction($tranid)
-    {
-//        $this->check_ChildTransaction($tranid);
 
-        $em=$this->getDoctrine()->getManager();
-
-        $Tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
-        $AccountRetailer = $Tran->getAccount();
-        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerDetailsTransaction.html.twig',
-            array(
-                'tran'=>$Tran,
-                'retailerAccount'=>$AccountRetailer,
-            ));
-
-    }
 
 
     public function MasterRetailerSettingAction(Request $req, $id)

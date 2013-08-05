@@ -141,23 +141,7 @@
 
 
             {% set com=render(controller('HelloDiDiDistributorsBundle:Distributors:GetCom', { 'id':Tr.TR.id  }))   %}
-                                            {#{% set buyingpric=0 %}#}
-                                            {#{% for c in com %}#}
 
-                                                      {#{% if#}
-                                                      {#c.Code==Tr.TR.Code#}
-                                                      {#and#}
-                                                       {#c.User==Tr.TR.User#}
-                                                       {#and#}
-                                                      {#c.Account==Tr.TR.Account.Parent#}
-                                                      {#%}#}
-                                                     {#{% set buyingpric=-Tr.TR.tranAmount-c.tranAmount %}#}
-
-                                                      {#{% endif %}#}
-                                            {#{% endfor %}#}
-
-                                            {#{{ buyingpric }}#}
-                                            {#&#123;&#35;|{{ Tr.SaleCom }}&#35;&#125;#}
                                             <script type="text/javascript">
                                                 document.write(Math.abs({{Tr.TR.tranAmount+com}}));
                                             </script>
@@ -183,7 +167,13 @@
 
                                         </td>
 
-                                        <td>Taks</td>
+                                        <td>
+
+                                            {%  set vat= -Tr.TR.tranAmount+(Tr.TR.tranAmount/(1+tax/100)) %}
+                                            {{  vat | number_format(2) }}
+
+
+                                        </td>
 
 
                                     </tr>

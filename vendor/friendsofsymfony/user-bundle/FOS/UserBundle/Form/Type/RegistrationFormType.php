@@ -43,8 +43,7 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('enabled', 'choice',
                 array(
-
-                    'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
+                 'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
                 'choices' =>
                 array(
                     0 => 'Disabled',
@@ -52,7 +51,7 @@ class RegistrationFormType extends AbstractType
 
                 )
 
-                ,'data'=>''
+
 
 
                 ));

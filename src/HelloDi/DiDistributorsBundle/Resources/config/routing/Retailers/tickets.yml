@@ -1,17 +1,17 @@
 RetailerTickets:
-    pattern:  /tickets
+    pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:tickets }
 
 RetailerTicketsNote:
-    pattern:  /tickets/{id}/notes
+    pattern:  /{id}/notes
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnote }
 
 RetailerTicketsClose:
-    pattern:  /tickets/{id}/close
+    pattern:  /{id}/close
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclose }
 
 RetailerTicketsNew:
-    pattern:  /tickets/new
+    pattern:  /new
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew }
 
 RetailerTicketsChangeStatus:

@@ -124,31 +124,6 @@
         <div class="widget-header">
             <h3>Create User</h3>
         </div>
-
-        <div class="control-group username">
-            {{ form_label(form_Relaited_New.users[0].username) }}
-            {{ form_widget(form_Relaited_New.users[0].username) }}
-            {{ form_errors(form_Relaited_New.users[0].username) }}
-        </div>
-
-        <div class="control-group email">
-            {{ form_label(form_Relaited_New.users[0].email) }}
-            {{ form_widget(form_Relaited_New.users[0].email) }}
-            {{ form_errors(form_Relaited_New.users[0].email) }}
-        </div>
-
-        <div class="control-group plainPassword1">
-            {{ form_label(form_Relaited_New.users[0].plainPassword.first) }}
-            {{ form_widget(form_Relaited_New.users[0].plainPassword.first) }}
-            {{ form_errors(form_Relaited_New.users[0].plainPassword.first) }}
-        </div>
-
-        <div class="control-group plainPassword2">
-            {{ form_label(form_Relaited_New.users[0].plainPassword.second) }}
-            {{ form_widget(form_Relaited_New.users[0].plainPassword.second) }}
-            {{ form_errors(form_Relaited_New.users[0].plainPassword.second) }}
-        </div>
-
         <div class="control-group firstname">
             {{ form_label(form_Relaited_New.users[0].firstname) }}
             {{ form_widget(form_Relaited_New.users[0].firstname) }}
@@ -192,6 +167,34 @@
             {{ form_errors(form_Relaited_New.users[0].roles[0]) }}
         </div>
 
+
+
+        <div class="control-group username">
+            {{ form_label(form_Relaited_New.users[0].username) }}
+            {{ form_widget(form_Relaited_New.users[0].username) }}
+            {{ form_errors(form_Relaited_New.users[0].username) }}
+        </div>
+
+        <div class="control-group email">
+            {{ form_label(form_Relaited_New.users[0].email) }}
+            {{ form_widget(form_Relaited_New.users[0].email) }}
+            {{ form_errors(form_Relaited_New.users[0].email) }}
+        </div>
+
+        <div class="control-group plainPassword1">
+            {{ form_label(form_Relaited_New.users[0].plainPassword.first) }}
+            {{ form_widget(form_Relaited_New.users[0].plainPassword.first) }}
+            {{ form_errors(form_Relaited_New.users[0].plainPassword.first) }}
+        </div>
+
+        <div class="control-group plainPassword2">
+            {{ form_label(form_Relaited_New.users[0].plainPassword.second) }}
+            {{ form_widget(form_Relaited_New.users[0].plainPassword.second) }}
+            {{ form_errors(form_Relaited_New.users[0].plainPassword.second) }}
+        </div>
+
+
+        {{ form_widget(form_Relaited_New._token) }}
 
 
 

@@ -74,7 +74,14 @@
     <div class="control-group">
         <label class="control-label" >TimeZone</label>
         <div class="controls">
-            <input type="text" disabled class="input-large" value="{{ Account.accTimeZone }}" >
+            <input type="text" disabled class="input-large"
+
+                   {% if Account.accTimeZone is not null %}
+                   value="{{ Account.accTimeZone }}"
+            {% else %}
+                value="--------"
+            {% endif %}
+                    >
         </div>
     </div>
 
