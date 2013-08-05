@@ -17,36 +17,37 @@
     </div> <!-- /widget-header -->
 
     <div class="tab-content">
-        <form name="addprice" action="#" method="post" class="attr form-horizontal">
+        <form id="addprice" action="#" method="post" class="form-horizontal">
 
-
-
-
-            <div class="Fields" >
-                <div class="control-group">
-                    {{ form_label(form.Item) }}
-                    <div class="controls money">
-                        {{ form_widget(form.Item) }} <span class="icon-certificate"></span>
-                    </div>
-                    {{ form_errors(form.Item) }}
+            <div class="control-group">
+                {{ form_label(form.Item) }}
+                <div class="controls money">
+                    {{ form_widget(form.Item) }} <span class="icon-certificate"></span>
                 </div>
-
-                <div class="control-group price">
-                    {{ form_label(form.price) }}
-                    <div class="controls money" >{{ form_widget(form.price) }} | {{ Account.accCurrency }} <span class="icon-certificate"></span> </div>
-                    {{ form_errors(form.price) }}
-                </div>
-
-                {{form_widget(form._token)}}
+                {{ form_errors(form.Item) }}
             </div>
 
-            <div class="form-actions" style="margin-bottom: 0" >
-                <input onclick="AlertShow('hi','attr',event)" class="btn btn-primary btn-medium" type="submit" value="Add" >
-                <a class="btn" onclick="GoWhere()"  >Back</a>
-                <script type="text/javascript">
-                    function GoWhere()
-                    {
+            <div class="control-group price">
+                {{ form_label(form.price) }}
+                <div class="controls money" >{{ form_widget(form.price) }} | {{ Account.accCurrency }} <span class="icon-certificate"></span> </div>
+                {{ form_errors(form.price) }}
+            </div>
 
+            {{form_widget(form._token)}}
+
+            <div class="form-actions" style="margin-bottom: 0" >
+                <a class="btn btn-primary btn-medium" onclick="GoWhere(0)"  >Add</a>
+                <a class="btn" onclick="GoWhere(1)"  >Back</a>
+                <script type="text/javascript">
+                    function GoWhere(x)
+                    {
+                        if(x == 1)
+                            $('form#Item').submit();
+                        else
+                        {
+                            if(CheckData('.price input'))
+                                $('#addprice').submit();
+                        }
                     }
                 </script>
             </div>

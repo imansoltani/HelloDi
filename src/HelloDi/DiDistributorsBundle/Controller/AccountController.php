@@ -1742,9 +1742,12 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $code->setInput($input);
             $em->persist($code);
 
+            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$Item,'Account'=>$Account))->getPrice();
+
             $transaction = new Transaction();
             $transaction->setCode($code);
             $transaction->setAccount($Account);
+            $transaction->setTranAmount($price);
             $transaction->setUser($user);
             $transaction->setTranDate(new \DateTime('now'));
             $transaction->setTranInsert(new \DateTime('now'));
@@ -1752,6 +1755,9 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $transaction->setTranCurrency($Account->getAccCurrency());
             $transaction->setTranFees(0);
             $transaction->setTranType(1);
+            $transaction->setTranBookingValue(null);
+            $transaction->setTranBalance($Account->getAccBalance());
+            $transaction->setTranDescription('add new code with serial '.$code->getSerialNumber().' to system.');
             $em->persist($transaction);
 
         }

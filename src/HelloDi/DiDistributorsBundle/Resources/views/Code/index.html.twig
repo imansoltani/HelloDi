@@ -30,7 +30,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
+                    <form class="form-horizontal SearchForm" action="#" method="get" {{ form_enctype(form) }}>
                         <fieldset>
                             <div class="control-group">
                                 {{ form_label(form.provider) }}
@@ -96,13 +96,11 @@
                     <div class="contenttitle">
                         <h4>Codes (Quantity: {{ count }})</h4>
                     </div>
-                    <form>
                         <div class="tab-content">
                             <table style="margin-top: 20px"
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th><input type="checkbox"/></th>
                                     <th>Item Name</th>
                                     <th>serialNumber</th>
                                     <th>PinCode</th>
@@ -115,7 +113,6 @@
                                 <tbody>
                                 {% for code in pagination %}
                                     <tr>
-                                        <td><input type="checkbox"/></td>
                                         <td>{{ code.Item.itemName }}</td>
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.pin }}</td>
@@ -124,6 +121,12 @@
                                         <td>{{ code.Input.Account.accName }}</td>
                                         <td>
                                             <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
+                                            <br/>
+                                            {% if code.status==1 %}
+                                                <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">Dead Beat</a>
+                                            {% else %}
+                                                <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">Credit Note</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -131,15 +134,13 @@
                             </table>
 
                         </div>
-                    </form>
                 </div>
                 <div class="navigation" style="text-align: center">
                     {{ knp_pagination_render(pagination) }}
                 </div>
-                <div class="form-actions" style="margin-bottom: 0">
-                    <a href="#" class="btn btn-warning">Credit Note</a>
-                    <a href="#" class="btn btn-danger">Dead Beat</a>
-                </div>
+                <input type="button" value="Reload Page location.reload" onClick="window.location.reload(true)">
+                <input type="button" value="Reload Page history.go" onClick="history.go(0)">
+                <br/>
             </div>
         </div>
     </div>
