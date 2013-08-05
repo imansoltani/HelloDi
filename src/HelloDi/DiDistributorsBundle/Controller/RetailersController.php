@@ -57,6 +57,7 @@ class RetailersController extends Controller
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
+
         return $this->render('HelloDiDiDistributorsBundle:Retailers:RetailerProfile.html.twig', array('Account' => $Account, 'Entiti' => $Account->getEntiti(), 'User' => $user));
     }
 
@@ -245,7 +246,7 @@ $datetype=0;
         //load first list search
 
 
-
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
 
 
         $form=$this->createFormBuilder()
@@ -344,6 +345,8 @@ $datetype=0;
             10/*limit per page*/
         );
 
+
+
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ReportSales.html.twig',
 
             array(
@@ -351,7 +354,9 @@ $datetype=0;
             'form'=>$form->createView(),
              'User'=>$User,
             'Account' =>$User->getAccount(),
-            'Entiti' =>$User->getEntiti()));
+            'Entiti' =>$User->getEntiti(),
+            'tax'=>$tax->getTax()
+            ));
 
     }
 
@@ -429,7 +434,7 @@ $datetype=0;
     }
 
 
-    public  function ticketsnewAction(Request $req)
+    public  function ticketsnewAction(Request $req,$data=null)
     {
         $User=$this->get('security.context')->getToken()->getUser();
 
@@ -437,7 +442,7 @@ $datetype=0;
         $Tick=new Ticket();
         $TickNote=new TicketNote();
 
-        $form=$this->createFormBuilder()
+        $form=$this->createFormBuilder(array('Type'=>$data))
             ->add('Contact','choice',array(
                 'expanded'=>true,
                 'multiple'=>false,
@@ -448,7 +453,9 @@ $datetype=0;
                 'choices'=>array(
                     0=>'Payment issue',
                     1=>'new item request',
-                    2=>'price change request'
+                    2=>'price change request',
+                    3=>'address change',
+                    4=>'account change'
                 )
             ))
             ->add('Description','textarea',array('required'=>true))
@@ -487,7 +494,6 @@ $datetype=0;
         return $this->render('HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig',array(
 
             'form'=>$form->createView(),
-            
             'User'=>$User,
             'Account'=>$User->getAccount()
         ));
@@ -764,6 +770,33 @@ $datetype=0;
         ));
 
     }
+
+    public function EpaymentAction() {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+            ->from('HelloDiDiDistributorsBundle:Operator','O')
+            ->innerJoin('O.Item','OI')
+            ->innerJoin('OI.Prices','OIP')
+            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('epmt')))
+            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
+            ->andwhere('OIP.priceStatus = 1');
+        $qb=$qb->getQuery();
+        $qb=$qb->getResult();
+
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:E-payment.html.twig',array
+        (
+            'Operators'=>$qb,
+            'Account'=>$Account,
+        ));
+
+    }
+
+
 
     public  function FavouritesAction(Request $request ){
 

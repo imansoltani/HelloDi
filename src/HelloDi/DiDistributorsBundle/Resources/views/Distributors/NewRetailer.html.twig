@@ -7,11 +7,12 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label">
-                Name(Company)
-            </label>
-            {{ form_widget(form_Relaited_New.entName) }}
             {{ form_errors(form_Relaited_New.entName) }}
+            {{ form_label(form_Relaited_New.entName,'Name(Company):') }}
+            <div class="controls money">
+                {{ form_widget(form_Relaited_New.entName) }}
+                <span class="icon-certificate"></span>
+              </div>
         </div>
         <div class="control-group entVatNumber">
             {{ form_label(form_Relaited_New.entVatNumber) }}
@@ -25,15 +26,18 @@
         <div class="control-group Country">
 
             {{ form_label(form_Relaited_New.Country) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form_Relaited_New.Country) }}
+                <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form_Relaited_New.Country) }}
         </div>
 
         <div class="control-group">
             {{ form_label(form_Relaited_New.entCity) }}
+
             {{ form_widget(form_Relaited_New.entCity) }}
+
             {{ form_errors(form_Relaited_New.entCity) }}
         </div>
 

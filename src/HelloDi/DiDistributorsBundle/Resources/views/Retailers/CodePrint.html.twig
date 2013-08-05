@@ -45,7 +45,7 @@
 <div class="printhidden" style="text-align: center;margin: 20px">
     <a type="button" class="btn" href="javascript:window.print();">Print</a>
     <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
-    <a type="button" class="btn" href="javascript:history.back()">Back</a>
+    <a type="button" class="btn" href="javascript:history.go(-1)">Back</a>
 </div>
 {% endif %}
 <div class="print">
@@ -55,7 +55,7 @@
             {% if duplicate %}<div style="text-align: center;">Duplicate Print Code</div>{% endif %}
 
             {% if description is not null %}
-                {{ include(template_from_string(description.descdesc),{"pin":tran.Code.pin, "serial":tran.Code.serialNumber}) }}
+                {{ include(template_from_string(description.descdesc),{"pin":tran.Code.pin, "serial":tran.Code.serialNumber , "expire":tran.Code.Input.dateExpiry|date('Y/m/d') }) }}
             {% else %}
 
                 SerialNumber:{{ tran.Code.serialNumber }}<br><br>

@@ -2,26 +2,25 @@
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
-/**
+/** 
  * @ORM\Entity
- * @ORM\Table(name="setting")
+ * @ORM\Table(name="Setting")
  */
 class Setting
 {
-    /**
+    /** 
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false, name="Order_id")
+    /** 
+     * @ORM\Column(type="decimal", nullable=false, name="tax")
      */
-    private $orderId;
+    private $tax;
 
-
-    /**
+     /**
      * Get id
      *
      * @return integer 
@@ -32,25 +31,27 @@ class Setting
     }
 
     /**
-     * Set orderId
+     * Set tax
      *
-     * @param integer $orderId
-     * @return Setting
+     * @param float $tax
+     * @return Tax
      */
-    public function setOrderId($orderId)
+    public function setTax($tax)
     {
-        $this->orderId = $orderId;
+        $this->tax = $tax;
     
         return $this;
     }
 
     /**
-     * Get orderId
+     * Get tax
      *
-     * @return integer 
+     * @return float 
      */
-    public function getOrderId()
+    public function getTax()
     {
-        return $this->orderId;
+        return $this->tax;
     }
+
+
 }

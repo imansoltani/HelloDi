@@ -46,21 +46,21 @@
                     <div class="control-group ">
                         {{ form_label(formapplay.Communications ) }}
                         <div class="controls">
-                            {{ form_widget(formapplay.Communications )  }}
+                            {{ form_widget(formapplay.Communications )  }} <span class="icon-certificate"></span>
                         </div>
                     </div>
 
                     <div class="control-group ">
                         {{ form_label(formapplay.Description ) }}
                         <div class="controls">
-                            {{ form_widget(formapplay.Description )  }}
+                            {{ form_widget(formapplay.Description )  }} <span class="icon-certificate"></span>
                         </div>
                     </div>
 
 
                     <div class="form-actions" style="margin-bottom: 0" >
                         <button class="btn btn-primary" type="submit">Transfer</button>
-                        <a href="{{path('Retailer_Transaction',{'id':retailerAccount.id})  }}" class='btn'>Cancel</a>
+                        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                     </div>
 
 
@@ -114,7 +114,7 @@
 
                     <div class="form-actions" style="margin-bottom: 0" >
                         <button class="btn btn-primary" type="submit">Update</button>
-                        <a href="{{path('Retailer_Transaction',{'id':retailerAccount.id})  }}" class='btn'>Cancel</a>
+                        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                     </div>
 
 

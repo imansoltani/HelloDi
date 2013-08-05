@@ -46,7 +46,7 @@ class DistributorsController extends Controller
         $User= $this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
         $em=$this->getDoctrine()->getEntityManager();
-
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
 
 
         $qb=array();
@@ -174,7 +174,9 @@ class DistributorsController extends Controller
                 'User'=>$User,
                 'Account' =>$User->getAccount(),
                 'Entiti' =>$User->getEntiti(),
-                'com'=>$com
+                'com'=>$com,
+                'tax'=>$tax->getTax()
+
     ));
 
     }
@@ -394,8 +396,7 @@ else
     public function DistStaffAction()
     {
         $em=$this->getDoctrine()->getEntityManager();
-        $user= $this->get('security.context')->getToken()->getUser();
-
+        $user= $this->getUser();
          $Account=$user->getAccount();
 
         $users =$em->createQueryBuilder()
@@ -410,7 +411,8 @@ else
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig',
             array(
                 'Entiti' => $Account->getEntiti(),
-                'Users' => $users));
+                'Users' => $users
+            ));
     }
 
     public function DistStaffAddAction(Request $request)
@@ -964,7 +966,7 @@ else
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $entity = $Account->getEntiti();
-
+        $detahis=new DetailHistory();
         $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
 
         if($req->isMethod('post'))
@@ -972,7 +974,20 @@ else
          $editForm->handleRequest($req);
          if($editForm->isValid())
          {
+
+             $detahis->setAdrs1($entity->getEntAdrs1());
+             $detahis->setAdrs2($entity->getEntAdrs2());
+             $detahis->setAdrs3($entity->getEntAdrs3());
+             $detahis->setAdrsCity($entity->getEntCity());
+             $detahis->setAdrsNp($entity->getEntNp());
+             $detahis->setCountry($entity->getCountry());
+             $detahis->setAdrsDate(new \DateTime('now'));
+             $detahis->setEntiti($entity);
+
+             $em->persist($detahis);
              $em->flush();
+
+
              $this->get('session')->getFlashBag()->add('success','this operation done success !');
          }
         }
@@ -1391,7 +1406,7 @@ else
 
 
 
-    public  function  tickestnewAction(Request $req)
+    public  function  tickestnewAction(Request $req,$data)
     {
 
         $em=$this->getDoctrine()->getEntityManager();
@@ -1399,14 +1414,15 @@ else
         $User=$this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
 
-        $form=$this->createFormBuilder()
+        $form=$this->createFormBuilder(array('Type'=>$data))
             ->add('Subject','text',array('label'=>'Subject:'))
             ->add('Type','choice',array('label'=>'Type:',
                 'choices'=>array(
-                    5=>'All',
                     0=>'Payment issue',
                     1=>'new item request',
-                    2=>'price change request'
+                    2=>'price change request',
+                    3=>'address change',
+                    4=>'account change'
                 )
 
             ))

@@ -33,9 +33,11 @@
 
                 <div class="control-group">
                     {{ form_label(form.firstname) }}
-
+                    <div class="controls money">
                     {{ form_widget(form.firstname) }}
+                    <span class="icon-certificate"></span>
                 </div>
+                    </div>
 
                 <div class="control-group">
                     {{ form_label(form.lastname) }}
@@ -44,8 +46,9 @@
                 </div>
                 <div class="control-group">
                     {{ form_label(form.username) }}
-
-                    {{ form_widget(form.username) }}
+                    <div class="controls money">
+                    {{ form_widget(form.username) }} <span class="icon-certificate"></span>
+                        </div>
                 </div>
 
                 <div class="control-group">
@@ -63,27 +66,35 @@
                 <div class="control-group">
 
                     {{ form_label(form.plainPassword.first) }}
+                    <div class="controls money">
                     {{ form_widget(form.plainPassword.first) }}
+                        <span class="icon-certificate"></span>
+                        </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.plainPassword.second) }}
-
+                    <div class="controls money">
                     {{ form_widget(form.plainPassword.second) }}
+                        <span class="icon-certificate"></span>
+                      </div>
                 </div>
 
                 <div class="control-group">
 
                     {{ form_label(form.language) }}
-                    <div class="controls">
+                    <div class="controls money">
                         {{ form_widget(form.language) }}
+                        <span class="icon-certificate">
+
+                        </span>
                     </div>
                 </div>
                 <div class="control-group">
                     {{ form_errors(form.enabled) }}
                     {{ form_label(form.enabled) }}
-                    <div class="controls">
-                        {{ form_widget(form.enabled) }}
+                    <div class="controls money">
+                        {{ form_widget(form.enabled) }} <span class="icon-certificate"></span>
                     </div>
                 </div>
 
@@ -91,8 +102,8 @@
                 <div class="control-group">
                     {{ form_errors(form.roles[0]) }}
                     {{ form_label(form.roles[0]) }}
-                    <div class="controls">
-                        {{ form_widget(form.roles[0]) }}
+                    <div class="controls money">
+                        {{ form_widget(form.roles[0]) }} <span class="icon-certificate"></span>
                     </div>
                 </div>
 
@@ -102,7 +113,7 @@
 
                 <div class="form-actions" style="margin-bottom: 0" >
                     <input class="btn btn-primary" type="submit"  value="Create">
-                    <a href="{{ path('RetailerStaff') }}" class="btn">Cancel</a>
+                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                 </div>
 
             </form>
