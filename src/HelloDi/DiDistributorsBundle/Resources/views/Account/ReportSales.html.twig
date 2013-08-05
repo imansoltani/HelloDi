@@ -177,20 +177,10 @@
                                             <div class="controls">
                                                 <input type="text"
 
-                                                {% for c in com %}
-                                                    {% if
-                                                      c.Code==Tr.TR.Code
-                                                    and
-                                                      c.User==Tr.TR.User
-                                                    and
-                                                      c.Account==Tr.TR.Account.Parent
-                                                    and
-                                                     c.tranDate==Tr.TR.tranDate
-                                                    %}
-                                                   value="{{ -Tr.TR.tranAmount-c.tranAmount }}"
-                                                     {% endif %}
-                                                 {% endfor %}
+                                    {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}
 
+                                              {% set Buying=-Tr.TR.tranAmount-com %}
+                                            value="{{ Buying }}"
                                             disabled="" >
                                             </div>
                                         </div>
@@ -202,6 +192,16 @@
                                             <div class="controls">
 
                                                 <input type="text" value="{{ -Tr.TR.tranAmount}}" disabled="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                {{ 'Benefit' | trans ({}, "account") }}
+                                            </label>
+                                            <div class="controls">
+
+                                                <input type="text" value="{{ com }}" disabled="" >
                                             </div>
                                         </div>
 

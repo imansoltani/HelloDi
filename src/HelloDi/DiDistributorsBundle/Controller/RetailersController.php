@@ -718,14 +718,15 @@ $datetype=0;
 
                     'description'=>$description
                 ));
-              return new Response(
-                  $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-                  200,
-                  array(
-                      'Content-Type'          => 'application/pdf',
-                      'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
-                  )
-              );
+              return $html;
+//              new Response(
+//                  $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+//                  200,
+//                  array(
+//                      'Content-Type'          => 'application/pdf',
+//                      'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+//                  )
+//              );
 
         }
 

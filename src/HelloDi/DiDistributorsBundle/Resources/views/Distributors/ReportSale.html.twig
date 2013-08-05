@@ -130,39 +130,44 @@
 
                                 {% for Tr in pagination %}
                                     <tr>
-                                        <td>{{ Tr.id}}</td>
-                                        <td>{{ Tr.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                        <td>{{ Tr.TR.id}}</td>
+                                        <td>{{ Tr.TR.tranInsert|date('Y-m-d H:i:s') }}</td>
                                         <td>
-                                            {{ Tr.Code.Item.itemName}}
+                                            {{ Tr.TR.Code.Item.itemName}}
 
                                         </td>
 
                                         <td>
 
-                                            {% set buyingpric=0 %}
-                                            {% for c in com %}
 
-                                                      {% if
-                                                      c.Code==Tr.Code
-                                                      and
-                                                       c.User==Tr.User
-                                                       and
-                                                      c.Account==Tr.Account.Parent
-                                                      %}
-                                                     {% set buyingpric=-Tr.tranAmount-c.tranAmount %}
+            {% set com=render(controller('HelloDiDiDistributorsBundle:Distributors:GetCom', { 'id':Tr.TR.id  }))   %}
+                                            {#{% set buyingpric=0 %}#}
+                                            {#{% for c in com %}#}
 
-                                                      {% endif %}
-                                            {% endfor %}
+                                                      {#{% if#}
+                                                      {#c.Code==Tr.TR.Code#}
+                                                      {#and#}
+                                                       {#c.User==Tr.TR.User#}
+                                                       {#and#}
+                                                      {#c.Account==Tr.TR.Account.Parent#}
+                                                      {#%}#}
+                                                     {#{% set buyingpric=-Tr.TR.tranAmount-c.tranAmount %}#}
 
-                                            {{ buyingpric }}
+                                                      {#{% endif %}#}
+                                            {#{% endfor %}#}
 
+                                            {#{{ buyingpric }}#}
+                                            {#&#123;&#35;|{{ Tr.SaleCom }}&#35;&#125;#}
+                                            <script type="text/javascript">
+                                                document.write(Math.abs({{Tr.TR.tranAmount+com}}));
+                                            </script>
                                         </td>
 
                                         <td>
 
 
                                             <script type="text/javascript">
-                                                document.write(Math.abs({{Tr.tranAmount }}));
+                                                document.write(Math.abs({{Tr.TR.tranAmount }}));
                                             </script>
 
 
@@ -170,11 +175,11 @@
                                         </td>
 
 
-                                        <td>{{ Tr.User.username }}</td>
+                                        <td>{{ Tr.TR.User.username }}</td>
 
                                         <td>
 
-                                            {{ -Tr.tranAmount-buyingpric }}
+                                            {{ com }}
 
                                         </td>
 

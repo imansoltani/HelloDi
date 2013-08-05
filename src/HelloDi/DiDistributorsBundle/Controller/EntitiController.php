@@ -10,6 +10,7 @@ use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditAddressEntitiType;
+use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiMasterType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiesSearchType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
@@ -420,4 +421,9 @@ public function  EditUserEntitiesAction(Request $request,$userid)
             'entity' => $entity,
         ));
     }
+
+
+
+
+
 }

@@ -110,7 +110,7 @@ class DistributorsController extends Controller
 
             $qb=$em->createQueryBuilder();
 
-            $qb->select('Tr')
+            $qb->select('Tr as TR','GROUP_CONCAT(Tr.tranAmount) as SaleCom')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
                 ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt');
@@ -119,7 +119,7 @@ class DistributorsController extends Controller
                 $qb->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
                 if($data['DateStart']!='')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                elseif($data['DateEnd']!='')
+                if($data['DateEnd']!='')
                  $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
              if($data['Account'])
@@ -145,7 +145,7 @@ class DistributorsController extends Controller
             if($data['ItemName'])
                 $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
 
-
+            $qb->addGroupBy('Tr.Code')->addGroupBy('Tr.tranDate');
        $qb->orderBy('Tr.tranInsert','desc');
 
             $qb=$qb->getQuery();
@@ -176,6 +176,27 @@ class DistributorsController extends Controller
                 'Entiti' =>$User->getEntiti(),
                 'com'=>$com
     ));
+
+    }
+
+
+    public function GetComAction($id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+
+        $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array(
+         'Account'=>$tran->getAccount()->getParent(),
+         'Code'=>$tran->getCode(),
+         'User'=>$tran->getUser(),
+          'tranAction'=>'com',
+         'tranDate'=>$tran->getTranDate(),
+         'tranCurrency'=>$tran->getTranCurrency()
+        ));
+
+        return new Response($com->getTranAmount());
 
     }
 
