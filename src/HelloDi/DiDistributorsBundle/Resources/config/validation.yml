@@ -38,7 +38,7 @@ HelloDi\DiDistributorsBundle\Entity\Account:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: accName
-            message: 'fos_user.accName.already_used'
+            message: 'this name already used'
 
 
 

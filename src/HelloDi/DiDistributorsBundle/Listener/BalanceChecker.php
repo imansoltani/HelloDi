@@ -16,9 +16,14 @@ class BalanceChecker
     {
 
         if ($this->currenciesMatch($account->getAccCurrency(), $price->getPriceCurrency())) {
-            return  ($account->getAccBalance() + $account->getAccCreditLimit() >= ($price->getPrice()*$count));
-        } else {
-            throw new \Exception('The Currencies are NOT matched!');
+            if  ($account->getAccBalance() + $account->getAccCreditLimit() >= ($price->getPrice()*$count))
+                return true;
+        }
+
+        else
+        {
+            $this->session->getFlashBag()->add('error','The Currencies are NOT matched!');
+            return false;
         }
     }
 
@@ -28,7 +33,7 @@ class BalanceChecker
         if ($account->getAccBalance() >= $value  ) {
             return true;
         } else {
-            $this->session->getFlashBag()->add('error','this operation done with error!');
+            $this->session->getFlashBag()->add('error','balance is not enough!');
             return false;
         }
     }
@@ -39,7 +44,12 @@ class BalanceChecker
    {
        if(($account->getAccBalance()-$value)>=$account->getAccCreditLimit())
            return true;
-       $this->session->getFlashBag()->add('error','this operation done with error!');
+       else{
+
+           $this->session->getFlashBag()->add('error','balance less than credit limit !');
+           return false;
+       }
+
 
    }
 
@@ -47,7 +57,12 @@ class BalanceChecker
     {
         if(($account->getAccCreditLimit()-$value)>=0)
             return true;
-        $this->session->getFlashBag()->add('error','this operation done with error!');
+        else
+        {
+            $this->session->getFlashBag()->add('error','CreditLimit must be positive!');
+            return false;
+        }
+
 
     }
 

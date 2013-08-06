@@ -306,7 +306,7 @@ class DistributorsController extends Controller
 
             }
 else
-    $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+    $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
 
         }
 
@@ -379,7 +379,7 @@ if($data['Amount']>0)
 
 }
 else
-    $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+    $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
 
 }
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
