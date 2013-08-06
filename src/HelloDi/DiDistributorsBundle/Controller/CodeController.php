@@ -18,12 +18,17 @@ class CodeController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $qb = $em->createQueryBuilder()
-            ->select('code')
-            ->from('HelloDiDiDistributorsBundle:Code','code');
-
+        $first = 1;
+        $pagination = null;
+        $count = 0;
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $first = 0;
+
+            $qb = $em->createQueryBuilder()
+                ->select('code')
+                ->from('HelloDiDiDistributorsBundle:Code','code');
+
+            $form->handleRequest($request);
             $data = $form->getData();
 
             $qb ->join('code.Input','input')
@@ -53,21 +58,23 @@ class CodeController extends Controller
 
             if($data['expiredate']!="")
                 $qb = $qb->andWhere("input.dateExpiry = :expiredate")->setParameter('expiredate', $data['expiredate']);
+
+            $count = count($qb->getQuery()->getResult());
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $qb,
+                $request->get('page'),
+                20,
+                array('distinct' => false)
+            );
         }
 
-        $count = count($qb->getQuery()->getResult());
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb,
-            $request->get('page'),
-            20,
-            array('distinct' => false)
-        );
         return $this->render('HelloDiDiDistributorsBundle:Code:index.html.twig', array(
             'pagination' => $pagination,
             'form' => $form->createView(),
-            'count' => $count
+            'count' => $count,
+            'first' => $first
         ));
     }
 

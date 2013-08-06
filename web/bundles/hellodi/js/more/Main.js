@@ -83,15 +83,32 @@ function AlertShow(message,fname,event)
     }
 }
 
-function YesNoMessage(header, message, linkyes)
-{
+var form = null;
+$(document).ready(function(){
+    $('a.YesNoMessage').click(function(e)
+    {
+        e.preventDefault();
+        PopuptopOpen($(this).attr('header'),$(this).attr('message'),$(this).attr('href'));
+    });
+    $('form.YesNoMessage').submit(function(e)
+    {
+        if(form == null)
+        {
+            e.preventDefault();
+            form = $(this);
+            PopuptopOpen($(this).attr('header'),$(this).attr('message'),'javascript:$(form).submit();');
+        }
+    });
+});
+
+function PopuptopOpen (header,message,action) {
     var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
     body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>' ;
     body += '<h3 id="myModalLabel">'+header+'</h3></div>' ;
     body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">' ;
     body += '<div>'+message+'</div>';
     body += '</div><div class="containerpop form-actions " style="padding-left: 0px">' ;
-    body += '<a href="'+linkyes+'" style="margin-right:5px" class="btn btn-primary">Yes</a>' ;
+    body += '<a href="'+action+'" style="margin-right:5px" class="btn btn-primary">Yes</a>' ;
     body += '<a href="javascript:;" class="btn" onclick="PopuptopClose(event);" >No</a>' ;
     body += '</div></form>' ;
     body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
@@ -149,6 +166,7 @@ function PopuptopClose(e) {
     $('.popupshow').fadeOut('fast', function () {
         $('.popupshow').html('');
         $('.popupshow').removeAttr('id');
+        form = null;
     });
 }
 

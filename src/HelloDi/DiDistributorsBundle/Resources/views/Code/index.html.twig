@@ -85,12 +85,13 @@
                     <script type="text/javascript">
                         $(function () {
 
-                            Form_Search(0,"Search Code");
+                            Form_Search({{ first }},"Search Code");
 
                         });
                     </script>
 
                 </div>
+                {% if  not first %}
                 <div class="tablediv">
 
                     <div class="contenttitle">
@@ -123,9 +124,9 @@
                                             <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
                                             <br/>
                                             {% if code.status==0 %}
-                                                <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Credit Node the code?', '{{ path('code_creditnote',{'id':code.id}) }}')" class="btn_actions">Credit Note</a>
+                                                <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node the code?" class="YesNoMessage btn_actions">Credit Note</a>
                                             {% elseif code.status==1 %}
-                                                <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Dead Beat the code?', '{{ path('code_deadbeat',{'id':code.id}) }}')" class="btn_actions">Dead Beat</a>
+                                                <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Dead Beat the code?" class="YesNoMessage btn_actions">Dead Beat</a>
                                             {% endif %}
                                             <br/>
                                         </td>
@@ -139,6 +140,7 @@
                 <div class="navigation" style="text-align: center">
                     {{ knp_pagination_render(pagination) }}
                 </div>
+                {% endif %}
                 <br/>
             </div>
         </div>
