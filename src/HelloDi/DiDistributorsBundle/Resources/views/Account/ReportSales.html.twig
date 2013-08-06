@@ -79,11 +79,19 @@
 
     </div>
 
-    <form action="#" method="POST">
+    <form action="#" method="POST" class="form-horizontal" style="padding: 10px;border: 1px solid rgb(221, 221,221);background: none repeat scroll 0% 0% rgb(252, 252, 252);">
+        {% for state in formprint.print %}
+            <div class="control-group">
+                <label class="control-label">{{ form_label(state) }}</label>
+                <div class="controls">
+                    {{ form_widget(state) }}
+                </div>
+            </div>
+        {% endfor %}
         {{ form_rest(formprint) }}
-
-        <input type="submit" value="Print To PDF">
+        <input type="submit" value="Print To PDF" class="btn btn-primary">
     </form>
+
     <div class="tablediv">
 
         <div class="contenttitle">

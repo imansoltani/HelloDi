@@ -751,15 +751,15 @@ class AccountController extends Controller
 
 
         $formprint=$this->createFormBuilder()
-            ->add('option','choice',array('label'=>'option:',
-
+            ->add('print','choice',array('label'=>'Print:',
                 'expanded'=>true,
                 'choices'=>array(
-                    0=>'retailer statements',
-                    1=>'retailer revenues'
+                    0=>'Retailer Statements',
+                    1=>'Retailer Revenues'
                 )
             ))->getForm();
 
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
 
 $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
     'Account'=>$Account,
@@ -773,7 +773,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 'Account' => $Account,
                 'group'=>$group,
                 'Entiti' => $Account->getEntiti(),
-                'com'=>$com
+                'com'=>$com,
+                'tax'=>$tax->getTax()
 
         ));
 
