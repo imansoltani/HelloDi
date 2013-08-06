@@ -29,7 +29,7 @@
                 <h3>Add Users</h3>
             </div> <!-- /widget-header --><br>
 
-            <form class="form-horizontal foo" action="{{ path('DistStaffAdd',{'id':Account.id}) }}" method="post" >
+            <form class="form-horizontal" action="{{ path('DistStaffAdd',{'id':Account.id}) }}" method="post" >
 
                 <div class="control-group">
                     {{ form_errors(form.firstname) }}
@@ -119,8 +119,9 @@
                 {{ form_widget(form._token) }}
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <input  onclick="AlertShow('body','foo',event);" class="btn btn-primary" type="submit"   value="Create">
-                    <a   class="btn"  href="{{ path('DistStaffAdd') }}">Cancel</a>
+                    <input   class="btn btn-primary" type="submit"   value="Create">
+                    {#onclick="AlertShow('body','foo',event);"#}
+                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                 </div>
 
             </form>

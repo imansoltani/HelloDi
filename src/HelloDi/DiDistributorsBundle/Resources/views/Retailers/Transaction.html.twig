@@ -203,7 +203,13 @@
                                                            {{ 'Credit' | trans ({}, "account") }}
                                                        </label>
                                                        <div class="controls">
-                                                           <input type="text" disabled="" value="{% if tran.tranAmount>0 %} {{ tran.tranAmount }} {% elseif tran.tranAmount<0 %}--------{% endif %}">
+                                                           <input type="text" disabled=""
+                                                     {% if tran.tranAmount>0 %}
+                                                        value="{{ tran.tranAmount }}"
+                                                        {% elseif tran.tranAmount<0 %}
+                                                        value="--------"
+                                                        {% endif %}
+                                                        ">
                                                        </div>
                                                    </div>
 
@@ -214,7 +220,13 @@
                                                        </label>
                                                        <div class="controls">
 
-                                                           <input type="text" disabled="" value="{% if tran.tranAmount>0 %}--------{% elseif tran.tranAmount<0 %}{{ -tran.tranAmount }}{% endif %}">
+                                                           <input type="text" disabled=""
+
+                                                                  {% if tran.tranAmount>0 %}
+                                                                  value="--------"
+                                                                  {% elseif tran.tranAmount<0 %}
+                                                                  value="{{ -tran.tranAmount }}"
+                                                                  {% endif %}>
                                                        </div>
                                                    </div>
 
@@ -227,13 +239,12 @@
                                                        </div>
                                                    </div>
 
-
                                                    <div class="control-group">
                                                        <label class="control-label">
                                                            {{ 'User' | trans ({}, "account") }}
                                                        </label>
                                                        <div class="controls">
-                                                           <input type="text" disabled="" value="{{ tran.User.username }}">
+                                                           <input type="text" disabled="" value="{{tran.User.username}}">
                                                        </div>
                                                    </div>
 

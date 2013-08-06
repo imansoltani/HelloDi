@@ -7,8 +7,8 @@ DistTicketsNote:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ticketsnote }
 
 DistTicketsNew:
-    pattern:  /new
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:tickestnew }
+    pattern:  /new/{data}
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:tickestnew,data:null }
 
 DistTicketsChangeStatus:
     pattern:  /{id}/changestatus

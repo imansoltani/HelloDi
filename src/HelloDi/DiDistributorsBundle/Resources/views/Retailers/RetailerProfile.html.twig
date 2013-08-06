@@ -110,7 +110,7 @@
                     </form>
 
                     <div class="form-actions">
-                        <a class="btn btn-primary" href="#">Request</a>
+            <a class="btn btn-primary" href="{{ path('RetailerTicketsNew',{'data':4}) }}">Request</a>
                     </div>
                 </div>
                 <div id="company" class="tab-pane ">
@@ -184,13 +184,14 @@
                         <div class="control-group" >
                             <label class="control-label">Country Name</label>
                             <div class="controls">
-                                <input class="input-large" disabled="" type="text" value="{{ Entiti.Country.name }}/Country Code:{{ Entiti.Country.iso }}" />
+                                <input class="input-large" disabled="" type="text" value="{{ Entiti.Country.name }}({{ Entiti.Country.iso }})" />
                             </div>
                         </div>
                     </form>
 
+
                     <div class="form-actions">
-                        <a class="btn btn-primary" href="#">Change Address Or Detail</a>
+                        <a class="btn btn-primary" href="{{ path('RetailerTicketsNew',{'data':3}) }}">Change Address Or Detail</a>
                     </div>
                 </div>
             </div>

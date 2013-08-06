@@ -8,13 +8,13 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" >Transaction</a>
-    <span class="link">History</span>
+    <a href="{{ path('DistTickets') }}" class="link">Tickets</a>
+    <span class="link">New</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-money"></i>
-    Transaction History
+   New ticket
 {% endblock %}
 
 {% block Body %}
@@ -53,8 +53,9 @@
                             </div>
                         </div>
                         {{ form_widget(form._token) }}
-                   <input type="submit" value="Open">
-
+                        <hr>
+                   <input type="submit" value="Open" class="bt btn-primary">
+                   <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                     </form>
 
             </div>

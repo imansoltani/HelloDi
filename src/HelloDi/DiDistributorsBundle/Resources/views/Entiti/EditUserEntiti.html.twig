@@ -85,7 +85,7 @@
     {{ form_widget(form_edit._token) }}
     <div class="form-actions" style="margin-bottom: 0" >
         <input type="submit" class="btn btn-primary btn-medium" value="Edit">
-        <a class="btn" href="{{ path('Ent_Users',{'id':entity.id}) }}">Cancel</a>
+        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
         <script type="text/javascript">
             function GoWhere(x)
             {

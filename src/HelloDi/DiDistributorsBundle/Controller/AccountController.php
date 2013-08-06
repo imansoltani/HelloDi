@@ -2443,7 +2443,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
         $RetailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $entity = $RetailerAccount->getEntiti();
-
+        $detahis=new DetailHistory();
         $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
 
         if($req->isMethod('post'))
@@ -2451,6 +2451,16 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $editForm->handleRequest($req);
             if($editForm->isValid())
             {
+                $detahis->setAdrs1($entity->getEntAdrs1());
+                $detahis->setAdrs2($entity->getEntAdrs2());
+                $detahis->setAdrs3($entity->getEntAdrs3());
+                $detahis->setAdrsCity($entity->getEntCity());
+                $detahis->setAdrsNp($entity->getEntNp());
+                $detahis->setCountry($entity->getCountry());
+                $detahis->setAdrsDate(new \DateTime('now'));
+                $detahis->setEntiti($entity);
+
+                $em->persist($detahis);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
