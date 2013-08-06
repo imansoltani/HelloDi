@@ -646,7 +646,9 @@ $datetype=0;
         $codeselector = $this->get('hello_di_di_distributors.codeselector');
 
         $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+
         $Account = $priceChild->getAccount();
+
         $item = $priceChild->getItem();
 
         $codes = $codeselector->lookForAvailableCode($Account, $priceChild, $item, $request->get('numberOfsale'));
@@ -655,13 +657,15 @@ $datetype=0;
 
         $com = $priceChild->getprice() - $priceParent->getprice();
 
-        if ($codes) {
+        if ($codes)
+        {
             $ordercode = new OrderCode();
             $em->persist($ordercode);
-            foreach ($codes as $code) {
+            foreach ($codes as $code)
+            {
                 $tranretailer = new Transaction();
                 $trandist = new Transaction();
-                //   for retailer
+
                 $tranretailer->setAccount($Account);
                 $tranretailer->setTranAmount(-($priceChild->getPrice()));
                 $tranretailer->setTranFees(0);

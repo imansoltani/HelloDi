@@ -559,7 +559,7 @@ class AccountController extends Controller
             }
             else
 
-                $this->get('session')->getFlashBag()->add('error', ' zero isn,t accept !');
+                $this->get('session')->getFlashBag()->add('error', ' more than zero is accept!');
 
         }
 
@@ -880,7 +880,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
             }
             else
-                $this->get('session')->getFlashBag()->add('error', 'zero isn,t accept!');
+                $this->get('session')->getFlashBag()->add('error', 'more than zero is accept!');
         }
 
 
@@ -2584,7 +2584,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
             }
             else
-                $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+                $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
 
         }
 
@@ -2658,7 +2658,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
             }
             else
-                $this->get('session')->getFlashBag()->add('error','zero isn,t accept!');
+                $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
 
         }
         return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));

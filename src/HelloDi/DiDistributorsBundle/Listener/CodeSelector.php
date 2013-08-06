@@ -31,7 +31,8 @@ class CodeSelector
 
             if($count > $countinitem)
             {
-                return    $this->session->getFlashBag()->add('error','Code not exist in this item!');
+              $this->session->getFlashBag()->add('error','Code not exist in this item!');
+                return false;
             }
 
 
@@ -48,7 +49,8 @@ class CodeSelector
             return $codes;
 
         }
-    return    $this->session->getFlashBag()->add('error','Balance is not enough!');
 
+       $this->session->getFlashBag()->add('error','Balance is not enough!');
+       return false;
     }
 }
