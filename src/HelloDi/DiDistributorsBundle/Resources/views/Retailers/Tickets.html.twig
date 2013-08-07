@@ -32,7 +32,13 @@
 
                     <form class="form-horizontal SearchForm" action="{{ path('RetailerTickets') }}" method="POST">
 
-                        status:
+
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                <b>Status :</b>
+                            </label>
+                        </div>
                         <div class="control-group">
                             <label class="control-label">Close:
                             </label>
@@ -51,7 +57,12 @@
                             </div>
                         </div>
 
-countact:
+                        <div class="control-group">
+                            <label class="control-label">
+                                <b>Countact :</b>
+                            </label>
+                        </div>
+
                         <div class="control-group">
                             <label class="control-label">Distributors:
                             </label>
@@ -82,30 +93,13 @@ countact:
                         <input class="btn btn-primary" type="submit" value="search">
 
                     </form>
-                    {#<script type="text/javascript">#}
-                        {#$(function () {#}
-                            {#$(".SearchForm").hide();#}
-                            {#$('.TitleShow1').click(function () {#}
-                                {#$('.SearchForm').slideToggle();#}
-                                {#$('#search_logo').removeAttr('class');#}
+                    <script type="text/javascript">
+                        $(function () {
 
-                                {#if ($('.title_search').html() == 'Filter List') {#}
-                                    {#$('.title_search').html('Close Search');#}
-                                    {#$('#search_logo').attr('class', 'icon-remove');#}
-                                {#}#}
-                                {#else {#}
-                                    {#$('.title_search').html('Filter List');#}
-                                    {#$('#search_logo').attr('class', 'icon-search');#}
-                                {#}#}
+                            Form_Search(0,"Filter List");
 
-                                {#var x = $('.form_search').offset().top - 20;#}
-                                {#$('body,html').animate({#}
-                                    {#scrollTop: x#}
-                                {#}, 800);#}
-                            {#});#}
-
-                        {#});#}
-                    {#</script>#}
+                        });
+                    </script>
                 </div>
 
                 <div>

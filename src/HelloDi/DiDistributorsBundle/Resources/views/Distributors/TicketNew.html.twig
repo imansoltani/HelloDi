@@ -1,10 +1,10 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Transactions
+    Tickets
 {% endblock title %}
 
-{% set MU = 'trans' %}
+{% set MU = '0' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
@@ -13,7 +13,7 @@
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-money"></i>
+    <i class="icon-comment"></i>
    New ticket
 {% endblock %}
 
@@ -56,9 +56,12 @@
                             </div>
                         </div>
                         {{ form_widget(form._token) }}
-                        <hr>
-                   <input type="submit" value="Open" class="bt btn-primary">
-                   <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+
+                        <div class="form-actions">
+                            <input type="submit" value="Open" class="btn btn-primary">
+                            <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                        </div>
+
                     </form>
 
             </div>

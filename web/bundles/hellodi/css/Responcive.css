@@ -118,7 +118,14 @@
             =============================================================== */
 @media only screen and (max-width: 767px) {
 
+    .TicketDetail li span{
+        font-size: 12px;
+        width: 100px;
+    }
 
+    .TicketDetail li a{
+        font-size: 12px;
+    }
 
     .main .span {
         width: 95%;
@@ -216,6 +223,8 @@
 
 @media only screen and (max-width:670px){
 
+
+
     .datatable table{
         display: block;
     }
@@ -297,11 +306,45 @@
         border: none;
         margin-top: 5px;
     }
+
+    .Note > div:first-child > span{
+        font-size: 15px;
+    }
 }
 
 
 @media only screen and (max-width:550px){
 
+    .Note{
+        width: 90%;
+    }
+
+
+
+    .Note > div:first-child > span:last-child{
+        float: none;
+        display: block;
+        padding-top: 10px;
+    }
+
+    /*Ticket*/
+
+    .TicketDetail li{
+       padding: 2px;
+        display: block;
+        width: auto;
+    }
+
+    .TicketDetail li span{
+        width: 110px;
+        font-size: 12px;
+    }
+
+    .TicketDetail li a{
+        font-size: 12px;
+    }
+
+    /*-----*/
 
     .bodypopup{
         top: 5%;

@@ -1,18 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    Transactions
+    Tickets
 {% endblock title %}
 
-{% set MU = 'trans' %}
+{% set MU = '0' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    {#<span class="link">Transaction History</span>#}
+    <a class="link" href="{{ path('RetailerTickets') }}">Tickets</a>
+    <span class="link">New Ticket</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-money"></i>
+    <i class="icon-comment"></i>
     New Ticket
 {% endblock %}
 
@@ -28,8 +29,11 @@
 
                          <div class="control-group">
 
+                             <label class="control-label">
+                                 <b>Attention To :</b>
+                             </label>
                             <div class="controls money">
-                                Attention To:
+
                                 <span class="icon-certificate"></span>
 
                             </div>
@@ -77,8 +81,11 @@
                             </div>
                         </div>
                         {{ form_widget(form._token) }}
-                   <input type="submit" value="Open" class="btn btn-primary">
-                   <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+
+                        <div class="form-actions">
+                            <input type="submit" value="Open" class="btn btn-primary">
+                            <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                        </div>
                     </form>
 
             </div>

@@ -984,6 +984,10 @@ body .main .container.Ticket{
     border-bottom: solid thin #f1f8fc;
 }
 
+body .main .container.Ticket.Lock{
+    border: thin solid rgb(204, 204, 204);
+}
+
 body .main .container.Ticket:hover ,body .main .container.Ticket:active{
     background: #f1f8fc;
 }
@@ -1152,5 +1156,111 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 }
 
 
+/* Ticket Note */
+.TicketDetail{
+    list-style: none;
+    margin: 0;
+    border-bottom: solid 2px #b1b2e1;
+}
+
+.TicketDetail li{
+    width: 40%;
+    display: inline-block;
+    padding:5px;
+    margin-right: 20px;
+
+}
+
+.TicketDetail li:last-child{
+
+}
+
+.TicketDetail li span{
+    padding: 2px;
+    width: 130px;
+    display: inline-block;
+
+    font-weight: bold;
+}
+
+.TicketDetail li a:link{
+    cursor: pointer;
+}
+
+.TicketDetail li a{
+    color: #000000;
+    /*font-weight: bold;*/
+    text-decoration: none;
+    cursor: default;
+}
+
+.TicketDetail li a.btn{
+    color: #fcf2ff;
+
+}
 
 
+.Note{
+    padding: 7px;
+    width: 70%;
+    display: inline-block;
+    margin-top: 20px;
+    border: dashed 2px #9fa0d2;
+    color: #000240;
+    float: right;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.Note.Me{
+    float: left;
+    background: none;
+    border: dashed  1px #cbcbcb;
+}
+
+.Note > div:first-child{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-size: 17px;
+    border-bottom: solid thin #9fa0d2;
+}
+
+.Note > div:first-child > span:last-child{
+    float: right;
+
+}
+
+
+.Note > div:last-child{
+    padding: 5px;
+    padding-left: 10px;
+    color: #000000;
+}
+
+.FormShow{
+
+
+    padding-top: 5px;
+    border-left: solid 2px #b1b2e1;
+    border-right: solid 2px #b1b2e1;
+    border-bottom: solid 2px #b1b2e1;
+   display: none;
+}
+
+.FormShow form{
+    margin: 0;
+    margin-top: 20px;
+
+}
+
+.FormShow textarea{
+    max-width: 90%;
+    max-height: 200px;
+}
+
+.form-horizontal .form-actions.form_action1{
+    padding-top: 5px;
+    padding-bottom: 10px;
+
+    border-top: solid thin #c7c8e7 ;
+    margin-bottom: 0;
+}

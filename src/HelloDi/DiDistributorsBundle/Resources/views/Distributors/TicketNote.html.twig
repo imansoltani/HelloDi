@@ -1,83 +1,106 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Transactions
+    Tickets
 {% endblock title %}
 
-{% set MU = 'trans' %}
+{% set MU = '0' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" >Transaction</a>
-    <span class="link">History</span>
+    <a href="{{ path('DistTickets') }}" class="link">Tickets</a>
+    <span class="link">Ticket Note</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-money"></i>
-    Transaction History
+    <i class="icon-comment"></i>
+    Ticket Note
 {% endblock %}
 
 {% block Body %}
-    <div class="span" >
+    <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
 
-{% if app.session.flashbag.get('sendcancel') %}
- <b style="color: red">This Ticket Is InActive!</b>
- {% endif %}
-                <hr>
-<br>
+                <ul class="TicketDetail">
+                    <li>
+                        <span>Date</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
+                    </li>
+                    {% if Ticket.ticketEnd is not null %}
+                        <li>
+                            <span>DateEnd</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <span>Type</span><a>
+                            {% if Ticket.type==0 %}Payment Issue
+                            {% elseif Ticket.type==1 %}New Item Request
+                            {% elseif Ticket.type==2 %}Price Change Request
+                            {% elseif Ticket.type==3 %}
 
-DateStart:{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</br>
- {% if Ticket.ticketEnd is not null %}
-DateEnd:{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</br>
-{% endif %}
-     Type:
-    {% if Ticket.type==0 %}Payment Issue
-    {% elseif Ticket.type==1 %}New Item Request
-    {% elseif Ticket.type==2 %}Price Change Request
-    {% elseif Ticket.type==3 %}
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <span>Current Status</span>
+                        {% if Ticket.status==0 %}
 
-    {% endif %}
-    </br>
-Current Status:{% if Ticket.status==0 %}
-        <a href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">Close</a>
-       {% else %}
-        <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
-       {% endif %}
+                            <a style="margin-right: 10px">Close</a><a class="btn btn-danger"
+                                                                      href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">Switch</a>
+                        {% else %}
+                            <a style="margin-right: 10px">Open</a><a class="btn btn-danger"
+                                                                     href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Switch</a>
+                        {% endif %}
+                    </li>
+                </ul>
 
-                <hr>
+
                 {% if Ticket.Status!=0 %}
-                    <form action="{{ path('DistTicketsNote',{'id':Ticket.id}) }}" method="POST">
+                    <div class="FormShow">
+                        <form action="{{ path('DistTicketsNote',{'id':Ticket.id}) }}" class="form-horizontal"
+                              method="POST">
 
-                        {{form_label(form.Description)}}
-                        {{form_widget(form.Description)}}
 
-                        <input type="submit" value="Send">
-                    </form>
+                            <div class="control-group">
+                                {{ form_label(form.Description) }}
+                                <div class="controls">
+                                    {{ form_widget(form.Description) }}
+                                </div>
+                            </div>
+
+
+                            <div class="form_action1 form-actions">
+                                <input class="btn btn-primary" type="submit" value="Send">
+                                <a class="btn"
+                                   onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">Cancel</a>
+                            </div>
+
+                        </form>
+                    </div>
+                    <a style="margin-top: 10px" class="showt btn btn-info"
+                       onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">Add Note</a>
                 {% endif %}
-                <div class="tab-content">
-                    <table style="margin-top: 20px"
-                           class="table table-bordered table-striped table-highlight postsend">
-                        <tbody>
 
-                        {% for Note in Notes %}
-                            <tr>
-                                <td>
-                                   Time: {{ Note.date|date('y-M-d  H:i:s') }}<br>
-                                    User:{{ Note.User.username }}<br>
-                                   Text: {{ Note.description }}</td>
-                            </tr>
+                <div>
 
-                        {% endfor %}
+                    {% for Note in Notes %}
 
-                        </tbody>
-                    </table>
+                        <div class="Note {% if Note.user.Account == app.user.Account %}Me{% endif %}" >
+                            <div >
+                                <span>From <b>{{ Note.User.username }}</b></span>
+                                <span>{{ Note.date|date('y-M-d  H:i:s') }}</span>
+                            </div>
+                            <div>
+                                {{ Note.description }}
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
                 </div>
 
-
-
-
+                {#-------------------------#}
             </div>
         </div>
     </div>

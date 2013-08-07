@@ -1,113 +1,130 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Transactions
+    Tickets
 {% endblock title %}
 
-{% set MU = 'trans' %}
+{% set MU = 'ticket' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" >Transaction</a>
-    <span class="link">History</span>
+    <a class="link" href="{{ path('MasterTickets') }}">Tickets</a>
+    <span class="link">Ticket Note</span>
+
 {% endblock Site_Map %}
 
 {% block PageTitle %}
-    <i class="icon-money"></i>
-    Transaction History
+    <i class="icon-comment"></i>
+    Ticket Note
 {% endblock %}
 
+
+
 {% block Body %}
-    <div class="span" >
+
+    <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
+                <ul class="TicketDetail" >
+                    <li>
+                        <span>Date</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
+                    </li>
+                    {% if Ticket.ticketEnd is not null %}
+                        <li>
+                            <span>DateEnd</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <span>Type</span><a>
+                            {% if Ticket.type==0 %}Payment Issue
+                            {% elseif Ticket.type==1 %}New Item Request
+                            {% elseif Ticket.type==2 %}Price Change Request
+                            {% elseif Ticket.type==3 %}
 
-{% if app.session.flashbag.get('sendcancel') %}
- <b style="color: red">This Ticket Is InActive!</b>
- {% endif %}
-                <hr>
-<br>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <span>Current Status</span>
+                        {% if Ticket.status==0 %}
 
-Date:{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</br>
-{% if Ticket.ticketEnd is not null %}
-    DateEnd:{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</br>
-{% endif %}
-Type:
-    {% if Ticket.type==0 %}Payment Issue
-    {% elseif Ticket.type==1 %}New Item Request
-    {% elseif Ticket.type==2 %}Price Change Request
-    {% elseif Ticket.type==3 %}
+                            <a style="margin-right: 10px" >Close</a><a class="btn btn-danger" href="{{ path('MasterTicketsStatus',{id:Ticket.id}) }}">Switch</a>
+                        {% else %}
+                            <a style="margin-right: 10px"  >Open</a><a class="btn btn-danger" href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Switch</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <span>In change</span>
+                        {% set istake='' %}
+                        {% if Ticket.Inchange==app.user.id %}
+                            <a class="btn btn-primary" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>
+                            {% set istake='take' %}
+                        {% else %}
 
-    {% endif %}
-    </br>
-Current Status:{% if Ticket.status==0 %}
+                            {% set istake='notake' %}
 
-        <a href="{{ path('MasterTicketsStatus',{id:Ticket.id}) }}">Close</a>
-       {% else %}
-        <a href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Open</a>
-       {% endif %}
-<br>
-In change:
+                            {% for user in usermaster %}
+                                {% if user.id==Ticket.inchange %}
+                                    <a class="btn btn-primary">   {{ user.username }}</a>
 
-  {% set istake='' %}
- {% if Ticket.Inchange==app.user.id %}
-                   <a class="btn btn-mini btn-danger" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>
-     {% set istake='take' %}
- {% else %}
+                                    {% set istake='notake' %}
+                                {% endif %}
 
-     {% set istake='notake' %}
+                            {% endfor %}
 
-    {% for user in usermaster %}
-        {% if user.id==Ticket.inchange %}
-         <b style="color: red">   {{ user.username }}</b>
+                            {% if Ticket.inchange is null %}
 
-            {% set istake='notake' %}
-        {% endif %}
+                                <a class="btn btn-info" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                </ul>
 
-    {% endfor %}
-
-    {% if Ticket.inchange is null %}
-
-        <a class="btn btn-mini btn-danger" href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
-    {% endif %}
-{% endif %}
-<hr>
                 {% if istake=='take' and Ticket.Status==1 %}
 
-                    <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" method="POST">
+                    <div class="FormShow" >
+                        <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" class="form-horizontal" method="POST">
 
-                        {{form_label(form.Description)}}
-                        {{form_widget(form.Description)}}
 
-                        <input type="submit" value="Send" >
-                    </form>
 
+                            <div class="control-group">
+                                {{form_label(form.Description)}}
+                                <div class="controls">
+                                    {{form_widget(form.Description)}}
+                                </div>
+                            </div>
+
+
+                                <div class="form_action1 form-actions" >
+                                    <input class="btn btn-primary" type="submit" value="Send" >
+                                    <a class="btn" onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()" >Cancel</a>
+                                </div>
+
+                        </form>
+                    </div>
+                    <a style="margin-top: 10px" class="showt btn btn-info" onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()" >Add Note</a>
                 {% endif %}
 
-                <div class="tab-content">
-                    <table style="margin-top: 20px"
-                           class="table table-bordered table-striped table-highlight postsend">
-                        <tbody>
+                <div>
 
                         {% for Note in pagination %}
-                            <tr>
-                                <td>
-                                   Time: {{ Note.date|date('y-M-d  H:i:s') }}<br>
-                                    User:{{ Note.User.username }}<br>
-                                   Text: {{ Note.description }}</td>
-                            </tr>
+
+                                <div class="Note {% if Note.user.Account is null %}Me{% endif %}" >
+                                    <div >
+                                        <span>From <b>{{ Note.User.username }}</b></span>
+                                        <span>{{ Note.date|date('y-M-d  H:i:s') }}</span>
+                                    </div>
+                                    <div>
+                                        {{ Note.description }}
+                                    </div>
+                                </div>
+
 
                         {% endfor %}
 
-                        </tbody>
-                    </table>
                 </div>
-
-<hr>
-
-
-
             </div>
         </div>
     </div>
+
 {% endblock %}

@@ -97,7 +97,7 @@
 
                 {% for Ticket in pagination %}
 
-                    <div class=" container {% if Ticket.status==0 %}
+                    <div class="{% if Ticket.inChange is not null %}Lock{% endif %} container {% if Ticket.status==0 %}
                                     closet
                                     {% else %}
                                     opent
@@ -158,7 +158,7 @@
                             </div>
                         </a>
 
-                        <div class="controler">
+                        <div class="controler"  >
                             {% if Ticket.status==0 %}
                                 Close
                             {% else %}
