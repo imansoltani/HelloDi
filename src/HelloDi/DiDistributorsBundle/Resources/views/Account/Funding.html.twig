@@ -38,7 +38,7 @@
 
 
 
-        <form style="margin-top: 20px" action="{{ path('MasterDistApplyFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+        <form style="margin-top: 20px" action="{{ path('MasterDistApplyFunding',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" header='Change balance!' message='Are you sure to change balance?' >
 
             <fieldset>
 
@@ -96,8 +96,7 @@
             <br>
         </div> <!-- /widget-header -->
 
-        <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal" >
-
+        <form style="margin-top: 20px" action="{{ path('MasterDistUpdateFunding',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" header='Change Credit limit!' message='Are you sure to change credit limit?' >
             <fieldset>
 
                 <div class="control-group">

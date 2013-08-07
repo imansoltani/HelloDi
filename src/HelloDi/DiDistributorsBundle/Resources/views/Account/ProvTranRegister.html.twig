@@ -16,7 +16,7 @@
         <h3>Register Transaction</h3>
     </div> <!-- /widget-header -->
 
-    <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal" >
+    <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" message='Are you sure to change balance?'  header='Change balance!' >
        {% for credeb in  form.CreditDebit %}
         <div class="control-group">
 

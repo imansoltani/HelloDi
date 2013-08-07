@@ -21,7 +21,7 @@
 
             Retailer Balance : <b>{{ retailerAccount.accBalance }}</b>
 <hr>
-            <form style="margin-top: 20px" action="{{ path('Master_RetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
+            <form style="margin-top: 20px" action="{{ path('Master_RetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header='Change balance!' message='Are you sure to change balance? ' >
 
                 <fieldset>
 
@@ -84,7 +84,7 @@
             <hr>
 
 
-            <form style="margin-top: 20px" action="{{ path('Master_RetailerUpdateFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
+            <form style="margin-top: 20px" action="{{ path('Master_RetailerUpdateFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header='Change credit limit!' message='Are you sure to change credit limit? ' >
 
                 <fieldset>
 

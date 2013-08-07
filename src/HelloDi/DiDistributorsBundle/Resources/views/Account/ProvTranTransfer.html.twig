@@ -17,7 +17,7 @@
     </div> <!-- /widget-header -->
 
     {% if CountProv >0 %}
-    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr" >
+    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header='Change distributors balance!' message='Are you sure to change balance?' >
         <div class="control-group">
 
             {{ form_label(form.Amount) }}
