@@ -4,9 +4,9 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
- * @ORM\Table(name="Setting")
+ * @ORM\Table(name="Tax")
  */
-class Setting
+class Tax
 {
     /** 
      * @ORM\Id
@@ -19,6 +19,13 @@ class Setting
      * @ORM\Column(type="decimal", nullable=false, name="tax")
      */
     private $tax;
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false, name="Tax_Start")
+     */
+    private $taxstart;
+
 
      /**
      * Get id
@@ -51,6 +58,29 @@ class Setting
     public function getTax()
     {
         return $this->tax;
+    }
+
+    /**
+     * Set taxstart
+     *
+     * @param \DateTime $taxstart
+     * @return Tax
+     */
+    public function setTaxstart($taxstart)
+    {
+        $this->taxstart= $taxstart;
+
+        return $this;
+    }
+
+    /**
+     * Get taxstart
+     *
+     * @return \DateTime
+     */
+    public function getTaxstart()
+    {
+        return $this->taxstart;
     }
 
 

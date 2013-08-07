@@ -6,6 +6,13 @@ HelloDi\DiDistributorsBundle\Entity\Entiti:
                 match: true
                 message: 'only numeric'
 
+HelloDi\DiDistributorsBundle\Entity\Tax:
+    properties:
+        tax:
+            - Regex:
+                pattern: "/\d/"
+                match:   true
+                message: Your name cannot contain a number
 HelloDi\DiDistributorsBundle\Entity\User:
     properties:
         firstName:
@@ -18,7 +25,6 @@ HelloDi\DiDistributorsBundle\Entity\User:
                 pattern: "/\d/"
                 match: true
                 message: 'only numeric'
-
 
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

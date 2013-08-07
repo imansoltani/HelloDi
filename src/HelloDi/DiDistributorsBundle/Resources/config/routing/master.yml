@@ -45,6 +45,10 @@ master_profile:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/profile.yml"
     prefix:   /admin/profile
 
+master_tax:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/Tax.yml"
+    prefix:   /tax
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }

@@ -1,0 +1,99 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Edit User
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
+    <a class="link" >Tax</a>
+
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+   Tax and History
+{% endblock %}
+
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget-content" >
+            <div class="widget-header">
+                <h3>Tax</h3>
+            </div> <!-- /widget-header --><br>
+
+            <form class="form-horizontal" action="{{ path('Tax') }}" method="post" >
+
+
+                <div class="control-group">
+                    {{ form_label(form.tax) }}
+                    <div class="controls">
+                        {{ form_widget(form.tax) }}
+                        {{ form_errors(form.tax) }}
+                    </div>
+                </div>
+                {{ form_widget(form._token) }}
+                <input type="hidden" value="1" name="page" id="search_page" >
+                <div class="form-actions" style="margin-bottom: 0" >
+                    <input class="btn btn-primary" type="submit"  value="Edit">
+                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <div class="tablediv">
+
+    <div class="contenttitle">
+        <h4>History</h4>
+    </div>
+    <form>
+    <div class="tab-content">
+        <table style="margin-top: 20px"
+               class="table table-bordered table-striped table-highlight postsend">
+            <thead>
+            <tr>
+                <th>{{ 'Id' | trans ({}, "account") }}</th>
+                <th>{{ 'Tax' | trans ({}, "account") }}</th>
+                <th>{{ 'Start Date' | trans ({}, "account") }}</th>
+
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for tx in pagination %}
+                <tr>
+                    <td>
+                     {{ tx.id }}
+                    </td>
+
+                    <td>
+                        {{ tx.tax }}
+                    </td>
+
+                    <td>
+                        {{ tx.taxstart|date('y/M/d') }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+{% endblock %}

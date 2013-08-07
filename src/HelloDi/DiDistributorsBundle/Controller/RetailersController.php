@@ -241,12 +241,12 @@ $datetype=0;
     {
         $User= $this->get('security.context')->getToken()->getUser();
 
-        $em=$this->getDoctrine()->getManager();
+        $em=$this->getDoctrine()->getEntityManager();
          $qb=array();
         //load first list search
 
 
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
 
         $form=$this->createFormBuilder()

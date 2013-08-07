@@ -45,8 +45,8 @@ class DistributorsController extends Controller
         $paginator = $this->get('knp_paginator');
         $User= $this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
-        $em=$this->getDoctrine()->getEntityManager();
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
+        $em=$this->getDoctrine()->getManager();
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
 
         $qb=array();

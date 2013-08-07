@@ -1,0 +1,3 @@
+Tax:
+    pattern:  /
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Tax:Tax" }

@@ -31,6 +31,7 @@ use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
+use HelloDi\DiDistributorsBundle\TaxType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -759,7 +760,7 @@ class AccountController extends Controller
                 )
             ))->getForm();
 
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Setting')->find(1);
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
 $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
     'Account'=>$Account,
@@ -2675,10 +2676,6 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
         }
         return new Response($value);
     }
-
-
-
-
 
 //    End Retailer
 }
