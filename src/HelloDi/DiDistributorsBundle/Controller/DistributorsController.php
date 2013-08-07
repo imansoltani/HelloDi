@@ -1566,16 +1566,16 @@ else
 
     public  function  countnoteAction()
     {
-        $User = $this->get('security.context')->getToken()->getUser();
+        $User = $this->getUser();
+        $users=$User->getAccount()->getUsers();
         $em=$this->getDoctrine()->getEntityManager();
         $Countnote=$em->createQueryBuilder();
         $Countnote->select('Note')
             ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
             ->innerJoin('Note.Ticket','NoteTic')
             ->Where('NoteTic.Accountdist = :Acc')->setParameter('Acc',$User->getAccount())
-            ->andWhere('Note.User != :usr')->setParameter('usr',$User)
-            ->andWhere('Note.view = 0');
-
+            ->andWhere('Note.view = 0')
+            ->andWhere('Note.User NOT IN(:usr)')->setParameter('usr',$users->toArray());
         return new Response(count($Countnote->getQuery()->getResult()));
     }
 
