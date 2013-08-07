@@ -1238,10 +1238,10 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 
 .FormShow{
 
-
+background: rgb(252, 252, 252);
     padding-top: 5px;
-    border-left: solid 2px #b1b2e1;
-    border-right: solid 2px #b1b2e1;
+    border-left: solid 1px #b1b2e1;
+    border-right: solid 1px #b1b2e1;
     border-bottom: solid 2px #b1b2e1;
    display: none;
 }
