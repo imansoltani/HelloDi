@@ -1395,6 +1395,9 @@ else
             if($data['Type']!=5)
                 $tickets->andWhere('Tic.type = :type')->setParameter('type',$data['Type']);
             $tickets=$tickets->getQuery();
+            $count = count($tickets->getResult());
+            $tickets->setHint('knp_paginator.count', $count);
+
         }
 
         $pagination = $paginator->paginate(

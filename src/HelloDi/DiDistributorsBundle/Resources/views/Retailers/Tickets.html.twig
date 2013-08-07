@@ -50,7 +50,7 @@
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
-<hr>
+
 countact:
                         <div class="control-group">
                             <label class="control-label">Distributors:
@@ -69,7 +69,7 @@ countact:
                                 {{ form_widget(form.Contact[1]) }}
                             </div>
                         </div>
-<hr>
+
                         <div class="control-group">
                             {{ form_label(form.Type,'Type:') }}
                             <div class="controls">
@@ -77,35 +77,35 @@ countact:
                             </div>
                         </div>
 
-                        <hr>
+
 
                         <input class="btn btn-primary" type="submit" value="search">
 
                     </form>
-                    <script type="text/javascript">
-                        $(function () {
-                            $(".SearchForm").hide();
-                            $('.TitleShow1').click(function () {
-                                $('.SearchForm').slideToggle();
-                                $('#search_logo').removeAttr('class');
+                    {#<script type="text/javascript">#}
+                        {#$(function () {#}
+                            {#$(".SearchForm").hide();#}
+                            {#$('.TitleShow1').click(function () {#}
+                                {#$('.SearchForm').slideToggle();#}
+                                {#$('#search_logo').removeAttr('class');#}
 
-                                if ($('.title_search').html() == 'Filter List') {
-                                    $('.title_search').html('Close Search');
-                                    $('#search_logo').attr('class', 'icon-remove');
-                                }
-                                else {
-                                    $('.title_search').html('Filter List');
-                                    $('#search_logo').attr('class', 'icon-search');
-                                }
+                                {#if ($('.title_search').html() == 'Filter List') {#}
+                                    {#$('.title_search').html('Close Search');#}
+                                    {#$('#search_logo').attr('class', 'icon-remove');#}
+                                {#}#}
+                                {#else {#}
+                                    {#$('.title_search').html('Filter List');#}
+                                    {#$('#search_logo').attr('class', 'icon-search');#}
+                                {#}#}
 
-                                var x = $('.form_search').offset().top - 20;
-                                $('body,html').animate({
-                                    scrollTop: x
-                                }, 800);
-                            });
+                                {#var x = $('.form_search').offset().top - 20;#}
+                                {#$('body,html').animate({#}
+                                    {#scrollTop: x#}
+                                {#}, 800);#}
+                            {#});#}
 
-                        });
-                    </script>
+                        {#});#}
+                    {#</script>#}
                 </div>
 
                 <div>
@@ -197,7 +197,9 @@ countact:
 
 
                     {% endfor %}
-
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
                 </div>
 
 

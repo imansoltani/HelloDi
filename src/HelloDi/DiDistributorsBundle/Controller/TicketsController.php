@@ -18,6 +18,7 @@ class TicketsController extends Controller
 public  function  ticketsAction(Request $req)
 {
 
+    $paginator = $this->get('knp_paginator');
 
     $em=$this->getDoctrine()->getEntityManager();
     $usermaster=$em->getRepository('HelloDiDiDistributorsBundle:User')->findBy(array('Account'=>null));
@@ -55,12 +56,6 @@ public  function  ticketsAction(Request $req)
           ->orWhere($tickets->expr()->isNull('Tic.Accountdist'))
           ->orWhere($tickets->expr()->isnotNull('Tic.inchange'));
 
-    foreach($User->getEntiti()->getUsers() as $Userm)
-       {
-           $tickets->andWhere('Tic.lastUser != :user  ')->setParameter('user',$Userm);
-       }
-
-
 if($req->isMethod('POST'))
 {
    $form->submit($req);
@@ -70,7 +65,7 @@ if($req->isMethod('POST'))
      $tickets->select('Tic')
          ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
          ->Where('Tic.Status = :status')->setParameter('status',$data['Status']);
-if(($data['Retailers']==0 and $data['Distributors']==0)or($data['Retailers']==1 and $data['Distributors']==1))
+if($data['Retailers']==1 and $data['Distributors']==1)
     {
         $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
         $tickets->orWhere($tickets->expr()->isNull('Tic.Accountretailer'));
@@ -94,13 +89,22 @@ if(($data['Retailers']==0 and $data['Distributors']==0)or($data['Retailers']==1 
 
          $tickets->orWhere($tickets->expr()->isnotNull('Tic.inchange'));
 
-}
-    $tickets=$tickets->getQuery()->getResult();
 
+}
+
+    $tickets=$tickets->getQuery();
+    $count = count($tickets->getResult());
+    $tickets->setHint('knp_paginator.count', $count);
+
+    $pagination = $paginator->paginate(
+        $tickets,
+        $req->get('page',1) /*page number*/,
+        10/*limit per page*/
+    );
     return $this->render('HelloDiDiDistributorsBundle:Tickets:Tickets.html.twig',array(
         'Account'=>$Account,
          'form'=>$form->createView(),
-        'pagination'=>$tickets,
+        'pagination'=>$pagination,
         'usermaster'=>$usermaster
     ));
 

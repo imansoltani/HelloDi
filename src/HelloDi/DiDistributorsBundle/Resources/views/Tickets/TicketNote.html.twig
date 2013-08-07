@@ -72,7 +72,7 @@ In change:
     {% endif %}
 {% endif %}
 <hr>
-                {% if istake=='take' %}
+                {% if istake=='take' and Ticket.Status==1 %}
 
                     <form action="{{ path('MasterTicketsNote',{'id':Ticket.id}) }}" method="POST">
 
