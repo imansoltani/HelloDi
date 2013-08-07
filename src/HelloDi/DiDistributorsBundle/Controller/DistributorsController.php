@@ -292,6 +292,8 @@ class DistributorsController extends Controller
             $tranretailer->setTranBalance($Account->getAccBalance());
             $tranretailer->setTranDescription($data['Communications']);
 
+            $alredyretailer=$Account->getAccBalance();
+            $alredydist=$Account->getParent()->getAccBalance();
             if($data['Amount']>0)
             {
                 if($balancechecker->isBalanceEnoughForMoney($Account->getParent(),$data['Amount']))
@@ -301,7 +303,8 @@ class DistributorsController extends Controller
                     $em->persist($trandist);
                     $em->persist($tranretailer);
                     $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                    $this->get('session')->getFlashBag()->add('success','balance retailer changed from '.$alredyretailer.' to ' .$Account->getAccBalance().' successfully ');
+                    $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$Account->getParent()->getAccBalance().' successfully ');
                 }
 
             }
@@ -350,6 +353,9 @@ else
             $trandist->setTranType(0);
             $trandist->setAccount($Account->getParent());
             $trandist->setTranDescription('increase retailer,s credit limit ');
+
+            $alredyretailer=$Account->getAccCreditLimit();
+            $alredydist=$Account->getParent()->getAccBalance();
 if($data['Amount']>0)
 {
 
@@ -362,7 +368,8 @@ if($data['Amount']>0)
             $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
             $em->persist($trandist);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$Account->getAccCreditLimit().' successfully ');
+            $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$Account->getParent()->getAccBalance().' successfully ');
         }
     }
 
@@ -373,7 +380,7 @@ if($data['Amount']>0)
         {
             $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$Account->getAccCreditLimit().' successfully ');
         }
     }
 

@@ -29,7 +29,7 @@ class Account
     public function getNamewithCurrency()
     {
 
-        return $this->getAccName() .' |  '. $this->getAccCurrency() ;
+        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
 
     }
 

@@ -520,12 +520,14 @@ class AccountController extends Controller
                     case 0:
 
                         if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
+
+                            $alredy=$Account->getAccBalance();
                             $trandist->setTranType(0);
                             $trandist->setTranAmount(-$data['Amount']);
                             $trandist->setTranAction('amdt');
                             $em->persist($trandist);
                             $em->flush();
-                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                            $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
                         }
 
                         break;
@@ -535,9 +537,10 @@ class AccountController extends Controller
                         $trandist->setTranType(1);
                         $trandist->setTranAmount(+$data['Amount']);
                         $trandist->setTranAction('pmt');
+                        $alredy=$Account->getAccBalance();
                         $em->persist($trandist);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
 
                         break;
 
@@ -545,12 +548,13 @@ class AccountController extends Controller
 
                         if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount']))
                         {
+                            $alredy=$Account->getAccBalance();
                             $trandist->setTranType(0);
                             $trandist->setTranAmount(-$data['Amount']);
                             $trandist->setTranAction('com_pmt');
                             $em->persist($trandist);
                             $em->flush();
-                            $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                            $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
                         }
                         break;
                 }
@@ -584,18 +588,19 @@ class AccountController extends Controller
         if ($req->isMethod('POST')) {
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
-
+            $alredy=$Account->getAccCreditLimit();
           switch($data['As'] )
           {
               case 0:
                   if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
+
                       $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
-                      $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                      $this->get('session')->getFlashBag()->add('success','credit limit changed from '.$alredy.' to ' .$Account->getAccCreditLimit().' successfully ');
                   }
                   break;
               case 1:
                   $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
-                  $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                  $this->get('session')->getFlashBag()->add('success','credit limit changed from '.$alredy.' to ' .$Account->getAccCreditLimit().' successfully ' );
                   break;
 
           }
@@ -873,11 +878,14 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $trandist->setTranCurrency($data['Accounts']->getAccCurrency());
             $trandist->setTranBalance($data['Accounts']->getAccBalance());
 
+            $alredydist=$data['Accounts']->getAccBalance();
+            $alredyprov=$Account->getAccBalance();
             if ($data['Amount'] > 0) {
                 $em->persist($trandist);
                 $em->persist($tranprov);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$data['Accounts']->getAccBalance().' successfully ');
+                $this->get('session')->getFlashBag()->add('success','balance provider changed from '.$alredyprov.' to ' .$Account->getAccBalance().' successfully ');
             }
             else
                 $this->get('session')->getFlashBag()->add('error', 'more than zero is accept!');
@@ -939,7 +947,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $tran->setTranFees($data['Fees']);
             else
                 $tran->setTranFees(0);
-
+                $alredy=$Account->getAccBalance();
             if ($data['Amount'] > 0) {
                 switch ($data['CreditDebit']) {
                     case 1:
@@ -948,7 +956,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                         $tran->setTranAmount(+$data['Amount']);
                         $em->persist($tran);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
                         break;
 
 
@@ -958,7 +966,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                         $tran->setTranAmount(-$data['Amount']);
                         $em->persist($tran);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
 
                         break;
 
@@ -2530,6 +2538,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $tranretailer->setTranBalance($AccountRetailer->getAccBalance());
             $tranretailer->setTranDescription($data['Communications']);
 
+            $alredyretailer=$AccountRetailer->getAccBalance();
+            $alredydist=$AccountRetailer->getParent()->getAccBalance();
             if($data['Amount']>0)
             {
                 if($balancechecker->isBalanceEnoughForMoney($AccountRetailer->getParent(),$data['Amount']))
@@ -2539,7 +2549,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                     $em->persist($trandist);
                     $em->persist($tranretailer);
                     $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                    $this->get('session')->getFlashBag()->add('success','balance retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccBalance().' successfully ');
+                    $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$AccountRetailer->getParent()->getAccBalance().' successfully ');
                 }
 
             }
@@ -2589,6 +2600,9 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $trandist->setTranBalance($AccountRetailer->getParent()->getAccBalance());
             $trandist->setTranType(0);
             $trandist->setAccount($AccountRetailer->getParent());
+
+            $alredyretailer=$AccountRetailer->getAccCreditLimit();
+            $alredydist=$AccountRetailer->getParent()->getAccBalance();
             if($data['Amount']>0)
             {
 
@@ -2601,7 +2615,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                         $AccountRetailer->setAccCreditLimit($AccountRetailer->getAccCreditLimit()+$data['Amount']);
                         $em->persist($trandist);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                        $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccCreditLimit().' successfully ');
+                        $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$AccountRetailer->getParent()->getAccBalance().' successfully ');
                     }
                 }
 
@@ -2612,7 +2627,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                     {
                         $AccountRetailer->setAccCreditLimit($AccountRetailer->getAccCreditLimit()- $data['Amount']);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                        $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccCreditLimit().' successfully ');
                     }
                 }
 
