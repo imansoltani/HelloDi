@@ -30,16 +30,18 @@
 
                         <div class="control-group">
                             {{ form_label(form.Subject) }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Subject) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
 
 
                         <div class="control-group">
                             {{ form_label(form.Type) }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Type) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
 
@@ -48,8 +50,9 @@
 
                         <div class="control-group">
                             {{ form_label(form.Description) }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Description) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
                         {{ form_widget(form._token) }}

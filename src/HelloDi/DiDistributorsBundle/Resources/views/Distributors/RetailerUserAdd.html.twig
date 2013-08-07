@@ -5,7 +5,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
-    <a class="link" href="">Users</a>
+    <a class="link" href="javascript:history.go(-1)">Users</a>
     <span class="link">Add User</span>
 {% endblock Site_Map %}
 
@@ -26,7 +26,7 @@
             <div class="controls money">
                 {{ form_widget(form.firstname) }}
                 <span class="icon-certificate"></span>
-            </div>
+        </div>
         </div>
 
         <div class="control-group">

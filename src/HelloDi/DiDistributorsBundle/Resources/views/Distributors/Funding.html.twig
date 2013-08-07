@@ -6,7 +6,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
     <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
-    <a class="link" href="{{ path('retailer_show') }}">Transactions</a>
+    <a class="link" href="javascript:history.go(-1)">Transactions</a>
     <span class="link">Fund Retailer</span>
 {% endblock Site_Map %}
 {% block Tab %}
@@ -21,7 +21,7 @@
 
             Retailer Balance : <b>{{ retailerAccount.accBalance }}</b>
 <hr>
-            <form style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
+            <form name='formfundingdistforretailer' style="margin-top: 20px" action="{{ path('DistRetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal" >
 
                 <fieldset>
 
@@ -45,21 +45,22 @@
 
                     <div class="control-group ">
                         {{ form_label(formapplay.Communications ) }}
-                        <div class="controls">
+                        <div class="controls money">
                             {{ form_widget(formapplay.Communications )  }} <span class="icon-certificate"></span>
                         </div>
                     </div>
 
                     <div class="control-group ">
                         {{ form_label(formapplay.Description ) }}
-                        <div class="controls">
+                        <div class="controls money">
                             {{ form_widget(formapplay.Description )  }} <span class="icon-certificate"></span>
                         </div>
                     </div>
 
 
                     <div class="form-actions" style="margin-bottom: 0" >
-                        <button class="btn btn-primary" type="submit">Transfer</button>
+
+                        <button class="btn btn-primary" onclick="AlertShow('do you sure?','formfundingdistforretailer',event);" type="submit">Transfer</button>
                         <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                     </div>
 
@@ -107,8 +108,9 @@
 
                     <div class="control-group">
                         {{ form_label(formupdate.As) }}
-                        <div class="controls">
+                        <div class="controls money">
                             {{ form_widget(formupdate.As)  }}
+                            <span class="icon-certificate"></span>
                         </div>
                     </div>
 

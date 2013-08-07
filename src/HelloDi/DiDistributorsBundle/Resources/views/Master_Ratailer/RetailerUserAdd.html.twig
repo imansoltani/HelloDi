@@ -43,7 +43,7 @@
             {{ form_label(form.username) }}
             <div class="controls money">
                 {{ form_widget(form.username) }}
-                <span class="icon-certificate"></span>
+
             </div>
         </div>
 
@@ -62,8 +62,9 @@
         <div class="control-group">
             {{ form_errors(form.enabled) }}
             {{ form_label(form.enabled) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form.enabled) }}
+                <span class="icon-certificate"></span>
             </div>
         </div>
 
@@ -88,8 +89,9 @@
         <div class="control-group">
             {{ form_errors(form.language) }}
             {{ form_label(form.language) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form.language) }}
+                <span class="icon-certificate"></span>
             </div>
         </div>
         <div class="control-group">
@@ -98,7 +100,7 @@
 
 
             <div class="controls money">
-                <div class="controls">
+                <div class="controls money">
                     {{ form_widget(form.roles[0]) }}
                 </div>
                 <span class="icon-certificate"></span>

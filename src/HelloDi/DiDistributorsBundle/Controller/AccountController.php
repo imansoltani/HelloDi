@@ -908,7 +908,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
         $form = $this->createFormBuilder()
             ->add('CreditDebit', 'choice', array(
-                'expanded' => true,
+                'expanded' => true,'label'=>'Action:',
                 'choices' => array(
 
                     1 => 'Credit:',
@@ -1140,49 +1140,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createFormBuilder()
-            ->add('accName', 'text', array('required' => false))
-            ->add('accCreditLimit', 'choice', array('choices' => (array(0 => 'Have Not', 1 => 'Have'))))
-            ->add('accBalance', 'choice', array('choices' => (array(0 => 'Lower Than', 1 => 'More Than'))))
-            ->add('accBalanceValue', 'text', array('required' => false))->getForm();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $query = array();
         $query = $Account->getChildrens();
-
-        if ($request->isMethod('post')) {
-            $form->handleRequest($request);
-            $data = $form->getData();
-            $qb = $em->createQueryBuilder()
-                ->select('Acc')
-                ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
-                ->Where('Acc.Parent=:AccountParent')
-                ->setParameter('AccountParent', $Account);
-            if ($data['accName'] != null)
-                $qb->andWhere($qb->expr()->like('Acc.accName', $qb->expr()->literal($data['accName'] . '%')));
-
-            if ($data['accCreditLimit'] == 0)
-                $qb->andwhere($qb->expr()->eq('Acc.accCreditLimit', 0));
-
-            if ($data['accCreditLimit'] == 1)
-                $qb->andwhere($qb->expr()->gt('Acc.accCreditLimit', 0));
-
-
-            if ($data['accBalance'] == 1)
-                if ($data['accBalanceValue'] != '')
-                    $qb->andwhere($qb->expr()->gte('Acc.accBalance', $data['accBalanceValue']));
-
-            if ($data['accBalance'] == 0)
-                if ($data['accBalanceValue'] != '')
-                    $qb->andwhere($qb->expr()->lte('Acc.accBalance', $data['accBalanceValue']));
-
-            $query = $qb->getQuery();
-
-            $count = count($query->getResult());
-            $query->setHint('knp_paginator.count', $count);
-
-        }
-
-
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -1192,7 +1151,6 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig',
             array(
-                'form' => $form->createView(),
                 'pagination' => $pagination,
                 'Account' => $Account));
 
@@ -2496,6 +2454,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 'preferred_choices'=>array('Credit'),
                 'choices'=>
                 array(
+//                    'required'=>true,
+                    ''=>'select a action',
                     1=>'Increase',
                     0=>'Decrease')
             ))->getForm();

@@ -4,7 +4,7 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
     <span class="link">Sub Accounts</span>
 {% endblock Site_Map %}
 
@@ -17,67 +17,6 @@
             Sub Accounts List
         </h3>
     </div> <!-- /widget-header -->
-
-<div class="form_search">
-    <h5 style="cursor:pointer;" class="TitleShow1">
-                        <span>
-                            <i id="search_logo" class="icon-search" ></i>
-                            <p class="title_search" ></p>
-                        </span>
-    </h5>
-    <form class="form-horizontal SearchForm" action="{{ path('ManageDistChildren',{'id':Account.id}) }}" method="post">
-        <fieldset>
-
-            <div class="control-group">
-                {{ form_label(form.accName) }}
-                {{ form_widget(form.accName) }}
-            </div>
-
-            <div class="control-group">
-                {{ form_label(form.accCreditLimit) }}
-                <div class="controls">
-                    {{ form_widget(form.accCreditLimit) }}
-                </div>
-            </div>
-
-            <div class="control-group">
-                {{ form_label(form.accBalance) }}
-                    <div class="controls">
-                        {{ form_widget(form.accBalance) }}
-                    </div>
-            </div>
-
-
-
-
-
-            <div class="control-group">
-                {{ form_label(form.accBalanceValue) }}
-
-                    {{ form_widget(form.accBalanceValue) }}
-
-            </div>
-            {{ form_rest(form) }}
-            <hr>
-            <input type="hidden" value="1" name="page" id="search_page" >
-            <input class="btn btn-primary" type="submit" value="Search">
-    </form>
-
-            <a href="{{ path('ManageDistChildren',{'id': Account.id}) }}" class="btn btn-mini">Reset</a>
-
-
-
-
-        </fieldset>
-
-    <script type="text/javascript">
-        $(function () {
-
-            Form_Search(0,"Search Sub Accounts");
-
-        });
-    </script>
-</div>
 
 
 

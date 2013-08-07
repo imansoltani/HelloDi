@@ -4,7 +4,7 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Distributor</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
     <a class="link" href="">Users</a>
     <span class="link">Add User</span>
 {% endblock Site_Map %}
@@ -81,14 +81,15 @@
 
                 <div class="control-group">
                     {{ form_label(form.language) }}
-                    <div class="controls">
+                    <div class="controls money">
                         {{ form_widget(form.language) }}
+                        <span class="icon-certificate" ></span>
                     </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.roles[0]) }}
-                    <div class="controls">
+                    <div class="controls money">
                         {{ form_widget(form.roles[0]) }} <span class="icon-certificate"></span>
                     </div>
                 </div>

@@ -26,7 +26,15 @@
 
                     <form class="form-horizontal SearchForm" action="{{ path('RetailerTicketsNew') }}" method="POST" >
 
-Attention To:
+                         <div class="control-group">
+
+                            <div class="controls money">
+                                Attention To:
+                                <span class="icon-certificate"></span>
+
+                            </div>
+                        </div>
+
                         <div class="control-group">
                             {{ form_label(form.Contact[0],'Distributors:') }}
                             <div class="controls">
@@ -43,16 +51,18 @@ Attention To:
 
                         <div class="control-group">
                             {{ form_label(form.Subject,'Subject:') }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Subject) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
 
 
                         <div class="control-group">
                             {{ form_label(form.Type,'Type:') }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Type) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
 
@@ -61,12 +71,13 @@ Attention To:
 
                         <div class="control-group">
                             {{ form_label(form.Description,'Description:') }}
-                            <div class="controls">
+                            <div class="controls money">
                                 {{ form_widget(form.Description) }}
+                                <span class="icon-certificate"></span>
                             </div>
                         </div>
                         {{ form_widget(form._token) }}
-                   <input type="submit" value="Open">
+                   <input type="submit" value="Open" class="btn btn-primary">
                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
                     </form>
 
