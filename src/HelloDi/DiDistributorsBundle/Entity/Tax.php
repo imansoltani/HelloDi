@@ -15,8 +15,8 @@ class Tax
      */
     private $id;
 
-    /** 
-     * @ORM\Column(type="decimal", nullable=false, name="tax")
+    /**
+     * @ORM\Column(type="float", nullable=false, name="taxp")
      */
     private $tax;
 

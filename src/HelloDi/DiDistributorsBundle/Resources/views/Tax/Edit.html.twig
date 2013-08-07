@@ -29,18 +29,20 @@
                 <h3>Tax</h3>
             </div> <!-- /widget-header --><br>
 
-            <form class="form-horizontal" action="{{ path('Tax') }}" method="post" >
+            <form class="form-horizontal SearchForm" action="{{ path('Tax') }}" method="post" >
 
 
                 <div class="control-group">
-                    {{ form_label(form.tax,'Last tax :') }}
+                    {{ form_label(form.tax,'tax :') }}
                     <div class="controls">
                         {{ form_widget(form.tax) }}
                         {{ form_errors(form.tax) }}
                     </div>
                 </div>
                 {{ form_widget(form._token) }}
+
                 <input type="hidden" value="1" name="page" id="search_page" >
+
                 <div class="form-actions" style="margin-bottom: 0" >
                     <input class="btn btn-primary" type="submit"  value="Edit">
                     <a href="javascript:history.go(-1)" class="btn">Cancel</a>
@@ -91,6 +93,9 @@
 
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 
 

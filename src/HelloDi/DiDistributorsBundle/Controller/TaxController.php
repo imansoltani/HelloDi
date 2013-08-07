@@ -52,6 +52,7 @@ class TaxController extends Controller
         $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
         $newtax=new Tax();
+        if($tax!=null)
         $newtax->setTax($tax->getTax());
         $form=$this->createForm(new TaxType(),$newtax);
 
@@ -73,11 +74,17 @@ class TaxController extends Controller
            ;
 
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $historytax,
+            $req->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
      return   $this->render('HelloDiDiDistributorsBundle:Tax:Edit.html.twig',
             array(
                 'form'=>$form->createView(),
-                'pagination'=>$historytax->getQuery()->getResult()
+                'pagination'=>$pagination
             ));
     }
 

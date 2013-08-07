@@ -10,9 +10,9 @@ HelloDi\DiDistributorsBundle\Entity\Tax:
     properties:
         tax:
             - Regex:
-                pattern: "/\d/"
+                pattern: "/^\d/"
                 match:   true
-                message: Your name cannot contain a number
+                message: 'only numeric'
 HelloDi\DiDistributorsBundle\Entity\User:
     properties:
         firstName:
