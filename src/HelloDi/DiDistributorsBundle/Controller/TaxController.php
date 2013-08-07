@@ -49,8 +49,10 @@ class TaxController extends Controller
 
 
         $em=$this->getDoctrine()->getEntityManager();
+        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
         $newtax=new Tax();
+        $newtax->setTax($tax->getTax());
         $form=$this->createForm(new TaxType(),$newtax);
 
         if($req->isMethod('POST'))
