@@ -67,13 +67,27 @@ if($req->isMethod('POST'))
          ->Where('Tic.Status = :status')->setParameter('status',$data['Status']);
 if($data['Retailers']==1 and $data['Distributors']==1)
     {
-        $tickets->andWhere($tickets->expr()->isNull('Tic.Accountdist'));
-        $tickets->orWhere($tickets->expr()->isNull('Tic.Accountretailer'));
+     $tickets->andWhere(
+      $tickets->expr()->orX(
+          $tickets->expr()->andX(
+
+              $tickets->expr()->isNull('Tic.Accountretailer')  ,
+              $tickets->expr()->isNotNull('Tic.Accountdist')
+
+                                 ),
+
+          $tickets->expr()->andX(
+
+              $tickets->expr()->isNull('Tic.Accountdist') ,
+              $tickets->expr()->isNotNull('Tic.Accountretailer')
+
+                                )
+
+                           )
+                        );
     }
     elseif($data['Distributors']==1 and $data['Retailers']==0)
     {
-
-
         $tickets->andWhere($tickets->expr()->isNull('Tic.Accountretailer'));
     }
 
