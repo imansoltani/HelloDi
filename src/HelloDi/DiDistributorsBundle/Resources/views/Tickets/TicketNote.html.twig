@@ -57,11 +57,11 @@ In change:
 
      {% set istake='notake' %}
 
-    {% for user in usermaster %}
+ {% for user in usermaster %}
         {% if user.id==Ticket.inchange %}
          <b style="color: red">   {{ user.username }}</b>
+            <a class="btn btn-mini btn-danger" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>
 
-            {% set istake='notake' %}
         {% endif %}
 
     {% endfor %}
