@@ -110,7 +110,7 @@
                                         <span class="new">
                                        {% set h,k=0,0 %}
                                             {% for Note in Ticket.TicketNotes %}
-                                                {% set users=app.user.Account.Users %}
+                                                {% set users=app.user.Entiti.Users %}
                                                 {% if Note.view==0 %}
                                                     {% for user in users %}
                                                         {% if Note.User!=user %}
@@ -120,7 +120,7 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% endif %}
-                                                {% if k.count==users.count %}
+                                                {% if k==users|length %}
                                                      {% set h=h+1 %}
                                                 {% endif %}
                                                 {% set k=0 %}

@@ -177,7 +177,7 @@ public  function ticketsnoteAction(Request $req,$id)
     $notesview=$em->createQueryBuilder();
     $notesview->update('HelloDiDiDistributorsBundle:TicketNote','Note')
         ->set('Note.view',1)
-        ->Where('Note.User != :usr')->setParameter('usr',$User)
+        ->Where('Note.User not in (:usr)')->setParameter('usr',$User->getEntiti()->getUsers()->ToArray())
         ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
         ->andWhere('Note.view = 0')
         ->getQuery()->execute();

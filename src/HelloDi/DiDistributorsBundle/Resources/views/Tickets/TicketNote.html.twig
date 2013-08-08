@@ -66,7 +66,7 @@
                             {% for user in usermaster %}
                                 {% if user.id==Ticket.inchange %}
                                     <a class="btn btn-primary">   {{ user.username }}</a>
-
+                                    <a class="btn btn-primary" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>
                                     {% set istake='notake' %}
                                 {% endif %}
 

@@ -543,7 +543,7 @@ $datetype=0;
         $notesview=$em->createQueryBuilder();
         $notesview->update('HelloDiDiDistributorsBundle:TicketNote Note')
             ->set('Note.view',1)
-            ->Where('Note.User != :usr')->setParameter('usr',$User)
+            ->Where('Note.User Not in (:usr)')->setParameter('usr',$User->getAccount()->getUsers()->toArray())
             ->andWhere('Note.Ticket = :tic')->setParameter('tic',$ticket)
             ->andWhere('Note.view = 0')
             ->getQuery()->execute();
