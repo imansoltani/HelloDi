@@ -108,14 +108,28 @@
                                 <div class="items">
                                     <div>
                                         <span class="new">
-                    {% set i=0 %}
+                    {% set i,k=0,0 %}
                                             {% for Note in Ticket.TicketNotes %}
-                                                {% if Note.view==0 and Note.User!=app.user %}
-                                                    {% set i=i+1 %}
-                                                {% endif %}
-                                            {% endfor %}
+                                                {% set users=app.user.Entiti.Users %}
+                                                   {% if Note.view==0 %}
+                                                       {% for user in users %}
+                                                         {% if Note.User!=user %}
+                                                       {% set k=1 %}
+                                                         {% else %}
+                                                        {% set k=0 %}
+                                                        {% endif %}
+                                                       {% endfor %}
+                                                    {% endif %}
+
+                                                    {% if k==1 %}
+                                                       {% set i=i+1 %}
+                                                  {% endif %}
+
+                                           {% endfor %}
 
                                             {{ i }}
+
+
                 </span>
                 <span class="count">
                     {{ Ticket.TicketNotes.count }}
@@ -175,14 +189,14 @@
                             <div>
 
                                 {{ 'Tickets.In change' | trans ({}, "account") }} -
-                                {% set i=0 %}
+                                {% set j=0 %}
                                 {% for user in usermaster %}
                                     {% if user.id==Ticket.inchange %}
-                                        {{ user.username }}
-                                        {% set i=1 %}
+                                        <b style="color:red ">{{ user.username }}</b>
+                                        {% set j=1 %}
                                     {% endif %}
                                 {% endfor %}
-                                {% if i==0 %}
+                                {% if j==0 %}
                                     <a
                                        href="{{ path('MasterTakeTickets',{'id':Ticket.id}) }}">Take</a>
                                 {% endif %}

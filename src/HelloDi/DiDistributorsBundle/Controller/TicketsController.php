@@ -52,9 +52,25 @@ public  function  ticketsAction(Request $req)
     $tickets=$em->createQueryBuilder();
     $tickets->select('Tic')
         ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
-          ->orWhere( $tickets->expr()->isNull('Tic.Accountretailer'))
-          ->orWhere($tickets->expr()->isNull('Tic.Accountdist'))
-          ->orWhere($tickets->expr()->isnotNull('Tic.inchange'));
+        ->Where(
+        $tickets->expr()->orX(
+            $tickets->expr()->andX(
+
+                $tickets->expr()->isNull('Tic.Accountretailer')  ,
+                $tickets->expr()->isNotNull('Tic.Accountdist')
+
+            ),
+
+            $tickets->expr()->andX(
+
+                $tickets->expr()->isNull('Tic.Accountdist') ,
+                $tickets->expr()->isNotNull('Tic.Accountretailer')
+
+            )
+
+        )
+    )
+ ->orWhere($tickets->expr()->isnotNull('Tic.inchange'));
 
 if($req->isMethod('POST'))
 {
@@ -130,8 +146,6 @@ if($data['Retailers']==1 and $data['Distributors']==1)
 public  function ticketsnoteAction(Request $req,$id)
 {
     $em=$this->getDoctrine()->getEntityManager();
-
-//    $usermaster=$em->getRepository('HelloDiDiDistributorsBundle:User')->findBy(array('Account'=>null));
 
 
     $note=new TicketNote();
@@ -247,17 +261,38 @@ public  function taketicketsAction($id)
     public  function  countnoteAction()
     {
         $User = $this->get('security.context')->getToken()->getUser();
+        $users=$User->getEntiti()->getUsers();
         $em=$this->getDoctrine()->getEntityManager();
         $Countnote=$em->createQueryBuilder();
         $Countnote->select('Note')
             ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
             ->innerJoin('Note.Ticket','NoteTic')
-            ->orWhere($Countnote->expr()->isNull('NoteTic.Accountretailer'))
-            ->orWhere($Countnote->expr()->isNull('NoteTic.Accountdist'))
-            ->andWhere('Note.User != :usr')->setParameter('usr',$User)
-            ->andWhere('Note.view = 0');
+            ->Where(
+                $Countnote->expr()->orX(
+                     $Countnote->expr()->andX(
 
+                         $Countnote->expr()->isNull('NoteTic.Accountretailer')  ,
+                         $Countnote->expr()->isNotNull('NoteTic.Accountdist')
+
+                     ),
+
+                     $Countnote->expr()->andX(
+
+                         $Countnote->expr()->isNull('NoteTic.Accountdist') ,
+                         $Countnote->expr()->isNotNull('NoteTic.Accountretailer')
+
+                     )
+
+                 )
+            );
+//        foreach($users as $userm)
+//        {
+            $Countnote->andWhere('Note.User NOT IN(:usr)')->setParameter('usr',$users->toArray());
+//        }
+
+        $Countnote->andWhere('Note.view = 0');
         return new Response(count($Countnote->getQuery()->getResult()));
+
     }
 
 

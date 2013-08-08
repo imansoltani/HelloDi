@@ -146,7 +146,7 @@
                        data-toggle="dropdown">
                         <i class="icon-comment">
 
-                            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
                                 {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
                                     <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
@@ -155,7 +155,7 @@
 
 
 
-                            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
                                 {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
                                     <span>
                                 {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
@@ -174,13 +174,13 @@
                         </i>
                     </a>
                     <ul class="dropdown-menu">
-                        {% if app.user.roles[0]!='ROLE_MASTER_ADMIN' %}
+                        {% if app.user.roles[0]!='ROLE_MASTER_ADMIN' and app.user.roles[0]!='ROLE_MASTER' %}
                         <li><a
-                                {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                                {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
 
                                     href="{{ path('DistTicketsNew') }}"
 
-                                {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                                {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
 
                                 href="{{ path('RetailerTicketsNew') }}"
                                 {% endif %}
