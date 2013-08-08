@@ -465,7 +465,7 @@ $datetype=0;
             $form->handleRequest($req);
             $data=$form->getData();
 
-            $Tick->setUser($User);
+
             $Tick->setAccountretailer($User->getAccount());
 
             if($data['Contact']==0)
@@ -487,6 +487,7 @@ $datetype=0;
             $em->persist($TickNote);
             $em->persist($Tick);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','this ticket create successfully !');
         }
 
 

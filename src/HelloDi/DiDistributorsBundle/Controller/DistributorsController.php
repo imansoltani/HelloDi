@@ -1448,7 +1448,6 @@ else
             $tickets->setAccountdist($Account);
             $tickets->setStatus(1);
             $tickets->setType($data['Type']);
-            $tickets->setUser($User);
             $tickets->setSubject($data['Subject']);
             $tickets->setTicketEnd(null);
             $tickets->setTicketStart(new \DateTime('now'));
@@ -1462,6 +1461,8 @@ else
             $em->persist($tickets);
             $em->persist($note);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success','this ticket create successfully !');
 
         }
 
