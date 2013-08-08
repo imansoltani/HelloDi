@@ -38,16 +38,15 @@ class RetailersController extends Controller
 
   public  function  countnoteAction()
   {
-      $User = $this->get('security.context')->getToken()->getUser();
+      $User = $this->getUser();
+      $users=$User->getAccount()->getUsers();
       $em=$this->getDoctrine()->getEntityManager();
       $Countnote=$em->createQueryBuilder();
       $Countnote->select('Note')
           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
           ->innerJoin('Note.Ticket','NoteTic')
           ->Where('NoteTic.Accountretailer = :Accr')->setParameter('Accr',$User->getAccount())
-          ->andWhere('NoteTic.Accountdist = :Accd')->setParameter('Accd',$User->getAccount()->getParent())
-          ->orWhere($Countnote->expr()->isNull('NoteTic.Accountdist'))
-          ->andWhere('Note.User != :usr')->setParameter('usr',$User)
+          ->andWhere('Note.User NOT IN(:usr)')->setParameter('usr',$users->toArray())
           ->andWhere('Note.view = 0');
 
       return new Response(count($Countnote->getQuery()->getResult()));

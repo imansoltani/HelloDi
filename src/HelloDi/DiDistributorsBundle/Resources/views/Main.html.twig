@@ -190,11 +190,11 @@
                             </a></li>
                         {% endif %}
                         <li><a
-                                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
 
                                         href="{{ path('DistTickets') }}"
 
-                                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
                                         href="{{ path('RetailerTickets') }}"
 
 
