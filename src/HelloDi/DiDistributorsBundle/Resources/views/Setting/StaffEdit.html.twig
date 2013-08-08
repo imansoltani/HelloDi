@@ -34,37 +34,44 @@
                 <div class="control-group">
 
                     {{ form_label(form.firstname) }}
-                    {{ form_errors(form.firstname) }}
+
                     {{ form_widget(form.firstname) }}
+                    {{ form_errors(form.firstname) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.lastname) }}
                     {{ form_widget(form.lastname) }}
+                    {{ form_errors(form.lastname) }}
                 </div>
                 <div class="control-group">
                     {{ form_label(form.username) }}
                     {{ form_widget(form.username) }}
+                    {{ form_errors(form.username) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.mobile) }}
                     {{ form_widget(form.mobile) }}
+                    {{ form_errors(form.mobile) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.plainPassword.first) }}
                     {{ form_widget(form.plainPassword.first) }}
+                    {{ form_errors(form.plainPassword.first) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.plainPassword.second) }}
                     {{ form_widget(form.plainPassword.second) }}
+                    {{ form_errors(form.plainPassword.second) }}
                 </div>
 
 
@@ -74,6 +81,7 @@
                     {{ form_label(form.language) }}
                     <div class="controls">
                         {{ form_widget(form.language) }}
+                        {{ form_errors(form.language) }}
                     </div>
                 </div>
 

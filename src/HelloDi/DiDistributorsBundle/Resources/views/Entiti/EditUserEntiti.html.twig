@@ -20,42 +20,50 @@
     <div class="control-group">
         {{ form_label(form_edit.firstname) }}
         {{ form_widget(form_edit.firstname,{ 'attr' : { 'placeholder': 'important'}}) }}
+        {{ form_errors(form_edit.firstname) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form_edit.lastname) }}
     {{ form_widget(form_edit.lastname) }}
+        {{ form_errors(form_edit.lastname) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form_edit.username) }}
     {{ form_widget(form_edit.username,{ 'attr' : { 'placeholder': 'important'}}) }}
+        {{ form_errors(form_edit.username) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form_edit.mobile) }}
     {{ form_widget(form_edit.mobile) }}
+        {{ form_errors(form_edit.mobile) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form_edit.email) }}
     {{ form_widget(form_edit.email) }}
+        {{ form_errors(form_edit.email) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form_edit.plainPassword.first) }}
     {{ form_widget(form_edit.plainPassword.first) }}
+        {{ form_errors(form_edit.plainPassword.first) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form_edit.plainPassword.second) }}
         {{ form_widget(form_edit.plainPassword.second) }}
+        {{ form_errors(form_edit.plainPassword.second) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form_edit.enabled) }}
         <div class="controls">
             {{ form_widget(form_edit.enabled) }}
+            {{ form_errors(form_edit.enabled) }}
         </div>
     </div>
 
@@ -63,6 +71,7 @@
     {{ form_label(form_edit.language) }}
     <div class="controls">
         {{ form_widget(form_edit.language) }}
+        {{ form_errors(form_edit.language) }}
     </div>
     </div>
 
@@ -77,6 +86,7 @@
         {{ form_label(form_edit.roles[0]) }}
         <div class="controls">
             {{ form_widget(form_edit.roles[0]) }}
+            {{ form_errors(form_edit.roles[0]) }}
         </div>
     </div>
 

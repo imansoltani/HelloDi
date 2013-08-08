@@ -19,13 +19,14 @@
             <br>
 
             <form class="form-horizontal" action="{{ path('MasterDistUserAdd',{'id':Account.id}) }}" method="post" >
-                {{ form_errors(form) }}
+
                 <div class="control-group">
                     {{ form_label(form.firstname) }}
 
 
                     <div class="controls money">
                         {{ form_widget(form.firstname) }} <span class="icon-certificate" ></span>
+                        {{ form_errors(form.firstname) }}
                     </div>
                 </div>
 
@@ -35,22 +36,26 @@
                         {{ form_widget(form.lastname) }}
                     </div>
                 </div>
+
                 <div class="control-group">
                     {#{{ form_errors(form.username) }}#}
                     {{ form_label(form.username) }}
                     <div class="controls money">
                         {{ form_widget(form.username) }} <span class="icon-certificate" ></span>
+                        {{ form_errors(form.username) }}
                     </div>
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.mobile) }}
                     {{ form_widget(form.mobile) }}
+                    {{ form_errors(form.mobile) }}
                 </div>
 
                 <div class="control-group">
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
                 </div>
 
 
@@ -60,6 +65,7 @@
 
                     <div class="controls money">
                         {{ form_widget(form.enabled) }} <span class="icon-certificate" ></span>
+                        {{ form_errors(form.enabled) }}
                     </div>
                 </div>
 
@@ -68,6 +74,7 @@
 
                     <div class="controls money">
                         {{ form_widget(form.plainPassword.first) }} <span class="icon-certificate" ></span>
+                        {{ form_errors(form.plainPassword.first) }}
                     </div>
                 </div>
 
@@ -76,6 +83,7 @@
 
                     <div class="controls money">
                         {{ form_widget(form.plainPassword.second) }} <span class="icon-certificate" ></span>
+                        {{ form_errors(form.plainPassword.second) }}
                     </div>
                 </div>
 
@@ -84,6 +92,7 @@
                     <div class="controls money">
                         {{ form_widget(form.language) }}
                         <span class="icon-certificate" ></span>
+                        {{ form_errors(form.language) }}
                     </div>
                 </div>
 
@@ -91,6 +100,7 @@
                     {{ form_label(form.roles[0]) }}
                     <div class="controls money">
                         {{ form_widget(form.roles[0]) }} <span class="icon-certificate"></span>
+                        {{ form_errors(form.roles[0]) }}
                     </div>
                 </div>
 

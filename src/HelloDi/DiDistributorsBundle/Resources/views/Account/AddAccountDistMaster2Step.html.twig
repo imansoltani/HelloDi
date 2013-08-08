@@ -91,7 +91,7 @@
 
         <div class="control-group">
             {{ form_label(form2step.Country) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form2step.Country) }} <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form2step.Country) }}
@@ -115,7 +115,7 @@
 
         <div class="control-group">
             {{ form_label(form2step.Accounts[0].accCurrency) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form2step.Accounts[0].accCurrency) }} <span class="icon-certificate"></span>
             </div>
             {{ form_errors(form2step.Accounts[0].accCurrency) }}
@@ -170,38 +170,45 @@
             <div class="controls money">
                 {{ form_widget(form2step.Users[0].firstname) }} <span class="icon-certificate"></span>
             </div>
+            {{ form_errors(form2step.Users[0].firstname) }}
         </div>
 
         <div class="control-group lastname">
             {{ form_label(form2step.Users[0].lastname) }}
-            <div class="controls money">
+            <div class="controls">
             {{ form_widget(form2step.Users[0].lastname) }}
                 </div>
+            {{ form_errors(form2step.Users[0].lastname) }}
         </div>
+
         <div class="control-group username">
             {{ form_label(form2step.Users[0].username) }}
             <div class="controls money">
             {{ form_widget(form2step.Users[0].username) }} <span class="icon-certificate"></span>
                 </div>
+            {{ form_errors(form2step.Users[0].username) }}
         </div>
 
         <div class="control-group">
             {{ form_label(form2step.Users[0].mobile) }}
             {{ form_widget(form2step.Users[0].mobile) }}
+            {{ form_errors(form2step.Users[0].mobile) }}
         </div>
 
         <div class="control-group email">
             {{ form_label(form2step.Users[0].email) }}
-            <div class="controls money">
+            <div class="controls">
             {{ form_widget(form2step.Users[0].email) }}
                 </div>
+            {{ form_errors(form2step.Users[0].email) }}
         </div>
 
         <div class="control-group">
             {{ form_label(form2step.Users[0].enabled) }}
-            <div class="controls">
-                {{ form_widget(form2step.Users[0].enabled) }}
+            <div class="controls money">
+                {{ form_widget(form2step.Users[0].enabled) }} <span class="icon-certificate"></span>
             </div>
+            {{ form_errors(form2step.Users[0].enabled) }}
         </div>
 
         <div class="control-group first">
@@ -209,6 +216,7 @@
             <div class="controls money">
             {{ form_widget(form2step.Users[0].plainPassword.first) }} <span class="icon-certificate"></span>
                 </div>
+            {{ form_errors(form2step.Users[0].plainPassword.first) }}
         </div>
 
         <div class="control-group second">
@@ -216,19 +224,25 @@
             <div class="controls money">
             {{ form_widget(form2step.Users[0].plainPassword.second) }} <span class="icon-certificate"></span>
                 </div>
+            {{ form_errors(form2step.Users[0].plainPassword.second) }}
         </div>
+
         {{form_widget(form2step._token)}}
+
         <div class="control-group">
             {{ form_label(form2step.Users[0].language) }}
-            <div class="controls">
-                {{ form_widget(form2step.Users[0].language) }}
+            <div class="controls money">
+                {{ form_widget(form2step.Users[0].language) }}<span class="icon-certificate"></span>
             </div>
+            {{ form_errors(form2step.Users[0].language) }}
         </div>
+
         <div class="control-group">
             {{ form_label(form2step.Users[0].roles[0]) }}
-            <div class="controls">
+            <div class="controls money">
                 {{ form_widget(form2step.Users[0].roles[0]) }} <span class="icon-certificate"></span>
             </div>
+            {{ form_errors(form2step.Users[0].roles[0]) }}
         </div>
 
      </div>

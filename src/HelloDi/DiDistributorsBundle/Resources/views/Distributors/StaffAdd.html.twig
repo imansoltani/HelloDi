@@ -32,88 +32,101 @@
             <form class="form-horizontal" action="{{ path('DistStaffAdd',{'id':Account.id}) }}" method="post" >
 
                 <div class="control-group">
-                    {{ form_errors(form.firstname) }}
+
                     {{ form_label(form.firstname) }}
                     <div class="controls money">
                         {{ form_widget(form.firstname) }}
                         <span class="icon-certificate"></span>
+                        {{ form_errors(form.firstname) }}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.lastname) }}
+
                     {{ form_label(form.lastname) }}
-                    <div class="controls money">
                         {{ form_widget(form.lastname) }}
-                        <span class="icon-certificate"></span>
-                    </div>
+                    {{ form_errors(form.lastname) }}
+
                 </div>
+
                 <div class="control-group">
-                    {{ form_errors(form.username) }}
+
                     {{ form_label(form.username) }}
                     <div class="controls money">
                         {{ form_widget(form.username) }}
                         <span class="icon-certificate"></span>
+                        {{ form_errors(form.username) }}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.mobile) }}
+
                     {{ form_label(form.mobile) }}
                     {{ form_widget(form.mobile) }}
+                    {{ form_errors(form.mobile) }}
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.email) }}
+
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.enabled) }}
+
+
                     {{ form_label(form.enabled) }}
-                    <div class="controls">
+                    <div class="controls money">
                         {{ form_widget(form.enabled) }}
+                        <span class="icon-certificate"></span>
+                        {{ form_errors(form.enabled) }}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.plainPassword.first) }}
+
                     {{ form_label(form.plainPassword.first) }}
                     <div class="controls money">
                         {{ form_widget(form.plainPassword.first) }}
                         <span class="icon-certificate"></span>
+                        {{ form_errors(form.plainPassword.first) }}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.plainPassword.second) }}
+
                     {{ form_label(form.plainPassword.second) }}
                     <div class="controls money">
                         {{ form_widget(form.plainPassword.second) }}
                         <span class="icon-certificate"></span>
+                        {{ form_errors(form.plainPassword.second) }}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    {{ form_errors(form.language) }}
+
                     {{ form_label(form.language) }}
-                    <div class="controls">
+                    <div class="controls money">
                         {{ form_widget(form.language) }}
+                        <span class="icon-certificate"></span>
+                        {{ form_errors(form.language) }}
                     </div>
                 </div>
+
                 <div class="control-group">
-                    {{ form_errors(form.roles[0]) }}
+
                     {{ form_label(form.roles[0]) }}
 
-
-                    <div class="controls money">
-                        <div class="controls">
+                        <div class="controls money">
                             {{ form_widget(form.roles[0]) }}
+                            <span class="icon-certificate"></span>
+                            {{ form_errors(form.roles[0]) }}
                         </div>
-                        <span class="icon-certificate"></span>
+
                     </div>
-                </div>
+
+
 
 
                 {{ form_widget(form._token) }}

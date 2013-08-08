@@ -23,51 +23,63 @@
 
     <div class="control-group">
         {{ form_label(form.firstname) }}
+
         <div class="controls money">
             {{ form_widget(form.firstname ) }} <span class="icon-certificate">
             </span>
+            {{ form_errors(form.firstname) }}
         </div>
     </div>
 
     <div class="control-group">
     {{ form_label(form.lastname) }}
-        <div class="controls money">
+
             {{ form_widget(form.lastname ) }}
-            </span>
-        </div>
+        {{ form_errors(form.lastname) }}
     </div>
+
     <div class="control-group">
     {{ form_label(form.username) }}
+
         <div class="controls money">
             {{ form_widget(form.username ) }} <span class="icon-certificate">
             </span>
+            {{ form_errors(form.username) }}
         </div>
     </div>
 
     <div class="control-group">
     {{ form_label(form.mobile) }}
+
     {{ form_widget(form.mobile) }}
+        {{ form_errors(form.mobile) }}
     </div>
 
     <div class="control-group">
     {{ form_label(form.email) }}
+
     {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
     </div>
 
     <div class="control-group">
         {{ form_label(form.plainPassword.first) }}
+
         <div class="controls money">
             {{ form_widget(form.plainPassword.first ) }} <span class="icon-certificate">
             </span>
+            {{ form_errors(form.plainPassword.first ) }}
         </div>
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
 
     <div class="control-group">
         {{ form_label(form.plainPassword.second) }}
+
         <div class="controls money">
             {{ form_widget(form.plainPassword.second ) }} <span class="icon-certificate">
             </span>
+            {{ form_errors(form.plainPassword.second) }}
         </div>
         {#{{ form_widget(form.plainPassword) }}#}
     </div>
@@ -76,10 +88,8 @@
     <div class="control-group">
     {{ form_label(form.Account) }}
     <div class="controls money">
-
-            <div class="controls">
                 {{ form_widget(form.Account ) }}
-            </div> <span class="icon-certificate">
+            <span class="icon-certificate">
             </span>
 
     </div>
@@ -87,21 +97,28 @@
 
     <div class="control-group">
         {{ form_label(form.language) }}
-        <div class="controls">
-            {{ form_widget(form.language) }}
+        {{ form_errors(form.language) }}
+        <div class="controls money">
+            {{ form_widget(form.language) }}<span class="icon-certificate"></span>
+            {{ form_errors(form.language) }}
         </div>
     </div>
 
     <div class="control-group">
         {{ form_label(form.roles[0]) }}
-        <div class="controls">
-            {{ form_widget(form.roles[0]) }}<span class="icon-certificate">
+
+        <div class="controls money">
+            {{ form_widget(form.roles[0]) }}<span class="icon-certificate"></span>
+            {{ form_errors(form.roles[0]) }}
         </div>
     </div>
+
     <div class="control-group">
         {{ form_label(form.enabled) }}
-        <div class="controls">
-            {{ form_widget(form.enabled) }}
+
+        <div class="controls money">
+            {{ form_widget(form.enabled) }}<span class="icon-certificate"></span>
+            {{ form_errors(form.enabled) }}
         </div>
     </div>
 

@@ -20,16 +20,16 @@ class NewRetailersType extends AbstractType
     {
                   $builder
                       ->add('entName', 'text',array('required'=>true,'label' => 'Name','translation_domain' => 'entity'))
-                      ->add('entVatNumber', 'text',array('required'=>false,'label' => 'VatNumber','translation_domain' => 'entity'))
-                      ->add('entTel1', 'text',array('required'=>false,'label' => 'Tel1','translation_domain' => 'entity'))
-                      ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))
-                      ->add('entFax', 'text',array('required'=>false,'label' => 'Fax','translation_domain' => 'entity'))
-                      ->add('entWebsite', 'text',array('required'=>false,'label' => 'WebSite','translation_domain' => 'entity'))
-                      ->add('entCity','text',array('required'=>true,'label' => 'City','translation_domain' => 'entity'))
-                      ->add('entNP','text',array('required'=>true,'label' => 'PostCode','translation_domain' => 'entity'))
-                       ->add('entAdrs1','text',array('required'=>true,'label' => 'Town','translation_domain' => 'entity'))
-                      ->add('entAdrs2','text',array('required'=>false,'label' => 'Additional','translation_domain' => 'entity'))
-                      ->add('entAdrs3','text',array('required'=>false,'label' => 'Additional','translation_domain' => 'entity'))
+                      ->add('entVatNumber', 'text',array('required'=>false,'label' => 'VatNumber:','translation_domain' => 'entity'))
+                      ->add('entTel1', 'text',array('required'=>false,'label' => 'Tel1:','translation_domain' => 'entity'))
+                      ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2:','translation_domain' => 'entity'))
+                      ->add('entFax', 'text',array('required'=>false,'label' => 'Fax:','translation_domain' => 'entity'))
+                      ->add('entWebsite', 'text',array('required'=>false,'label' => 'WebSite:','translation_domain' => 'entity'))
+                      ->add('entCity','text',array('required'=>true,'label' => 'City:','translation_domain' => 'entity'))
+                      ->add('entNP','text',array('required'=>true,'label' => 'PostCode:','translation_domain' => 'entity'))
+                       ->add('entAdrs1','text',array('required'=>true,'label' => 'Town:','translation_domain' => 'entity'))
+                      ->add('entAdrs2','text',array('required'=>false,'label' => 'Additional:','translation_domain' => 'entity'))
+                      ->add('entAdrs3','text',array('required'=>false,'label' => 'Additional:','translation_domain' => 'entity'))
                       ->add('Country', 'entity', array(
                               'label'=>'Country',
                               'class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property' => 'name',
