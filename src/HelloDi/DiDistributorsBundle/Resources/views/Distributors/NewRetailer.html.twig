@@ -7,13 +7,15 @@
         </div>
 
         <div class="control-group">
-            {{ form_errors(form_Relaited_New.entName) }}
+
             {{ form_label(form_Relaited_New.entName,'Name(Company):') }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.entName) }}
                 <span class="icon-certificate"></span>
+                {{ form_errors(form_Relaited_New.entName) }}
               </div>
         </div>
+
         <div class="control-group entVatNumber">
             {{ form_label(form_Relaited_New.entVatNumber) }}
             {{ form_widget(form_Relaited_New.entVatNumber,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
@@ -135,6 +137,7 @@
                 </div>
             {{ form_errors(form_Relaited_New.accounts[0].accName) }}
         </div>
+
         <div class="control-group accTerms">
             {{ form_label(form_Relaited_New.accounts[0].accTerms,'Terms:') }}
             {{ form_widget(form_Relaited_New.accounts[0].accTerms,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
