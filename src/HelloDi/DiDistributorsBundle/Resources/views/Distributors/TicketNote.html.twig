@@ -33,10 +33,13 @@
                     {% endif %}
                     <li>
                         <span>Type</span><a>
-                            {% if Ticket.type==0 %}Payment Issue
-                            {% elseif Ticket.type==1 %}New Item Request
-                            {% elseif Ticket.type==2 %}Price Change Request
-                            {% elseif Ticket.type==3 %}
+                            {% if Ticket.type==0 %}payment issue
+                            {% elseif Ticket.type==1 %}new item request
+                            {% elseif Ticket.type==2 %}price change request
+                            {% elseif Ticket.type==3 %}address change
+                            {% elseif Ticket.type==4 %}account change requests
+                            {% elseif Ticket.type==5 %}bug reporting
+                            {% elseif Ticket.type==6 %}support
 
                             {% endif %}
                         </a>

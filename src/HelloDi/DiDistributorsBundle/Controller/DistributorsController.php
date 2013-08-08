@@ -1432,7 +1432,9 @@ else
                     1=>'new item request',
                     2=>'price change request',
                     3=>'address change',
-                    4=>'account change'
+                    4=>'account change requests',
+                    5=>'bug reporting',
+                    6=>'support'
                 )
 
             ))
