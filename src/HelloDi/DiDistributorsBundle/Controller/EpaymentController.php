@@ -36,8 +36,10 @@ class EpaymentController extends Controller
 
         if ($request->isMethod('POST'))
         { $ogonePaymentForm->handleRequest($request);
+
             if($ogonePaymentForm->isValid())
             {
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($ogonePayment);
                 $em->flush();

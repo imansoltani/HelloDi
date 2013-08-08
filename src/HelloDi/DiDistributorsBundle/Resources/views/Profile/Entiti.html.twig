@@ -1,16 +1,15 @@
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowProfileMaster.html.twig' %}
 
-{% set tab = '4' %}
+{% set tab = '1' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Info</span>
+    <span class="link">Profile Info</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Entity Info</h3>
+        <h3>Profile Info</h3>
     </div> <!-- /widget-header -->
 
     <form style="margin-top: 20px" action="{{ path('MasterProfileEntiti') }}" method="post" class="form-horizontal" >

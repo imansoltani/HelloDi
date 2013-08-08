@@ -8,13 +8,13 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" >Tax</a>
+    <span class="link">Tax</span>
 
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-   Tax and History
+    Tax and History
 {% endblock %}
 
 
@@ -24,81 +24,87 @@
 
 {% block Body %}
     <div class="span">
-        <div class="widget-content" >
-            <div class="widget-header">
-                <h3>Tax</h3>
-            </div> <!-- /widget-header --><br>
+        <div class="widget stacked">
+            <div class="widget-content">
 
-            <form class="form-horizontal SearchForm" action="{{ path('Tax') }}" method="post" >
+                <div class="widget-header">
+                    <h3>Tax</h3>
+                </div>
+                <!-- /widget-header --><br>
+
+                <form class="form-horizontal SearchForm" action="{{ path('Tax') }}" method="post">
 
 
-                <div class="control-group">
-                    {{ form_label(form.tax,'tax :') }}
-                    <div class="controls">
-                        {{ form_widget(form.tax) }}
-                        {{ form_errors(form.tax) }}
+                    <div class="control-group">
+                        {{ form_label(form.tax,'tax :') }}
+                        <div class="controls">
+                            {{ form_widget(form.tax) }}
+                            {{ form_errors(form.tax) }}
+                        </div>
                     </div>
+                    {{ form_widget(form._token) }}
+
+                    <input type="hidden" value="1" name="page" id="search_page">
+
+                    <div class="form-actions" style="margin-bottom: 0">
+                        <input class="btn btn-primary" type="submit" value="Edit">
+                        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                    </div>
+
+                </form>
+
+
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4>Tax</h4>
+                    </div>
+                    <form>
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'Id' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Tax' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Start Date' | trans ({}, "account") }}</th>
+
+                                </tr>
+
+                                </thead>
+                                <tbody>
+
+                                {% for tx in pagination %}
+                                    <tr>
+                                        <td>
+                                            {{ tx.id }}
+                                        </td>
+
+                                        <td>
+                                            {{ tx.tax }}
+                                        </td>
+
+                                        <td>
+                                            {{ tx.taxstart|date('y/M/d') }}
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
                 </div>
-                {{ form_widget(form._token) }}
 
-                <input type="hidden" value="1" name="page" id="search_page" >
-
-                <div class="form-actions" style="margin-bottom: 0" >
-                    <input class="btn btn-primary" type="submit"  value="Edit">
-                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
                 </div>
 
-            </form>
+            </div>
         </div>
+
+
     </div>
-
-
-    <div class="tablediv">
-
-    <div class="contenttitle">
-        <h4>History</h4>
-    </div>
-    <form>
-    <div class="tab-content">
-        <table style="margin-top: 20px"
-               class="table table-bordered table-striped table-highlight postsend">
-            <thead>
-            <tr>
-                <th>{{ 'Id' | trans ({}, "account") }}</th>
-                <th>{{ 'Tax' | trans ({}, "account") }}</th>
-                <th>{{ 'Start Date' | trans ({}, "account") }}</th>
-
-            </tr>
-
-            </thead>
-            <tbody>
-
-            {% for tx in pagination %}
-                <tr>
-                    <td>
-                     {{ tx.id }}
-                    </td>
-
-                    <td>
-                        {{ tx.tax }}
-                    </td>
-
-                    <td>
-                        {{ tx.taxstart|date('y/M/d') }}
-                    </td>
-
-                </tr>
-
-            {% endfor %}
-
-            </tbody>
-        </table>
-        <div class="navigation">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-    </div>
-
-
-</div>
 
 {% endblock %}

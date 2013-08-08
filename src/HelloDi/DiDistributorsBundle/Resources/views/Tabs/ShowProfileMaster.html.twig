@@ -1,0 +1,63 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+   Profile
+{% endblock title %}
+
+{% block PageTitle %}
+    <i class="icon-user"></i>
+    Profile
+{% endblock %}
+
+
+
+
+
+{% set MU = 'setting' %}
+
+{% set hornav = '38px' %}
+{% block Tabs %}
+    <li {% if tab == '1' %}class="active"{% endif %}  >
+
+
+        <a href="{{ path('MasterProfileEntiti') }}">
+
+            <input type="submit" value="Info" >
+        </a>
+
+
+    </li>
+    <li {% if tab == '2' %}class="active"{% endif %} >
+
+
+        <a href="{{ path('MasterProfileAddress') }}">
+
+            <input type="submit" value="Address" >
+        </a>
+
+
+    </li>
+
+
+
+
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="Info">
+                        {% block Tab %}
+                        {% endblock Tab %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock Body %}

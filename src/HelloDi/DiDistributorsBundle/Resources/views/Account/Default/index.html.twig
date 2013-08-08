@@ -1,44 +1,46 @@
-<div class="tablediv">
+{% extends "FOSUserBundle::Main0.html.twig" %}
 
-    <div class="contenttitle">
-        <h4>History</h4>
-    </div>
-    <form>
-        <div class="tab-content">
-            <table style="margin-top: 20px"
-                   class="table table-bordered table-striped table-highlight postsend">
-                <thead>
+{% block title %}
+    Epayment
+{% endblock title %}
 
-                <tr>
+{% block fos_user_content %}
 
 
+    <form action="
+        {% if is_granted('ROLE_RETAILER_ADMIN') %}
+        {{ path('retailer_transactions_new') }}
+        {% else %}
+        {{ path('distributor_transactions_new') }}
+        {% endif %}
+        " method="post">
 
-                    <th>{{ 'User' | trans ({}, "account") }}</th>
-                    <th>{{ 'Item Name' | trans ({}, "account") }}</th>
+        <h1>Epayment New</h1>
 
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-
-
-
-                    <td> {{ tran.User.username }} </td>
-
-
-                    <td>
-                        {% if tran.Code is not null  %}
-                            {{ tran.Code.Item.itemName }}
-                        {% else %}
-                            not have code
-                        {% endif %}
-                    </td>
+        <div class="login-fields">
 
 
-                </tr>
+            <div class="field Peyment">
+                {{ form_label(form.paymentAmount) }}
+                {{ form_widget(form.paymentAmount) }}
+                {{ form_errors(form.paymentAmount) }}
+            </div>
+            <!-- /field -->
 
-                </tbody>
-            </table>
+            {{ form_widget(form._token) }}
+
         </div>
+
+        <div class="login-actions">
+
+				<span class="login-checkbox">
+
+				</span>
+            <input class="button btn btn-warning btn-large" type="submit" id="submit" name="submit"
+                   value="Next"/>
+        </div>
+        <!-- .actions -->
+
+
     </form>
-</div>
+{% endblock fos_user_content %}
