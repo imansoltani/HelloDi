@@ -130,8 +130,21 @@
                 </tbody>
             </table>
 
+            <div class="navigation" style="text-align: center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
         </div>
     </div>
+<div style="display:none ">
+
+    <form class="SearchForm" method="#" action="#">
+        <input type="hidden" value="1" name="page" id="search_page" >
+        <hr>
+        <input  class="btn btn-primary" type="submit" value="Search">
+
+    </form>
+    <div>
 {% endblock %}
 
 {% block Link_Footer %}

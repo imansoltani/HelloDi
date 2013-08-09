@@ -38,27 +38,29 @@ class EntitiController extends Controller
                      'required'=>false
                 )
             )
-            ->add('HaveAccount', 'choice',
-                array('label'=>'Have Account:',
-                    'expanded'=>true,
-                    'multiple'=>true,
-                    'choices'=>
-                         array(
-                             2=>'Retailer',
-                             1=>'Provider',
-                             0=>'Distributors')
+        ->add('Retailer', 'checkbox', array(
+            'label'     => 'Retailer',
+            'required'  => false,
+        ))
+        ->add('Distributors', 'checkbox', array(
+                'label'     => 'Distributors',
+                'required'  => false,
+            ))
+       ->add('Provider', 'checkbox', array(
+                'label'     => 'Provider',
+                'required'  => false,
                 ))->getForm()
         ;
 
 //die('sdd'.$user->getEntiti()->getId());
 
-        $entity=$this->get('security.context')->getToken()->getUser()->getEntiti();
+        $entity=$this->getUser()->getEntiti();
 
         $qb = $em->createQueryBuilder();
                      $qb->select('Ent')
                         ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
                          ->innerJoin('Ent.Accounts','EntAcc')
-                         ->andWhere('Ent != :E')->setParameter('E',$user->getEntiti());
+                         ->Where('Ent != :E')->setParameter('E',$user->getEntiti());
 
 
         if ($request->isMethod('POST'))
@@ -68,16 +70,27 @@ class EntitiController extends Controller
             $data = $formsearch->getData();
 
             if ($data['Country'])
-                $qb->where('Ent.Country= :cun')->setParameter('cun',$data['Country']);
+                $qb->andwhere('Ent.Country= :cun')->setParameter('cun',$data['Country']);
 
             if ($data['entName'] != '')
                 $qb->andwhere($qb->expr()->like('Ent.entName', $qb->expr()->literal($data['entName'] . '%')));
 
-            foreach($data['HaveAccount'] as $acc)
-               $qb->andwhere($qb->expr()->eq('EntAcc.accType',$acc));
 
+            if($data['Retailer'])
+                $qb->andwhere($qb->expr()->eq('EntAcc.accType',2));
+            if($data['Distributors'])
+                $qb->andwhere($qb->expr()->eq('EntAcc.accType',0));
+            if($data['Provider'])
+                $qb->andwhere($qb->expr()->eq('EntAcc.accType',1));
+
+            if($data['Provider'] and $data['Distributors'] and !$data['Retailer'])
+            {
+
+             $qb->orWhere($qb->expr()->eq('EntAcc.accType',1));
+             $qb->orWhere($qb->expr()->eq('EntAcc.accType',0));
+
+             }
         }
-
         $qb = $qb->getQuery();
         $count = count($qb->getResult());
 
@@ -87,7 +100,7 @@ class EntitiController extends Controller
         $pagination = $paginator->paginate(
             $qb,
             $request->get('page',1) /*page number*/,
-            13/*limit per page*/
+            10/*limit per page*/
         );
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:main.html.twig', array(
@@ -95,9 +108,8 @@ class EntitiController extends Controller
             'formsearch' => $formsearch->createView()
         ));
 
+
     }
-
-
     public function accountsAction(Request $request,$id)
     {
 
@@ -121,7 +133,7 @@ class EntitiController extends Controller
     }
 
 
-    public function usersAction(Request $request,$id)
+    public function usersAction(Request $req,$id)
     {
 
 
@@ -131,9 +143,14 @@ class EntitiController extends Controller
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
+        $pagination = $paginator->paginate(
+            $entity->getUsers(),
+            $req->get('page',1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' => $entity->getUsers(),
+            'pagination' =>$pagination,
             'entity' => $entity,
         ));
     }
@@ -355,19 +372,23 @@ public function  EditUserEntitiesAction(Request $request,$userid)
 
 
 
-    public  function addressAction($id)
+    public  function addressAction(Request $req, $id)
     {
-
+        $paginator = $this->get('knp_paginator');
 
         $em=$this->getDoctrine()->getEntityManager();
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $Address=$entity->getDetailHistories();
 
+        $pagination = $paginator->paginate(
+            $Address,
+            $req->get('page',1) /*page number*/,
+            10/*limit per page*/
+        );
 
 
-        // die('sas'.count($pagination));
         return $this->render('HelloDiDiDistributorsBundle:Entiti:Address.html.twig', array(
-            'pagination' => $Address,
+            'pagination' => $pagination,
             'entity' => $entity,
         ));
 

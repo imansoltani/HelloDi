@@ -45,14 +45,29 @@
                                 </label>
                             </div>
 
-                            {% for Acc in formsearch.HaveAccount %}
+
                             <div class="control-group">
 
-                                {{ form_label(Acc) }}
-                                <div class="controls" >{{ form_widget(Acc) }}</div>
+                                {{ form_label(formsearch.Retailer) }}
+                                <div class="controls" >{{ form_widget(formsearch.Retailer) }}</div>
 
                             </div>
-                            {% endfor %}
+
+                            <div class="control-group">
+
+                                {{ form_label(formsearch.Provider) }}
+                                <div class="controls" >{{ form_widget(formsearch.Provider) }}</div>
+
+                            </div>
+
+                            <div class="control-group">
+
+                                {{ form_label(formsearch.Distributors) }}
+                                <div class="controls" >{{ form_widget(formsearch.Distributors) }}</div>
+
+                            </div>
+
+
                             <div class="control-group">
                                 {{ form_label(formsearch.Country) }}
                                 <div class="controls">{{ form_widget(formsearch.Country) }}</div>

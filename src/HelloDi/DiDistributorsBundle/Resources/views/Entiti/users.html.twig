@@ -93,12 +93,8 @@
                             <td>{{ User.username }}</td>
                             <td>{{ User.email }}</td>
                             <td>
-                                {% if User.roles[0]=='ROLE_MASTER' or User.roles[0]=='ROLE_MASTER_ADMIN'  %}
-                                    null
-                                    {% else %}
                                 {{ User.Account.accName }}
-                                        {% endif
-                                %}
+
                             </td>
                             <td>
 
@@ -113,10 +109,20 @@
                 {% endfor %}
                 </tbody>
             </table>
-
+                <div class="navigation" style="text-align: center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
         </div>
     </div>
+<div style="display:none ">
 
+    <form class="SearchForm" method="#" action="#">
+        <input type="hidden" value="1" name="page" id="search_page" >
+        <hr>
+        <input  class="btn btn-primary" type="submit" value="Search">
+
+    </form>
+    <div>
     {% endif %}
 {% endblock %}
 

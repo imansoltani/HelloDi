@@ -419,7 +419,7 @@ $datetype=0;
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $tickets,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $req->get('page', 1) /*page number*/,
            10/*limit per page*/
         );
 
