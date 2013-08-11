@@ -259,7 +259,7 @@ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 /* Navbar
         -------------------------------------------------------- */
 .navbar-fixed-top{
-position: static;
+position: relative;
     right: 0px;
     left: 0px;
     z-index: 1030;
@@ -417,14 +417,18 @@ padding: 0;
     /* background-color: #0f2336; */
     transition: background 0.2s;
     -webkit-transition: background 0.2s; /* Safari */
-    padding: 3px;
+    padding: 5px;
+    border:solid thin #b1daf5;
+
 }
 
 
 
-.menubarhome .dropdown > a:hover , .menubarhome .dropdown > a:active {
+.menubarhome .dropdown > a:hover , .menubarhome .dropdown > a:active , .menubarhome .dropdown > a:focus  {
     background: #FFF;
     color: #0e5c92;
+    box-shadow: 0px 0px 3px #569dce inset;
+    border:solid thin #85b9dd;
 }
 
 .menubarhome .nav li.dropdown.open b.caret , .menubarhome .nav li.dropdown b.caret{
@@ -1264,7 +1268,7 @@ text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
     float: left;
-    border-top: solid #5f718f 1px;
+    border-top: solid #ece5e5 1px;
 }
 
 .Login_error

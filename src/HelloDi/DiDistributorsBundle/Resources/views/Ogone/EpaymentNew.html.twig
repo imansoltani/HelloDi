@@ -4,7 +4,11 @@
     Epayment
 {% endblock title %}
 
-{% block body %}
+{% block bodywidth %}login{% endblock %}
+
+{% block header %}Epayment New{% endblock %}
+
+{% block fos_user_content %}
 
 
     <form action="
@@ -15,22 +19,26 @@
         {% endif %}
         " method="post">
 
-        <h1>Epayment New</h1>
-
         <div class="login-fields">
 
 
             <div class="field Peyment">
                 {{ form_label(form.paymentAmount) }}
                 {{ form_widget(form.paymentAmount) }}
-                {{ form_errors(form.paymentAmount) }}
+                {{ form_widget(form.PaymentCurrencyISO) }}
             </div>
-            {{ form_widget(form.PaymentCurrencyISO) }}
+
             <!-- /field -->
 
             {{ form_widget(form._token) }}
 
         </div>
+
+        {% if form_errors(form.paymentAmount) %}
+            <div class="Login_error" >
+                <span>{{ form_errors(form.paymentAmount) }}</span>
+            </div>
+        {% endif %}
 
         <div class="login-actions">
 

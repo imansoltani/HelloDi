@@ -1,18 +1,41 @@
-<html>
-<head>
+{% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
-</head>
-<body>
-<h1>Validate</h1>
-<hr>
+{% block title %}
+    Validate
+{% endblock title %}
 
-are you for payment
+{% block bodywidth %}login{% endblock %}
 
-<b>{{ ogonePayment.paymentAmount }}</b>
-sure?
-{{ form | raw }}
+{% block header %}Validate{% endblock %}
 
-</body>
+{% block fos_user_content %}
 
-</html>
 
+
+
+
+        <div class="login-fields">
+
+            <div class="Login_error Comment" >
+                are you sure for payment
+                <b style="color: #000100" >{{ ogonePayment.paymentAmount }}</b> ?
+            </div>
+
+
+            <!-- /field -->
+
+
+        </div>
+
+        <div class="login-actions">
+
+				<span class="login-checkbox">
+
+				</span>
+            {{ form | raw }}
+        </div>
+        <!-- .actions -->
+
+
+
+{% endblock %}

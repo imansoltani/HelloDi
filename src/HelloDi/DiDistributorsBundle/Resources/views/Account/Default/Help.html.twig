@@ -1,24 +1,31 @@
-<html>
-<head>
+{% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
-</head>
-<body>
+{% block title %}
+    Validate
+{% endblock title %}
 
-<h1>Epayment_New</h1>
-<form action="
-{% if is_granted('ROLE_RETAILER_ADMIN') %}
-{{ path('retailer_transactions_new') }}
-{% else %}
-{{ path('distributor_transactions_new') }}
-{% endif %}
-" method="post">
+{% block body %}
 
-    {{ form_rest(form) }}
-    {{ form_widget(form._token) }}
 
-    <input type="submit" value="Next">
-</form>
-</body>
 
-</html>
 
+    <h1>Validate</h1>
+
+    <div class="login-fields">
+
+
+
+
+        <!-- /field -->
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+$$$PAYMENT ZONE$$$

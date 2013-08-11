@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"></link>
     <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
@@ -27,7 +27,7 @@
     <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/ui-lightness/jquery-ui-1.10.0.custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/hellodi/css/pages/signin.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/login.css') }}" rel="stylesheet">
 
 
 </head>
@@ -35,57 +35,61 @@
 <body>
 
 
+<div class="BG" >
+
+</div>
+
+<div class="navbar navbar-inverse navbar-fixed-top" >
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" id="brand" href="{{ path('layout') }}">
+                Hello <span>Di</span>
+            </a>
+
+            <ul class="nav pull-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
 
-<div class=" menubarhome" >
-    <div class="menuhome">
-        <a class="brand" id="brand" href="{{ path('layout') }}">
-            Hello <span >Di</span>
-        </a>
+                    <li class="dropdown">
 
-        <ul class="nav pull-right">
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-
-                <li class="dropdown">
-
-                    <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+                        <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
 
 
 							<span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                                 <b class="caret"></b></span>
-                    </a>
+                        </a>
 
-                    <ul style="font-size: 16px" class="dropdown-menu">
-                        {% if is_granted("ROLE_MASTER") %}
-                            <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
-                        {% endif %}
-                        {% if is_granted("ROLE_DISTRIBUTOR") %}
-                            <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
-                        {% endif %}
-                        {% if is_granted("ROLE_RETAILER") %}
-                            <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
-                        {% endif %}
-                        <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
-                    </ul>
+                        <ul style="font-size: 16px" class="dropdown-menu">
+                            {% if is_granted("ROLE_MASTER") %}
+                                <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_DISTRIBUTOR") %}
+                                <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_RETAILER") %}
+                                <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
 
-                </li>
+                    </li>
 
-            {% else %}
+                {% else %}
 
 
-                <li class="dropdown">
-                    <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                    <li class="dropdown">
+                        <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
                                 <span id="user_title_menu" style="display: block" >
                                    {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                                  </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
 
 
-            {% endif %}
-        </ul>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -95,12 +99,18 @@
 
 
 
-    <div class="body_main">
-        <div style="padding-bottom: 10px" class="content clearfix">
+    <div class="body_main {% block bodywidth %}{% endblock %} "  >
 
-            {% block fos_user_content %}
+        <h1>
+            {% block header %}{% endblock %}
+        </h1>
 
-            {% endblock %}
+        <div class="content clearfix">
+
+
+               {% block fos_user_content %}
+
+               {% endblock %}
 
         </div> <!-- /content -->
     </div>
