@@ -744,7 +744,7 @@ $datetype=0;
             return $html;
         else
             return new Response(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
                 200,
                 array(
                     'Content-Type'          => 'application/pdf',

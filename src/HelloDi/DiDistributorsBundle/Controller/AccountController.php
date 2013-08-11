@@ -615,6 +615,7 @@ class AccountController extends Controller
 
     public function  SaleAction(Request $req, $id)
     {
+        $printtype= $req->get('print', null);
 
 
         $group = 0;
@@ -667,8 +668,8 @@ class AccountController extends Controller
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From:'))
-            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To:'))
+            ->add('DateStart', 'text', array('disabled' => false, 'label' => 'From:','data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D'))->format('Y/m/d')))
+            ->add('DateEnd', 'text', array('disabled' => false, 'label' => 'To:','data'=>(new \DateTime('now'))->format('Y/m/d')))
 
             ->add('GroupBy', 'choice', array('label' => 'GroupBy:',
                 'expanded' => true,
@@ -722,9 +723,8 @@ class AccountController extends Controller
 
 
             if ($data['GroupBy'])
-                $qb->GroupBy('Tr.tranDate','TrCoIt.itemName','Tr.tranAmount');
-
-            if (!$data['GroupBy'])
+                $qb->GroupBy('Tr.tranDate','TrCo.Item','Tr.Account');
+            else
                 $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id', 'desc');
 
 
@@ -750,16 +750,6 @@ class AccountController extends Controller
             );
         }
 
-
-        $formprint=$this->createFormBuilder()
-            ->add('print','choice',array('label'=>'Print:',
-                'expanded'=>true,
-                'choices'=>array(
-                    0=>'Retailer Statements',
-                    1=>'Retailer Revenues'
-                )
-            ))->getForm();
-
         $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
 $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
@@ -767,19 +757,67 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
     'tranAction'=>'com'
      ));
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',array(
-                'pagination' => $pagination,
-                'form' => $form->createView(),
-                'formprint'=>$formprint->createView(),
-                'Account' => $Account,
-                'group'=>$group,
-                'Entiti' => $Account->getEntiti(),
-                'com'=>$com,
-                'tax'=>$tax->getTax()
+        if($printtype==null)
+        {
+            return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',array(
+                    'pagination' => $pagination,
+                    'form' => $form->createView(),
+                    'Account' => $Account,
+                    'group'=>$group,
+                    'Entiti' => $Account->getEntiti(),
+                    'com'=>$com,
+                    'tax'=>$tax->getTax()
 
-        ));
+            ));
+        }
+        else
+        {
+            $header= "
+                <div style='font-size:14px;float:left;border:1px solid #999;width:7cm;padding:3px'>
+                    <b>Distributor Details</b><br/>
+                    Account Name: ".$Account->getAccName()."<br/>
+                    Account Balance: ".$Account->getAccBalance()."<br/>
+                    Account Currency: ".$Account->getAccCurrency()."<br/>
+                </div>
+                <div style='font-size:14px;float:right;width:8cm;text-align:right'>
+                    <b>List of Retailer Revenues</b><hr/>
+                    Period: ".$data['DateStart']." to ".$data['DateEnd']."
+                </div>
+                ";
 
+            if($printtype == 0)
+            {
+                $html = $this->render('HelloDiDiDistributorsBundle:Print:SaleRevenuesPrint.html.twig',array(
+                    'pagination' => $qb->getResult()
+                ));
+            }
+            else
+            {
+                $retailers = $Account->getChildrens();
+                $html = $this->render('HelloDiDiDistributorsBundle:Print:SaleStatementPrint.html.twig',array(
+                    'pagination' => $qb->getResult(),
+                    'retailers' => $retailers,
+                    'tax'=>$tax->getTax()
+                ));
+            }
 
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent(),array(
+                    'footer-right'=>'Page: [page]/[toPage]',
+                    'footer-left'=>'Date: [date]',
+                    'header-html'=>$header,
+                    'margin-top'=>35,
+                    'header-spacing'=>25,
+                    'margin-bottom'=>15,
+                    'footer-spacing'=>5
+                )),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Print.pdf"'
+                )
+            );
+        }
     }
 
 
@@ -1897,7 +1935,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             ->innerJoin('code.Input', 'input')
             ->innerJoin('input.Account', 'acc')
             ->where('trans.tranAction =:check')
-            ->setParameter('check', 'removed')
+            ->setParameter('check', 'rmv')
             ->andwhere('acc = :check2')
             ->setParameter('check2', $account);
 
