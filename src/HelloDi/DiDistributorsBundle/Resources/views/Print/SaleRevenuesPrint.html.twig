@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body{
+            margin:0;
+            font-size:14px;
+        }
+        .table{
+            width:100%;
+            border-spacing:0;
+        }
+        .table caption+thead tr:first-child th,.table caption+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table thead:first-child tr:first-child th,.table thead:first-child tr:first-child td{
+            border-top:0
+        }
+        .table th,.table td{
+            padding:8px;
+            line-height:20px;
+            text-align:left;
+            vertical-align:top;
+            border-top:1px solid #ddd;
+            page-break-inside: avoid;
+        }
+        .table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th{
+            background-color:#f9f9f9
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Account ID</th>
+                <th>Retailer</th>
+                <th>Total Purchase</th>
+                <th>VAT</th>
+                <th>Revenues</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for Tr in pagination %}
+            <tr>
+                <td>{{ Tr.TR.Account.id }}</td>
+                <td>{{ Tr.TR.Account.Entiti.entName }}</td>
+                <td>{{ (Tr.TR.tranAmount * Tr.Quantity)|abs }}</td>
+                <td>--</td>
+                <td>{{ Tr.TR.Code.Item.itemFaceValue * Tr.Quantity}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</body>
+</html>

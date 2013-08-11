@@ -1,77 +1,139 @@
-Distributors Details :
-<hr>
-Seles Statement
-<hr>
-Period :
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<hr>
-Retailer Details :
-<hr>
-All Prices in 'Account Currency'
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>{{ 'Item' | trans ({}, "account") }}</th>
-                                    <th>{{ 'FaceValue' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Quantity' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Vat' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Price' | trans ({}, "account") }}</th>{#gheymat kharid retailer#}
-                                    <th>{{ 'Discont' | trans ({}, "account") }}</th>{#ghemat kharid- face value#}
-                                    <th>{{ 'Total' | trans ({}, "account") }}</th>{#quantity * price#}
-                                </tr>
-                            </thead>
-                            <tbody>
+    <style>
+        body{
+            margin:0;
+            font-size:14px;
+        }
+        .table{
+            width:100%;
+            border-spacing:0;
+        }
+        .table caption+thead tr:first-child th,.table caption+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table thead:first-child tr:first-child th,.table thead:first-child tr:first-child td{
+            border-top:0
+        }
+        .table th,.table td{
+            padding:8px;
+            line-height:20px;
+            text-align:left;
+            vertical-align:top;
+            border-top:1px solid #999;
+            page-break-inside: avoid;
+        }
+        .table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th{
+            background-color:#f9f9f9
+        }
 
-                            {#{% for Tr in pagination %}#}
+        .table-bordered {
+            border: 1px solid #999;
+            border-collapse: separate;
+            *border-collapse: collapse;
+            border-left: 0;
+        }
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+        .table-bordered th,
+        .table-bordered td {
+            border-left: 1px solid #999;
+        }
 
-                            {#{% endfor %}#}
+        .table-bordered caption + thead tr:first-child th,
+        .table-bordered caption + tbody tr:first-child th,
+        .table-bordered caption + tbody tr:first-child td,
+        .table-bordered colgroup + thead tr:first-child th,
+        .table-bordered colgroup + tbody tr:first-child th,
+        .table-bordered colgroup + tbody tr:first-child td,
+        .table-bordered thead:first-child tr:first-child th,
+        .table-bordered tbody:first-child tr:first-child th,
+        .table-bordered tbody:first-child tr:first-child td {
+            border-top: 0;
+        }
+    </style>
 
-                            </tbody>
-                        </table>
-                        {#{button pagination}#}
-                    </div>
-                </form>
+</head>
+<body>
+{% for ret in retailers %}
+    <div style='font-size:14px;float:right;border:1px solid #999;width:7cm;padding:3px'>
+        <b>Retailer Details</b><br/>
+        Account Name: {{ ret.AccName }}<br/>
+        Account Balance: {{ ret.AccBalance }}<br/>
+        Account Currency: {{ ret.AccCurrency }}<br/>
+    </div>
+    <div style="clear: both"></div>
+    <table class="table table-striped">
 
-Condition :
-Printed :{#print date roze#}
+        <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Item (Name & FaceValue)</th>
+            <th>Quantity</th>
+            <th>VAT</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Total</th>
+        </tr>
+        </thead>
 
-<table style="margin-top: 20px" class="table postsend">
-    <tr>
-        <th></th><th></th>
-    </tr>
-    <tr>
-        <td>Vat @ 0.00 %</td><td></td>
-    </tr>
+        <tbody>
+        {% for Tr in pagination %}
+            {% if Tr.TR.Account.id == ret.id %}
+            <tr>
+                <td>{{ Tr.TR.Code.Item.itemCode }}</td>
+                <td>{{ Tr.TR.Code.Item.itemName }} {{ Tr.TR.Code.Item.itemFaceValue }}</td>
+                <td>{{ Tr.Quantity }}</td>
+                <td>
+                    {%  set vat= -Tr.TR.tranAmount+(Tr.TR.tranAmount/(1+tax/100)) %}
+                    {{  vat | number_format(2) }}
+                </td>
+                <td>{{ Tr.TR.tranAmount|abs }}</td>
+                <td>
+                    {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}
+                    {{ com }}
+                </td>
+                <td>{{ (Tr.TR.tranAmount * Tr.Quantity)|abs }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
 
-    <tr>
-        <td>Total To Pay</td><td></td>
-    </tr>
-
-</table>
-
-
-<table style="margin-top: 20px" class="table postsend">
-    <tr>
-        <th>Vat Code</th><th>Vat %</th>
-    </tr>
-    <tr>
-        <td></td><td></td>
-    </tr>
-
-</table>
-
-
-            </div>
+    </table>
+    <table class="table table-bordered" style='font-size:14px;float:right;width:7cm'>
+        <tbody>
+        <tr>
+            <td style="width: 3cm">Nett</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>VAT @ 0.00%</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Total to Pay</td>
+            <td>-</td>
+        </tr>
+        </tbody>
+    </table>
+    <div style='font-size:14px;float:left;border:1px solid #999;width:6.5cm;padding:.25cm;margin-bottom: .5cm'>
+        Condition: <br/>
+        Printed: {{ "now"|date("Y/m/d") }}
+    </div>
+    <div style="clear: left"></div>
+    <table class="table table-bordered" style='font-size:14px;float:left;width:7cm;'>
+        <thead>
+        <tr>
+            <th>VAT Code</th>
+            <th>VAT %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="clear: both;page-break-after: always"></div>
+{% endfor %}
+</body>
+</html>

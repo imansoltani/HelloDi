@@ -26,7 +26,7 @@
                         </span>
         </h5>
 
-        <form class="form-horizontal SearchForm" action="{{ path('MasterDistSale',{'id':Account.id}) }}" method="POST" >
+        <form id='searchsale' class="form-horizontal SearchForm" action="{{ path('MasterDistSale',{'id':Account.id}) }}" method="POST" >
 
 
             <div class="control-group datepicker1">
@@ -79,18 +79,30 @@
 
     </div>
 
-    <form action="#" method="POST" class="form-horizontal" style="padding: 10px;border: 1px solid rgb(221, 221,221);background: none repeat scroll 0% 0% rgb(252, 252, 252);">
-        {% for state in formprint.print %}
+    {% if pagination|length != 0 and group == 1 %}
+        <form id="printsale" action="#" method="POST" class="form-horizontal" target="_blank" style="padding: 10px;border: 1px solid rgb(221, 221,221);background: none repeat scroll 0% 0% rgb(252, 252, 252);">
+
             <div class="control-group">
-                <label class="control-label">{{ form_label(state) }}</label>
+                <label class="control-label" for="print_1">
+                    Retailer Revenues
+                </label>
                 <div class="controls">
-                    {{ form_widget(state) }}
+                    <input type="radio" id="print_1" name="print" value="0" checked />
                 </div>
             </div>
-        {% endfor %}
-        {{ form_rest(formprint) }}
-        <input type="submit" value="Print To PDF" class="btn btn-primary">
-    </form>
+
+            <div class="control-group">
+                <label class="control-label" for="print_2">
+                    Retailer Statements
+                </label>
+                <div class="controls">
+                    <input type="radio" id="print_2" name="print" value="1" />
+                </div>
+            </div>
+
+            <input type="submit" value="Print To PDF" class="btn btn-primary" onclick="copyFormElements()"/>
+        </form>
+    {% endif %}
 
     <div class="tablediv">
 
@@ -134,7 +146,7 @@
                             {% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}
                             </td>
                             <td>
-                                {% if group==0 %}{{ Tr.TR.Account.Entiti.entName }}{% else %}----{% endif %}
+                                {{ Tr.TR.Account.Entiti.entName }}
                             </td>
                             <td>
 
@@ -281,5 +293,19 @@
     {% if group==0 %}{{ knp_pagination_render(pagination) }}{% endif %}
     </div>
 
+    <script type="text/javascript">
+        function copyFormElements()
+        {
+            $("#searchsale :input").each(function(){
+                if($(this).attr('name') != undefined)
+                {
+                    if($(this).attr('type') == 'checkbox')
+                        $('#printsale').append('<input type="hidden" name="'+$(this).attr('name')+'" value="'+($(this).is(':checked')?'1':'0')+'" />');
+                    else
+                        $('#printsale').append('<input type="hidden" name="'+$(this).attr('name')+'" value="'+$(this).val()+'"/>');
+                }
+            });
+        }
+    </script>
 
 {% endblock %}

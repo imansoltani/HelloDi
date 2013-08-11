@@ -26,7 +26,7 @@ class Item
     }
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="item_face_value")
+     * @ORM\Column(type="integer", nullable=false, name="item_face_value")
      */
     private $itemFaceValue;
 
@@ -133,7 +133,7 @@ class Item
     /**
      * Set itemFaceValue
      *
-     * @param string $itemFaceValue
+     * @param integer $itemFaceValue
      * @return Item
      */
     public function setItemFaceValue($itemFaceValue)
@@ -146,7 +146,7 @@ class Item
     /**
      * Get itemFaceValue
      *
-     * @return string 
+     * @return integer
      */
     public function getItemFaceValue()
     {
