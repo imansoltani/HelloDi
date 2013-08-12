@@ -49,3 +49,16 @@ Master_Retailer_details:
 MasterLoadActionRetailer:
     pattern:  /loadaction
     defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterLoadActionRetailer }
+
+#items---------------------
+Master_RetailerItem:
+    pattern:  /{id}/items
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItems }
+
+Master_RetailerItemAdd:
+    pattern:  /{id}/items/add
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItemsAdd }
+
+Master_RetailerItemEdit:
+    pattern:  /{id}/items/{priceid}/edit
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItemsEdit }

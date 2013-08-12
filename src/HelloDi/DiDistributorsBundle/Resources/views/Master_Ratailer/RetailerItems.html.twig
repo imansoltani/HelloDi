@@ -1,10 +1,11 @@
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
-
-{% set tab = '2' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailerMaster.html.twig' %}
+{% set tab2 = '2' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
+
     <span class="link">Items</span>
 {% endblock Site_Map %}
 
@@ -34,7 +35,7 @@
         <h3>Items</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}"
+    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerItemAdd',{'id':retailerAccount.id}) }}"
             >Add New Item</a>
     <div style="margin-top: 5px" class="tablediv">
         <form method="post">
@@ -70,7 +71,7 @@
                             <td>{{ price.price }}
                                 {{ price.priceCurrency }}</td>
                             <td>
-                                <a class="btn_actions" href="{{ path('dist_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">Edit</a>
+                                <a class="btn_actions" href="{{ path('Master_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">Edit</a>
                             </td>
                         </tr>
                     {% endfor %}
