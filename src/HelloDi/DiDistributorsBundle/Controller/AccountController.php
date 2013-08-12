@@ -782,7 +782,7 @@ class AccountController extends Controller
         }
         else
         {
-            $header= "
+       $header= "
                 <div style='font-size:14px;float:left;border:1px solid #999;width:7cm;padding:3px'>
                     <b>Distributor Details</b><br/>
                     Account Name: ".$Account->getAccName()."<br/>
