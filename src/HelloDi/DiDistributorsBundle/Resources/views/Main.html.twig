@@ -416,6 +416,7 @@
 
     var open = 0 ;
     var header = "" ;
+    var widthMain = 0 ;
 
     function Form_Search(close,title){
         header = title ;
@@ -435,6 +436,9 @@
     }
 
     $(function () {
+
+        widthMain = $(window).width();
+
         $('.datepicker1 input').removeAttr('id');
         $('.datepicker1 input').attr('id', 'pickdate1');
         $('.datepicker2 input').removeAttr('id');
@@ -481,11 +485,17 @@
             //$(this).stop();
             if($(this).attr("id") != "show")
             {
+
                 $(this).attr("id","show") ;
                 $(this).append('<div class="ShowDetailPopUp"></div>');
                 $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
-
-
+                var x = widthMain - $(this).offset().left ;
+                var y = $('.ShowDetailPopUp').width();
+                if(x + y > widthMain)
+                {
+                    x = 0 ;
+                }
+                $('.ShowDetailPopUp').css('right',x);
                 $('.ShowDetailPopUp',this).fadeIn();
             }
         },function(){
@@ -518,6 +528,10 @@
                     $('.ShowDetailPopUp',this).fadeIn('fast');
                 })
             }
+        });
+
+        $(window).resize(function(){
+            widthMain = $(window).width();
         });
     });
 

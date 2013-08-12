@@ -54,12 +54,48 @@ body .navbar .navbar-inner{
 .body_main{
     margin: 70px auto 0 auto;
     background: #FFFFFF;
-    padding-bottom: 0
+    padding-bottom: 0;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 0px 10px #2c45c4;
+    border: solid thin #001686;
 }
 
 .body_main.login{
     width: 500px;
 }
+
+.body_main.Result{
+    width:700px;
+}
+
+.login-fields.Result span{
+    display: block;
+    text-align: center;
+}
+
+.login-fields.Result span:first-child{
+    font-size: 15px;
+    padding-bottom: 5px;
+    border-bottom: solid thin #cccccc;
+    margin-bottom: 20px;
+}
+
+.login-fields.Result span:last-child{
+    font-size: 30px;
+    padding-bottom: 25px;
+    border-bottom: solid thin #cccccc;
+
+}
+
+.login-actions.Result{
+    text-align: center;
+    margin-bottom: 0;
+}
+.login-actions.Result a.btn{
+    margin: 0 auto;
+    margin-bottom: 0;
+}
+
 
 .body_main h1{
     font-family: sans-serif;
@@ -69,7 +105,8 @@ body .navbar .navbar-inner{
     background: #f9f9f9;
     display: block;
     padding: 15px;
-  ;
+    border-radius: 10px 10px 0px 0px;
+
 }
 
 .body_main > div{

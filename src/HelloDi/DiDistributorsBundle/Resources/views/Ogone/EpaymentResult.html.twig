@@ -1,42 +1,86 @@
-{% if ogonePayment.status=='accepted'  %}
+{% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
-the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }}:<br>
-<hr>
-    {%  set ban=ogonePayment.Transaction.tranBalance %}
-    {%  set amount=ogonePayment.paymentAmount %}
+{% block title %}
+    Epayment
+{% endblock title %}
 
-  {{ ogonePayment.Transaction.tranBalance }}+<b>{{ ogonePayment.paymentAmount }}</b>=<b style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }})
-    <br>
-<hr>
-<a class="btn"
+{% block bodywidth %}Result{% endblock %}
 
-   {% if is_granted('ROLE_RETAILER_ADMIN') %}
+{% block header %}Epayment Result{% endblock %}
 
-   href="{{ path('RetailerTransaction') }}"
+{% block fos_user_content %}
 
-   {% elseif is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
-   href="{{ path('DistTransaction') }}"
+<form>
 
-    {% endif %}
-   > transaction page  </a>
+    <div class="login-fields Result">
 
-{% elseif ogonePayment.status=='canceled' %}
 
-    canceled
 
-{% elseif ogonePayment.status=='declined' %}
+            {% if ogonePayment.status=='accepted'  %}
 
-    declined
+            <span >
+                the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }}:<br>
+            </span>
 
-{% elseif ogonePayment.status=='unknown' %}
 
-    unknown
+            <span>
+                {%  set ban=ogonePayment.Transaction.tranBalance %}
+                {%  set amount=ogonePayment.paymentAmount %}
 
-{% elseif ogonePayment.status=='uncertain' %}
+                {{ ogonePayment.Transaction.tranBalance }}+<b>{{ ogonePayment.paymentAmount }}</b>=<b style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }})
+            </span>
 
-    uncertain
-{% else %}
 
-    {{ ogonePayment.status }}
 
-{% endif %}
+
+        <!-- /field -->
+
+
+
+    </div>
+
+
+
+
+    <div class="login-actions Result">
+
+
+        <a class="btn btn-primary btn-large"
+
+                {% if is_granted('ROLE_RETAILER_ADMIN') %}
+
+                    href="{{ path('RetailerTransaction') }}"
+
+                {% elseif is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+                    href="{{ path('DistTransaction') }}"
+
+                {% endif %}
+                > transaction page  </a>
+
+        {% elseif ogonePayment.status=='canceled' %}
+
+            canceled
+
+        {% elseif ogonePayment.status=='declined' %}
+
+            declined
+
+        {% elseif ogonePayment.status=='unknown' %}
+
+            unknown
+
+        {% elseif ogonePayment.status=='uncertain' %}
+
+            uncertain
+        {% else %}
+
+            {{ ogonePayment.status }}
+
+        {% endif %}
+    </div>
+
+</form>
+
+
+
+{% endblock %}

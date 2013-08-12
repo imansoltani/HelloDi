@@ -1129,14 +1129,17 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
     position: fixed;
     overflow: auto;
     z-index: 1000000;
-    background: #ffffff;
+    background: #f5fafd;
     height: auto;
     width: auto;
     max-height: 90%;
     max-width: 90%;
-    border: solid thin #000100;
+    border: solid thin #000000;
     top: 15%;
-    right: 35%;
+
+    box-shadow: 0px 0px 20px #a8a8a8;
+    padding: 10px;
+
 }
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp.ShowLoader {
@@ -1149,6 +1152,31 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled {
     display: block;
+}
+
+div.ShowDetailPopUp .control-group{
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: solid thin #cccccc;
+}
+
+div.ShowDetailPopUp .control-group:last-child{
+    margin-bottom: 0px;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+div.ShowDetailPopUp .control-group .control-label{
+    color: #000000;
+    font-weight: bold;
+}
+
+.tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled{
+    border-radius: 0px;
+    border: none;
+    box-shadow: none;
+    background: #dfdfdf;
+    font-size: 15px;
 }
 
 .showDetails span{
