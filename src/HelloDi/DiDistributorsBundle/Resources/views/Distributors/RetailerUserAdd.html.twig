@@ -21,18 +21,21 @@
     <form class="form-horizontal" action="{{ path('DistRetailerUserAdd',{'id':retailerAccount.id}) }}" method="post" >
 
         <div class="control-group">
-            {{ form_errors(form.firstname) }}
+
             {{ form_label(form.firstname) }}
             <div class="controls money">
                 {{ form_widget(form.firstname) }}
                 <span class="icon-certificate"></span>
+                {{ form_errors(form.firstname) }}
         </div>
+
         </div>
 
         <div class="control-group">
-            {{ form_errors(form.lastname) }}
+
             {{ form_label(form.lastname) }}
                 {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
 
         </div>
         <div class="control-group">

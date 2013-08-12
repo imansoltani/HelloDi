@@ -521,8 +521,10 @@ else
             $form->handleRequest($request);
             $user->setAccount($Account);
             $user->setEntiti($Entiti);
+
             if ($form->isValid())
             {
+
                 $em->persist($user);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');

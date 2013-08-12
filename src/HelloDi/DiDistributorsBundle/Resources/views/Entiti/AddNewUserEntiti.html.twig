@@ -88,8 +88,18 @@
     <div class="control-group">
     {{ form_label(form.Account) }}
     <div class="controls money">
-                {{ form_widget(form.Account ) }}
-            <span class="icon-certificate">
+    {% set j=0 %}
+    {% for Acc in entity.Accounts %}
+                 {% if Acc.AccType==2 %}
+                       {% set j=j+1 %}
+                 {% endif %}
+   {% endfor %}
+    {% if j==entity.Accounts|length %}
+                  {{ form_widget(form.Account,{'attr':{'readonly':'readonly'}} ) }}
+    {% else %}
+                   {{ form_widget(form.Account ) }}
+      {% endif %}
+        <span class="icon-certificate">
             </span>
 
     </div>

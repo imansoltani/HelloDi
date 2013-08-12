@@ -1177,16 +1177,11 @@ class AccountController extends Controller
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $query = $Account->getChildrens();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig',
             array(
-                'pagination' => $pagination,
+                'pagination' => $query,
                 'Account' => $Account));
 
     }
@@ -1194,7 +1189,7 @@ class AccountController extends Controller
 
     public function ManageDistUserAction(Request $request, $id)
     {
-        $paginator = $this->get('knp_paginator');
+
 
         $em = $this->getDoctrine()->getManager();
 
@@ -1203,17 +1198,10 @@ class AccountController extends Controller
 
         $result = $Account->getUsers();
 
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('Usr')
-            ->from('HelloDiDiDistributorsBundle:User', 'Usr')
-            ->where('Usr.Account = :Acc')->setParameter('Acc', $Account);
-        $qb = $qb->getQuery();
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig',
 
             array(
-                'pagination' => $qb->getResult(),
+                'pagination' =>$result,
                 'Account' => $Account
             ));
 
@@ -1979,6 +1967,7 @@ class AccountController extends Controller
                 $user->setEnabled(1);
                 $em->persist($user);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $Account->getId())));
 
             }
