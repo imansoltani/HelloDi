@@ -126,7 +126,7 @@
                 <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
                 <script type="text/javascript">
                     $(function(){
-                        var x = "{{ form_errors(form.ItemDescs[0].desclang) }}{{ form_errors(form.ItemDescs[0].descdesc) }}";
+                        var x = "{{ form_errors(form.desclang) }}{{ form_errors(form.descdesc) }}";
 
                         if(x != "")
                         {
@@ -145,27 +145,9 @@
                                 ,["indent","outdent"]
                                 ,["forecolor"],
                                 [
+
                                     {
-                                        css: "RemoveStyleButton",
-                                        text: "Remove Style",
-                                        action: function() {
-                                            this.iframe[0].contentWindow.focus();
-                                            var node = $.browser.msie
-                                                    ? this.getRange().parentElement()
-                                                    : this.getRange().startContainer.parentNode;
-                                            var highlightedText = node.innerHTML;
-                                            if( node.tagName.toLowerCase() != 'body' && node.tagName.toLowerCase() != 'html')
-                                            {
-                                                var newNode = this.iframe[0].contentDocument.createTextNode(highlightedText);
-                                                $(newNode).insertBefore(node);
-                                                $(node).remove();
-                                            }
-                                            node.collapse(false);
-                                            node.select();
-                                        }
-                                    },
-                                    {
-                                        css: "BorderButton",
+                                        css: "BorderButton Button",
                                         text: "Add Border Div",
                                         action: function() {
                                             var html = this.getRange().htmlText;
@@ -182,7 +164,7 @@
                                         }
                                     },
                                     {
-                                        css: "BorderButton",
+                                        css: "SpanBorderButton Button",
                                         text: "Add Border Span",
                                         action: function() {
                                             var html = this.getRange().htmlText;
@@ -221,6 +203,27 @@
                                             this.pasteHTML('&#123;&#123;expire&#125;&#125;');
                                         }
                                     }
+                                ],
+                                [
+                                    {
+                                        css: "RemoveStyleButton Button",
+                                        text: "Remove Style",
+                                        action: function() {
+                                            this.iframe[0].contentWindow.focus();
+                                            var node = $.browser.msie
+                                                    ? this.getRange().parentElement()
+                                                    : this.getRange().startContainer.parentNode;
+                                            var highlightedText = node.innerHTML;
+                                            if( node.tagName.toLowerCase() != 'body' && node.tagName.toLowerCase() != 'html')
+                                            {
+                                                var newNode = this.iframe[0].contentDocument.createTextNode(highlightedText);
+                                                $(newNode).insertBefore(node);
+                                                $(node).remove();
+                                            }
+                                            node.collapse(false);
+                                            node.select();
+                                        }
+                                    }
                                 ]
                             ]
 
@@ -235,6 +238,9 @@
                         $('.jHtmlArea > div > iframe').removeAttr('style');
                         $('.jHtmlArea > div > iframe').attr('style','min-height: 200px;width:100%');
                         $('.jHtmlArea .PinButton').html('Pin');
+                        $('.jHtmlArea .RemoveStyleButton').html('Remove Border');
+                        $('.jHtmlArea .BorderButton').html('Border');
+                        $('.jHtmlArea .SpanBorderButton').html('V Border');
                         $('.jHtmlArea .ExpireButton').html('Expire');
                         $('.jHtmlArea .SerialButton').html('Serial');
 
@@ -245,6 +251,7 @@
                          alert(x);
                          });*/
                     });
+
 
 
                 </script>

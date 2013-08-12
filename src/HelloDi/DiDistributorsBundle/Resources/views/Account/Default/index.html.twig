@@ -1,46 +1,30 @@
-{% extends "FOSUserBundle::Main0.html.twig" %}
+<span>
 
-{% block title %}
-    Epayment
-{% endblock title %}
-
-{% block fos_user_content %}
+                                               <fieldset>
 
 
-    <form action="
-        {% if is_granted('ROLE_RETAILER_ADMIN') %}
-        {{ path('retailer_transactions_new') }}
-        {% else %}
-        {{ path('distributor_transactions_new') }}
-        {% endif %}
-        " method="post">
-
-        <h1>Epayment New</h1>
-
-        <div class="login-fields">
 
 
-            <div class="field Peyment">
-                {{ form_label(form.paymentAmount) }}
-                {{ form_widget(form.paymentAmount) }}
-                {{ form_errors(form.paymentAmount) }}
-            </div>
-            <!-- /field -->
-
-            {{ form_widget(form._token) }}
-
-        </div>
-
-        <div class="login-actions">
-
-				<span class="login-checkbox">
-
-				</span>
-            <input class="button btn btn-warning btn-large" type="submit" id="submit" name="submit"
-                   value="Next"/>
-        </div>
-        <!-- .actions -->
 
 
-    </form>
-{% endblock fos_user_content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                               </fieldset>
+
+
+
+
+                                                 </span>
