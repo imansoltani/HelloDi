@@ -72,17 +72,12 @@ class DistributorsController extends Controller
                     'property' => 'itemName',
                     'query_builder' => function(EntityRepository $er) use ($Account) {
                         return $er->createQueryBuilder('u')
-                            ->innerJoin('u.Prices','up');
-                        foreach($Account->getChildrens() as $acc )
-                        {
-                            $er->orwhere('up.Account = :Acc')->setParameter('Acc',$acc);
-
-                        }
-                        $er->andWhere('up.priceStatus = 1');
+                            ->innerJoin('u.Prices','up')
+                            ->andwhere('up.Account = :Acc')->setParameter('Acc',$Account)
+                            ->andWhere('up.priceStatus = 1');
                     }
-
-
                 ))
+
 
             ->add('Account', 'entity',
                 array(
@@ -115,29 +110,27 @@ class DistributorsController extends Controller
                 /*for groupBy*/
                 ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt');
                 /**/
+            if($data['Account'])
+                $qb->where('Tr.Account=:ac')->setParameter('ac',$data['Account']);
 
-                $qb->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+            else
+                $qb->where('Tr.Account IN (:Acc)')->setParameter('Acc',(count($Account->getChildrens()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+
+                $qb->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
                 if($data['DateStart']!='')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
                  $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-             if($data['Account'])
-                 $qb->andwhere('Tr.Account=:ac')->setParameter('ac',$data['Account']);
-
-            else
-                $qb->andwhere('Tr.Account IN (:Acc)')->setParameter('Acc',$Account->getChildrens()->toArray());
-
-
 
             if($data['ItemType']!='All')
-                $qb=$qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+               $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
 
             if($data['ItemName'])
-                $qb=$qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
+                $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
 
             $qb->addGroupBy('Tr.Code')->addGroupBy('Tr.tranDate');
-       $qb->orderBy('Tr.tranInsert','desc');
+            $qb->orderBy('Tr.tranInsert','desc');
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
@@ -152,11 +145,6 @@ class DistributorsController extends Controller
            10/*limit per page*/
         );
 
-     $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
-         'tranAction'=>'com',
-         'Account'=>$User->getAccount()
-     )) ;
-
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ReportSale.html.twig',
 
             array(
@@ -165,7 +153,6 @@ class DistributorsController extends Controller
                 'User'=>$User,
                 'Account' =>$User->getAccount(),
                 'Entiti' =>$User->getEntiti(),
-                'com'=>$com,
 
 
     ));
