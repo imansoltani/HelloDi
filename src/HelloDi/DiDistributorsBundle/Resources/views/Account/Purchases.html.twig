@@ -22,7 +22,7 @@
                             <p class="title_search"></p>
                         </span>
         </h5>
-        <form class="form-horizontal SearchForm" action="{{ path('MasterDistPurchases',{'id':Account.id}) }}" method="POST"
+        <form class="form-horizontal SearchForm" action="{{ path('MasterDistPurchases',{'id':Account.id}) }}" method="POST" id="searchpurchases">
         <fieldset>
 
             <div class="control-group datepicker1">
@@ -54,10 +54,11 @@
                 </div>
             </div>
 
+            <input type="hidden" name="print" value="0" id="printhidden">
 
             <input type="hidden" value="1" name="page" id="search_page" >
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="Search" onclick="$('#printhidden').val('0');">
 
             </fieldset>
 
@@ -65,7 +66,7 @@
         <script type="text/javascript">
             $(function () {
 
-                Form_Search(0,"Search Purchases");
+                Form_Search(1,"Search Purchases");
 
             });
         </script>
@@ -74,7 +75,7 @@
     <div class="tablediv">
         <div class="contenttitle">
             <h4>
-                <a class="btn btn-info" href="#">Print To PDF</a>
+                <input class="btn btn-info" type="button" value="Print To PDF" onclick="$('#printhidden').val('1');$('#searchpurchases').submit();" >
             </h4>
         </div>
         <form>
