@@ -105,7 +105,7 @@ class DistributorsController extends Controller
 
             $qb=$em->createQueryBuilder();
 
-            $qb->select('Tr as TR','GROUP_CONCAT(Tr.tranAmount) as SaleCom')
+            $qb->select('Tr')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
                 ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt');
@@ -129,7 +129,6 @@ class DistributorsController extends Controller
             if($data['ItemName'])
                 $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
 
-            $qb->addGroupBy('Tr.Code')->addGroupBy('Tr.tranDate');
             $qb->orderBy('Tr.tranInsert','desc');
 
             $qb=$qb->getQuery();

@@ -130,20 +130,20 @@
 
                                 {% for Tr in pagination %}
                                     <tr>
-                                        <td>{{ Tr.TR.id}}</td>
-                                        <td>{{ Tr.TR.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                        <td>{{ Tr.id}}</td>
+                                        <td>{{ Tr.tranInsert|date('Y-m-d H:i:s') }}</td>
                                         <td>
-                                            {{ Tr.TR.Code.Item.itemName}}
+                                            {{ Tr.Code.Item.itemName}}
 
                                         </td>
 
                                         <td>
 
 
-            {% set com=render(controller('HelloDiDiDistributorsBundle:Distributors:GetCom', { 'id':Tr.TR.id  }))   %}
+            {% set com=render(controller('HelloDiDiDistributorsBundle:Distributors:GetCom', { 'id':Tr.id  }))   %}
 
                                             <script type="text/javascript">
-                                                document.write(Math.abs({{Tr.TR.tranAmount+com}}));
+                                                document.write(Math.abs({{Tr.tranAmount+com}}));
                                             </script>
                                         </td>
 
@@ -151,7 +151,7 @@
 
 
                                             <script type="text/javascript">
-                                                document.write(Math.abs({{Tr.TR.tranAmount }}));
+                                                document.write(Math.abs({{Tr.tranAmount }}));
                                             </script>
 
 
@@ -159,7 +159,7 @@
                                         </td>
 
 
-                                        <td>{{ Tr.TR.User.username }}</td>
+                                        <td>{{ Tr.User.username }}</td>
 
                                         <td>
 
@@ -168,7 +168,7 @@
                                         </td>
 
                                         <td>
-                                            {{ Tr.TR.tax|number_format(4) }}
+                                            {{ Tr.tax|number_format(4) }}
 
 
 

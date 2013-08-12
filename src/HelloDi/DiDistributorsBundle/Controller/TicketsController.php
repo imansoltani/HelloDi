@@ -285,10 +285,9 @@ public  function taketicketsAction($id)
 
                  )
             );
-//        foreach($users as $userm)
-//        {
+
             $Countnote->andWhere('Note.User NOT IN(:usr)')->setParameter('usr',$users->toArray());
-//        }
+
 
         $Countnote->andWhere('Note.view = 0');
         return new Response(count($Countnote->getQuery()->getResult()));
