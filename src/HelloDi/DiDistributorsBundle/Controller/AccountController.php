@@ -1085,6 +1085,7 @@ class AccountController extends Controller
 
         }
 
+        $print= $req->get('print', 0);
 
 //        $pagination = $paginator->paginate(
 //            $qb,
@@ -1092,13 +1093,46 @@ class AccountController extends Controller
 //            10/*limit per page*/
 //        );
 
-        return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
-            'pagination' => $qb,
-            'Account' => $Account,
-            'User' => $User,
-            'Entity' => $Account->getEntiti(),
-            'form' => $form->createView()
-        ));
+        if($print == 0)
+        {
+            return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
+                'pagination' => $qb,
+                'Account' => $Account,
+                'User' => $User,
+                'Entity' => $Account->getEntiti(),
+                'form' => $form->createView()
+            ));
+        }
+        else
+        {
+            $html = $this->render('HelloDiDiDistributorsBundle:Print:PurchasesPrint.html.twig', array(
+                'pagination' => $qb
+            ));
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent(),array(
+                    'header-html'=>'
+                    <div style="font-size:14px;float:left;border:1px solid #999;width:7cm;padding:3px">
+                        <b>Distributor Details</b><br/>
+                        Account Name: '.$Account->getAccName().'<br/>
+                        Account Balance: '.$Account->getAccBalance().'<br/>
+                        Account Currency: '.$Account->getAccCurrency().'<br/>
+                    </div>
+                    <div style="float: right;font-weight: bold;width: 8cm;border-bottom: 2px solid black;text-align:right">
+                        Purchases Print
+                    </div>
+                    ',
+                    'margin-top'=>35,
+                    'header-spacing'=>25,
+                    'footer-right'=>'Page: [page]/[toPage]',
+                    'footer-left'=>'Date: [date]'
+                )),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Purchases.pdf"'
+                )
+            );
+        }
     }
 
 

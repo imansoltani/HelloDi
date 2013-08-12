@@ -735,15 +735,25 @@ $datetype=0;
 
     public function PrintAction(Request $request,$print)
     {
-        $em = $this->getDoctrine()->getManager();
-        $descriptionid = $request->getSession()->get('descriptionid');
-        $orderid = $request->getSession()->get('orderid');
+        $em = $this->getDoctrine()->getEntityManager();
+
+        if($request->getSession()->has('orderid'))
+        {
+            $descriptionid = $request->getSession()->get('descriptionid');
+            $orderid = $request->getSession()->get('orderid');
+            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$orderid,'tranAction'=>'sale'));
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descriptionid);
+        }
+        else
+        {
+            $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Account'=>$this->getUser()->getAccount(),'tranAction'=>'sale'),array('id'=>'desc'));
+            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
+            $item = $lasttran->getCode()->getItem();
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$this->getUser()->getLanguage()));
+        }
 
         $duplicate = !$request->getSession()->has('firstprintcode');
         $request->getSession()->remove('firstprintcard');
-
-        $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descriptionid);
-        $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$orderid,'tranAction'=>'sale'));
 
         $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
             'trans'=>$trans,
