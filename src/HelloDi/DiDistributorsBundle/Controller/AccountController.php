@@ -708,6 +708,7 @@ class AccountController extends Controller
 
                 $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
 
+
             if ($data['DateStart'] != '')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
