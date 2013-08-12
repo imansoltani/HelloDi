@@ -697,30 +697,27 @@ class AccountController extends Controller
 //                /*for groupBy*/
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
-                ->innerJoin('TrCo.Item', 'TrCoIt')
+                ->innerJoin('TrCo.Item', 'TrCoIt');
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+
+            if ($data['Account'])
+                $qb->where('Tr.Account =:account')->setParameter('account', $data['Account']);
+            else
+                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildrens()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+
+
+                $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
 
             if ($data['DateStart'] != '')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
-            if ($data['Account'])
-                $qb->andwhere('Tr.Account =:account')->setParameter('account', $data['Account']);
-            else {
-                $child = $Account->getChildrens();
-                foreach ($child as $acc) {
-                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc', $acc);
-                }
-            }
-
             if ($data['ItemType'] != 'All')
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
 
             if ($data['ItemName'])
-                $qb->andwhere('TrCoIt.itemName = :item')->setParameter('item', $data['ItemName']);
-
+             $qb->andwhere('TrCoIt= :item')->setParameter('item', $data['ItemName']);
 
             if ($data['GroupBy'])
                 $qb->GroupBy('Tr.tranDate','TrCo.Item','Tr.Account');
@@ -782,7 +779,7 @@ class AccountController extends Controller
         }
         else
         {
-       $header= "
+            $header= "
                 <div style='font-size:14px;float:left;border:1px solid #999;width:7cm;padding:3px'>
                     <b>Distributor Details</b><br/>
                     Account Name: ".$Account->getAccName()."<br/>
