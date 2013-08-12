@@ -27,7 +27,7 @@ class EpaymentController extends Controller
         $ogonePayment = new OgonePayment();
 
         $ogonePayment->setUser($user);
-//        $ogonePayment->setPaymentCurrencyISO($currency);
+
         $ogonePayment->setStatus(OgonePayment::STATUS_PENDING);
 
         $ogonePaymentForm = $this->createForm(new NewOgonePaymentType($currency),$ogonePayment);

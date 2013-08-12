@@ -20,12 +20,14 @@
             text-align:left;
             vertical-align:top;
             border-top:1px solid #ddd;
-            page-break-inside: avoid;
         }
         .table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th{
             background-color:#f9f9f9
         }
-
+        table tr{
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
     </style>
 
 </head>
@@ -49,7 +51,7 @@
                 <td>{{ Tr.TR.Account.id }}</td>
                 <td>{{ Tr.TR.Account.Entiti.entName }}</td>
                 <td>{{ (Tr.TR.tranAmount * Tr.Quantity)|abs }}</td>
-                <td>--</td>
+                <td>{{ Tr.TR.tax|number_format(4) }}</td>
                 <td>{{ Tr.TR.Code.Item.itemFaceValue * Tr.Quantity}}</td>
             </tr>
         {% endfor %}

@@ -311,22 +311,26 @@ $datetype=0;
                 ->innerJoin('Tr.Code','TrCo')
                 ->innerJoin('TrCo.Item','TrCoIt')
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+                ->Where('Tr.Account = :Acc')->setParameter('Acc',$User->getAccount())
+                ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
             if($data['DateStart'])
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
             if($data['DateEnd'])
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            if($data['Staff']!='')
+            if($roles[0]=='ROLE_RETAILER_ADMIN')
+            {
+            if($data['Staff'])
               $qb->andWhere('Tr.User = :usr')->setParameter('usr',$data['Staff']);
-
+            }
+            else
+                $qb->andWhere('Tr.User = :usr')->setParameter('usr',$User);
 //
             if($data['ItemType']!='All')
-                $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+                $qb->andwhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
 
 
-            if($data['ItemName']!='')
-                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
+            if($data['ItemName'])
+                 $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
 
             $qb->orderBy('Tr.tranInsert','desc');
 
@@ -642,7 +646,7 @@ $datetype=0;
 
     public function BuyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -660,12 +664,19 @@ $datetype=0;
 
         $com = $priceChild->getprice() - $priceParent->getprice();
 
+        $vat=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
+        $vsale=(($priceChild->getPrice()/(100+$vat->getTax()))*$vat->getTax());
+        $vcom=(($priceParent->getPrice()/(100+$vat->getTax()))*$vat->getTax());
+
+
         if ($codes)
         {
             $ordercode = new OrderCode();
             $em->persist($ordercode);
             foreach ($codes as $code)
             {
+
+
                 $tranretailer = new Transaction();
                 $trandist = new Transaction();
 
@@ -682,7 +693,7 @@ $datetype=0;
                 $tranretailer->setUser($user);
                 $tranretailer->setTranBookingValue(null);
                 $tranretailer->setTranBalance($Account->getAccBalance());
-
+                $tranretailer->setTax($vsale);
                 $tranretailer->setOrder($ordercode);
                 $ordercode->addTransaction($tranretailer);
 
@@ -700,10 +711,11 @@ $datetype=0;
                 $trandist->setUser($user);
                 $trandist->setTranBookingValue(null);
                 $trandist->setTranBalance($Account->getParent()->getAccBalance());
+                $trandist->setTax($vcom);
+                $trandist->setBuyingprice($priceParent->getPrice());
+                $trandist->setOrder($ordercode);
                 $em->persist($tranretailer);
                 $em->persist($trandist);
-
-                $trandist->setOrder($ordercode);
                 $ordercode->addTransaction($trandist);
             }
             $em->flush();

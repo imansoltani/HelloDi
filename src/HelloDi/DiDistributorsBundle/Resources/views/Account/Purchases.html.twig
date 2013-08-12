@@ -104,10 +104,10 @@
 
                             <td>
 
-                             {{ Tr.BuyingPrice }}
+                             {{ Tr.TR.BuyingPrice }}
 
                             </td>
-                            <td>Task</td>
+                            <td>{{ Tr.TR.tax|number_format(4) }}</td>
                         </tr>
 
                     {% endfor %}

@@ -15,11 +15,6 @@ HelloDi\DiDistributorsBundle\Entity\Tax:
                 message: 'only numeric'
 HelloDi\DiDistributorsBundle\Entity\User:
     properties:
-        firstName:
-            - Regex:
-                pattern: "/\d/"
-                match:   false
-                message: Your name cannot contain a number
         mobile:
             - Regex:
                 pattern: "/\d/"

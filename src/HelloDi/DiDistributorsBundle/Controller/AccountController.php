@@ -364,7 +364,7 @@ class AccountController extends Controller
                     'amdt' => 'debit distributor,s account',
                     'crnt' => 'issue a credit note for a sold code',
                     'com_pmt' => 'debit distributor,s account for the commisson payments',
-                    'pmt' => 'ogone payment on its own account',
+                    'ogo_pmt' => 'ogone payment on its own account',
                     'tran' => 'transfer credit from provider,s account to a distributor,s account',
                     'tran' => 'transfer credit from distributors account to a retailer,s account',
                     'crtl' => 'increase retailer,s credit limit',
@@ -697,30 +697,28 @@ class AccountController extends Controller
 //                /*for groupBy*/
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
-                ->innerJoin('TrCo.Item', 'TrCoIt')
+                ->innerJoin('TrCo.Item', 'TrCoIt');
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+
+            if ($data['Account'])
+                $qb->where('Tr.Account =:account')->setParameter('account', $data['Account']);
+            else
+                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildrens()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+
+
+                $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
+
 
             if ($data['DateStart'] != '')
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
-            if ($data['Account'])
-                $qb->andwhere('Tr.Account =:account')->setParameter('account', $data['Account']);
-            else {
-                $child = $Account->getChildrens();
-                foreach ($child as $acc) {
-                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc', $acc);
-                }
-            }
-
             if ($data['ItemType'] != 'All')
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
-//
-            if ($data['ItemName'])
-                $qb->andwhere('TrCoIt.itemName = :item')->setParameter('item', $data['ItemName']);
 
+            if ($data['ItemName'])
+             $qb->andwhere('TrCoIt= :item')->setParameter('item', $data['ItemName']);
 
             if ($data['GroupBy'])
                 $qb->GroupBy('Tr.tranDate','TrCo.Item','Tr.Account');
@@ -750,13 +748,6 @@ class AccountController extends Controller
             );
         }
 
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
-
-$com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
-    'Account'=>$Account,
-    'tranAction'=>'com'
-     ));
-
         if($printtype==null)
         {
             return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',array(
@@ -764,10 +755,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                     'form' => $form->createView(),
                     'Account' => $Account,
                     'group'=>$group,
-                    'Entiti' => $Account->getEntiti(),
-                    'com'=>$com,
-                    'tax'=>$tax->getTax()
-
+                    'Entiti' => $Account->getEntiti()
             ));
         }
         else
@@ -796,8 +784,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $retailers = $Account->getChildrens();
                 $html = $this->render('HelloDiDiDistributorsBundle:Print:SaleStatementPrint.html.twig',array(
                     'pagination' => $qb->getResult(),
-                    'retailers' => $retailers,
-                    'tax'=>$tax->getTax()
+                    'retailers' => $retailers
                 ));
             }
 
@@ -834,7 +821,8 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             'User'=>$tran->getUser(),
             'tranAction'=>'com',
             'tranDate'=>$tran->getTranDate(),
-            'tranCurrency'=>$tran->getTranCurrency()
+            'tranCurrency'=>$tran->getTranCurrency(),
+            'Order'=>$tran->getOrder()
         ));
 
         return new Response($com->getTranAmount());
@@ -843,14 +831,18 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
     public function ProvTransferAction($id, Request $req)
     {
+
         $AccountBalance = $this->get('hello_di_di_distributors.balancechecker');
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $User = $this->get('security.context')->getToken()->getUser();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $countisprov = 0;
+
         $isprove = $em->createQueryBuilder();
+
         $isprove->select('Acc')
             ->from('HelloDiDiDistributorsBundle:Account', 'Acc')
             ->Where('Acc.Entiti = :Ent')->setParameter('Ent', $Account->getEntiti())
@@ -1028,12 +1020,10 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $User = $this->get('security.context')->getToken()->getUser();
-        $paginator = $this->get('knp_paginator');
+        $User = $this->getUser();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
-
+        $vat= $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'))->getTax();
         $qb = array();
 
         $form = $this->createFormBuilder()
@@ -1070,13 +1060,13 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             $data = $form->getData();
 
             $qb = $em->createQueryBuilder();
-//            ,Count(Tr.tranDate) as c
-        $qb->select('Tr as TR, count(Tr.Code) as Quantity,abs(Tr.tranAmount)as BuyingPrice')
+        $qb->select('Tr as TR, count(Tr.Code) as Quantity')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 ->innerJoin('Tr.Account', 'TrAcc')
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('TrCo.Item', 'TrCoIt')
-                ->where($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('com')));
+                ->where('Tr.Account = :Acc')->setParameter('Acc',$Account)
+                ->andwhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('com')));
             if ($data['DateStart'] != '')
                 $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
@@ -1084,17 +1074,14 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
             if ($data['ItemType'] != 'All')
                 $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
             if ($data['ItemName'])
-                $qb->andWhere($qb->expr()->like('TrCoIt.itemName ', $qb->expr()->literal($data['ItemName']->getItemName())));
+                $qb->andWhere($qb->expr()->like('TrCoIt', $qb->expr()->literal($data['ItemName'])));
 
-            $qb->groupBy('TrCo.Item')->addGroupBy('BuyingPrice');
+            $qb->groupBy('TrCoIt')->addGroupBy('Tr.BuyingPrice')->addGroupBy('Tr.tax');
 
-            $qb->addOrderBy('Tr.tranDate', 'desc');
+            $qb->addOrderBy('Tr.tranInsert', 'desc');
 
             $qb = $qb->getQuery();
             $qb = $qb->getResult();
-
-//            $count = count($qb->getResult());
-//            $qb->setHint('knp_paginator.count', $count);
 
         }
 
@@ -1190,16 +1177,11 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $query = $Account->getChildrens();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig',
             array(
-                'pagination' => $pagination,
+                'pagination' => $query,
                 'Account' => $Account));
 
     }
@@ -1207,7 +1189,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
     public function ManageDistUserAction(Request $request, $id)
     {
-        $paginator = $this->get('knp_paginator');
+
 
         $em = $this->getDoctrine()->getManager();
 
@@ -1216,17 +1198,10 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
 
         $result = $Account->getUsers();
 
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('Usr')
-            ->from('HelloDiDiDistributorsBundle:User', 'Usr')
-            ->where('Usr.Account = :Acc')->setParameter('Acc', $Account);
-        $qb = $qb->getQuery();
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistUser.html.twig',
 
             array(
-                'pagination' => $qb->getResult(),
+                'pagination' =>$result,
                 'Account' => $Account
             ));
 
@@ -1863,7 +1838,6 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
         }
 
 
-//die('sas'.$request->get('page'));
 
         $pagination = $paginator->paginate(
             $qb,
@@ -1993,6 +1967,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $user->setEnabled(1);
                 $em->persist($user);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $Account->getId())));
 
             }
@@ -2125,7 +2100,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
                 $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
                 $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
-                $value .= '<option value="pmt">' . 'ogone payment on its own account' . '</option>';
+                $value .= '<option value="ogo_pmt">' . 'ogone payment on its own account' . '</option>';
                 $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
 
 
@@ -2140,7 +2115,7 @@ $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array
                 $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
                 $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
                 $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
-                $value .= '<option value="pmt">' . 'ogone payment on its own account' . '</option>';
+                $value .= '<option value="ogo_pmt">' . 'ogone payment on its own account' . '</option>';
                 $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
                 break;
         }

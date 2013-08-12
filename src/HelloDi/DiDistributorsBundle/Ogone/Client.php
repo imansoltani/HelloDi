@@ -63,10 +63,10 @@ class Client
             'DECLINEURL'    => $this->resultUrl,
             'EXCEPTIONURL'  => $this->resultUrl,
             'HOMEURL'       => $this->homeUrl,
-            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getLanguage()),
+            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getEntiti()->getCountry()->getIso()),
             'ORDERID'       => $payment->getOrderReference(),
             'PSPID'         => $this->pspId,
-//            'TP'            => $this->ogoneTemplateUrl
+            'TP'            => $this->ogoneTemplateUrl
         );
     }
 
@@ -195,7 +195,7 @@ class Client
         }
 
         $fields[] = sprintf('<input  type="hidden" name="SHASIGN" value="%s" />', $this->generateHashIn($payment));
-        $fields[] ='<input  class="button btn btn-primary btn-large"  type="submit"  value="Go to Ogone">';
+        $fields[] ='<input  class="button btn btn-primary btn-large"  type="submit"  value="Accept">';
         $fields[] = '</form>';
 
         return    implode('', $fields);

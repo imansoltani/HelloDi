@@ -82,10 +82,7 @@
                 <td>{{ Tr.TR.Code.Item.itemCode }}</td>
                 <td>{{ Tr.TR.Code.Item.itemName }} {{ Tr.TR.Code.Item.itemFaceValue }}</td>
                 <td>{{ Tr.Quantity }}</td>
-                <td>
-                    {%  set vat= -Tr.TR.tranAmount+(Tr.TR.tranAmount/(1+tax/100)) %}
-                    {{  vat | number_format(2) }}
-                </td>
+                <td>{{ Tr.TR.tax|number_format(4) }}</td>
                 <td>{{ Tr.TR.tranAmount|abs }}</td>
                 <td>
                     {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}

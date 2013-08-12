@@ -139,18 +139,10 @@ class EntitiController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $paginator = $this->get('knp_paginator');
-
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
-        $pagination = $paginator->paginate(
-            $entity->getUsers(),
-            $req->get('page',1) /*page number*/,
-            10/*limit per page*/
-        );
-
         return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' =>$pagination,
+            'pagination' =>$entity->getUsers(),
             'entity' => $entity,
         ));
     }
@@ -197,6 +189,7 @@ class EntitiController extends Controller
                 $user->setEntiti($entity);
                 $em->persist($user);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
             }
 
@@ -239,20 +232,6 @@ class EntitiController extends Controller
     }
 
 
-    public function addressesAction(Request $request,$id)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-
-        $addresses = $em->getRepository('HelloDiDiDistributorsBundle:Address')->findBy(array('Entiti' => $entity));
-
-
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:addresses.html.twig', array(
-            'addresses' => $addresses,
-            'entity' => $entity
-        ));
-    }
 
     public function AddProvAction(Request $request, $id)
     {
@@ -374,21 +353,15 @@ public function  EditUserEntitiesAction(Request $request,$userid)
 
     public  function addressAction(Request $req, $id)
     {
-        $paginator = $this->get('knp_paginator');
+
 
         $em=$this->getDoctrine()->getEntityManager();
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $Address=$entity->getDetailHistories();
 
-        $pagination = $paginator->paginate(
-            $Address,
-            $req->get('page',1) /*page number*/,
-            10/*limit per page*/
-        );
-
 
         return $this->render('HelloDiDiDistributorsBundle:Entiti:Address.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $Address,
             'entity' => $entity,
         ));
 
