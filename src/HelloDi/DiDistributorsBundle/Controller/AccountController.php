@@ -750,23 +750,6 @@ class AccountController extends Controller
             );
         }
 
-
-        $formprint=$this->createFormBuilder()
-            ->add('print','choice',array('label'=>'Print:',
-                'expanded'=>true,
-                'choices'=>array(
-                    0=>'Retailer Statements',
-                    1=>'Retailer Revenues'
-                )
-            ))->getForm();
-
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
-
-       $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array(
-       'Account'=>$Account,
-       'tranAction'=>'com'
-         ));
-
         if($printtype==null)
         {
             return $this->render('HelloDiDiDistributorsBundle:Account:ReportSales.html.twig',array(
@@ -774,10 +757,7 @@ class AccountController extends Controller
                     'form' => $form->createView(),
                     'Account' => $Account,
                     'group'=>$group,
-                    'Entiti' => $Account->getEntiti(),
-                    'com'=>$com,
-                    'tax'=>$tax->getTax()
-
+                    'Entiti' => $Account->getEntiti()
             ));
         }
         else
@@ -806,8 +786,7 @@ class AccountController extends Controller
                 $retailers = $Account->getChildrens();
                 $html = $this->render('HelloDiDiDistributorsBundle:Print:SaleStatementPrint.html.twig',array(
                     'pagination' => $qb->getResult(),
-                    'retailers' => $retailers,
-                    'tax'=>$tax->getTax()
+                    'retailers' => $retailers
                 ));
             }
 
