@@ -311,22 +311,26 @@ $datetype=0;
                 ->innerJoin('Tr.Code','TrCo')
                 ->innerJoin('TrCo.Item','TrCoIt')
                 /**/
-                ->Where($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
+                ->Where('Tr.Account = :Acc')->setParameter('Acc',$User->getAccount())
+                ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
             if($data['DateStart'])
                 $qb->andwhere('Tr.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
             if($data['DateEnd'])
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            if($data['Staff']!='')
+            if($roles[0]=='ROLE_RETAILER_ADMIN')
+            {
+            if($data['Staff'])
               $qb->andWhere('Tr.User = :usr')->setParameter('usr',$data['Staff']);
-
+            }
+            else
+                $qb->andWhere('Tr.User = :usr')->setParameter('usr',$User);
 //
             if($data['ItemType']!='All')
-                $qb->andwhere('TrCoIt.itemType =:ItemType')->setParameter('ItemType',$data['ItemType']);
+                $qb->andwhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
 
 
-            if($data['ItemName']!='')
-                 $qb->andWhere($qb->expr()->like('TrCoIt.itemName',$qb->expr()->literal($data['ItemName']->getItemName())));
+            if($data['ItemName'])
+                 $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
 
             $qb->orderBy('Tr.tranInsert','desc');
 
