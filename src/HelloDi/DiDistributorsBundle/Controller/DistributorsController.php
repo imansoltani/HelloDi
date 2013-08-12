@@ -46,7 +46,7 @@ class DistributorsController extends Controller
         $User= $this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
         $em=$this->getDoctrine()->getManager();
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
+
 
 
         $qb=array();
@@ -123,20 +123,11 @@ class DistributorsController extends Controller
                  $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
              if($data['Account'])
-             {
                  $qb->andwhere('Tr.Account=:ac')->setParameter('ac',$data['Account']);
 
-             }
-
             else
-            {
-                foreach($Account->getChildrens() as $acc )
-                {
-                    $qb->orwhere('Tr.Account = :Acc')->setParameter('Acc',$acc);
+                $qb->andwhere('Tr.Account IN (:Acc)')->setParameter('Acc',$Account->getChildrens()->toArray());
 
-                }
-
-            }
 
 
             if($data['ItemType']!='All')
@@ -175,7 +166,7 @@ class DistributorsController extends Controller
                 'Account' =>$User->getAccount(),
                 'Entiti' =>$User->getEntiti(),
                 'com'=>$com,
-                'tax'=>$tax->getTax()
+
 
     ));
 
@@ -195,7 +186,8 @@ class DistributorsController extends Controller
          'User'=>$tran->getUser(),
           'tranAction'=>'com',
          'tranDate'=>$tran->getTranDate(),
-         'tranCurrency'=>$tran->getTranCurrency()
+         'tranCurrency'=>$tran->getTranCurrency(),
+          'Order'=>$tran->getOrder()
         ));
 
         return new Response($com->getTranAmount());
@@ -275,8 +267,6 @@ class DistributorsController extends Controller
             $trandist->setTranType(0);
             $trandist->setTranBalance($Account->getParent()->getAccBalance());
             $trandist->setTranDescription($data['Description']);
-
-
 
 
             #transaction for retailer#
@@ -735,6 +725,7 @@ else
 
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $typedate=0;
+
        $qb=array();
 
         $form=$this->createFormBuilder()

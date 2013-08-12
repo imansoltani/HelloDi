@@ -81,6 +81,18 @@ class Transaction
     private $tranBalance;
 
     /**
+     * @ORM\Column(type="float", nullable=true, name="tax")
+     */
+    private $tax;
+
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, name="Buying_Price")
+     */
+    private $BuyingPrice;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
@@ -538,5 +550,55 @@ class Transaction
     public function getOrder()
     {
         return $this->Order;
+    }
+
+    /**
+     * Set tax
+     *
+     * @param float $tax
+     * @return Transaction
+     */
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
+    
+        return $this;
+    }
+
+    /**
+     * Get tax
+     *
+     * @return float 
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+
+
+
+
+    /**
+     * Set BuyingPrice
+     *
+     * @param decimal $buyingPrice
+     * @return Transaction
+     */
+    public function setBuyingPrice($buyingPrice)
+    {
+        $this->BuyingPrice = $buyingPrice;
+    
+        return $this;
+    }
+
+    /**
+     * Get BuyingPrice
+     *
+     * @return decimal
+     */
+    public function getBuyingPrice()
+    {
+        return $this->BuyingPrice;
     }
 }

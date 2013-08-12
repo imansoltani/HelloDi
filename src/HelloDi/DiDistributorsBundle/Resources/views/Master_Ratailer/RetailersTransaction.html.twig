@@ -91,7 +91,11 @@
             });
 
             $(function () {
-
+                val= $("#form_Type").val();
+                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $.post('{{ path("MasterLoadActionRetailer") }}',{id: val},function(result){
+                    $("#form_Action").html(result);
+                });
 
                Form_Search(1,"Search Transactions");
 

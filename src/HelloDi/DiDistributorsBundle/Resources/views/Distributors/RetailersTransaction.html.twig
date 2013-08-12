@@ -92,7 +92,11 @@
 
             $(function () {
 
-
+                val= $("#form_Type").val();
+                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $.post('{{ path("DistLoadActionRetailer") }}',{id: val},function(result){
+                    $("#form_Action").html(result);
+                });
                Form_Search(1,"Search Transactions");
 
             });
@@ -110,6 +114,7 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
+
                         <th>{{ 'Date' | trans ({}, "account") }}</th>
                         <th>{{ 'Description' | trans ({}, "account") }}</th>
                         <th>{{ 'Credit' | trans ({}, "account") }}</th>
@@ -134,17 +139,17 @@
                             <td>{{ tran.tranDescription }}</td>
 
                             {% if tran.tranAmount>=0 %}
+
                                 <td>{{ tran.tranAmount }}</td>
                                 <td>------</td>
-                           {% else %}
+
+                            {% else %}
                                  <td>------</td>
                                  <td>
 
                                      <script type="text/javascript">
                                          document.write(Math.abs({{ tran.tranAmount }}));
                                      </script>
-
-
                                  </td>
                             {% endif %}
 
@@ -156,6 +161,7 @@
 
                                 {{ balance }}
                             </td>
+
                             <td class="td-actions">
 
                                 <a class="btn_actions showDetails">
@@ -164,7 +170,7 @@
 
 
 
-    <fieldset>
+                         <fieldset>
 
         <div class="control-group">
             <label class="control-label">
@@ -273,6 +279,7 @@
 
 
 {% endif %}
+
     </fieldset>
 
 

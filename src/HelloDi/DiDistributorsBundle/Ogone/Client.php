@@ -63,7 +63,7 @@ class Client
             'DECLINEURL'    => $this->resultUrl,
             'EXCEPTIONURL'  => $this->resultUrl,
             'HOMEURL'       => $this->homeUrl,
-            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getLanguage()),
+            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getEntiti()->getCountry()->getIso()),
             'ORDERID'       => $payment->getOrderReference(),
             'PSPID'         => $this->pspId,
 //            'TP'            => $this->ogoneTemplateUrl
