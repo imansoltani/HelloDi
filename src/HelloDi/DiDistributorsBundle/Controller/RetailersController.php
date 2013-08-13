@@ -746,33 +746,45 @@ $datetype=0;
         }
         else
         {
-            $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Account'=>$this->getUser()->getAccount(),'tranAction'=>'sale'),array('id'=>'desc'));
-            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
-            $item = $lasttran->getCode()->getItem();
-            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$this->getUser()->getLanguage()));
+            $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
+            if($lasttran)
+            {
+                $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
+                $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$this->getUser()->getLanguage()));
+            }
+            else
+                $trans = null;
         }
 
-        $duplicate = !$request->getSession()->has('firstprintcode');
-        $request->getSession()->remove('firstprintcard');
+        if($trans!= null)
+        {
+            $duplicate = !$request->getSession()->has('firstprintcode');
+            $request->getSession()->remove('firstprintcard');
 
-        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-            'trans'=>$trans,
-            'description'=>$description,
-            'duplicate'=>$duplicate,
-            'print' => $print
-        ));
+            $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+                'trans'=>$trans,
+                'description'=>$description,
+                'duplicate'=>$duplicate,
+                'print' => $print
+            ));
 
-        if($print == 'web')
-            return $html;
+            if($print == 'web')
+                return $html;
+            else
+                return new Response(
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
+                    200,
+                    array(
+                        'Content-Type'          => 'application/pdf',
+                        'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                    )
+                );
+        }
         else
-            return new Response(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
-                200,
-                array(
-                    'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
-                )
-            );
+        {
+            $this->get('session')->getFlashBag()->add('error', "You haven't any sale!");
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
     }
 
     public function CallingCardAction() {
