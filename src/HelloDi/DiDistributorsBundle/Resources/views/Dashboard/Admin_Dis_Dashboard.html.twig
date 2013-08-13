@@ -19,15 +19,146 @@
 {% block Body %}
     <div class="span">
 
-
         <div class="widget stacked">
 
             <div class="widget-content">
+                <div class="widget-header">
+                    <h3>ShortCuts</h3>
+                </div> <!-- /widget-header -->
+                <div class="alertdiv" style="border:none" >
+                    <center>
+                        <ul class="shortcuts" >
+                            <li>
+                                <a href="{{ path('retailer_show') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-th-large"></i>
+                                    <span class="shortcut-label">Retailers</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('items_show') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-tags"></i>
+                                    <span class="shortcut-label">Items</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('DistTicketsNew',{'data':1}) }}" class="shortcut">
+                                    <i class="shortcut-icon icon-tag"></i>
+                                    <span class="shortcut-label">New Item</span>
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a href="{{ path('distributor_transactions_new') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-file"></i>
+                                    <span class="shortcut-label">Recharge</span>
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a href="{{ path('DistStaff') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-wrench"></i>
+                                    <span class="shortcut-label">Staff</span>
+                                </a>
+                            </li>
+
+
+
+                            <li>
+                                <a href="{{ path('DistTickets') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-comment"></i>
+                                    <span class="shortcut-label">Ticket</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="shortcut">
+                                    <i class="shortcut-icon icon-envelope"></i>
+                                    <span class="shortcut-label">Notification</span>
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a href="{{ path('DistProfile') }}" class="shortcut">
+                                    <i class="shortcut-icon icon-user"></i>
+                                    <span class="shortcut-label">Profile</span>
+                                </a>
+                            </li>
+
+
+
+                        </ul>
+                    </center>
+
+                </div>
+
+
 
             </div> <!-- /widget-content -->
 
         </div> <!-- /widget -->
 
+    </div> <!-- /span6 -->
+    <div class="span">
+
+
+
+
+        <div class="widget widget-nopad stacked">
+
+
+
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3>Recent Notifications</h3>
+                </div> <!-- /widget-header -->
+
+                <div class="alertdiv" >
+                    <ul>
+                        <li>
+                            <div class="entity" >
+                                <h4>
+                                    <a>Duis aute irure dolor in reprehenderit</a>
+                                </h4>
+                                <small>08 Mar</small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="entity" >
+                                <h4>
+                                    <a>Duis aute irure dolor in reprehenderit</a>
+                                </h4>
+                                <small>07 Mar</small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="entity" >
+                                <h4>
+                                    <a>Duis aute irure dolor in reprehenderit</a>
+                                </h4>
+                                <small>06 Mar</small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+            </div> <!-- /widget-content -->
+
+        </div> <!-- /widget -->
 
 
 
