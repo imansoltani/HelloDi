@@ -417,6 +417,7 @@
     var open = 0 ;
     var header = "" ;
     var widthMain = 0 ;
+    var showD = 0 ;
 
     function Form_Search(close,title){
         header = title ;
@@ -433,6 +434,43 @@
             $('.title_search').html("Close Search");
             $('#search_logo').attr('class', 'icon-remove');
         }
+    }
+
+
+
+    function FixRightDetail()
+    {
+
+        var x = $('.ShowDetailPopUp').width() ;
+
+        if(500 >= widthMain)
+        {
+            x = '5px' ;
+        }
+        else
+        {
+            var x = widthMain - x ;
+            x = x/2.5;
+        }
+
+        $('.ShowDetailPopUp').css('right',x);
+    }
+
+    function CloseDetail()
+    {
+        var preElement = $('td.td-actions > #show');
+        if(preElement != null)
+        {
+            $(preElement).removeAttr("id");
+            $(preElement).removeAttr("up");
+            $('.ShowDetailPopUp',preElement).fadeOut();
+            $('.ShowDetailPopUp',preElement).remove();
+        }
+    }
+
+    function CloseDetail2()
+    {
+        showD = 1 ;
     }
 
     $(function () {
@@ -480,7 +518,45 @@
         $('#element').tooltip({placement:'bottom'});
 
 
-        $('* .showDetails').hover(function(){
+
+
+        $('* .showDetails').click(function(){
+            if($(this).attr("id") != "show")
+            {
+                CloseDetail();
+                $(this).attr("id","show") ;
+                $(this).attr("up","1") ;
+                $(this).append('<div class="ShowDetailPopUp" id="ShowDetailPopUp" up="1" ></div>');
+                var x = '<div class="closeD" ><span onclick="CloseDetail2();" >x</span></div>';
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+x+$('span',this).html()+'</form>');
+                FixRightDetail();
+                $('.ShowDetailPopUp *').attr('up','1');
+                $('.ShowDetailPopUp',this).fadeIn();
+                showD = 0 ;
+            }
+            else
+            {
+                if(showD == 1)
+                {
+                    CloseDetail();
+                }
+
+            }
+        });
+
+        $('body').click(function(event) {
+            var obj=$(event.target);
+            //obj=obj['context'];// context : clicked element inside body
+            var element = $('div.ShowDetailPopUp');
+            if ( $(obj).attr('up')!="1" && element != null )
+            {
+                CloseDetail();
+            }
+        });
+
+
+
+        /*$('* .showDetails').hover(function(){
             //$('.ShowDetailPopUp',this).remove();
             //$(this).stop();
             if($(this).attr("id") != "show")
@@ -493,7 +569,7 @@
                 var y = $('.ShowDetailPopUp').width();
                 if(x + y > widthMain)
                 {
-                    x = 0 ;
+                    x = '5%' ;
                 }
                 $('.ShowDetailPopUp').css('right',x);
                 $('.ShowDetailPopUp',this).fadeIn();
@@ -505,7 +581,7 @@
                 $('.ShowDetailPopUp',this).fadeOut();
                 $('.ShowDetailPopUp',this).remove();
             }
-        });
+        });*/
 
         $('* .showDetailsAjax').click(function(){
             //$('.ShowDetailPopUp',this).remove();
@@ -532,6 +608,7 @@
 
         $(window).resize(function(){
             widthMain = $(window).width();
+            FixRightDetail();
         });
     });
 

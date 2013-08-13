@@ -386,6 +386,67 @@
 }
 
 @media only screen and (max-width: 500px) {
+    .tablediv table.table tr td.td-actions div.ShowDetailPopUp{
+        width: 90%;
+        right: 5%;
+        max-height: 80%;
+        top: 5px;
+    }
+
+
+    /*Login New Page */
+
+    .body_main {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+
+    .body_main.login , .body_main.Result  {
+        width: 90%;
+    }
+
+    .body_main h1 {
+        font-size: 20px;
+        padding: 5px;
+        padding-left: 15px;
+    }
+
+    .field {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .field input {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .field.Peyment{
+       display: block;
+    }
+
+    .field.Peyment label {
+        width: auto;
+    }
+
+    .field.Peyment input {
+        width: 80%;
+    }
+
+    .login_remind .btn{
+        float: left;
+    }
+
+    .Login_error.Comment {
+        font-size: 15px;
+    }
+
+    .login-fields.Result span:last-child {
+        font-size: 14px;
+        padding-left: 5px;
+        padding-right: 5px;
+        max-width: 95%;
+    }
 
 }
 
@@ -484,6 +545,10 @@
         padding-top: 20px;
         padding-bottom: 10px;
 
+    }
+
+    .navbar .container .pull-right {
+        margin-bottom: 10px;
     }
 
 

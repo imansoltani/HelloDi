@@ -1,12 +1,12 @@
 {% extends 'HelloDiDiDistributorsBundle:Step:RetailDistAdd.html.twig' %}
 
 {% block steps %}
-    <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+    <div style="display: block;position: absolute;z-index: 10" class="content important1" id="step-1">
         <div class="widget-header">
             <h3>Create Entity</h3>
         </div>
 
-        <div class="control-group">
+        <div class="control-group important">
 
             {{ form_label(form_Relaited_New.entName,'Name(Company):') }}
             <div class="controls money">
@@ -16,7 +16,7 @@
               </div>
         </div>
 
-        <div class="control-group entVatNumber">
+        <div class="control-group">
             {{ form_label(form_Relaited_New.entVatNumber) }}
             {{ form_widget(form_Relaited_New.entVatNumber,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
@@ -30,7 +30,7 @@
         <div class="widget-header">
             <h3>Address</h3>
         </div>
-        <div class="control-group Country">
+        <div class="control-group important">
 
             {{ form_label(form_Relaited_New.Country,'Country:') }}
             <div class="controls money">
@@ -40,7 +40,7 @@
             {{ form_errors(form_Relaited_New.Country) }}
         </div>
 
-        <div class="control-group">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.entCity,'City:') }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.entCity) }}
@@ -50,7 +50,7 @@
         </div>
 
 
-        <div class="control-group">
+        <div class="control-group important">
             <label class="control-label">
                 Town:
             </label>
@@ -62,7 +62,7 @@
         </div>
 
 
-        <div class="control-group entAdrs2">
+        <div class="control-group">
             <label class="control-label">
                 Street:
             </label>
@@ -79,7 +79,7 @@
         </div>
 
 
-        <div class="control-group entNP">
+        <div class="control-group important">
             <label class="control-label">
                 Post Code:
             </label>
@@ -158,11 +158,11 @@
         </div>
     </div>
 
-    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
+    <div style="display: none;position: absolute;z-index: 11" class="content important3" id="step-3">
         <div class="widget-header">
             <h3>Create User</h3>
         </div>
-        <div class="control-group firstname">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].firstname) }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.users[0].firstname) }}
@@ -171,13 +171,13 @@
             {{ form_errors(form_Relaited_New.users[0].firstname) }}
         </div>
 
-        <div class="control-group lastname">
+        <div class="control-group">
             {{ form_label(form_Relaited_New.users[0].lastname) }}
             {{ form_widget(form_Relaited_New.users[0].lastname) }}
             {{ form_errors(form_Relaited_New.users[0].lastname) }}
         </div>
 
-        <div class="control-group mobile">
+        <div class="control-group">
             {{ form_label(form_Relaited_New.users[0].mobile) }}
             {{ form_widget(form_Relaited_New.users[0].mobile,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
@@ -188,7 +188,7 @@
             {{ form_errors(form_Relaited_New.users[0].mobile) }}
         </div>
 
-        <div class="control-group language">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].language) }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.users[0].language) }}
@@ -198,7 +198,7 @@
         </div>
 
 
-        <div class="control-group users">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].enabled) }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.users[0].enabled) }}
@@ -207,7 +207,7 @@
             {{ form_errors(form_Relaited_New.users[0].enabled) }}
         </div>
 
-        <div class="control-group users">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].roles[0]) }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.users[0].roles[0]) }}
@@ -218,7 +218,7 @@
 
 
 
-        <div class="control-group username">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].username) }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.users[0].username) }}
@@ -227,13 +227,13 @@
             {{ form_errors(form_Relaited_New.users[0].username) }}
         </div>
 
-        <div class="control-group email">
+        <div class="control-group">
             {{ form_label(form_Relaited_New.users[0].email) }}
             {{ form_widget(form_Relaited_New.users[0].email) }}
             {{ form_errors(form_Relaited_New.users[0].email) }}
         </div>
 
-        <div class="control-group plainPassword1">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].plainPassword.first) }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.users[0].plainPassword.first) }}
@@ -242,7 +242,7 @@
             {{ form_errors(form_Relaited_New.users[0].plainPassword.first) }}
         </div>
 
-        <div class="control-group plainPassword2">
+        <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].plainPassword.second) }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.users[0].plainPassword.second) }}

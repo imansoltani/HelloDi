@@ -181,7 +181,7 @@ function Validation_Prov(x)
 function Valid_Step_1()
 {
     var y = false ;
-    $('.entName input, .entCity  input, .entAdrs3 input, .entAdrs1 input, .entNP input').each(function() {
+    $('* .important1 .important input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');
@@ -199,7 +199,7 @@ function Valid_Step_1()
 function Valid_Step_3()
 {
     var y = false ;
-    $('* #step-3 input').each(function() {
+    $('*  .important3 .important input').each(function() {
         if ($(this).val() == '') {
             y = true ;
             $(this).attr('style','border:thin #FF0000 solid');

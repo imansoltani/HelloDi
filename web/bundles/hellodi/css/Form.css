@@ -199,6 +199,7 @@ body .tablediv table.table tr td:last-child{
 
 .btn_actions ,.btn_actions:hover{
     text-decoration: none;
+    cursor: pointer;
 }
 
 .btn_edit_action{
@@ -255,7 +256,7 @@ body .tablediv table.table tr td:last-child{
     -webkit-transition:padding-left 0.3s; /* Safari */
 
 }
-.tablediv table.table tr td.td-actions input:hover ,.btn_actions:hover{
+.tablediv table.table tr td.td-actions input:hover ,.btn_actions:hover , .tablediv table.table tr td.td-actions #show{
     color: rgb(251, 147, 55);
     padding-left:10px ;
 }
@@ -1136,11 +1137,14 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
     max-width: 90%;
     border: solid thin #000000;
     top: 15%;
-
     box-shadow: 0px 0px 20px #a8a8a8;
     padding: 10px;
-
+    padding-top: 0;
+    padding-bottom: 0;
+    cursor: default;
 }
+
+
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp.ShowLoader {
     background: url("../img/ajax-loader.gif") no-repeat center center;
@@ -1152,23 +1156,62 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled {
     display: block;
+
+
+}
+
+.tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled:hover{
+    padding: 4px 6px;
+    color: #000000;
 }
 
 div.ShowDetailPopUp .control-group{
     margin-bottom: 5px;
     padding-bottom: 5px;
     border-bottom: solid thin #cccccc;
+    cursor: default;
 }
 
+div.ShowDetailPopUp .closeD
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    height: 20px;
+    cursor: default;
+}
+
+div.ShowDetailPopUp .closeD span{
+    display: block;
+    padding: 3px ;
+    background: #c8c7cc;
+    width: 20px;
+    cursor: pointer;
+    text-align: center;
+    color: #ffffff;
+}
+
+div.ShowDetailPopUp .closeD span:hover{
+    color: #000;
+    background: #ebeaf0;
+}
+
+div.ShowDetailPopUp .closeD span:focus , div.ShowDetailPopUp .closeD span:active{
+    box-shadow: 0px 0px 3px #000 inset;
+}
+
+
 div.ShowDetailPopUp .control-group:last-child{
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     border-bottom: none;
     padding-bottom: 0;
+    cursor: default;
 }
 
 div.ShowDetailPopUp .control-group .control-label{
     color: #000000;
     font-weight: bold;
+    cursor: default;
 }
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp input:disabled{
@@ -1177,6 +1220,7 @@ div.ShowDetailPopUp .control-group .control-label{
     box-shadow: none;
     background: #dfdfdf;
     font-size: 15px;
+    cursor: text;
 }
 
 .showDetails span{

@@ -839,7 +839,7 @@ color:#FFF;
 .main .pagetop.second .pagedisc{
     color: #1b206a;
     display: block;
-    width: 200px;
+    width: 250px;
     float: right;
 
     margin-right: 20px;
@@ -1260,7 +1260,10 @@ text-align: center;
 }
 
 
-
+.login_remind .btn {
+    float: right;
+    width: auto;
+}
 
 .login_remind{
     width: 100%;
