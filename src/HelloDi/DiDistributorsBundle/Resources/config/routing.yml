@@ -22,9 +22,3 @@ test:
     pattern:  /{id}/test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:test1}
 
-
-hellodi_transactions_ogone_template:
-    pattern:   hellodi/ogone-template
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig'
