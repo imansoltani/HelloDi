@@ -1,10 +1,10 @@
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailDist.html.twig' %}
-
-{% set tab = '2' %}
+{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowRetailerMaster.html.twig' %}
+{% set tab2 = '2' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
     <a class="link" href="">Items</a>
     <span class="link">New Items</span>
 {% endblock Site_Map %}
@@ -15,7 +15,7 @@
         <h3>Add new Item</h3>
     </div> <!-- /widget-header -->
 
-    <form id="addprice" action="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal">
+    <form id="addprice" action="{{ path('Master_RetailerItemAdd',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal">
 
         <div class="control-group">
             {{ form_label(form.Item) }}

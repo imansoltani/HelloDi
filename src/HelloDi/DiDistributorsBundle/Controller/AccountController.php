@@ -32,6 +32,7 @@ use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
 use HelloDi\DiDistributorsBundle\TaxType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
@@ -2722,6 +2723,132 @@ class AccountController extends Controller
                 break;
         }
         return new Response($value);
+    }
+
+    //-----
+    public function MasterRetailerItemsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $distaccount = $account->getParent();
+
+        $prices = $account->getPrices();
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerItems.html.twig', array(
+            'Account' => $distaccount,
+            'retailerAccount' => $account,
+            'prices' => $prices
+        ));
+    }
+
+    public function MasterRetailerItemsAddAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+
+        $distaccount = $account->getParent();
+
+        $price = new Price();
+        $price->setPriceCurrency($account->getAccCurrency());
+        $price->setPriceStatus(1);
+        $price->setAccount($account);
+        $price->setIsFavourite(false);
+
+        $form = $this->createFormBuilder($price)
+            ->add('Item', 'entity', array(
+                'class' => 'HelloDiDiDistributorsBundle:Item',
+                'property' => 'itemName',
+                'query_builder' => function(EntityRepository $er) use ($account,$distaccount) {
+                    return $er->createQueryBuilder('u')
+                        ->where ('u.id NOT IN (
+                            SELECT ii.id
+                            FROM HelloDiDiDistributorsBundle:Item ii
+                            JOIN ii.Prices pp
+                            JOIN pp.Account aa
+                            WHERE aa = :aaid
+                        )')
+                        ->andWhere('u.id IN (
+                            SELECT iii.id
+                            FROM HelloDiDiDistributorsBundle:Item iii
+                            JOIN iii.Prices ppp
+                            JOIN ppp.Account aaa
+                            WHERE aaa = :aamyid
+                        )')
+                        ->setParameter('aaid',$account)
+                        ->setParameter('aamyid',$distaccount)
+                        ;
+                }
+            ))
+            ->add('price','integer')
+            ->getForm();
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$distaccount))->getPrice();
+            if( $price->getPrice()<$distprice)
+                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
+            if ($form->isValid()) {
+                $em->persist($price);
+
+                $pricehistory = new PriceHistory();
+                $pricehistory->setDate(new \DateTime('now'));
+                $pricehistory->setPrice($price->getPrice());
+                $pricehistory->setPrices($price);
+                $em->persist($pricehistory);
+
+                $em->flush();
+                return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
+                    'id' => $account->getId()
+                ));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerItemsAdd.html.twig', array(
+            'Account' => $distaccount,
+            'retailerAccount' => $account,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function MasterRetailerItemsEditAction($id,$priceid, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
+
+        $distaccount = $price->getAccount()->getParent();
+
+        $oldprice = $price->getPrice();
+
+        $form = $this->createForm(new PriceEditType(), $price);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$distaccount))->getPrice();
+            if( $price->getPrice()<$distprice)
+                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
+            if ($form->isValid()) {
+                if ($price->getPrice() != $oldprice) {
+                    $pricehistory = new PriceHistory();
+                    $pricehistory->setDate(new \DateTime('now'));
+                    $pricehistory->setPrice($price->getPrice());
+                    $pricehistory->setPrices($price);
+                    $em->persist($pricehistory);
+                }
+                $em->flush();
+
+                return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
+                    'id' => $price->getAccount()->getId()
+                ));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Master_Ratailer:RetailerItemsEdit.html.twig', array(
+            'Account' => $distaccount,
+            'retailerAccount' => $price->getAccount(),
+            'price' => $price,
+            'form' => $form->createView()
+        ));
     }
 
 //    End Retailer
