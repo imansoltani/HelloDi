@@ -37,29 +37,41 @@ class CdSearchType extends AbstractType
                 'property' => 'fileName',
                 'label' => 'Code.InputFileName','translation_domain' => 'code'
             ))
-            ->add('serial', 'text',array(
+            ->add('fromserial', 'text',array(
                 'required'=> false,
-                'label' => 'Code.SerialNumber','translation_domain' => 'code'
+                'label' => 'Code.FromSerialNumber','translation_domain' => 'code'
             ))
-            ->add('pin', 'text',array(
+            ->add('toserial', 'text',array(
                 'required'=> false,
-                'label' => 'Code.Pin','translation_domain' => 'code
-                '))
+                'label' => 'Code.ToSerialNumber','translation_domain' => 'code'
+            ))
             ->add('status','choice',array(
                 'choices'=> array('3' => 'Code.Sale.All' , '0'=>'Code.Sale.Sale', '1'=>'Code.Sale.NotSale', '2'=>'Code.Sale.DeadBeat'),
                 'label' => 'Code.Status','translation_domain' => 'code'
             ))
-            ->add('insertdate','date',array(
+            ->add('frominsertdate','date',array(
                 'empty_value' => 'No Value',
                 'required'=> false,
                 'widget' => 'single_text','format' => 'yyyy/MM/dd',
-                'label' => 'Code.InsertDate','translation_domain' => 'code'
+                'label' => 'Code.FromInsertDate','translation_domain' => 'code'
             ))
-            ->add('expiredate','date',array(
+            ->add('toinsertdate','date',array(
                 'empty_value' => 'No Value',
                 'required'=> false,
                 'widget' => 'single_text','format' => 'yyyy/MM/dd',
-                'label' => 'Code.ExpireDate','translation_domain' => 'code'
+                'label' => 'Code.ToInsertDate','translation_domain' => 'code'
+            ))
+            ->add('fromexpiredate','date',array(
+                'empty_value' => 'No Value',
+                'required'=> false,
+                'widget' => 'single_text','format' => 'yyyy/MM/dd',
+                'label' => 'Code.FromExpireDate','translation_domain' => 'code'
+            ))
+            ->add('toexpiredate','date',array(
+                'empty_value' => 'No Value',
+                'required'=> false,
+                'widget' => 'single_text','format' => 'yyyy/MM/dd',
+                'label' => 'Code.ToExpireDate','translation_domain' => 'code'
             ));
     }
 

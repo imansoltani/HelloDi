@@ -1,6 +1,7 @@
 Code:
     Id: ردیف
-    SerialNumber: شماره سریال
+    FromSerialNumber: شماره سریال از
+    ToSerialNumber: تا
     Pin: پین کد
     Status: وضعیت
     CreditingDate: تاریخ ایجاد
@@ -9,9 +10,11 @@ Code:
 
     Provider: فروشنده
     InputFileName: نام فایل ورودی
-    InsertDate: تاریخ درج
+    FromInsertDate: تاریخ درج از
+    ToInsertDate: تا
     SaleDate: تاریخ فروش
-    ExpireDate: تاریخ انقضا
+    FromExpireDate: تاریخ انقضا از
+    ToExpireDate: تا
 
     All: همه
     Sale:

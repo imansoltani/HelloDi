@@ -1,6 +1,7 @@
 Code:
     Id: ID
-    SerialNumber: Serial Number
+    FromSerialNumber: Serial Number From
+    ToSerialNumber: To
     Pin: Pin Code
     Status: Status
     CreditingDate: Crediting Date
@@ -9,9 +10,11 @@ Code:
 
     Provider: Provider
     InputFileName: Input File Name
-    InsertDate: Insert Date
+    FromInsertDate: Insert Date From
+    ToInsertDate: To
     SaleDate: Sale Date
-    ExpireDate: Expire Date
+    FromExpireDate: Expire Date From
+    ToExpireDate: To
 
     All: All
     Sale:

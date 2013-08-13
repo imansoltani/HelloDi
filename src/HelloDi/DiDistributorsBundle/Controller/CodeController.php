@@ -44,20 +44,26 @@ class CodeController extends Controller
             if($data['inputFileName']!=null)
                 $qb = $qb->andWhere($qb->expr()->eq('input',intval($data['inputFileName']->getId() )));
 
-            if($data['serial']!="")
-                $qb = $qb->andWhere($qb->expr()->like('code.serialNumber', $qb->expr()->literal($data['serial'].'%')));
+            if($data['fromserial']!="")
+                $qb = $qb->andWhere('code.serialNumber >= :fromserial')->setParameter('fromserial', $data['fromserial']);
 
-            if($data['pin']!="")
-                $qb = $qb->andWhere($qb->expr()->like('code.pin', $qb->expr()->literal($data['pin'].'%')));
+            if($data['toserial']!="")
+                $qb = $qb->andWhere('code.serialNumber <= :toserial')->setParameter('toserial', $data['toserial']);
 
             if($data['status']!='3')
                 $qb = $qb->andWhere('code.status = :status')->setParameter('status', $data['status']);
 
-            if($data['insertdate']!="")
-                $qb = $qb->andWhere("input.dateInsert = :insertdate")->setParameter('insertdate', $data['insertdate']);
+            if($data['frominsertdate']!="")
+                $qb = $qb->andWhere("input.dateInsert >= :frominsertdate")->setParameter('frominsertdate', $data['frominsertdate']);
 
-            if($data['expiredate']!="")
-                $qb = $qb->andWhere("input.dateExpiry = :expiredate")->setParameter('expiredate', $data['expiredate']);
+            if($data['toinsertdate']!="")
+                $qb = $qb->andWhere("input.dateInsert <= :toinsertdate")->setParameter('toinsertdate', $data['toinsertdate']);
+
+            if($data['fromexpiredate']!="")
+                $qb = $qb->andWhere("input.dateExpiry >= :fromexpiredate")->setParameter('fromexpiredate', $data['fromexpiredate']);
+
+            if($data['toexpiredate']!="")
+                $qb = $qb->andWhere("input.dateExpiry <= :toexpiredate")->setParameter('toexpiredate', $data['toexpiredate']);
 
             $count = count($qb->getQuery()->getResult());
 
