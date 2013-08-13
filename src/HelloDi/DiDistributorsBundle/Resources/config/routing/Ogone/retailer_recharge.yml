@@ -13,8 +13,9 @@ retailer_transactions_result:
 retailer_index:
     pattern:  /
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
+
 retailer_transactions_ogone_template:
-    pattern:   /ogone-template
+    path:   /ogone-template
     defaults:
         _controller: FrameworkBundle:Template:template
-        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig'
+        template: HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig
