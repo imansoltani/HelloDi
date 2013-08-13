@@ -15,6 +15,7 @@ distributor_index:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:dashboard}
 
 distributor_transactions_ogone_template:
-    path: /ogone-template
+    pattern:   /ogone-template
     defaults:
-        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate'
+        _controller: FrameworkBundle:Template:template
+        template: 'HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig'

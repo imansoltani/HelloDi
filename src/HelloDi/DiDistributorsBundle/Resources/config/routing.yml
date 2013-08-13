@@ -22,13 +22,6 @@ test:
     pattern:  /{id}/test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:test1}
 
-ogonetest:
-    pattern:  /ogonetest
-    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTestAccept }
-
-ogonetestaccept:
-    pattern:  /ogonetest/accept
-    defaults: { _controller: HelloDiDiDistributorsBundle:Test:OgoneTestAccept }
 
 hellodi_transactions_ogone_template:
     pattern:   hellodi/ogone-template
