@@ -30,7 +30,7 @@
                         </span>
                     </h5>
 
-                    <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
+                    <form id="codesearch" class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
                         <fieldset>
                             <div class="control-group">
                                 {{ form_label(form.provider) }}
@@ -101,7 +101,8 @@
                             {{ form_rest(form) }}
                             <hr>
                             <input type="hidden" name="page" id="search_page" value="1"/>
-                            <input class="btn btn-primary" type="submit" value="Search">
+                            <input type="hidden" name="csv" id="csv" value="0" />
+                            <input class="btn btn-primary" type="submit" value="Search" onclick="$('#csv').val('0');">
                         </fieldset>
                     </form>
                     <script type="text/javascript">
@@ -113,6 +114,9 @@
                     </script>
 
                 </div>
+                {% if  not first %}
+                    <a href="javascript:;" onclick="$('#csv').val('1');$('#codesearch').submit();" class="btn btn-success">Export to CSV</a><br/><br/>
+                {% endif %}
                 <div class="tablediv">
 
                     <div class="contenttitle">
@@ -138,17 +142,10 @@
                                         <td>{{ code.Item.itemName }}</td>
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
-                                        <td>{% if code.status==1 %}Available{% elseif code.status==0 %}Not Available{% else %}Removed{% endif %}</td>
+                                        <td>{% if code.status==1 %}Available{% else %}Unavailable{% endif %}</td>
                                         <td>{{ code.Input.Account.accName }}</td>
                                         <td>
                                             <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
-                                            <br/>
-                                            {% if code.status==0 %}
-                                                <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node the code?" class="YesNoMessage btn_actions">Credit Note</a>
-                                            {% elseif code.status==1 %}
-                                                <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Dead Beat the code?" class="YesNoMessage btn_actions">Dead Beat</a>
-                                            {% endif %}
-                                            <br/>
                                         </td>
                                     </tr>
                                 {% endfor %}

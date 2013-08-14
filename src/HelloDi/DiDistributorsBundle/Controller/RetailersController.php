@@ -721,7 +721,7 @@ $datetype=0;
             $em->flush();
 
             $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item, 'desclang' => $user->getLanguage()));
-
+            if(!$description) $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item));
             $request->getSession()->set('descriptionid', $description->getId());
             $request->getSession()->set('orderid', $ordercode->getId());
             $request->getSession()->set('firstprintcode', true);

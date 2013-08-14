@@ -26,9 +26,10 @@
             <div class="widget-content">
 
                 {% if code.status==0 %}
-                    <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Credit Node the code?', '{{ path('code_creditnote',{'id':code.id}) }}')" class="btn btn-danger">Credit Note</a><br/><br/>
-                {% elseif code.status==1 %}
-                    <a href="javascript:;" onClick="YesNoMessage('Alert', 'Are you sure to Dead Beat the code?', '{{ path('code_deadbeat',{'id':code.id}) }}')" class="btn btn-danger">Dead Beat</a><br/><br/>
+                    <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node the code?" class="YesNoMessage btn btn-danger">Credit Note</a>
+                    <a href="{{ path('code_creditnoteanddeatbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node And Deat Beat the code?" class="YesNoMessage btn btn-danger">Credit Note And Deat Beat</a><br/><br/>
+                {% elseif not isremoved %}
+                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Dead Beat the code?" class="YesNoMessage btn btn-danger">Dead Beat</a><br/><br/>
                 {% endif %}
                 <div class="tablediv">
                     <div class="contenttitle">

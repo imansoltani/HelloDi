@@ -13,3 +13,7 @@ code_deadbeat:
 code_creditnote:
     pattern:  /{id}/creditnote
     defaults: { _controller: "HelloDiDiDistributorsBundle:Code:CreditNote" }
+
+code_creditnoteanddeatbeat:
+    pattern:  /{id}/creditnoteanddeatbeat
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Code:CreditNoteAndDeadBeat" }

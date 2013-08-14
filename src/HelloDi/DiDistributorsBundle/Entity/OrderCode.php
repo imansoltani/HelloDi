@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OrderCode
  *
- * @ORM\Table()
+ * @ORM\Table(name="ordercode")
  * @ORM\Entity
  */
 class OrderCode

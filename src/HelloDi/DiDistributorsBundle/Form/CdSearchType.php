@@ -46,7 +46,7 @@ class CdSearchType extends AbstractType
                 'label' => 'Code.ToSerialNumber','translation_domain' => 'code'
             ))
             ->add('status','choice',array(
-                'choices'=> array('3' => 'Code.Sale.All' , '0'=>'Code.Sale.Sale', '1'=>'Code.Sale.NotSale', '2'=>'Code.Sale.DeadBeat'),
+                'choices'=> array('3' => 'All' , '0'=>'Unavailable', '1'=>'Available'),
                 'label' => 'Code.Status','translation_domain' => 'code'
             ))
             ->add('frominsertdate','date',array(
