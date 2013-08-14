@@ -25,7 +25,6 @@ class Client
     private $em;
     //private $routePrefix;
 
-
     private $pspId;
     private $shaIn;
     private $shaOut;
@@ -43,11 +42,11 @@ class Client
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
-        //generate(string $name, mixed $parameters = array(), Boolean $absolute = false)
+
         $this->resultUrl    = $router->generate($routesContainer->getResultUrl(), [], true);
         $this->catalogUrl   = $router->generate($routesContainer->getCatalogUrl(), [], true);
         $this->homeUrl  = $router->generate($routesContainer->getHomeUrl(), [], true);
-        $this->ogoneTemplateUrl   = $router->generate($routesContainer->getOgoneTemplateUrl(), [], true);
+        $this->ogoneTemplateUrl   = $router->generate("transactions_ogone_template", [], true);
     }
 
     private function getSortedParameters(OgonePayment $payment)

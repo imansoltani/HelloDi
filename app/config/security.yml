@@ -28,7 +28,7 @@ security:
         - { path: ^/app/d, roles: ROLE_DISTRIBUTOR }
         - { path: ^/app/r/admin, roles: ROLE_RETAILER_ADMIN }
         - { path: ^/app/r, roles: ROLE_RETAILER }
-        - { path: ^/hellodi$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/ogone-template, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
     role_hierarchy:
         ROLE_RETAILER_ADMIN: ROLE_RETAILER

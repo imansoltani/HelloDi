@@ -22,3 +22,8 @@ test:
     pattern:  /{id}/test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:test1}
 
+transactions_ogone_template:
+    path:   /ogone-template
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig
