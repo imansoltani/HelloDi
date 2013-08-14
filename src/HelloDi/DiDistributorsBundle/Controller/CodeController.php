@@ -7,7 +7,6 @@ use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\CdSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use HelloDi\DiDistributorsBundle\Form\CodeType;
 use Symfony\Component\HttpFoundation\Response;
 
 class CodeController extends Controller
@@ -21,17 +20,31 @@ class CodeController extends Controller
         $first = 1;
         $pagination = null;
         $count = 0;
+        $data = null;
+
         if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $data = $form->getData();
             $first = 0;
+        }
+        else
+        {
+            if ($request->getSession()->has('codesearch'))
+            {
+                $data = $request->getSession()->get('codesearch');
+                if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($data['provider']);
+                if($data['item']!=null) $data['item'] = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($data['item']);
+                if($data['inputFileName']!=null) $data['inputFileName'] = $em->getRepository('HelloDiDiDistributorsBundle:Input')->find($data['inputFileName']);
+                $form->setData($data);
+            }
+        }
+
+        if($data != null) {
 
             $qb = $em->createQueryBuilder()
                 ->select('code')
-                ->from('HelloDiDiDistributorsBundle:Code','code');
-
-            $form->handleRequest($request);
-            $data = $form->getData();
-
-            $qb ->join('code.Input','input')
+                ->from('HelloDiDiDistributorsBundle:Code','code')
+                ->join('code.Input','input')
                 ->join('input.Account','account')
                 ->join('code.Item','item');
 
@@ -65,12 +78,17 @@ class CodeController extends Controller
             if($data['toexpiredate']!="")
                 $qb = $qb->andWhere("input.dateExpiry <= :toexpiredate")->setParameter('toexpiredate', $data['toexpiredate']);
 
+            if($data['provider'] != null) $data['provider'] = $data['provider']->getId();
+            if($data['item']!=null) $data['item'] = $data['item']->getId();
+            if($data['inputFileName']!=null) $data['inputFileName'] = $data['inputFileName']->getId();
+            $request->getSession()->set('codesearch',$data);
+
             $count = count($qb->getQuery()->getResult());
 
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
                 $qb,
-                $request->get('page'),
+                $request->get('page',1),
                 20,
                 array('distinct' => false)
             );
@@ -80,13 +98,18 @@ class CodeController extends Controller
 
         if($csv==1 && !$first)
         {
+            $searchresult = $qb->getQuery()->getResult();
             $result = "";
-            foreach ($qb->getQuery()->getResult() as $row)
+            for($i=0;$i<count($searchresult);$i++)
+            {
+                $row = $searchresult[$i];
                 $result .=
                     $row->getSerialNumber().';'.
                     $row->getInput()->getDateProduction()->format('Y/m/d').';'.
                     $row->getInput()->getDateExpiry()->format('Y/m/d').";".
-                    rtrim($row->getPin())."\n";
+                    rtrim($row->getPin());
+                if($i<count($searchresult)-1) $result .="\n";
+            }
 
             return new Response($result,200,array(
                         'Content-Type'          => 'text/csv',
