@@ -409,7 +409,12 @@ class AccountController extends Controller
                             $trandist->setTranAction('amdt');
                             $em->persist($trandist);
                             $em->flush();
-                            $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
+
+                            $this->get('session')->getFlashBag()->add('success',
+                                $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                                    array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
+                                    'transaction')
+                            );
                         }
 
                         break;
@@ -422,7 +427,13 @@ class AccountController extends Controller
                         $alredy=$Account->getAccBalance();
                         $em->persist($trandist);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                                array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
+                                'transaction')
+                        );
+
 
                         break;
 
@@ -436,7 +447,13 @@ class AccountController extends Controller
                             $trandist->setTranAction('com_pmt');
                             $em->persist($trandist);
                             $em->flush();
-                            $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
+
+                            $this->get('session')->getFlashBag()->add('success',
+                                $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                                    array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
+                                    'transaction')
+                            );
+
                         }
                         break;
                 }
@@ -477,12 +494,22 @@ class AccountController extends Controller
                   if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
 
                       $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
-                      $this->get('session')->getFlashBag()->add('success','credit limit changed from '.$alredy.' to ' .$Account->getAccCreditLimit().' successfully ');
+
+
+                      $this->get('session')->getFlashBag()->add('success',
+                          $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
+                              array('alredydist'=>$alredy,'currentdist'=>$Account->getAccCreditLimit()),
+                              'transaction')
+                      );
                   }
                   break;
               case 1:
                   $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
-                  $this->get('session')->getFlashBag()->add('success','credit limit changed from '.$alredy.' to ' .$Account->getAccCreditLimit().' successfully ' );
+                  $this->get('session')->getFlashBag()->add('success',
+                      $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
+                          array('alredydist'=>$alredy,'currentdist'=>$Account->getAccCreditLimit()),
+                          'transaction')
+                  );
                   break;
 
           }
@@ -798,8 +825,21 @@ class AccountController extends Controller
                 $em->persist($trandist);
                 $em->persist($tranprov);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$data['Accounts']->getAccBalance().' successfully ');
-                $this->get('session')->getFlashBag()->add('success','balance provider changed from '.$alredyprov.' to ' .$Account->getAccBalance().' successfully ');
+
+
+                $this->get('session')->getFlashBag()->add('success',
+                    $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                        array('alredydist'=>$alredydist,'currentdist'=>$data['Accounts']->getAccBalance()),
+                        'transaction')
+                );
+
+
+                $this->get('session')->getFlashBag()->add('success',
+                    $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
+                        array('alredyprov'=>$alredyprov,'currentprov'=>$Account->getAccBalance()),
+                        'transaction')
+                );
+
             }
             else
                 $this->get('session')->getFlashBag()->add('error', 'more than zero is accept!');
@@ -871,7 +911,15 @@ class AccountController extends Controller
                         $tran->setTranAmount(+$data['Amount']);
                         $em->persist($tran);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
+                                array('alredyprov'=>$alredy,'currentprov'=>$Account->getAccBalance()),
+                                'transaction')
+                        );
+
+
+
                         break;
 
 
@@ -881,7 +929,13 @@ class AccountController extends Controller
                         $tran->setTranAmount(-$data['Amount']);
                         $em->persist($tran);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','balance changed from '.$alredy.' to ' .$Account->getAccBalance().' successfully ');
+
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
+                                array('alredyprov'=>$alredy,'currentprov'=>$Account->getAccBalance()),
+                                'transaction')
+                        );
 
                         break;
 
@@ -2570,8 +2624,19 @@ class AccountController extends Controller
                     $em->persist($trandist);
                     $em->persist($tranretailer);
                     $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','balance retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccBalance().' successfully ');
-                    $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$AccountRetailer->getParent()->getAccBalance().' successfully ');
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                            array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccBalance()),
+                            'transaction')
+                    );
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$alredydist,'currentdist'=>$AccountRetailer->getParent()->getAccBalance()),
+                            'transaction')
+                    );
+
+
                 }
 
             }
@@ -2636,8 +2701,19 @@ class AccountController extends Controller
                         $AccountRetailer->setAccCreditLimit($AccountRetailer->getAccCreditLimit()+$data['Amount']);
                         $em->persist($trandist);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccCreditLimit().' successfully ');
-                        $this->get('session')->getFlashBag()->add('success','balance distributors changed from '.$alredydist.' to ' .$AccountRetailer->getParent()->getAccBalance().' successfully ');
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                                array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccCreditLimit()),
+                                'transaction')
+                        );
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                                array('alredydist'=>$alredydist,'currentdist'=>$AccountRetailer->getParent()->getAccBalance()),
+                                'transaction')
+                        );
+
                     }
                 }
 
@@ -2648,7 +2724,12 @@ class AccountController extends Controller
                     {
                         $AccountRetailer->setAccCreditLimit($AccountRetailer->getAccCreditLimit()- $data['Amount']);
                         $em->flush();
-                        $this->get('session')->getFlashBag()->add('success','credit limit retailer changed from '.$alredyretailer.' to ' .$AccountRetailer->getAccCreditLimit().' successfully ');
+
+                        $this->get('session')->getFlashBag()->add('success',
+                            $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                                array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccCreditLimit()),
+                                'transaction')
+                        );
                     }
                 }
 

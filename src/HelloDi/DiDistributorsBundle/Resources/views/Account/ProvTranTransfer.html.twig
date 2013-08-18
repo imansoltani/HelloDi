@@ -19,7 +19,7 @@
     </div> <!-- /widget-header -->
 
     {% if CountProv >0 %}
-    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header='Change distributors balance!' message='Are you sure to change balance?' >
+    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header="{{ 'Make_transfer'|trans({},'transaction') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}" >
         <div class="control-group">
 
             {{ form_label(form.Amount) }}
