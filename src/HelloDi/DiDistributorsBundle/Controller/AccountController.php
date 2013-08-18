@@ -56,125 +56,6 @@ class AccountController extends Controller
 
     }
 
-//Master
-
-//    public function EditChildAccountAction(Request $request, $id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-//
-//        $idp = $account->getparent()->getId();
-//
-//        if (!$account) {
-//            throw $this->createNotFoundException('Unable to find Account entity.');
-//        }
-//
-//        $editForm = $this->createForm(new AccountDistChildType(), $account);
-//        if ($request->isMethod('POST')) {
-//
-//            $editForm->bind($request);
-//            if ($editForm->isValid()) {
-//                $em->flush();
-//
-//                return $this->redirect($this->generateUrl('ShowChildAccount', array('id' => $idp)));
-//
-//            }
-//
-////        }
-//        return $this->render('HelloDiDiDistributorsBundle:Account:EditChildAccount.html.twig', array(
-//            'account' => $account,
-//            'edit_form' => $editForm->createView(),
-//        ));
-//
-//    }
-
-//    public function EditAccountAction(Request $request, $id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-//        $edit_form = $this->createForm(new AccountDistMasterType(), $account);
-//        if ($request->isMethod('POST')) {
-//            $edit_form->bind($request);
-//            if ($edit_form->isValid()) {
-//
-//                $em->flush($account);
-//                return $this->redirect($this->generateUrl('ShowMyAccountProv'));
-//            }
-//        }
-//
-//        return $this->render('HelloDiDiDistributorsBundle:Account:EditAccount.html.twig', array(
-//            'account' => $account,
-//            'edit_form' => $edit_form->createView()
-//        ));
-//    }
-////
-//    public function AddAccountProvMasterAction()
-//    {
-//
-//        $em = $this->getDoctrine()->getEntityManager();
-//
-//        $Entiti=$this->get('security.context')->getToken()->getUser()->getEntiti();
-//
-//        $entities =$em->createQueryBuilder();
-//            $entities->select('Ent')
-//                     ->from('HelloDiDiDistributorsBundle:Entiti','Ent')
-//                     ->innerJoin('Ent.Accounts','EntAcc')
-//                     ->where('Ent.id !=:id ')->setParameter('id',$Entiti->getId())
-//                     ->andWhere('EntAcc.accType != 2');
-//
-//        $entities=$entities->getQuery()->getResult();
-//
-//        $paginator = $this->get('knp_paginator');
-//
-//        $pagination = $paginator->paginate(
-//            $entities,
-//            $this->get('request')->query->get('page', 1) /*page number*/,
-//            10/*limit per page*/
-//        );
-//        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster.html.twig',
-//
-//            array(
-//                'pagination' => $pagination
-//                ));
-//
-//
-//    }
-//
-//    public function AddAccountProvMasterOkAction(Request $request, $id)
-//    {
-//
-//        $Account = new Account();
-//        $em = $this->getDoctrine()->getManager();
-//        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-//        $Form = $this->createForm(new AccountProvType(), $Account);
-//
-//        $Form->bind($request);
-//
-//        if ($Form->isValid()) {
-//            $Account->setEntiti($entity);
-//            $Account->setAccCreationDate(new \DateTime('now'));
-//            $Account->setAccTimeZone(null);
-//            $Account->setAccType(1);
-//            $Account->setAccBalance(0);
-//            $Account->setAccCreditLimit(0);
-//            $Account->setAccDefaultLanguage(null);
-//            $Account->setParent(null);
-//            $Account->setAccTerms(0);
-//            $Account->setAccTimeZone(null);
-//            $em->persist($Account);
-//            $em->flush();
-//            return $this->redirect($this->generateUrl('ShowMyAccountProv'));
-//
-//        }
-//        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMasterOk.html.twig', array(
-//            'entity' => $entity,
-//            'form' => $Form->createView(),
-//        ));
-//
-//
-//    }
-
 
     public function AddAccountProveMaster2StepAction(Request $request)
     {
@@ -342,35 +223,34 @@ class AccountController extends Controller
         $qb = array();
         $form = $this->createFormBuilder()
 
-            ->add('DateStart', 'text', array('required' => false, 'label' => 'From:'))
-            ->add('DateEnd', 'text', array('required' => false, 'label' => 'To:'))
-            ->add('TypeDate', 'choice', array(
+            ->add('DateStart', 'text', array('required' => false, 'label' => 'From','translation_domain' => 'transaction',))
+            ->add('DateEnd', 'text', array('required' => false, 'label' => 'To','translation_domain' => 'transaction',))
+            ->add('TypeDate', 'choice', array('translation_domain' => 'transaction',
                 'expanded' => true,
                 'choices' => array(
-                    0 => 'Trade Date',
-                    1 => 'Looking Date',
+                    0 => 'TradeDate',
+                    1 => 'LookingDate',
                 )
             ))
-            ->add('Type', 'choice', array('label' => 'Type:',
+            ->add('Type', 'choice', array('translation_domain' => 'transaction',
                 'choices' => array(
                     2 => 'All',
                     1 => 'Credit',
                     0 => 'Debit'
                 )))
-            ->add('Action', 'choice', array('label' => 'Action:',
+            ->add('Action', 'choice', array('label'=>'Action','translation_domain' => 'transaction',
                 'choices' =>
                 array(
                     'All' => 'All',
-                    'pmt' => 'credit distributor,s account',
-                    'amdt' => 'debit distributor,s account',
-                    'crnt' => 'issue a credit note for a sold code',
-                    'com_pmt' => 'debit distributor,s account for the commisson payments',
-                    'ogo_pmt' => 'ogone payment on its own account',
-                    'tran' => 'transfer credit from provider,s account to a distributor,s account',
-                    'tran' => 'transfer credit from distributors account to a retailer,s account',
-                    'crtl' => 'increase retailer,s credit limit',
-                    'com' => 'credit commissons when a retailer sells a code'
-
+                    'pmt' => 'credit_distributor,s_account',
+                    'amdt' => 'debit_distributor,s_account',
+                    'crnt' => 'issue_a_credit_note_for_a_sold_code',
+                    'com_pmt' => 'debit_distributor,s_account_for_the_commisson_payments',
+                    'ogo_pmt' => 'ogone_payment_on_its_own_account',
+                    'tran' => 'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
+                    'tran' => 'transfer_credit_from_distributors_account_to_a_retailer,s_account',
+                    'crtl' => 'increase_retailer,s_credit_limit',
+                    'com' => 'credit_commissons_when_a_retailer_sells_a_code'
                 )))
             ->getForm();
 
@@ -441,26 +321,26 @@ class AccountController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay = $this->createFormBuilder()
-            ->add('Amount', null, array('label' => 'Amount:'))
-            ->add('As', 'choice', array('label' => 'As:',
-                'empty_value' => 'choice a action',
+            ->add('Amount', null, array('label' => 'Amount','translation_domain'=>'transaction'))
+            ->add('As', 'choice', array('label' => 'As','translation_domain'=>'transaction',
+                'empty_value' => 'select_a_action',
                 'preferred_choices' => array('Credit'),
                 'choices' => array(
                     0 => 'Debit',
                     1 => 'Credit',
-                    2 => 'Debit (commission)'
+                    2 => 'Debit(commission)'
                 )
             ))
             ->add('Description', 'textarea',
-                array('label' => 'Description:',
+                array('label' => 'Description','translation_domain'=>'transaction',
                     'required' => true
                 ))
             ->getForm();
 
         $formupdate = $this->createFormBuilder()
-            ->add('Amount', 'text', array('label' => 'Amount:'))
-            ->add('As', 'choice', array('label' => 'As:',
-                'empty_value' => 'choice a action',
+            ->add('Amount', 'text', array('label' => 'Amount','translation_domain'=>'transaction',))
+            ->add('As', 'choice', array('label' => 'As','translation_domain'=>'transaction',
+                'empty_value' => 'select_a_action',
                 'choices' =>
                 array(
                     1 => 'Increase',
@@ -487,16 +367,16 @@ class AccountController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay = $this->createFormBuilder()
-            ->add('Amount')
-            ->add('As', 'choice', array(
-                'preferred_choices' => array('pmt'),
+            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('As', 'choice', array('label'=>'As','translation_domain'=>'transaction',
+
                 'choices'
                 => array(
                     0 => 'Debit',
                     1 => 'Credit',
-                    2 => 'Debit (commission)'
+                    2 => 'Debit(commission)'
                 )))
-            ->add('Description', 'textarea', array('required' => true))
+            ->add('Description', 'textarea', array('required' => true,'label'=>'Description','translation_domain'=>'transaction'))
             ->getForm();
 
         if ($req->isMethod('post')) {
@@ -628,17 +508,17 @@ class AccountController extends Controller
         $form = $this->createFormBuilder()
 
             ->add('ItemType', 'choice',
-                array('label' => 'Type:', 'choices' =>
+                array('label' => 'ItemType','translation_domain'=>'item' ,'choices' =>
                 array(
                     'All' => 'All',
                     'dmtu' => 'Mobile',
-                    'clcd' => 'calling card',
-                    'empt' => 'e-payment',
+                    'clcd' => 'Calling_Card',
+                    'empt' => 'E-payment',
 
                 )))
 
             ->add('ItemName', 'entity',
-                array('label' => 'Name:',
+                array('label' => 'Item','translation_domain'=>'item',
                     'empty_data' => '',
                     'empty_value' => 'All',
                     'required' => false,
@@ -654,7 +534,7 @@ class AccountController extends Controller
 
 
             ->add('Account', 'entity',
-                array('label' => 'Retailer(s):',
+                array('label' => 'Retailer(s)','translation_domain'=>'accounts',
                     'class' => 'HelloDiDiDistributorsBundle:Account',
                     'property' => 'accName',
                     'required' => false,
@@ -669,14 +549,14 @@ class AccountController extends Controller
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled' => false, 'label' => 'From:','data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D'))->format('Y/m/d')))
-            ->add('DateEnd', 'text', array('disabled' => false, 'label' => 'To:','data'=>(new \DateTime('now'))->format('Y/m/d')))
+            ->add('DateStart', 'text', array('disabled' => false, 'label' => 'From','translation_domain'=>'transaction','data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D'))->format('Y/m/d')))
+            ->add('DateEnd', 'text', array('disabled' => false, 'label' => 'To','translation_domain'=>'transaction','data'=>(new \DateTime('now'))->format('Y/m/d')))
 
-            ->add('GroupBy', 'choice', array('label' => 'GroupBy:',
+            ->add('GroupBy', 'choice', array('translation_domain'=>'transaction',
                 'expanded' => true,
                  'multiple'=>true,
                 'choices' => array(
-                    1 => 'daily sales grouped by item and retailer',
+                    1 => 'daily_sales_grouped_by_item_and_retailer',
                 )))
 
             ->getForm();
@@ -853,9 +733,10 @@ class AccountController extends Controller
         $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
-            ->add('Amount', 'text', array())
-            ->add('Accounts', 'entity', array(
-                'empty_value' => 'select a account',
+            ->add('Amount', 'text', array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Accounts', 'entity', array('label'=>'Account',
+                'translation_domain'=>'accounts',
+                'empty_value' => 'select_a_account',
                 'empty_data' => '',
                 'class' => 'HelloDiDiDistributorsBundle:Account',
                 'property' => 'NamewithCurrency',
@@ -867,8 +748,8 @@ class AccountController extends Controller
                         ->andWhere('Acc.accCurrency=:Cur')->setParameter('Cur', $Account->getAccCurrency());
                 }
             ))
-            ->add('Description', 'textarea', array('required' => true))
-            ->add('Communications', 'textarea', array('required' => true))
+            ->add('Description', 'textarea', array('required' => true,'label'=>'Description','translation_domain'=>'transaction'))
+            ->add('Communications', 'textarea', array('required' => true,'label'=>'Communications','translation_domain'=>'transaction'))
             ->getForm();
 
         $tranprov = new Transaction();
@@ -948,21 +829,21 @@ class AccountController extends Controller
         $tran = new Transaction();
 
         $form = $this->createFormBuilder()
-            ->add('CreditDebit', 'choice', array(
-                'expanded' => true,'label'=>'Action:',
+            ->add('CreditDebit', 'choice', array('translation_domain'=>'transaction',
+                'expanded' => true,
                 'choices' => array(
+                    0 => 'Debit',
+                    1 => 'Credit',
 
-                    1 => 'Credit:',
-                    0 => 'Debit:'
                 )
 
             ))
-            ->add('Amount', 'text', array(
-                'required' => true, 'label' => 'Amount:',
+            ->add('Amount', 'text', array('label'=>'Amount','translation_domain'=>'transaction',
+                'required' => true,
             ))
-            ->add('TradeDate', 'text', array('label' => 'Trade Date:'))
-            ->add('Description', 'textarea', array('required' => true, 'label' => 'Description:',))
-            ->add('Fees', 'text', array('required' => false, 'label' => 'Fees:',))->getForm();
+            ->add('TradeDate', 'text', array('label'=>'TradeDate','translation_domain'=>'transaction',))
+            ->add('Description', 'textarea', array('required' => true,'label'=>'Description','translation_domain'=>'transaction',))
+            ->add('Fees', 'text', array('required' => false,'label'=>'Fees','translation_domain'=>'transaction'))->getForm();
 
         if ($Req->isMethod('POST')) {
             $form->submit($Req);
@@ -971,8 +852,9 @@ class AccountController extends Controller
             $tran->setTranCurrency($Account->getAccCurrency());
             $tran->setUser($User);
             $tran->setAccount($Account);
-            $tran->setTranDate(new \DateTime('now'));
-            $tran->setTranInsert(new \DateTime('now'));
+
+            $tran->setTranDate(\DateTime::createFromFormat('Y/m/d',$data['TradeDate']));
+            $tran->setTranInsert(\DateTime::createFromFormat('Y/m/d',$data['TradeDate']));
             $tran->setTranBalance($Account->getAccBalance());
             $tran->setTranDescription($data['Description']);
 
@@ -1028,20 +910,20 @@ class AccountController extends Controller
         $qb = array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From:'))
-            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To:'))
+            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From','translation_domain'=>'transaction'))
+            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To','translation_domain'=>'transaction'))
             ->add('ItemType', 'choice',
-                array('label' => 'Type:', 'choices' =>
+                array('label' => 'ItemType','translation_domain'=>'item','choices' =>
                 array(
                     'All' => 'All',
                     'dmtu' => 'Mobile',
-                    'clcd' => 'calling card',
-                    'empt' => 'e-payment',
+                    'clcd' => 'Calling_Card',
+                    'empt' => 'E-payment',
 
                 )))
 
             ->add('ItemName', 'entity',
-                array('label' => 'Name:',
+                array('label' => 'Item','translation_domain'=>'item',
                     'empty_data' => '',
                     'empty_value' => 'All',
                     'required' => false,
@@ -1247,7 +1129,7 @@ class AccountController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $form_edit = $this->createForm(new EditDistType, $Account);
+        $form_edit = $this->createForm(new EditDistType(), $Account);
 
 
         if ($request->isMethod('POST')) {
@@ -1802,31 +1684,32 @@ class AccountController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $paginator = $this->get('knp_paginator');
         $form = $this->createFormBuilder()
-            ->add('TypeDate', 'choice', array(
+            ->add('TypeDate', 'choice', array('translation_domain'=>'transaction',
                 'expanded' => true,
                 'choices' => array(
-                    0 => 'Trade Date',
-                    1 => 'Looking Date',
+                    0 => 'TradeDate',
+                    1 => 'LookingDate',
                 )))
-            ->add('FromDate', 'text', array('disabled' => false, 'required' => false))
-            ->add('ToDate', 'text', array('disabled' => false, 'required' => false))
-            ->add('type', 'choice', array('label' => 'Type:',
+            ->add('FromDate', 'text', array('disabled' => false, 'required' => false,'label'=>'From','translation_domain'=>'transaction'))
+            ->add('ToDate', 'text', array('disabled' => false, 'required' => false,'label'=>'To','translation_domain'=>'transaction'))
+
+            ->add('type', 'choice', array('label' => 'Type','translation_domain'=>'transaction',
                 'choices' => array(
                     2 => 'All',
                     1 => 'Credit',
                     0 => 'Debit'
                 )))
 
-            ->add('Action', 'choice', array('label' => 'Action:',
+            ->add('Action', 'choice', array('label' => 'Action','translation_domain'=>'transaction',
                 'choices' => array(
                     'All' => 'All',
-                    'add' => 'add new codes to system',
-                    'pmt' => 'credit provider,s account',
-                    'amdt' => 'an amount is credited to correct the price of a code',
-                    'amdt' => 'an amount is debited to correct the price of a code',
-                    'rmv' => 'remove codes from to system',
-                    'amdt' => 'debit provider,s account',
-                    'tran' => 'transfer credit from provider,s account to a distributor,s account',
+                    'add' => 'add_new_codes_to_system',
+                    'pmt' => 'credit_provider,s_account',
+                    'amdt' => 'an_amount_is_credited_to_correct_the_price_of_a_code',
+                    'amdt' => 'an_amount_is_debited_to_correct_the_price_of_a_code',
+                    'rmv' => 'remove_codes_from_to_system',
+                    'amdt' => 'debit_provider,s_account',
+                    'tran' => 'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
 
                 )))->getForm();
 
@@ -2079,35 +1962,74 @@ class AccountController extends Controller
     {
         $id = $req->get('id', 0);
         $value = '';
-        $value .= '<option value="All">' . 'All' . '</option>';
+        $value .= '<option value="All">' .
+            $this->get('translator')->trans('All',[],'transaction')
+            . '</option>';
 
         switch ($id) {
             case 0:
 
-                $value .= '<option value="rmv">' . 'remove codes from the system' . '</option>';
-                $value .= '<option value="amdt">' . 'debit provider,s account' . '</option>';
-                $value .= '<option value="amdt">' . 'an amount is debited to correct the price of a code' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
+                $value .= '<option value="rmv">' .
+                 $this->get('translator')->trans('remove_codes_from_the_system',[],'transaction')
+                    .'</option>';
+
+                $value .= '<option value="amdt">' .
+                 $this->get('translator')->trans('debit_provider,s_account',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="amdt">' .
+                     $this->get('translator')->trans('an_amount_is_debited_to_correct_the_price_of_a_code',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="tran">' .
+                     $this->get('translator')->trans('transfer_credit_from_provider,s_account_to_a_distributor,s_account',[],'transaction')
+                    . '</option>';
 
                 break;
 
             case 1:
 
-                $value .= '<option value="add">' . 'add new codes to system' . '</option>';
-                $value .= '<option value="pmt">' . 'credit provider,s account' . '</option>';
-                $value .= '<option value="amdt">' . 'an amount is credited to correct the price of a code' . '</option>';
+                $value .= '<option value="add">' .
+                $this->get('translator')->trans('add_new_codes_to_system',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="pmt">' .
+                    $this->get('translator')->trans('credit_provider,s_account',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="amdt">' .
+                    $this->get('translator')->trans('an_amount_is_credited_to_correct_the_price_of_a_code',[],'transaction')
+                    . '</option>';
 
                 break;
 
             case 2:
-                $value .= '<option value="rmv">' . 'remove codes from the system' . '</option>';
-                $value .= '<option value="amdt">' . 'debit provider,s account' . '</option>';
-                $value .= '<option value="amdt">' . 'an amount is debited to correct the price of a code' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
+                $value .= '<option value="rmv">' .
+                    $this->get('translator')->trans('remove_codes_from_the_system',[],'transaction')
+                    .'</option>';
 
-                $value .= '<option value="add">' . 'add new codes to system' . '</option>';
-                $value .= '<option value="pmt">' . 'credit provider,s account' . '</option>';
-                $value .= '<option value="amdt">' . 'an amount is credited to correct the price of a code' . '</option>';
+                $value .= '<option value="amdt">' .
+                    $this->get('translator')->trans('debit_provider,s_account',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="amdt">' .
+                    $this->get('translator')->trans('an_amount_is_debited_to_correct_the_price_of_a_code',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="tran">' .
+                    $this->get('translator')->trans('transfer_credit_from_provider,s_account_to_a_distributor,s_account',[],'transaction')
+                    . '</option>';
+                $value .= '<option value="add">' .
+                    $this->get('translator')->trans('add_new_codes_to_system',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="pmt">' .
+                    $this->get('translator')->trans('credit_provider,s_account',[],'transaction')
+                    . '</option>';
+
+                $value .= '<option value="amdt">' .
+                    $this->get('translator')->trans('an_amount_is_credited_to_correct_the_price_of_a_code',[],'transaction')
+                    . '</option>';
                 break;
         }
         return new Response($value);
@@ -2123,35 +2045,84 @@ class AccountController extends Controller
         switch ($id) {
             case 0:
 
-                $value .= '<option value="amdt">' . 'debit distributor,s account' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from distributor,s account to a retailer,s account' . '</option>';
-                $value .= '<option value="crnt">' . 'issue a credit note for a sold code' . '</option>';
-                $value .= '<option value="com_pmt">' . 'debit distributor,s account for the commisson payments' . '</option>';
+                $value.='<option value="amdt">'.
+                    $this->get('translator')->trans('debit_distributor,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction').
+                    '</option>';
+
+                $value.='<option value="crnt">'.
+                    $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="com_pmt">'.
+                    $this->get('translator')->trans('debit_distributor,s_account_for_the_commisson_payments',[],'transaction')
+                    .'</option>';
 
                 break;
 
             case 1:
 
-                $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
-                $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
-                $value .= '<option value="ogo_pmt">' . 'ogone payment on its own account' . '</option>';
-                $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
+                $value.='<option value="crlt">'.
+                    $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
+                    .'</option>';
 
+                $value.='<option value="pmt">'.
+                    $this->get('translator')->trans('credit_distributor,s_account',[],'transaction')
+                    .'</option>';
 
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_provider,s_account_to_a_distributor,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="ogn_pmt">'.
+                    $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="com">'.
+                    $this->get('translator')->trans('credit_commissons_when_a_retailer_sells_a_code',[],'transaction')
+                    .'</option>';
                 break;
 
             case 2:
-                $value .= '<option value="amdt">' . 'debit distributor,s account' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from distributor,s account to a retailer,s account' . '</option>';
-                $value .= '<option value="crnt">' . 'issue a credit note for a sold code' . '</option>';
-                $value .= '<option value="com_pmt">' . 'debit distributor,s account for the commisson payments' . '</option>';
 
-                $value .= '<option value="crlt">' . 'inscrease retailer,s credit limit' . '</option>';
-                $value .= '<option value="pmt">' . 'credit distributor,s account' . '</option>';
-                $value .= '<option value="tran">' . 'transfer credit from provider,s account to a distributor,s account' . '</option>';
-                $value .= '<option value="ogo_pmt">' . 'ogone payment on its own account' . '</option>';
-                $value .= '<option value="com">' . 'credit commissons when a retailer sells a code' . '</option>';
+                $value.='<option value="amdt">'.
+                    $this->get('translator')->trans('debit_distributor,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction').
+                    '</option>';
+
+                $value.='<option value="crnt">'.
+                    $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="com_pmt">'.
+                    $this->get('translator')->trans('debit_distributor,s_account_for_the_commisson_payments',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="crlt">'.
+                    $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="pmt">'.
+                    $this->get('translator')->trans('credit_distributor,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_provider,s_account_to_a_distributor,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="ogn_pmt">'.
+                    $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="com">'.
+                    $this->get('translator')->trans('credit_commissons_when_a_retailer_sells_a_code',[],'transaction')
+                    .'</option>';
                 break;
         }
         return new Response($value);
@@ -2335,33 +2306,33 @@ class AccountController extends Controller
         $qb=array();
 
         $form=$this->createFormBuilder()
-            ->add('TypeDate','choice', array(
+            ->add('TypeDate','choice', array('translation_domain'=>'transaction',
                 'expanded'   => true,
                 'choices'    => array(
-                    0 => 'Trade Date',
-                    1 => 'Looking Date',
+                    0 => 'TradeDate',
+                    1 => 'LookingDate',
                 )
 
             ))
-            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction',))
 
             ->add('Type','choice',
-                array('choices'=>
+                array('label'=>'Type','translation_domain'=>'transaction','choices'=>
                 array(
                     2=>'All',
                     0=>'Debit',
                     1=>'Credit',
                 )))
 
-            ->add('Action', 'choice', array('label'=>'Action:',
+            ->add('Action', 'choice', array('label'=>'Action','translation_domain'=>'transaction',
                 'choices' =>
                 array(
                     'All'=>'All',
-                    'sale'=>'debit balance when the retailer sell a code',
-                    'crnt'=>'issue a credit note for a sold code',
-                    'tran'=>'transfer credit from distributor,s account to a retailer,s account',
-                    'ogn_pmt'=>'ogone payment on its own account'
+                    'sale'=>'debit_balance_when_the_retailer_sell_a_code',
+                    'crnt'=>'issue_a_credit_note_for_a_sold_code',
+                    'tran'=>'transfer_credit_from_distributor,s_account_to_a_retailer,s_account',
+                    'ogn_pmt'=>'ogone_payment_on_its_own_account'
                 )))
 
             ->getForm();
@@ -2501,19 +2472,19 @@ class AccountController extends Controller
         $AccountRetailer=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
-            ->add('Amount',null,array())
-            ->add('Communications','textarea',array('required'=>true))
-            ->add('Description','textarea',array('required'=>true))
+            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Communications','textarea',array('required'=>true,'label'=>'Communications','translation_domain'=>'transaction'))
+            ->add('Description','textarea',array('required'=>true,'label'=>'Description','translation_domain'=>'transaction'))
             ->getForm();
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text',array())
-            ->add('As','choice',array(
-                'preferred_choices'=>array('Credit'),
+            ->add('Amount','text',array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('As','choice',array('label'=>'As','translation_domain'=>'transaction'
+                ,
                 'choices'=>
                 array(
 //                    'required'=>true,
-                    ''=>'select a action',
+                    ''=>'select_a_action',
                     1=>'Increase',
                     0=>'Decrease')
             ))->getForm();
@@ -2543,9 +2514,9 @@ class AccountController extends Controller
         $AccountRetailer=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formtransfer=$this->createFormBuilder()
-            ->add('Amount')
-            ->add('Communications','textarea',array('required'=>false))
-            ->add('Description','textarea',array('required'=>false))
+            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'accounts'))
+            ->add('Communications','textarea',array('required'=>true,'label'=>'Communications','translation_domain'=>'transaction'))
+            ->add('Description','textarea',array('required'=>true,'label'=>'Description','translation_domain'=>'transaction'))
             ->getForm();
 
         if($req->isMethod('post'))
@@ -2625,8 +2596,8 @@ class AccountController extends Controller
         $AccountRetailer=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text')
-            ->add('As','choice',array('preferred_choices'=>array('Credit'),
+            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'accounts'))
+            ->add('As','choice',array('label'=>'As','translation_domain'=>'transaction',
                 'choices'=>array(
                     1=>'Increase',
                     0=>'Decrease')
@@ -2700,26 +2671,54 @@ class AccountController extends Controller
         {
             case 0:
 
-                $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
+                $value.='<option value="sale">'.
+                 $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                    .'</option>';
 
 
                 break;
 
             case 1:
-                $value.='<option value="All">'.'All'.'</option>';
-                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-                $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+                $value.='<option value="All">'.
+                    $this->get('translator')->trans('All',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="crnt">'.
+                 $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="tran">'.
+                 $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="ogn_pmt">'.
+                 $this->get('translator')->trans( 'ogone_payment_on_its_own_account',[],'transaction')
+                 .'</option>';
 
 
                 break;
 
             case 2:
-                $value.='<option value="All">'.'All'.'</option>';
-                $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
-                $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-                $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-                $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+                $value.='<option value="All">'.
+                 $this->get('translator')->trans('All',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="sale">'.
+                 $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="crnt">'.
+                 $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="tran">'.
+                 $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                 .'</option>';
+
+                $value.='<option value="ogn_pmt">'.
+                     $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
+                     .'</option>';
+
                 break;
         }
         return new Response($value);

@@ -4,15 +4,16 @@
 {% set tab = '7' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <span class="link">Purchases</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Purchases' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
 <div class="widget-header">
-    <h3>Distributor Purchases</h3>
+
+    <h3>{{ 'Purchases' | trans ({}, "accounts") }}</h3>
 </div> <!-- /widget-header -->
 
     <div class="form_search">
@@ -58,7 +59,7 @@
 
             <input type="hidden" value="1" name="page" id="search_page" >
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search" onclick="$('#printhidden').val('0');">
+                <input class="btn btn-primary" type="submit" value="{{'Search' | trans ({}, "common")}}" onclick="$('#printhidden').val('0');">
 
             </fieldset>
 
@@ -75,7 +76,7 @@
     <div class="tablediv">
         <div class="contenttitle">
             <h4>
-                <input class="btn btn-info" type="button" value="Print To PDF" onclick="$('#printhidden').val('1');$('#searchpurchases').submit();" >
+                <input class="btn btn-info" type="button" value="{{'PrintToPDF' | trans ({}, "common")}}" onclick="$('#printhidden').val('1');$('#searchpurchases').submit();" >
             </h4>
         </div>
         <form>
@@ -86,10 +87,10 @@
                     <tr>
 
 
-                        <th>{{ 'Item' | trans ({}, "account") }}</th>
-                        <th>{{ 'Quantity' | trans ({}, "account") }}</th>
-                        <th>{{ 'Buying Price' | trans ({}, "account") }}</th>
-                        <th>{{ 'Vat' | trans ({}, "account") }}</th>
+                        <th>{{ 'Item' | trans ({}, "itam") }}</th>
+                        <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'BuyingPrice' | trans ({}, "price") }}</th>
+                        <th>{{ 'Vat' | trans ({}, "vat") }}</th>
 
                     </tr>
                     </thead>
@@ -119,9 +120,5 @@
             </div>
         </form>
     </div>
-
-    {#<div class="navigation">#}
-        {#{{ knp_pagination_render(pagination) }}#}
-    {#</div>#}
 
 {% endblock %}

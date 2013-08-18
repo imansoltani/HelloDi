@@ -3,9 +3,9 @@
 {% set tab = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Address</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <span class="link">{{ 'Address' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 
 
@@ -36,19 +36,19 @@
 
 <div class="tablediv">
     <div class="contenttitle">
-        <h4>Address</h4>
+        <h4>{{ 'Address' | trans ({}, "entity") }}</h4>
     </div>
     <div class="tab-content">
         <table style="margin-top: 20px" class="table table-striped table-bordered postsend">
             <thead>
             <tr>
-                <th>{{ 'Town' | trans ({}, "user") }}</th>
-                <th>{{ 'Street' | trans ({}, "user") }}</th>
-                <th>{{ 'Aditional' | trans ({}, "user") }}</th>
-                <th>{{ 'PostCode' | trans ({}, "user") }}</th>
-                <th>{{ 'City' | trans ({}, "user") }}</th>
-                <th>{{ 'Country' | trans ({}, "user") }}</th>
-                <th>{{ 'Manage' | trans ({}, "user") }}</th>
+                <th>{{ 'Adrs1' | trans ({}, "entity") }}</th>
+                <th>{{ 'Adrs2' | trans ({}, "entity") }}</th>
+                <th>{{ 'Adrs3' | trans ({}, "entity") }}</th>
+                <th>{{ 'NP' | trans ({}, "entity") }}</th>
+                <th>{{ 'City' | trans ({}, "entity") }}</th>
+                <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                <th>{{ 'Opeation' | trans ({}, "common") }}</th>
             </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@
                 <td>{{ entity.entCity }}</td>
                 <td>{{ entity.Country.Iso }}|{{ entity.Country.name}}</td>
                 <td>
-                    <a class="btn_actions" href="{{ path('Ent_Edit_Address',{'id':entity.id,'addrid':entity.id}) }}">Manage</a>
+                    <a class="btn_actions" href="{{ path('Ent_Edit_Address',{'id':entity.id,'addrid':entity.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                 </td>
             </tr>
 
@@ -83,14 +83,16 @@
             <table id="example" class="table postsend">
                 <thead>
                 <tr>
-                    <th>{{ 'Id' | trans ({}, "user") }}</th>
-                    <th>{{ 'DateChange' | trans ({}, "user") }}</th>
-                    <th>{{ 'Town' | trans ({}, "user") }}</th>
-                    <th>{{ 'Street' | trans ({}, "user") }}</th>
-                    <th>{{ 'Additional' | trans ({}, "user") }}</th>
-                    <th>{{ 'PostCode' | trans ({}, "user") }}</th>
-                    <th>{{ 'City' | trans ({}, "user") }}</th>
-                    <th>{{ 'Country' | trans ({}, "user") }}</th>
+                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                    <th>{{ 'DateChange' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                    <th>{{ 'City' | trans ({}, "entity") }}</th>
+
+                    <th>{{ 'Adrs1' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Adrs2' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Adrs3' | trans ({}, "entity") }}</th>
+                    <th>{{ 'NP' | trans ({}, "entity") }}</th>
+
                 </tr>
 
                 <tr class="input" >
@@ -118,12 +120,14 @@
 
                             <td >{{ Address.id }}</td>
                             <td>{{ Address.adrsDate|date('m-Y-d') }}</td>
+                            <td>{{ Address.Country.Iso }}|{{ Address.Country.name}}</td>
+                            <td>{{ Address.adrsCity }}</td>
                             <td>{{ Address.adrs1 }}</td>
                             <td>{{ Address.adrs2 }}</td>
                             <td>{{ Address.adrs3 }}</td>
                             <td>{{ Address.adrsNp }}</td>
-                            <td>{{ Address.adrsCity }}</td>
-                            <td>{{ Address.Country.Iso }}|{{ Address.Country.name}}</td>
+
+
                         </tr>
 
                 {% endfor %}
@@ -137,8 +141,7 @@
     <form class="SearchForm" method="#" action="#">
         <input type="hidden" value="1" name="page" id="search_page" >
         <hr>
-        <input  class="btn btn-primary" type="submit" value="Search">
-
+        <input  class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
     </form>
     <div>
 {% endblock %}

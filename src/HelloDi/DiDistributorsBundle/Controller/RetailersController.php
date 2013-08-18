@@ -150,26 +150,26 @@ class RetailersController extends Controller
             ->add('TypeDate','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
-                    0 => 'Trade Date',
-                    1 => 'booking Date',
+                    0 => 'TradeDate',
+                    1 => 'bookingDate',
                 )))
-            ->add('DateStart','text',array('required'=>false,'label'=>'From:'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))
+            ->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
+            ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction'))
 
-            ->add('Type','choice',array('label'=>'Type:',
+            ->add('Type','choice',array('label'=>'Type','translation_domain'=>'transaction',
                 'choices'=> array(
                     2=>'All',
                     1=>'Credit',
                     0=>'Debit'
                 )))
 
-            ->add('Action','choice',array('label'=>'Action:','data'=>'20',
+            ->add('Action','choice',array('label'=>'Action','translation_domain'=>'transaction',
                 'choices'=> array(
                     'All'=>'All',
-                    'sale'=>'debit balance when the retailer sell a code',
-                    'crnt'=>'issue a credit note for a sold code',
-                    'tran'=>'transfer credit from distributor,s account to a retailer,s account',
-                    'ogn_pmt'=>'ogone payment on its own account'
+                    'sale'=>'debit_balance_when_the_retailer_sell_a_code',
+                    'crnt'=>'issue_a_credit_note_for_a_sold_code',
+                    'tran'=>'transfer_credit_from_distributor,s_account_to_a_retailer,s_account',
+                    'ogn_pmt'=>'ogone_payment_on_its_own_account'
                 )))->getForm();
 $datetype=0;
 
@@ -251,18 +251,18 @@ $datetype=0;
         $form=$this->createFormBuilder()
 
             ->add('ItemType','choice',
-            array('label'=>'Type:',
+            array('label'=>'ItemType','translation_domain'=>'item',
                 'choices'=>array(
                     'All' => 'All',
-                     'dmtu'=>'mobile',
-                     'clcd'=>'calling card',
-                     'empt'=>'e-payment'
+                     'dmtu'=>'Mobile',
+                     'clcd'=>'Calling_Card',
+                     'empt'=>'E-payment'
                   )))
 
             ->add('ItemName', 'entity',
-                  array(
+                  array('translation_domain'=>'item',
                       'required'=>false,
-                 'label'=>'Item:',
+                 'label'=>'Item',
                  'empty_data' => '',
                  'empty_value'=>'All',
                  'class' => 'HelloDiDiDistributorsBundle:Item',
@@ -280,7 +280,7 @@ $datetype=0;
   if($roles[0]=='ROLE_RETAILER_ADMIN')
   {
       $form=$form->add('Staff', 'entity',
-                array(
+                array('label'=>'Staff','translation_domain'=>'user',
                    'empty_value'=>'All',
                    'empty_data'=>'',
                     'required'=>false,
@@ -297,8 +297,8 @@ $datetype=0;
   }
 
 
-  $form=$form->add('DateStart','text',array('required'=>false,'label'=>'From:'))
-             ->add('DateEnd','text',array('required'=>false,'label'=>'To:'))->getForm();
+  $form=$form->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
+             ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction'))->getForm();
 
         if($req->isMethod('POST'))
         {
@@ -373,10 +373,14 @@ $datetype=0;
 
         $form=$this->createFormBuilder()
             ->add('Type','choice',array('choices'=>array(
-                5=>'All',
-                0=>'Payment issue',
-                1=>'new item request',
-                2=>'price change request'
+                -1=>'All',
+                0=>'Payment_issue',
+                1=>'new_item_request',
+                2=>'price_change_request',
+                3=>'address_change',
+                4=>'account_change_requests',
+                5=>'bug_reporting',
+                6=>'support'
             )))
             ->add('Status','choice',array(
                 'expanded'=>true,
@@ -406,7 +410,7 @@ $datetype=0;
                 ->from('HelloDiDiDistributorsBundle:Ticket','Tic')
                 ->Where('Tic.Status =:sta')->setParameter('sta',$data['Status'])
                 ->andWhere('Tic.Accountretailer = :Acc')->setParameter('Acc',$User->getAccount());
-            if($data['Type']!=5)
+            if($data['Type']!=-1)
                 $tickets->andwhere('Tic.type =:type')->setParameter('type',$data['Type']);
             if($data['Contact']==0)
                 $tickets->andwhere('Tic.Accountdist = :Accdist')->setParameter('Accdist',$User->getAccount()->getParent());
@@ -446,25 +450,25 @@ $datetype=0;
         $TickNote=new TicketNote();
 
         $form=$this->createFormBuilder(array('Type'=>$data))
-            ->add('Contact','choice',array(
+            ->add('Contact','choice',array('translation_domain'=>'ticket',
                 'expanded'=>true,
                 'multiple'=>false,
-                'choices'=>array(0=>'Distributors',1=>'Support Team')
+                'choices'=>array(0=>'Distributors',1=>'SupportTeam')
             ))
-            ->add('Subject','text')
-            ->add('Type','choice',array(
+            ->add('Subject','text',array('label'=>'Subject','translation_domain'=>'ticket',))
+            ->add('Type','choice',array('label'=>'Type','translation_domain'=>'ticket',
                 'choices'=>array(
-                    0=>'Payment issue',
-                    1=>'new item request',
-                    2=>'price change request',
-                    3=>'address change',
-                    4=>'account change requests',
-                    5=>'bug reporting',
+                    0=>'Payment_issue',
+                    1=>'new_item_request',
+                    2=>'price_change-request',
+                    3=>'address_change',
+                    4=>'account_change_requests',
+                    5=>'bug_reporting',
                     6=>'support',
 
                 )
             ))
-            ->add('Description','textarea',array('required'=>true))
+            ->add('Description','textarea',array('label'=>'Description','translation_domain'=>'ticket','required'=>true))
             ->getForm();
 
         if($req->isMethod('POST'))
@@ -521,7 +525,7 @@ $datetype=0;
 
         $form=$this->createFormBuilder()
             ->add('Description','textarea',array('required'=>true,
-                'label'=>'Description:'
+                'label'=>'Description','translation_domain'=>'ticket'
             ))->getForm();
 
         if($req->isMethod('POST'))
@@ -941,27 +945,55 @@ public function RetailerLoadActiowOwnAction(Request $req)
     {
         case 0:
 
-            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
-
-
+            $value.='<option value="sale">'.
+                $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                .'</option>';
             break;
 
         case 1:
 
-            $value.='<option value="All">'.'All'.'</option>';
-            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+
+            $value.='<option value="All">'.
+                $this->get('translator')->trans('All',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="crnt">'.
+                $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="tran">'.
+                $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="ogn_pmt">'.
+                $this->get('translator')->trans( 'ogone_payment_on_its_own_account',[],'transaction')
+                .'</option>';
+
 
             break;
 
         case 2:
 
-            $value.='<option value="All">'.'All'.'</option>';
-            $value.='<option value="sale">'.'debit balance when the retailer sell a code'.'</option>';
-            $value.='<option value="crnt">'.'issue a credit note for a sold code'.'</option>';
-            $value.='<option value="tran">'.'transfer credit from distributor,s account to a retailer,s account'.'</option>';
-            $value.='<option value="ogn_pmt">'.'ogone payment on its own account'.'</option>';
+            $value.='<option value="All">'.
+                $this->get('translator')->trans('All',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="sale">'.
+                $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="crnt">'.
+                $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="tran">'.
+                $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                .'</option>';
+
+            $value.='<option value="ogn_pmt">'.
+                $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
+                .'</option>';
+
 
             break;
     }

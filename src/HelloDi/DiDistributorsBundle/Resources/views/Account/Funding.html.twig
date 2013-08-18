@@ -3,10 +3,10 @@
 {% set tab = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <a class="link" href="">Transactions</a>
-    <span class="link">Fund distributors</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <a class="link" href="">{{ 'Transactions' | trans ({}, "transaction") }}</a>
+    <span class="link">{{ 'FundDistributor' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 
@@ -15,26 +15,14 @@
     <div class="span5">
         <div class="widget-header">
             <h3>
-                Fund distributors balance
+                {{ 'FundDistributorBalance' | trans ({}, "accounts") }}
             </h3>
             <br>
 
-            Current Distributors Balance : {{ Account.accBalance }} {{ Account.accCurrency }}
+       {{ 'CurrentDistributorBalance' | trans ({}, "accounts") }} : {{ Account.accBalance }} {{ Account.accCurrency }}
 
             <br>
         </div> <!-- /widget-header -->
-
-
-
-{#<div id="popuptop" class="modal">#}
-
-    {#are you for increase balance sure !#}
-
-    {#<a class="btn" href="{{ path('MasterDistApplyFunding',{'id':Account.id}) }}" >Ok</a>#}
-    {#<button class="btn" onclick="PopuptopClose(event)">Close</button>#}
-
-
-{#</div>#}
 
 
 
@@ -75,8 +63,8 @@
 
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <button class="btn btn-primary" id="Applay" type="submit">Apply</button>
-                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                    <button class="btn btn-primary" id="Applay" type="submit">{{ 'Applay' | trans ({}, "common") }}</button>
+                    <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
                 </div>
 
 
@@ -89,10 +77,12 @@
         {#//----Form update----//#}
         <div class="widget-header">
             <h3>
-                Update distributors Credit Limit
+                {{ 'UpdateDistributorCreditLimit' | trans ({}, "accounts") }}
+
             </h3>
             <br>
-            Current Distributors Credit limit : {{ Account.accCreditlimit }} {{ Account.accCurrency }}
+
+            {{'CurrentDistributorCreditlimit' | trans ({}, "accounts") }}:{{ Account.accCreditlimit }} {{ Account.accCurrency }}
             <br>
         </div> <!-- /widget-header -->
 
@@ -124,8 +114,8 @@
                 </div>
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                    <button class="btn btn-primary" type="submit">{{ 'Update' | trans ({}, "common") }}</button>
+                    <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
                 </div>
 
 
@@ -136,26 +126,5 @@
 
         {% endif %}
         </div>
-
-    {#<script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>#}
-    {#<script type="text/javascript"#}
-            {#src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>#}
-
-
-    {#<script type="text/javascript">#}
-
-        {#$(function () {#}
-            {#$("* #Applay").click(function () {#}
-                {#Popuptop('modal');#}
-            {#});#}
-            {#$('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});#}
-
-            {#$("* #hidepopuptop").click(function () {#}
-               {#('#popuptop').hideModal();#}
-            {#});#}
-        {#});#}
-
-
-    {#</script>#}
 
 {% endblock %}

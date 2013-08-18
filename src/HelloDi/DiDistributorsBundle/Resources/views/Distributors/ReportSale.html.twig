@@ -7,13 +7,13 @@
 {% set MU = 'report' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <span class="link">Sales Reports</span>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'SalesReport' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-list-alt"></i>
-    Sales Report
+    {{ 'SalesReport' | trans ({}, "transaction") }}
 {% endblock %}
 
 {% block Link_Footer %}
@@ -39,35 +39,35 @@
                         <fieldset>
 
                             <div class="control-group datepicker1">
-                                {{ form_label(form.DateStart,'From:') }}
+                                {{ form_label(form.DateStart) }}
 
                                     {{ form_widget(form.DateStart) }}
 
                             </div>
 
                             <div class="control-group datepicker2">
-                                {{ form_label(form.DateEnd,'To:') }}
+                                {{ form_label(form.DateEnd) }}
 
                                     {{ form_widget(form.DateEnd) }}
 
                             </div>
 
                             <div class="control-group">
-                                {{ form_label(form.ItemType,'Type:') }}
+                                {{ form_label(form.ItemType) }}
                                 <div class="controls">
                                     {{ form_widget(form.ItemType) }}
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                {{ form_label(form.ItemName,'Item:') }}
+                                {{ form_label(form.ItemName) }}
                                 <div class="controls">
                                     {{ form_widget(form.ItemName) }}
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                {{ form_label(form.Account,'Retailer Account(S):') }}
+                                {{ form_label(form.Account) }}
                                 <div class="controls">
                                     {{ form_widget(form.Account) }}
                                 </div>
@@ -77,7 +77,7 @@
 
                             <hr>
                             <input type="hidden" value="1" name="page" id="search_page" >
-                            <input class="btn btn-primary" type="submit" value="Search">
+                            <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
 
                         </fieldset>
 
@@ -93,7 +93,7 @@
 
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>Sales</h4>
+                        <h4>{{ 'Sales' | trans ({}, "code") }}</h4>
                     </div>
                     <form>
                         <div class="tab-content">
@@ -102,13 +102,13 @@
                                 <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>{{ 'Date' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Item' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Buying Price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Selling Price' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Retailer' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Benefit' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Vat' | trans ({}, "account") }}</th>
+                                    <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                                    <th>{{ 'Item' | trans ({}, "item") }}</th>
+                                    <th>{{ 'BuyingPrice' | trans ({}, "price") }}</th>
+                                    <th>{{ 'SellingPrice' | trans ({}, "transaction") }}</th>
+                                    <th>{{ 'Retailer' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Benefit' | trans ({}, "transaction") }}</th>
+                                    <th>{{ 'Vat' | trans ({}, "vat") }}</th>
 
                                 </tr>
                                 </thead>

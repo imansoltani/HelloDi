@@ -2,17 +2,17 @@
 
 {% block Dist1 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i> {{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i> {{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
@@ -21,13 +21,13 @@
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
         <a href="{{ path('distributors_dashboard') }}">
             <i class="icon-home"></i>
-            <span id="user_pc_menu" >Home</span>
+            <span id="user_pc_menu" >{{ 'Home' | trans ({}, "menu") }}</span>
         </a>
     </li>
     <li class=" {% if MU == 'retail' %}active{% endif %} dropdown">
         <a href="{{ path('retailer_show') }}" class="dropdown-toggle">
             <i class="icon-briefcase"></i>
-            <span  id="user_pc_menu"  >Retailers</span>
+            <span  id="user_pc_menu"  >{{ 'Retailers' | trans ({}, "accounts") }}</span>
         </a>
     </li>
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
@@ -40,13 +40,13 @@
     <li class=" {% if MU == 'trans' %}active{% endif %} dropdown">
         <a href=""  class="dropdown-toggle"  data-toggle="dropdown"   >
             <i class="icon-file"></i>
-            <span  id="user_pc_menu"  >Transactions</span>
+            <span  id="user_pc_menu"  >{{ 'Transactions' | trans ({}, "transaction") }}</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('DistTransaction') }}">History</a></li>
+            <li><a href="{{ path('DistTransaction') }}">{{ 'History' | trans ({}, "transaction") }}</a></li>
             {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
-            <li><a href="{{ path('distributor_transactions_new') }}">Recharge</a></li>
+            <li><a href="{{ path('distributor_transactions_new') }}">{{ 'Recharge' | trans ({}, "transaction") }}</a></li>
             {% endif %}
         </ul>
 
@@ -56,12 +56,12 @@
     <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
             <i class="icon-list-alt"></i>
-            <span  id="user_pc_menu"  >Reports</span>
+            <span  id="user_pc_menu"  >{{ 'Reports' | trans ({}, "transaction") }}</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('DistSale') }}">Sales</a></li>
-            <li><a href="javascript:;">Trends</a></li>
+            <li><a href="{{ path('DistSale') }}">{{ 'Sales' | trans ({}, "code") }}</a></li>
+            <li><a href="javascript:;">{{ 'Trends' | trans ({}, "code") }}</a></li>
         </ul>
     </li>
 
@@ -72,12 +72,12 @@
     <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-wrench"></i>
-            <span  id="user_pc_menu"  >Account Setting</span>
+            <span  id="user_pc_menu"  >{{ 'AccountSetting' | trans ({}, "accounts") }}</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('DistProfile') }}">Profile</a></li>
-            <li><a href="{{ path('DistStaff') }}">Stuff</a></li>
+            <li><a href="{{ path('DistProfile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
+            <li><a href="{{ path('DistStaff') }}">{{ 'Stuff' | trans ({}, "user") }}</a></li>
         </ul>
     </li>
     {% endif %}
@@ -85,7 +85,7 @@
     <li class=" {% if MU == 'support' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-plus-sign"></i>
-            <span  id="user_pc_menu"  >Support</span>
+            <span  id="user_pc_menu"  >{{ 'Support' | trans ({}, "accounts") }}</span>
         </a>
     </li>
 

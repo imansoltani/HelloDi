@@ -12,8 +12,8 @@ class EditRetailerType extends AbstractType
     {
 
                 $builder
-                    ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-                    ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr'))));
+                    ->add('accTerms','text',array('label'=>'Terms','translation_domain' => 'accounts','required'=>false))
+                    ->add('accDefaultLanguage','choice',array('label'=>'DefaultLanguage','translation_domain' => 'accounts','required'=>true,'choices'=>(array('en'=>'en','fr'=>'fr'))));
 
 
     ;

@@ -1,15 +1,16 @@
 Item:
-    Id: ID
-    Name: Item Name
-    FaceValue: Item Face Value
-    Currency: Item Currency
-    Type: Item Type
-    AlertMinStock: Alert Min Stock
-    Operator: Operator
-
-    All: All
-    TypeChioce:
-        All: All
-        Internet: Internet
-        Mobile: Mobile
-        Tel: Tel
+Id: ID
+Name: Item Name
+FaceValue: Item Face Value
+Currency: Item Currency
+AlertMinStock: Alert Min Stock
+Operator: Operator
+Mobile:
+Calling_Card:
+E-payment:
+ItemType:
+All:
+Type:
+ShopDmtu:
+BuyCard:
+Favorites:

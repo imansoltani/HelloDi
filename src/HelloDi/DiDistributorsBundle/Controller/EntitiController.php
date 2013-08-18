@@ -30,23 +30,23 @@ class EntitiController extends Controller
         $user=$this->get('security.context')->getToken()->getUser();
 
         $formsearch = $this->createFormBuilder()
-            ->add('entName', 'text',array('required'=>false,'label'=>'Entity Name:'))
-            ->add('Country', 'entity', array('label'=>'Country:',
+            ->add('entName', 'text',array('required'=>false,'label'=>'EntityName','translation_domain' => 'entity'))
+            ->add('Country', 'entity', array('label'=>'Country','translation_domain' => 'entity',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country','property' => 'name',
                      'empty_value'=>'All',
                      'empty_data'=>'',
                      'required'=>false
                 )
             )
-        ->add('Retailer', 'checkbox', array(
+        ->add('Retailer', 'checkbox', array('translation_domain' => 'accounts',
             'label'     => 'Retailer',
             'required'  => false,
         ))
-        ->add('Distributors', 'checkbox', array(
+        ->add('Distributors', 'checkbox', array('translation_domain' => 'accounts',
                 'label'     => 'Distributors',
                 'required'  => false,
             ))
-       ->add('Provider', 'checkbox', array(
+       ->add('Provider', 'checkbox', array('translation_domain' => 'accounts',
                 'label'     => 'Provider',
                 'required'  => false,
                 ))->getForm()

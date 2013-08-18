@@ -3,20 +3,20 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
 
-    <span class="link">Transactions</span>
+    <span class="link">{{ 'Transactions' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Transactions</h3>
+        <h3>{{ 'Transactions' | trans ({}, "transaction") }}</h3>
     </div> <!-- /widget-header -->
     <br>
 
-    <a class="btn btn-primary btn-large" href="{{ path('DistRetailerFunding',{'id':retailerAccount.id}) }}">Fund Retailers</a>
+    <a class="btn btn-primary btn-large" href="{{ path('DistRetailerFunding',{'id':retailerAccount.id}) }}">{{ 'FundRetailers' | trans ({}, "accounts") }}</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -29,7 +29,7 @@
               method="POST">
             <fieldset>
                 <div class="control-group ">
-                    {{ form_label(form.TypeDate[0],'Trade Date') }}
+                    {{ form_label(form.TypeDate[0],'TradeDate' | trans ({}, "transaction")) }}
                     <div class="controls ">
                         {{ form_widget(form.TypeDate[0],{ 'attr': {'checked':'checked'}}) }}
                     </div>
@@ -37,7 +37,7 @@
 
 
                 <div class="control-group ">
-                    {{ form_label(form.TypeDate[1],'Looking Date') }}
+                    {{ form_label(form.TypeDate[1],'LookingDate' | trans ({}, "transaction")) }}
                     <div class="controls ">
                         {{ form_widget(form.TypeDate[1]) }}
                     </div>
@@ -75,7 +75,7 @@
 
                 <input type="hidden" value="1" name="page" id="search_page" >
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
 
             </fieldset>
         </form>
@@ -84,7 +84,7 @@
 
             $("#form_Type").change(function(){
                 val= $("#form_Type").val();
-                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
                 $.post('{{ path("DistLoadActionRetailer") }}',{id: val},function(result){
                     $("#form_Action").html(result);
                 })
@@ -93,7 +93,7 @@
             $(function () {
 
                 val= $("#form_Type").val();
-                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
                 $.post('{{ path("DistLoadActionRetailer") }}',{id: val},function(result){
                     $("#form_Action").html(result);
                 });
@@ -106,7 +106,7 @@
 
     <div class="tablediv">
         <div class="contenttitle">
-            <h4>Transactions</h4>
+            <h4>{{ 'Transactions' | trans ({}, "transaction") }}</h4>
         </div>
         <form>
             <div class="tab-content">
@@ -115,12 +115,12 @@
                     <thead>
                     <tr>
 
-                        <th>{{ 'Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Credit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Debit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Credit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Debit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                     </tr>
                     </thead>
@@ -165,7 +165,7 @@
                             <td class="td-actions">
 
                                 <a class="btn_actions showDetails">
-                                    Details
+                                    {{ 'Details' | trans ({}, "common") }}
                                 <span>
 
 
@@ -174,7 +174,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'id' | trans ({}, "account") }}
+                {{ 'id' | trans ({}, "common") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.id}}" >
@@ -183,7 +183,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'Date' | trans ({}, "account") }}
+                {{ 'Date' | trans ({}, "transaction") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.tranInsert|date('y-M-d H:m:s') }}">
@@ -192,7 +192,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'Description' | trans ({}, "account") }}
+                {{ 'Description' | trans ({}, "transaction") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.tranDescription}}">
@@ -208,7 +208,7 @@
         {% endif %}
         <div class="control-group">
             <label class="control-label">
-                {{ 'Credit' | trans ({}, "account") }}
+                {{ 'Credit' | trans ({}, "transaction") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ credit }}">
@@ -219,7 +219,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'Debit' | trans ({}, "account") }}
+                {{ 'Debit' | trans ({}, "transaction") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ -debit }}">
@@ -229,7 +229,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'Balance' | trans ({}, "account") }}
+                {{ 'Balance' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 {% set balance=tran.tranBalance+tran.tranAmount %}
@@ -239,7 +239,7 @@
 
    <div class="control-group">
             <label class="control-label">
-                {{ 'User' | trans ({}, "account") }}
+                {{ 'User' | trans ({}, "user") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.User.username }}">
@@ -249,7 +249,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'Accountname' | trans ({}, "account") }}
+                {{ 'Account' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.Account.accName }}">
@@ -260,7 +260,7 @@
 
             <div class="control-group">
                 <label class="control-label">
-                    {{ 'Code' | trans ({}, "account") }}
+                    {{ 'Code' | trans ({}, "code") }}
                 </label>
                 <div class="controls">
                     <input type="text" disabled="" value="{{ tran.Code.id }}">
@@ -269,7 +269,7 @@
 
             <div class="control-group">
             <label class="control-label">
-                {{ 'ItemName' | trans ({}, "account") }}
+                {{ 'Item' | trans ({}, "item") }}
             </label>
             <div class="controls">
                 <input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">

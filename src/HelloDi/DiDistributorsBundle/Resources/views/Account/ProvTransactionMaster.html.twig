@@ -3,9 +3,9 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Transactions</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Transactions' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 
@@ -13,11 +13,14 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Provider Transactions</h3>
+        <h3>
+            {{ 'Transactions' | trans ({}, "transaction") }}
+            </h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-large btn-primary" href="{{ path('ProvRegister',{'id':Account.id}) }}">Register transaction</a>
-    <a class="button btn btn-large btn-primary" href="{{ path('ProvTransfer',{'id':Account.id}) }}">Make Transfer</a>
+
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvRegister',{'id':Account.id}) }}"> {{ 'RegisterTransaction' | trans ({}, "accounts") }}</a>
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvTransfer',{'id':Account.id}) }}">{{ 'MakeTransfer' | trans ({}, "accounts") }}</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -33,7 +36,7 @@
 
                 <div class="control-group">
                     <label class="control-label" >
-                        {{ form_label(form.TypeDate[0]) }}
+                        {{ 'TradeDate' | trans ({}, "transaction") }}
                     </label>
                     <div class="controls">
 
@@ -44,7 +47,7 @@
 
                 <div class="control-group">
                     <label class="control-label" >
-                        {{ form_label(form.TypeDate[1]) }}
+                        {{ 'LookingDate' | trans ({}, "transaction") }}
                     </label>
                     <div class="controls">
 
@@ -53,7 +56,7 @@
                 </div>
 
                 <div class="control-group datepicker1">
-                    {{ form_label(form.FromDate,'From:') }}
+                    {{ form_label(form.FromDate) }}
 
                         {{ form_widget(form.FromDate ) }}
 
@@ -62,7 +65,7 @@
 
 
                 <div class="control-group datepicker2">
-                    {{ form_label(form.ToDate,'To:') }}
+                    {{ form_label(form.ToDate) }}
 
                         {{ form_widget(form.ToDate ) }}
                 </div>
@@ -84,7 +87,7 @@
                 <input type="hidden" value="1" name="page" id="search_page" >
 
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
             </fieldset>
         </form>
         <script type="text/javascript">
@@ -93,7 +96,7 @@
 
                     $("#form_type").change(function(){
                         val= $("#form_type").val();
-                        $("#form_Action").html('<option value="All">Please wait ...</option>');
+                        $("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');
                         $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
 
                             $("#form_Action").html(result);
@@ -110,7 +113,7 @@
                 Form_Search(1,"Search Transactions");
 
                     val= $("#form_type").val();
-                    $("#form_Action").html('<option value="All">Please wait ...</option>');
+                    $("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');
                     $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
 
                         $("#form_Action").html(result);
@@ -126,7 +129,7 @@
 
     <div class="tablediv">
         <div class="contenttitle">
-            <h4>History</h4>
+            <h4>{{ 'History' | trans ({}, "transaction") }}</h4>
         </div>
         <form>
             <div class="tab-content">
@@ -135,12 +138,12 @@
                     <thead>
                     <tr>
 
-                        <th>Date</th>
-                        <th>{{ 'Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Credit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Debit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Credit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Debit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                     </tr>
                     </thead>
@@ -191,14 +194,15 @@
 
 
                                 <a class="btn_actions showDetails">
-                                    Details
+                                    {{ 'Details' | trans ({}, "common") }}
                                 <span>
 
 
                                            <fieldset>
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       ID:
+                                                       {{ 'Id' | trans ({}, "common") }}
+
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text" value="{{ tran.id}}" disabled="" >
@@ -207,7 +211,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       Date:
+                                                       {{ 'DateInsert' | trans ({}, "transaction") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text" value="{{ tran.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
@@ -216,7 +220,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Credit:' | trans ({}, "account") }}
+                                                       {{ 'Credit' | trans ({}, "transaction") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text"
@@ -231,7 +235,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Debit:' | trans ({}, "account") }}
+                                                       {{ 'Debit' | trans ({}, "transaction") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text"
@@ -246,7 +250,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Description:' | trans ({}, "account") }}
+                                                       {{ 'Description' | trans ({}, "transaction") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text" value="{{ tran.tranDescription }}" disabled="" >
@@ -255,7 +259,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Balance:' | trans ({}, "account") }}
+                                                       {{ 'Balance' | trans ({}, "accounts") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text" value=" {{ balance }}" disabled="" >
@@ -264,7 +268,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'User:' | trans ({}, "account") }}
+                                                       {{ 'User' | trans ({}, "user") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text" value="{{ tran.User.username }}" disabled="" >
@@ -273,7 +277,7 @@
                                                {% if tran.Code is not null %}
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Item:' | trans ({}, "account") }}
+                                                       {{ 'Item' | trans ({}, "item") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text"
@@ -287,7 +291,7 @@
 
                                                <div class="control-group">
                                                    <label class="control-label">
-                                                       {{ 'Code:' | trans ({}, "account") }}
+                                                       {{ 'Code' | trans ({}, "code") }}
                                                    </label>
                                                    <div class="controls">
                                                        <input type="text"
@@ -312,7 +316,9 @@
 
 
 |
-                                <a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':Account.id,'tranid':tran.id}) }}">Delete</a>
+                                <a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':Account.id,'tranid':tran.id}) }}">
+                                    {{ 'Delete' | trans ({}, "common") }}
+                                </a>
 
                             </td>
                         </tr>

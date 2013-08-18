@@ -3,16 +3,17 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <span class="link">Sales</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Sales' | trans ({}, "code") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
     <div class="widget-header">
         <h3>
-            Account Sales
+            {{ 'SalesReport' | trans ({}, "transaction") }}
+
         </h3>
     </div> <!-- /widget-header -->
     <br>
@@ -65,15 +66,16 @@
 
     {% for group in form.GroupBy %}
         <div class="control-group">
-            <label class="control-label">{{ form_label(group) }}</label>
+            {{ form_label(group) }}<br>
             <div class="controls">
+
                 {{ form_widget(group) }}
             </div>
         </div>
      {% endfor %}
             <input type="hidden" value="1" name="page" id="search_page" >
             <hr>
-            <input class="btn btn-primary" type="submit" value="Search">
+            <input class="btn btn-primary" type="submit" value="{{'Search' | trans ({}, "common")  }}">
 
         </form>
 
@@ -92,7 +94,7 @@
 
             <div class="control-group">
                 <label class="control-label" for="print_1">
-                    Retailer Revenues
+                 {{ 'RetailerRevenues' | trans ({}, "accounts") }}
                 </label>
                 <div class="controls">
                     <input type="radio" id="print_1" name="print" value="0" checked />
@@ -101,21 +103,22 @@
 
             <div class="control-group">
                 <label class="control-label" for="print_2">
-                    Retailer Statements
+                    {{ 'RetailerStatements' | trans ({}, "accounts") }}
+
                 </label>
                 <div class="controls">
                     <input type="radio" id="print_2" name="print" value="1" />
                 </div>
             </div>
 
-            <input type="submit" value="Print To PDF" class="btn btn-primary" onclick="copyFormElements()"/>
+            <input type="submit" value="{{ 'PrintToPDF' | trans ({}, "accounts") }}" class="btn btn-primary" onclick="copyFormElements()"/>
         </form>
     {% endif %}
 
     <div class="tablediv">
 
         <div class="contenttitle">
-            <h4>History</h4>
+            <h4>{{ 'History' | trans ({}, "transaction") }}</h4>
         </div>
 
 
@@ -127,13 +130,13 @@
                     <thead>
                     <tr>
                         <th>id</th>
-                        <th>{{ 'Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Item' | trans ({}, "account") }}</th>
-                        <th>{{ 'Quantity' | trans ({}, "account") }}</th>
-                        <th>{{ 'Retailers' | trans ({}, "account") }}</th>
-                        <th>{{ 'Selling Price' | trans ({}, "account") }}</th>
-                        <th>{{ 'Vat' | trans ({}, "account") }}</th>
-                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Item' | trans ({}, "item") }}</th>
+                        <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
+                        <th>{{ 'SellingPrice' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -171,14 +174,14 @@
                                 {% if group==0 %}
 
                                 <a class="btn_actions showDetails">
-                                    Details
+                                    {{ 'Details' | trans ({}, "common") }}
                                 <span>
 
                                     <fieldset>
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'id' | trans ({}, "account") }}
+                                                {{ 'Id' | trans ({}, "common") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.id}}" disabled="" >
@@ -187,7 +190,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Date' | trans ({}, "account") }}
+                                                {{ 'Date' | trans ({}, "transaction") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
@@ -196,7 +199,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Buying Price' | trans ({}, "account") }}
+                                                {{ 'BuyingPrice' | trans ({}, "price") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text"
@@ -211,7 +214,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Selling Price' | trans ({}, "account") }}
+                                                {{ 'SellingPrice' | trans ({}, "transaction") }}
                                             </label>
                                             <div class="controls">
 
@@ -221,7 +224,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Benefit' | trans ({}, "account") }}
+                                                {{ 'Benefit' | trans ({}, "transaction") }}
                                             </label>
                                             <div class="controls">
 
@@ -231,7 +234,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Retailer Account' | trans ({}, "account") }}
+                                                {{ 'RetailerAccount' | trans ({}, "account") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.Account.accName }}" disabled="" >
@@ -240,7 +243,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Retailer User' | trans ({}, "account") }}
+                                                {{ 'User' | trans ({}, "user") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.User.username }}" disabled="" >
@@ -250,7 +253,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Code' | trans ({}, "account") }}
+                                                {{ 'Code' | trans ({}, "code") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.Code.id }}" disabled="" >
@@ -259,7 +262,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">
-                                                {{ 'Item Name' | trans ({}, "account") }}
+                                                {{ 'Item' | trans ({}, "item") }}
                                             </label>
                                             <div class="controls">
                                                 <input type="text" value="{{ Tr.TR.Code.Item.itemName }}" disabled="" >

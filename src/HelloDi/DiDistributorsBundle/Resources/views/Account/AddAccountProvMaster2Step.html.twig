@@ -5,14 +5,17 @@
     <!-- Entity -->
     <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
         <div class="widget-header">
-            <h3>Create Entity</h3>
+            <h3>
+                {{ 'Entity' | trans ({}, "entity") }}
+
+            </h3>
         </div>
         <!-- /widget-header -->
 
         <div class="control-group entName">
             {{ form_label(form2step.entName) }}
             <div class="controls money">
-                {{ form_widget(form2step.entName, { 'attr' : { 'placeholder': 'Your Entity Name'} }) }} <span class="icon-certificate" ></span>
+                {{ form_widget(form2step.entName) }} <span class="icon-certificate" ></span>
             </div>
             {{ form_errors(form2step.entName) }}
         </div>
@@ -29,7 +32,8 @@
             {{ form_errors(form2step.entVatNumber) }}
         </div>
         <hr>
-Details:
+        {{ 'Details' | trans ({}, "common") }}:
+
         <div class="control-group">
             {{ form_label(form2step.entTel1) }}
             {{ form_widget(form2step.entTel1) }}
@@ -60,7 +64,7 @@ Details:
         <!-- Address -->
         <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
             <div class="widget-header">
-                <h3>Address Entity</h3>
+                <h3>{{ 'Address' | trans ({}, "entity") }}</h3>
             </div>
             <!-- /widget-header -->
             <div class="control-group">
@@ -83,7 +87,7 @@ Details:
             <div class="control-group entAdrs1">
                 {{ form_label(form2step.entAdrs1) }}
                 <div class="controls money">
-                    {{ form_widget(form2step.entAdrs1, { 'attr' : { 'placeholder': 'Your Entity Address'} }) }} <span class="icon-certificate" ></span>
+                    {{ form_widget(form2step.entAdrs1) }} <span class="icon-certificate" ></span>
                 </div>
                 {{ form_errors(form2step.entAdrs1) }}
             </div>
@@ -119,7 +123,7 @@ Details:
         <!-- Account -->
         <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
             <div class="widget-header">
-                <h3>Create Account</h3>
+                <h3>{{ 'Account' | trans ({}, "accounts") }}</h3>
             </div>
             <!-- /widget-header -->
             <div class="control-group accName">
@@ -166,8 +170,6 @@ Details:
         </div>
 
         {{ form_widget(form2step._token) }}
-
-
 
 
 {% endblock %}

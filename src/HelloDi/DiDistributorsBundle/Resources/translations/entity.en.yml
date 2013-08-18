@@ -1,34 +1,29 @@
-Entiti:
-    Id: ID
-    Name: Name
-    VatNumber: VatNumber
-    Tel1: Tel1
-    Tel2: Tel2
-    Fax: Fax
-    WebSite: WebSite
-    RegistrationNumber: RegistrationNumber
-    Users: Users
-    Accounts: Accounts
-    Addresses: Addresses
-
-    Edit: Edit
-    Manage: Manage
-    Add: Add Child Entity
-
+Entity:
+VatNumber:
+Tel1:
+Tel2:
+Fax:
+WebSite:
+Adrs1: Town
+Adrs2: Street
+Adrs3: Additional
+Np:
+City:
+Country:
 Address:
-    Id: ID
-    Type: type
-    Start: start
-    End: End
-    Np: NP
-    City: City
-    Country: Country
-    Address1: Address1
-    Address2: Address2
-    Address3: Address3
+Address1:
+Address2:
+Address3:
+EditAddress:
+EntityName:
+EntityInfo:
+AddressInfo:
+AddressEntity:
+EntitiesManagement:
+Entities:
+EntityUsers:
+DateChange:
+Profile:
+AdditionalDetails:
+Info:
 
-    Add: Add Address
-    Manage: Manage
-
-    TypeChoice:
-        Office: Office

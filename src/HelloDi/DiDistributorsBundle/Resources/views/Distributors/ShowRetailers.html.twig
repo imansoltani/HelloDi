@@ -1,19 +1,21 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Retailers Accounts
+    {{ 'RetailersAccounts' | trans ({}, "accounts") }}
+
 {% endblock title %}
 
 {% set MU = 'retail' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Retailer</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Retailers' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    Retailer Management
+    {{ 'RetailersManagement' | trans ({}, "accounts") }}
+
 {% endblock %}
 
 {% block Link_Head %}
@@ -43,7 +45,8 @@
             <div class="widget-content">
 
                 <a class="btn-large button btn btn-primary " href="{{ path('DistNewRetailer') }}">
-                    New Retailer
+                    {{ 'NewRetailerAccount' | trans ({}, "accounts") }}
+
                 </a>
 
                 <div class="form_search">
@@ -60,7 +63,7 @@
 
 
                             <div class="control-group">
-                                {{ form_label(form_search.CityName,'City:') }}
+                                {{ form_label(form_search.CityName) }}
                                 <div class="controls">
                                     {{ form_widget(form_search.CityName) }}
                                 </div>
@@ -68,7 +71,7 @@
 
                             <div class="control-group">
 
-                                {{ form_label(form_search.Balance,'Balance:') }}
+                                {{ form_label(form_search.Balance) }}
 
                                     <div class="controls">
                                         {{ form_widget(form_search.Balance) }}
@@ -77,7 +80,7 @@
 
                             </div>
                             <div class="control-group">
-                                {{ form_label(form_search.BalanceValue,'Value:') }}
+                                {{ form_label(form_search.BalanceValue) }}
                                 <div class="controls money">
                                     {{ form_widget(form_search.BalanceValue) }} | {{ Account.accCurrency }}
                                 </div>
@@ -85,7 +88,7 @@
 
                             <input type="hidden" value="1" name="page" id="search_page">
                             <hr>
-                            <input class="btn btn-primary" type="submit" value="Search">
+                            <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
 
                         </fieldset>
 
@@ -107,12 +110,12 @@
                         <table id="example" class="table postsend">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Entity</th>
-                                <th>Balance</th>
-                                <th>Credit Limit</th>
-                                <th>Manage</th>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'Name' | trans ({}, "common") }}</th>
+                                <th>{{ 'Entity' | trans ({}, "entity") }}</th>
+                                <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                                <th>{{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
                             </tr>
 
 
@@ -143,7 +146,7 @@
                                     <td>{{ myAccount.accCreditLimit }}</td>
                                     <td class="td-actions">
                                         <a class="btn_actions"
-                                           href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">Open</a>
+                                           href="{{ path('Retailer_Transaction',{'id':myAccount.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
                                         {#<br/>#}
                                         {#<a class="btn_actions" href="{{ path('Retailer_edit',{'id':myAccount.id}) }}">Edit</a>#}
                                     </td>

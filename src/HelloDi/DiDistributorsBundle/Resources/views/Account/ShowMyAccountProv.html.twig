@@ -1,19 +1,21 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Provider Accounts
+    {{ 'ProviderAccounts' | trans ({}, "accounts") }}
+
 {% endblock title %}
 
 {% set MU = 'prov' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Provider</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Providers' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    Provider Management
+    {{ 'ProvidersManagement' | trans ({}, "accounts") }}
+
 {% endblock %}
 
 
@@ -48,7 +50,7 @@
 
 
                 <a class="button btn btn-primary btn-large" href="{{ path('AddAccountProveMaster2Step') }}">
-                    Create a new Provider with new Entity
+                    {{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}
                 </a>
 
 
@@ -60,11 +62,12 @@
                                 <thead>
 
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Operation</th>
-                                    <th>Name</th>
-                                    <th>Balance</th>
-                                    <th>Entity Name</th>
+
+                                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Name' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'EntityName' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                                 </tr>
 
@@ -83,15 +86,15 @@
                                 {% for myAccount in pagination %}
                                     <tr>
                                         <td style="font-weight: bold">{{ myAccount.id }}</td>
+
+                                        <td>{{ myAccount.accName }}</td>
+                                        <td>{{ myAccount.accBalance }}|{{ myAccount.accCurrency }}</td>
+                                        <td>{{ myAccount.entiti.entName }}</td>
                                         <td class="td-actions">
 
                                             <a class="btn_actions"
                                                href="{{ path('MasterProvTransaction',{'id':myAccount.id}) }}">Manage</a>
                                         </td>
-                                        <td>{{ myAccount.accName }}</td>
-                                        <td>{{ myAccount.accBalance }}|{{ myAccount.accCurrency }}</td>
-                                        <td>{{ myAccount.entiti.entName }}</td>
-
                                     </tr>
                                 {% endfor %}
 

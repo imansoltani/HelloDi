@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Tickets
+    {{ 'Tickets' | trans ({}, "ticket") }}
 {% endblock title %}
 
 {% set MU = 'ok' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Tickets</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }} </a>
+    <span class="link"> {{ 'Tickets' | trans ({}, "ticket") }} </span>
 
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-comment"></i>
-    Tickets
+    {{ 'Tickets' | trans ({}, "ticket") }}
 {% endblock %}
 
 {% block Body %}
@@ -31,26 +31,32 @@
                     </h5>
 
                     <form class="form-horizontal SearchForm" action="{{ path('DistTickets') }}" method="POST" >
-
-
+                        <div class="control-group">
+                        <label class="control-label" >
+                           {{ 'Status' | trans ({}, "ticket") }}
+                            :
+                        </label>
+                            </div>
                         <div class="control-group">
                             <label class="control-label" >
+                                {{ form_label(form.Status[0],'Close' | trans ({}, "ticket")) }}
                             </label>
-                            <div class="controls">Close:
+                            <div class="controls">
                                 {{ form_widget(form.Status[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" >
+                                {{ form_label(form.Status[1],'Open' | trans ({}, "ticket")) }}
                             </label>
-                            <div class="controls">Open:
+                            <div class="controls">
                                 {{ form_widget(form.Status[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Type,'Type:') }}
+                            {{ form_label(form.Type) }}
                             <div class="controls">
                                 {{ form_widget(form.Type) }}
                             </div>
@@ -58,7 +64,7 @@
 
                         <hr>
                         <input type="hidden" value="1" name="page" id="search_page" >
-                        <input class="btn btn-primary" type="submit" value="search">
+                        <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
                     </form>
 
                     <script type="text/javascript">
@@ -133,20 +139,29 @@
                                     {% if Ticket.Accountretailer is not null %}
                                         {{ Ticket.Accountretailer.accName }}
                                     {% else %}
-                                        Master
+                                        {{ 'Master' | trans ({}, "common") }}
                                     {% endif %}
                                 </div>
 
                                 <div class="detail">
                         <span>
-                            {% if Ticket.type==0 %}payment issue
-                            {% elseif Ticket.type==1 %}new item request
-                            {% elseif Ticket.type==2 %}price change request
-                            {% elseif Ticket.type==3 %}address change
-                            {% elseif Ticket.type==4 %}account change requests
-                            {% elseif Ticket.type==5 %}bug reporting
-                            {% elseif Ticket.type==6 %}support
-                            {% endif %}
+
+                                         {% if Ticket.type==0 %}
+                                             {{ 'payment_issue' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==1 %}
+                                             {{ 'new_item_request' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==2 %}
+                                             {{ 'price_change_request' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==3 %}
+                                             {{ 'address_change' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==4 %}
+                                             {{ 'account_change_requests' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==5 %}
+                                             {{ 'bug_reporting' | trans ({}, "ticket") }}
+                                         {% elseif Ticket.type==6 %}
+                                             {{ 'support' | trans ({}, "ticket") }}
+                                         {% endif %}
+
                         </span> |
                                     <span>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</span>
                                 </div>
@@ -155,15 +170,16 @@
 
                         <div class="controler">
                             {% if Ticket.status==0 %}
-                                Close
+                                {{ 'Close' | trans ({}, "ticket") }}
                             {% else %}
-                                Open
-                            {% endif %} Ticket -
+                                {{ 'Open' | trans ({}, "ticket") }}
+
+                            {% endif %}   {{ 'Ticket' | trans ({}, "ticket") }} -
                             <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">
-                                Click for Switch to {% if Ticket.status==0 %}
-                                    Open
+                                {{ 'Click_for_Switch_to' | trans ({}, "ticket") }} {% if Ticket.status==0 %}
+                                    {{ 'Open' | trans ({}, "ticket") }}
                                 {% else %}
-                                    Close
+                                    {{ 'Close' | trans ({}, "ticket") }}
                                 {% endif %}
                             </a>
                         </div>

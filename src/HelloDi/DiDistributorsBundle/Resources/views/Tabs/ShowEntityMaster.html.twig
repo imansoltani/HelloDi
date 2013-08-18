@@ -1,7 +1,8 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Manage Entity
+    {{ 'ManageEntity' | trans ({}, "entity") }}
+
 {% endblock title %}
 
 {% block PageTitle %}
@@ -22,7 +23,7 @@
 
         <a href="{{ path('Ent_Accounts',{'id':entity.id}) }}">
 
-            <input type="submit" value="Accounts" >
+            <input type="submit" value="{{ 'Accounts' | trans ({}, "accounts") }}" >
         </a>
 
 
@@ -32,7 +33,7 @@
 
         <a href="{{ path('Ent_Users',{'id':entity.id}) }}">
 
-            <input type="submit" value="Users" >
+            <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
         </a>
 
 
@@ -44,7 +45,7 @@
 
         <a href="{{ path('Ent_Address',{'id':entity.id}) }}">
 
-            <input type="submit" value="Address" >
+            <input type="submit" value="{{ 'Address' | trans ({}, "entity") }}" >
         </a>
 
 
@@ -56,7 +57,7 @@
 
         <a href="{{ path('Ent_Info',{'id':entity.id}) }}">
 
-            <input type="submit" value="Info" >
+            <input type="submit" value="{{ 'Info' | trans ({}, "common") }}" >
         </a>
 
     </li>

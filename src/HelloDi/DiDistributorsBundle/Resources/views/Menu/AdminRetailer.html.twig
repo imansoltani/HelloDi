@@ -7,17 +7,17 @@
 
 {% block Dist1 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i>{{ 'AccountName' | trans ({}, "accounts") }}  :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc">
-        <i>Name :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>Credit Limit :</i><span>{{ app.user.Account.accCreditLimit }}</span>
+        <i>{{ 'AccountName' | trans ({}, "accounts") }}  :</i><span>{{ app.user.Account.accName }}</span><br>
+        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
+        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
@@ -25,19 +25,19 @@
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
         <a href="{{ path('retailers_dashboard') }}">
             <i class="icon-home"></i>
-            <span id="user_pc_menu" >Home</span>
+            <span id="user_pc_menu" >{{ 'Home' | trans ({}, "menu") }}</span>
         </a>
     </li>
     <li class=" {% if MU == 'fav' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_favourite') }}" class="dropdown-toggle">
             <i class="icon-star"></i>
-            <span  id="user_pc_menu"  >Favorites</span>
+            <span  id="user_pc_menu"  >{{ 'Favorites' | trans ({}, "item") }}</span>
         </a>
     </li>
     <li class=" {% if MU == 'mob' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_dmtu') }}" class="dropdown-toggle">
             <i class="icon-mobile-phone"></i>
-            <span  id="user_pc_menu"  >Mobile</span>
+            <span  id="user_pc_menu"  >{{ 'Mobile' | trans ({}, "item") }}</span>
         </a>
     </li>
 
@@ -45,14 +45,14 @@
     <li class=" {% if MU == 'cell' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_callingCard') }}" class="dropdown-toggle">
             <i class="icon-credit-card"></i>
-            <span  id="user_pc_menu"  >Celling Cards</span>
+            <span  id="user_pc_menu"  >{{ 'Calling_Card' | trans ({}, "item") }}</span>
         </a>
     </li>
 
     <li class=" {% if MU == 'vou' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_e-payment') }}" class="dropdown-toggle">
             <i class="icon-flag-alt"></i>
-            <span  id="user_pc_menu"  >E-payment</span>
+            <span  id="user_pc_menu"  >{{ 'E-payment' | trans ({}, "item") }}</span>
         </a>
     </li>
 
@@ -66,13 +66,13 @@
     <li class=" {% if MU == 'trans' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
             <i class="icon-money"></i>
-            <span  id="user_pc_menu"  >Transactions</span>
+            <span  id="user_pc_menu"  >{{ 'Transactions' | trans ({}, "transaction") }}</span>
             <b class="caret"></b>
         </a>
             <ul class="dropdown-menu">
-                <li><a href="{{ path('RetailerTransaction') }}">History</a></li>
+                <li><a href="{{ path('RetailerTransaction') }}">{{ 'History' | trans ({}, "transaction") }}</a></li>
                 {% if is_granted('ROLE_RETAILER_ADMIN') %}
-                <li><a href="{{ path('retailer_transactions_new') }}">Recharge</a></li>
+                <li><a href="{{ path('retailer_transactions_new') }}">{{ 'Recharge' | trans ({}, "transaction") }}</a></li>
                 {% endif %}
             </ul>
     </li>
@@ -80,12 +80,12 @@
     <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle"  data-toggle="dropdown" >
             <i class="icon-list-alt"></i>
-            <span  id="user_pc_menu"  >Report</span>
+            <span  id="user_pc_menu"  >{{ 'Report' | trans ({}, "transaction") }}</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('RetailerSale') }}">Sales</a></li>
-            <li><a href="javascript:;">Trends</a></li>
+            <li><a href="{{ path('RetailerSale') }}">{{ 'Sales' | trans ({}, "code") }}</a></li>
+            <li><a href="javascript:;">{{ 'Trends' | trans ({}, "code") }}</a></li>
         </ul>
     </li>
 
@@ -95,12 +95,12 @@
     <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-wrench"></i>
-            <span  id="user_pc_menu"  >Account Setting</span>
+            <span  id="user_pc_menu"  >{{ 'AccountSetting' | trans ({}, "accounts") }}</span>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('RetailerProfile') }}">Profile</a></li>
-            <li><a href="{{ path('RetailerStaff') }}">Stuff</a></li>
+            <li><a href="{{ path('RetailerProfile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
+            <li><a href="{{ path('RetailerStaff') }}">{{ 'Stuff' | trans ({}, "user") }}</a></li>
         </ul>
     </li>
     {% endif %}
@@ -108,7 +108,7 @@
     <li class=" {% if MU == 'support' %}active{% endif %} dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-plus-sign"></i>
-            <span  id="user_pc_menu"  >Support</span>
+            <span  id="user_pc_menu"  >{{ 'Support' | trans ({}, "common") }}</span>
         </a>
     </li>
 

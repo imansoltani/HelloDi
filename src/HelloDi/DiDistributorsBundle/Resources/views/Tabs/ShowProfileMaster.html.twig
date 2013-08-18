@@ -1,12 +1,12 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-   Profile
+    {{ 'Profile' | trans ({}, "entity") }}
 {% endblock title %}
 
 {% block PageTitle %}
     <i class="icon-user"></i>
-    Profile
+    {{ 'Profile' | trans ({}, "entity") }}
 {% endblock %}
 
 
@@ -22,7 +22,7 @@
 
         <a href="{{ path('MasterProfileEntiti') }}">
 
-            <input type="submit" value="Info" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
 
 
@@ -32,7 +32,7 @@
 
         <a href="{{ path('MasterProfileAddress') }}">
 
-            <input type="submit" value="Address" >
+            <input type="submit" value="{{ 'Address' | trans ({}, "entity") }}" >
         </a>
 
 

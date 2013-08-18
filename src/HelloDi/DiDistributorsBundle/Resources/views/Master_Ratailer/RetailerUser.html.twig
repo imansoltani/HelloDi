@@ -2,11 +2,11 @@
 {% set tab2 = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
 
-    <span class="link">Users</span>
+    <span class="link">{{ 'Users' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -31,21 +31,21 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Users</h3>
+        <h3>{{ 'Users' | trans ({}, "user") }}</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerUserAdd',{'id':retailerAccount.id}) }}" >Add New User</a>
+    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerUserAdd',{'id':retailerAccount.id}) }}" >{{ 'AddNewUser' | trans ({}, "user") }}</a>
     <div style="margin-top: 5px" class="tablediv">
         <form method="post">
             <div class="tab-content datatable">
                 <table id="example" class="table postsend">
                     <thead>
                     <tr>
-                        <th>{{ 'Id' | trans ({}, "user") }}</th>
-                        <th>{{ 'Name' | trans ({}, "user") }}</th>
+                        <th>{{ 'Id' | trans ({}, "common") }}</th>
+                        <th>{{ 'FullName' | trans ({}, "user") }}</th>
                         <th>{{ 'UserName' | trans ({}, "user") }}</th>
                         <th>{{ 'Role' | trans ({}, "user") }}</th>
-                        <th>{{ 'Modify' | trans ({}, "user") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                     </tr>
 
@@ -72,7 +72,7 @@
                             </td>
 
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('Master_RetailerUserEdit',{'id':retailerAccount.id,'userid':User.id}) }}">Edit</a>
+                                <a class="btn_actions" href="{{ path('Master_RetailerUserEdit',{'id':retailerAccount.id,'userid':User.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
 
                         </tr>

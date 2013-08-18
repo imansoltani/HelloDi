@@ -3,8 +3,8 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Profile Address</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'AddressInfo' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 
 
@@ -31,7 +31,7 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Profile Address</h3>
+        <h3>{{ 'AddressInfo' | trans ({}, "entity") }}</h3>
     </div> <!-- /widget-header -->
 
 
@@ -41,7 +41,7 @@
 
         <div class="control-group">
             {{ form_label(form_edit.entAdrs1) }}
-            {{ form_widget(form_edit.entAdrs1 ,{ 'attr' : { 'placeholder': 'important'} }) }}
+            {{ form_widget(form_edit.entAdrs1) }}
         </div>
 
         <div class="control-group">
@@ -71,14 +71,14 @@
 
 
             ) }}
-                <span class="icon-certificate"></span>
+
              </div>
         </div>
 
 
         <div class="control-group">
             {{ form_label(form_edit.entCity) }}
-            {{ form_widget(form_edit.entCity,{ 'attr' : { 'placeholder': 'important'} }) }}
+            {{ form_widget(form_edit.entCity) }}
         </div>
 
         <div class="control-group">
@@ -95,7 +95,7 @@
 
 
         <div class="form-actions" style="margin-bottom: 0" >
-            <input class="btn btn-primary" type="submit"  value="edit">
+            <input class="btn btn-primary" type="submit"  value="{{ 'Save' | trans ({}, "common") }}">
         </div>
     </form>
 
@@ -107,14 +107,16 @@
             <table id="example" class="table postsend">
                 <thead>
                 <tr>
-                    <th>{{ 'Id' | trans ({}, "user") }}</th>
-                    <th>{{ 'DateChange' | trans ({}, "user") }}</th>
-                    <th>{{ 'Town' | trans ({}, "user") }}</th>
-                    <th>{{ 'Street' | trans ({}, "user") }}</th>
-                    <th>{{ 'Additional' | trans ({}, "user") }}</th>
-                    <th>{{ 'PostCode' | trans ({}, "user") }}</th>
-                    <th>{{ 'City' | trans ({}, "user") }}</th>
-                    <th>{{ 'Country' | trans ({}, "user") }}</th>
+                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                    <th>{{ 'DateChange' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                    <th>{{ 'City' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Adrs1' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Adrs2' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Adrs3' | trans ({}, "entity") }}</th>
+                    <th>{{ 'NP' | trans ({}, "entity") }}</th>
+
+
                 </tr>
 
                 <tr class="input" >
@@ -142,12 +144,14 @@
 
                             <td >{{ Address.id }}</td>
                             <td>{{ Address.adrsDate|date('m-Y-d') }}</td>
+                            <td>{{ Address.Country.Iso }}|{{ Address.Country.name}}</td>
+                            <td>{{ Address.adrsCity }}</td>
+
                             <td>{{ Address.adrs1 }}</td>
                             <td>{{ Address.adrs2 }}</td>
                             <td>{{ Address.adrs3 }}</td>
                             <td>{{ Address.adrsNp }}</td>
-                            <td>{{ Address.adrsCity }}</td>
-                            <td>{{ Address.Country.Iso }}|{{ Address.Country.name}}</td>
+
                         </tr>
 
                 {% endfor %}

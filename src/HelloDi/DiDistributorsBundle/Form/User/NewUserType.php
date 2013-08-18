@@ -21,11 +21,11 @@ class NewUserType extends BaseType
         parent::buildForm($builder, $options);
         $builder
             ->add('firstname',null,array(
-                'required'=>true,'label'=>'FirstName:'
+                'required'=>true,'label'=>'FirstName','translation_domain' => 'user'
             ))
-            ->add('lastname',null,array('required'=>false,'label'=>'LastName:'))
-            ->add('mobile',null,array('required'=>false,'label'=>'Mobile:'))
-            ->add('language','choice',array('required'=>true,'label'=>'Language:','choices'=>array('en'=>'en','fr'=>'fr')))
+            ->add('lastname',null,array('required'=>false,'label'=>'LastName','translation_domain' => 'user'))
+            ->add('mobile',null,array('required'=>false,'label'=>'Mobile','translation_domain' => 'user'))
+            ->add('language','choice',array('required'=>true,'label'=>'Language','translation_domain' => 'user','choices'=>array('en'=>'en','fr'=>'fr')))
 
 
 ;

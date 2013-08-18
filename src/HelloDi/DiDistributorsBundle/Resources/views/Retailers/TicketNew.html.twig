@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    Tickets
+    {{ 'Tickets' | trans ({}, "ticket") }}
 {% endblock title %}
 
 {% set MU = '0' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('RetailerTickets') }}">Tickets</a>
-    <span class="link">New Ticket</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('RetailerTickets') }}">{{ 'Tickets' | trans ({}, "ticket") }}</a>
+    <span class="link">{{ 'NewTicket' | trans ({}, "ticket") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-comment"></i>
-    New Ticket
+    {{ 'NewTicket' | trans ({}, "ticket") }}
 {% endblock %}
 
 {% block Body %}
@@ -30,7 +30,9 @@
                          <div class="control-group">
 
                              <label class="control-label">
-                                 <b>Attention To :</b>
+                                 <b>
+                                     {{ 'AttentionTo ' | trans ({}, "ticket") }}
+                                     :</b>
                              </label>
                             <div class="controls money">
 
@@ -40,21 +42,28 @@
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Contact[0],'Distributors:') }}
+                            <label class="control-label">
+                                {{ 'Distributors ' | trans ({}, "accounts") }}
+
+                            </label>
+
                             <div class="controls">
                                 {{ form_widget(form.Contact[0]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Contact[1],'Supoprt team:') }}
+                            <label class="control-label">
+                                {{ 'SupoprtTeam' | trans ({}, "ticket") }}
+
+                            </label>
                             <div class="controls">
                                 {{ form_widget(form.Contact[1]) }}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.Subject,'Subject:') }}
+                            {{ form_label(form.Subject) }}
                             <div class="controls money">
                                 {{ form_widget(form.Subject) }}
                                 <span class="icon-certificate"></span>
@@ -63,7 +72,7 @@
 
 
                         <div class="control-group">
-                            {{ form_label(form.Type,'Type:') }}
+                            {{ form_label(form.Type) }}
                             <div class="controls money">
                                 {{ form_widget(form.Type) }}
                                 <span class="icon-certificate"></span>
@@ -74,7 +83,7 @@
 
 
                         <div class="control-group">
-                            {{ form_label(form.Description,'Description:') }}
+                            {{ form_label(form.Description) }}
                             <div class="controls money">
                                 {{ form_widget(form.Description) }}
                                 <span class="icon-certificate"></span>
@@ -83,8 +92,8 @@
                         {{ form_widget(form._token) }}
 
                         <div class="form-actions">
-                            <input type="submit" value="Open" class="btn btn-primary">
-                            <a href="javascript:history.go(-1)" class="btn">Back</a>
+                            <input type="submit" value=" {{ 'Open' | trans ({}, "ticket") }}" class="btn btn-primary">
+                            <a href="javascript:history.go(-1)" class="btn"> {{ 'Cancel' | trans ({}, "common") }}</a>
                         </div>
                     </form>
 

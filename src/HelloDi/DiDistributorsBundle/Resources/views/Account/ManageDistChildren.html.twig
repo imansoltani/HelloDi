@@ -3,9 +3,9 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <span class="link">Sub Accounts</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'SubAccounts' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 
@@ -29,7 +29,8 @@
 {% block Tab %}
     <div class="widget-header">
         <h3>
-            Sub Accounts List
+            {{ 'SubAccounts' | trans ({}, "accounts") }}
+
         </h3>
     </div> <!-- /widget-header -->
 
@@ -46,14 +47,13 @@
                         <thead>
                         <tr>
 
-                            <th>Id</th>
-                            <th>Operation</th>
-                            <th>Name</th>
-                            <th>Entity Name</th>
-                            <th>Type</th>
-                            <th>Balance</th>
-                            <th>CreditLimit</th>
-
+                            <th> {{ 'Id' | trans ({}, "common") }}</th>
+                            <th> {{ 'AccountName' | trans ({}, "accounts") }}</th>
+                            <th> {{ 'EntityName' | trans ({}, "entity") }}</th>
+                            <th> {{ 'Type' | trans ({}, "common") }}</th>
+                            <th> {{ 'Balance' | trans ({}, "accounts") }}</th>
+                            <th> {{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                            <th> {{ 'Operation' | trans ({}, "common") }}</th>
 
                         </tr>
                         </thead>
@@ -62,12 +62,7 @@
                             <tr>
 
                                 <td>{{ childaccount.id }}</td>
-                                <td class="td-actions">
 
-                                    <a class="btn_actions"
-                                       href="{{ path('Master_Retailer_Transaction',{'id':childaccount.id}) }}">ShowTranscation</a>
-
-                                </td>
 
                                 <td>
                                     {% if childaccount.accName=='' %}
@@ -84,13 +79,11 @@
 
 
                                 </td>
-                                <td>{% if childaccount.accType==0 %}
-                                        Distributors
-                                    {% elseif childaccount.accType==2 %}
-                                        Retailes
-                                    {% elseif childaccount.accType==1 %}
-                                        Provider
-                                    {% endif %}
+                                <td>
+
+                                    {{ 'Retailers' | trans ({}, "accounts") }}
+
+
                                 </td>
 
                                 <td>
@@ -108,7 +101,12 @@
 
                                 </td>
 
+                                <td class="td-actions">
 
+                                    <a class="btn_actions"
+                                       href="{{ path('Master_Retailer_Transaction',{'id':childaccount.id}) }}"> {{ 'Manage' | trans ({}, "common") }}</a>
+
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

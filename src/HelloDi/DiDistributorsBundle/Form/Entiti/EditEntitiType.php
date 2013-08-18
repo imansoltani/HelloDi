@@ -11,10 +11,10 @@ class EditEntitiType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entTel1',null,array('label' => 'Tel1:','translation_domain' => 'entity'))
-            ->add('entTel2',null,array('label' => 'Tel2:','translation_domain' => 'entity'))
-            ->add('entFax',null,array('label' => 'Fax:','translation_domain' => 'entity'))
-            ->add('entWebsite',null,array('label' => 'WebSite:','translation_domain' => 'entity'))
+            ->add('entTel1',null,array('required'=>false,'label' => 'Tel1','translation_domain' => 'entity'))
+            ->add('entTel2',null,array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))
+            ->add('entFax',null,array('required'=>false,'label' => 'Fax','translation_domain' => 'entity'))
+            ->add('entWebsite',null,array('required'=>false,'label' => 'WebSite','translation_domain' => 'entity'))
 
         ;
     }

@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    Transactions
+    {{ 'Transactions' | trans ({}, "transaction") }}
 {% endblock title %}
 
 {% set MU = 'trans' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Transaction History</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Transactions' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-money"></i>
-    Transaction History
+    {{ 'History' | trans ({}, "transaction") }}
 {% endblock %}
 
 {% block Body %}
@@ -22,7 +22,7 @@
     <div class="widget-content">
     {% if is_granted('ROLE_RETAILER_ADMIN') %}
         <a class="btn-large button btn btn-primary " href="{{ path('retailer_transactions_new') }}">
-            Recharge
+            {{ 'Recharge' | trans ({}, "transaction") }}
         </a>
     {% endif %}
 
@@ -38,7 +38,8 @@
 
 
             <div class="control-group">
-                <label class="control-label">Trade Date
+                <label class="control-label">
+                    {{ 'TradeDate' | trans ({}, "transaction") }}
                 </label>
 
                 <div class="controls">
@@ -47,7 +48,9 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label">Looking Date
+                <label class="control-label">
+                    {{ 'LookingDate' | trans ({}, "transaction") }}
+
                 </label>
 
                 <div class="controls">
@@ -83,14 +86,14 @@
 
             <hr>
             <input type="hidden" value="1" name="page" id="search_page">
-            <input class="btn btn-primary" type="submit" value="Search">
+            <input class="btn btn-primary" type="submit" value=" {{ 'Search' | trans ({}, "common") }}">
 
         </form>
         <script type="text/javascript">
 
             $("#form_Type").change(function () {
                 val = $("#form_Type").val();
-                $("#form_Action").html('<option value="All">Please wait ...</option>');
+                $("#form_Action").html('<option value="All"> {{ 'Pleasewait' | trans ({}, "transaction") }}</option>');
                 $.post('{{ path("RetailerLoadActiowOwn") }}', {id: val}, function (result) {
                     $("#form_Action").html(result);
                 })
@@ -98,6 +101,11 @@
 
             $(function () {
 
+                val = $("#form_Type").val();
+                $("#form_Action").html('<option value="All"> {{ 'Pleasewait' | trans ({}, "transaction") }}</option>');
+                $.post('{{ path("RetailerLoadActiowOwn") }}', {id: val}, function (result) {
+                    $("#form_Action").html(result);
+                });
 
                 Form_Search(1, "Filter List");
 
@@ -108,7 +116,7 @@
     <div class="tablediv">
 
         <div class="contenttitle">
-            <h4>History</h4>
+            <h4>{{ 'History' | trans ({}, "transaction") }}</h4>
         </div>
         <form>
             <div class="tab-content">
@@ -116,12 +124,12 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
-                        <th>{{ 'Date' | trans ({}, "account") }}</th>
-                        <th>{{ 'Description' | trans ({}, "account") }}</th>
-                        <th>{{ 'Credit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Debit' | trans ({}, "account") }}</th>
-                        <th>{{ 'Balance' | trans ({}, "account") }}</th>
-                        <th>{{ 'Manage' | trans ({}, "account") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Credit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Debit' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                     </tr>
 
@@ -165,12 +173,12 @@
                             <td class="td-actions">
 
                                 <a class="btn_actions showDetails">
-                                    Details
+                                    {{ 'Details' | trans ({}, "common") }}
                                     <span>
                                          <fieldset>
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'id' | trans ({}, "account") }}
+                                                     {{ 'Id' | trans ({}, "common") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -179,7 +187,7 @@
                                              </div>
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'Date' | trans ({}, "account") }}
+                                                     {{ 'Date' | trans ({}, "transaction") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -189,7 +197,7 @@
                                              </div>
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'Account name' | trans ({}, "account") }}
+                                                     {{ 'Account' | trans ({}, "accounts") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -200,7 +208,7 @@
 
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'Credit' | trans ({}, "account") }}
+                                                     {{ 'Credit' | trans ({}, "transaction") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -216,7 +224,7 @@
 
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'Debit' | trans ({}, "account") }}
+                                                     {{ 'Debit' | trans ({}, "transaction") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -233,7 +241,7 @@
 
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'Balance' | trans ({}, "account") }}
+                                                     {{ 'Balance' | trans ({}, "accounts") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -243,7 +251,7 @@
 
                                              <div class="control-group">
                                                  <label class="control-label">
-                                                     {{ 'User' | trans ({}, "account") }}
+                                                     {{ 'User' | trans ({}, "user") }}
                                                  </label>
 
                                                  <div class="controls">
@@ -256,7 +264,7 @@
 
                                                  <div class="control-group">
                                                      <label class="control-label">
-                                                         {{ 'Item Name' | trans ({}, "account") }}
+                                                         {{ 'Item' | trans ({}, "item") }}
                                                      </label>
 
                                                      <div class="controls">
@@ -267,7 +275,7 @@
 
                                                  <div class="control-group">
                                                      <label class="control-label">
-                                                         {{ 'Code' | trans ({}, "account") }}
+                                                         {{ 'Code' | trans ({}, "code") }}
                                                      </label>
 
                                                      <div class="controls">

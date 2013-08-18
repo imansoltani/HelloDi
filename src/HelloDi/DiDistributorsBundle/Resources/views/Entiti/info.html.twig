@@ -3,14 +3,14 @@
 {% set tab = '4' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Info</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <span class="link">{{ 'Info' | trans ({}, "common") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Entity Info</h3>
+        <h3>{{ 'EntityInfo' | trans ({}, "entity") }}</h3>
     </div> <!-- /widget-header -->
 
     <form style="margin-top: 20px" action="{{ path('Ent_Info',{'id':entity.id}) }}" method="post" class="form-horizontal" >
@@ -18,14 +18,14 @@
 
 
             <div class="control-group">
-                <label class="control-label" >Name</label>
+                <label class="control-label" >{{ 'Name' | trans ({}, "common") }}</label>
                 <div class="controls">
                     <input type="text" disabled class="input-large" value="{{ entity.entName }}" >
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" >VatNumber</label>
+                <label class="control-label" >{{ 'VatNumber' | trans ({}, "entity") }}</label>
                 <div class="controls">
                     <input type="text" disabled class="input-large" value="{{ entity.entVatNumber }}" >
                 </div>
@@ -34,24 +34,24 @@
 
 
             <div class="control-group">
-            {{ form_label(edit_form.entTel1,'Tel1') }}
+            {{ form_label(edit_form.entTel1) }}
             {{ form_widget(edit_form.entTel1) }}
            </div>
 
             <div class="control-group">
-            {{ form_label(edit_form.entTel2,'Tel2') }}
+            {{ form_label(edit_form.entTel2) }}
             {{ form_widget(edit_form.entTel2) }}
             </div>
 
 
 
             <div class="control-group">
-            {{ form_label(edit_form.entFax,'Fax') }}
+            {{ form_label(edit_form.entFax) }}
             {{ form_widget(edit_form.entFax) }}
             </div>
 
             <div class="control-group">
-            {{ form_label(edit_form.entWebsite,'WebSite') }}
+            {{ form_label(edit_form.entWebsite) }}
             {{ form_widget(edit_form.entWebsite) }}
             </div>
 
@@ -60,7 +60,7 @@
 
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <button class="btn btn-primary" type="submit">{{'Entiti.Edit' | trans ({}, "entity")}}</button>
+                <button class="btn btn-primary" type="submit">{{'Save' | trans ({}, "common")}}</button>
 
             </div>
         </fieldset>

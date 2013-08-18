@@ -3,9 +3,9 @@
 {% set tab = '7' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Entity</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Entity' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
@@ -15,7 +15,7 @@
 
 
     <div class="widget-header">
-        <h3>Entity Info</h3>
+        <h3>{{ 'Info' | trans ({}, "entity") }}</h3>
 
     </div> <!-- /widget-header -->
 
@@ -27,7 +27,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Name
+                {{ 'Name' | trans ({}, "common") }}
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entName }}">
@@ -36,7 +36,8 @@
 
         <div class="control-group">
             <label class="control-label">
-                VatNumber
+                {{ 'VatNumber' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entVatNumber }}">
@@ -45,7 +46,8 @@
 
         <div class="control-group">
             <label class="control-label">
-                NP
+                {{ 'NP' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entNp}}">
@@ -54,7 +56,8 @@
 
         <div class="control-group">
             <label class="control-label">
-                Tel1
+                {{ 'Tel1' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entTel1 }}">
@@ -63,7 +66,18 @@
 
         <div class="control-group">
             <label class="control-label">
-                Fax
+                {{ 'Tel2' | trans ({}, "entity") }}
+
+            </label>
+            <div class="controls">
+                <input type="text" disabled=""  value="{{ entiti.entTel2 }}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                {{ 'Fax' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entFax }}">
@@ -72,7 +86,8 @@
 
         <div class="control-group">
             <label class="control-label">
-                City
+                {{ 'City' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entCity }}">
@@ -81,16 +96,18 @@
 
         <div class="control-group">
             <label class="control-label">
-                Address Additional
+                {{ 'Address' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
-                <input type="text" disabled=""  value="{{ entiti.entAdrs1 }}/{{ entiti.entAdrs2 }}/{{ entiti.entAdrs3}}">
+                <input type="text" disabled=""  value="{{ entiti.entAdrs1 }}&nbsp;/&nbsp;{{ entiti.entAdrs2 }}&nbsp;/&nbsp;{{ entiti.entAdrs3}}">
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label">
-                Country
+                {{ 'Country' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.Country.name}}({{ entiti.Country.iso }})">
@@ -99,7 +116,8 @@
 
         <div class="control-group">
             <label class="control-label">
-                Website
+                {{ 'WebSite' | trans ({}, "entity") }}
+
             </label>
             <div class="controls">
                 <input type="text" disabled=""  value="{{ entiti.entWebsite }}">

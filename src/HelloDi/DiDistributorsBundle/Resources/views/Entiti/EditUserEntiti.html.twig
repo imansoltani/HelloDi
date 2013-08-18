@@ -3,16 +3,16 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <a class="link" href="">Users</a>
-    <span class="link">Edit Users</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <a class="link" href="{{ path('Ent_Users',{'id':entity.id} ) }}">{{ 'Users' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
 <div class="widget-header">
-    <h3>Manage Users</h3>
+    <h3>{{ 'EditUser' | trans ({}, "user") }}</h3>
 </div> <!-- /widget-header --><br>
 
 <form class="form-horizontal"  action="{{ path('EditUserEntities',{'id':entity.id,'userid':User.id}) }}" method="post" >
@@ -94,8 +94,8 @@
    {#// <input type="hidden" value="{{ entity.id }}">#}
     {{ form_widget(form_edit._token) }}
     <div class="form-actions" style="margin-bottom: 0" >
-        <input type="submit" class="btn btn-primary btn-medium" value="Edit">
-        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+        <input type="submit" class="btn btn-primary btn-medium" value="{{ 'Save' | trans ({}, "common") }}">
+        <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
         <script type="text/javascript">
             function GoWhere(x)
             {

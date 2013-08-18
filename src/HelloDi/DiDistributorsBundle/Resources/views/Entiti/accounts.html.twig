@@ -3,9 +3,9 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Accounts</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <span class="link">{{ 'Accounts' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -30,7 +30,10 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Entity Accounts</h3>
+        <h3>
+            {{ 'EntityAccounts' | trans ({}, "account") }}
+
+        </h3>
     </div> <!-- /widget-header --><br>
 
 
@@ -39,12 +42,12 @@
    {% if  distprov==1 %}
 {% if is_granted('ROLE_MASTER_ADMIN') %}
     <a style="margin-bottom: 5px" class="btn btn-primary btn-large" href="{{path('AddDist',{'id':entity.id})  }}">
-        {{'Account.New.Dist' | trans ({}, "account")}}
+        {{'CreateANewDistributor' | trans ({}, "accounts")}}
     </a>
 {% endif %}
 
        <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddProv',{'id':entity.id}) }}">
-           {{'Account.New.Prov' | trans ({}, "account")}}
+           {{'CreateANewProvider' | trans ({}, "accounts")}}
        </a>
     {% endif %}
 
@@ -56,16 +59,16 @@
         <table id="example" class="table postsend">
                 <thead>
                 <tr>
-                    <th>{{'Account.Id' | trans ({}, "account")}}</th>
+                    <th>{{'Id' | trans ({}, "common")}}</th>
 
-                    <th>{{'Account.Name' | trans ({}, "account")}}</th>
-                    <th>{{'Account.ChildNumber' | trans ({}, "account")}}</th>
+                    <th>{{'AccountName' | trans ({}, "accounts")}}</th>
+                    <th>{{'ChildNumber' | trans ({}, "accounts")}}</th>
 
-                    <th>Type</th>
+                    <th>{{'AccountType' | trans ({}, "accounts")}}</th>
 
-                    <th>{{'Account.Balance' | trans ({}, "account")}}</th>
-                    <th>{{'Account.CreditLimit' | trans ({}, "account")}}</th>
-                    <th>{{'Account.Manage' | trans ({}, "account")}}</th>
+                    <th>{{'Balance' | trans ({}, "accounts")}}</th>
+                    <th>{{'CreditLimit' | trans ({}, "accounts")}}</th>
+                    <th>{{'Operation' | trans ({}, "common")}}</th>
                 </tr>
 
                 <tr class="input" >
@@ -114,7 +117,8 @@
                                     {% endif %}
 
                                     >
-                                Show Transactions
+                                {{'Manage' | trans ({}, "common")}}
+
                             </a>
 
                         </td>

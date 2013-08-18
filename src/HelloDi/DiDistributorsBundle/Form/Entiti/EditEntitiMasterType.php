@@ -12,11 +12,11 @@ class EditEntitiMasterType extends AbstractType
     {
         $builder
             ->add('entName',null,array('label' => 'Name:','translation_domain' => 'entity'))
-            ->add('entVatNumber',null,array('label' => 'VatNumber:','translation_domain' => 'entity'))
-            ->add('entTel1',null,array('label' => 'Tel1:','translation_domain' => 'entity'))
-            ->add('entTel2',null,array('label' => 'Tel2:','translation_domain' => 'entity'))
-            ->add('entFax',null,array('label' => 'Fax:','translation_domain' => 'entity'))
-            ->add('entWebsite',null,array('label' => 'WebSite:','translation_domain' => 'entity'))
+            ->add('entVatNumber',null,array('required'=>false,'label' => 'VatNumber:','translation_domain' => 'entity'))
+            ->add('entTel1',null,array('required'=>false,'label' => 'Tel1:','translation_domain' => 'entity'))
+            ->add('entTel2',null,array('required'=>false,'label' => 'Tel2:','translation_domain' => 'entity'))
+            ->add('entFax',null,array('required'=>false,'label' => 'Fax:','translation_domain' => 'entity'))
+            ->add('entWebsite',null,array('required'=>false,'label' => 'WebSite:','translation_domain' => 'entity'))
 
         ;
     }

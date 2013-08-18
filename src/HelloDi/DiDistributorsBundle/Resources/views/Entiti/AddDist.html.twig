@@ -3,15 +3,15 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <a class="link" >Accounts</a>
-    <span class="link">Create a new distributor</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <a class="link" href="{{ path('Ent_Accounts',{'id':entity.id}) }}" >{{ 'Accounts' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'CreateANewDistributor' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 <div class="widget-header">
-    <h3>Add Distributor Accounts</h3>
+    <h3>{{ 'CreateANewDistributor' | trans ({}, "accounts") }}</h3>
 </div> <!-- /widget-header --><br>
 
 <form class="form-horizontal" action="{{ path('AddDist',{'id':id}) }}" method="post" >
@@ -19,7 +19,7 @@
     <div class="control-group">
         {{ form_label(form.accName) }}
         <div class="controls money">
-            {{ form_widget(form.accName, { 'attr' : { 'placeholder': 'Account Name'} }) }} <span class="icon-certificate"></span>
+            {{ form_widget(form.accName) }} <span class="icon-certificate"></span>
         </div>
         {{ form_errors(form.accName) }}
     </div>
@@ -70,7 +70,7 @@
 
     <input type="hidden" name='id' value="{{ id }}">
     <div class="form-actions" style="margin-bottom: 0" >
-        <input class="btn btn-primary" type="submit"  value="Create">
+        <input class="btn btn-primary" type="submit"  value="{{ 'Create' | trans ({}, "common") }}">
 
     </div>
 </form>

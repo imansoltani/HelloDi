@@ -7,14 +7,14 @@
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('RetailerStaff') }}">Staff</a>
-    <span class="link">Edit User</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('MasterStaff') }}">{{ 'Staff' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    Edit User
+    {{ 'EditUser' | trans ({}, "user") }}
 {% endblock %}
 
 

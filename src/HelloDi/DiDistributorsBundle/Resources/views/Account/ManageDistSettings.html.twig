@@ -3,30 +3,31 @@
 {% set tab = '5' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <span class="link">Settings</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }} </a>
+    <span class="link">{{ 'Settings' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
     <div class="widget-header">
         <h3>
-            Account Setting
+            {{ 'AccountSetting' | trans ({}, "accounts") }}
+
         </h3>
     </div> <!-- /widget-header -->
 <form style="margin-top: 20px"  class="form-horizontal"   action="{{ path('ManageDistSettings',{'id':Account.id}) }}" method="post">
 
 
     <div class="control-group">
-        <label class="control-label" >Id</label>
+        <label class="control-label" >{{ 'Id' | trans ({}, "common") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.id }}" >
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label" >accName</label>
+        <label class="control-label" >{{ 'Name' | trans ({}, "common") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accName }}" >
         </div>
@@ -47,7 +48,8 @@
 
 
     <div class="control-group">
-        <label class="control-label" >accDefaultLanguage</label>
+        <label class="control-label" >
+            {{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accDefaultLanguage }}" >
         </div>
@@ -62,14 +64,14 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label" >Type</label>
+        <label class="control-label" >{{ 'Type' | trans ({}, "common") }}</label>
         <div class="controls">
-            <input type="text" disabled class="input-large" value="Distributors" >
+            <input type="text" disabled class="input-large" value="{{ 'Distributor' | trans ({}, "accounts") }}" >
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label" >Creaditlimit</label>
+        <label class="control-label" >{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accCreditLimit }}" >
         </div>
@@ -81,7 +83,7 @@
     <input type="hidden" value="{{ Account.id }}">
 
     <div class="form-actions">
-        <input class="btn btn-primary" type="submit" value="Edit">
+        <input class="btn btn-primary" type="submit" value="{{ 'Save' | trans ({}, "common") }}">
 
 
     </div>

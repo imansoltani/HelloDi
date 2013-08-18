@@ -32,23 +32,22 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, array('required'=>true,'label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
-            ->add('email', 'email', array('required' => false, 'label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
-            ->add('plainPassword', 'repeated', array(
+            ->add('username', null, array('required'=>true,'label' => 'UserName', 'translation_domain' => 'user'))
+            ->add('email', 'email', array('required' => false, 'label' => 'Email', 'translation_domain' => 'user'))
+            ->add('plainPassword', 'repeated', array('translation_domain' => 'user',
                 'type' => 'password',
-                'options' => array('translation_domain' => 'FOSUserBundle'),
-                'first_options' => array('label' => 'form.password'),
-                'second_options' => array('label' => 'form.password_confirmation'),
-                'invalid_message' => 'fos_user.password.mismatch',
+                'options' => array(),
+                'first_options' => array('label' => 'PlainPassword_First'),
+                'second_options' => array('label' => 'PlainPassword_Second'),
+                'invalid_message' => 'password.mismatch',
             ))
             ->add('enabled', 'choice',
                 array(
-                 'label' => 'Enabled:', 'translation_domain' => 'FOSUserBundle',
+                 'label' => 'Enabled','translation_domain' => 'user',
                 'choices' =>
                 array(
                     0 => 'Disabled',
                     1 => 'Enabled'
-
                 )
 
 
@@ -56,33 +55,33 @@ class RegistrationFormType extends AbstractType
 
                 ));
         if ($this->type == 2) {
-            $builder->add('roles', 'collection', array(
+            $builder->add('roles', 'collection', array('translation_domain' => 'user',
                 'type' => 'choice',
-                'options' => array('label' => 'Role:',
+                'options' => array('label' => 'Role',
                     'choices' => array(
-                        ''=>'select a role',
+                        ''=>'select_a_role',
                         'ROLE_RETAILER' => 'ROLE_RETAILER',
                         'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
                     ),
                 ),
             ));
         } elseif ($this->type == 0) {
-            $builder->add('roles', 'collection', array(
+            $builder->add('roles', 'collection', array('translation_domain' => 'user',
                 'type' => 'choice',
                 'options' => array('label' => 'Role',
                     'choices' => array(
-                        ''=>'select a role',
+                        ''=>'select_a_role',
                         'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
                         'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
                     ),
                 ),
             ));
         } elseif ($this->type == 1) {
-            $builder->add('roles', 'collection', array(
+            $builder->add('roles', 'collection', array('translation_domain' => 'user',
                 'type' => 'choice',
                 'options' => array('label' => 'Role',
                     'choices' => array(
-                        ''=>'select a role',
+                        ''=>'select_a_role',
                         'ROLE_MASTER' => 'ROLE_MASTER',
                         'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
                     ),

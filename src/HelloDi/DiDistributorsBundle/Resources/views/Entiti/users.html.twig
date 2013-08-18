@@ -3,9 +3,9 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <span class="link">Users</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <span class="link">{{ 'Users' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 
@@ -32,7 +32,7 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Entity Users</h3>
+        <h3>{{ 'EntityUsers' | trans ({}, "entity") }}</h3>
     </div> <!-- /widget-header --><br>
 {% set i=0 %}
 {% for EntAcc in entity.Accounts %}
@@ -43,14 +43,14 @@
 
     {% if i==entity.Accounts|length %}
 
-      <b>  This Account have not user !</b>
+      <b>{{ 'ThisAccountHaveNotUser' | trans ({}, "accounts") }} </b>
 
 
     {% else %}
 
 
     <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
-        {{ 'User.Add' | trans ({}, "user") }}
+        {{ 'AddNewUser' | trans ({}, "user") }}
 
     </a>
 
@@ -61,13 +61,13 @@
                 <table id="example" class="table postsend">
                 <thead>
                 <tr>
-                    <th>{{ 'Id' | trans ({}, "user") }}</th>
-                    <th>{{ 'Name' | trans ({}, "user") }}</th>
+                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                    <th>{{ 'FullName' | trans ({}, "user") }}</th>
                     <th>{{ 'UserName' | trans ({}, "user") }}</th>
                     <th>{{ 'Email' | trans ({}, "user") }}</th>
-                    <th>{{ 'Account' | trans ({}, "user") }}</th>
+                    <th>{{ 'Account' | trans ({}, "accounts") }}</th>
                     <th>{{ 'Role' | trans ({}, "user") }}</th>
-                    <th>{{ 'Modify' | trans ({}, "user") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                 </tr>
 
@@ -89,7 +89,7 @@
                         <tr>
 
                             <td >{{ User.id }}</td>
-                            <td>{{ User.firstName }}</td>
+                            <td>{{ User.firstName }}&nbsp;{{ User.lastName }}</td>
                             <td>{{ User.username }}</td>
                             <td>{{ User.email }}</td>
                             <td>
@@ -102,7 +102,7 @@
 
                             </td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':entity.id,'userid':User.id}) }}">Manage</a>
+                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':entity.id,'userid':User.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
                         </tr>
 
@@ -117,7 +117,7 @@
     <form class="SearchForm" method="#" action="#">
         <input type="hidden" value="1" name="page" id="search_page" >
         <hr>
-        <input  class="btn btn-primary" type="submit" value="Search">
+        <input  class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
 
     </form>
     <div>

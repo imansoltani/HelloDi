@@ -1,19 +1,21 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Entities Management
+    {{ 'EntitiesManagement' | trans ({}, "entity") }}
+
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}" xmlns="http://www.w3.org/1999/html">Home</a>
-    <span class="link">Entities Management</span>
+    <a class="link" href="{{ path('loginsuccess') }}" xmlns="http://www.w3.org/1999/html">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'EntitiesManagement' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'ent' %}
 
 {% block PageTitle %}
     <i class="icon-book"></i>
-    Entities Management
+{{ 'EntitiesManagement' | trans ({}, "entity") }}
+
 {% endblock %}
 
 {% block Body %}
@@ -41,7 +43,7 @@
 
                             <div class="control-group">
                                 <label class="control-label">
-                                    Have Account
+                                    {{ 'HaveAccount' | trans ({}, "accounts") }}
                                 </label>
                             </div>
 
@@ -76,7 +78,7 @@
 
                             <input type="hidden" value="1" name="page" id="search_page" >
                             <hr>
-                           <input  class="btn btn-primary" type="submit" value="Search">
+                           <input  class="btn btn-primary" type="submit" value="{{ 'Search'|trans({},"common") }}">
                         </fieldset>
 
                     </form>
@@ -92,7 +94,7 @@
 
                 <div class="tablediv" >
                     <div class="contenttitle">
-                        <h4>Entities</h4>
+                        <h4>{{ 'Entities'|trans({},"common") }}</h4>
                     </div>
                     {#<form  action="{{ path('Ent_Accounts',{}) }}" method="post">#}
                     <div class="tab-content">
@@ -100,14 +102,14 @@
                             <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Id' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Manage' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Name' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Name' | trans ({}, "common") }}</th>
                                     <th>{{ 'Country' | trans ({}, "entity") }}</th>
                                     <th>{{ 'City' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Count Distributors' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Count Provider' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Count Retailer' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'CountDistributors' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'CountProviders' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'CountRetailers' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -116,11 +118,7 @@
                                     <tr>
                                         <td style="font-weight: bold">{{ entity.id }}</td>
 
-                                        <td class="td-actions">
 
-                                            <a class="btn_actions" href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
-
-                                        </td>
                                         <td>{{ entity.entName }}</td>
                                         <td>
                                             {{ entity.Country.iso }}|{{ entity.Country.Name }}
@@ -152,6 +150,11 @@
 
                                         <td>
                                             {{ r }}
+                                        </td>
+                                        <td class="td-actions">
+
+                                            <a class="btn_actions" href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
+
                                         </td>
                                     </tr>
                                 {% endfor %}

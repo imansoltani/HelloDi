@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Profile
+    {{ 'Profile' | trans ({}, "user") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <span class="link">Profile</span>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Profile' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    Profile
+    {{ 'Profile' | trans ({}, "user") }}
 {% endblock %}
 
 
@@ -24,18 +24,18 @@
 {% block Tabs %}
     <li class="active"   >
         <a href="#account" data-toggle="tab" >
-            <input type="submit" value="Account" >
+            <input type="submit" value="{{ 'Account' | trans ({}, "accounts") }}" >
         </a>
     </li>
     <li  >
         <a href="#company" data-toggle="tab">
-            <input type="submit" value="Company" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
     </li>
 
     <li  >
         <a href="#address" data-toggle="tab">
-            <input type="submit" value="Address" >
+            <input type="submit" value="{{ 'Address' | trans ({}, "entity") }}" >
         </a>
     </li>
 {% endblock %}
@@ -46,54 +46,54 @@
        <div class="tab-content">
            <div id="account" class="tab-pane active">
                <div class="widget-header">
-                   <h3>Account</h3>
+                   <h3>{{ 'Account' | trans ({}, "accounts") }}</h3>
                </div> <!-- /widget-header --><br>
 
 
                    <div class="control-group" >
-                       <label class="control-label">Credit Limit</label>
+                       <label class="control-label">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accCreditLimit }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Avilabel Balance</label>
+                       <label class="control-label">{{ 'Balance' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accBalance }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Currency</label>
+                       <label class="control-label">{{ 'Currency' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accCurrency }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Account Type</label>
+                       <label class="control-label">{{ 'Type' | trans ({}, "common") }}</label>
                        <div class="controls">
-                           <input class="input-large" disabled="" type="text" value="Distriburors" />
+                           <input class="input-large" disabled="" type="text" value="{{ 'Distriburors' | trans ({}, "accounts") }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">TimeZone</label>
+                       <label class="control-label">{{ 'TimeZone' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accTimeZone }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Account Condtion</label>
+                       <label class="control-label">{{ 'Terms' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accTerms }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Notification Language</label>
+                       <label class="control-label">{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Account.accDefaultLanguage }}" />
                        </div>
@@ -103,58 +103,53 @@
                </form>
 
                <div class="form-actions">
-                   <a class="btn btn-primary" href="{{ path('DistTicketsNew',{'data':4}) }}">Request</a>
+                   <a class="btn btn-primary" href="{{ path('DistTicketsNew',{'data':4}) }}">{{ 'Request' | trans ({}, "ticket") }}</a>
                </div>
            </div>
            <div id="company" class="tab-pane ">
 
                <div class="widget-header">
-                   <h3>Company</h3>
+                   <h3>{{ 'Entity' | trans ({}, "entity") }}</h3>
                </div> <!-- /widget-header --><br>
 
                <form class="form-horizontal">
+
                    <div class="control-group" >
-                       <label class="control-label">Description</label>
-                       <div class="controls">
-                           <input class="input-large" disabled="" type="text" value="------------" />
-                       </div>
-                   </div>
-                   <div class="control-group" >
-                       <label class="control-label">Name</label>
+                       <label class="control-label">{{ 'Name' | trans ({}, "common") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entName }}" />
                        </div>
                    </div>
                    <div class="control-group" >
-                       <label class="control-label">Vat</label>
+                       <label class="control-label">{{ 'VatNumber' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entVatNumber }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Tel1</label>
+                       <label class="control-label">{{ 'Tel1' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel1 }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Tel2</label>
+                       <label class="control-label">{{ 'Tel2' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entTel2 }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Fax</label>
+                       <label class="control-label">{{ 'Fax' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entFax }}" />
                        </div>
                    </div>
 
                    <div class="control-group" >
-                       <label class="control-label">Website</label>
+                       <label class="control-label">{{ 'WebSite' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entWebsite }}" />
                        </div>
@@ -164,18 +159,19 @@
            </div>
            <div id="address" class="tab-pane ">
                <div class="widget-header">
-                   <h3>Address</h3>
+                   <h3>{{ 'Address' | trans ({}, "entity") }}</h3>
                </div> <!-- /widget-header --><br>
 
                <form class="form-horizontal">
                    <div class="control-group" >
-                       <label class="control-label">Np/City</label>
+                       <label class="control-label">{{ 'NP' | trans ({}, "entity") }}/{{ 'City' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.entNP }}/{{ Entiti.entCity }}" />
                        </div>
                    </div>
+
                    <div class="control-group" >
-                       <label class="control-label">Country Name</label>
+                       <label class="control-label">{{ 'Country' | trans ({}, "entity") }}</label>
                        <div class="controls">
                            <input class="input-large" disabled="" type="text" value="{{ Entiti.Country.name }}({{ Entiti.Country.iso }})" />
                        </div>
@@ -183,7 +179,7 @@
                </form>
 
                <div class="form-actions">
-                   <a class="btn btn-primary" href="{{ path('DistTicketsNew',{'data':3}) }}">Change Address Or Detail</a>
+                   <a class="btn btn-primary" href="{{ path('DistTicketsNew',{'data':3}) }}">{{ 'Change_Address_Or_Detail' | trans ({}, "ticket") }}</a>
                </div>
            </div>
        </div>

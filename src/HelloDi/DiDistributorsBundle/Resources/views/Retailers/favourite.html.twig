@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    Shop Dmtu
+    {{ 'Favourites' | trans ({}, "item") }}
 {% endblock title %}
 
 {% set MU = 'mobile' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <span class="link">Favourites</span>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link"> {{ 'Favourites' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-mobile-phone"></i>
-    Favourites
+    {{ 'Favourites' | trans ({}, "item") }}
 {% endblock %}
 
 {% block Link_Footer %}
@@ -27,13 +27,13 @@
     <div id="popuptop" class="modal" >
         <div class="modal-header containerpop">
             <button type="button" class="close" onclick="PopuptopClose(event)">X</button>
-            <h3 id="myModalLabel">Buy Card</h3>
+            <h3 id="myModalLabel">{{ 'BuyCard' | trans ({}, "item") }}</h3>
         </div>
         <form class="form-horizontal" action="{{ path('Retailer_Shop_buy') }}" method="POST">
             <div class="modal-body containerpop">
                 <div class="control-group">
                     <label class="control-label">
-                        Operator
+                        {{ 'Operator' | trans ({}, "operator") }}
                     </label>
 
                     <div class="controls">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="control-group">
                     <label class="control-label">
-                        Item
+                        {{ 'Item' | trans ({}, "item") }}
                     </label>
 
                     <div class="controls">
@@ -52,7 +52,7 @@
 
                 <div class="control-group">
                     <label class="control-label">
-                        Value
+                        {{ 'Value' | trans ({}, "price") }}
                     </label>
 
                     <div class="controls">
@@ -62,7 +62,7 @@
 
                 <div class="control-group">
                     <label class="control-label">
-                        Count
+                        {{ 'Count' | trans ({}, "code") }}
                     </label>
 
                     <div class="controls">
@@ -80,7 +80,7 @@
 
                 <div class="control-group">
                     <label class="control-label">
-                        Sum Values
+                        {{ 'SumValues' | trans ({}, "price") }}
                     </label>
 
                     <div class="controls">
@@ -93,8 +93,8 @@
             </div>
 
             <div class="containerpop form-actions " style="padding-left: 0px">
-                <button class="btn" onclick="PopuptopClose(event)">Close</button>
-                <input type="submit" class="btn btn-primary" value="Buy">
+                <button class="btn" onclick="PopuptopClose(event)">   {{ 'Cancel' | trans ({}, "common") }}  </button>
+                <input type="submit" class="btn btn-primary" value="   {{ 'Buy' | trans ({}, "common") }}  ">
             </div>
 
         </form>
@@ -120,7 +120,7 @@
                 <div class="filter_Div filter_item">
 
                     <div class="filter" data-filter="all">
-                        All Operator
+                        {{ 'AllOperators' | trans ({}, "operator") }}
                     </div>
 
                     {% for opr in Operators %}

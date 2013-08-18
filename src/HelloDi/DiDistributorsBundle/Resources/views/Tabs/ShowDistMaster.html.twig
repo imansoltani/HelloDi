@@ -1,30 +1,31 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Manage Distributor
+    {{ 'ManageDistributor' | trans ({}, "accounts") }}
+
 {% endblock title %}
 
 {% set MU = 'dist' %}
 
 {% block PageTitle %}
     <i class="icon-briefcase"></i>
-    Manage Distributor
+    {{ 'ManageDistributor' | trans ({}, "accounts") }}
 {% endblock %}
 
 
 {% block Dist1 %}
    <div class="pagedisc" >
-       <i>Name :</i><span>{{ Account.accName }}</span><br>
-       <i>Balance :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
-       <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+       <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ Account.accName }}</span><br>
+       <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
+       <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ Account.accCreditLimit }}</span>
    </div>
 {% endblock %}
 
 {% block Dist2 %}
     <div class="pagedisc" >
-        <i>Name :</i><span>{{ Account.accName }}</span><br>
-        <i>Balance :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
-        <i>Credit Limit :</i><span>{{ Account.accCreditLimit }}</span>
+        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ Account.accName }}</span><br>
+        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ Account.accBalance }}  {{ Account.accCurrency }}</span><br>
+        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
@@ -35,7 +36,7 @@
 
 
         <a  href="{{ path('MasterDistTransaction',{'id':Account.id}) }}">
-            <input type="submit" value="Transactions" >
+            <input type="submit" value="{{ 'Transactions' | trans ({}, "transaction") }}" >
         </a>
     </li>
 
@@ -48,7 +49,7 @@
     <li {% if tab == '1' %}class="active"{% endif %} >
         <a href="{{ path('MasterDistSale',{'id':Account.id}) }}">
 
-            <input type="submit" value="Sales" >
+            <input type="submit" value="{{ 'Sale' | trans ({}, "code") }}" >
 
 
         </a>
@@ -58,7 +59,7 @@
         <a href="{{ path('MasterDistPurchases',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="Purchases" >
+            <input type="submit" value="{{ 'Purchases' | trans ({}, "accounts") }}" >
 
 
         </a>
@@ -71,7 +72,7 @@
         <a href="{{ path('ManageDistUser',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="Users" >
+            <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
 
 
         </a>
@@ -81,7 +82,7 @@
         <a href="{{ path('ManageDistSettings',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="Settings" >
+            <input type="submit" value="{{ 'Settings' | trans ({}, "accounts") }}" >
 
 
         </a>
@@ -92,7 +93,7 @@
         <a href="{{ path('ManageDistChildren',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="Sub Accounts" >
+            <input type="submit" value="{{ 'SubAccounts' | trans ({}, "accounts") }}" >
 
 
         </a>
@@ -104,7 +105,7 @@
         <a href="{{ path('MasterDistEntiti',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="Entity" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
 
 
         </a>

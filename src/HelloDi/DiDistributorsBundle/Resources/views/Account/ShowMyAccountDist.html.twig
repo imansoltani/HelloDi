@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Distributor Accounts
+    {{ 'DistributorsAccounts' | trans ({}, "accounts") }}
 {% endblock title %}
 
 {% set MU = 'dist' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Distributor</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link" >{{ 'Distributors' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-briefcase"></i>
-    Distributor Management
+    {{ 'DistributorsManagement' | trans ({}, "accounts") }}
 {% endblock %}
 
 {% block Link_Head %}
@@ -46,7 +46,7 @@
 
 
                 <a class="button btn btn-primary btn-large" href="{{ path('AddAccountDistMaster2Step') }}">
-                    Create a new Distributor with new entity
+                    {{ 'CreateDistWithEntity' | trans ({}, "accounts") }}
                 </a>
 
 
@@ -56,27 +56,15 @@
                             <table id="example" class="table postsend">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Operation</th>
-                                    <th>Name</th>
-                                    <th>Entity Name</th>
-                                    <th>Balance</th>
-                                    <th>CreditLimit</th>
-
-
-                                    <th>Sub accounts</th>
+                                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Name' | trans ({}, "common") }}</th>
+                                    <th>{{ 'EntityName' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'SubAccounts' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
                                 </tr>
 
-
-                                <tr class="input" >
-                                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                                    <td><input type="text" name="search_Entity_Name" value="Search Entity Name" class="search_init" /></td>
-                                    <td><input type="text" name="search_Balance" value="Search Balance" class="search_init" /></td>
-                                    <td><input type="text" name="search_Limit" value="Search Credit Limit" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Sub" value="Search Sub Account" class="search_init" /></td>
-                                </tr>
 
                                 </thead>
 
@@ -85,9 +73,6 @@
                                     {% set countchild=(myAccount.Childrens)|length %}
                                     <tr>
                                         <td >{{ myAccount.id }}</td>
-                                        <td class="td-actions" >
-                                            <a class="btn_actions" href="{{ path('MasterDistTransaction',{'id':myAccount.id}) }}" >Manage</a>
-                                        </td>
                                         <td>{{ myAccount.accName }}</td>
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
@@ -107,6 +92,9 @@
                                         </td>
 
                                         <td>{{ countchild }}</td>
+                                        <td class="td-actions" >
+                                            <a class="btn_actions" href="{{ path('MasterDistTransaction',{'id':myAccount.id}) }}" >{{ 'Manage' | trans ({}, "common") }}</a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

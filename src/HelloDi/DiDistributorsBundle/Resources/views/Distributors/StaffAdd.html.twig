@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Add User
+    {{ 'AddUser' | trans ({}, "user") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <a class="link" href="{{ path('DistStaff') }}">Stuff</a>
-    <span class="link">Add User</span>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('DistStaff') }}">{{ 'Staff' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'AddUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    New User
+    {{ 'CreateUser' | trans ({}, "user") }}
 {% endblock %}
 
 
@@ -26,7 +26,7 @@
     <div class="span">
         <div class="widget-content" >
             <div class="widget-header">
-                <h3>Add Users</h3>
+                <h3>{{ 'CreateUser' | trans ({}, "user") }}</h3>
             </div> <!-- /widget-header --><br>
 
             <form class="form-horizontal" action="{{ path('DistStaffAdd',{'id':Account.id}) }}" method="post" >
@@ -132,9 +132,9 @@
                 {{ form_widget(form._token) }}
 
                 <div class="form-actions" style="margin-bottom: 0" >
-                    <input   class="btn btn-primary" type="submit"   value="Create">
+                    <input   class="btn btn-primary" type="submit"   value="{{ 'Create' | trans ({}, "common") }}">
                     {#onclick="AlertShow('body','foo',event);"#}
-                    <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                    <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
                 </div>
 
             </form>

@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Tickets
+    {{ 'Tickets' | trans ({}, "ticket") }}
 {% endblock title %}
 
 {% set MU = '0' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a href="{{ path('DistTickets') }}" class="link">Tickets</a>
-    <span class="link">Ticket Note</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a href="{{ path('DistTickets') }}" class="link">{{ 'Tickets' | trans ({}, "ticket") }}</a>
+    <span class="link">{{ 'TicketNote' | trans ({}, "ticket") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-comment"></i>
-    Ticket Note
+    {{ 'TicketNote' | trans ({}, "ticket") }}
 {% endblock %}
 
 {% block Body %}
@@ -24,35 +24,42 @@
 
                 <ul class="TicketDetail">
                     <li>
-                        <span>Date</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
+                        <span>{{ 'DateStart' | trans ({}, "ticket") }}:</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
                     </li>
                     {% if Ticket.ticketEnd is not null %}
                         <li>
-                            <span>DateEnd</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
+                            <span>{{ 'DateEnd' | trans ({}, "ticket") }}:</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
                         </li>
                     {% endif %}
                     <li>
-                        <span>Type</span><a>
-                            {% if Ticket.type==0 %}payment issue
-                            {% elseif Ticket.type==1 %}new item request
-                            {% elseif Ticket.type==2 %}price change request
-                            {% elseif Ticket.type==3 %}address change
-                            {% elseif Ticket.type==4 %}account change requests
-                            {% elseif Ticket.type==5 %}bug reporting
-                            {% elseif Ticket.type==6 %}support
+                        <span>{{ 'Type' | trans ({}, "ticket") }}:</span><a>
 
+                            {% if Ticket.type==0 %}
+                                {{ 'payment_issue' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==1 %}
+                                {{ 'new_item_request' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==2 %}
+                                {{ 'price_change_request' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==3 %}
+                                {{ 'address_change' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==4 %}
+                                {{ 'account_change_requests' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==5 %}
+                                {{ 'bug_reporting' | trans ({}, "ticket") }}
+                            {% elseif Ticket.type==6 %}
+                                {{ 'support' | trans ({}, "ticket") }}
                             {% endif %}
                         </a>
                     </li>
                     <li>
-                        <span>Current Status</span>
+                        <span> {{ 'Status' | trans ({}, "ticket") }}:</span>
                         {% if Ticket.status==0 %}
 
-                            <a style="margin-right: 10px">Close</a><a class="btn btn-danger"
-                                                                      href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">Switch</a>
+                            <a style="margin-right: 10px">{{ 'Close' | trans ({}, "ticket") }}</a><a class="btn btn-danger"
+                                                                      href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">{{ 'Switch' | trans ({}, "ticket") }}</a>
                         {% else %}
-                            <a style="margin-right: 10px">Open</a><a class="btn btn-danger"
-                                                                     href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">Switch</a>
+                            <a style="margin-right: 10px">{{ 'Open' | trans ({}, "ticket") }}</a><a class="btn btn-danger"
+                                                                     href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">{{ 'Switch' | trans ({}, "ticket") }}</a>
                         {% endif %}
                     </li>
                 </ul>
@@ -73,15 +80,15 @@
 
 
                             <div class="form_action1 form-actions">
-                                <input class="btn btn-primary" type="submit" value="Send">
+                                <input class="btn btn-primary" type="submit" value="{{ 'Send' | trans ({}, "ticket") }}">
                                 <a class="btn"
-                                   onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">Cancel</a>
+                                   onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">{{ 'Cancel' | trans ({}, "common") }}</a>
                             </div>
 
                         </form>
                     </div>
                     <a style="margin-top: 10px" class="showt btn btn-info"
-                       onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">Add Note</a>
+                       onclick="$('.FormShow').slideToggle();$('.showt').slideToggle()">{{ 'AddNote' | trans ({}, "ticket") }}</a>
                 {% endif %}
 
                 <div>
@@ -90,7 +97,7 @@
 
                         <div class="Note {% if Note.user.Account == app.user.Account %}Me{% endif %}" >
                             <div >
-                                <span>From <b>{{ Note.User.username }}</b></span>
+                                <span>{{ 'From' | trans ({}, "transaction") }} <b>{{ Note.User.username }}</b></span>
                                 <span>{{ Note.date|date('y-M-d  H:i:s') }}</span>
                             </div>
                             <div>

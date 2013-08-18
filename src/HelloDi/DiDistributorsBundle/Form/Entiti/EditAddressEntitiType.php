@@ -10,13 +10,13 @@ class EditAddressEntitiType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entAdrs1',null,array('required'=>true,'label' => 'Town:','translation_domain' => 'entity'))
-            ->add('entAdrs2',null,array('required'=>false,'label' => 'Street:','translation_domain' => 'entity'))
-            ->add('entAdrs3',null,array('required'=>false,'label' => 'Additional:','translation_domain' => 'entity'))
-            ->add('entNp',null,array('required'=>true,'label' => 'PostCode:','translation_domain' => 'entity'))
-            ->add('entCity',null,array('required'=>true,'label' => 'City:','translation_domain' => 'entity'))
+            ->add('entAdrs1',null,array('required'=>true,'label' => 'Adrs1','translation_domain' => 'entity'))
+            ->add('entAdrs2',null,array('required'=>false,'label' => 'Adrs2','translation_domain' => 'entity'))
+            ->add('entAdrs3',null,array('required'=>false,'label' => 'Adrs3','translation_domain' => 'entity'))
+            ->add('entNp',null,array('required'=>true,'label' => 'NP','translation_domain' => 'entity'))
+            ->add('entCity',null,array('required'=>true,'label' => 'City','translation_domain' => 'entity'))
             ->add('Country','entity',
-                array('label' => 'Country:','translation_domain' => 'Country',
+                array('label' => 'Country','translation_domain' => 'entity',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name'
                 )

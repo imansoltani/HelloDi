@@ -16,19 +16,19 @@ class MakeAccountIn2StepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entName', 'text',array('required'=>false,'label' => 'Name:','translation_domain' => 'Entity'))
-            ->add('entVatNumber', 'text',array('label' => 'VatNumber:','translation_domain' => 'Entity'))
-            ->add('entTel1', 'text',array('label' => 'Tel1:','translation_domain' => 'Entity'))
-            ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2:','translation_domain' => 'Entity'))
-            ->add('entFax', 'text',array('required'=>false,'label' => 'Fax:','translation_domain' => 'Entity'))
-            ->add('entWebsite', 'text',array('required'=>false,'label' => 'Website:','translation_domain' => 'Entity'))
-            ->add('entAdrs1', 'text',array('label' => 'Town:','translation_domain' => 'Entity'))
-            ->add('entAdrs2', 'text',array('required'=>false,'label' => 'Street:','translation_domain' => 'Entity'))
-            ->add('entAdrs3', 'text',array('required'=>false,'label' => 'Additional:','translation_domain' => 'Entity'))
-            ->add('entCity', 'text',array('required'=>false,'label' => 'City:','translation_domain' => 'Entity'))
-            ->add('entNP', 'text',array('label' => 'PostCode:','translation_domain' => 'Entity'))
+            ->add('entName', 'text',array('required'=>false,'label' => 'Name','translation_domain' => 'common'))
+            ->add('entVatNumber', 'text',array('label' => 'VatNumber','translation_domain' => 'entity'))
+            ->add('entTel1', 'text',array('label' => 'Tel1','translation_domain' => 'entity'))
+            ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))
+            ->add('entFax', 'text',array('required'=>false,'label' => 'Fax','translation_domain' => 'entity'))
+            ->add('entWebsite', 'text',array('required'=>false,'label' => 'WebSite','translation_domain' => 'entity'))
+            ->add('entAdrs1', 'text',array('label' => 'Adrs1','translation_domain' => 'entity'))
+            ->add('entAdrs2', 'text',array('required'=>false,'label' => 'Adrs2','translation_domain' => 'entity'))
+            ->add('entAdrs3', 'text',array('required'=>false,'label' => 'Adrs3','translation_domain' => 'entity'))
+            ->add('entCity', 'text',array('required'=>false,'label' => 'City','translation_domain' => 'entity'))
+            ->add('entNP', 'text',array('label' => 'NP','translation_domain' => 'entity'))
             ->add('Country','entity',
-                array('label' => 'Country:','translation_domain' => 'Country',
+                array('label' => 'Country','translation_domain' => 'entity',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name',))
             ->add('Accounts','collection',array('type'=>new AccountType()))

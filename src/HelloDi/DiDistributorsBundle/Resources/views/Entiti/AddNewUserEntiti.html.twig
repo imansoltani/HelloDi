@@ -3,10 +3,10 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('Ent_Main') }}">Entities</a>
-    <a class="link" >Users</a>
-    <span class="link">Create a new user</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <a class="link" href="{{ path('Ent_Users',{'id':entity.id} ) }}">{{ 'Users' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'CreateUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 
@@ -14,7 +14,7 @@
 
 
     <div class="widget-header">
-        <h3>Add Users</h3>
+        <h3>{{ 'CreateUser' | trans ({}, "user") }}</h3>
     </div>
 
         <!-- /widget-header --><br>
@@ -137,8 +137,8 @@
 
 
     <div class="form-actions" style="margin-bottom: 0" >
-        <input type="submit" class="btn btn-primary btn-medium" value="Add">
-        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+        <input type="submit" class="btn btn-primary btn-medium" value="{{ 'Create' | trans ({}, "common") }}">
+        <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
     </div>
 
 </form>

@@ -28,12 +28,17 @@ public  function  ticketsAction(Request $req)
     $Account=$User->getAccount();
 
     $form=$this->createFormBuilder()
-        ->add('Type','choice',array(
+        ->add('Type','choice',array('label'=>'Type','translation_domain'=>'ticket',
          'choices'=>array(
-             5=>'All',
-             0=>'Payment issue',
-             1=>'new item request',
-             2=>'price change request')
+             -1=>'All',
+             0=>'payment_issue',
+             1=>'new_item_request',
+             2=>'price_change_request',
+             3=>'address_change',
+             4=>'account_change_requests',
+             5=>'bug_reporting',
+             6=>'support'
+         )
         ))
 
         ->add('Status','choice',array(
@@ -42,10 +47,10 @@ public  function  ticketsAction(Request $req)
            0=>'Close',
            1=>'Open'
          )))
-        ->add('Distributors','checkbox',array(
+        ->add('Distributors','checkbox',array('label'=>'Distributors','translation_domain'=>'accounts',
             'required'=>false    ))
 
-        ->add('Retailers','checkbox',array(
+        ->add('Retailers','checkbox',array('label'=>'Retailers','translation_domain'=>'accounts',
             'required'=>false ))
         ->getForm();
 
@@ -113,7 +118,7 @@ if($data['Retailers']==1 and $data['Distributors']==1)
 
     }
 
-    if($data['Type']!=5)
+    if($data['Type']!=-1)
 
          $tickets->andWhere('Tic.type = :type')->setParameter('type',$data['Type']);
 

@@ -3,12 +3,12 @@
 {% block steps %}
     <div style="display: block;position: absolute;z-index: 10" class="content important1" id="step-1">
         <div class="widget-header">
-            <h3>Create Entity</h3>
+            <h3>{{ 'CreateEntity' | trans ({}, "entity") }}</h3>
         </div>
 
         <div class="control-group important">
 
-            {{ form_label(form_Relaited_New.entName,'Name(Company):') }}
+            {{ form_label(form_Relaited_New.entName) }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.entName) }}
                 <span class="icon-certificate"></span>
@@ -28,11 +28,11 @@
         </div>
         <hr>
         <div class="widget-header">
-            <h3>Address</h3>
+            <h3>{{ 'Address' | trans ({}, "entity") }}</h3>
         </div>
         <div class="control-group important">
 
-            {{ form_label(form_Relaited_New.Country,'Country:') }}
+            {{ form_label(form_Relaited_New.Country) }}
             <div class="controls money">
                 {{ form_widget(form_Relaited_New.Country) }}
                 <span class="icon-certificate"></span>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="control-group important">
-            {{ form_label(form_Relaited_New.entCity,'City:') }}
+            {{ form_label(form_Relaited_New.entCity) }}
             <div class="controls money">
             {{ form_widget(form_Relaited_New.entCity) }}
             <span class="icon-certificate"></span>
@@ -52,7 +52,7 @@
 
         <div class="control-group important">
             <label class="control-label">
-                Town:
+                {{ form_label(form_Relaited_New.entAdrs1) }}
             </label>
             <div class="controls money">
             {{ form_widget(form_Relaited_New.entAdrs1) }}
@@ -64,7 +64,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Street:
+                {{ form_label(form_Relaited_New.entAdrs2) }}
             </label>
             {{ form_widget(form_Relaited_New.entAdrs2) }}
             {{ form_errors(form_Relaited_New.entAdrs2) }}
@@ -72,7 +72,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Additional:
+                {{ form_label(form_Relaited_New.entAdrs3) }}
             </label>
             {{ form_widget(form_Relaited_New.entAdrs3) }}
             {{ form_errors(form_Relaited_New.entAdrs3) }}
@@ -81,7 +81,7 @@
 
         <div class="control-group important">
             <label class="control-label">
-                Post Code:
+                {{ form_label(form_Relaited_New.entNP) }}
             </label>
             <div class="controls money">
             {{ form_widget(form_Relaited_New.entNP,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
@@ -99,25 +99,25 @@
 
         <hr>
         <div class="widget-header">
-            <h3>Additional Details</h3>
+            <h3>{{ 'AdditionalDetails' | trans ({}, "entity") }}</h3>
         </div>
         <div class="control-group entTel1">
-            {{ form_label(form_Relaited_New.entTel1,'Tel1:') }}
+            {{ form_label(form_Relaited_New.entTel1) }}
             {{ form_widget(form_Relaited_New.entTel1) }}
             {{ form_errors(form_Relaited_New.entTel1) }}
         </div>
         <div class="control-group entTel2">
-            {{ form_label(form_Relaited_New.entTel2,'Tel2:') }}
+            {{ form_label(form_Relaited_New.entTel2) }}
             {{ form_widget(form_Relaited_New.entTel2) }}
             {{ form_errors(form_Relaited_New.entTel2) }}
         </div>
         <div class="control-group entFax">
-            {{ form_label(form_Relaited_New.entFax,'Fax:') }}
+            {{ form_label(form_Relaited_New.entFax) }}
             {{ form_widget(form_Relaited_New.entFax) }}
             {{ form_errors(form_Relaited_New.entFax) }}
         </div>
         <div class="control-group entWebsite">
-            {{ form_label(form_Relaited_New.entWebsite,'WebSite:') }}
+            {{ form_label(form_Relaited_New.entWebsite) }}
             {{ form_widget(form_Relaited_New.entWebsite) }}
             {{ form_errors(form_Relaited_New.entWebsite) }}
         </div>
@@ -126,10 +126,10 @@
 
     <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
         <div class="widget-header">
-            <h3>Create Account</h3>
+            <h3>{{ 'CreateAccount' | trans ({}, "accounts") }}</h3>
         </div>
         <div class="control-group accName">
-            {{ form_label(form_Relaited_New.accounts[0].accName,'Account:') }}
+            {{ form_label(form_Relaited_New.accounts[0].accName) }}
             <div class="controls money">
 
             {{ form_widget(form_Relaited_New.accounts[0].accName) }}
@@ -139,7 +139,7 @@
         </div>
 
         <div class="control-group accTerms">
-            {{ form_label(form_Relaited_New.accounts[0].accTerms,'Terms:') }}
+            {{ form_label(form_Relaited_New.accounts[0].accTerms) }}
             {{ form_widget(form_Relaited_New.accounts[0].accTerms,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
 						|| (95<event.keyCode && event.keyCode<106)
@@ -150,7 +150,7 @@
         </div>
 
         <div class="control-group accDefaultLanguage">
-            {{ form_label(form_Relaited_New.accounts[0].accDefaultLanguage,'DefaultLanguage:') }}
+            {{ form_label(form_Relaited_New.accounts[0].accDefaultLanguage) }}
             <div class="controls">
                 {{ form_widget(form_Relaited_New.accounts[0].accDefaultLanguage) }}
             </div>
@@ -160,7 +160,7 @@
 
     <div style="display: none;position: absolute;z-index: 11" class="content important3" id="step-3">
         <div class="widget-header">
-            <h3>Create User</h3>
+            <h3>{{ 'CreateUser' | trans ({}, "user") }}</h3>
         </div>
         <div class="control-group important">
             {{ form_label(form_Relaited_New.users[0].firstname) }}

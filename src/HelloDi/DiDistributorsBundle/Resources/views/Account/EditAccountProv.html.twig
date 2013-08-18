@@ -3,15 +3,15 @@
 {% set tab = '4' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Info</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Info' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Provider Info</h3>
+        <h3>{{ 'Info' | trans ({}, "accounts") }}</h3>
     </div> <!-- /widget-header -->
 <form style="margin-top: 20px" action="{{ path('EditAccountProv',{'id':Account.id}) }}" method="post" class="form-horizontal" >
 
@@ -20,7 +20,7 @@
 
     <div class="control-group">
 
-        <label class="control-label" >Name</label>
+        <label class="control-label" >{{ 'Name' | trans ({}, "common") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accName }}" >
         </div>
@@ -28,7 +28,7 @@
 
 
     <div class="control-group Need">
-        {{ form_label(form_edit.accTerms) }}
+        {{ form_label(form_edit.accTerms,'Terms' | trans ({}, "accounts")) }}
 
         {{ form_widget(form_edit.accTerms,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
@@ -42,14 +42,14 @@
 
 
     <div class="control-group">
-        <label class="control-label" >Balance</label>
+        <label class="control-label" >{{ 'Balance' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accBalance}}" >
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label" >Currency</label>
+        <label class="control-label" >{{ 'Currency' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accCurrency}}" >
         </div>
@@ -57,7 +57,7 @@
 
 
     <div class="control-group">
-        <label class="control-label" >Creaditlimit</label>
+        <label class="control-label" >{{ 'Creditlimit' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="0" >
         </div>
@@ -65,21 +65,21 @@
 
 
     <div class="control-group">
-        <label class="control-label" >DefaultLanguage</label>
+        <label class="control-label" >{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="{{ Account.accDefaultLanguage }}" >
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label" >TimeZone</label>
+        <label class="control-label" >{{ 'TimeZone' | trans ({}, "accounts") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large"
 
                    {% if Account.accTimeZone is not null %}
                    value="{{ Account.accTimeZone }}"
             {% else %}
-                value="--------"
+                   value="--------"
             {% endif %}
                     >
         </div>
@@ -87,7 +87,7 @@
 
 
     <div class="control-group">
-        <label class="control-label" >Type</label>
+        <label class="control-label" >{{ 'Type' | trans ({}, "common") }}</label>
         <div class="controls">
             <input type="text" disabled class="input-large" value="Distributors" >
         </div>
@@ -100,7 +100,7 @@
     <input type="hidden" name="accountid" value="{{ id }}"/>
 
     <div class="form-actions" style="margin-bottom: 0" >
-        <button class="btn btn-primary" type="submit">Edit</button>
+        <button class="btn btn-primary" type="submit">{{ 'Save' | trans ({}, "common") }}</button>
 
     </div>
 

@@ -12,8 +12,8 @@ class EditDistType extends AbstractType
     {
 
                 $builder
-                    ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-                    ->add('accTimeZone','timezone',array('label'=>'TimeZone'))
+                    ->add('accTerms','text',array('label'=>'Terms','translation_domain'=>'accounts','required'=>false))
+                    ->add('accTimeZone','timezone',array('label'=>'TimeZone','translation_domain'=>'accounts',))
 
 
     ;

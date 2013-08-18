@@ -1,23 +1,6 @@
 Code:
-    Id: ID
-    FromSerialNumber: Serial Number From
-    ToSerialNumber: To
-    Pin: Pin Code
-    Status: Status
-    CreditingDate: Crediting Date
-    Item: Item
-    Input: Input
-
-    Provider: Provider
-    InputFileName: Input File Name
-    FromInsertDate: Insert Date From
-    ToInsertDate: To
-    SaleDate: Sale Date
-    FromExpireDate: Expire Date From
-    ToExpireDate: To
-
-    All: All
-    Sale:
-        Sale: Sale
-        NotSale: Not Sale
-        All: AllStatus
+Sales:
+Sale:
+Count:
+Trends:
+SerialNumber:

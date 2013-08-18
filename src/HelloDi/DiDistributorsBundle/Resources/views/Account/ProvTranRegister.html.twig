@@ -3,35 +3,47 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <a class="link" href="">Transactions</a>
-    <span class="link">Register Transaction</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('MasterProvTransaction',{'id':Account.id}) }}">{{ 'Transactions' | trans ({}, "transaction") }}</a>
+    <span class="link">{{ 'RegisterTransaction' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Register Transaction</h3>
+        <h3>{{ 'RegisterTransaction' | trans ({}, "accounts") }}</h3>
     </div> <!-- /widget-header -->
 
     <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" message='Are you sure to change balance?'  header='Change balance!' >
-       {% for credeb in  form.CreditDebit %}
+
         <div class="control-group">
 
-            {{ form_label(credeb) }}
+            {{ form_label(form.CreditDebit[0]) }}
 
             <div class="controls money">
                 <div class="controls">
-                    {{ form_widget(credeb)  }}
+                    {{ form_widget(form.CreditDebit[0])  }}
                 </div>
                  <span class="icon-certificate"></span>
             </div>
 
         </div>
 
-      {% endfor %}
+           <div class="control-group">
+
+               {{ form_label(form.CreditDebit[1]) }}
+
+               <div class="controls money">
+                   <div class="controls">
+                       {{ form_widget(form.CreditDebit[1])  }}
+                   </div>
+                   <span class="icon-certificate"></span>
+               </div>
+
+           </div>
+
 
         <div class="control-group">
 
@@ -94,8 +106,8 @@
 
 
         <div class="form-actions" style="margin-bottom: 0" >
-            <button class="btn btn-primary" type="submit">Register</button>
-            <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+            <button class="btn btn-primary" type="submit">{{ 'Register' | trans ({}, "common") }}</button>
+            <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
 
         </div>
     </form>

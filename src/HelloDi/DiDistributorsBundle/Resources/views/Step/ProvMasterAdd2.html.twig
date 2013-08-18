@@ -1,13 +1,13 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Add Provider
+    {{ 'AddProvider' | trans ({}, "menu") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Add Provider</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "account") }}</a>
+    <span class="link">{{ 'AddProvider' | trans ({}, "menu") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -17,7 +17,7 @@
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    New Provider
+    {{ 'CreateProvider' | trans ({}, "accounts") }}
 {% endblock %}
 
 
@@ -40,7 +40,8 @@
                                 <li><a id="step1" rel="1" isdone="1" class="selected" onclick="go(1)">
                                         <label style="cursor:default" class="stepNumber">1</label>
                                         <span class="stepDesc">
-                                           Entity<br>
+                                           {{ 'Entity' | trans ({}, "entity") }}
+                                            <br>
 
                                         </span>
                                     </a>
@@ -48,7 +49,7 @@
                                 <li><a id="step2" rel="2" isdone="0" class="disabled" onclick="go(2)">
                                         <label style="cursor:default" class="stepNumber">2</label>
                                         <span class="stepDesc">
-                                           Address<br>
+                                           {{ 'Address' | trans ({}, "entity") }}<br>
 
                                         </span>
                                     </a>
@@ -57,7 +58,8 @@
                                     <a id="step3" rel="3" isdone="0" class="disabled" onclick="go(3)">
                                         <label style="cursor:default" class="stepNumber">3</label>
                                         <span class="stepDesc">
-                                           Account<br>
+                                           {{ 'Account' | trans ({}, "accounts") }}
+                                            <br>
 
                                         </span>
                                     </a>
@@ -70,11 +72,11 @@
                                 {% endblock %}
                             </div>
                             <div class="form-actions" style="margin-bottom: 0">
-                                <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">Previous</a>
-                                <a class="btn btn-primary buttonNext" onclick="Next()">Next</a>
+                                <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">{{ 'Previous' | trans ({}, "common") }}</a>
+                                <a class="btn btn-primary buttonNext" onclick="Next()"> {{ 'Next' | trans ({}, "common") }}</a>
 
-                                <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">Create</a>
-                                <a class="btn" href="{{ path('ShowMyAccountProv') }}">Cancel</a>
+                                <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">{{ 'Create' | trans ({}, "common") }}</a>
+                                <a class="btn" href="{{ path('ShowMyAccountProv') }}">{{ 'Cancel' | trans ({}, "common") }}</a>
                                 </div>
                             </div>
                     </fieldset>

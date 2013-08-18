@@ -1,14 +1,14 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Staff
+    {{ 'Staff' | trans ({}, "user") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Staff</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Staff' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 
@@ -34,7 +34,7 @@
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    Account Staff
+    {{ 'Staff' | trans ({}, "user") }}
 {% endblock %}
 
 
@@ -49,8 +49,9 @@
     <div class="span">
         <div class="widget-content">
 
-            <a class="btn-large button btn btn-primary " href="{{ path('MasterStaffAdd') }}">Add New
-                user</a><br>
+            <a class="btn-large button btn btn-primary " href="{{ path('MasterStaffAdd') }}">
+                {{ 'AddNewUser' | trans ({}, "user") }}
+                </a><br>
 
             <div style="margin-top: 5px" class="tablediv">
 
@@ -59,12 +60,12 @@
                     <table id="example" class="table postsend">
                             <thead>
                             <tr>
-                                <th>{{ 'Account.Id' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Name' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Username' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Status' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Role' | trans ({}, "account") }}</th>
-                                <th>{{ 'Account.Manage' | trans ({}, "account") }}</th>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'FullName' | trans ({}, "user") }}</th>
+                                <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                                <th>{{ 'Status' | trans ({}, "user") }}</th>
+                                <th>{{ 'Role' | trans ({}, "user") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                             </tr>
 
@@ -88,9 +89,11 @@
                                     <td>{{ user.username }}</td>
                                     <td>
                                         {% if user.enabled==0 %}
-                                            InActive
+                                            {{ 'InActive' | trans ({}, "user") }}
+
                                         {% else %}
-                                            Active
+                                            {{ 'Active' | trans ({}, "user") }}
+
                                         {% endif %}
                                     </td>
                                     <td>{{ user.roles[0] }}</td>
@@ -98,7 +101,7 @@
                                     <td class="td-actions">
 
 
-                                        <a class="btn_actions" href="{{ path('MasterStaffEdit',{'id':user.id }) }}">Modify</a>
+                                        <a class="btn_actions" href="{{ path('MasterStaffEdit',{'id':user.id }) }}">{{ 'Edit' | trans ({}, "common") }}</a>
 
                                     </td>
 

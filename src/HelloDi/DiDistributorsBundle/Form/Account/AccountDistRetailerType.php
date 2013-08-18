@@ -11,9 +11,9 @@ class AccountDistRetailerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('accName','text',array('required'=>true,'label'=>'Name'))
-            ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-            ->add('accDefaultLanguage','choice',array('choices'=>(array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
+            ->add('accName','text',array('required'=>true,'label'=>'Name','translation_domain'=>'common',))
+            ->add('accTerms','text',array('label'=>'Terms','translation_domain'=>'accounts','required'=>false))
+            ->add('accDefaultLanguage','choice',array('label'=>'DefaultLanguage','translation_domain'=>'accounts','choices'=>(array('en'=>'en','fr'=>'fr'))));
         ;
     }
 

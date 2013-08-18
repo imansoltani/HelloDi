@@ -1,23 +1,23 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    Sales Report
+    {{ 'SalesReport' | trans ({}, "transaction") }}
 {% endblock title %}
 
 {% set MU = 'report' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Sales Report</span>
+    <a class="link" href="{{ path('loginsuccess') }}"> {{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link"> {{ 'SalesReport' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-list-alt"></i>
-    Sales
+    {{ 'SalesReport' | trans ({}, "transaction") }}
 {% endblock %}
 
 {% block Body %}<br/>
-    <a class="btn btn-success" href="{{ path('Retailer_Shop_print') }}">Print Last Sale</a>
+    <a class="btn btn-success" href="{{ path('Retailer_Shop_print') }}"> {{ 'PrintLastSale' | trans ({}, "transaction") }}</a>
     <div class="span">
         <div class="widget stacked ">
             <div class="widget-content">
@@ -61,7 +61,7 @@
 
                             <div class="control-group">
                                 {%   if(User.roles[0]=='ROLE_RETAILER_ADMIN') %}
-                                    {{ form_label(form.Staff,'Staff:') }}
+                                    {{ form_label(form.Staff) }}
                                 <div class="controls">
                                     {{ form_widget(form.Staff) }}
                                     </div>
@@ -69,7 +69,7 @@
                             </div>
                             <hr>
                             <input type="hidden" value="1" name="page" id="search_page" >
-                            <input class="btn btn-primary" type="submit" value="Search">
+                            <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
                         </fieldset>
                     </form>
                     <script type="text/javascript">
@@ -86,7 +86,7 @@
 
                     <div class="tablediv">
                         <div class="contenttitle">
-                            <h4>Sales Report</h4>
+                            <h4>{{ 'SalesReport' | trans ({}, "transaction") }}</h4>
                         </div>
                         <form>
                             <div class="tab-content">
@@ -95,13 +95,13 @@
                                        class="table table-bordered table-striped table-highlight postsend">
                                     <thead>
                                     <tr>
-                                        <th>{{ 'Date' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Item' | trans ({}, "account") }}</th>
-                                        <th>{{ 'FaceValue' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Buying Price' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Serial Number' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Seller' | trans ({}, "account") }}</th>
-                                        <th>{{ 'Vat' | trans ({}, "account") }}</th>
+                                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                                        <th>{{ 'Item' | trans ({}, "item") }}</th>
+                                        <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                                        <th>{{ 'BuyingPrice' | trans ({}, "price") }}</th>
+                                        <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                                        <th>{{ 'Seller' | trans ({}, "user") }}</th>
+                                        <th>{{ 'Vat' | trans ({}, "vat") }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>

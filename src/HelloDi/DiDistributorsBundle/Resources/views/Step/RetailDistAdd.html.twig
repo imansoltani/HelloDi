@@ -5,9 +5,9 @@
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
-    <span class="link">Add Retailer</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'AddRetailer' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -17,7 +17,7 @@
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    New Retailer
+    {{ 'AddRetailer' | trans ({}, "accounts") }}
 {% endblock %}
 
 
@@ -40,7 +40,9 @@
                                 <li><a id="step1" rel="1" isdone="1" class="selected" onclick="go(1)">
                                         <label style="cursor:default" class="stepNumber">1</label>
                                         <span class="stepDesc">
-                                           Entity<br>
+
+                                            {{ 'Entity' | trans ({}, "entity") }}
+                                            <br>
 
                                         </span>
                                     </a>
@@ -48,7 +50,9 @@
                                 <li><a id="step2" rel="2" isdone="0" class="disabled" onclick="go(2)">
                                         <label style="cursor:default" class="stepNumber">2</label>
                                         <span class="stepDesc">
-                                           Account<br>
+
+                                            {{ 'Account' | trans ({}, "accounts") }}
+                                            <br>
 
                                         </span>
                                     </a>
@@ -57,7 +61,9 @@
                                     <a id="step3" rel="3" isdone="0" class="disabled" onclick="go(3)">
                                         <label style="cursor:default" class="stepNumber">3</label>
                                         <span class="stepDesc">
-                                           User<br>
+
+                                            {{ 'User' | trans ({}, "user") }}
+                                            <br>
 
                                         </span>
                                     </a>
@@ -70,11 +76,11 @@
                                 {% endblock %}
                             </div>
                             <div class="form-actions" style="margin-bottom: 0">
-                                <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">Previous</a>
-                                <a class="btn btn-primary buttonNext" onclick="Next()">Next</a>
+                                <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">{{ 'Previous' | trans ({}, "common") }}</a>
+                                <a class="btn btn-primary buttonNext" onclick="Next()">{{ 'Next' | trans ({}, "common") }}</a>
 
-                                <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">Create</a>
-                                <a   class="btn"  href="{{ path('retailer_show') }}">Cancel</a>
+                                <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">{{ 'Create' | trans ({}, "commmon") }}</a>
+                                <a   class="btn"  href="{{ path('retailer_show') }}">{{ 'Cancel' | trans ({}, "common") }}</a>
 
                                 </div>
 

@@ -3,22 +3,22 @@
 {% set tab2 = '4' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
 
-    <span class="link">Setting</span>
+    <span class="link">{{ 'Setting' | trans ({}, "common") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
 <div class="widget-header">
-    <h3>Retailer Setting</h3>
+    <h3>{{ 'Setting' | trans ({}, "common") }}</h3>
 </div> <!-- /widget-header -->
     <br>
     <form class="form-horizontal" action="{{ path('Master_RetailerSetting',{'id':retailerAccount.id}) }}" method="post">
         <div class="control-group">
-            <label class="control-label">id
+            <label class="control-label">{{ 'Id' | trans ({}, "common") }}
             </label>
             <div class="controls">
                 <input class="input-large" type="text"  value="{{ retailerAccount.id }}" disabled="" >
@@ -27,7 +27,7 @@
 
 
         <div class="control-group">
-            <label class="control-label">accName
+            <label class="control-label">{{ 'AccountName' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 <input class="input-large" type="text"  value="{{ retailerAccount.accName }}" disabled="" >
@@ -35,7 +35,7 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label">accCreationDate
+            <label class="control-label">{{ 'CreationDate' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 <input class="input-large" type="text"  value="{{ retailerAccount.accCreationDate|date('Y-m-d') }}" disabled="" >
@@ -43,7 +43,7 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label">accTimeZone
+            <label class="control-label">{{ 'TimeZone' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 <input class="input-large" type="text"  value="{{ retailerAccount.accTimeZone }}" disabled="" >
@@ -52,7 +52,7 @@
 
 
         <div class="control-group">
-            <label class="control-label">accCreditLimit
+            <label class="control-label">{{ 'CreditLimit' | trans ({}, "accounts") }}
             </label>
             <div class="controls">
                 <input class="input-large" type="text" value="{{ retailerAccount.accCreditLimit }}" disabled="" >
@@ -75,7 +75,7 @@
         {{ form_widget(form._token) }}
 
         <div class="form-actions" style="margin-bottom: 0" >
-            <input class="btn btn-primary" type="submit"  value="Edit">
+            <input class="btn btn-primary" type="submit"  value="{{ 'Save' | trans ({}, "common") }}">
 
         </div>
     </form>
