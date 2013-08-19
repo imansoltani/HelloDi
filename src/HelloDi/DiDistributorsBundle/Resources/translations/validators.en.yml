@@ -6,4 +6,3 @@ password.mismatch: These passwords are not the
 password_must_be_at_least_%limit%_characters_length: password must be at least limit characters length
 pasword_name_cannot_be_longer_than_%limit%_characters_length: pasword name cannot be longer than limit characters length
 
-Please_input_a_number_greater_than_zero: Please input a number greater than zero

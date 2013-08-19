@@ -20,7 +20,7 @@
 
     {% if CountProv >0 %}
 
-    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header="{{ 'Make_transfer'|trans({},'transaction') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}" >
+    <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header="{{ 'Make_transfer'|trans({},'message') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'message') }}" >
         <div class="control-group">
 
             {{ form_label(form.Amount) }}

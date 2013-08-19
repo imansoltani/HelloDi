@@ -16,7 +16,7 @@
         <h3>{{ 'RegisterTransaction' | trans ({}, "transaction") }}</h3>
     </div> <!-- /widget-header -->
 
-    <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}"  header="{{ 'Register_transaction'|trans({},'transaction') }}" >
+    <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'message') }}"  header="{{ 'Register_transaction'|trans({},'message') }}" >
 
         <div class="control-group">
         <div class="control-label" >

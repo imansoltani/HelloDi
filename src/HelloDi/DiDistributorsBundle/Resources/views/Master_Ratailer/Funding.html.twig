@@ -22,7 +22,7 @@
 
             {{ 'RetailerBalance' | trans ({}, "accounts") }}  : <b>{{ retailerAccount.accBalance }}</b>
 <hr>
-            <form style="margin-top: 20px" action="{{ path('Master_RetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header="{{ 'Fund_retailer'|trans({},'transaction') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}" >
+            <form style="margin-top: 20px" action="{{ path('Master_RetailerTransferFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header="{{ 'Fund_retailer'|trans({},'message') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'message') }}" >
 
                 <fieldset>
 
@@ -86,7 +86,7 @@
             <hr>
 
 
-            <form style="margin-top: 20px" action="{{ path('Master_RetailerUpdateFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header="{{ 'Fund_retailer'|trans({},'transaction') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}" >
+            <form style="margin-top: 20px" action="{{ path('Master_RetailerUpdateFunding',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal YesNoMessage" header="{{ 'Fund_retailer'|trans({},'message') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'message') }}" >
 
                 <fieldset>
 

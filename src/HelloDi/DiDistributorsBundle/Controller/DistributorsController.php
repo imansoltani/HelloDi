@@ -200,6 +200,7 @@ class DistributorsController extends Controller
             ->add('As','choice',array('label'=>'As','translation_domain'=>'transaction',
                 'choices'=>
                 array(
+                    ''=>'select_a_action',
                     1=>'Increase',
                     0=>'Decrease')
             ))->getForm();
@@ -282,19 +283,20 @@ class DistributorsController extends Controller
                     $this->get('session')->getFlashBag()->add('success',
                         $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
                             array('alredyretailer'=>$alredyretailer,'currentretailer'=>$Account->getAccBalance()),
-                            'transaction')
+                            'message')
                     );
 
                     $this->get('session')->getFlashBag()->add('success',
                         $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                             array('alredydist'=>$alredydist,'currentdist'=>$Account->getParent()->getAccBalance()),
-                            'transaction')
+                            'message')
                     );
                 }
 
             }
 else
-    $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
 
@@ -357,13 +359,13 @@ if($data['Amount']>0)
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
                     array('alredyretailer'=>$alredyretailer,'currentretailer'=>$Account->getAccCreditLimit()),
-                    'transaction')
+                    'message')
             );
 
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                     array('alredydist'=>$alredydist,'currentdist'=>$Account->getParent()->getAccBalance()),
-                    'transaction')
+                    'message')
             );
         }
     }
@@ -379,7 +381,7 @@ if($data['Amount']>0)
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
                     array('alredyretailer'=>$alredyretailer,'currentretailer'=>$Account->getAccCreditLimit()),
-                    'transaction')
+                    'message')
             );
 
 
@@ -388,7 +390,8 @@ if($data['Amount']>0)
 
 }
 else
-    $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
 }
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
@@ -446,7 +449,10 @@ else
             if ($form->isValid()) {
                 $em->persist($user);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+
+                $this->get('session')->getFlashBag()->add('success',
+                    'this operation done success !');
+
                 return $this->redirect($this->generateUrl('DistStaff', array('id' => $Account->getId())));
 
             }
@@ -475,7 +481,7 @@ else
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
             }
 
@@ -517,7 +523,7 @@ else
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
 
         }
@@ -553,7 +559,7 @@ else
 
                 $em->persist($user);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
             }
 
@@ -629,7 +635,7 @@ else
             $AdrsDetai->setEntiti($Entiti);
             $em->persist($AdrsDetai);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
             }
 
@@ -955,7 +961,7 @@ else
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
@@ -997,7 +1003,7 @@ else
              $em->flush();
 
 
-             $this->get('session')->getFlashBag()->add('success','this operation done success !');
+             $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
          }
         }
 

@@ -413,7 +413,7 @@ class AccountController extends Controller
                             $this->get('session')->getFlashBag()->add('success',
                                 $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                                     array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
-                                    'transaction')
+                                    'message')
                             );
                         }
 
@@ -431,7 +431,7 @@ class AccountController extends Controller
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                                 array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
-                                'transaction')
+                                'message')
                         );
 
 
@@ -451,7 +451,7 @@ class AccountController extends Controller
                             $this->get('session')->getFlashBag()->add('success',
                                 $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                                     array('alredydist'=>$alredy,'currentdist'=>$Account->getAccBalance()),
-                                    'transaction')
+                                    'message')
                             );
 
                         }
@@ -462,7 +462,8 @@ class AccountController extends Controller
             }
             else
 
-                $this->get('session')->getFlashBag()->add('error', ' more than zero is accept!');
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
 
@@ -488,6 +489,8 @@ class AccountController extends Controller
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
             $alredy=$Account->getAccCreditLimit();
+if($data['Amount']>0 )
+{
           switch($data['As'] )
           {
               case 0:
@@ -499,7 +502,7 @@ class AccountController extends Controller
                       $this->get('session')->getFlashBag()->add('success',
                           $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
                               array('alredydist'=>$alredy,'currentdist'=>$Account->getAccCreditLimit()),
-                              'transaction')
+                              'message')
                       );
                   }
                   break;
@@ -508,7 +511,7 @@ class AccountController extends Controller
                   $this->get('session')->getFlashBag()->add('success',
                       $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
                           array('alredydist'=>$alredy,'currentdist'=>$Account->getAccCreditLimit()),
-                          'transaction')
+                          'message')
                   );
                   break;
 
@@ -517,9 +520,14 @@ class AccountController extends Controller
             $em->flush();
 
         }
+
+        else
+            $this->get('session')->getFlashBag()->add('error',
+                $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
+
         return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
     }
-
+    }
 
     public function  SaleAction(Request $req, $id)
     {
@@ -830,20 +838,20 @@ class AccountController extends Controller
                 $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                         array('alredydist'=>$alredydist,'currentdist'=>$data['Accounts']->getAccBalance()),
-                        'transaction')
+                        'message')
                 );
 
 
                 $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
                         array('alredyprov'=>$alredyprov,'currentprov'=>$Account->getAccBalance()),
-                        'transaction')
+                        'message')
                 );
 
             }
             else
                 $this->get('session')->getFlashBag()->add('error',
-                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'validators'));
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
         }
 
 
@@ -916,7 +924,7 @@ class AccountController extends Controller
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
                                 array('alredyprov'=>$alredy,'currentprov'=>$Account->getAccBalance()),
-                                'transaction')
+                                'message')
                         );
 
 
@@ -935,7 +943,7 @@ class AccountController extends Controller
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
                                 array('alredyprov'=>$alredy,'currentprov'=>$Account->getAccBalance()),
-                                'transaction')
+                                'message')
                         );
 
                         break;
@@ -943,7 +951,7 @@ class AccountController extends Controller
                 }
             } else
                 $this->get('session')->getFlashBag()->add('error',
-                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'validators'));
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
@@ -1192,7 +1200,7 @@ class AccountController extends Controller
             $form_edit->handleRequest($request);
             if ($form_edit->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
 
         }
@@ -1941,7 +1949,7 @@ class AccountController extends Controller
                 $user->setEnabled(1);
                 $em->persist($user);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('ManageDistUser', array('id' => $Account->getId())));
 
             }
@@ -1967,7 +1975,7 @@ class AccountController extends Controller
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
             }
 
@@ -2224,7 +2232,7 @@ class AccountController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
 
         }
@@ -2261,7 +2269,7 @@ class AccountController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('Master_RetailerUser', array('id' => $AccountRetailer->getId())));
             }
 
@@ -2334,7 +2342,7 @@ class AccountController extends Controller
             $AdrsDetai->setEntiti($Entiti);
             $em->persist($AdrsDetai);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
             return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
 
@@ -2466,7 +2474,7 @@ class AccountController extends Controller
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
@@ -2505,7 +2513,7 @@ class AccountController extends Controller
 
                 $em->persist($detahis);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
@@ -2629,13 +2637,13 @@ class AccountController extends Controller
                     $this->get('session')->getFlashBag()->add('success',
                         $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
                             array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccBalance()),
-                            'transaction')
+                            'message')
                     );
 
                     $this->get('session')->getFlashBag()->add('success',
                         $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                             array('alredydist'=>$alredydist,'currentdist'=>$AccountRetailer->getParent()->getAccBalance()),
-                            'transaction')
+                            'message')
                     );
 
 
@@ -2643,7 +2651,8 @@ class AccountController extends Controller
 
             }
             else
-                $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
 
@@ -2707,13 +2716,13 @@ class AccountController extends Controller
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
                                 array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccCreditLimit()),
-                                'transaction')
+                                'message')
                         );
 
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
                                 array('alredydist'=>$alredydist,'currentdist'=>$AccountRetailer->getParent()->getAccBalance()),
-                                'transaction')
+                                'message')
                         );
 
                     }
@@ -2726,18 +2735,18 @@ class AccountController extends Controller
                     {
                         $AccountRetailer->setAccCreditLimit($AccountRetailer->getAccCreditLimit()- $data['Amount']);
                         $em->flush();
-
                         $this->get('session')->getFlashBag()->add('success',
                             $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
                                 array('alredyretailer'=>$alredyretailer,'currentretailer'=>$AccountRetailer->getAccCreditLimit()),
-                                'transaction')
+                                'message')
                         );
                     }
                 }
 
             }
             else
-                $this->get('session')->getFlashBag()->add('error','more than zero is accept!');
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
         return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));

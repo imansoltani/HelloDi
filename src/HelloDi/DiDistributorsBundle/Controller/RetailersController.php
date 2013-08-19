@@ -97,7 +97,7 @@ class RetailersController extends Controller
             if ($form->isValid()) {
                 $em->persist($user);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $Account->getId())));
 
             }
@@ -122,7 +122,7 @@ class RetailersController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('RetailerStaff', array('id' => $user->getAccount()->getId())));
             }
 
