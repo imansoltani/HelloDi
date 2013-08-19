@@ -5,9 +5,9 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
-    <a class="link" href="javascript:history.go(-1)">{{ 'Transactions' | trans ({}, "transaction") }}</a>
+    <a class="link" href="{{ path('MasterProvTransaction',{'id':Account.id}) }}">{{ 'Transactions' | trans ({}, "transaction") }}</a>
     <span class="link">
-        {{ 'MakeTransfer' | trans ({}, "accounts") }}
+        {{ 'MakeTransfer' | trans ({}, "transaction") }}
     </span>
 {% endblock Site_Map %}
 
@@ -15,10 +15,11 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3> {{ 'MakeTransfer' | trans ({}, "accounts") }}</h3>
+        <h3> {{ 'MakeTransfer' | trans ({}, "transaction") }}</h3>
     </div> <!-- /widget-header -->
 
     {% if CountProv >0 %}
+
     <form action="{{ path('ProvTransfer',{'id':Account.id}) }}" method="post" class="form-horizontal aadtr YesNoMessage" header="{{ 'Make_transfer'|trans({},'transaction') }}" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'transaction') }}" >
         <div class="control-group">
 
@@ -37,7 +38,7 @@
 <hr>
         <div class="control-group">
             <label class="control-label">
-                {{ 'TransferTo' | trans ({}, "accounts") }}:
+                {{ 'TransferTo' | trans ({}, "transaction") }}:
             </label>
         </div>
 
@@ -80,7 +81,7 @@
         <div class="form-actions" style="margin-bottom: 0" >
 
             <button class="btn btn-primary"   type="submit">{{ 'Transfer' | trans ({}, "common") }}</button>
-            <a href="javascript:history.go(-1)" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
+            <a href="{{ path('MasterProvTransaction',{'id':Account.id}) }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
     </form>
         {% else %}
@@ -90,4 +91,8 @@
 
             </h3>
     {% endif %}
+
+
+
+
 {% endblock %}

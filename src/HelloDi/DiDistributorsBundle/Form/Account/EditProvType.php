@@ -11,9 +11,7 @@ class EditProvType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('accTerms','text',array('label'=>'Payment condition','required'=>false))
-
-
+            ->add('accTerms','text',array('label'=>'Terms','translation_domain'=>'accounts','required'=>false))
 
     ;
     }

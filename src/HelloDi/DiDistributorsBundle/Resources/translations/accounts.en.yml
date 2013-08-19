@@ -1,5 +1,6 @@
 #Common#
-
+Setting:
+Details:
 Name:
 All:
 Balance:
@@ -16,20 +17,17 @@ CreateAccount:
 HaveAccount:
 AccountSetting:
 Type:
+select_a_account:
 #End Common#
 
 #Distributors#
 Distributors:
 Distributor:
-DistributorsManagement:
-DistributorsAccounts:
 AccountTransactions:
 ManageDistributor:
 CountDistributors:
 CreateDistWithEntity:
 CreateANewDistributor:
-AddDistributor:
-NewDistributor:
 ChildNumber:
 FundDistributor:
 CurrentDistributorBalance:
@@ -48,12 +46,7 @@ RetailerAccount:
 RetailerStatements:
 RetailerRevenues:
 DailySalesGroupedByItemAndRetailer:
-
-Purchases:
 PrintToPDF:
-
-
-Settings:
 AccountSetting:
 
 #End Distributors#
@@ -61,19 +54,11 @@ AccountSetting:
 #Providers#
 Provider:
 Providers:
-AddProvider:
 CountProviders:
 ThisAccountHaveNotUser:
-CreateProvider:
 Info:
-ProviderAccounts:
-ProvidersManagement:
 CreateProviderWithEntity:
 CreateANewProvider:
-RegisterTransaction:
-
-MakeTransfer:
-TransferTo:
 Accounts:
 This_Entity_have_not_dist_account:
 
@@ -86,9 +71,7 @@ This_Entity_have_not_dist_account:
 Retailers:
 Retailer:
 Retailer(s):
-RetailersAccounts:
-RetailersManagement:
-NewRetailerAccount:
+CreateRetailerWithEntity:
 CountRetailers:
 FundRetailers:
 AddRetailer:

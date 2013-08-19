@@ -25,7 +25,10 @@ class NewUserType extends BaseType
             ))
             ->add('lastname',null,array('required'=>false,'label'=>'LastName','translation_domain' => 'user'))
             ->add('mobile',null,array('required'=>false,'label'=>'Mobile','translation_domain' => 'user'))
-            ->add('language','choice',array('required'=>true,'label'=>'Language','translation_domain' => 'user','choices'=>array('en'=>'en','fr'=>'fr')))
+            ->add('language','choice',array('required'=>true,'label'=>'Language','translation_domain' => 'user','choices'=>
+             array('en'=>'en',
+                  'fr'=>'fr',
+                  'de'=>'de')))
 
 
 ;

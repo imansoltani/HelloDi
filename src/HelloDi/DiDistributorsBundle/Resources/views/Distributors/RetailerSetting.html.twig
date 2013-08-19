@@ -6,13 +6,13 @@
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
 
-    <span class="link">{{ 'Setting' | trans ({}, "common") }}</span>
+    <span class="link">{{ 'Setting' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
 <div class="widget-header">
-    <h3>{{ 'Setting' | trans ({}, "common") }}</h3>
+    <h3>{{ 'Setting' | trans ({}, "accounts") }}</h3>
 </div> <!-- /widget-header -->
     <br>
     <form class="form-horizontal" action="{{ path('DistRetailerSetting',{'id':retailerAccount.id}) }}" method="post">
@@ -29,7 +29,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                {{ 'AccountName' | trans ({}, "accounts") }}
+                {{ 'Name' | trans ({}, "accounts") }}
 
             </label>
             <div class="controls">

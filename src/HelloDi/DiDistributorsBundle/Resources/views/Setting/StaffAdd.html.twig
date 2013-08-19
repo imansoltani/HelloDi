@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Add User
+    {{ 'AddNewUser' | trans ({}, "user") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
@@ -9,7 +9,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('MasterStaff') }}">{{ 'Staff' | trans ({}, "user") }}</a>
-    <span class="link">{{ 'Staff' | trans ({}, "user") }}</span>
+    <span class="link">{{ 'AddNewUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}

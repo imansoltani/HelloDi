@@ -4,6 +4,8 @@ Date:
 Description:
 Action:
 Type:
+TypeAction:
+Purchases:
 From:
 To:
 Amount:
@@ -29,7 +31,12 @@ As:
 Debit(commission):
 History:
 PrintLastSale:
-daily_sales_grouped_by_item_and_retailer: t
+daily_sales_grouped_by_item_and_retailer:
+
+
+RegisterTransaction: Register Transaction
+MakeTransfer: Make Transfer
+TransferTo: Transfer To
 
 #Provider#
 add_new_codes_to_system:

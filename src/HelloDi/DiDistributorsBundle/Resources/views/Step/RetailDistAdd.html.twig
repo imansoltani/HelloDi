@@ -1,13 +1,13 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Add Retailer
+    {{ 'CreateRetailerWithEntity' | trans ({}, "accounts") }}
 {% endblock title %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
-    <span class="link">{{ 'AddRetailer' | trans ({}, "accounts") }}</span>
+    <span class="link">{{ 'CreateRetailerWithEntity' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -17,7 +17,7 @@
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    {{ 'AddRetailer' | trans ({}, "accounts") }}
+    {{ 'CreateRetailerWithEntity' | trans ({}, "accounts") }}
 {% endblock %}
 
 

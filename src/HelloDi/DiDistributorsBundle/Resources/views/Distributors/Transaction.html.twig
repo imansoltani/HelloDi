@@ -38,7 +38,7 @@
                       method="POST">
                     <fieldset>
                         <div class="control-group ">
-                            {{ form_label(form.TypeDate[0],'TradeDate' | trans ({}, "transaction")) }}
+                            {{ form_label(form.TypeDate[0]) }}
                             <div class="controls">
                                 {{ form_widget(form.TypeDate[0]) }}
                             </div>
@@ -46,7 +46,7 @@
 
 
                         <div class="control-group ">
-                            {{ form_label(form.TypeDate[1],'LookingDate' | trans ({}, "transaction")) }}
+                            {{ form_label(form.TypeDate[1]) }}
                             <div class="controls">
                                 {{ form_widget(form.TypeDate[1],{'attr':{'checked':'checked'}}) }}
                             </div>
@@ -100,13 +100,7 @@
 
                     $(function () {
 
-                        val= $("#form_Type").val();
-                        $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
-                        $.post('{{ path("DistLoadActionOwn") }}',{id: val},function(result){
-                            $("#form_Action").html(result);
-                        });
-
-                        Form_Search(1,"Search Transactions");
+                        Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
                     });
                 </script>
@@ -232,7 +226,7 @@
                                                     {{ 'Debit' | trans ({}, "transaction") }}
                                                 </label>
                                                 <div class="controls">
-                                                    <input type="text" disabled="" value="{{ -debit }}">
+                                                    <input type="text" disabled="" value="{{ debit|abs }}">
                                                 </div>
                                             </div>
 

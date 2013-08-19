@@ -59,7 +59,7 @@ class DistributorsController extends Controller
                         'All' => 'All',
                         'dmtu'=>'Mobile',
                         'clcd'=>'Calling_Card',
-                        'empt'=>'E-payment'
+                        'epmt'=>'E-payment'
                     )))
 
             ->add('ItemName', 'entity',
@@ -587,22 +587,21 @@ else
         $Account->setAccTimeZone(null);
         $Account->setAccType(2);
         $Account->setAccBalance(0);
-
-
         $Account->setAccCurrency($userdist->getAccount()->getAccCurrency());
         $Account->setParent($userdist->getAccount());
 
 
         $Account->setEntiti($Entiti);
-
         $Entiti->addAccount($Account);
+
 
         $user->setEntiti($Entiti);
         $Entiti->addUser($user);
 
 
-
         $user->setAccount($Account);
+        $Account->addUser($user);
+
 
 
         $form = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
@@ -631,8 +630,9 @@ else
             $em->persist($AdrsDetai);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','this operation done success !');
+           return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
             }
-            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
+
 
 
 
@@ -679,7 +679,7 @@ else
                                        1=>'>',
                                        2=>'=' )
                                                      )))
-                       ->add('BalanceValue','text',
+                       ->add('BalanceValue','integer',
                                 array(
                                     'required'=>false)
                                                       )->getForm();
@@ -712,15 +712,9 @@ else
 
 
         $qb=$qb->getQuery();
-        $count = count($qb->getResult());
-        $qb->setHint('knp_paginator.count', $count);
-        $pagination = $paginator->paginate(
-            $qb,
-            $request->get('page',1)/*page number*/,
-            10/*limit per page*/
-        );
+
         return $this->render('HelloDiDiDistributorsBundle:Distributors:ShowRetailers.html.twig', array (
-            'Retailers' => $pagination,
+            'Retailers' => $qb->getResult(),
             'form_search' => $form_search->createView(),
             'Account' => $Account
         ));
@@ -743,7 +737,7 @@ else
        $qb=array();
 
         $form=$this->createFormBuilder()
-            ->add('TypeDate','choice', array(
+            ->add('TypeDate','choice', array('translation_domain'=>'transaction',
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'TradeDate',
@@ -875,8 +869,8 @@ else
 
         ->add('DateStart','text',array('label'=>'From','translation_domain'=>'transaction','required'=>false))
         ->add('DateEnd','text',array('label'=>'To','translation_domain'=>'transaction','required'=>false))
-        ->add('TypeDate','choice', array(
-            'empty_value'=>'Trade Date',
+        ->add('TypeDate','choice', array('translation_domain'=>'transaction',
+            'empty_value'=>'TradeDate',
             'expanded'   => true,
             'choices'    => array(
                 0 => 'TradeDate',

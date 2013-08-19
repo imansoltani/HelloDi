@@ -418,6 +418,7 @@
 
     var open = 0 ;
     var header = "" ;
+    var headerClose = "{{ 'Close_Search'|trans({},'js') }}" ;
     var widthMain = 0 ;
     var showD = 0 ;
 
@@ -433,7 +434,7 @@
         }
         else
         {
-            $('.title_search').html("Close Search");
+            $('.title_search').html(headerClose);
             $('#search_logo').attr('class', 'icon-remove');
         }
     }
@@ -504,7 +505,7 @@
             $('#search_logo').removeAttr('class');
 
             if (open == 0) {
-                $('.title_search').html('Close Search');
+                $('.title_search').html(headerClose);
                 $('#search_logo').attr('class', 'icon-remove');
                 open = 1 ;
             }

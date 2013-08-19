@@ -39,7 +39,7 @@ class EntitiController extends Controller
                 )
             )
         ->add('Retailer', 'checkbox', array('translation_domain' => 'accounts',
-            'label'     => 'Retailer',
+            'label'     => 'Retailers',
             'required'  => false,
         ))
         ->add('Distributors', 'checkbox', array('translation_domain' => 'accounts',
@@ -47,7 +47,7 @@ class EntitiController extends Controller
                 'required'  => false,
             ))
        ->add('Provider', 'checkbox', array('translation_domain' => 'accounts',
-                'label'     => 'Provider',
+                'label'     => 'Providers',
                 'required'  => false,
                 ))->getForm()
         ;
@@ -240,18 +240,18 @@ class EntitiController extends Controller
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $acc = new Account();
         $acc->setEntiti($entity);
-        $acc->setAccCreationDate(new \DateTime('now'));
+        $acc->setAccCreationDate(new \DateTime());
         $acc->setAccBalance(0);
         $acc->setAccType(1);
         $acc->setAccCreditLimit(0);
         $acc->setAccTimeZone(null); /////=========*******
         $acc->getAccDefaultLanguage(null);
-
-        $form = $this->createForm(new AccountType(), $acc);
+        $form = $this->createForm(new AccountType(),$acc);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+
                 $em->persist($acc);
                 $em->flush($acc);
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');

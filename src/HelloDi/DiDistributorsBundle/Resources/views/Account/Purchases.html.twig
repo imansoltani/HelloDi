@@ -6,14 +6,14 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
-    <span class="link">{{ 'Purchases' | trans ({}, "accounts") }}</span>
+    <span class="link">{{ 'Purchases' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
 <div class="widget-header">
 
-    <h3>{{ 'Purchases' | trans ({}, "accounts") }}</h3>
+    <h3>{{ 'Purchases' | trans ({}, "transaction") }}</h3>
 </div> <!-- /widget-header -->
 
     <div class="form_search">
@@ -67,7 +67,7 @@
         <script type="text/javascript">
             $(function () {
 
-                Form_Search(1,"Search Purchases");
+                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
             });
         </script>
@@ -76,7 +76,7 @@
     <div class="tablediv">
         <div class="contenttitle">
             <h4>
-                <input class="btn btn-info" type="button" value="{{'PrintToPDF' | trans ({}, "common")}}" onclick="$('#printhidden').val('1');$('#searchpurchases').submit();" >
+                <input class="btn btn-info" type="button" value="{{'PrintToPDF' | trans ({}, "accounts")}}" onclick="$('#printhidden').val('1');$('#searchpurchases').submit();" >
             </h4>
         </div>
         <form>

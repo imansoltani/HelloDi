@@ -75,7 +75,7 @@
                     <script type="text/javascript">
                         $(function () {
 
-                            Form_Search(1,"Search Sales");
+                            Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
                         });
                     </script>
@@ -113,9 +113,9 @@
                                             <td>{{ Tr.Code.Item.itemName}}</td>
                                             <td>{{ Tr.Code.Item.itemFaceValue}}</td>
                                             <td>
-                                            <script type="text/javascript">
-                                                document.write(Math.abs({{ Tr.tranAmount }}));
-                                            </script>
+
+                                               {{ Tr.tranAmount|abs }}
+
 
 
                                             </td>

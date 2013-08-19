@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'EntitiesManagement' | trans ({}, "entity") }}
+    {{ 'Entities' | trans ({}, "entity") }}
 
 {% endblock title %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}" xmlns="http://www.w3.org/1999/html">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link">{{ 'EntitiesManagement' | trans ({}, "entity") }}</span>
+    <span class="link">{{ 'Entities' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'ent' %}
 
 {% block PageTitle %}
     <i class="icon-book"></i>
-{{ 'EntitiesManagement' | trans ({}, "entity") }}
+{{ 'Entities' | trans ({}, "entity") }}
 
 {% endblock %}
 
@@ -94,7 +94,7 @@
 
                 <div class="tablediv" >
                     <div class="contenttitle">
-                        <h4>{{ 'Entities'|trans({},"common") }}</h4>
+                        <h4>{{ 'Entities'|trans({},"entity") }}</h4>
                     </div>
                     {#<form  action="{{ path('Ent_Accounts',{}) }}" method="post">#}
                     <div class="tab-content">
@@ -153,7 +153,7 @@
                                         </td>
                                         <td class="td-actions">
 
-                                            <a class="btn_actions" href="{{path('Ent_Accounts',{'id':entity.id})  }}" >Manage</a>
+                                            <a class="btn_actions" href="{{path('Ent_Accounts',{'id':entity.id})  }}" >{{ 'Manage' | trans ({}, "common") }}</a>
 
                                         </td>
                                     </tr>

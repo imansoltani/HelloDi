@@ -1,7 +1,7 @@
 Item:
 Id: ID
 Name: Item Name
-FaceValue: Item Face Value
+FaceValue: Face Value
 Currency: Item Currency
 AlertMinStock: Alert Min Stock
 Operator: Operator

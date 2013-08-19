@@ -28,7 +28,7 @@
 
 
     <div class="control-group Need">
-        {{ form_label(form_edit.accTerms,'Terms' | trans ({}, "accounts")) }}
+        {{ form_label(form_edit.accTerms) }}
 
         {{ form_widget(form_edit.accTerms,{ 'attr' : {'onkeydown' : 'return ( event.ctrlKey || event.altKey
 						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
@@ -89,7 +89,7 @@
     <div class="control-group">
         <label class="control-label" >{{ 'Type' | trans ({}, "common") }}</label>
         <div class="controls">
-            <input type="text" disabled class="input-large" value="Distributors" >
+            <input type="text" disabled class="input-large" value="{{ 'Distributors' | trans ({}, 'accounts') }}" >
         </div>
     </div>
 

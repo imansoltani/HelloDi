@@ -1,13 +1,13 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'AddProvider' | trans ({}, "menu") }}
+    {{ 'CreateProviderWithEntity' | trans ({}, "menu") }}
 {% endblock title %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Providers' | trans ({}, "account") }}</a>
-    <span class="link">{{ 'AddProvider' | trans ({}, "menu") }}</span>
+    <span class="link">{{ 'CreateProviderWithEntity' | trans ({}, "menu") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -17,7 +17,7 @@
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    {{ 'CreateProvider' | trans ({}, "accounts") }}
+    {{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}
 {% endblock %}
 
 

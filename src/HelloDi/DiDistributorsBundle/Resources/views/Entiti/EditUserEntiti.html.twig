@@ -19,7 +19,7 @@
 
     <div class="control-group">
         {{ form_label(form_edit.firstname) }}
-        {{ form_widget(form_edit.firstname,{ 'attr' : { 'placeholder': 'important'}}) }}
+        {{ form_widget(form_edit.firstname) }}
         {{ form_errors(form_edit.firstname) }}
     </div>
 
@@ -31,7 +31,7 @@
 
     <div class="control-group">
     {{ form_label(form_edit.username) }}
-    {{ form_widget(form_edit.username,{ 'attr' : { 'placeholder': 'important'}}) }}
+    {{ form_widget(form_edit.username) }}
         {{ form_errors(form_edit.username) }}
     </div>
 
@@ -78,7 +78,7 @@
         <div class="control-group">
             {{ form_label(form_edit.Account) }}
             <div class="controls">
-                {{ form_widget(form_edit.Account,{ 'attr' : { 'placeholder': 'important'}}) }}
+                {{ form_widget(form_edit.Account) }}
             </div>
         </div>
 

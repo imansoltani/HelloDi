@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    {{ 'AddUser' | trans ({}, "user") }}
+    {{ 'AddNewUser' | trans ({}, "user") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
@@ -9,7 +9,7 @@
 {% block Site_Map %}
     <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('DistStaff') }}">{{ 'Staff' | trans ({}, "user") }}</a>
-    <span class="link">{{ 'AddUser' | trans ({}, "user") }}</span>
+    <span class="link">{{ 'AddNewUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}

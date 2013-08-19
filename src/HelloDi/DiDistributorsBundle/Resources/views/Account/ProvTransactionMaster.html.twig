@@ -19,8 +19,8 @@
     </div> <!-- /widget-header -->
     <br>
 
-    <a class="button btn btn-large btn-primary" href="{{ path('ProvRegister',{'id':Account.id}) }}"> {{ 'RegisterTransaction' | trans ({}, "accounts") }}</a>
-    <a class="button btn btn-large btn-primary" href="{{ path('ProvTransfer',{'id':Account.id}) }}">{{ 'MakeTransfer' | trans ({}, "accounts") }}</a>
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvRegister',{'id':Account.id}) }}"> {{ 'RegisterTransaction' | trans ({}, "transaction") }}</a>
+    <a class="button btn btn-large btn-primary" href="{{ path('ProvTransfer',{'id':Account.id}) }}">{{ 'MakeTransfer' | trans ({}, "transaction") }}</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -110,14 +110,14 @@
 
             $(function () {
 
-                Form_Search(1,"Search Transactions");
+                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
-                    val= $("#form_type").val();
-                    $("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');
-                    $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
+                    {#val= $("#form_type").val();#}
+                    {#$("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');#}
+                    {#$.post('{{ path("LoadActionProv") }}',{id: val},function(result){#}
 
-                        $("#form_Action").html(result);
-                    });
+                        {#$("#form_Action").html(result);#}
+                    {#});#}
 
 
 

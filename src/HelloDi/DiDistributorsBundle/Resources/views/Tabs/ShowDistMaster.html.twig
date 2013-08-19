@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'ManageDistributor' | trans ({}, "accounts") }}
+    {{ 'Distributor' | trans ({}, "accounts") }}
 
 {% endblock title %}
 
@@ -9,7 +9,7 @@
 
 {% block PageTitle %}
     <i class="icon-briefcase"></i>
-    {{ 'ManageDistributor' | trans ({}, "accounts") }}
+    {{ 'Distributor' | trans ({}, "accounts") }}
 {% endblock %}
 
 
@@ -59,7 +59,7 @@
         <a href="{{ path('MasterDistPurchases',{'id':Account.id}) }}">
 
 
-            <input type="submit" value="{{ 'Purchases' | trans ({}, "accounts") }}" >
+            <input type="submit" value="{{ 'Purchases' | trans ({}, "transaction") }}" >
 
 
         </a>

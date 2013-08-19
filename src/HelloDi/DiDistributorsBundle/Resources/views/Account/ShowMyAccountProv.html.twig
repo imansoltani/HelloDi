@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'ProviderAccounts' | trans ({}, "accounts") }}
+    {{ 'Provider' | trans ({}, "accounts") }}
 
 {% endblock title %}
 
@@ -14,11 +14,9 @@
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    {{ 'ProvidersManagement' | trans ({}, "accounts") }}
+    {{ 'Providers' | trans ({}, "accounts") }}
 
 {% endblock %}
-
-
 
 
 {% block Link_Head %}
@@ -66,7 +64,7 @@
                                     <th>{{ 'Id' | trans ({}, "common") }}</th>
                                     <th>{{ 'Name' | trans ({}, "common") }}</th>
                                     <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
-                                    <th>{{ 'EntityName' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Entity' | trans ({}, "entity") }}</th>
                                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
                                 </tr>
@@ -93,7 +91,7 @@
                                         <td class="td-actions">
 
                                             <a class="btn_actions"
-                                               href="{{ path('MasterProvTransaction',{'id':myAccount.id}) }}">Manage</a>
+                                               href="{{ path('MasterProvTransaction',{'id':myAccount.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -48,11 +48,21 @@
                     <div class="controls">
                         <input type="text" value="" id="itemname" disabled class="input-large">
                     </div>
+                </div>            <div class="control-group">
+                    <label class="control-label">
+                        {{ 'ItemType' | trans ({}, "item") }}
+                    </label>
+
+                    <div class="controls">
+                        <input type="text" value="" id="itemtype" disabled class="input-large">
+                    </div>
                 </div>
+
+
 
                 <div class="control-group">
                     <label class="control-label">
-                        {{ 'Value' | trans ({}, "price") }}
+                        {{ 'FaceValue' | trans ({}, "itam") }}
                     </label>
 
                     <div class="controls">
@@ -123,7 +133,10 @@
                         {{ 'AllOperators' | trans ({}, "operator") }}
                     </div>
 
+
+
                     {% for opr in Operators %}
+
                         <div class="filter" data-filter="{{ opr.oprname }}">
                             {{ opr.oprname }}
                         </div>
@@ -161,6 +174,17 @@
                                     </div>
 
                                     <input type="hidden" id="item_name1" value="{{ opritm.itemname }}">
+                                    <input type="hidden" id="item_type1"
+
+                                  {% if opritm.itemtype=='dmtu'  %}
+                                           value="{{ 'Mobile' | trans ({}, 'item') }}"
+                                  {% elseif opritm.itemtype=='epmt'  %}
+                                           value="{{ 'E-payment' | trans ({}, 'item') }}"
+                                  {% elseif opritm.itemtype=='clcd'  %}
+                                           value="{{ 'Calling_Card' | trans ({}, 'item') }}"
+                                   {% endif %}
+
+                                    ">
                                     <input type="hidden" id="face_value1" value="{{ opritm.itemfv }}">
                                     <input type="hidden" id="currency1" value="{{ opritm.itemcur }}">
                                     <input type="hidden" id="operator1" value="{{ opritm.oprname }}">
@@ -194,6 +218,7 @@
 
                         $('.popupshow #operator').val($(" #operator1", this).val());
                         $('.popupshow #itemname').val($(" #item_name1", this).val());
+                        $('.popupshow #itemtype').val($(" #item_type1", this).val());
                         $('.popupshow #facevalue').val($(" #face_value1", this).val());
                         $('.popupshow #showsum').val($(" #face_value1", this).val());
                         $('.popupshow #itemcount').val(1);

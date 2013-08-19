@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'DistributorsAccounts' | trans ({}, "accounts") }}
+    {{ 'Distributors' | trans ({}, "accounts") }}
 {% endblock title %}
 
 {% set MU = 'dist' %}
@@ -13,7 +13,7 @@
 
 {% block PageTitle %}
     <i class="icon-briefcase"></i>
-    {{ 'DistributorsManagement' | trans ({}, "accounts") }}
+    {{ 'Distributors' | trans ({}, "accounts") }}
 {% endblock %}
 
 {% block Link_Head %}
@@ -58,7 +58,7 @@
                                 <tr>
                                     <th>{{ 'Id' | trans ({}, "common") }}</th>
                                     <th>{{ 'Name' | trans ({}, "common") }}</th>
-                                    <th>{{ 'EntityName' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'Entity' | trans ({}, "entity") }}</th>
                                     <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
                                     <th>{{ 'CreditLimit' | trans ({}, "accounts") }}</th>
                                     <th>{{ 'SubAccounts' | trans ({}, "accounts") }}</th>
@@ -77,11 +77,8 @@
                                         <td>{{ myAccount.Entiti.entName }}</td>
                                         <td>{{ myAccount.accBalance }}</td>
                                         <td>
-                                            {% if myAccount.accCurrency =='USD' %}
-                                                USD|
-                                            {% elseif myAccount.accCurrency =='CHF' %}
-                                                CHF|
-                                            {% endif %}
+                                            {{  myAccount.accCurrency }}|
+
                                             {%  if myAccount.accCreditLimit=='' %}
                                                 0
                                             {% else %}

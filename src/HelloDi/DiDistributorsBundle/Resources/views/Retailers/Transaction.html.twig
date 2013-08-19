@@ -101,13 +101,13 @@
 
             $(function () {
 
-                val = $("#form_Type").val();
-                $("#form_Action").html('<option value="All"> {{ 'Pleasewait' | trans ({}, "transaction") }}</option>');
-                $.post('{{ path("RetailerLoadActiowOwn") }}', {id: val}, function (result) {
-                    $("#form_Action").html(result);
-                });
+                {#val = $("#form_Type").val();#}
+                {#$("#form_Action").html('<option value="All"> {{ 'Pleasewait' | trans ({}, "transaction") }}</option>');#}
+                {#$.post('{{ path("RetailerLoadActiowOwn") }}', {id: val}, function (result) {#}
+                    {#$("#form_Action").html(result);#}
+                {#});#}
 
-                Form_Search(1, "Filter List");
+                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
             });
         </script>
@@ -156,9 +156,9 @@
                                 <td>------</td>
                                 <td>
 
-                                    <script type="text/javascript">
-                                        document.write(Math.abs({{ tran.tranAmount }}));
-                                    </script>
+
+                                    {{ tran.tranAmount|abs }}
+
 
                                 </td>
                             {% endif %}
@@ -214,7 +214,7 @@
                                                  <div class="controls">
                                                      <input type="text" disabled=""
                                                          {% if tran.tranAmount>0 %}
-                                                            value="{{ tran.tranAmount }}"
+                                                            value="{{ tran.tranAmount|abs }}"
                                                          {% elseif tran.tranAmount<0 %}
                                                             value="--------"
                                                      {% endif %}
@@ -234,7 +234,7 @@
                                                              {% if tran.tranAmount>0 %}
                                                                  value="--------"
                                                              {% elseif tran.tranAmount<0 %}
-                                                                 value="{{ -tran.tranAmount }}"
+                                                                 value="{{ tran.tranAmount|abs }}"
                                                              {% endif %} />
                                                  </div>
                                              </div>

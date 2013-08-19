@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    {{ 'Profile' | trans ({}, "user") }}
+    {{ 'Profile' | trans ({}, "common") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link">{{ 'Profile' | trans ({}, "user") }}</span>
+    <span class="link">{{ 'Profile' | trans ({}, "common") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    {{ 'Profile' | trans ({}, "user") }}
+    {{ 'Profile' | trans ({}, "common") }}
 {% endblock %}
 
 

@@ -256,7 +256,7 @@ $datetype=0;
                     'All' => 'All',
                      'dmtu'=>'Mobile',
                      'clcd'=>'Calling_Card',
-                     'empt'=>'E-payment'
+                     'epmt'=>'E-payment'
                   )))
 
             ->add('ItemName', 'entity',
@@ -797,7 +797,7 @@ $datetype=0;
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemType as itemtype ','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
             ->from('HelloDiDiDistributorsBundle:Operator','O')
             ->innerJoin('O.Item','OI')
             ->innerJoin('OI.Prices','OIP')
@@ -850,7 +850,7 @@ $datetype=0;
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.itemType as itemtype','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
             ->from('HelloDiDiDistributorsBundle:Operator','O')
             ->innerJoin('O.Item','OI')
             ->innerJoin('OI.Prices','OIP')

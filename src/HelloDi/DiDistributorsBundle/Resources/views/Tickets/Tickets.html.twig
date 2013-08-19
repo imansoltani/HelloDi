@@ -35,6 +35,12 @@
 
                     <form class="form-horizontal SearchForm" action="{{ path('MasterTickets') }}" method="POST">
 
+                        <div class="control-group">
+                        <label class="control-label">
+                            {{ 'Status' | trans ({}, "ticket") }}:
+
+                        </label>
+                            </div>
 
                         <div class="control-group">
                             <label class="control-label">
@@ -95,7 +101,7 @@
                     <script type="text/javascript">
                         $(function () {
 
-                            Form_Search(0,"Filter List");
+                            Form_Search(0,"{{'Filter_List'|trans({},'js')  }}");
 
                         });
                     </script>

@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Transactions
+    {{ 'SalesReport' | trans ({}, "transaction") }}
 {% endblock title %}
 
 {% set MU = 'report' %}
@@ -84,7 +84,7 @@
                     </form>
                     <script type="text/javascript">
                         $(function () {
-                            Form_Search(1,"Filter List");
+                            Form_Search(1,"{{'Filter_List'|trans({},'js')  }}")
 
                         });
                     </script>
@@ -128,17 +128,16 @@
 
             {% set com=render(controller('HelloDiDiDistributorsBundle:Distributors:GetCom', { 'id':Tr.id  }))   %}
 
-                                            <script type="text/javascript">
-                                                document.write(Math.abs({{Tr.tranAmount+com}}));
-                                            </script>
+                                 {% set BuyingPrice=Tr.tranAmount+com %}
+                                               {{BuyingPrice|abs}}
                                         </td>
 
                                         <td>
 
 
-                                            <script type="text/javascript">
-                                                document.write(Math.abs({{Tr.tranAmount }}));
-                                            </script>
+
+                                                {{Tr.tranAmount|abs }}
+
 
 
 

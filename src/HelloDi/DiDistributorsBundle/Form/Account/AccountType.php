@@ -17,7 +17,7 @@ class AccountType extends AbstractType
             ->add('accTimeZone','timezone',array('label' => 'TimeZone','translation_domain' => 'accounts'))
             ->add('accDefaultLanguage','choice',array('label' => 'DefaultLanguage','translation_domain' => 'accounts',
                 'choices'=>(
-                       array('en'=>'en','fr'=>'fr')),'preferred_choices'=>array(1)));
+                       array('en'=>'en','fr'=>'fr'))));
         ;
     }
 

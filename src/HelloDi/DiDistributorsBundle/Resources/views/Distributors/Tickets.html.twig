@@ -70,7 +70,7 @@
                     <script type="text/javascript">
                         $(function () {
 
-                            Form_Search(0,"Filter List");
+                            Form_Search(0,"{{'Filter_List'|trans({},'js')  }}");
 
                         });
                     </script>
@@ -174,7 +174,8 @@
                             {% else %}
                                 {{ 'Open' | trans ({}, "ticket") }}
 
-                            {% endif %}   {{ 'Ticket' | trans ({}, "ticket") }} -
+                            {% endif %}
+                            {{ 'Ticket' | trans ({}, "ticket") }} -
                             <a href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">
                                 {{ 'Click_for_Switch_to' | trans ({}, "ticket") }} {% if Ticket.status==0 %}
                                     {{ 'Open' | trans ({}, "ticket") }}
@@ -184,11 +185,6 @@
                             </a>
                         </div>
                     </div>
-
-
-
-
-
 
 
                 {% endfor %}

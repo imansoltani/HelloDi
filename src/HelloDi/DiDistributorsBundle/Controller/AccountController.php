@@ -540,7 +540,7 @@ class AccountController extends Controller
                     'All' => 'All',
                     'dmtu' => 'Mobile',
                     'clcd' => 'Calling_Card',
-                    'empt' => 'E-payment',
+                    'epmt' => 'E-payment',
 
                 )))
 
@@ -760,7 +760,7 @@ class AccountController extends Controller
         $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
-            ->add('Amount', 'text', array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount', 'integer', array('label'=>'Amount','translation_domain'=>'transaction'))
             ->add('Accounts', 'entity', array('label'=>'Account',
                 'translation_domain'=>'accounts',
                 'empty_value' => 'select_a_account',
@@ -842,7 +842,8 @@ class AccountController extends Controller
 
             }
             else
-                $this->get('session')->getFlashBag()->add('error', 'more than zero is accept!');
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'validators'));
         }
 
 
@@ -878,7 +879,7 @@ class AccountController extends Controller
                 )
 
             ))
-            ->add('Amount', 'text', array('label'=>'Amount','translation_domain'=>'transaction',
+            ->add('Amount', 'integer', array('label'=>'Amount','translation_domain'=>'transaction',
                 'required' => true,
             ))
             ->add('TradeDate', 'text', array('label'=>'TradeDate','translation_domain'=>'transaction',))
@@ -941,7 +942,8 @@ class AccountController extends Controller
 
                 }
             } else
-                $this->get('session')->getFlashBag()->add('error', 'more than zero is accept !');
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'validators'));
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(

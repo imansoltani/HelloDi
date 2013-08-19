@@ -4,28 +4,36 @@ HelloDi\DiDistributorsBundle\Entity\Entiti:
             - Regex:
                 pattern: "/\d/"
                 match: true
-                message: 'only numeric'
+                message: 'Only_numbers_are_accepted'
 
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: entName
+            message: 'This_entity_name_is_already_in_use'
 HelloDi\DiDistributorsBundle\Entity\Tax:
     properties:
         tax:
             - Regex:
                 pattern: "/^\d/"
                 match:   true
-                message: 'only numeric'
+                message: 'Only_numbers_are_accepted'
+
+
 HelloDi\DiDistributorsBundle\Entity\User:
-    properties:
-        mobile:
-            - Regex:
-                pattern: "/\d/"
-                match: true
-                message: 'only numeric'
 
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: usernameCanonical
             errorPath: username
-            message: 'fos_user.username.already_used'
+            message: 'This_username_is_already_in_use'
+
+    properties:
+        plainPassword:
+            - Length:
+                min: 6
+                max: 25
+                minMessage: "password must be at least {{ limit }} characters length"
+                maxMessage: "pasword name cannot be longer than {{ limit }} characters length"
 
 
 HelloDi\DiDistributorsBundle\Entity\Account:
@@ -34,12 +42,19 @@ HelloDi\DiDistributorsBundle\Entity\Account:
             - Regex:
                 pattern: "/\d/"
                 match:   true
-                message: only numeric
-
+                message: 'Only_numbers_are_accepted'
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: accName
-            message: 'this name already used'
+            message: 'This_account_name_is_already_in_use'
+
+HelloDi\DiDistributorsBundle\Entity\Transaction:
+        Fees:
+            - Regex:
+                pattern: "/\d/"
+                match:   true
+                message: 'Only_numbers_are_accepted'
+
 
 
 

@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'ManageEntity' | trans ({}, "entity") }}
+    {{ 'Entities' | trans ({}, "entity") }}
 
 {% endblock title %}
 
@@ -57,7 +57,7 @@
 
         <a href="{{ path('Ent_Info',{'id':entity.id}) }}">
 
-            <input type="submit" value="{{ 'Info' | trans ({}, "common") }}" >
+            <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}" >
         </a>
 
     </li>

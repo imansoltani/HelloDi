@@ -10,7 +10,7 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>{{ 'EntityInfo' | trans ({}, "entity") }}</h3>
+        <h3>{{ 'Info' | trans ({}, "entity") }}</h3>
     </div> <!-- /widget-header -->
 
     <form style="margin-top: 20px" action="{{ path('Ent_Info',{'id':entity.id}) }}" method="post" class="form-horizontal" >
@@ -18,7 +18,7 @@
 
 
             <div class="control-group">
-                <label class="control-label" >{{ 'Name' | trans ({}, "common") }}</label>
+                <label class="control-label" >{{ 'Name' | trans ({}, "entity") }}</label>
                 <div class="controls">
                     <input type="text" disabled class="input-large" value="{{ entity.entName }}" >
                 </div>

@@ -839,7 +839,7 @@ color:#FFF;
 .main .pagetop.second .pagedisc{
     color: #1b206a;
     display: block;
-    width: 250px;
+    width: 300px;
     float: right;
 
     margin-right: 20px;
@@ -902,7 +902,7 @@ color:#FFF;
 }
 
 .main .pagetop .pagedisc i{
-    width: 100px;
+    width: 150px;
     display: inline-block;
 }
 

@@ -11,7 +11,7 @@ class EditEntitiRetailerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entName', 'text',array('required'=>true,'label' => 'EntityName','translation_domain' => 'entity'))
+            ->add('entName', 'text',array('required'=>true,'label' => 'Name','translation_domain' => 'entity'))
             ->add('entVatNumber', 'text',array('required'=>false,'label' => 'VatNumber','translation_domain' => 'entity'))
             ->add('entTel1', 'text',array('required'=>false,'label' => 'Tel1','translation_domain' => 'entity'))
             ->add('entTel2', 'text',array('required'=>false,'label' => 'Tel2','translation_domain' => 'entity'))

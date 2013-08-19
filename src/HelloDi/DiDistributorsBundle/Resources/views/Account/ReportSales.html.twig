@@ -39,6 +39,12 @@
                 {{ form_widget(form.DateEnd) }}
             </div>
 
+            <div class="control-group">
+                {{ form_label(form.Account) }}
+                <div class="controls">
+                    {{ form_widget(form.Account) }}
+                </div>
+            </div>
 
             <div class="control-group">
                 {{ form_label(form.ItemName) }}
@@ -55,12 +61,6 @@
             </div>
 
 
-            <div class="control-group">
-                {{ form_label(form.Account) }}
-                <div class="controls">
-                    {{ form_widget(form.Account) }}
-                </div>
-            </div>
 
 
 
@@ -84,7 +84,7 @@
     <script type="text/javascript">
         $(function () {
 
-            Form_Search(1,"Search Transactions");
+            Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
         });
     </script>

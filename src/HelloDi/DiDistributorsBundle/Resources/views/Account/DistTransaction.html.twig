@@ -112,13 +112,13 @@
 
             $(function () {
 
-                Form_Search(1,"Search Transactions");
+                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
-                    val= $("#form_Type").val();
-                    $("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');
-                    $.post('{{ path("LoadActionDist") }}',{id: val},function(result){
-                        $("#form_Action").html(result);
-                    });
+                    {#val= $("#form_Type").val();#}
+                    {#$("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');#}
+                    {#$.post('{{ path("LoadActionDist") }}',{id: val},function(result){#}
+                        {#$("#form_Action").html(result);#}
+                    {#});#}
 
 
 
