@@ -14,6 +14,28 @@
 
 {% set MU = 'item' %}
 
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Fix_Size();
+            filterFunction($('#SelectFilter option:selected').text(),1);
+        });
+
+    </script>
+
+{% endblock %}
+
 {% block Tab %}
     <div class="widget-header">
         <h3>Item Per Distributors</h3>
@@ -24,117 +46,128 @@
             This item has not price on any provider account.
         </div>
     {% else %}
-    <div class="span">
-        <div class="widget-content">
+        <div class="span">
+            <div class="widget-content">
 
 
-            <form action="#" method="post" class="form-horizontal">
-                <div class="tablediv">
+                <form action="#" method="post" class="form-horizontal">
+                    <div style="margin-top: 5px" class="tablediv">
 
 
-                    <div class="tab-content datatable">
-                        <table id="example" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>Retailer Account</th>
-                                <th>Retailer Price</th>
-                                <th>Status</th>
-                                <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
-                            </tr>
-
-
-
-                            </thead>
-                            <tbody>
-                            {% for row in form.checks %}
-
-                                {% set pricerow = null %}
-                                {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
-                                    {% if price.item.id == itemid %}
-                                        {% set pricerow = price %}
-                                    {% endif %}
-                                {% endfor %}
-
+                        <div class="tab-content datatable">
+                            <table id="example" class="table postsend">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        {{ form.checks.vars.choices[row.vars.value].data.accName }}
-                                    </td>
-                                    <td>
-                                        {% if pricerow is null %}
-                                            N/A
-                                        {% else %}
-                                            {{ pricerow.price }}
-                                        {% endif %}
-                                        ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
-                                    </td>
-                                    <td>
-                                        {% if pricerow is null %}
-                                            N/A
-                                        {% else %}
-                                            {% if pricerow.priceStatus==1 %}
-                                            true
-                                            {% else %}
-                                            false
-                                            {% endif %}
-                                        {% endif %}
-                                    </td>
-                                    <td class="checkboxs">
-                                        {{ form_widget(row) }}
-                                    </td>
+                                    <th>Retailer Account</th>
+                                    <th>Retailer Price</th>
+                                    <th>Status</th>
+                                    <th style="text-align: center"><input onclick="CheckAll()" id="clickall"
+                                                                          type="checkbox"/></th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                <tr class="input">
+                                    <td></td>
+                                    <td>
 
+                                        <select onchange="filterFunction($('#SelectFilter option:selected').text(),1);" id="SelectFilter">
+
+                                            {% for price in prices %}
+                                                <option value="{{ price.priceCurrency }}">{{ price.priceCurrency }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+
+                                </thead>
+                                <tbody>
+                                {% for row in form.checks %}
+
+                                    {% set pricerow = null %}
+                                    {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
+                                        {% if price.item.id == itemid %}
+                                            {% set pricerow = price %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <tr>
+                                        <td>
+                                            {{ form.checks.vars.choices[row.vars.value].data.accName }}
+                                        </td>
+                                        <td>
+                                            {% if pricerow is null %}
+                                                N/A
+                                            {% else %}
+                                                {{ pricerow.price }}
+                                            {% endif %}
+                                            ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
+                                        </td>
+                                        <td>
+                                            {% if pricerow is null %}
+                                                N/A
+                                            {% else %}
+                                                {% if pricerow.priceStatus==1 %}
+                                                    true
+                                                {% else %}
+                                                    false
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td class="checkboxs">
+                                            {{ form_widget(row) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+
+                        </div>
 
                     </div>
 
-                </div>
 
-                <script type="text/javascript"
-                        src="{{ asset('bundles/hellodi/js/libs/jquery-1.9.1.min.js') }}"></script>
-
-                <script type="text/javascript"
-                        src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        Fix_Size();
+                    <script type="text/javascript">
+                        $(document).ready(function () {
 
 
-                    });
+                        });
 
 
-                    function CheckAll() {
-                        var clickall = document.getElementById('clickall').checked;
-                        $('* .checkboxs > input').prop("checked", clickall);
-                    }
+                        function CheckAll() {
+                            var clickall = document.getElementById('clickall').checked;
+                            $('* .checkboxs > input').prop("checked", clickall);
+                        }
 
-                </script>
+                    </script>
 
 
-                <div style="margin-top: 15px" class="control-group">
-                    {{ form_label(form.NewPrice) }}
+                    <div style="margin-top: 15px" class="control-group">
+                        {{ form_label(form.NewPrice) }}
 
-                    {{ form_widget(form.NewPrice, {'required':'' }) }}
+                        {{ form_widget(form.NewPrice, {'required':'' }) }}
 
-                    {{ form_errors(form.NewPrice) }}
-                </div>
+                        {{ form_errors(form.NewPrice) }}
+                    </div>
 
-                {{ form_rest(form) }}
+                    {{ form_rest(form) }}
 
-                <input type="hidden" name="actiontype" id="actiontype" value="0"/>
+                    <input type="hidden" name="actiontype" id="actiontype" value="0"/>
 
-                <div class="form-actions">
-                    Apply the new price to the selected accounts:<br/>
-                    <input type="submit" class="btn btn-primary" value="Approve"/><br/>
-                    <br/>
+                    <div class="form-actions">
+                        Apply the new price to the selected accounts:<br/>
+                        <input type="submit" class="btn btn-primary" value="Approve"/><br/>
+                        <br/>
 
-                    Inactive the item on the selected accounts:<br/>
-                    <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);" value="Inactive"/>
-                    This change will be affect the retailers of the distributor.
-                </div>
-            </form>
+                        Inactive the item on the selected accounts:<br/>
+                        <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);"
+                               value="Inactive"/>
+                        This change will be affect the retailers of the distributor.
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
     {% endif %}
 {% endblock %}
