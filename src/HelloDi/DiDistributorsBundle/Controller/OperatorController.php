@@ -32,6 +32,7 @@ class OperatorController extends Controller
                 $em->flush();
                 $operator->upload();
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Operator Created Successfully!');
                 return $this->redirect($this->generateUrl('operator'));
             }
         }

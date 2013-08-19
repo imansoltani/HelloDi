@@ -18,7 +18,7 @@ class Operator
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="Name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="Name", unique = true)
      */
     private $name;
 
@@ -176,10 +176,6 @@ class Operator
 
     public function upload()
     {
-        if (null === $this->getFile()) {
-            return;
-        }
-
         if(file_exists($this->getAbsolutePath()))
             unlink($this->getAbsolutePath());
 

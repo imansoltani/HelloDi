@@ -44,14 +44,16 @@
                     </div>
                     <div class="control-group">
                         {{ form_label(form.file) }}
-                        {{ form_widget(form.file) }}
+                        <div class="controls money">
+                            {{ form_widget(form.file) }} <span class="icon-certificate"></span>
+                        </div>
                         {{ form_errors(form.file) }}
                     </div>
 
                     {{ form_rest(form) }}
                     <div class="form-actions" style="margin-bottom: 0">
                         <input type="submit" class="btn btn-primary" value="Add"/>
-                        <button type="reset" class="btn">Cancel</button>
+                        <a href="{{ path('operator') }}" class="btn">Cancel</a>
                     </div>
 
                 </form>

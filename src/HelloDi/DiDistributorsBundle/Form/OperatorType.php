@@ -12,7 +12,7 @@ class OperatorType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('file',null,array('label'=>'Logo'))
+            ->add('file',null,array('label'=>'Logo','required'=> true))
         ;
     }
 

@@ -82,4 +82,10 @@ HelloDi\DiDistributorsBundle\Entity\Item:
             fields: itemCode
             message: 'This_item_code_exist_already'
 
+HelloDi\DiDistributorsBundle\Entity\Operator:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: name
+            message: 'This_operator_name_exist_already'
+
 #mostafa
