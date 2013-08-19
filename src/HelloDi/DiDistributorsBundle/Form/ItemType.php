@@ -25,11 +25,13 @@ class ItemType extends AbstractType
             ->add('itemType','choice',array('choices'=> array('clcd'=>'calling card','dmtu' =>'Mobile','epmy' =>'e-payment'),'label' => 'Item.Type','translation_domain' => 'item'))
             ->add('alertMinStock',null,array('label' => 'Item.AlertMinStock','translation_domain' => 'item'))
             ->add('operator',null,array(
+                'empty_value' => '--',
                 'property'=>'name',
                 'label' => 'Item.Operator','translation_domain' => 'item'
             ))
             ->add('itemCode','text',array('label' => 'Item.itemCode','translation_domain' => 'item'))
             ->add('Country','entity',array(
+                'empty_value' => '--',
                 'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                 'property'=>'name',
             ))

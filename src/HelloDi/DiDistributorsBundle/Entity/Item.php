@@ -16,7 +16,7 @@ class Item
     private $id;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="item_name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="item_name", unique = true)
      */
     private $itemName;
 
@@ -52,7 +52,7 @@ class Item
     private $operator;
 
     /** 
-     * @ORM\Column(type="string", length=45, nullable=true, name="item_code")
+     * @ORM\Column(type="string", length=45, nullable=true, name="item_code", unique = true)
      */
     private $itemCode;
 

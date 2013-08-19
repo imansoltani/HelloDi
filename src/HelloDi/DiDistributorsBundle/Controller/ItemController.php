@@ -45,6 +45,7 @@ class ItemController extends Controller
                 $em->persist($item);
                 $em->persist($itemdesc);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Item Created Successfully!');
                 return $this->redirect($this->generateUrl('item'));
             }
         }

@@ -63,6 +63,7 @@
                                 <th>Min Stock</th>
                                 <th>Stock</th>
                                 <th>Country</th>
+                                <th>Description Languages</th>
                             </tr>
 
                             <tr class="input" >
@@ -75,6 +76,7 @@
                                 <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                 <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                 <td><input type="text" name="search_Country" value="Search Country" class="search_init" /></td>
+                                <td><input type="text" name="search_language" value="Search Languages" class="search_init" /></td>
                             </tr>
 
                             </thead>
@@ -93,6 +95,12 @@
                                     <td>{{ item.alertMinStock }}</td>
                                     <td>{{ item.Codes.count }}</td>
                                     <td>{{ item.Country.iso }}</td>
+                                    <td>
+                                        {% for desc in item.ItemDescs %}
+                                            {{ desc.desclang }}
+                                            {% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
