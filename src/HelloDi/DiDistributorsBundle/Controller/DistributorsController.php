@@ -93,8 +93,21 @@ class DistributorsController extends Controller
                             ->setParameter('ap',$Account);
                     }
                           ))
-            ->add('DateStart','text',array('label'=>'From','translation_domain'=>'transaction','required'=>false))
-            ->add('DateEnd','text',array('label'=>'To','translation_domain'=>'transaction','required'=>false))
+            ->add('DateStart','date',
+                array(
+                     'widget'=>'single_text',
+                      'format'=>'yyyy/MM/dd',
+                    'label'=>'From',
+                    'translation_domain'=>'transaction',
+                    'required'=>false
+                ))
+            ->add('DateEnd','date',array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'label'=>'To',
+                'translation_domain'=>'transaction',
+                'required'=>false
+            ))
 
             ->getForm();
 
@@ -190,13 +203,22 @@ class DistributorsController extends Controller
         $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
-            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount','money',array(
+                'currency'=>$Account->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label'=>'Amount',
+                'translation_domain'=>'transaction'
+            ))
             ->add('Communications','textarea',array('label'=>'Communications','translation_domain'=>'transaction','required'=>true))
             ->add('Description','textarea',array('label'=>'Description','translation_domain'=>'transaction','required'=>true))
             ->getForm();
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text',array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount','money',array(
+                'currency'=>$Account->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label'=>'Amount',
+                'translation_domain'=>'transaction'))
             ->add('As','choice',array('label'=>'As','translation_domain'=>'transaction',
                 'choices'=>
                 array(
@@ -204,6 +226,10 @@ class DistributorsController extends Controller
                     1=>'Increase',
                     0=>'Decrease')
             ))->getForm();
+
+
+
+
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:Funding.html.twig',
             array(
@@ -233,7 +259,6 @@ class DistributorsController extends Controller
 
         if($req->isMethod('post'))
         {
-
             $trandist=new Transaction();
             $tranretailer=new Transaction();
 
@@ -747,12 +772,24 @@ else
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'TradeDate',
-                    1 => 'LookingDate',
+                    1 => 'BookingDate',
                 )
 
             ))
-            ->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction'))
+            ->add('DateStart','date',array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'required'=>false,
+                'label'=>'From',
+                'translation_domain'=>'transaction'
+            ))
+            ->add('DateEnd','date',array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'required'=>false,
+                'label'=>'To',
+                'translation_domain'=>'transaction'
+            ))
 
             ->add('Type','choice',
                 array('label'=>'Type','translation_domain'=>'transaction','choices'=>
@@ -880,7 +917,7 @@ else
             'expanded'   => true,
             'choices'    => array(
                 0 => 'TradeDate',
-                1 => 'LookingDate',
+                1 => 'BookingDate',
             )
         ))->getForm();
 

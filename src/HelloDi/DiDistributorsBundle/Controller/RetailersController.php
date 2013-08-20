@@ -151,10 +151,24 @@ class RetailersController extends Controller
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'TradeDate',
-                    1 => 'bookingDate',
+                    1 => 'BookingDate',
                 )))
-            ->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction'))
+
+            ->add('DateStart','date',array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'required'=>false,
+                'label'=>'From',
+                'translation_domain'=>'transaction'
+                                          ))
+
+            ->add('DateEnd','date',array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'required'=>false,
+                'label'=>'To',
+                'translation_domain'=>'transaction'
+                                         ))
 
             ->add('Type','choice',array('label'=>'Type','translation_domain'=>'transaction',
                 'choices'=> array(
@@ -186,7 +200,7 @@ $datetype=0;
             if($data['TypeDate']==0)
             {
              if($data['DateStart']!='')
-                $qb->where('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
              if($data['DateEnd']!='')
                 $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
@@ -195,7 +209,7 @@ $datetype=0;
             if($data['TypeDate']==1)
             {$datetype=1;
                 if($data['DateStart']!='')
-                $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
                 $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
@@ -297,8 +311,14 @@ $datetype=0;
   }
 
 
-  $form=$form->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
-             ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction'))->getForm();
+  $form=$form->add('DateStart','date',array(
+      'widget'=>'single_text',
+      'format'=>'yyyy/MM/dd',
+      'required'=>false,'label'=>'From','translation_domain'=>'transaction'))
+             ->add('DateEnd','date',array(
+          'widget'=>'single_text',
+          'format'=>'yyyy/MM/dd',
+          'required'=>false,'label'=>'To','translation_domain'=>'transaction'))->getForm();
 
         if($req->isMethod('POST'))
         {

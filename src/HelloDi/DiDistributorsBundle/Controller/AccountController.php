@@ -223,13 +223,21 @@ class AccountController extends Controller
         $qb = array();
         $form = $this->createFormBuilder()
 
-            ->add('DateStart', 'text', array('required' => false, 'label' => 'From','translation_domain' => 'transaction',))
-            ->add('DateEnd', 'text', array('required' => false, 'label' => 'To','translation_domain' => 'transaction',))
+            ->add('DateStart', 'date',
+                array(
+                    'widget'=>'single_text',
+                    'format'=>'yyyy/MM/dd',
+                    'required' => false, 'label' => 'From','translation_domain' => 'transaction',))
+            ->add('DateEnd', 'date',
+                array(
+                    'widget'=>'single_text',
+                    'format'=>'yyyy/MM/dd',
+                    'required' => false, 'label' => 'To','translation_domain' => 'transaction',))
             ->add('TypeDate', 'choice', array('translation_domain' => 'transaction',
                 'expanded' => true,
                 'choices' => array(
                     0 => 'TradeDate',
-                    1 => 'LookingDate',
+                    1 => 'BookingDate',
                 )
             ))
             ->add('Type', 'choice', array('translation_domain' => 'transaction',
@@ -321,7 +329,13 @@ class AccountController extends Controller
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay = $this->createFormBuilder()
-            ->add('Amount', null, array('label' => 'Amount','translation_domain'=>'transaction'))
+            ->add('Amount', 'money',
+                array(
+                'currency'=>$Account->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label' => 'Amount',
+                'translation_domain'=>'transaction'
+                ))
             ->add('As', 'choice', array('label' => 'As','translation_domain'=>'transaction',
                 'empty_value' => 'select_a_action',
                 'preferred_choices' => array('Credit'),
@@ -338,7 +352,10 @@ class AccountController extends Controller
             ->getForm();
 
         $formupdate = $this->createFormBuilder()
-            ->add('Amount', 'text', array('label' => 'Amount','translation_domain'=>'transaction',))
+            ->add('Amount', 'money', array(
+                'currency'=>$Account->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label' => 'Amount','translation_domain'=>'transaction',))
             ->add('As', 'choice', array('label' => 'As','translation_domain'=>'transaction',
                 'empty_value' => 'select_a_action',
                 'choices' =>
@@ -584,8 +601,15 @@ if($data['Amount']>0 )
                 ))
 
 
-            ->add('DateStart', 'text', array('disabled' => false, 'label' => 'From','translation_domain'=>'transaction','data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D'))->format('Y/m/d')))
-            ->add('DateEnd', 'text', array('disabled' => false, 'label' => 'To','translation_domain'=>'transaction','data'=>(new \DateTime('now'))->format('Y/m/d')))
+            ->add('DateStart', 'date', array(
+                'format'=>"yyyy/MM/dd",
+                'widget'=>'single_text',
+                'disabled' => false, 'label' => 'From','translation_domain'=>'transaction','data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D'))))
+            ->add('DateEnd', 'date',
+                array(
+                    'format'=>"yyyy/MM/dd",
+                    'widget'=>'single_text',
+                    'disabled' => false, 'label' => 'To','translation_domain'=>'transaction','data'=>(new \DateTime('now'))))
 
             ->add('GroupBy', 'choice', array('translation_domain'=>'transaction',
                 'expanded' => true,
@@ -685,7 +709,7 @@ if($data['Amount']>0 )
                 </div>
                 <div style='font-size:14px;float:right;width:8cm;text-align:right'>
                     <b>List of Retailer Revenues</b><hr/>
-                    Period: ".$data['DateStart']." to ".$data['DateEnd']."
+                    Period: ".$data['DateStart']->format('Y/m/d')." to ".$data['DateEnd']->format('Y/m/d')."
                 </div>
                 ";
 
@@ -768,7 +792,13 @@ if($data['Amount']>0 )
         $countisprov = count($isprove->getQuery()->getResult());
 
         $form = $this->createFormBuilder()
-            ->add('Amount', 'integer', array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount', 'money',
+                array(
+                 'invalid_message'=> 'You-entered_an_invali',
+                 'currency'=>$Account->getAccCurrency()
+                ,'label'=>'Amount'
+                ,'translation_domain'=>'transaction'
+                ))
             ->add('Accounts', 'entity', array('label'=>'Account',
                 'translation_domain'=>'accounts',
                 'empty_value' => 'select_a_account',
@@ -887,10 +917,20 @@ if($data['Amount']>0 )
                 )
 
             ))
-            ->add('Amount', 'integer', array('label'=>'Amount','translation_domain'=>'transaction',
+            ->add('Amount', 'money',
+                array(
+                'currency'=>$Account->getAccCurrency(),
+                'invalid_message'=> 'You_entered_an_invali',
+                'label'=>'Amount','translation_domain'=>'transaction',
                 'required' => true,
-            ))
-            ->add('TradeDate', 'text', array('label'=>'TradeDate','translation_domain'=>'transaction',))
+                     ))
+            ->add('TradeDate', 'date', array(
+                 'widget'=>'single_text',
+                 'format'=>"yyyy/MM/dd",
+                 'data'=>new \DateTime('now'),
+                'label'=>'TradeDate',
+                'translation_domain'=>'transaction'
+                   ))
             ->add('Description', 'textarea', array('required' => true,'label'=>'Description','translation_domain'=>'transaction',))
             ->add('Fees', 'text', array('required' => false,'label'=>'Fees','translation_domain'=>'transaction'))->getForm();
 
@@ -902,8 +942,8 @@ if($data['Amount']>0 )
             $tran->setUser($User);
             $tran->setAccount($Account);
 
-            $tran->setTranDate(\DateTime::createFromFormat('Y/m/d',$data['TradeDate']));
-            $tran->setTranInsert(\DateTime::createFromFormat('Y/m/d',$data['TradeDate']));
+            $tran->setTranDate($data['TradeDate']);
+            $tran->setTranInsert($data['TradeDate']);
             $tran->setTranBalance($Account->getAccBalance());
             $tran->setTranDescription($data['Description']);
 
@@ -947,7 +987,6 @@ if($data['Amount']>0 )
                         );
 
                         break;
-
                 }
             } else
                 $this->get('session')->getFlashBag()->add('error',
@@ -974,8 +1013,22 @@ if($data['Amount']>0 )
         $qb = array();
 
         $form = $this->createFormBuilder()
-            ->add('DateStart', 'text', array('disabled' => false, 'required' => false, 'label' => 'From','translation_domain'=>'transaction'))
-            ->add('DateEnd', 'text', array('disabled' => false, 'required' => false, 'label' => 'To','translation_domain'=>'transaction'))
+            ->add('DateStart', 'date',
+                array(
+                    'format'=>'yyyy/MM/d',
+                    'widget'=>'single_text',
+                    'data'=>((new \DateTime('now'))->sub(new \DateInterval('P7D'))),
+                    'disabled' => false,
+                    'required' => false,
+                    'label' => 'From',
+                     'translation_domain'=>'transaction'
+                     ))
+            ->add('DateEnd', 'date',
+                array(
+                    'format'=>'yyyy/MM/d',
+                    'data'=>(new \DateTime('now')),
+                    'widget'=>'single_text',
+                    'disabled' => false, 'required' => false, 'label' => 'To','translation_domain'=>'transaction'))
             ->add('ItemType', 'choice',
                 array('label' => 'ItemType','translation_domain'=>'item','choices' =>
                 array(
@@ -1752,10 +1805,16 @@ if($data['Amount']>0 )
                 'expanded' => true,
                 'choices' => array(
                     0 => 'TradeDate',
-                    1 => 'LookingDate',
+                    1 => 'BookingDate',
                 )))
-            ->add('FromDate', 'text', array('disabled' => false, 'required' => false,'label'=>'From','translation_domain'=>'transaction'))
-            ->add('ToDate', 'text', array('disabled' => false, 'required' => false,'label'=>'To','translation_domain'=>'transaction'))
+            ->add('FromDate', 'date', array(
+                'widget'=>'single_text',
+                'format'=>"yyyy/MM/dd",
+                'disabled' => false, 'required' => false,'label'=>'From','translation_domain'=>'transaction'))
+            ->add('ToDate', 'date', array(
+                'widget'=>'single_text',
+                'format'=>"yyyy/MM/dd",
+                'disabled' => false, 'required' => false,'label'=>'To','translation_domain'=>'transaction'))
 
             ->add('type', 'choice', array('label' => 'Type','translation_domain'=>'transaction',
                 'choices' => array(
@@ -2374,12 +2433,27 @@ if($data['Amount']>0 )
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'TradeDate',
-                    1 => 'LookingDate',
+                    1 => 'BookingDate',
                 )
 
             ))
-            ->add('DateStart','text',array('required'=>false,'label'=>'From','translation_domain'=>'transaction'))
-            ->add('DateEnd','text',array('required'=>false,'label'=>'To','translation_domain'=>'transaction',))
+            ->add('DateStart','date',
+                array(
+                    'widget'=>'single_text',
+                    'format' => 'yyyy/MM/dd',
+                    'required'=>false,
+                    'label'=>'From',
+                    'translation_domain'=>'transaction',
+                    ))
+
+            ->add('DateEnd','date',
+                array(
+                    'widget'=>'single_text',
+                    'format' => 'yyyy/MM/dd',
+                    'required'=>false,
+                    'label'=>'To',
+                    'translation_domain'=>'transaction',
+                ))
 
             ->add('Type','choice',
                 array('label'=>'Type','translation_domain'=>'transaction','choices'=>
@@ -2404,7 +2478,9 @@ if($data['Amount']>0 )
 
         if($req->isMethod('POST'))
         {
+
             $form->handleRequest($req);
+
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select('Tran')
@@ -2420,7 +2496,9 @@ if($data['Amount']>0 )
             }
 
             if($data['TypeDate']==1)
-            {$typedate=1;
+            {
+
+                $typedate=1;
                 if($data['DateStart']!='')
                     $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
@@ -2455,6 +2533,7 @@ if($data['Amount']>0 )
                 'retailerAccount' => $AccountRetailer,
                 'typedate'=>$typedate
             ));
+
 
 
     }
@@ -2536,13 +2615,20 @@ if($data['Amount']>0 )
         $AccountRetailer=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
-            ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount','money',array(
+                'currency'=>$AccountRetailer->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label'=>'Amount',
+                'translation_domain'=>'transaction'))
             ->add('Communications','textarea',array('required'=>true,'label'=>'Communications','translation_domain'=>'transaction'))
             ->add('Description','textarea',array('required'=>true,'label'=>'Description','translation_domain'=>'transaction'))
             ->getForm();
 
         $formupdate=$this->createFormBuilder()
-            ->add('Amount','text',array('label'=>'Amount','translation_domain'=>'transaction'))
+            ->add('Amount','money',array(
+                'currency'=>$AccountRetailer->getAccCurrency(),
+                'invalid_message'=>'You_entered_an_invalid',
+                'label'=>'Amount','translation_domain'=>'transaction'))
             ->add('As','choice',array('label'=>'As','translation_domain'=>'transaction'
                 ,
                 'choices'=>

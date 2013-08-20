@@ -109,7 +109,7 @@
                                     {% for Tr in pagination %}
                                         <tr>
 
-                                            <td>{{ Tr.tranDate|date('Y-m-d H:i:s') }}</td>
+                                            <td>{{ Tr.tranDate|date('Y/m/d H:i:s') }}</td>
                                             <td>{{ Tr.Code.Item.itemName}}</td>
                                             <td>{{ Tr.Code.Item.itemFaceValue}}</td>
                                             <td>

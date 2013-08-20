@@ -18,3 +18,5 @@ Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Distributor_
 Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Distributor_creditlimit_was_changed_from_alredydist_to_currentdist
 
 Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider_account_was_changed_from_alredyprov_to_currentprov
+
+You_entered_an_invali: You entered an invali

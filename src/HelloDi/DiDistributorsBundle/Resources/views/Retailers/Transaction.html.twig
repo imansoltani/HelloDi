@@ -49,7 +49,7 @@
 
             <div class="control-group">
                 <label class="control-label">
-                    {{ 'LookingDate' | trans ({}, "transaction") }}
+                    {{ 'BookingDate' | trans ({}, "transaction") }}
 
                 </label>
 
@@ -141,9 +141,9 @@
                             <td>
 
                                 {% if typedate==0 %}
-                                {{ tran.tranDate|date('Y-m-d') }}</td>
+                                {{ tran.tranDate|date('Y/m/d') }}</td>
                             {% else %}
-                                {{ tran.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                {{ tran.tranInsert|date('Y/m/d H:i:s') }}</td>
                             {% endif %}
                             </td>
 
@@ -192,7 +192,7 @@
 
                                                  <div class="controls">
                                                      <input type="text" disabled=""
-                                                            value="{{ tran.tranInsert|date('y-M-d H:m:s') }}">
+                                                            value="{{ tran.tranInsert|date('Y/m/d H:m:s') }}">
                                                  </div>
                                              </div>
                                              <div class="control-group">
@@ -280,7 +280,7 @@
 
                                                      <div class="controls">
                                                          <input type="text" disabled=""
-                                                                value="{{ tran.Code.Item.itemName }}" />
+                                                                value="{{ tran.Code.id }}" />
                                                      </div>
                                                  </div>
 

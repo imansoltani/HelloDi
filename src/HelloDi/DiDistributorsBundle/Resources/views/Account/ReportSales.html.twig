@@ -148,7 +148,7 @@
                                 {% if group==0 %}{{ Tr.TR.id}}{% else %}----{% endif %}
                             </td>
                             <td>
-                                {{ Tr.TR.tranDate|date('y-M-d') }}
+                                {{ Tr.TR.tranDate|date('Y/m/d') }}
                             </td>
                             <td>
                                 {{ Tr.TR.Code.Item.itemName}}
@@ -193,7 +193,7 @@
                                                 {{ 'Date' | trans ({}, "transaction") }}
                                             </label>
                                             <div class="controls">
-                                                <input type="text" value="{{ Tr.TR.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
+                                                <input type="text" value="{{ Tr.TR.tranInsert|date('Y/m/d H:m:s') }}" disabled="" >
                                             </div>
                                         </div>
 

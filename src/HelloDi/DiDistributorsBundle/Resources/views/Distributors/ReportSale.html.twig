@@ -117,7 +117,7 @@
                                 {% for Tr in pagination %}
                                     <tr>
                                         <td>{{ Tr.id}}</td>
-                                        <td>{{ Tr.tranInsert|date('Y-m-d H:i:s') }}</td>
+                                        <td>{{ Tr.tranInsert|date('Y/m/d H:i:s') }}</td>
                                         <td>
                                             {{ Tr.Code.Item.itemName}}
 

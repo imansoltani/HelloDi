@@ -40,14 +40,14 @@
                     </label>
                     <div class="controls">
 
-                        {{ form_widget(form.TypeDate[0],{'attr':{'checked':'checked'}}) }}
+                        {{ form_widget(form.TypeDate[0]) }}
                     </div>
                 </div>
 
 
                 <div class="control-group">
                     <label class="control-label" >
-                        {{ 'LookingDate' | trans ({}, "transaction") }}
+                        {{ 'BookingDate' | trans ({}, "transaction") }}
                     </label>
                     <div class="controls">
 
@@ -152,9 +152,9 @@
                         <tr>
                             <td>
                                 {% if datetype==0 %}
-                                {{ tran.tranDate|date('y-M-d') }}
+                                {{ tran.tranDate|date('Y/m/d') }}
                                    {% else %}
-                                    {{ tran.tranInsert|date('y-M-d H:m:s') }}
+                                    {{ tran.tranInsert|date('Y/m/d H:m:s') }}
                                     {% endif %}
                              </td>
                             <td>{{ tran.tranDescription }}</td>
@@ -214,7 +214,7 @@
                                                        {{ 'DateInsert' | trans ({}, "transaction") }}
                                                    </label>
                                                    <div class="controls">
-                                                       <input type="text" value="{{ tran.tranInsert|date('y-M-d H:m:s') }}" disabled="" >
+                                                       <input type="text" value="{{ tran.tranInsert|date('Y/m/d H:m:s') }}" disabled="" >
                                                    </div>
                                                </div>
 
