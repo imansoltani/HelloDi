@@ -32,6 +32,7 @@ use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
 use HelloDi\DiDistributorsBundle\TaxType;
+use Symfony\Component\Form\Extension\Validator\Constraints\FormValidator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +40,14 @@ use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use HelloDi\DiDistributorsBundle\Form\searchProvTransType;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Tests\ConstraintViolationTest;
+use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
 
 
 class AccountController extends Controller
@@ -927,7 +935,6 @@ if($data['Amount']>0 )
             ->add('TradeDate', 'date', array(
                  'widget'=>'single_text',
                  'format'=>"yyyy/MM/dd",
-                 'data'=>new \DateTime('now'),
                 'label'=>'TradeDate',
                 'translation_domain'=>'transaction'
                    ))
@@ -935,7 +942,11 @@ if($data['Amount']>0 )
             ->add('Fees', 'text', array('required' => false,'label'=>'Fees','translation_domain'=>'transaction'))->getForm();
 
         if ($Req->isMethod('POST')) {
-            $form->submit($Req);
+
+
+         try
+         {
+            $form->handleRequest($Req);
             $data = $form->getData();
 
             $tran->setTranCurrency($Account->getAccCurrency());
@@ -991,6 +1002,19 @@ if($data['Amount']>0 )
             } else
                 $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
+        }
+         catch(\Exception $e)
+         {
+          $form->get('TradeDate')->addError(New FormError('You_entered_an_invalid',array('translation_domain'=>'message')));
+
+             return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
+                 array(
+                     'form' => $form->createView(),
+                     'Account' => $Account,
+                     'User' => $User,
+                     'Entity' => $Account->getEntiti(),
+                 ));
+         }
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
             array(
