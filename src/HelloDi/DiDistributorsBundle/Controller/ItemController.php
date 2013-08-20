@@ -151,15 +151,17 @@ class ItemController extends Controller
                         {
                             $price->setPriceStatus(0);
                             $RetAccs = $accountdist->getChildrens()->toArray();
-//                            die("--".count($RetAccs)."--");
-                            $em ->createQueryBuilder()
-                                ->update('HelloDiDiDistributorsBundle:Price','pr')
-                                ->where('pr.Account IN (:retaccs)')->setParameter('retaccs',$RetAccs)
-                                ->andWhere('pr.Item = :item')->setParameter('item',$item)
-                                ->set("pr.priceStatus",0)
-                                ->getQuery()
-                                ->execute()
-                            ;
+                            if (count($RetAccs)> 0)
+                            {
+                                $em ->createQueryBuilder()
+                                    ->update('HelloDiDiDistributorsBundle:Price','pr')
+                                    ->where('pr.Account IN (:retaccs)')->setParameter('retaccs',$RetAccs)
+                                    ->andWhere('pr.Item = :item')->setParameter('item',$item)
+                                    ->set("pr.priceStatus",0)
+                                    ->getQuery()
+                                    ->execute()
+                                ;
+                            }
                         }
                     }
                     else
@@ -169,7 +171,6 @@ class ItemController extends Controller
                             if($price->getPrice() != $newprice)
                             {
                                 $price->setPrice($newprice);
-                                $price->setPriceStatus(1);
 
                                 $pricehistory = new PriceHistory();
                                 $pricehistory->setPrice($newprice);
@@ -177,6 +178,7 @@ class ItemController extends Controller
                                 $pricehistory->setPrices($price);
                                 $em->persist($pricehistory);
                             }
+                            $price->setPriceStatus(1);
                         }
                         else
                         {

@@ -1114,7 +1114,6 @@ else
                             if($retprice->getPrice() != $newprice)
                             {
                                 $retprice->setPrice($newprice);
-                                $retprice->setPriceStatus(1);
 
                                 $pricehistory = new PriceHistory();
                                 $pricehistory->setPrice($newprice);
@@ -1122,6 +1121,7 @@ else
                                 $pricehistory->setPrices($retprice);
                                 $em->persist($pricehistory);
                             }
+                            $retprice->setPriceStatus(1);
                         }
                         else
                         {
