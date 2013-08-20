@@ -20,26 +20,20 @@ class CodeController extends Controller
         $first = 1;
         $pagination = null;
         $count = 0;
-        $data = null;
+
+        if($request->isMethod('GET') && $request->getSession()->has('codesearch'))
+        {
+            $data = $request->getSession()->get('codesearch');
+            if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($data['provider']);
+            if($data['item']!=null) $data['item'] = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($data['item']);
+            if($data['inputFileName']!=null) $data['inputFileName'] = $em->getRepository('HelloDiDiDistributorsBundle:Input')->find($data['inputFileName']);
+            $form->setData($data);
+        }
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $data = $form->getData();
             $first = 0;
-        }
-        else
-        {
-            if ($request->getSession()->has('codesearch'))
-            {
-                $data = $request->getSession()->get('codesearch');
-                if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($data['provider']);
-                if($data['item']!=null) $data['item'] = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($data['item']);
-                if($data['inputFileName']!=null) $data['inputFileName'] = $em->getRepository('HelloDiDiDistributorsBundle:Input')->find($data['inputFileName']);
-                $form->setData($data);
-            }
-        }
-
-        if($data != null) {
 
             $qb = $em->createQueryBuilder()
                 ->select('code')
