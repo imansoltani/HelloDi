@@ -3,65 +3,65 @@
 {% set tab = '1' %}
 
 {% block title %}
-    Items Management
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('item') }}">Item</a>
-    <span class="link">Details</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('item') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Details' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'item' %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Item Details</h3>
+        <h3>{{ 'Details' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
     <form class="form-horizontal">
         <div class="control-group" >
-            <label class="control-label">Date</label>
+            <label class="control-label">{{ 'DateInsert' | trans ({}, "item") }}</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{{ item.itemDateInsert|date('Y/m/d') }}" >
             </div>
         </div>
         <div class="control-group" >
-            <label class="control-label">Country</label>
+            <label class="control-label">{{ 'Country' | trans ({}, "item") }}</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{{ item.Country.name }}" >
             </div>
         </div>
         <div class="control-group" >
-            <label class="control-label">(FaceValue/Currency)</label>
+            <label class="control-label">{{ 'Name' | trans ({}, "item")}} ({{ 'FaceValue' | trans ({}, "item") }} / {{ 'Currency' | trans ({}, "item") }})</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{{ item.itemName }} ( {{ item.itemFaceValue }} / {{ item.itemCurrency }} )" >
             </div>
         </div>
 
         <div class="control-group" >
-            <label class="control-label">Type</label>
+            <label class="control-label">{{ 'Type' | trans ({}, "item") }}</label>
             <div class="controls">
-                <input disabled=""  class="input-large" type="text" value=" {% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}" >
+                <input disabled=""  class="input-large" type="text" value="{% if item.itemType=='dmtu' %}{{ 'Mobile' | trans ({}, "item") }}{% elseif item.itemType=='clcu' %}{{ 'Calling_Card' | trans ({}, "item") }}{% else %}{{ 'E-payment' | trans ({}, "item") }}{% endif %}" >
             </div>
         </div>
 
         <div class="control-group" >
-            <label class="control-label">MinStock</label>
+            <label class="control-label">{{ 'MinStock' | trans ({}, "item") }}</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{{ item.alertMinStock }}" >
             </div>
         </div>
 
         <div class="control-group" >
-            <label class="control-label">Item Code</label>
+            <label class="control-label">{{ 'ItemCode' | trans ({}, "item") }}</label>
             <div class="controls">
                 <input  disabled="" class="input-large" type="text" value="{{ item.itemCode }}" >
             </div>
         </div>
 
         <div class="control-group" >
-            <label class="control-label">Operator</label>
+            <label class="control-label">{{ 'Operator' | trans ({}, "operator") }}</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{{ item.operator.name }}" >
             </div>
@@ -69,7 +69,7 @@
     </form>
 
     <div class="form-actions" >
-        <a class="btn btn-primary" href="{{ path('item_edit',{'id':item.id}) }}">Modify</a>
+        <a class="btn btn-primary" href="{{ path('item_edit',{'id':item.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
     </div>
 
 {% endblock %}

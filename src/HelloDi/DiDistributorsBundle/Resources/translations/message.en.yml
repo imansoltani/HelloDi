@@ -17,9 +17,12 @@ Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Ret
 Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Distributor_account_was_changed_from_alredydist_to_currentdist
 Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Distributor_creditlimit_was_changed_from_alredydist_to_currentdist
 
-Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider_account_was_changed_from_alredyprov_to_currentprov
+Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider account was changed from alredyprov to currentprov
 
 You_entered_an_invalid: You entered an invalid
 balance_should_more_than_credit_limit: balance should more than credit limit
 balance_is_not_enough: balance is not enough
 credit_Limit_should_be_positive: credit Limit should be positive
+
+#------
+Unable_to_find_%object%: Unable to find object

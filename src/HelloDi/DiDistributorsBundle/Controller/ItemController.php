@@ -61,7 +61,7 @@ class ItemController extends Controller
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
 
         if (!$item) {
-            throw $this->createNotFoundException('Unable to find Item entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
         }
 
         return $this->render('HelloDiDiDistributorsBundle:Item:show.html.twig', array(
@@ -77,7 +77,7 @@ class ItemController extends Controller
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
 
         if (!$item) {
-            throw $this->createNotFoundException('Unable to find Item entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
         }
 
         $editForm = $this->createForm(new ItemType($langs), $item);
