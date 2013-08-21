@@ -1,10 +1,10 @@
 Item:
+Items: Items
 Id: ID
 Name: Item Name
 FaceValue: Face Value
-Currency: Item Currency
-AlertMinStock: Alert Min Stock
-Operator: Operator
+Currency: Currency
+MinStock: Min Stock
 Mobile:
 Calling_Card:
 E-payment:
@@ -14,3 +14,10 @@ Type:
 ShopDmtu:
 BuyCard:
 Favorites:
+AddItem:
+Stock:
+Country:
+ItemCode:
+Info:
+
+DescriptionLanguages:

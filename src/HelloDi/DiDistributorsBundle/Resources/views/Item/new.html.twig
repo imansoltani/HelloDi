@@ -1,13 +1,13 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    New Item
+    {{ 'AddItem' | trans ({}, "item") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('item') }}">Item</a>
-    <span class="link">New Item</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
+    <span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 {% block Link_Head %}
     <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
@@ -17,7 +17,7 @@
 
 {% block PageTitle %}
     <i class="icon-tags"></i>
-    Add Item
+    <span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>
 {% endblock %}
 
 
@@ -31,7 +31,7 @@
 
             <div class="widget-content">
                 <div class="widget-header">
-                    <h3>Item Info</h3>
+                    <h3>{{ 'Info' | trans ({}, "item") }}</h3>
                 </div>
                 <!-- /widget-header -->
 
@@ -125,8 +125,8 @@
                     {{ form_widget(form._token) }}
 
                     <div class="form-actions" style="margin-bottom: 0">
-                        <input type="submit" class="btn btn-primary" value="Add"/>
-                        <button type="reset" class="btn">Reset</button>
+                        <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans ({}, "common") }}"/>
+                        <button type="reset" class="btn">{{ 'Reset' | trans ({}, "common") }}</button>
                     </div>
 
                 </form>

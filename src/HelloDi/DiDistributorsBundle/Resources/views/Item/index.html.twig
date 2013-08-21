@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Items
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 {% set MU = 'item' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Item</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-tags"></i>
-    Items Management
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock %}
 
 {% block Link_Head %}
@@ -44,7 +44,7 @@
 
         <div class="widget-content">
             <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
-                Add a new Item
+                {{ 'AddItem' | trans ({}, "item") }}
             </a>
 
 
@@ -54,16 +54,16 @@
                         <table id="example" class="table postsend">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Manage</th>
-                                <th>Name</th>
-                                <th>Face Value (Currency)</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Min Stock</th>
-                                <th>Stock</th>
-                                <th>Country</th>
-                                <th>Description Languages</th>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                                <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
+                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
+                                <th>{{ 'Type' | trans ({}, "item") }}</th>
+                                <th>{{ 'MinStock' | trans ({}, "item") }}</th>
+                                <th>{{ 'Stock' | trans ({}, "item") }}</th>
+                                <th>{{ 'Country' | trans ({}, "item") }}</th>
+                                <th>{{ 'DescriptionLanguages' | trans ({}, "item") }}</th>
                             </tr>
 
                             <tr class="input" >
@@ -86,12 +86,20 @@
 
                                     <td >{{ item.id }}</td>
                                     <td class="td-actions" >
-                                        <a class="btn_actions" href="{{ path('item_show',{'id':item.id}) }}">Manage</a>
+                                        <a class="btn_actions" href="{{ path('item_show',{'id':item.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
                                     </td>
                                     <td>{{ item.itemName }}</td>
                                     <td>{{ item.itemFaceValue }} {{ item.itemCurrency }}</td>
                                     <td>{{ item.itemCode }}</td>
-                                    <td>{% if item.itemType==0 %}Mobile{% elseif item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                                    <td>
+                                        {% if item.itemType=='dmtu' %}
+                                            {{ 'Mobile' | trans ({}, "item") }}
+                                        {% elseif item.itemType=='clcu' %}
+                                            {{ 'Calling_Card' | trans ({}, "item") }}
+                                        {% else %}
+                                            {{ 'E-payment' | trans ({}, "item") }}
+                                        {% endif %}
+                                    </td>
                                     <td>{{ item.alertMinStock }}</td>
                                     <td>{{ item.Codes.count }}</td>
                                     <td>{{ item.Country.iso }}</td>

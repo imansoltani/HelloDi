@@ -4,7 +4,7 @@
     <li class="{% if MU == 'home' %}active{% else %}dropdown{% endif %}" >
         <a href="{{ path('loginsuccess') }}">
             <i class="icon-home"></i>
-            <span id="user_pc_menu" >{{ 'Home' | trans ({}, "common") }}</span>
+            <span id="user_pc_menu" >{{ 'Home' | trans ({}, "menu") }}</span>
         </a>
     </li>
     <li class="{% if MU == 'prov' %}active dropdown{% else %}dropdown{% endif %}">
@@ -30,14 +30,14 @@
     <li class="{% if MU == 'code' %}active{% else %}dropdown{% endif %} ">
         <a href="{{ path('code') }}" class="dropdown-toggle" >
             <i class="icon-list-alt"></i>
-            <span  id="user_pc_menu"  >Codes</span>
+            <span  id="user_pc_menu"  >{{ 'Codes' | trans ({}, "code") }}</span>
         </a>
     </li>
 
     <li class="{% if MU == 'item' %}active{% else %}dropdown{% endif %}">
         <a href="{{ path('item') }}" class="dropdown-toggle">
             <i class="icon-tags"></i>
-            <span  id="user_pc_menu"  >Items</span>
+            <span  id="user_pc_menu"  >{{ 'Items' | trans ({}, "item") }}</span>
         </a>
     </li>
 
@@ -45,7 +45,7 @@
     <li class="{% if MU == 'operator' %}active{% else %}dropdown{% endif %}">
         <a href="{{ path('operator') }}" class="dropdown-toggle">
             <i class="icon-align-justify"></i>
-            <span  id="user_pc_menu"  >Operators</span>
+            <span  id="user_pc_menu"  >{{ 'Operators' | trans ({}, "operator") }}</span>
         </a>
     </li>
 

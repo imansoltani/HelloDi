@@ -1,10 +1,10 @@
-Id: i
+Id: id
 Operation:
 Manage:
 Search:
 Pleasewait:
 Details:
-Applay:
+Apply:
 Cancel:
 Update:
 Edit:
@@ -21,3 +21,5 @@ Master:  #?#
 Buy:
 Support:
 Profile:
+Add:
+Reset:
