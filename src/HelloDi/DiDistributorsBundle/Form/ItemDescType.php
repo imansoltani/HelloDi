@@ -20,8 +20,9 @@ class ItemDescType extends AbstractType
         $builder
             ->add('desclang','choice', array(
                     'choices'   => $this->langs,
+                    'label' => 'Language','translation_domain' => 'item'
                 ))
-            ->add('descdesc')
+            ->add('descdesc',null,array('label' => 'Description','translation_domain' => 'item'))
         ;
     }
 

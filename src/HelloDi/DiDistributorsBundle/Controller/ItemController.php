@@ -138,7 +138,7 @@ class ItemController extends Controller
                             ;
                     }
                 ))
-            ->add('NewPrice','text',array('required'=>true))
+            ->add('NewPrice','text',array('required'=>true,'label' => 'NewPrice','translation_domain' => 'price'))
             ->getForm();
 
         if ($request->isMethod('POST')) {
