@@ -19,20 +19,6 @@
     <form action="{{ path('ProvRegister',{'id':Account.id}) }}" method="post" class="form-horizontal YesNoMessage" message="{{ 'Are_you_sure_you_perform_this_operation?'|trans({},'message') }}"  header="{{ 'Register_transaction'|trans({},'message') }}" >
 
 
-        {% if form_errors(form.TradeDate) %}
-
-
-            <div class="control-group">
-
-                <div class="controls money">
-                    <b style="color: red">    {{'You_entered_an_invalid'|trans({},'validators') }}</b>
-                    <span class="icon-certificate"></span>
-                </div>
-
-            </div>
-
-        {% endif %}
-
 
         <div class="control-group">
         <div class="control-label" >

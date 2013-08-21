@@ -8,9 +8,11 @@ use HelloDi\DiDistributorsBundle\Entity\Price;
 class BalanceChecker
 {
     private  $session;
-    function  __construct($sesion)
+    private $translator;
+    function  __construct($sesion,$translator)
     {
         $this->session=$sesion;
+        $this->translator=$translator;
     }
     public function isBalanceEnough(Account $account, Price $price, $count = 1)
     {
@@ -33,7 +35,8 @@ class BalanceChecker
         if ($account->getAccBalance() >= $value  ) {
             return true;
         } else {
-            $this->session->getFlashBag()->add('error','balance is not enough!');
+            $this->session->getFlashBag()->add('error',
+                $this->translator->trans('balance_is_not_enough',array(),'message'));
             return false;
         }
     }
@@ -46,8 +49,9 @@ class BalanceChecker
            return true;
        else{
 
-           $this->session->getFlashBag()->add('error','balance less than credit limit !');
-           return false;
+           $this->session->getFlashBag()->add('error',
+               $this->translator->trans('balance_should_more_than_credit_limit',array(),'message'));
+                   return false;
        }
 
 
@@ -59,7 +63,8 @@ class BalanceChecker
             return true;
         else
         {
-            $this->session->getFlashBag()->add('error','CreditLimit must be positive!');
+            $this->session->getFlashBag()->add('error',
+                $this->translator->trans('credit_Limit_should_be_positive',array(),'message'));
             return false;
         }
 

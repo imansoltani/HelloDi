@@ -405,7 +405,8 @@ class AccountController extends Controller
             ->getForm();
 
         if ($req->isMethod('post')) {
-
+            try
+            {
             $trandist = new Transaction();
             $formapplay->handleRequest($req);
             $data = $formapplay->getData();
@@ -423,11 +424,12 @@ class AccountController extends Controller
 
 
             if (($data['Amount'] > 0)) {
+
                 switch ($data['As']) {
                     case 0:
 
-                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount'])) {
-
+                        if ($balancechecker->isMoreThanCreditLimit($Account, $data['Amount']))
+                        {
                             $alredy=$Account->getAccBalance();
                             $trandist->setTranType(0);
                             $trandist->setTranAmount(-$data['Amount']);
@@ -441,6 +443,7 @@ class AccountController extends Controller
                                     'message')
                             );
                         }
+
 
                         break;
 
@@ -480,7 +483,6 @@ class AccountController extends Controller
                             );
 
                         }
-                        break;
                 }
 
 
@@ -490,11 +492,21 @@ class AccountController extends Controller
                 $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
-        }
+       }
 
-        return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
+catch(\Exception $e)
+       {
 
-    }
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+     }
+
+            return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
+
+
+          }
+              }
 
     public function  FundingUpdateCredilimitAction(Request $req, $id)
     {
@@ -511,9 +523,11 @@ class AccountController extends Controller
             ))->getForm();
 
         if ($req->isMethod('POST')) {
+    try{
             $formupdate->handleRequest($req);
             $data = $formupdate->getData();
             $alredy=$Account->getAccCreditLimit();
+
 if($data['Amount']>0 )
 {
           switch($data['As'] )
@@ -522,7 +536,6 @@ if($data['Amount']>0 )
                   if ($balancechecker->isAccCreditLimitPlus($Account, $data['Amount'])) {
 
                       $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
-
 
                       $this->get('session')->getFlashBag()->add('success',
                           $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
@@ -549,10 +562,19 @@ if($data['Amount']>0 )
         else
             $this->get('session')->getFlashBag()->add('error',
                 $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
+      }
 
+catch(\Exception $e)
+{
+
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+}
         return $this->redirect($this->generateUrl('MasterDistFunding', array('id' => $id)));
     }
-    }
+
+   }
 
     public function  SaleAction(Request $req, $id)
     {
@@ -840,6 +862,9 @@ if($data['Amount']>0 )
         $tranprov->setTranAction('tran');
 
         if ($req->isMethod('POST')) {
+
+      try
+         {
             $form->handleRequest($req);
             $data = $form->getData();
 
@@ -868,10 +893,10 @@ if($data['Amount']>0 )
             $alredydist=$data['Accounts']->getAccBalance();
             $alredyprov=$Account->getAccBalance();
             if ($data['Amount'] > 0) {
+
                 $em->persist($trandist);
                 $em->persist($tranprov);
                 $em->flush();
-
 
                 $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
@@ -890,9 +915,15 @@ if($data['Amount']>0 )
             else
                 $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
+             }
+
+    catch(\Exception $e)
+         {
+             $this->get('session')->getFlashBag()->add('error',
+                 $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+         }
         }
-
-
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranTransfer.html.twig', array(
             'Account' => $Account,
             'User' => $User,
@@ -999,21 +1030,17 @@ if($data['Amount']>0 )
 
                         break;
                 }
-            } else
+            }
+            else
                 $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
         }
          catch(\Exception $e)
          {
-          $form->get('TradeDate')->addError(New FormError('You_entered_an_invalid',array('translation_domain'=>'message')));
 
-             return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
-                 array(
-                     'form' => $form->createView(),
-                     'Account' => $Account,
-                     'User' => $User,
-                     'Entity' => $Account->getEntiti(),
-                 ));
+             $this->get('session')->getFlashBag()->add('error',
+                 $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
          }
         }
         return $this->render('HelloDiDiDistributorsBundle:Account:ProvTranRegister.html.twig',
@@ -2695,7 +2722,7 @@ if($data['Amount']>0 )
 
         if($req->isMethod('post'))
         {
-
+try{
             $trandist=new Transaction();
             $tranretailer=new Transaction();
 
@@ -2765,11 +2792,18 @@ if($data['Amount']>0 )
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
+catch(\Exception $e)
+{
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
 
-        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
+}
+
 
     }
+        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
 
+  }
     public function  MasterRetailerFundingUpdateAction(Request $req,$id)
     {
 //        $this->check_ChildAccount($id);
@@ -2791,6 +2825,9 @@ if($data['Amount']>0 )
 
         if($req->isMethod('POST'))
         {
+
+ try
+ {
             $formupdate->handleRequest($req);
             $data=$formupdate->getData();
 
@@ -2859,9 +2896,17 @@ if($data['Amount']>0 )
                     $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
         }
-        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
-    }
 
+ catch(\Exception $e)
+ {
+     $this->get('session')->getFlashBag()->add('error',
+         $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+ }
+
+    }
+        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
+  }
 
     public function MasterLoadActionRetailerAction(Request $req)
     {

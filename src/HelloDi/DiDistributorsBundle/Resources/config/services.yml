@@ -42,7 +42,7 @@ services:
 
     hello_di_di_distributors.balancechecker:
         class: HelloDi\DiDistributorsBundle\Listener\BalanceChecker
-        arguments: [@session]
+        arguments: [@session,@translator.default]
 
     hello_di_di_distributors.codeselector:
             class: HelloDi\DiDistributorsBundle\Listener\CodeSelector

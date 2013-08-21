@@ -259,6 +259,7 @@ class DistributorsController extends Controller
 
         if($req->isMethod('post'))
         {
+       try{
             $trandist=new Transaction();
             $tranretailer=new Transaction();
 
@@ -325,6 +326,15 @@ else
 
         }
 
+  catch(\Exception $e)
+       {
+           $this->get('session')->getFlashBag()->add('error',
+               $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+       }
+
+        }
+
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
 
     }
@@ -349,6 +359,7 @@ else
 
         if($req->isMethod('POST'))
         {
+          try{
             $formupdate->handleRequest($req);
             $data=$formupdate->getData();
 
@@ -419,6 +430,14 @@ else
         $this->get('translator')->trans('Please_input_a_number_greater_than_zero',array(),'message'));
 
 }
+catch(\Exception $e)
+{
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+
+}
+ }
+
         return $this->redirect($this->generateUrl('DistRetailerFunding',array('id'=>$id)));
     }
 
