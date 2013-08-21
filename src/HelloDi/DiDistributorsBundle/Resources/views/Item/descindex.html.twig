@@ -3,29 +3,29 @@
 {% set tab = '2' %}
 
 {% block title %}
-    Items Management
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('item') }}">Item</a>
-    <span class="link">Descriptions</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('item') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Descriptions' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'item' %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Item Descriptions</h3>
+        <h3>{{ 'Descriptions' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
     <br>
     <a class=" btn btn-primary btn-large" href="{{ path('item_desc_new',{'id':item.id}) }}">
-        Add new Item Description
+        {{ 'AddItemDescription' | trans ({}, "item") }}
     </a>
     <div style="margin-top: 35px" class="tablediv">
 
         <div class="contenttitle">
-            <h4>Descriptions</h4>
+            <h4>{{ 'Descriptions' | trans ({}, "item") }}</h4>
         </div>
 
 
@@ -34,10 +34,10 @@
                        class="table table-bordered table-striped table-highlight postsend">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Manage</th>
-                        <th>Language</th>
-                        <th>Sample (Pin:1234, Serial:4321, expire:2012/12/12)</th>
+                        <th>{{ 'Id' | trans ({}, "item") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        <th>{{ 'Language' | trans ({}, "item") }}</th>
+                        <th>{{ 'Sample' | trans ({}, "item") }} ({{ 'Pin' | trans ({}, "code") }}:1234, {{ 'SerialNumber' | trans ({}, "item") }}:4321, {{ 'ExpiryDate' | trans ({}, "item") }}:2012/12/12)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@
 
                             <td >{{ itemdesc.id }}</td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">Edit</a>
+                                <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
                             <td>{{ include(template_from_string(itemdesc.descdesc),{"pin":1234, "serial":4321, "expire":"2012/12/12"}) }}</td>

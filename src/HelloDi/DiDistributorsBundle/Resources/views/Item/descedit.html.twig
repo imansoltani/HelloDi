@@ -3,7 +3,7 @@
 {% set tab = '2' %}
 
 {% block title %}
-    Items Management
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 {% block Link_Head %}
@@ -13,17 +13,17 @@
 {% endblock %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('item') }}">Item</a>
-    <a class="link" href="#">Descriptions</a>
-    <span class="link">Edit Description</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('item') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <a class="link" href="{{ path('item_desc',{'id':item.id}) }}">{{ 'Descriptions' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'EditItemDescription' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'item' %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Edit Item Description</h3>
+        <h3>{{ 'EditItemDescription' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
 
@@ -50,8 +50,8 @@
         <input type="hidden" name="itemdescid" value="{{ itemdescid }}"/>
 
         <div class="form-actions" style="margin-bottom: 0">
-            <input type="submit" class="btn btn-primary" value="Save"/>
-            <a href="{{ path('item_desc',{'id':item.id}) }}" class="btn">Cancel</a>
+            <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans ({}, "common") }}"/>
+            <a href="{{ path('item_desc',{'id':item.id}) }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
 
 

@@ -1,7 +1,7 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Manage Item
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 
@@ -17,18 +17,18 @@
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="{{ path('item_show',{'id':item.id}) }}"  >
-            <input type="submit" value="details" >
+            <input type="submit" value="{{ 'Details' | trans ({}, "item") }}" >
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a href="{{ path('item_desc',{'id':item.id}) }}"  >
-            <input type="submit" value="description" >
+            <input type="submit" value="{{ 'Description' | trans ({}, "item") }}" >
         </a>
     </li>
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a href="{{ path('item_price',{'id':item.id}) }}"  >
-            <input type="submit" value="item per distributors" >
+            <input type="submit" value="{{ 'ItemPerDist' | trans ({}, "item") }}" >
         </a>
     </li>
 

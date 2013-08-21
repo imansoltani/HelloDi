@@ -3,13 +3,13 @@
 {% set tab = '3' %}
 
 {% block title %}
-    Items Management
+    {{ 'Items' | trans ({}, "item") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('item') }}">Item</a>
-    <span class="link">Item Per Distributors</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('item') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'ItemPerDist' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% set MU = 'item' %}
@@ -38,12 +38,12 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Item Per Distributors</h3>
+        <h3>{{ 'ItemPerDist' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
     {% if haspriceforprov == false %}
         <div class="span">
-            This item has not price on any provider account.
+            {{ 'item_has_not_price_on_provider' | trans ({}, "message") }}
         </div>
     {% else %}
         <div class="span">
@@ -58,11 +58,10 @@
                             <table id="example" class="table postsend">
                                 <thead>
                                 <tr>
-                                    <th>Retailer Account</th>
-                                    <th>Retailer Price</th>
-                                    <th>Status</th>
-                                    <th style="text-align: center"><input onclick="CheckAll()" id="clickall"
-                                                                          type="checkbox"/></th>
+                                    <th>{{ 'Distributors' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                    <th>{{ 'Status' | trans ({}, "price") }}</th>
+                                    <th style="text-align: center"><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
                                 </tr>
                                 <tr class="input">
                                     <td></td>
@@ -109,9 +108,9 @@
                                                 N/A
                                             {% else %}
                                                 {% if pricerow.priceStatus==1 %}
-                                                    true
+                                                    {{ 'True' | trans ({}, "common") }}
                                                 {% else %}
-                                                    false
+                                                    {{ 'False' | trans ({}, "common") }}
                                                 {% endif %}
                                             {% endif %}
                                         </td>
@@ -157,14 +156,13 @@
                     <input type="hidden" name="actiontype" id="actiontype" value="0"/>
 
                     <div class="form-actions">
-                        Apply the new price to the selected accounts:<br/>
-                        <input type="submit" class="btn btn-primary" value="Approve"/><br/>
+                        {{ 'apply_new_price_to_account' | trans ({}, "message") }}<br/>
+                        <input type="submit" class="btn btn-primary" value="{{ 'Apply' | trans ({}, "common") }}"/><br/>
                         <br/>
 
-                        Inactive the item on the selected accounts:<br/>
-                        <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);"
-                               value="Inactive"/>
-                        This change will be affect the retailers of the distributor.
+                        {{ 'inactive_item_on_selected_accounts' | trans ({}, "message") }}<br/>
+                        <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);" value="{{ 'Inactive' | trans ({}, "item") }}"/>
+                        {{ 'change_will_be_affect_retailers_of_distributor' | trans ({}, "message") }}.
                     </div>
                 </form>
             </div>

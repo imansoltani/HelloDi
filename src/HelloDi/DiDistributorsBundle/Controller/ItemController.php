@@ -87,7 +87,7 @@ class ItemController extends Controller
             if ($editForm->isValid()) {
                 $em->persist($item);
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward("HelloDiDiDistributorsBundle:Item:show", array('id'=>$id));
             }
         }
@@ -101,6 +101,11 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+
+        if (!$item) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
+        }
+
         $qb = $em->createQueryBuilder()
             ->select("prc")
             ->from("HelloDiDiDistributorsBundle:Price","prc")
@@ -200,6 +205,7 @@ class ItemController extends Controller
                     }
                 }
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('item_price', array('id' => $id)));
             }
         }
@@ -220,11 +226,11 @@ class ItemController extends Controller
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
 
-        $itemdescs = $item->getItemDescs();
-
         if (!$item) {
-            throw $this->createNotFoundException('Unable to find ItemDesc entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
         }
+
+        $itemdescs = $item->getItemDescs();
 
         return $this->render('HelloDiDiDistributorsBundle:Item:descindex.html.twig', array(
                 'item'      => $item,
@@ -265,6 +271,7 @@ class ItemController extends Controller
                     $em->persist($desc);
                     $em->flush();
 
+                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                     return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
                             'id' => $item->getId()
                         ));
@@ -281,6 +288,11 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid);
+
+        if (!$desc) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Description',array(),'item')),'message'));
+        }
+
         $desclang = $desc->getDesclang();
         $langs = $this->container->getParameter('languages');
         $langs = array_combine($langs, $langs);
@@ -293,6 +305,7 @@ class ItemController extends Controller
                 $em->persist($desc);
                 $em->flush();
 
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
                         'id' => $desc->getItem()->getId()
                     ));
