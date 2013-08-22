@@ -39,7 +39,6 @@ Action:
 All:
 UpdatedistributorCreditLimit:
 CurrentDistributorCreditlimit:
-
 select_a_account: t
 AccountSales:
 RetailerAccount:
@@ -52,6 +51,7 @@ AccountSetting:
 #End Distributors#
 
 #Providers#
+
 Provider:
 Providers:
 CountProviders:
@@ -68,6 +68,7 @@ This_Entity_have_not_dist_account:
 
 
 #Retailer#
+
 Retailers:
 Retailer:
 Retailer(s):
@@ -79,5 +80,4 @@ FundRetailerBalance:
 RetailerBalance:
 UpdateRetailerCreditLimit:
 RetailerCreditLimit:
-
 #End Retailer#

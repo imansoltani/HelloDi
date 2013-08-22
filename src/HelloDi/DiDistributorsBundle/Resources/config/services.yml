@@ -67,6 +67,13 @@ services:
         tags:
          - { name: 'twig.extension' }
 
+    hello_di_di_notification:
+        class:  HelloDi\DiDistributorsBundle\Controller\NotificationController
+        arguments: [@doctrine.orm.default_entity_manager,@request]
+        scope: request
+
+
+
 #    my_cache_clearer:
 #        class: HelloDi\DiDistributorsBundle\Listener\ClearCache
 #        tags:

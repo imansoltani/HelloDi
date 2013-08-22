@@ -189,6 +189,12 @@ class EntitiController extends Controller
                 $user->setEntiti($entity);
                 $em->persist($user);
                 $em->flush();
+
+              if($user->getAccount()->getAccType()==0)
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>21));
+              else
+                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37));
+
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
             }
@@ -406,6 +412,16 @@ public function  EditUserEntitiesAction(Request $request,$userid)
                 $DetaHis->setAdrsDate(new \DateTime('now'));
                 $em->persist($DetaHis);
                 $em->flush();
+
+                foreach($entity->getAccounts() as $Account)
+                {
+                    if($Account->getAccType()==0)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>27));
+                    elseif($Account->getAccType()==2)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
+                }
+
+
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
         }

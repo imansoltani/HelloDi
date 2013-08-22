@@ -37,6 +37,15 @@ class DistributorsController extends Controller
 
     }
 
+
+    #notification#
+
+    public function CountNotificationAction()
+
+    {
+        return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
+    }
+
     //Retailers
 
     public function saleAction(Request $req)
@@ -311,7 +320,9 @@ class DistributorsController extends Controller
                     $trandist->setTranAmount(-$data['Amount']);
                     $em->persist($trandist);
                     $em->persist($tranretailer);
+                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>32));
                     $em->flush();
+
 
                     $this->get('session')->getFlashBag()->add('success',
                         $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
@@ -397,6 +408,9 @@ if($data['Amount']>0)
             $trandist->setTranAmount(-$data['Amount']);
             $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
             $em->persist($trandist);
+
+            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>33));
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success',
@@ -420,6 +434,8 @@ if($data['Amount']>0)
         {
             $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
             $em->flush();
+
+            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>34));
 
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
@@ -610,6 +626,7 @@ catch(\Exception $e)
 
                 $em->persist($user);
                 $em->flush();
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>37));
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
             }
@@ -686,6 +703,7 @@ catch(\Exception $e)
             $AdrsDetai->setEntiti($Entiti);
             $em->persist($AdrsDetai);
             $em->flush();
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>13));
             $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
             }
@@ -1035,6 +1053,7 @@ catch(\Exception $e){
             $form->handleRequest($req);
             if ($form->isValid()) {
                 $em->flush();
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>35));
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
@@ -1075,6 +1094,7 @@ catch(\Exception $e){
 
              $em->persist($detahis);
              $em->flush();
+             $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
 
 
              $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));

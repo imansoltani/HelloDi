@@ -36,6 +36,14 @@ class RetailersController extends Controller
     }
 
 
+  public function CountNotificationAction()
+
+  {
+
+    return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
+  }
+
+
   public  function  countnoteAction()
   {
       $User = $this->getUser();
