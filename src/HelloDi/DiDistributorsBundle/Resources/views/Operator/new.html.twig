@@ -1,13 +1,13 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    New Operator
+    {{ 'Operators' | trans ({}, "operator") }}
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('operator') }}">Operator</a>
-    <span class="link">New Operator</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('operator') }}">{{ 'Operator' | trans ({}, "operator") }}</a>
+    <span class="link">{{ 'AddOperator' | trans ({}, "operator") }}</span>
 {% endblock Site_Map %}
 {% block Link_Head %}
 
@@ -16,7 +16,7 @@
 
 {% block PageTitle %}
     <i class="icon-align-justify"></i>
-    Add Operator
+    {{ 'AddOperator' | trans ({}, "operator") }}
 {% endblock %}
 
 
@@ -29,11 +29,6 @@
             <!-- /widget-header -->
 
             <div class="widget-content">
-                <div class="widget-header">
-                    <h3>Operator Info</h3>
-                </div>
-                <!-- /widget-header -->
-
                 <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal">
                     <div class="control-group">
                         {{ form_label(form.name) }}
@@ -52,8 +47,8 @@
 
                     {{ form_rest(form) }}
                     <div class="form-actions" style="margin-bottom: 0">
-                        <input type="submit" class="btn btn-primary" value="Add"/>
-                        <a href="{{ path('operator') }}" class="btn">Cancel</a>
+                        <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans ({}, "common") }}"/>
+                        <a href="{{ path('operator') }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
                     </div>
 
                 </form>

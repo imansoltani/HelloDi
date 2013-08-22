@@ -5,9 +5,9 @@
 {% endblock title %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('operator') }}">Operator</a>
-    <span class="link">Edit Operator</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('operator') }}">{{ 'Operator' | trans ({}, "operator") }}</a>
+    <span class="link">{{ 'EditOperator' | trans ({}, "operator") }}</span>
 {% endblock Site_Map %}
 {% block Link_Head %}
 
@@ -16,7 +16,7 @@
 
 {% block PageTitle %}
     <i class="icon-align-justify"></i>
-    Edit Operator
+    {{ 'EditOperator' | trans ({}, "operator") }}
 {% endblock %}
 
 
@@ -40,7 +40,7 @@
 
                 <div class="control">
                     <label class="control-label">
-                        Logo
+                        {{ 'Logo' | trans ({}, "operator") }}
                     </label>
                     <div class="controls">
                         <img src="{{ asset(operator.webPath) }}" style="width: 100px; height: 100px" />
@@ -56,7 +56,8 @@
                 {{ form_rest(edit_form) }}
 
                 <div class="form-actions" style="margin-bottom: 0">
-                    <input type="submit" class="btn btn-primary" value="Edit"/>
+                    <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans ({}, "common") }}"/>
+                    <a href="{{ path('operator') }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
                 </div>
             </form>
         </div>

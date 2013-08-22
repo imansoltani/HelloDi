@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Operators
+    {{ 'Operators' | trans ({}, "operator") }}
 {% endblock title %}
 
 {% set MU = 'operator' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Operator</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Operator' | trans ({}, "operator") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-align-justify"></i>
-    Operators Management
+    {{ 'Operators' | trans ({}, "operator") }}
 {% endblock %}
 
 
@@ -45,7 +45,7 @@
 
         <div class="widget-content">
             <a class=" btn btn-primary btn-large" href="{{ path('operator_new') }}">
-                Add a new Operator
+                {{ 'AddOperator' | trans ({}, "operator") }}
             </a>
 
             <div style="margin-top: 5px" class="tablediv">
@@ -54,10 +54,10 @@
                         <table id="example" class="table postsend">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Manage</th>
-                                <th>Name</th>
-                                <th>Logo</th>
+                                <th>{{ 'Id' | trans ({}, "operator") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                                <th>{{ 'Name' | trans ({}, "operator") }}</th>
+                                <th>{{ 'Logo' | trans ({}, "operator") }}</th>
                             </tr>
                             <tr class="input" >
                                 <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
@@ -73,7 +73,7 @@
 
                                     <td >{{ operator.id }}</td>
                                     <td class="td-actions" >
-                                        <a class="btn_actions" href="{{ path('operator_edit',{'id':operator.id}) }}">edit</a>
+                                        <a class="btn_actions" href="{{ path('operator_edit',{'id':operator.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                                     </td>
                                     <td>{{ operator.name }}</td>
                                     <td><img src="{{ asset(operator.webPath) }}" style="width: 50px;height: 50px" /></td>

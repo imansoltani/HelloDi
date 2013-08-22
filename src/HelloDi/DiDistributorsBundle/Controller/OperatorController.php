@@ -25,14 +25,14 @@ class OperatorController extends Controller
         $form   = $this->createForm(new OperatorType(), $operator);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($operator);
                 $em->flush();
                 $operator->upload();
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Operator Created Successfully!');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('operator'));
             }
         }
@@ -49,19 +49,19 @@ class OperatorController extends Controller
         $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->find($id);
 
         if (!$operator) {
-            throw $this->createNotFoundException('Unable to find Operator entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Operator',array(),'item')),'operator'));
         }
 
         $editForm = $this->createForm(new OperatorType(), $operator);
 
         if ($request->isMethod('POST')) {
-            $editForm->bind($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $operator->upload();
                 $em->persist($operator);
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('operator'));
             }
         }

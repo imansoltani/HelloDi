@@ -11,8 +11,8 @@ class OperatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('file',null,array('label'=>'Logo','required'=> true))
+            ->add('name',null,array('label' => 'Name','translation_domain' => 'operator'))
+            ->add('file',null,array('label'=>'Logo','translation_domain' => 'operator','required'=> true))
         ;
     }
 
