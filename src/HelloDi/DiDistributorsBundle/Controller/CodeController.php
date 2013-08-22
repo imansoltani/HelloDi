@@ -15,7 +15,7 @@ class CodeController extends Controller
     {
         $form = $this->createForm(new CdSearchType());
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $first = 1;
         $pagination = null;
@@ -125,6 +125,9 @@ class CodeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
+        if (!$code) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+        }
         $isremoved = ($em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'rmv'))==null ? false : true);
 
         return $this->render('HelloDiDiDistributorsBundle:Code:history.html.twig', array(
@@ -137,6 +140,9 @@ class CodeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
+        if (!$code) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+        }
         if($code->getStatus()==1)
         {
             try
@@ -162,16 +168,16 @@ class CodeController extends Controller
                 $tranrmv->setTranBalance($tranadd->getAccount()->getAccBalance());
                 $em->persist($tranrmv);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Code is Dead Beat successfully!');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
             catch(\Exception $e)
             {
-                $this->get('session')->getFlashBag()->add('error', 'Error in Dead Beat!');
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
             }
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error', 'The code must be Active to Dead Beat!');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Active',array(),'message'));
         }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
@@ -180,6 +186,9 @@ class CodeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
+        if (!$code) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+        }
         if($code->getStatus()==0)
         {
             try
@@ -223,16 +232,16 @@ class CodeController extends Controller
                 $em->persist($trancrntcom);
 
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Code is Credit Note successfully!');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
             catch(\Exception $e)
             {
-                $this->get('session')->getFlashBag()->add('error', 'Error in Credit Note!');
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
             }
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error', 'The code must be Active to Credit Note!');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Inactive',array(),'message'));
         }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
@@ -241,6 +250,9 @@ class CodeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
+        if (!$code) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+        }
         if($code->getStatus()==0)
         {
             try
@@ -300,19 +312,20 @@ class CodeController extends Controller
                 $tranrmv->setTranBalance($tranadd->getAccount()->getAccBalance());
                 $em->persist($tranrmv);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Code is Credit Note And Dead Beat successfully!');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
             catch(\Exception $e)
             {
-                $this->get('session')->getFlashBag()->add('error', 'Error in Credit Note or Dead Beat!');
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
             }
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error', 'The code must be Active to Credit Note!');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Inactive',array(),'message'));
         }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
+
 //    public function aaaaAction()
 //    {
 //        $em = $this->getDoctrine()->getEntityManager();

@@ -242,6 +242,9 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
+        }
         $desc = new ItemDesc();
         $langs = $this->container->getParameter('languages');
         $qb = $em->createQueryBuilder()

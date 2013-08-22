@@ -26,7 +26,13 @@ credit_Limit_should_be_positive: credit Limit should be positive
 
 #------
 Unable_to_find_%object%: Unable to find object
-item_has_not_price_on_provider: item has not price on provider
-apply_new_price_to_account: Apply new price to selected account
-inactive_item_on_selected_accounts: Inactive item on the selected accounts
-change_will_be_affect_retailers_of_distributor: This change will be affect the retailers of the distributor
+item_has_not_price_on_provider: item has not price on provider.
+apply_new_price_to_account: Apply new price to selected account.
+inactive_item_on_selected_accounts: Inactive item on the selected accounts.
+change_will_be_affect_retailers_of_distributor: This change will be affect the retailers of the distributor.
+the_operation_failed: the operation failed!
+code_must_be_Active: The code must be Active!
+code_must_be_Inactive: The code must be Inactive!
+Are_you_sure_to_Credit_Node: Are you sure to Credit Node the code?
+Are_you_sure_to_Credit_Node_And_Deat_Beat: Are you sure to Credit Node And Deat Beat the code?
+Are_you_sure_to_Dead_Beat: Are you sure to Dead Beat the code?

@@ -6,4 +6,28 @@ Count:
 Trends:
 SerialNumber:
 Pin:
-ExpiryDate:
+Status:
+DateInsert: Date Insert
+DateProduction: Date Production
+DateExpiry: Date Expiry
+FileName: File Name
+Batch: Batch
+ExportCSV: Export to CSV
+Quantity:
+History:
+Info:
+All:
+
+CreditNote:
+DeadBeat:
+CreditNoteAndDeadBeat:
+
+Available:
+Unavailable:
+
+FromSerialNumber: Serial Number From
+ToSerialNumber: Serial Number To
+FromInsertDate:
+ToInsertDate:
+FromExpireDate:
+ToExpireDate:

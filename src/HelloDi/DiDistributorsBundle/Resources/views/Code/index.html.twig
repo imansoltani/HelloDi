@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Codes
+    {{ 'Codes' | trans ({}, "code") }}
 {% endblock title %}
 
 {% set MU = 'code' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Code</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Codes' | trans ({}, "code") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-list-alt"></i>
-    Code Management
+    {{ 'Codes' | trans ({}, "code") }}
 {% endblock %}
 
 {% block Body %}
@@ -102,37 +102,37 @@
                             <hr>
                             <input type="hidden" name="page" id="search_page" value="1"/>
                             <input type="hidden" name="csv" id="csv" value="0" />
-                            <input class="btn btn-primary" type="submit" value="Search" onclick="$('#csv').val('0');">
+                            <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}" onclick="$('#csv').val('0');">
                         </fieldset>
                     </form>
                     <script type="text/javascript">
                         $(function () {
 
-                            Form_Search({{ first }},"Search Code");
+                            Form_Search({{ first }},"{{ 'Search' | trans ({}, "common") }}");
 
                         });
                     </script>
 
                 </div>
                 {% if  not first %}
-                    <a href="javascript:;" onclick="$('#csv').val('1');$('#codesearch').submit();" class="btn btn-success">Export to CSV</a><br/><br/>
+                    <a href="javascript:;" onclick="$('#csv').val('1');$('#codesearch').submit();" class="btn btn-success">{{ 'ExportCSV' | trans ({}, "code") }}</a><br/><br/>
                 {% endif %}
                 <div class="tablediv">
 
                     <div class="contenttitle">
-                        <h4>Codes (Quantity: {{ count }})</h4>
+                        <h4>{{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ count }})</h4>
                     </div>
                         <div class="tab-content">
                             <table style="margin-top: 20px"
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>Item Name</th>
-                                    <th>serialNumber</th>
-                                    <th>ExpiryDate</th>
-                                    <th>Status</th>
-                                    <th>Provider</th>
-                                    <th>Manage</th>
+                                    <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                    <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                                    <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                                    <th>{{ 'Status' | trans ({}, "code") }}</th>
+                                    <th>{{ 'Provider' | trans ({}, "provider") }}</th>
+                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -142,10 +142,10 @@
                                         <td>{{ code.Item.itemName }}</td>
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.Input.dateExpiry|date('Y/m/d') }}</td>
-                                        <td>{% if code.status==1 %}Available{% else %}Unavailable{% endif %}</td>
+                                        <td>{% if code.status==1 %}{{ 'Available' | trans ({}, "code") }}{% else %}{{ 'Unavailable' | trans ({}, "code") }}{% endif %}</td>
                                         <td>{{ code.Input.Account.accName }}</td>
                                         <td>
-                                            <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">History</a>
+                                            <a href="{{ path('code_history',{'id':code.id}) }}" class="btn_actions">{{ 'History' | trans ({}, "code") }}</a>
                                         </td>
                                     </tr>
                                 {% endfor %}

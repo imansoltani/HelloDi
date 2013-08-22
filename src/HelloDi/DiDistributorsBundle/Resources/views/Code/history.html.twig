@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Codes
+    {{ 'Codes' | trans ({}, "code") }}
 {% endblock title %}
 
 {% set MU = 'code' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('code') }}">Code</a>
-    <span class="link">Code History</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('code') }}">{{ 'Codes' | trans ({}, "code") }}</a>
+    <span class="link">{{ 'History' | trans ({}, "code") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-list-alt"></i>
-    Code History
+    {{ 'History' | trans ({}, "code") }}
 {% endblock %}
 
 {% block Body %}
@@ -26,35 +26,43 @@
             <div class="widget-content">
 
                 {% if code.status==0 %}
-                    <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node the code?" class="YesNoMessage btn btn-danger">Credit Note</a>
-                    <a href="{{ path('code_creditnoteanddeatbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Credit Node And Deat Beat the code?" class="YesNoMessage btn btn-danger">Credit Note And Deat Beat</a><br/><br/>
+                    <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNote' | trans ({}, "code") }}</a>
+                    <a href="{{ path('code_creditnoteanddeatbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node_And_Deat_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNoteAndDeadBeat' | trans ({}, "code") }}</a><br/><br/>
                 {% elseif not isremoved %}
-                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="Alert" message="Are you sure to Dead Beat the code?" class="YesNoMessage btn btn-danger">Dead Beat</a><br/><br/>
+                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Dead_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'DeadBeat' | trans ({}, "code") }}</a><br/><br/>
                 {% endif %}
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>Code Info</h4>
+                        <h4>{{ 'Info' | trans ({}, "code") }}</h4>
                     </div>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
                             <tr>
-                                <th>item</th>
-                                <th>type</th>
-                                <th>serialNo</th>
-                                <th>status</th>
-                                <th>Production</th>
-                                <th>Expiry</th>
-                                <th>Operator</th>
+                                <th>{{ 'Item' | trans ({}, "item") }}</th>
+                                <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                                <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                                <th>{{ 'Status' | trans ({}, "code") }}</th>
+                                <th>{{ 'DateProduction' | trans ({}, "code") }}</th>
+                                <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                                <th>{{ 'Operator' | trans ({}, "operator") }}</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             <tr>
                                 <td style="font-weight: bold">{{ code.item.itemName }}</td>
-                                <td style="font-weight: bold">{% if code.item.itemType==0 %} Mobile {% elseif code.item.itemType==1 %} Internet {% elseif code.item.itemType==2 %} Tel {% endif %}</td>
+                                <td style="font-weight: bold">
+                                    {% if code.item.itemType=='dmtu' %}
+                                        {{ 'Mobile' | trans ({}, "item") }}
+                                    {% elseif code.item.itemType=='clcu' %}
+                                        {{ 'Calling_Card' | trans ({}, "item") }}
+                                    {% else %}
+                                        {{ 'E-payment' | trans ({}, "item") }}
+                                    {% endif %}
+                                </td>
                                 <td style="font-weight: bold">{{ code.serialNumber }}</td>
-                                <td style="font-weight: bold">{% if code.status==1 %}Available{% else %}Not Available{% endif %}</td>
+                                <td style="font-weight: bold">{% if code.status==1 %}{{ 'Available' | trans ({}, "code") }}{% else %}{{ 'Unavailable' | trans ({}, "code") }}{% endif %}</td>
                                 <td style="font-weight: bold">{{ code.input.dateProduction|date('Y/m/d') }}</td>
                                 <td style="font-weight: bold">{{ code.input.dateExpiry|date('Y/m/d') }}</td>
                                 <td style="font-weight: bold">{{ code.item.operator.name }}</td>
@@ -68,18 +76,18 @@
 
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>Code History</h4>
+                        <h4>{{ 'History' | trans ({}, "code") }}</h4>
                     </div>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table postsend">
                             <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Account<br/>(name/type)</th>
-                                <th>User</th>
-                                <th>Action</th>
-                                <th>Credit</th>
-                                <th>Debit</th>
+                                <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                                <th>{{ 'Account' | trans ({}, "accounts") }}<br/>({{ 'Name' | trans ({}, "accounts") }}/{{ 'Type' | trans ({}, "accounts") }})</th>
+                                <th>{{ 'User' | trans ({}, "user") }}</th>
+                                <th>{{ 'Action' | trans ({}, "transaction") }}</th>
+                                <th>{{ 'Credit' | trans ({}, "transaction") }}</th>
+                                <th>{{ 'Debit' | trans ({}, "transaction") }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -87,9 +95,9 @@
                                 <tr>
                                     <td>{{ tran.tranDate|date('Y/m/d') }}</td>
                                     <td>{{ tran.Account.accName }} /
-                                        {% if tran.Account.accType==0 %}distributor
-                                        {% elseif tran.Account.accType==1 %}provider
-                                        {% elseif tran.Account.accType==2 %}retailer
+                                        {% if tran.Account.accType==0 %}{{ 'Distributor' | trans ({}, "accounts") }}
+                                        {% elseif tran.Account.accType==1 %}{{ 'Provider' | trans ({}, "accounts") }}
+                                        {% elseif tran.Account.accType==2 %}{{ 'Retailer' | trans ({}, "accounts") }}
                                         {% endif %}
                                     </td>
                                     <td>{{ tran.User.firstName }} {{ tran.User.lastName }}</td>
