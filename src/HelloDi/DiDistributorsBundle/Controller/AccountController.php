@@ -272,6 +272,7 @@ class AccountController extends Controller
 
 
         if ($req->isMethod('POST')) {
+            try{
             $form->handleRequest($req);
             $data = $form->getData();
             $qb = $em->createQueryBuilder();
@@ -306,8 +307,13 @@ class AccountController extends Controller
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
+            }
 
-        }
+    catch(\Exception $e){
+        $this->get('session')->getFlashBag()->add('error',
+            $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+    }
+            }
 
         $pagination = $paginator->paginate(
             $qb,
@@ -652,6 +658,7 @@ catch(\Exception $e)
 
 
         if ($req->isMethod('POST')) {
+try{
             $form->handleRequest($req);
             $data = $form->getData();
 
@@ -702,6 +709,12 @@ catch(\Exception $e)
 
             $qb->setHint('knp_paginator.count', $count);
 
+        }
+catch(\Exception $e)
+{
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+}
         }
 
         if($group==1)
@@ -1107,6 +1120,8 @@ catch(\Exception $e)
                 ))->getForm();
 
         if ($req->isMethod('POST')) {
+            try
+            {
             $form->handleRequest($req);
             $data = $form->getData();
 
@@ -1134,6 +1149,11 @@ catch(\Exception $e)
             $qb = $qb->getQuery();
             $qb = $qb->getResult();
 
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+            }
         }
 
         $print= $req->get('print', 0);
@@ -1892,7 +1912,7 @@ catch(\Exception $e)
         $qb = array();
 
         if ($request->isMethod('post')) {
-
+try{
             $form->handleRequest($request);
             $data = $form->getData();
             $qb = $em->createQueryBuilder();
@@ -1926,7 +1946,12 @@ catch(\Exception $e)
 
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
-
+}
+catch(\Exception $e)
+{
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+}
         }
 
 
@@ -1954,15 +1979,14 @@ catch(\Exception $e)
 
     public function MasterProvTransactionDeleteAction($tranid)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
 
         $em->remove($tran);
         $em->flush();
-
-        return $this->redirect($this->generateUrl('MasterProvTransaction', array('id' => $tran->getAccount()->getId())));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
 
 
     }
@@ -2529,7 +2553,7 @@ catch(\Exception $e)
 
         if($req->isMethod('POST'))
         {
-
+try{
             $form->handleRequest($req);
 
             $data=$form->getData();
@@ -2568,6 +2592,12 @@ catch(\Exception $e)
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
+      }
+
+catch(\Exception $e){
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+}
         }
 
         $pagination = $paginator->paginate(

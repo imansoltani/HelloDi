@@ -113,6 +113,7 @@ class DistributorsController extends Controller
 
         if($req->isMethod('POST'))
         {
+          try{
             $form->handleRequest($req);
             $data=$form->getData();
 
@@ -147,6 +148,12 @@ class DistributorsController extends Controller
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
            $qb->setHint('knp_paginator.count', $count);
+
+          }
+          catch(\Exception $e){
+              $this->get('session')->getFlashBag()->add('error',
+                  $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+          }
 
         }
 
@@ -833,6 +840,7 @@ catch(\Exception $e)
 
         if($req->isMethod('POST'))
         {
+try{
             $form->handleRequest($req);
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
@@ -870,7 +878,11 @@ catch(\Exception $e)
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
         }
-
+catch(\Exception $e){
+    $this->get('session')->getFlashBag()->add('error',
+        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+}
+        }
         $pagination = $paginator->paginate(
             $qb,
             $req->get('page',1) /*page number*/,
@@ -943,6 +955,7 @@ catch(\Exception $e)
     $typedate=0;
     if($req->isMethod('POST'))
     {
+        try{
         $form->handleRequest($req);
         $data=$form->getData();
 
@@ -982,6 +995,11 @@ catch(\Exception $e)
         $count = count($qb->getResult());
         $qb->setHint('knp_paginator.count', $count);
 
+    }
+        catch(\Exception $e){
+            $this->get('session')->getFlashBag()->add('error',
+                $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+        }
     }
 
     $pagination = $paginator->paginate(

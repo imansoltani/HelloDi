@@ -14,13 +14,39 @@ app_Retailers:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailers.yml"
     prefix:   /app/r
 
-pdf:
-    pattern:  /pdf
-    defaults: { _controller: HelloDiDiDistributorsBundle:Account:pdf}
 
-test:
-    pattern:  /{id}/test
-    defaults: { _controller: HelloDiDiDistributorsBundle:Test:test1}
+homepage_about:
+    path: /about
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:About}
+
+homepage_contact:
+    path: /contact
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:Contact}
+
+
+homepage_news:
+    path: /news
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:News}
+
+
+homepage_product:
+    path: /product
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:Product}
+
+
+homepage_services:
+    path: /services
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:Services}
+
+homepage_network:
+    path: /network
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:Network}
+
+homepage_language:
+    path: /language/{locale}
+    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:language}
+    requirements:
+        locale: en|fr|de
 
 transactions_ogone_template:
     path:   /ogone-template
