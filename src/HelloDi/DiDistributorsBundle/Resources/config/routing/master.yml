@@ -41,6 +41,11 @@ master_print:
 master_tickets:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/tickets.yml"
     prefix:   /tickets
+
+master_notifications:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/notification.yml"
+    prefix:   /notifications
+
 master_profile:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/profile.yml"
     prefix:   /admin/profile

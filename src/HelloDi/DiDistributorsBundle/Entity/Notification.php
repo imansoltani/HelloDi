@@ -26,6 +26,10 @@ class Notification
      */
     private $Type;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $Value;
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Notification")
@@ -111,5 +115,28 @@ class Notification
     public function getAccount()
     {
         return $this->Account;
+    }
+
+    /**
+     * Set Value
+     *
+     * @param string $value
+     * @return Notification
+     */
+    public function setValue($value)
+    {
+        $this->Value = $value;
+    
+        return $this;
+    }
+
+    /**
+     * Get Value
+     *
+     * @return string 
+     */
+    public function getValue()
+    {
+        return $this->Value;
     }
 }

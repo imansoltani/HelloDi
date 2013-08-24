@@ -1,0 +1,50 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    {{ 'Notifications' | trans ({}, "notification") }}
+{% endblock title %}
+
+{% set MU = 'ok' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }} </a>
+    <span class="link"> {{ 'Notifications' | trans ({}, "notification") }} </span>
+
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-comment"></i>
+    {{ 'Notifications' | trans ({}, "notification") }}
+{% endblock %}
+
+{% block Body %}
+
+     {% for Notfi in Notifications %}
+
+
+        DateTimeCreate:{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
+        Description:
+                 {% if Notfi.Type==11 %}
+                     <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
+                 {% elseif Notfi.Type==12 %}
+                     <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                {% elseif Notfi.Type==13 %}
+                     <b>{{ 'Retailer_created_an_account'|trans({},'notification') }}</b>
+                {% elseif Notfi.Type==121 %}
+                     <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                {% endif %}
+
+
+         <br>
+
+===>                            <a href="{{ path('MasterReadNotification',{'id':Notfi.id}) }}">
+                                    {{ 'Read' | trans ({}, "notification") }}
+                            </a>
+
+<br>
+
+         <hr>
+                {% endfor %}
+
+    <a href="javascript:history.go(-1)" class="btn"> {{ 'Back' | trans ({}, "common") }}</a>
+{% endblock %}

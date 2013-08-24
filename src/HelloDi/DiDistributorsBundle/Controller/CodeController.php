@@ -168,6 +168,10 @@ class CodeController extends Controller
                 $tranrmv->setTranBalance($tranadd->getAccount()->getAccBalance());
                 $em->persist($tranrmv);
                 $em->flush();
+
+                if($tranadd->getAccount()->getAccBalance()<=15000)
+                    $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>12,'value'=>'15000 '.$tranadd->getAccount()->getAccCurrency()));
+
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
             catch(\Exception $e)

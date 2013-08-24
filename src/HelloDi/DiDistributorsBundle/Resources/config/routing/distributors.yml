@@ -29,3 +29,7 @@ distributors_reports:
 distributors_tickets:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/tickets.yml"
     prefix:   /tickets
+
+distributors_notification:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/notification.yml"
+    prefix:   /notification

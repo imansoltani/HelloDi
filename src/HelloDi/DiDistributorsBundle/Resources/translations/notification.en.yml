@@ -1,0 +1,25 @@
+Notification: Notification
+Notifications: Notifications
+Read: Read
+DateTimeCreate:
+Type:
+
+#Retailer#
+Retailer_account_balance_is_lower_than_equal_%value%: Retailer account balance is lower than equal value
+
+#Distributor_Retailer#
+Balance_increased_%value%: Balance increased value
+Balance_decreased_%value%: Balance decreased value
+CreditLimit_increased_%value%: CreditLimit increased value
+CreditLimit_decreased_%value%: CreditLimit decreased value
+Edited_account: Edited account
+Edited_entity: Edited entity
+Added_user_with_username_%value%: Added user with username: value
+
+#Provider#
+Codes_for_this_%value%_is_very_low: Codes for this value is very low
+Provider_account_balance_is_lower_than_equal_%value%: Provider account balance is less than value
+Retailer_created_an_account:
+
+#Distributor#
+Distributor_account_balance_is_lower_than_equal_%value%: Distributor account balance is lower than equal value

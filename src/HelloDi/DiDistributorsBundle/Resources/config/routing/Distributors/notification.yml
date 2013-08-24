@@ -1,0 +1,7 @@
+DistShowNotification:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ShowNotification }
+
+DistReadNotification:
+    pattern:  /read/{id}/notification
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ReadNotification }

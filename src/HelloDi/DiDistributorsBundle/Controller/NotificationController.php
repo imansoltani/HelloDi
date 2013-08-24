@@ -2,6 +2,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Notification;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,14 +12,16 @@ class NotificationController
 
     private  $em;
     private  $Request;
+    private  $Router;
    public  function  __construct($EntityManage,$Request)
     {
+
+
         $this->em= $EntityManage;
         $this->Request=$Request;
-
     }
 
- public function NewAction($id,$type)
+ public function NewAction($id,$type,$value=null)
  {
 
  $Not=new Notification();
@@ -26,6 +29,8 @@ class NotificationController
        $Not->setAccount($this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id));
        $Not->setDate(new \DateTime('now'));
        $Not->setType($type);
+    if($value!=null)
+       $Not->setValue($value);
 
  $this->em->persist($Not);
  $this->em->flush();
@@ -41,7 +46,7 @@ return new Response();
         $this->em->remove($Notification);
         $this->em->flush();
 
-        return new Response();
+    return new Response();
 
     }
 
@@ -57,7 +62,6 @@ else
         return new Response(count($Notification));
 
     }
-
 
 
 }

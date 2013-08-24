@@ -27,6 +27,9 @@ retailer_transaction_recharge:
 retailer_ticket:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/tickets.yml"
     prefix:   /tickets
+retailer_notification:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/notification.yml"
+    prefix:   /notifications
 
 retailer_shop:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Retailers/shop.yml"

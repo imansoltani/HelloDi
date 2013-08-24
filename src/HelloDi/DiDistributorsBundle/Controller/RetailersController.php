@@ -35,13 +35,36 @@ class RetailersController extends Controller
         ));
     }
 
-
+#notifications#
   public function CountNotificationAction()
 
   {
 
     return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
   }
+
+    public function ShowNotificationAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:Notifications.html.twig',
+            array(
+                'Account' => $this->getUser()->getAccount(),
+                'Entity' => $this->getUser()->getAccount()->getEntiti(),
+                'Notifications'=>$Notifications
+            ));
+
+    }
+
+    public function ReadNotificationAction($id)
+    {
+
+      $this->forward('hello_di_di_notification:ReadAction',array('id'=>$id));
+
+      return  $this->redirect($this->generateUrl('RetailerShowNotification'));
+
+    }
 
 
   public  function  countnoteAction()
@@ -751,6 +774,13 @@ $datetype=0;
                 $ordercode->addTransaction($trandist);
             }
             $em->flush();
+
+         if (count($codes[0]->getItem()->getCodes())<=$codes[0]->getItem()->getAlertMinStock())
+              $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$codes[0]->getItem()->getItemName()));
+
+            if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
+
 
             $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item, 'desclang' => $user->getLanguage()));
             if(!$description) $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item));

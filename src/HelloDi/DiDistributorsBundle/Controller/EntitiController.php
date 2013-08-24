@@ -191,9 +191,9 @@ class EntitiController extends Controller
                 $em->flush();
 
               if($user->getAccount()->getAccType()==0)
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>21));
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>21,'value'=>$user->getUsername()));
               else
-                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37));
+                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37,'value'=>$user->getUsername()));
 
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
                 return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
@@ -226,6 +226,16 @@ class EntitiController extends Controller
             if ($edit_form->isValid()) {
 
                 $em->flush($entity);
+
+                foreach($entity->getAccounts() as $Account)
+                {
+                    if($Account->getAccType()==0)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>27));
+                    elseif($Account->getAccType()==2)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
+
+                }
+
                 $this->get('session')->getFlashBag()->add('success','this operation done success !');
             }
         }

@@ -1,0 +1,7 @@
+MasterShowNotification:
+    pattern:  /
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:ShowNotification }
+
+MasterReadNotification:
+    pattern:  /read/{id}/notification
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:ReadNotification }

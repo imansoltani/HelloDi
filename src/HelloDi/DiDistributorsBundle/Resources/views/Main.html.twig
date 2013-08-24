@@ -164,9 +164,33 @@
                             {% endblock %}
                         </i>
                     </a>
+
+                    <ul class="dropdown-menu">
+
+                           {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
+
+                        <li><a             href="{{ path('DistShowNotification') }}" > {{ 'Notifications' | trans ({}, "notification") }} </a></li>
+
+                         {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+
+                             <li><a              href="{{ path('RetailerShowNotification') }}" >  {{ 'Notifications' | trans ({}, "notification") }}</a></li>
+
+
+                         {% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
+
+                               <li><a     href="{{ path('MasterShowNotification') }}"  > {{ 'Notifications' | trans ({}, "notification") }} </a></li>
+
+
+                                    {% endif %}
+
+
+
+                        </ul>
+
                     {% block Noti_Message %}{% endblock %}
 
                 </li>
+
                 <li class="dropdown">
                     <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
                        data-toggle="dropdown">

@@ -41,9 +41,29 @@ class DistributorsController extends Controller
     #notification#
 
     public function CountNotificationAction()
-
     {
         return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
+    }
+
+    public function ShowNotificationAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:Notifications.html.twig',
+            array(
+                'Account' => $this->getUser()->getAccount(),
+                'Entity' => $this->getUser()->getAccount()->getEntiti(),
+                'Notifications'=>$Notifications
+            ));
+
+    }
+
+    public function ReadNotificationAction($id)
+    {
+
+      $this->forward('hello_di_di_notification:ReadAction',array('id'=>$id));
+   return  $this->redirect($this->generateUrl('DistShowNotification'));
     }
 
     //Retailers
@@ -320,7 +340,20 @@ class DistributorsController extends Controller
                     $trandist->setTranAmount(-$data['Amount']);
                     $em->persist($trandist);
                     $em->persist($tranretailer);
-                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>32));
+
+
+                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>32,'value'=>$data['Amount'].$Account->getAccCurrency()));
+
+                    if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
+
+
+                    if($Account->getParent()->getAccBalance()+$Account->getParent()->getAccCreditLimit()<=15000)
+                    {
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getParent()->getId(),'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+                    }
+
                     $em->flush();
 
 
@@ -409,7 +442,18 @@ if($data['Amount']>0)
             $Account->setAccCreditLimit($Account->getAccCreditLimit()+$data['Amount']);
             $em->persist($trandist);
 
-            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>33));
+         $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>33,'value'=>$data['Amount'].$Account->getAccCurrency()));
+
+         if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
+
+         if($Account->getParent()->getAccBalance()+$Account->getParent()->getAccCreditLimit()<=15000)
+            {
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getParent()->getId(),'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+            }
+
+
 
             $em->flush();
 
@@ -435,7 +479,7 @@ if($data['Amount']>0)
             $Account->setAccCreditLimit($Account->getAccCreditLimit()- $data['Amount']);
             $em->flush();
 
-            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>34));
+            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>34,'value'=>$data['Amount'].$Account->getAccCurrency()));
 
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
@@ -626,7 +670,7 @@ catch(\Exception $e)
 
                 $em->persist($user);
                 $em->flush();
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>37));
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>37,'value'=>$user->getUsername()));
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('DistRetailerUser', array('id' => $Account->getId())));
             }
@@ -1094,6 +1138,7 @@ catch(\Exception $e){
 
              $em->persist($detahis);
              $em->flush();
+
              $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
 
 
