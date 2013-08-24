@@ -43,4 +43,8 @@ PINNotValid: PinCode is not valid.
 CodesAlreadyExist: The Codes is Already Exist.
 FileEmpty: File is empty.
 ErrorReadingFile: Error in Reading File.
-FileAlreadyExist: The selected File is Already Exist.
+FileAlreadyExist: The selected File is Already Exist.Are_you_sure_to_Dead_Beat: Are you sure to Dead Beat the code?
+
+
+#######ticket
+ticket_create_successfully: ticket create successfully

@@ -294,10 +294,10 @@ class AccountController extends Controller
                     'amdt' => 'debit_distributor,s_account',
                     'crnt' => 'issue_a_credit_note_for_a_sold_code',
                     'com_pmt' => 'debit_distributor,s_account_for_the_commisson_payments',
-                    'ogo_pmt' => 'ogone_payment_on_its_own_account',
+                    'ogn_pmt' => 'ogone_payment_on_its_own_account',
                     'tran' => 'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
                     'tran' => 'transfer_credit_from_distributors_account_to_a_retailer,s_account',
-                    'crtl' => 'increase_retailer,s_credit_limit',
+                    'crlt' => 'increase_retailer,s_credit_limit',
                     'com' => 'credit_commissons_when_a_retailer_sells_a_code'
                 )))
             ->getForm();
@@ -339,6 +339,7 @@ class AccountController extends Controller
             $qb = $qb->getQuery();
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
+
             }
 
     catch(\Exception $e){
@@ -2373,6 +2374,9 @@ catch(\Exception $e)
 
         switch ($id) {
             case 0:
+                $value.='<option value="crlt">'.
+                    $this->get('translator')->trans('increase_retailer,s_credit_limit',[],'transaction')
+                    .'</option>';
 
                 $value.='<option value="amdt">'.
                     $this->get('translator')->trans('debit_distributor,s_account',[],'transaction')
@@ -2394,9 +2398,7 @@ catch(\Exception $e)
 
             case 1:
 
-                $value.='<option value="crlt">'.
-                    $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
-                    .'</option>';
+
 
                 $value.='<option value="pmt">'.
                     $this->get('translator')->trans('credit_distributor,s_account',[],'transaction')
@@ -2434,7 +2436,7 @@ catch(\Exception $e)
                     .'</option>';
 
                 $value.='<option value="crlt">'.
-                    $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
+                    $this->get('translator')->trans('increase_retailer,s_credit_limit',[],'transaction')
                     .'</option>';
 
                 $value.='<option value="pmt">'.
@@ -2709,7 +2711,7 @@ try{
 
                 $typedate=1;
                 if($data['DateStart']!='')
-                    $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+                    $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
                 if($data['DateEnd']!='')
                     $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
@@ -2721,17 +2723,22 @@ try{
             if($data['Action']!='All')
                 $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
 
-            $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');;
+            $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');
 
             $qb=$qb->getQuery();
             $count = count($qb->getResult());
             $qb->setHint('knp_paginator.count', $count);
+
+
       }
 
-catch(\Exception $e){
+catch(\Exception $e)
+   {
     $this->get('session')->getFlashBag()->add('error',
         $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
-                    }
+   }
+
+
         }
 
         $pagination = $paginator->paginate(
@@ -3025,7 +3032,7 @@ catch(\Exception $e)
 
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAction('crtl');
+            $trandist->setTranAction('crlt');
             $trandist->setTranBalance($AccountRetailer->getParent()->getAccBalance());
             $trandist->setTranType(0);
             $trandist->setAccount($AccountRetailer->getParent());

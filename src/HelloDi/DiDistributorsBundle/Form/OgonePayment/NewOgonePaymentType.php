@@ -24,7 +24,7 @@ class NewOgonePaymentType extends AbstractType
     {
 
         $builder
-            ->add('paymentAmount','money')
+            ->add('paymentAmount','money',array('label'=>'paymentAmount','translation_domain'=>'ogone'))
             ->add('PaymentCurrencyISO', 'hidden',array('data'=>$this->currency))
         ;
     }

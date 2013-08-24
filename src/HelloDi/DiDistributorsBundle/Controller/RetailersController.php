@@ -549,7 +549,8 @@ $datetype=0;
             $em->persist($TickNote);
             $em->persist($Tick);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this ticket create successfully !');
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('ticket_create_successfully',array(),'message'));
         }
 
 

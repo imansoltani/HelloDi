@@ -95,11 +95,11 @@
             });
 
             $(function () {
-                {#val= $("#form_Type").val();#}
-                {#$("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');#}
-                {#$.post('{{ path("MasterLoadActionRetailer") }}',{id: val},function(result){#}
-                    {#$("#form_Action").html(result);#}
-                {#});#}
+                val= $("#form_Type").val();
+                $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
+                $.post('{{ path("MasterLoadActionRetailer") }}',{id: val},function(result){
+                    $("#form_Action").html(result);
+                });
 
                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 

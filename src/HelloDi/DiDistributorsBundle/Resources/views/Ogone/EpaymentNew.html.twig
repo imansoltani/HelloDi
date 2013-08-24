@@ -1,12 +1,12 @@
 {% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
 {% block title %}
-    Epayment
+    {{ 'Epayment'|trans({},'ogone') }}
 {% endblock title %}
 
 {% block bodywidth %}login{% endblock %}
 
-{% block header %}Epayment New{% endblock %}
+{% block header %}{{ 'EpaymentNew'|trans({},'ogone') }}{% endblock %}
 
 {% block fos_user_content %}
 
@@ -46,7 +46,7 @@
 
 				</span>
             <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
-                   value="Next"/>
+                   value="{{ 'Next'|trans({},'ogone') }}"/>
         </div>
         <!-- .actions -->
 

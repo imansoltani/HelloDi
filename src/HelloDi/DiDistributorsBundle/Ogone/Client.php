@@ -194,8 +194,8 @@ class Client
         }
 
         $fields[] = sprintf('<input  type="hidden" name="SHASIGN" value="%s" />', $this->generateHashIn($payment));
-        $fields[] ='<input  class="button btn btn-primary btn-large"  type="submit"  value="Accept">';
-        $fields[] = '</form>';
+//        $fields[] ='<input  class="button btn btn-primary btn-large"  type="submit"  value="Accept">';
+//        $fields[] = '</form>';
 
         return    implode('', $fields);
 
