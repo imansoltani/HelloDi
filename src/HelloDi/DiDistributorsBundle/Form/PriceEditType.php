@@ -11,13 +11,16 @@ class PriceEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('price','integer')
+            ->add('price','integer',array(
+                'label' => 'Price','translation_domain' => 'price'
+            ))
             ->add('priceStatus','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
                     0 => 'Inactive',
                     1 => 'Active',
-                )
+                ),
+                'label' => 'Status','translation_domain' => 'price'
             ))
         ;
     }

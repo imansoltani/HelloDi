@@ -1460,6 +1460,10 @@ catch(\Exception $e)
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
+        if (!$account) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Account',array(),'accounts')),'message'));
+        }
+
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
@@ -1480,9 +1484,10 @@ catch(\Exception $e)
                             WHERE aa = :aaid
                         )')
                         ->setParameter('aaid', $account);
-                }
+                },
+                'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price')
+            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1497,6 +1502,7 @@ catch(\Exception $e)
                 $em->persist($pricehistory);
 
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
                     'id' => $price->getAccount()->getId()
                 ));
@@ -1513,6 +1519,11 @@ catch(\Exception $e)
     {
         $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
+
+        if (!$price) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Item',array(),'item')),'message'));
+        }
+
         $oldprice = $price->getPrice();
 
         $form = $this->createForm(new PriceEditType(), $price);
@@ -1528,7 +1539,7 @@ catch(\Exception $e)
                     $em->persist($pricehistory);
                 }
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsProv', array(
                     'id' => $price->getAccount()->getId()
                 ));
@@ -1560,6 +1571,10 @@ catch(\Exception $e)
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
+        if (!$account) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Account',array(),'accounts')),'message'));
+        }
+
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
         $price->setPriceStatus(1);
@@ -1587,9 +1602,10 @@ catch(\Exception $e)
                             WHERE aaa.accType = 1
                         )')
                         ->setParameter('aaid', $account);
-                }
+                },
+                'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price')
+            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1604,6 +1620,7 @@ catch(\Exception $e)
                 $em->persist($pricehistory);
 
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
                     'id' => $price->getAccount()->getId()
                 ));
@@ -1620,6 +1637,11 @@ catch(\Exception $e)
     {
         $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
+
+        if (!$price) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Item',array(),'item')),'message'));
+        }
+
         $oldprice = $price->getPrice();
 
         $form = $this->createForm(new PriceEditType(), $price);
@@ -1636,16 +1658,19 @@ catch(\Exception $e)
                 }
                 if ($price->getPriceStatus() == 0) {
                     $RetAccs = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id)->getChildrens()->toArray();
-                    $em->createQueryBuilder()
-                        ->update('HelloDiDiDistributorsBundle:Price', 'pr')
-                        ->where('pr.Account IN (:retaccs)')->setParameter('retaccs', $RetAccs)
-                        ->andWhere('pr.Item = :item')->setParameter('item', $price->getItem())
-                        ->set("pr.priceStatus", 0)
-                        ->getQuery()
-                        ->execute();
+                    if(count($RetAccs)>0)
+                    {
+                        $em->createQueryBuilder()
+                            ->update('HelloDiDiDistributorsBundle:Price', 'pr')
+                            ->where('pr.Account IN (:retaccs)')->setParameter('retaccs', $RetAccs)
+                            ->andWhere('pr.Item = :item')->setParameter('item', $price->getItem())
+                            ->set("pr.priceStatus", 0)
+                            ->getQuery()
+                            ->execute();
+                    }
                 }
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:ManageItemsDist', array(
                     'id' => $price->getAccount()->getId()
                 ));

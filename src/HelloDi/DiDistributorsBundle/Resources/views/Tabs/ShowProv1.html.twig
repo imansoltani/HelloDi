@@ -32,14 +32,14 @@
     <li {% if tab == '2' %}class="active"{% endif %} >
         <a href="{{ path('MasterProvTransaction',{id:Account.id}) }}" >
            
-                <input type="submit" value="Transaction"/>
+                <input type="submit" value="{{ 'Transactions' | trans ({}, "transaction") }}"/>
 
         </a>
     </li>
 
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="{{ path('ManageItemsProv',{id:Account.id}) }}">
-                <input type="submit" value="Items"/>
+                <input type="submit" value="{{ 'Items' | trans ({}, "item") }}"/>
         </a>
     </li>
 
@@ -54,7 +54,7 @@
         <a href="{{ path('MasterProvRemoved',{id:Account.id}) }}" >
 
 
-                <input type="submit" value="Removed"/>
+                <input type="submit" value="{{ 'Removed' | trans ({}, "transaction") }}"/>
 
         </a>
     </li>
@@ -63,7 +63,7 @@
 
             <a href="{{ path('EditAccountProv',{'id':Account.id }) }}">
 
-                <input type="submit" value="Info" >
+                <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}" >
             </a>
     </li>
 
@@ -72,7 +72,7 @@
 
         <a href="{{ path('MasterProvEntiti',{'id':Account.id }) }}">
 
-            <input type="submit" value="Entity" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
     </li>
 

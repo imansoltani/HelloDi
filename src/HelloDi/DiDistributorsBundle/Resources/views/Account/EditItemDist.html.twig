@@ -3,24 +3,23 @@
 {% set tab = '6' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <a class="link" href="">Items</a>
-    <span class="link">Edit Items</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'EditItem' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Edit Item</h3>
+        <h3>{{ 'EditItem' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
-
 
         <form id="editprice" action="#" method="post" class="form-horizontal">
 
             <div class="control-group">
                 <label class="control-label">
-                    Name
+                    {{ 'Name' | trans ({}, "item") }}
                 </label>
                 <div class="controls">
                     <input class="input-large" type="text" disabled="" value="{{ price.item.itemName }}" >
@@ -29,16 +28,17 @@
 
             <div class="control-group">
                 <label class="control-label">
-                    Face Value
+                    {{ 'FaceValue' | trans ({}, "item") }}
                 </label>
-                <div class="controls">
+                <div class="controls money">
                     <input class="input-large" type="text" disabled="" value="{{ price.item.itemFaceValue }}" >
+                     | {{ Account.accCurrency }}
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label">
-                    Operator
+                    {{ 'Operator' | trans ({}, "operator") }}
                 </label>
                 <div class="controls">
                     <input class="input-large" type="text" disabled="" value="{{ price.item.operator.name }}" >
@@ -66,34 +66,22 @@
             {{form_widget(form._token)}}
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <input type="submit" class="btn btn-primary" onclick="$('#gowhere').val('0')" value="Edit" />
-                <input type="submit" class="btn" onclick="$('#gowhere').val('1')" value="Back" />
-                <input type="hidden" id="gowhere" value="0" />
-                <script type="text/javascript">
-                    $(function(){
-                        $('form#editprice').submit(function(e){
-                            if($('#gowhere').val() == '1')
-                            {
-                                e.preventDefault();
-                                $('form#Item').submit();
-                            }
-                        })
-                    });
-                </script>
+                <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans ({}, "common") }}"/>
+                <a href="{{ path('ManageItemsDist',{'id':Account.id}) }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
             </div>
         </form>
 
         <div class="tablediv" >
             <div class="contenttitle">
-                <h4>Price History</h4>
+                <h4>{{ 'History' | trans ({}, "price") }}</h4>
             </div>
             <div class="tab-content" >
                 <table style="margin-top: 20px" class="table postsend">
                     <thead>
                     <tr>
-                        <th>from</th>
-                        <th>to</th>
-                        <th>price</th>
+                        <th>{{ 'FromDate' | trans ({}, "price") }}</th>
+                        <th>{{ 'ToDate' | trans ({}, "price") }}</th>
+                        <th>{{ 'Price' | trans ({}, "price") }}</th>
                     </tr>
                     </thead>
                     <tbody>

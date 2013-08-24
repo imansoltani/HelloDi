@@ -3,17 +3,17 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <a class="link" href="javascript:history.go(-1)">Items</a>
-    <span class="link">Add New Items</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Provider' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('ManageItemsProv',{id:Account.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
 
 
     <div class="widget-header">
-        <h3>Add new Item</h3>
+        <h3>{{ 'AddItem' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
     <div class="tab-content">
@@ -36,20 +36,8 @@
             {{form_widget(form._token)}}
 
             <div class="form-actions" style="margin-bottom: 0" >
-                <a class="btn btn-primary btn-medium" onclick="GoWhere(0)"  >Add</a>
-                <a class="btn" onclick="GoWhere(1)"  >Back</a>
-                <script type="text/javascript">
-                    function GoWhere(x)
-                    {
-                        if(x == 1)
-                            $('form#Item').submit();
-                        else
-                        {
-                            if(CheckData('.price input'))
-                                $('#addprice').submit();
-                        }
-                    }
-                </script>
+                <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans ({}, "common") }}"/>
+                <a href="{{ path('ManageItemsProv',{id:Account.id}) }}" class="btn">{{ 'Cancel' | trans ({}, "common") }}</a>
             </div>
 
 

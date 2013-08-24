@@ -3,9 +3,9 @@
 {% set tab = '1' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Items</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Provider' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -31,11 +31,11 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Provider Items</h3>
+        <h3>{{ 'Items' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
     <br/>
     <a class=" btn btn-primary btn-large" href="{{ path('AddItemProv',{'id':Account.id}) }}">
-        Add new Item
+        {{ 'AddItem' | trans ({}, "item") }}
     </a>
     <br/>
     <br/>
@@ -47,14 +47,14 @@
 
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Face Value (Currency)</th>
-                    <th>Code</th>
-                    <th>Type</th>
-                    <th>Price (Currency)</th>
-                    <th>Status</th>
-                    <th>Management</th>
+                    <th>{{ 'Id' | trans ({}, "item") }}</th>
+                    <th>{{ 'Name' | trans ({}, "item") }}</th>
+                    <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
+                    <th>{{ 'Code' | trans ({}, "code") }}</th>
+                    <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                    <th>{{ 'Price' | trans ({}, "price") }} ({{ 'Currency' | trans ({}, "item") }})</th>
+                    <th>{{ 'Status' | trans ({}, "code") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
                 </tr>
 
 
@@ -80,13 +80,21 @@
                         <td>{{ price.item.itemName }}</td>
                         <td>{{ price.item.itemFaceValue }} {{ price.item.itemCurrency }}</td>
                         <td>{{ price.item.itemCode }}</td>
-                        <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                        <td>
+                            {% if price.item.itemType=='dmtu' %}
+                                {{ 'Mobile' | trans ({}, "item") }}
+                            {% elseif price.item.itemType=='clcu' %}
+                                {{ 'Calling_Card' | trans ({}, "item") }}
+                            {% else %}
+                                {{ 'E-payment' | trans ({}, "item") }}
+                            {% endif %}
+                        </td>
                         <td>{{ price.price }} {{ price.priceCurrency }}</td>
-                        <td>{% if price.priceStatus == 1 %}Active{% else %}Inactive{% endif %}</td>
+                        <td>{% if price.priceStatus == 1 %}{{ 'Active' | trans ({}, "price") }}{% else %}{{ 'Inactive' | trans ({}, "price") }}{% endif %}</td>
                         <td class="td-actions" >
-                            <a class="btn_actions" href="{{ path('EditItemProv',{'id':Account.id,'itemid':price.id}) }}">Manage</a>
+                            <a class="btn_actions" href="{{ path('EditItemProv',{'id':Account.id,'itemid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             <br/>
-                            <a class="btn_actions" href="{{ path('UploadInputProv',{'id':Account.id,'itemid':price.item.id}) }}">Upload Code</a>
+                            <a class="btn_actions" href="{{ path('UploadInputProv',{'id':Account.id,'itemid':price.item.id}) }}">{{ 'Upload' | trans ({}, "upload") }}</a>
                         </td>
                     </tr>
                 {% endfor %}
