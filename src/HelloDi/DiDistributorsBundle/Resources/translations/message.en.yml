@@ -36,3 +36,11 @@ code_must_be_Inactive: The code must be Inactive!
 Are_you_sure_to_Credit_Node: Are you sure to Credit Node the code?
 Are_you_sure_to_Credit_Node_And_Deat_Beat: Are you sure to Credit Node And Deat Beat the code?
 Are_you_sure_to_Dead_Beat: Are you sure to Dead Beat the code?
+
+BatchNotValid: Batch is not valid.
+SNNotValid: SerialNumber is not valid.
+PINNotValid: PinCode is not valid.
+CodesAlreadyExist: The Codes is Already Exist.
+FileEmpty: File is empty.
+ErrorReadingFile: Error in Reading File.
+FileAlreadyExist: The selected File is Already Exist.

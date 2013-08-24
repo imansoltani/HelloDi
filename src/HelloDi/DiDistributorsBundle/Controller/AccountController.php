@@ -1699,8 +1699,10 @@ catch(\Exception $e)
             ->setParameter('aaid', $account);
 
         $form = $this->createFormBuilder()
-            ->add('From', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
-            ->add('To', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
+            ->add('From', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd',
+                'label' => 'FromInsertDate','translation_domain' => 'code'))
+            ->add('To', 'date', array('required' => false, 'widget' => 'single_text', 'format' => 'yyyy/MM/dd',
+                'label' => 'ToInsertDate','translation_domain' => 'code'))
             ->add('item', 'entity', array(
                 'required' => false,
                 'empty_value' => 'All',
@@ -1712,7 +1714,8 @@ catch(\Exception $e)
                         ->innerJoin('p.Account', 'a')
                         ->where('a = :aaid')
                         ->setParameter('aaid', $account);
-                }
+                },
+                'label' => 'Item','translation_domain' => 'item'
             ))
             ->getForm();
 
@@ -1759,13 +1762,16 @@ catch(\Exception $e)
         $Item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
 
         $form = $this->createFormBuilder()
-            ->add('File', 'file')
-            ->add('Batch', 'text', array('required' => false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now')))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now')))
-            ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
-            ->add('SerialNumber', 'text', array('data' => '1', 'label' => 'Column Number Pin'))
-            ->add('PinCode', 'text', array('data' => '4', 'label' => 'Column Number SN'))
+            ->add('File', 'file',array('label' => 'File','translation_domain' => 'code'))
+            ->add('Batch', 'text', array('required' => false,'label' => 'Batch','translation_domain' => 'code'))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now'),
+                'label' => 'DateProduction','translation_domain' => 'code'))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now'),
+                'label' => 'DateExpiry','translation_domain' => 'code'))
+            ->add('delimiter', 'choice', array('choices' => array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'),
+                'label' => 'Delimiter','translation_domain' => 'code'))
+            ->add('SerialNumber', 'text', array('data' => '1','label' => 'ColumnNumSN','translation_domain' => 'code'))
+            ->add('PinCode', 'text', array('data' => '4','label' => 'ColumnNumPIN','translation_domain' => 'code'))
             ->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Account:UploadInputProv.html.twig', array(
@@ -1783,13 +1789,16 @@ catch(\Exception $e)
         $Item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemid);
 
         $form = $this->createFormBuilder()
-            ->add('File', 'file')
-            ->add('Batch', 'text', array('required' => false))
-            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
-            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd'))
-            ->add('delimiter', 'choice', array('choices' => (array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'))))
-            ->add('SerialNumber', 'text', array('label' => 'Column Number Pin'))
-            ->add('PinCode', 'text', array('label' => 'Column Number SN'))
+            ->add('File', 'file',array('label' => 'File','translation_domain' => 'code'))
+            ->add('Batch', 'text', array('required' => false,'label' => 'Batch','translation_domain' => 'code'))
+            ->add('ProductionDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now'),
+                'label' => 'DateProduction','translation_domain' => 'code'))
+            ->add('ExpireDate', 'date', array('widget' => 'single_text', 'format' => 'yyyy/MM/dd', 'data' => new \DateTime('now'),
+                'label' => 'DateExpiry','translation_domain' => 'code'))
+            ->add('delimiter', 'choice', array('choices' => array(';' => ';', ',' => ',', ' ' => 'Space', '-' => '-'),
+                'label' => 'Delimiter','translation_domain' => 'code'))
+            ->add('SerialNumber', 'text', array('data' => '1','label' => 'ColumnNumSN','translation_domain' => 'code'))
+            ->add('PinCode', 'text', array('data' => '4','label' => 'ColumnNumPIN','translation_domain' => 'code'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -1799,17 +1808,17 @@ catch(\Exception $e)
         if (!is_numeric($data['Batch']))
         {
             $haserror = true;
-            $this->get('session')->getFlashBag()->add('error', 'Batch is not valid.');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('BatchNotValid',array(),'message'));
         }
         if (!is_numeric($data['SerialNumber']))
         {
             $haserror = true;
-            $this->get('session')->getFlashBag()->add('error', 'SerialNumber is not valid.');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('SNNotValid',array(),'message'));
         }
         if (!is_numeric($data['PinCode']))
         {
             $haserror = true;
-            $this->get('session')->getFlashBag()->add('error', 'PinCode is not valid.');
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('PINNotValid',array(),'message'));
         }
 
         if (!$haserror) {
@@ -1838,10 +1847,10 @@ catch(\Exception $e)
                             $lineArray = explode($data['delimiter'], $line);
 //                        fwrite($f,$count.','.$lineArray[$data['SerialNumber'] - 1].'\n');
                             $codefind = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findOneBy(
-                                array('serialNumber' => $lineArray[$data['SerialNumber'] - 1])
+                                array('serialNumber' => trim($lineArray[$data['SerialNumber'] - 1]))
                             );
                             if ($codefind) {
-                                $this->get('session')->getFlashBag()->add('error', 'Codes are duplicate.');
+                                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('CodesAlreadyExist',array(),'message'));
                                 $ok = false;
                                 break;
                             }
@@ -1867,13 +1876,13 @@ catch(\Exception $e)
                             );
                         }
                     } else {
-                        $this->get('session')->getFlashBag()->add('error', 'File is empty.');
+                        $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('FileEmpty',array(),'message'));
                     }
                 } catch (\Exception $ex) {
-                    $this->get('session')->getFlashBag()->add('error', 'Error in Reading File.');
+                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('ErrorReadingFile',array(),'message'));
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('error', 'File is duplicate.');
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('FileAlreadyExist',array(),'message'));
             }
         }
         return $this->forward('HelloDiDiDistributorsBundle:Account:UploadInputProv', array(
@@ -1900,51 +1909,58 @@ catch(\Exception $e)
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $input = new Input();
-        $input->setFileName($filename);
-        $input->setItem($Item);
-        $input->setBatch($batch);
-        $input->setDateProduction($production);
-        $input->setDateExpiry($expiry);
-        $input->setDateInsert(new \DateTime('now'));
-        $input->setAccount($Account);
-        $input->setUser($user);
-        $em->persist($input);
-//        $f= fopen("d:\\b.txt","w+");
-        $file = fopen($input->getAbsolutePath(), 'r+');
-//        $count = 0;
-        while ($line = fgets($file)) {
-//            $count++;
-            $lineArray = explode($delimiter, $line);
-//            fwrite($f,$count.','.$lineArray[$SerialNumber - 1].'\n');
-            $code = new Code();
-            $code->setSerialNumber($lineArray[$SerialNumber - 1]);
-            $code->setPin($lineArray[$PinCode - 1]);
-            $code->setStatus(1);
-            $code->setItem($input->getItem());
-            $code->setInput($input);
-            $em->persist($code);
+        try {
+            $input = new Input();
+            $input->setFileName($filename);
+            $input->setItem($Item);
+            $input->setBatch($batch);
+            $input->setDateProduction($production);
+            $input->setDateExpiry($expiry);
+            $input->setDateInsert(new \DateTime('now'));
+            $input->setAccount($Account);
+            $input->setUser($user);
+            $em->persist($input);
+    //        $f= fopen("d:\\b.txt","w+");
+            $file = fopen($input->getAbsolutePath(), 'r+');
+    //        $count = 0;
+            while ($line = fgets($file)) {
+    //            $count++;
+                $lineArray = explode($delimiter, $line);
+    //            fwrite($f,$count.','.$lineArray[$SerialNumber - 1].'\n');
+                $code = new Code();
+                $code->setSerialNumber(trim($lineArray[$SerialNumber - 1]));
+                $code->setPin(trim($lineArray[$PinCode - 1]));
+                $code->setStatus(1);
+                $code->setItem($input->getItem());
+                $code->setInput($input);
+                $em->persist($code);
 
-            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$Item,'Account'=>$Account))->getPrice();
+                $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$Item,'Account'=>$Account))->getPrice();
 
-            $transaction = new Transaction();
-            $transaction->setCode($code);
-            $transaction->setAccount($Account);
-            $transaction->setTranAmount($price);
-            $transaction->setUser($user);
-            $transaction->setTranDate(new \DateTime('now'));
-            $transaction->setTranInsert(new \DateTime('now'));
-            $transaction->setTranAction('add');
-            $transaction->setTranCurrency($Account->getAccCurrency());
-            $transaction->setTranFees(0);
-            $transaction->setTranType(1);
-            $transaction->setTranBookingValue(null);
-            $transaction->setTranBalance($Account->getAccBalance());
-            $transaction->setTranDescription('add new code with serial '.$code->getSerialNumber().' to system.');
-            $em->persist($transaction);
+                $transaction = new Transaction();
+                $transaction->setCode($code);
+                $transaction->setAccount($Account);
+                $transaction->setTranAmount($price);
+                $transaction->setUser($user);
+                $transaction->setTranDate(new \DateTime('now'));
+                $transaction->setTranInsert(new \DateTime('now'));
+                $transaction->setTranAction('add');
+                $transaction->setTranCurrency($Account->getAccCurrency());
+                $transaction->setTranFees(0);
+                $transaction->setTranType(1);
+                $transaction->setTranBookingValue(null);
+                $transaction->setTranBalance($Account->getAccBalance());
+                $transaction->setTranDescription('add new code with serial '.$code->getSerialNumber().' to system.');
+                $em->persist($transaction);
 
+            }
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            $em->flush();
+        }catch (\Exception $e)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('ErrorReadingFile',array(),'message'));
         }
-        $em->flush();
 
         return $this->forward('HelloDiDiDistributorsBundle:Account:UploadInputProvSubmitCanceled');
     }
@@ -2109,8 +2125,10 @@ catch(\Exception $e)
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $searchForm = $this->createFormBuilder()
-            ->add('FromDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
-            ->add('ToDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text'))
+            ->add('FromDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text',
+                'label' => 'From','translation_domain' => 'transaction'))
+            ->add('ToDate', 'date', array('required' => false, 'format' => 'yyyy/MM/dd', 'widget' => 'single_text',
+                'label' => 'To','translation_domain' => 'transaction'))
             ->add('item', 'entity', array(
                 'required' => false,
                 'empty_value' => 'All',
@@ -2122,7 +2140,8 @@ catch(\Exception $e)
                         ->innerJoin('p.Account', 'a')
                         ->where('a = :aaid')
                         ->setParameter('aaid', $account);
-                }
+                },
+                'label' => 'Item','translation_domain' => 'item'
             ))
             ->getForm();
 

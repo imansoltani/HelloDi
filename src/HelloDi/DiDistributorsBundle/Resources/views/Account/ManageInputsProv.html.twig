@@ -3,9 +3,9 @@
 {% set tab = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Input</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Provider' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Input' | trans ({}, "code") }}</span>
 {% endblock Site_Map %}
 
 
@@ -13,7 +13,7 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Input List</h3>
+        <h3>{{ 'Inputs' | trans ({}, "code") }}</h3>
 
     </div> <!-- /widget-header -->
 
@@ -22,7 +22,7 @@
         <h5 style="cursor:pointer;" class="TitleShow1">
             <span>
                 <i id="search_logo" class="icon-search"></i>
-                <p class="title_search">Search Input File</p>
+                <p class="title_search">{{ 'Search' | trans ({}, "common") }}</p>
             </span>
         </h5>
         <form class="form-horizontal SearchForm" action="#" method="post">
@@ -48,13 +48,13 @@
 
                 {{ form_rest(form) }}
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
             </fieldset>
         </form>
         <script type="text/javascript">
             $(function () {
 
-                Form_Search(0,"Search Input File");
+                Form_Search(0,"{{ 'Search' | trans ({}, "common") }}");
 
             });
         </script>
@@ -66,20 +66,20 @@
 
     <div class="tablediv" >
         <div class="contenttitle">
-            <h4>Input List</h4>
+            <h4>{{ 'Inputs' | trans ({}, "code") }}</h4>
         </div>
         <form>
             <div class="tab-content" >
                 <table style="margin-top: 20px" class="table postsend">
                     <thead>
                     <tr>
-                        <th>Item</th>
-                        <th>Batch</th>
-                        <th>Dateproduction</th>
-                        <th>Dateexpiry</th>
-                        <th>Quantity</th>
-                        <th>Value</th>
-                        <th>Management</th>
+                        <th>{{ 'Item' | trans ({}, "item") }}</th>
+                        <th>{{ 'Batch' | trans ({}, "code") }}</th>
+                        <th>{{ 'DateProduction' | trans ({}, "code") }}</th>
+                        <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                        <th>{{ 'Quantity' | trans ({}, "code") }}</th>
+                        <th>{{ 'Value' | trans ({}, "code") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,7 +92,7 @@
                             <td>{{ input.Codes.count }}</td>
                             <td>{{ render(controller('HelloDiDiDistributorsBundle:Account:CalcPrice', { 'account': Account , 'item': input.Item , 'count' : input.Codes.count })) }}</td>
                             <td class="td-actions" >
-                                <a href="#" class="btn_actions" >Show</a>
+                                <a href="#" class="btn_actions" >{{ 'Details' | trans ({}, "common") }}</a>
                             </td>
                         </tr>
                     {% endfor %}

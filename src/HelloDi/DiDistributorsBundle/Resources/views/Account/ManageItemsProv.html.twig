@@ -94,7 +94,7 @@
                         <td class="td-actions" >
                             <a class="btn_actions" href="{{ path('EditItemProv',{'id':Account.id,'itemid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             <br/>
-                            <a class="btn_actions" href="{{ path('UploadInputProv',{'id':Account.id,'itemid':price.item.id}) }}">{{ 'Upload' | trans ({}, "upload") }}</a>
+                            <a class="btn_actions" href="{{ path('UploadInputProv',{'id':Account.id,'itemid':price.item.id}) }}">{{ 'Upload' | trans ({}, "code") }}</a>
                         </td>
                     </tr>
                 {% endfor %}

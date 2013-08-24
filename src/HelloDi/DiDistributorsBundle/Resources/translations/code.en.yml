@@ -11,6 +11,7 @@ DateInsert: Date Insert
 DateProduction: Date Production
 DateExpiry: Date Expiry
 FileName: File Name
+File:
 Batch: Batch
 ExportCSV: Export to CSV
 Quantity:
@@ -31,3 +32,10 @@ FromInsertDate:
 ToInsertDate:
 FromExpireDate:
 ToExpireDate:
+Upload:
+Input:
+Inputs:
+Value:
+Delimiter:
+ColumnNumSN: Column Number Serial
+ColumnNumPIN: Column Number Pin

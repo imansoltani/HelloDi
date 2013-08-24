@@ -3,9 +3,9 @@
 {% set tab = '6' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Removed</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Provider' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Removed' | trans ({}, "transaction") }}</span>
 {% endblock Site_Map %}
 
 
@@ -13,7 +13,7 @@
 {% block Tab %}
 
     <div class="widget-header">
-        <h3>Removed List</h3>
+        <h3>{{ 'Removed' | trans ({}, "transaction") }}</h3>
 
     </div> <!-- /widget-header -->
 
@@ -53,13 +53,13 @@
 
                 {{ form_rest(form) }}
                 <hr>
-                <input class="btn btn-primary" type="submit" value="Search">
+                <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
             </fieldset>
         </form>
         <script type="text/javascript">
             $(function () {
 
-                Form_Search(0,"Search Removed File");
+                Form_Search(0,"{{ 'Search' | trans ({}, "common") }}");
 
             });
         </script>
@@ -71,18 +71,18 @@
 
     <div class="tablediv" >
         <div class="contenttitle">
-            <h4>Removed List</h4>
+            <h4>{{ 'Removed' | trans ({}, "transaction") }}</h4>
         </div>
         <form>
             <div class="tab-content" >
                 <table style="margin-top: 20px" class="table postsend">
                     <thead>
                     <tr>
-                        <th>Item</th>
-                        <th>Serial Number</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Management</th>
+                        <th>{{ 'Item' | trans ({}, "item") }}</th>
+                        <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                        <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,7 @@
                             <td>{{ trans.tranDescription }}</td>
                             <td>{{ trans.tranDate|date('Y/m/d') }}</td>
                             <td class="td-actions" >
-                                <a href="{{ path('code_history',{id:trans.Code.id}) }}" class="btn_actions" >History</a>
+                                <a href="{{ path('code_history',{id:trans.Code.id}) }}" class="btn_actions" >{{ 'History' | trans ({}, "transaction") }}</a>
                             </td>
                         </tr>
                     {% endfor %}

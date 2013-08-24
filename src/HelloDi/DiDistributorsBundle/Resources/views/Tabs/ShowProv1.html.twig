@@ -46,7 +46,7 @@
 
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a href="{{ path('ManageInputsProv',{id:Account.id}) }}">
-                <input type="submit" value="Input"/>
+                <input type="submit" value="{{ 'Inputs' | trans ({}, "code") }}"/>
         </a>
     </li>
 

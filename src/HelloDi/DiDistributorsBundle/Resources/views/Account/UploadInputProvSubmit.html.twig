@@ -3,14 +3,15 @@
 {% set tab = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountProv') }}">Provider</a>
-    <span class="link">Upload Input</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountProv') }}">{{ 'Provider' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('ManageItemsProv',{id:Account.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Upload' | trans ({}, "code") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Upload Input</h3>
+        <h3>{{ 'Upload' | trans ({}, "code") }}</h3>
     </div>
 
 
@@ -18,7 +19,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Item Name
+                {{ 'Name' | trans ({}, "item") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.item.itemName }}" class="input-large" disabled="" >
@@ -27,7 +28,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Face Value
+                {{ 'FaceValue' | trans ({}, "item") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.item.itemFaceValue }}" class="input-large" disabled="" >
@@ -36,7 +37,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Quantity
+                {{ 'Quantity' | trans ({}, "code") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ count }}" class="input-large" disabled="" >
@@ -45,7 +46,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Batch
+                {{ 'Batch' | trans ({}, "code") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.batch }}" class="input-large" disabled="" >
@@ -54,7 +55,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Production
+                {{ 'DateProduction' | trans ({}, "code") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.dateProduction|date('Y/m/d') }}" class="input-large" disabled="" >
@@ -63,7 +64,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                Expiry
+                {{ 'DateExpiry' | trans ({}, "code") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.dateExpiry|date('Y/m/d') }}" class="input-large" disabled="" >
@@ -72,7 +73,7 @@
 
         <div class="control-group">
             <label class="control-label">
-                File Name
+                {{ 'FileName' | trans ({}, "code") }}
             </label>
             <div class="controls">
                 <input type="text" value="{{ input.fileName }}" class="input-large" disabled="" >
@@ -80,8 +81,8 @@
         </div>
 
         <div class="form-actions" style="margin-bottom: 0">
-            <input type="submit" class="btn btn-primary" value="Accept"/>
-            <a href="{{ path('UploadInputProvSubmitCanceled',{'id':Account.id,'itemid':input.item.id}) }}" class="btn btn-warning">Cancel</a>
+            <input type="submit" class="btn btn-primary" value="{{ 'Accept' | trans ({}, "common") }}"/>
+            <a href="{{ path('UploadInputProvSubmitCanceled',{'id':Account.id,'itemid':input.item.id}) }}" class="btn btn-warning">{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
 
 
