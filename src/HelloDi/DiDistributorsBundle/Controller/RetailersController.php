@@ -946,6 +946,7 @@ $datetype=0;
 
     public function SwitchFavoriteItemAction($priceid)
     {
+        $this->check_Price($priceid);
         $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
 
@@ -964,7 +965,7 @@ $datetype=0;
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
         if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this User !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('User',array(),'user')),'message'));
         }
     }
 
@@ -975,7 +976,7 @@ $datetype=0;
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Transaction !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));
         }
     }
 
@@ -986,7 +987,18 @@ $datetype=0;
         $ticket = $em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($ticketid);
         if($ticket == null || $ticket->getAccountretailer() == null || $ticket->getAccountretailer() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Ticket !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Ticket',array(),'ticket')),'message'));
+        }
+    }
+
+    private function check_Price($priceid)
+    {
+        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($priceid);
+        if($price == null || $price->getAccount() == null || $price->getAccount() != $myaccount)
+        {
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Price',array(),'price')),'message'));
         }
     }
 // end check

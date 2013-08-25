@@ -1396,7 +1396,7 @@ catch(\Exception $e){
 
         if($price == null || $price->getPrice()==0)
         {
-            throw new \Exception("You haven't permission to access this item !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Item',array(),'item')),'message'));
         }
     }
 
@@ -1407,7 +1407,7 @@ catch(\Exception $e){
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
         if($account == null || $account->getParent() == null || $account->getParent() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Account !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Account',array(),'accounts')),'message'));
         }
     }
 
@@ -1418,7 +1418,7 @@ catch(\Exception $e){
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         if($price == null || $price->getAccount() == null || $price->getAccount()->getParent() == null || $price->getAccount()->getParent() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Price !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Price',array(),'price')),'message'));
         }
     }
 
@@ -1429,7 +1429,7 @@ catch(\Exception $e){
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
         if($user == null || $user->getAccount() == null || $user->getAccount() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this User !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('User',array(),'user')),'message'));
         }
     }
 
@@ -1440,7 +1440,7 @@ catch(\Exception $e){
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
         if($user == null || $user->getAccount() == null || $user->getAccount()->getParent() == null || $user->getAccount()->getParent()!= $myaccount)
         {
-            throw new \Exception("You haven't permission to access this User !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('User',array(),'user')),'message'));
         }
     }
 
@@ -1451,7 +1451,7 @@ catch(\Exception $e){
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Transaction !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));
         }
     }
 
@@ -1462,32 +1462,8 @@ catch(\Exception $e){
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount()->getParent() == null || $tran->getAccount()->getParent() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Transaction !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));
         }
-    }
-
-    private function check_ChildEntity($entityid) //---has problem----
-    {
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
-        $em = $this->getDoctrine()->getManager();
-        $entiti = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($entityid);
-
-        $qb = $em->createQueryBuilder()
-            ->select('count(ent.id)')
-            ->from('HelloDiDiDistributorsBundle:Entiti','ent')
-            ->innerJoin('ent.Accounts','accs')
-            ->innerJoin('accs.Parent','p')
-            ->where('ent = :enti')
-            ->andWhere('p = :par')
-            ->setParameter('enti',$entiti)
-            ->setParameter('par',$myaccount)
-            ->getQuery();
-        $count = $qb->getSingleScalarResult();
-
-//        if($entiti == null || $entiti->getAccount() == null || $tran->getAccount()->getParent() == null || $tran->getAccount()->getParent() != $myaccount)
-//        {
-//            throw new \Exception("You haven't permission to access this Transaction !");
-//        }
     }
 
     private function check_Ticket($ticketid)
@@ -1497,7 +1473,7 @@ catch(\Exception $e){
         $ticket = $em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($ticketid);
         if($ticket == null || $ticket->getAccountdist() == null || $ticket->getAccountdist() != $myaccount)
         {
-            throw new \Exception("You haven't permission to access this Ticket !");
+            throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Ticket',array(),'ticket')),'message'));
         }
     }
 
