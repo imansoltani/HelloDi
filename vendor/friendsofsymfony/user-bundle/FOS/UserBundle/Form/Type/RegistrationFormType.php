@@ -43,11 +43,11 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('enabled', 'choice',
                 array(
-                 'label' => 'Enabled','translation_domain' => 'user',
+                 'label' => 'Active','translation_domain' => 'user',
                 'choices' =>
                 array(
-                    0 => 'Disabled',
-                    1 => 'Enabled'
+                    0 => 'Disable',
+                    1 => 'Enable'
                 )
 
 

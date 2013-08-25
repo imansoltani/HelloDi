@@ -48,7 +48,7 @@ class TaxController extends Controller
     {
 
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
         $newtax=new Tax();
@@ -65,7 +65,7 @@ class TaxController extends Controller
                 $em->persist($newtax);
                 $em->flush();
             }
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
         }
         $historytax=$em->createQueryBuilder();
            $historytax->select('TX')

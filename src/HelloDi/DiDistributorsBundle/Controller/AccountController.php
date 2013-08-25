@@ -754,11 +754,11 @@ try{
             if ($data['DateEnd'] != '')
                 $qb->andwhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
 
+            if ($data['ItemName'])
+               $qb->andwhere('TrCoIt= :item')->setParameter('item', $data['ItemName']);
+
             if ($data['ItemType'] != 'All')
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
-
-            if ($data['ItemName'])
-             $qb->andwhere('TrCoIt= :item')->setParameter('item', $data['ItemName']);
 
             if ($data['GroupBy'])
                 $qb->GroupBy('Tr.tranDate','TrCo.Item','Tr.Account');
@@ -880,7 +880,7 @@ catch(\Exception $e)
 
         $AccountBalance = $this->get('hello_di_di_distributors.balancechecker');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $User = $this->get('security.context')->getToken()->getUser();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -1028,7 +1028,7 @@ catch(\Exception $e)
     public function  ProvRegisterAction($id, Request $Req)
     {
         $AccountBalance = $this->get('hello_di_di_distributors.balancechecker');
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $User = $this->get('security.context')->getToken()->getUser();
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
@@ -1149,7 +1149,7 @@ catch(\Exception $e)
 
     public function PurchasesAction($id, Request $req)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $User = $this->getUser();
 
@@ -1180,7 +1180,7 @@ catch(\Exception $e)
                     'All' => 'All',
                     'dmtu' => 'Mobile',
                     'clcd' => 'Calling_Card',
-                    'empt' => 'E-payment',
+                    'epmt' => 'E-payment',
 
                 )))
 
@@ -1218,10 +1218,11 @@ catch(\Exception $e)
                 $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
             if ($data['DateEnd'] != '')
                 $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
-            if ($data['ItemType'] != 'All')
-                $qb->andWhere('TrCoIt.itemType = :ItemType')->setParameter('ItemType', $data['ItemType']);
             if ($data['ItemName'])
-                $qb->andWhere($qb->expr()->like('TrCoIt', $qb->expr()->literal($data['ItemName'])));
+                $qb->andWhere('TrCoIt = :Item')->setParameter('Item',$data['ItemName']);
+            if ($data['ItemType'] != 'All')
+                $qb->andWhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
+
 
             $qb->groupBy('TrCoIt')->addGroupBy('Tr.BuyingPrice')->addGroupBy('Tr.tax');
 
@@ -1237,13 +1238,8 @@ catch(\Exception $e)
             }
         }
 
-        $print= $req->get('print', 0);
 
-//        $pagination = $paginator->paginate(
-//            $qb,
-//            $req->get('page', 1) /*page number*/,
-//            10/*limit per page*/
-//        );
+        $print= $req->get('print', 0);
 
         if($print == 0)
         {
@@ -1994,7 +1990,7 @@ catch(\Exception $e)
     {
 
         $datetype = 0;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $form = $this->createFormBuilder()
             ->add('TypeDate', 'choice', array('translation_domain'=>'transaction',
@@ -2104,7 +2100,7 @@ catch(\Exception $e)
 
     public function MasterProvTransactionDeleteAction($tranid)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
 
         $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
@@ -2258,7 +2254,7 @@ catch(\Exception $e)
     public function  MasterProvEntitiAction($id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
@@ -2274,7 +2270,7 @@ catch(\Exception $e)
     public function  MasterDistEntitiAction($id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 

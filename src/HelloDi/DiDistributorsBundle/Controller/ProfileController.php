@@ -58,7 +58,7 @@ class ProfileController extends Controller
             {
 
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
@@ -94,7 +94,7 @@ class ProfileController extends Controller
                 $DetaHis->setAdrsDate(new \DateTime('now'));
                 $em->persist($DetaHis);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
             }
         }

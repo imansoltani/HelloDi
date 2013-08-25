@@ -50,4 +50,7 @@ New_price_can_not_less_than_price_on_this_item_in_your_distributor: New price ca
 have_not_permission_%object%: You haven't permission to access this object !
 
 #######ticket
-ticket_create_successfully: ticket created successfully
+ticket_create_successfully: ticket create successfully
+
+###homepage
+message_send_successfully: message send successfully

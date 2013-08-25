@@ -25,7 +25,7 @@ class EntitiController extends Controller
     {
         $paginator = $this->get('knp_paginator');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $user=$this->get('security.context')->getToken()->getUser();
 
@@ -113,7 +113,7 @@ class EntitiController extends Controller
     public function accountsAction(Request $request,$id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
@@ -151,7 +151,7 @@ class EntitiController extends Controller
     public function AddNewUserEntitiAction(Request $request, $id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
 
@@ -195,7 +195,7 @@ class EntitiController extends Controller
               else
                  $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37,'value'=>$user->getUsername()));
 
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
             }
 
@@ -236,7 +236,7 @@ class EntitiController extends Controller
 
                 }
 
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
@@ -270,7 +270,7 @@ class EntitiController extends Controller
 
                 $em->persist($acc);
                 $em->flush($acc);
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
@@ -300,7 +300,7 @@ class EntitiController extends Controller
             if ($form->isValid()) {
                 $em->persist($acc);
                 $em->flush($acc);
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl('Ent_Accounts',array('id'=>$id)));
             }
         }
@@ -351,7 +351,7 @@ public function  EditUserEntitiesAction(Request $request,$userid)
     if($form_edit->isValid())
     {
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success','this operation done success !');
+        $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
     }
 }
 
@@ -371,7 +371,7 @@ public function  EditUserEntitiesAction(Request $request,$userid)
     {
 
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
         $Address=$entity->getDetailHistories();
 
@@ -386,7 +386,7 @@ public function  EditUserEntitiesAction(Request $request,$userid)
     public  function EditAddressAction(Request $req,$addrid)
     {
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($addrid);
 
         $DetaHis=new DetailHistory();
@@ -432,7 +432,7 @@ public function  EditUserEntitiesAction(Request $request,$userid)
                 }
 
 
-                $this->get('session')->getFlashBag()->add('success','this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 

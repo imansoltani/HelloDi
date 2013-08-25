@@ -185,7 +185,7 @@
             {{ form_errors(form2step.Users[0].firstname) }}
         </div>
 
-        <div class="control-group lastname">
+        <div class="control-group">
             {{ form_label(form2step.Users[0].lastname) }}
 
             {{ form_widget(form2step.Users[0].lastname) }}
@@ -207,7 +207,7 @@
             {{ form_errors(form2step.Users[0].mobile) }}
         </div>
 
-        <div class="control-group email">
+        <div class="control-group">
             {{ form_label(form2step.Users[0].email) }}
 
             {{ form_widget(form2step.Users[0].email) }}
@@ -241,7 +241,7 @@
 
         {{form_widget(form2step._token)}}
 
-        <div class="control-group">
+        <div class="control-group language">
             {{ form_label(form2step.Users[0].language) }}
             <div class="controls money">
                 {{ form_widget(form2step.Users[0].language) }}<span class="icon-certificate"></span>
@@ -249,7 +249,7 @@
             {{ form_errors(form2step.Users[0].language) }}
         </div>
 
-        <div class="control-group">
+        <div class="control-group roles">
             {{ form_label(form2step.Users[0].roles[0]) }}
             <div class="controls money">
                 {{ form_widget(form2step.Users[0].roles[0]) }} <span class="icon-certificate"></span>

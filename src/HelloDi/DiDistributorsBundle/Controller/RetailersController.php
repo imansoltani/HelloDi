@@ -345,8 +345,10 @@ $datetype=0;
   $form=$form->add('DateStart','date',array(
       'widget'=>'single_text',
       'format'=>'yyyy/MM/dd',
+      'data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D')),
       'required'=>false,'label'=>'From','translation_domain'=>'transaction'))
              ->add('DateEnd','date',array(
+          'data'=>new \DateTime('now'),
           'widget'=>'single_text',
           'format'=>'yyyy/MM/dd',
           'required'=>false,'label'=>'To','translation_domain'=>'transaction'))->getForm();
@@ -420,7 +422,7 @@ $datetype=0;
     {
 
         $User=$this->get('security.context')->getToken()->getUser();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $form=$this->createFormBuilder()
             ->add('Type','choice',array('choices'=>array(
@@ -496,7 +498,7 @@ $datetype=0;
     {
         $User=$this->get('security.context')->getToken()->getUser();
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $Tick=new Ticket();
         $TickNote=new TicketNote();
 
@@ -570,7 +572,7 @@ $datetype=0;
 
         $ticketNote=new TicketNote();
         $User=$this->get('security.context')->getToken()->getUser();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
 
@@ -625,7 +627,7 @@ $datetype=0;
     public  function  ticketschangestatusAction($id)
     {
         $this->check_Ticket($id);
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -651,7 +653,7 @@ $datetype=0;
     public  function  ticketsstatusAction($id)
     {
         $this->check_Ticket($id);
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -677,7 +679,7 @@ $datetype=0;
         public function DmtuAction(){
 
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
             $qb = $em->createQueryBuilder();
@@ -702,7 +704,7 @@ $datetype=0;
 
     public function BuyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -798,7 +800,7 @@ $datetype=0;
 
     public function PrintAction(Request $request,$print)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         if($request->getSession()->has('orderid'))
         {
@@ -852,7 +854,7 @@ $datetype=0;
 
     public function CallingCardAction() {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();
@@ -877,7 +879,7 @@ $datetype=0;
 
     public function EpaymentAction() {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();
@@ -905,7 +907,7 @@ $datetype=0;
     public  function FavouritesAction(Request $request ){
 
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();

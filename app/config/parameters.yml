@@ -6,10 +6,12 @@ parameters:
     database_name: hellodi
     database_user: root
     database_password: null
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com::465
+    mailer_user: taghandiky@gmail.com
+    mailer_password: '05452006'
+    encryption : ssl
+    port: 465
     locale: en
     secret: ThisTokenIsNotSoSecretChangeIt
     ogone_pspid: hellodi

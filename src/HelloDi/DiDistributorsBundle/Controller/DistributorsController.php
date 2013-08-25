@@ -126,12 +126,14 @@ class DistributorsController extends Controller
                 array(
                      'widget'=>'single_text',
                       'format'=>'yyyy/MM/dd',
+                    'data'=>(new \DateTime('now'))->sub(new \DateInterval('P7D')),
                     'label'=>'From',
                     'translation_domain'=>'transaction',
                     'required'=>false
                 ))
             ->add('DateEnd','date',array(
                 'widget'=>'single_text',
+                'data'=>new \DateTime('now'),
                 'format'=>'yyyy/MM/dd',
                 'label'=>'To',
                 'translation_domain'=>'transaction',
@@ -518,7 +520,7 @@ catch(\Exception $e)
 
     public function DistStaffAction()
     {
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $user= $this->getUser();
          $Account=$user->getAccount();
 
@@ -561,8 +563,7 @@ catch(\Exception $e)
                 $em->persist($user);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success',
-                    'this operation done success !');
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
                 return $this->redirect($this->generateUrl('DistStaff', array('id' => $Account->getId())));
 
@@ -767,7 +768,7 @@ catch(\Exception $e)
     public function ShowRetaierAccountAction(Request $request)
     {
         $paginator = $this->get('knp_paginator');
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
         $qb = $em->createQueryBuilder()
@@ -1485,7 +1486,7 @@ catch(\Exception $e){
     {
         $paginator = $this->get('knp_paginator');
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $User=$this->get('security.context')->getToken()->getUser();
 
@@ -1553,7 +1554,7 @@ catch(\Exception $e){
     public  function  tickestnewAction(Request $req,$data)
     {
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $User=$this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
@@ -1614,7 +1615,7 @@ catch(\Exception $e){
     {
         $this->check_Ticket($id);
         $note=new TicketNote();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $User=$this->get('security.context')->getToken()->getUser();
 
 
@@ -1662,7 +1663,7 @@ catch(\Exception $e){
     public  function  ticketschangestatusAction($id)
     {
         $this->check_Ticket($id);
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -1688,7 +1689,7 @@ catch(\Exception $e){
     public  function  ticketsstatusAction($id)
     {
         $this->check_Ticket($id);
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -1706,7 +1707,7 @@ catch(\Exception $e){
     {
         $User = $this->getUser();
         $users=$User->getAccount()->getUsers();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $Countnote=$em->createQueryBuilder();
         $Countnote->select('Note')
             ->from('HelloDiDiDistributorsBundle:TicketNote','Note')

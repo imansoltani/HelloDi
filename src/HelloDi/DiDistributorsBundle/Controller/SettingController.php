@@ -44,7 +44,7 @@ public  function staffaddAction(Request $req)
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             return $this->redirect($this->generateUrl('MasterStaff'));
 
         }
@@ -71,7 +71,7 @@ public  function staffeditAction(Request $req,$id)
         $form->handleRequest($req);
         if ($form->isValid()) {
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','this operation done success !');
+            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             return $this->redirect($this->generateUrl('MasterStaff'));
         }
 

@@ -1,0 +1,35 @@
+
+<div class="widget-header">
+    <h3>{{ 'HomePage'|trans({},'homepage') }}</h3>
+<hr>
+    <h2>{{ 'Contact'|trans({},'homepage') }}</h2>
+
+
+<form action="{{ path('hellodi_homepage') }}" method="post">
+
+    {{ form_label(formContact.Inquiry) }}
+    {{ form_widget(formContact.Inquiry) }}
+    {{ form_errors(formContact.Inquiry) }}
+<br>
+
+    {{ form_label(formContact.Description) }}
+    {{ form_widget(formContact.Description) }}
+    {{ form_errors(formContact.Description) }}
+    <br>
+    {{ form_label(formContact.Name) }}
+    {{ form_widget(formContact.Name) }}
+    {{ form_errors(formContact.Name) }}
+    <br>
+    {{ form_label(formContact.Email) }}
+    {{ form_widget(formContact.Email) }}
+    {{ form_errors(formContact.Email) }}
+    <br>
+  <input type="submit" value="Send">
+    {{ form_widget(formContact._token) }}
+
+</form>
+
+
+
+</div> <!-- /widget-header -->
+

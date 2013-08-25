@@ -2,71 +2,61 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
+use HelloDi\DiDistributorsBundle\Form\HomePage\ContactType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomePageController extends Controller
 {
-    public function languageAction($locale)
-    {
 
+    public function indexAction($locale,Request $req)
+    {
+        $em=$this->getDoctrine()->getManager();
         $this->get('session')->set('_locale',$locale);
 
-       return $this->redirect($this->generateUrl($this->get('session')->get('MyRout')));
-    }
-
-    public function aboutAction(Request $req)
+       $Form=$this->createForm(new ContactType());
+if($req->isMethod('POST'))
+{
+  $Form->handleRequest($req);
+    if($Form->isValid())
     {
+$data=$Form->getData();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('To HelloDi from '.'Mr '.$data['Name'].' to '.$data['Email'].' have a request')
+            ->setFrom($data['Email'])
+            ->setTo('taghandiky@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'HelloDiDiDistributorsBundle:HomePage:Contact.html.twig',
+                    array(
+                        'Name' => $data['Name'],
+                        'Description'=>$data['Description'],
+                        'Inquiry'=>$data['Inquiry'],
+                         'Email'=>$data['Email']
+                    )
+                ), 'text/html'
+    )
+     ->addPart('My amazing body in plain text', 'text/plain');
 
-        $this->SetMyRouteAction($req);
+        $this->get('mailer')->send($message);
 
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:About.html.twig');
+
+        $this->get('session')->getFlashBag()->add('success',
+            $this->get('translator')->trans('message_send_successfully',
+                array(),
+                   'message'));
+
     }
+}
 
-    public function contactAction(Request $req)
-    {
-        $this->SetMyRouteAction($req);
+       return $this->render('HelloDiDiDistributorsBundle:HomePage:Index.html.twig',
+           array(
+               'formContact'=>$Form->createView(),
+           )
 
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:Contact.html.twig');
-    }
+       );
 
-    public function NewsAction(Request $req)
-    {
-        $this->SetMyRouteAction($req);
-
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:News.html.twig');
-    }
-
-    public function NetworkAction(Request $req)
-    {
-        $this->SetMyRouteAction($req);
-
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:Network.html.twig');
-    }
-
-
-    public function ProductAction(Request $req)
-    {
-        $this->SetMyRouteAction($req);
-
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:Product.html.twig');
-    }
-
-
-    public function ServicesAction(Request $req)
-    {
-        $this->SetMyRouteAction($req);
-
-        return $this->render('HelloDiDiDistributorsBundle:HomePage:Services.html.twig');
-    }
-
-
-  public function  SetMyRouteAction($req)
-    {
-    $MyRout=$req->attributes->get('_route');
-    $this->get('session')->set('MyRout',$MyRout);
-    return;
     }
 
 }

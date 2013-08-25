@@ -20,7 +20,7 @@ public  function  ticketsAction(Request $req)
 
     $paginator = $this->get('knp_paginator');
 
-    $em=$this->getDoctrine()->getEntityManager();
+    $em=$this->getDoctrine()->getManager();
     $usermaster=$em->getRepository('HelloDiDiDistributorsBundle:User')->findBy(array('Account'=>null));
 
 
@@ -150,7 +150,7 @@ if($data['Retailers']==1 and $data['Distributors']==1)
 
 public  function ticketsnoteAction(Request $req,$id)
 {
-    $em=$this->getDoctrine()->getEntityManager();
+    $em=$this->getDoctrine()->getManager();
 
 
     $note=new TicketNote();
@@ -201,7 +201,7 @@ public  function ticketsnoteAction(Request $req,$id)
 
 public  function  ticketschangestatusAction(Request $req,$id)
 {
-$em=$this->getDoctrine()->getEntityManager();
+$em=$this->getDoctrine()->getManager();
 
     $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -226,7 +226,7 @@ $em->flush();
 
     public  function  ticketsstatusAction(Request $req,$id)
     {
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
 
@@ -242,7 +242,7 @@ $em->flush();
 
     public  function  releaseticketsAction($id)
     {
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
         $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
         $ticket->setInchange(null);
@@ -256,7 +256,7 @@ $em->flush();
 public  function taketicketsAction($id)
 {
     $istake=$this->get('hello_di_di_distributors.Tickets');
-    $em=$this->getDoctrine()->getEntityManager();
+    $em=$this->getDoctrine()->getManager();
     $User=$this->get('security.context')->getToken()->getUser();
     $ticket=$em->getRepository('HelloDiDiDistributorsBundle:Ticket')->find($id);
     $istake->IsTake($ticket,$User);
@@ -267,7 +267,7 @@ public  function taketicketsAction($id)
     {
         $User = $this->get('security.context')->getToken()->getUser();
         $users=$User->getEntiti()->getUsers();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $Countnote=$em->createQueryBuilder();
         $Countnote->select('Note')
             ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
