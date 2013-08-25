@@ -40,7 +40,7 @@
         </div>
 
         <div class="control-group" >
-            <label class="control-label">{{ 'Type' | trans ({}, "item") }}</label>
+            <label class="control-label">{{ 'ItemType' | trans ({}, "item") }}</label>
             <div class="controls">
                 <input disabled=""  class="input-large" type="text" value="{% if item.itemType=='dmtu' %}{{ 'Mobile' | trans ({}, "item") }}{% elseif item.itemType=='clcu' %}{{ 'Calling_Card' | trans ({}, "item") }}{% else %}{{ 'E-payment' | trans ({}, "item") }}{% endif %}" >
             </div>
