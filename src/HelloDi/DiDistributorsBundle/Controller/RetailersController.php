@@ -71,7 +71,7 @@ class RetailersController extends Controller
   {
       $User = $this->getUser();
       $users=$User->getAccount()->getUsers();
-      $em=$this->getDoctrine()->getEntityManager();
+      $em=$this->getDoctrine()->getManager();
       $Countnote=$em->createQueryBuilder();
       $Countnote->select('Note')
           ->from('HelloDiDiDistributorsBundle:TicketNote','Note')
@@ -93,7 +93,7 @@ class RetailersController extends Controller
 
     public function RetailerStaffAction()
     {
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $user=$this->get('security.context')->getToken()->getUser();
 
         $qb=$em->createQueryBuilder()
@@ -173,7 +173,7 @@ class RetailersController extends Controller
         $paginator = $this->get('knp_paginator');
         $User= $this->get('security.context')->getToken()->getUser();
         $Account=$User->getAccount();
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $qb=array();
 
         $form=$this->createFormBuilder()
@@ -285,7 +285,7 @@ $datetype=0;
     {
         $User= $this->get('security.context')->getToken()->getUser();
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
          $qb=array();
         //load first list search
 

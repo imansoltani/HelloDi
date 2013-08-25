@@ -332,7 +332,7 @@ class CodeController extends Controller
 
 //    public function aaaaAction()
 //    {
-//        $em = $this->getDoctrine()->getEntityManager();
+//        $em = $this->getDoctrine()->getManager();
 //
 //        $q = $em->createQueryBuilder()
 //            -> select('Distinct code.id')

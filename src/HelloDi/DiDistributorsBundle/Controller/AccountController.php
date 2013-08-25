@@ -651,7 +651,7 @@ catch(\Exception $e)
 
 
         $group = 0;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $qb = array();
         //load first list search
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
