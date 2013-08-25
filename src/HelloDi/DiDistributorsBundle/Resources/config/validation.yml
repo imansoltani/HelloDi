@@ -10,6 +10,7 @@ HelloDi\DiDistributorsBundle\Entity\Entiti:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: entName
             message: 'This_entity_name_is_already_in_use'
+
 HelloDi\DiDistributorsBundle\Entity\Tax:
     properties:
         tax:
@@ -20,7 +21,6 @@ HelloDi\DiDistributorsBundle\Entity\Tax:
 
 
 HelloDi\DiDistributorsBundle\Entity\User:
-
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: usernameCanonical
@@ -32,9 +32,8 @@ HelloDi\DiDistributorsBundle\Entity\User:
             - Length:
                 min: 6
                 max: 25
-                minMessage: "password must be at least {{ limit }} characters length"
-                maxMessage: "pasword name cannot be longer than {{ limit }} characters length"
-
+                minMessage: "password_must_be_at_least_{{limit}}_characters_length"
+                maxMessage: "pasword_name_cannot_be_longer_than_{{limit}}_characters_length"
 
 HelloDi\DiDistributorsBundle\Entity\Account:
     properties:
@@ -55,10 +54,6 @@ HelloDi\DiDistributorsBundle\Entity\Transaction:
                 match:   true
                 message: 'Only_numbers_are_accepted'
 
-
-
-
-
 #mostafa
 HelloDi\DiDistributorsBundle\Entity\ItemDesc:
     properties:
@@ -67,11 +62,11 @@ HelloDi\DiDistributorsBundle\Entity\ItemDesc:
             - Regex:
                 pattern: "/{{pin}}/"
                 match:   true
-                message: pin not exist in description.
+                message: 'pin_not_exist'
             - Regex:
                 pattern: "/{{serial}}/"
                 match:   true
-                message: serial not exist in description.
+                message: 'sn_not_exist'
 
 HelloDi\DiDistributorsBundle\Entity\Item:
     constraints:
