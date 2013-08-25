@@ -3177,7 +3177,7 @@ catch(\Exception $e)
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
-                    'distid'=>$distaccount->getParent()->getId(),
+                    'distid'=>$distaccount->getId(),
                     'id' => $account->getId()
                 ));
             }
@@ -3217,7 +3217,7 @@ catch(\Exception $e)
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
-                    'distid'=>$distaccount->getParent()->getId(),
+                    'distid'=>$distaccount->getId(),
                     'id' => $price->getAccount()->getId()
                 ));
             }
