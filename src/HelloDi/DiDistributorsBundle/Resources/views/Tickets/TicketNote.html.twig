@@ -27,15 +27,15 @@
             <div class="widget-content">
                 <ul class="TicketDetail" >
                     <li>
-                        <span>Date</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
+                        <span>Date:</span><a>{{ Ticket.ticketStart|date('y-M-d H:i:s') }}</a>
                     </li>
                     {% if Ticket.ticketEnd is not null %}
                         <li>
-                            <span>DateEnd</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
+                            <span>DateEnd:</span><a>{{ Ticket.ticketEnd|date('y-M-d H:i:s') }}</a>
                         </li>
                     {% endif %}
                     <li>
-                        <span>Type</span><a>
+                        <span>Type:</span><a>
                             {% if Ticket.type==0 %}payment issue
                             {% elseif Ticket.type==1 %}new item request
                             {% elseif Ticket.type==2 %}price change request
@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li>
-                        <span>Current Status</span>
+                        <span>Current Status:</span>
                         {% if Ticket.status==0 %}
 
                             <a style="margin-right: 10px" >Close</a><a class="btn btn-danger" href="{{ path('MasterTicketsStatus',{id:Ticket.id}) }}">Switch</a>
@@ -57,7 +57,7 @@
                         {% endif %}
                     </li>
                     <li>
-                        <span>In change</span>
+                        <span>In change:</span>
                         {% set istake='' %}
                         {% if Ticket.Inchange==app.user.id %}
                             <a class="btn btn-primary" href="{{ path('MasterReleaseTickets',{'id':Ticket.id}) }}"> Release</a>

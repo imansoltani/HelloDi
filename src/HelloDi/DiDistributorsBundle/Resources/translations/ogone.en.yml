@@ -1,0 +1,5 @@
+paymentAmount:
+EpaymentNew:
+Epayment:
+Validate:
+are_you_sure_to_payment_%value%_%currency%: Are you sure to payment value currency ?

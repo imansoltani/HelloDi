@@ -112,12 +112,12 @@
 
                 Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
 
-                    {#val= $("#form_type").val();#}
-                    {#$("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');#}
-                    {#$.post('{{ path("LoadActionProv") }}',{id: val},function(result){#}
+                    val= $("#form_type").val();
+                    $("#form_Action").html('<option value="All"> {{'Pleasewait' | trans ({}, "common")}}</option>');
+                    $.post('{{ path("LoadActionProv") }}',{id: val},function(result){
 
-                        {#$("#form_Action").html(result);#}
-                    {#});#}
+                        $("#form_Action").html(result);
+                    });
 
 
 

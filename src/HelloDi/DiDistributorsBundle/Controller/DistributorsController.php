@@ -423,7 +423,7 @@ else
 
             $trandist->setUser($User);
             $trandist->setTranFees(0);
-            $trandist->setTranAction('crtl');
+            $trandist->setTranAction('crlt');
             $trandist->setTranType(0);
             $trandist->setAccount($Account->getParent());
             $trandist->setTranDescription('increase retailer,s credit limit ');
@@ -998,7 +998,7 @@ catch(\Exception $e){
                   'ogn_pmt' =>'ogone_payment_on_its_own_account',
                   'tran'=>'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
                   'tran'=>'transfer_credit_from_distributors_account_to_a_retailer,s_account',
-                  'crtl'=>'increase_retailer,s_credit_limit',
+                  'crlt'=>'increase_retailer,s_credit_limit',
                   'com'=>'credit_commissons_when_a_retailer_sells_a_code'
 
               )))
@@ -1617,7 +1617,8 @@ catch(\Exception $e){
             $em->persist($note);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success','this ticket create successfully !');
+            $this->get('session')->getFlashBag()->add('success',
+                                $this->get('translator')->trans('ticket_create_successfully',array(),'message'));
 
         }
 
@@ -1754,6 +1755,9 @@ catch(\Exception $e){
      {
          case 0:
 
+             $value.='<option value="crlt">'.
+                 $this->get('translator')->trans('increase_retailer,s_credit_limit',[],'transaction')
+                 .'</option>';
 
              $value.='<option value="amdt">'.
                  $this->get('translator')->trans('debit_distributor,s_account',[],'transaction')
@@ -1775,9 +1779,7 @@ catch(\Exception $e){
 
          case 1:
 
-             $value.='<option value="crlt">'.
-                  $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
-                 .'</option>';
+
 
              $value.='<option value="pmt">'.
                  $this->get('translator')->trans('credit_distributor,s_account',[],'transaction')
@@ -1817,7 +1819,7 @@ catch(\Exception $e){
                  .'</option>';
 
              $value.='<option value="crlt">'.
-                 $this->get('translator')->trans('inscrease_retailer,s_credit_limit',[],'transaction')
+                 $this->get('translator')->trans('increase_retailer,s_credit_limit',[],'transaction')
                  .'</option>';
 
              $value.='<option value="pmt">'.

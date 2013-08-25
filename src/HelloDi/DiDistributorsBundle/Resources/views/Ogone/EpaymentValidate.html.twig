@@ -1,7 +1,7 @@
 {% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
 {% block title %}
-    Validate
+    {{ 'Validate'|trans({},'ogone') }}
 {% endblock title %}
 
 {% block bodywidth %}login{% endblock %}
@@ -17,8 +17,9 @@
         <div class="login-fields">
 
             <div class="Login_error Comment" >
-                are you sure for payment
-                <b style="color: #000100" >{{ ogonePayment.paymentAmount }}({{ ogonePayment.paymentCurrencyISO }})</b> ?
+                {{ 'are_you_sure_to_payment_%value%_%currency%'|trans({'value':ogonePayment.paymentAmount,'currency':ogonePayment.paymentCurrencyISO},'ogone') }}
+
+
             </div>
 
 
@@ -33,6 +34,9 @@
 
 				</span>
             {{ form | raw }}
+            <input  class="button btn btn-primary btn-large"  type="submit"  value="{{ 'Accept'|trans({},'common')}}">
+            </form>
+
         </div>
         <!-- .actions -->
 

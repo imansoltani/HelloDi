@@ -283,7 +283,7 @@
                     <ul class="dropdown-menu">
                         <li id="user_icon_menu"><a>{{ app.user.username }}</a></li>
                         <li id="user_icon_menu" class="divider"></li>
-                        <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'Setting' | trans ({}, "common") }}</a></li>
 
                         <li>
                             <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
