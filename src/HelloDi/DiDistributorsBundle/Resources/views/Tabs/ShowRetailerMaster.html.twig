@@ -14,7 +14,7 @@
     </li>
     <li {% if tab2 == '2' %}class="active"{% endif %}  >
         <a href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}" >
-            <input type="submit" value="Items" >
+            <input type="submit" value="{{ 'Items' | trans ({}, "item") }}" >
         </a>
     </li>
 

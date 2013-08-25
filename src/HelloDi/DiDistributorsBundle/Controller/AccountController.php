@@ -3231,15 +3231,16 @@ catch(\Exception $e)
                         ->setParameter('aaid',$account)
                         ->setParameter('aamyid',$distaccount)
                         ;
-                }
+                },
+                'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price','integer')
+            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$distaccount))->getPrice();
             if( $price->getPrice()<$distprice)
-                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
+                $form->get('price')->addError(new FormError($this->get('translator')->trans('New_price_can_not_less_than_price_on_this_item_in_your_distributor',array(),'message')));
             if ($form->isValid()) {
                 $em->persist($price);
 
@@ -3250,6 +3251,7 @@ catch(\Exception $e)
                 $em->persist($pricehistory);
 
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
                     'id' => $account->getId()
                 ));
@@ -3278,7 +3280,7 @@ catch(\Exception $e)
             $form->handleRequest($request);
             $distprice = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$price->getItem(),'Account'=>$distaccount))->getPrice();
             if( $price->getPrice()<$distprice)
-                $form->get('price')->addError(new FormError('New price can not less than price on this item in your distributor and most be lorger than '.$distprice.'.'));
+                $form->get('price')->addError(new FormError($this->get('translator')->trans('New_price_can_not_less_than_price_on_this_item_in_your_distributor',array(),'message')));
             if ($form->isValid()) {
                 if ($price->getPrice() != $oldprice) {
                     $pricehistory = new PriceHistory();
@@ -3288,7 +3290,7 @@ catch(\Exception $e)
                     $em->persist($pricehistory);
                 }
                 $em->flush();
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
                     'id' => $price->getAccount()->getId()
                 ));

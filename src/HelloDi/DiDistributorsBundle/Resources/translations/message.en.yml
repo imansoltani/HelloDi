@@ -45,6 +45,7 @@ FileEmpty: File is empty.
 ErrorReadingFile: Error in Reading File.
 FileAlreadyExist: The selected File is Already Exist.
 
+New_price_can_not_less_than_price_on_this_item_in_your_distributor: New price can not less than price on this item in your distributor.
 
 #######ticket
 ticket_create_successfully: ticket created successfully

@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
 
 {% block title %}
-    Items Per Retailers
+    {{ 'ItemPerRetailer' | trans ({}, "item") }}
 {% endblock title %}
 
 {% set MU = 'item' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('distributors_dashboard') }}">Home</a>
-    <a class="link" href="{{ path('items_show') }}">Items</a>
-    <span class="link">Item per list of retailers</span>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('items_show') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'ItemPerRetailer' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-tags"></i>
-    Item per list of retailers
+    {{ 'ItemPerRetailer' | trans ({}, "item") }}
 {% endblock %}
 
 {% block Link_Head %}
@@ -50,9 +50,9 @@
                         <table id="example" class="table postsend">
                             <thead>
                             <tr>
-                                <th>Retailer Account</th>
-                                <th>Retailer Price</th>
-                                <th>Status</th>
+                                <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
+                                <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                <th>{{ 'Status' | trans ({}, "price") }}</th>
                                 <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
                             </tr>
 
@@ -130,12 +130,12 @@
                 <input type="hidden" name="actiontype" id="actiontype" value="0"/>
 
                 <div class="form-actions">
-                    Apply the new price to the selected accounts:<br/>
-                    <input type="submit" class="btn btn-primary" value="Approve"/><br/>
+                    {{ 'apply_new_price_to_account' | trans ({}, "message") }}<br/>
+                    <input type="submit" class="btn btn-primary" value="{{ 'Apply' | trans ({}, "common") }}"/><br/>
                     <br/>
 
-                    Inactive the item on the selected accounts:<br/>
-                    <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);" value="Inactive"/>
+                    {{ 'inactive_item_on_selected_accounts' | trans ({}, "message") }}<br/>
+                    <input type="submit" class="btn btn-primary" onclick="$('#actiontype').val(1);" value="{{ 'Inactive' | trans ({}, "item") }}"/>
                 </div>
             </form>
         </div>

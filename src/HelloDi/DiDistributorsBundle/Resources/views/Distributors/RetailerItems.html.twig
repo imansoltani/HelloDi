@@ -3,9 +3,9 @@
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('retailer_show') }}">Retailer</a>
-    <span class="link">Items</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts")}}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -31,23 +31,24 @@
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Items</h3>
+        <h3>{{ 'Items' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}"
-            >Add New Item</a>
+    <a class="button btn btn-primary btn-large" href="{{ path('dist_RetailerItemAdd',{'id':retailerAccount.id}) }}">
+        {{ 'AddItem' | trans ({}, "item") }}
+    </a>
     <div style="margin-top: 5px" class="tablediv">
         <form method="post">
             <div class="tab-content datatable">
                 <table id="example" class="table postsend">
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>faceValue</th>
-                        <th>type</th>
-                        <th>Price(Currency)</th>
-                        <th>Manage</th>
+                        <th>{{ 'Id' | trans ({}, "item") }}</th>
+                        <th>{{ 'Name' | trans ({}, "item") }}</th>
+                        <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                        <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                        <th>{{ 'Price' | trans ({}, "price") }}({{ 'Currency' | trans ({}, "price") }})</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
 
                     <tr class="input" >
@@ -66,11 +67,19 @@
                             <td>{{ price.item.id }}</td>
                             <td>{{ price.item.itemName }}</td>
                             <td>{{ price.item.itemFaceValue }}</td>
-                            <td>{% if price.item.itemType==0 %}Mobile{% elseif price.item.itemType==1 %}Internet{% else %}Tel{% endif %}</td>
+                            <td>
+                                {% if price.item.itemType=='dmtu' %}
+                                    {{ 'Mobile' | trans ({}, "item") }}
+                                {% elseif price.item.itemType=='clcu' %}
+                                    {{ 'Calling_Card' | trans ({}, "item") }}
+                                {% else %}
+                                    {{ 'E-payment' | trans ({}, "item") }}
+                                {% endif %}
+                            </td>
                             <td>{{ price.price }}
                                 {{ price.priceCurrency }}</td>
                             <td>
-                                <a class="btn_actions" href="{{ path('dist_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">Edit</a>
+                                <a class="btn_actions" href="{{ path('dist_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
                         </tr>
                     {% endfor %}

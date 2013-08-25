@@ -2,17 +2,17 @@
 {% set tab2 = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <a class="link" href="{{ path('ShowMyAccountDist') }}">Distributor</a>
-    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">Retailer</a>
-    <a class="link" href="">Items</a>
-    <span class="link">New Items</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributor' | trans ({}, "accounts")}}</a>
+    <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">{{ 'Retailer' | trans ({}, "accounts")}}</a>
+    <a class="link" href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>Add new Item</h3>
+        <h3>{{ 'AddItem' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
     <form id="addprice" action="{{ path('Master_RetailerItemAdd',{'id':retailerAccount.id}) }}" method="post" class="form-horizontal">
@@ -41,20 +41,8 @@
         <input type="hidden" name="accountid" value="{{  retailerAccount.id }}" />
 
         <div class="form-actions" style="margin-bottom: 0" >
-            <input type="submit" class="btn btn-primary" onclick="$('#gowhere').val('0')" value="Add" />
-            <input type="submit" class="btn " onclick="$('#gowhere').val('1')" value="Back" />
-            <input type="hidden" id="gowhere" value="0" />
-            <script type="text/javascript">
-                $(function(){
-                    $('form#addprice').submit(function(e){
-                        if($('#gowhere').val() == '1')
-                        {
-                            e.preventDefault();
-                            $('form#Item').submit();
-                        }
-                    })
-                });
-            </script>
+            <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans ({}, "common") }}" />
+            <a class="btn" href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}" >{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
 
     </form>

@@ -59,7 +59,7 @@
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Items_Show') }}" class="dropdown-toggle">
             <i class="icon-tags"></i>
-            <span  id="user_pc_menu"  >Item</span>
+            <span  id="user_pc_menu"  >{{ 'Items' | trans ({}, "item") }}</span>
         </a>
     </li>
 

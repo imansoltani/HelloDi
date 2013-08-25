@@ -13,6 +13,7 @@ All:
 Type:
 ShopDmtu:
 BuyCard:
+Favorite:
 Favorites:
 AddItem:
 EditItem:
@@ -23,6 +24,7 @@ Info:
 Details:
 DateInsert:
 ItemPerDist:
+ItemPerRetailer:
 Inactive:
 
 Description:

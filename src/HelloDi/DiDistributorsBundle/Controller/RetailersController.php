@@ -951,7 +951,7 @@ $datetype=0;
 
         $price->setIsFavourite(!$price->getIsFavourite());
         $em->flush();
-
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
         return $this->redirect($this->generateUrl('Retailer_Items_Show'));
     }
 //end mostafa
