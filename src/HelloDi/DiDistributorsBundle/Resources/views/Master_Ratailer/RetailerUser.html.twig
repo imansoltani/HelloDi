@@ -34,7 +34,7 @@
         <h3>{{ 'Users' | trans ({}, "user") }}</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerUserAdd',{'id':retailerAccount.id}) }}" >{{ 'AddNewUser' | trans ({}, "user") }}</a>
+    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerUserAdd',{'distid':Account.id,'id':retailerAccount.id}) }}" >{{ 'AddNewUser' | trans ({}, "user") }}</a>
     <div style="margin-top: 5px" class="tablediv">
         <form method="post">
             <div class="tab-content datatable">
@@ -72,7 +72,7 @@
                             </td>
 
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('Master_RetailerUserEdit',{'id':retailerAccount.id,'userid':User.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                <a class="btn_actions" href="{{ path('Master_RetailerUserEdit',{'distid':Account.id,'id':retailerAccount.id,'userid':User.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
 
                         </tr>

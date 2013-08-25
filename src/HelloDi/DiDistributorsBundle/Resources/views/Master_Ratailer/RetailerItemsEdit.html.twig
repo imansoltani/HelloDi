@@ -5,7 +5,7 @@
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('ShowMyAccountDist') }}">{{ 'Distributor' | trans ({}, "accounts")}}</a>
     <a class="link" href="{{ path('ManageDistChildren',{'id':Account.id}) }}">{{ 'Retailer' | trans ({}, "accounts")}}</a>
-    <a class="link" href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <a class="link" href="{{ path('Master_RetailerItem',{'distid':Account.id,'id':retailerAccount.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
     <span class="link">{{ 'EditItem' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
 
@@ -15,7 +15,7 @@
         <h3>{{ 'EditItem' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
 
-    <form id="editprice" action="{{ path('Master_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}" method="post" class="form-horizontal">
+    <form id="editprice" action="{{ path('Master_RetailerItemEdit',{'distid':Account.id,'id':retailerAccount.id,'priceid':price.id}) }}" method="post" class="form-horizontal">
 
         <div class="control-group">
             <label class="control-label">
@@ -73,7 +73,7 @@
 
         <div class="form-actions" style="margin-bottom: 0">
             <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans ({}, "common") }}" />
-            <a class="btn" href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}" >{{ 'Cancel' | trans ({}, "common") }}</a>
+            <a class="btn" href="{{ path('Master_RetailerItem',{'distid':Account.id,'id':retailerAccount.id}) }}" >{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
     </form>
 

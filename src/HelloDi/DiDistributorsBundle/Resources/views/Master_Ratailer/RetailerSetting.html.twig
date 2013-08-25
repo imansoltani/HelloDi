@@ -16,7 +16,7 @@
     <h3>{{ 'Setting' | trans ({}, "common") }}</h3>
 </div> <!-- /widget-header -->
     <br>
-    <form class="form-horizontal" action="{{ path('Master_RetailerSetting',{'id':retailerAccount.id}) }}" method="post">
+    <form class="form-horizontal" action="{{ path('Master_RetailerSetting',{'distid':Account.id,'id':retailerAccount.id}) }}" method="post">
         <div class="control-group">
             <label class="control-label">{{ 'Id' | trans ({}, "common") }}
             </label>

@@ -34,7 +34,7 @@
         <h3>{{ 'Items' | trans ({}, "item") }}</h3>
     </div> <!-- /widget-header -->
     <br>
-    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerItemAdd',{'id':retailerAccount.id}) }}">
+    <a class="button btn btn-primary btn-large" href="{{ path('Master_RetailerItemAdd',{'distid':Account.id,'id':retailerAccount.id}) }}">
         {{ 'AddItem' | trans ({}, "item") }}
     </a>
     <div style="margin-top: 5px" class="tablediv">
@@ -79,7 +79,7 @@
                             <td>{{ price.price }}
                                 {{ price.priceCurrency }}</td>
                             <td>
-                                <a class="btn_actions" href="{{ path('Master_RetailerItemEdit',{'id':retailerAccount.id,'priceid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                <a class="btn_actions" href="{{ path('Master_RetailerItemEdit',{'distid':Account.id,'id':retailerAccount.id,'priceid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
                         </tr>
                     {% endfor %}

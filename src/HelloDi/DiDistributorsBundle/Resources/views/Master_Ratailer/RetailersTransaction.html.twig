@@ -16,7 +16,7 @@
     </div> <!-- /widget-header -->
     <br>
 
-    <a class="btn btn-primary btn-large" href="{{ path('Master_RetailerFunding',{'id':retailerAccount.id}) }}">{{ 'FundRetailers' | trans ({}, "accounts") }}</a>
+    <a class="btn btn-primary btn-large" href="{{ path('Master_RetailerFunding',{'distid':Account.id,'id':retailerAccount.id}) }}">{{ 'FundRetailers' | trans ({}, "accounts") }}</a>
 
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
@@ -25,7 +25,7 @@
                             <p class="title_search">Search Transactions</p>
                         </span>
         </h5>
-        <form class="form-horizontal SearchForm" action="{{ path('Master_Retailer_Transaction',{'id':retailerAccount.id}) }}"
+        <form class="form-horizontal SearchForm" action="{{ path('Master_Retailer_Transaction',{'distid':Account.id,'id':retailerAccount.id}) }}"
               method="POST">
             <fieldset>
                 <div class="control-group ">
@@ -89,7 +89,7 @@
             $("#form_Type").change(function(){
                 val= $("#form_Type").val();
                 $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
-                $.post('{{ path("MasterLoadActionRetailer") }}',{id: val},function(result){
+                $.post('{{ path("MasterLoadActionRetailer",{'distid':Account.id}) }}',{id: val},function(result){
                     $("#form_Action").html(result);
                 })
             });
@@ -97,7 +97,7 @@
             $(function () {
                 val= $("#form_Type").val();
                 $("#form_Action").html('<option value="All">{{ 'Pleasewait' | trans ({}, "common") }}</option>');
-                $.post('{{ path("MasterLoadActionRetailer") }}',{id: val},function(result){
+                $.post('{{ path("MasterLoadActionRetailer",{'distid':Account.id}) }}',{id: val},function(result){
                     $("#form_Action").html(result);
                 });
 

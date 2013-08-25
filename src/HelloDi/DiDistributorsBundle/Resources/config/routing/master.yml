@@ -16,7 +16,7 @@ master_prov:
 
 master_retailer:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/retailer.yml"
-    prefix:   /distributors/retailers
+    prefix:   /distributors/{distid}/retailers
 
 master_items:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/item.yml"

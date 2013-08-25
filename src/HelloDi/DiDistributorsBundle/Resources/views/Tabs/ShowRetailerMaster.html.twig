@@ -8,32 +8,32 @@
 {% block Tabs2 %}
 
     <li {% if tab2 == '1' %}class="active"{% endif %} >
-        <a href="{{ path('Master_Retailer_Transaction',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('Master_Retailer_Transaction',{'distid':Account.id,'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Transactions' | trans ({}, "transaction") }}" >
         </a>
     </li>
     <li {% if tab2 == '2' %}class="active"{% endif %}  >
-        <a href="{{ path('Master_RetailerItem',{'id':retailerAccount.id}) }}" >
+        <a href="{{ path('Master_RetailerItem',{'distid':Account.id,'id':retailerAccount.id}) }}" >
             <input type="submit" value="{{ 'Items' | trans ({}, "item") }}" >
         </a>
     </li>
 
 
     <li {% if tab2 == '3' %}class="active"{% endif %} >
-        <a href="{{ path('Master_RetailerUser',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('Master_RetailerUser',{'distid':Account.id,'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
         </a>
     </li>
 
     <li {% if tab2 == '4' %}class="active"{% endif %} >
-        <a href="{{ path('Master_RetailerSetting',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('Master_RetailerSetting',{'distid':Account.id,'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Setting' | trans ({}, "common") }}" >
         </a>
     </li>
 
     <li {% if tab2 == '5' %}class="active"{% endif %} >
 
-            <a href="{{ path('Master_Retailer_details',{'id':retailerAccount.id}) }}"  >
+            <a href="{{ path('Master_Retailer_details',{'distid':Account.id,'id':retailerAccount.id}) }}"  >
                 <input type="submit" value="{{ 'Details' | trans ({}, "common") }}" >
             </a>
 

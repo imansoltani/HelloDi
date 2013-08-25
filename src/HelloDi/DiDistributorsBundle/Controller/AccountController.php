@@ -2489,7 +2489,7 @@ catch(\Exception $e)
 //        $this->check_ChildUser($userid);
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -2520,7 +2520,7 @@ catch(\Exception $e)
 
         $Entiti = $AccountRetailer->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2),$user);
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',2),$user);
 
 
         if ($request->isMethod('POST')) {
@@ -2536,7 +2536,7 @@ catch(\Exception $e)
 
 
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('Master_RetailerUser', array('id' => $AccountRetailer->getId())));
+                return $this->redirect($this->generateUrl('Master_RetailerUser', array('distid'=>$AccountRetailer->getParent()->getId(),'id' => $AccountRetailer->getId())));
             }
 
         }
@@ -2550,78 +2550,6 @@ catch(\Exception $e)
     }
 
 
-    public function MasterNewRetailerAction(Request $request)
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $Account = $user->getAccount();
-
-        $em = $this->getDoctrine()->getManager();
-        $user= $this->get('security.context')->getToken()->getUser();
-        $currency=$user->getAccount()->getAccCurrency();
-        $user = new User();
-        $AdrsDetai = new DetailHistory();
-        $Entiti = new Entiti();
-        $Account = new Account();
-
-        $Account->setAccCreditLimit(0);
-        $Account->setAccCreationDate(new \DateTime('now'));
-        $Account->setAccTimeZone(null);
-        $Account->setAccType(2);
-        $Account->setAccBalance(0);
-
-
-        $Account->setAccCurrency($currency);
-        $Account->setParent($user->getAccount());
-
-
-        $Account->setEntiti($Entiti);
-        $Entiti->addAccount($Account);
-
-        $user->setEntiti($Entiti);
-        $Entiti->addUser($user);
-
-
-
-        $user->setAccount($Account);
-        $user->setStatus(1);
-
-
-        $form = $this->createForm(new NewRetailersType(), $Entiti, array('cascade_validation' => true));
-
-        if ($request->isMethod('POST')) {
-
-            $form->handleRequest($request);
-
-            //if ($form->isValid()) {
-
-            $em->persist($Entiti);
-            $AdrsDetai->setCountry($Entiti->getCountry());
-            $em->persist($Account);
-            $em->persist($user);
-            $AdrsDetai->setAdrsDate(new \DateTime('now'));
-            $AdrsDetai->setEntiti($Entiti);
-            $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-            $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-            $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-            $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-            $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-            $AdrsDetai->setEntiti($Entiti);
-            $em->persist($AdrsDetai);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-
-            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
-
-
-
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:NewRetailer.html.twig', array(
-            'form_Relaited_New' => $form->createView(),
-            'Account' => $Account
-        ));
-
-    }
 
     public function MasterRetailersTransactionAction(Request $req,$id)
     {
@@ -2685,7 +2613,7 @@ catch(\Exception $e)
 
         if($req->isMethod('POST'))
         {
-try{
+            try{
             $form->handleRequest($req);
 
             $data=$form->getData();
@@ -2726,13 +2654,13 @@ try{
             $qb->setHint('knp_paginator.count', $count);
 
 
-      }
+            }
 
-catch(\Exception $e)
-   {
-    $this->get('session')->getFlashBag()->add('error',
-        $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
-   }
+            catch(\Exception $e)
+           {
+                $this->get('session')->getFlashBag()->add('error',
+                $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+           }
 
 
         }
@@ -2989,7 +2917,7 @@ catch(\Exception $e)
 
 
     }
-        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
+        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('distid'=>$AccountRetailer->getParent()->getId(),'id'=>$id)));
 
   }
     public function  MasterRetailerFundingUpdateAction(Request $req,$id)
@@ -3107,7 +3035,7 @@ catch(\Exception $e)
  }
 
     }
-        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('id'=>$id)));
+        return $this->redirect($this->generateUrl('Master_RetailerFunding',array('distid'=>$AccountRetailer->getParent()->getId(),'id'=>$id)));
   }
 
     public function MasterLoadActionRetailerAction(Request $req)
@@ -3249,6 +3177,7 @@ catch(\Exception $e)
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
+                    'distid'=>$distaccount->getParent()->getId(),
                     'id' => $account->getId()
                 ));
             }
@@ -3288,6 +3217,7 @@ catch(\Exception $e)
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->forward('HelloDiDiDistributorsBundle:Account:MasterRetailerItems', array(
+                    'distid'=>$distaccount->getParent()->getId(),
                     'id' => $price->getAccount()->getId()
                 ));
             }

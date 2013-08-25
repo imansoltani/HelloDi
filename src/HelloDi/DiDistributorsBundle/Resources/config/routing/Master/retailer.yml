@@ -1,7 +1,3 @@
-Master_NewRetailer:
-    pattern:  /new
-    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterNewRetailer }
-
 #transactions--------------
 Master_Retailer_Transaction:
     pattern:  /{id}/transactions
