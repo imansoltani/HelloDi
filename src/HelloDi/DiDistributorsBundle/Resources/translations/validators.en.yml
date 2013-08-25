@@ -7,6 +7,6 @@ password_must_be_at_least_{{limit}}_characters_length: password must be at leads
 pasword_name_cannot_be_longer_than_{{limit}}_characters_length: pasword name cannot be longer than {{ limit }} characters length
 pin_not_exist: pin not exist in description.
 sn_not_exist: serial not exist in description.
-This_item_name_exist_already:
+This_item_name_exist_already: This item name exist already
 This_item_code_exist_already:
-This_operator_name_exist_already
+This_operator_name_exist_already:
