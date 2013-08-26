@@ -23,18 +23,18 @@ if($req->isMethod('POST'))
     {
 $data=$Form->getData();
         $message = \Swift_Message::newInstance()
-            ->setSubject('To HelloDi from '.'Mr '.$data['Name'].' to '.$data['Email'].' have a request')
-            ->setFrom($data['Email'])
-            ->setTo('taghandiky@gmail.com')
+            ->setSubject('HelloDi -- from '. $data['Email'].' have a request')
+            ->setTo('taghandiky2020@localhost')
+//            ->setFrom($data['Email'])
             ->setBody(
                 $this->renderView(
                     'HelloDiDiDistributorsBundle:HomePage:Contact.html.twig',
-                    array(
+                      array(
                         'Name' => $data['Name'],
                         'Description'=>$data['Description'],
                         'Inquiry'=>$data['Inquiry'],
-                         'Email'=>$data['Email']
-                    )
+                        'Email'=>$data['Email']
+                          )
                 ), 'text/html'
     )
      ->addPart('My amazing body in plain text', 'text/plain');
