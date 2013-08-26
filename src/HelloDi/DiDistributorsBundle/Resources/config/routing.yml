@@ -1,7 +1,3 @@
-layout:
-    pattern:  /
-    defaults: { _controller: HelloDiDiDistributorsBundle:Default:index }
-
 app_master:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/master.yml"
     prefix:   /app/m
@@ -16,8 +12,8 @@ app_Retailers:
 
 
 hellodi_homepage:
-    path: /index/{locale}
-    defaults: { _controller: HelloDiDiDistributorsBundle:HomePage:index,locale:en}
+    path: /{locale}
+    defaults: { _controller: HelloDiDiDistributorsBundle:Default:index,locale:en}
     requirements:
         locale: en|fr|de
 
