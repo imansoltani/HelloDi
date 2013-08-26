@@ -1,7 +1,6 @@
 BuyingPrice:
 SumValues:
 Value:
-#----
 Price:
 Currency:
 Status:
@@ -9,6 +8,5 @@ NewPrice:
 History:
 FromDate:
 ToDate:
-
 Active:
 Inactive:
