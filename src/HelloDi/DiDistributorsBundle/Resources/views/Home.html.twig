@@ -40,68 +40,98 @@
 
 <body>
 
-<div class="BG" style="opacity: 0.5" >
-    <div class="inner" >
-        <div class="sun" >
-            <img src="{{ asset('bundles/hellodi/img/my/sun.png') }}" >
-        </div>
-    </div>
-</div>
-
-<div class=" menubarhome" >
-    <div class="menuhome">
-        <a class="brand" id="brand" href="{{ path('layout') }}">
-            Hello <span >Di</span>
-        </a>
-
-        <ul class="nav pull-right">
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
 
-                <li class="dropdown">
+<div class="navbar navbar-inverse navbar-fixed-top" >
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" id="brand" href="{{ path('layout') }}">
+                Hello <span>Di</span>
+            </a>
 
-                    <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+            <ul class="nav pull-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+                    <li class="dropdown">
+
+                        <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
 
 
 							<span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                                 <b class="caret"></b></span>
-                    </a>
+                        </a>
 
-                    <ul style="font-size: 16px" class="dropdown-menu">
-                        {% if is_granted("ROLE_MASTER") %}
-                            <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
-                        {% endif %}
-                        {% if is_granted("ROLE_DISTRIBUTOR") %}
-                            <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
-                        {% endif %}
-                        {% if is_granted("ROLE_RETAILER") %}
-                            <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
-                        {% endif %}
-                        <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
-                    </ul>
+                        <ul style="font-size: 16px" class="dropdown-menu">
+                            {% if is_granted("ROLE_MASTER") %}
+                                <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_DISTRIBUTOR") %}
+                                <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_RETAILER") %}
+                                <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
 
-                </li>
+                    </li>
 
-            {% else %}
+                {% else %}
 
 
-                <li class="dropdown">
-                    <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                    <li class="dropdown">
+                        <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
                                 <span id="user_title_menu" style="display: block" >
                                    {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                                  </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
 
 
-            {% endif %}
-        </ul>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </div>
 
-<div >
 
+<div class="show_div" >
+    <div class="vitrin">
+        <div class="body" >
+            <div class="window">
+
+            </div>
+        </div>
+    </div>
+    <div class="inner" >
+        <center>
+            <ul>
+                <li>
+                    <div>
+                        <a>
+                            <span>About</span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a>
+                            <span>About</span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a>
+                            <span>About</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </center>
+    </div>
 </div>
 
 
@@ -120,52 +150,11 @@
 <script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/hellodi/js/more/home.js') }}"></script>
 <script type="text/javascript">
-    $('.menuhome').attr('isdone','0');
+
     $(function(){
-        $(window).scroll(function(){
-            var x = $('.menuhome').attr('isdone');
-
-            if(x == 0)
-            {
-                if($(window).scrollTop() > 5)
-                {
-                    $('.menuhome').attr('style','border-right:0px;border-left:0px;border-radius:0px');
-                    $('.menuhome').animate({
-                        width:'100%',
-                        margin:'0px'
-                    });
-                    $('.menuhome').removeAttr('isdone');
-                    $('.menuhome').attr('isdone','1');
-                }
-            }
-            else
-            {
-                if($(window).scrollTop() < 6)
-                {
 
 
-                    $('.menuhome').animate({
-                        marginTop:'5px',
-                        marginRight:'2%',
-                        marginLeft:'29%',
-                        borderRightWidth:'2px',
-                        borderLeftWidth:'2px',
-                        width:'70%'
-
-                    },300,function()
-                    {
-                        $('.menuhome').removeAttr('style');
-                    });
-
-                    $('.menuhome').removeAttr('isdone');
-                    $('.menuhome').attr('isdone','0');
-
-                }
-            }
-
-        })  ;
-    })
-
+    });
     $(document).ready(function(){
 
     });

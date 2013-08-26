@@ -1,290 +1,861 @@
-
-body .navbar .navbar-inner {
-
-    border-bottom: #006fa1 solid thin;
-    box-shadow: 0px 0px 3px #006fa1;
-}
-
-body .navbar{
-    position: absolute;
-}
-
-html{
-    height: 100%;
-}
-
-.backgrounds{
+body,html{
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
-    display: block;
-}
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(51, 51, 51);
 
-.menubarhome{
-    position: relative;
-    min-height: 50px;
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-    display: none;
-}
-
-.brand,.brand:hover,.brand:active{
-    text-decoration: none;
-    margin-top: 5px;
-}
-.menuhome .nav{
-    margin-bottom: 5px;
-
-    margin-right: 20px;
-}
-
-.menuhome{
-
-padding: 10px;
-    padding-left: 0px;
-    padding-right: 0px;
-    border-radius: 5px;
-    border: solid #a2dfff 2px;
-    padding-bottom: 5px;
-    width: 70%;
-    margin-top: 5px;
-    margin-right: 2%;
-    margin-left: 29%;
-    position: fixed;
-    /* IE10 Consumer Preview */
-    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #6CB8EC 100%);
-
-    /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(top, #FFFFFF 0%, #6CB8EC 100%);
-
-    /* Opera */
-    background-image: -o-linear-gradient(top, #FFFFFF 0%, #6CB8EC 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #6CB8EC));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #6CB8EC 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: linear-gradient(to bottom, #FFFFFF 0%, #6CB8EC 100%);
+    background:  rgb(245, 250, 253);
 }
 
 body{
-    background:#000000;
-/*background-image: url('../img/summer.jpeg');*/
-    background-repeat: no-repeat;
-    background-size:  cover;
-    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-.dist{
+body a , a:active , a:hover , a:focus{
+    text-decoration: none;
+}
+
+body .navbar-fixed-top {
+    margin: 0px;
+    border: medium none;
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    z-index: 1030;
+    overflow: visible;
+    top: 0px;
+
+}
+
+body .navbar .navbar-inner{
+    background-color: #ffffff;
+    z-index: 1000;
+    border-bottom: solid rgb(80, 98, 127);
+    border-bottom-width: 2px;
+    box-shadow: none;
+    display: block;
+}
+
+body .navbar .navbar-inner .container{
+    border: none;
+}
+
+body .navbar{
+    border: none;
+}
+
+/*------------------------------*/
+.body{
+    height: 105%;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 200;
+}
+
+.body:nth-child(2n)
+{
+    z-index: 100;
+}
+
+.Other{
+    display: none;
+    margin: 0;
+    padding: 0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border-top: solid 1px rgb(80, 98, 127);
+}
+
+.Section1{
+    height: 100%;
+    display: none;
+}
+
+.Section1 > div{
+    position:  fixed;
+    padding-top: 20%;
+    display: block;
+    width: 100%;
+    top:0;
+}
+
+header{
+    font-family: 'Anton',sans-serif;
+    text-transform: uppercase;
+}
+
+
+
+.Section1 header{
+    width: 100%;
+    text-align: center;
+    font-size: 1500%;
+    display: block;
+    height:70px;
+    text-transform: none;
+    font-family: 'Carrois Gothic SC',sans-serif;
+}
+
+.Section1 header span{
+    color: rgb(25, 117, 180);
+}
+
+.Section1 >  div > a{
+    text-align: center;
+    font-size: 250%;
+    margin-top: 20px;
+    width: 100%;
+    display: block;
+    color: #2c2c2c;
+}
+
+.Section2{
+    background: url("../img/Wallpaper/section21.png") no-repeat center center  fixed ;
+
+
+}
+
+.Section2 > div{
+    width: 90%;
+    height: 93%;
+    margin-top: 7%;
+    margin-left: 5%;
+    display: block;
+}
+
+.Section2 > div > div:first-child{
+    float: left;
+    width: 100%;
+    display: inline-block;
+}
+
+.Section2 > div  header{
+    font-size: 70px;
+    display: inline-block;
+    color: #FFF;
+    margin-top: 20px;
+    text-shadow: 0px 0px 10px #000 ;
+    opacity: 0;
+    font-family: 'Cinzel',sans-serif;
+    text-transform: uppercase;
+}
+
+.Section2 > div  p{
+    font-size: 27px;
+    background:  rgba(0, 0, 0, 0.5);
+    line-height: 37px;
+    color: #FFFFFF;
+    margin-top: 50px;
+    padding: 10px;
+    padding-right: 5px;
+    padding-left: 20px;
+    border-left: solid 3px yellow;
+    opacity: 0;
+    font-family: Karla;
+
+}
+
+.Section3{
+    background: #4ba1db;
+    height: 700px;
+
+}
+
+.Section3 > div{
+    width: 70%;
+    min-height: 300px;
+    padding-bottom: 30px;
+    margin-top: 5%;
+    margin-left: 15%;
+    display: block;
+    top:0;
+    border-bottom: dashed #fff 1px;
+}
+
+.Section3 > div > div{
+
+    display: block;
+    margin-top: 60px;
+    width: 100%;
+}
+
+.Section3 .f1 header{
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    display: block;
+    color: #FFFFFF;
+    font-family: 'Carrois Gothic SC',sans-serif;
+    text-transform: uppercase;
+}
+
+.Section3 .f1  div > p{
+    font-family: Karla;
+    width: 40%;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: inline-block;
+    line-height: 27px;
+}
+
+.Section3 .f1 div > span{
+    float: right;
+    width: 45%;
+    background:url("../img/Wallpaper/macbook-air.png") no-repeat;
+    display: inline-block;
+    height: 200px;
+    background-size: 400px;
+}
+
+
+.Section3 .f1{
+    min-height: 300px;
+}
+
+.Section3 .f2{
+    min-height: 200px;
+    padding-bottom: 0;
+    margin-bottom: 20px;
+    margin-top: 0;
+    border: none;
+
+}
+
+.Section3 .f2  div > p{
+    font-family: Karla;
+    width:50%;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: inline-block;
+    line-height: 27px;
+
+}
+
+.Section3 .f2 div > span{
+    float: left;
+    width: 45%;
+    background:url("../img/Wallpaper/operators.png") no-repeat center center;
+    display: inline-block;
+    height: 180px;
+    background-size: 150px;
+}
+
+
+
+
+.Section4{
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(center bottom, circle farthest-corner, #9A728D 0%, #6C3C64 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center bottom, circle farthest-corner, #9A728D 0%, #6C3C64 100%);
+
+    /* Opera */
+    background-image: -o-radial-gradient(center bottom, circle farthest-corner, #9A728D 0%, #6C3C64 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center bottom, 0, center bottom, 561, color-stop(0, #9A728D), color-stop(1, #6C3C64));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center bottom, circle farthest-corner, #9A728D 0%, #6C3C64 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(circle farthest-corner at center bottom, #9A728D 0%, #6C3C64 100%);
+    
+
+
+    background: url("../img/Wallpaper/Lap.jpg") no-repeat center bottom fixed  ;
+    height: auto;
+    padding-top: 200px;
+    padding-bottom: 40px;
+
+
+}
+
+.Section4 > div {
+   position: relative;
+     width: 85%;
+    min-height: 20px;
+    margin-top: 100px;
+    margin: 0 auto;
+}
+
+.Section4 > div > div{
+    opacity: 0;
+}
+
+.Section4 .f1{
+    display: block;
+    padding: 10px;
+    min-height: 10px;
+    /*background: rgba(222,222,222,0.5);*/
+    margin-bottom: 10px;
+    height:400px;
+
+
+}
+
+.Section4 .f1 span{
+    position: left;
+    width: 40%;
+    height: 400px;
+    display: inline-block;
+    background: url("../img/Wallpaper/call2.jpg") no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-shadow: 0px 2px 3px #000;
+}
+
+.Section4 .f1 div.detail{
     position: absolute;
-    top: 30%;
-    width: 35%;
-    right: 20px;
-    height: 250px;
-    padding: 5px;
-    background: url('../img/grandstream_gxv3140_3.png') no-repeat top right;
-    background-size: contain;
-    font-size:40px;
+    left: 40%;
+    top: 10px;
+    display: block;
+
+    width: 60%;
+}
+
+.Section4 .f1 header{
+    display: block;
+    top: 0px;
+
+    width: 80%;
+    margin: 0 auto;
+
+    color: #ffffff;
+    padding:10px;
+    border: solid thin #fff;
+    border-radius: 5px ;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.Section4 .f1 header1{
+    display: block;
+    margin-left: 15px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: Karla;
+    text-shadow: -1px 1px 1px #404040;
+}
+
+.Section4 .f1 p{
+    color: #ffffff;
+    font-size: 17px;
+    font-family: Karla;
+    margin-left: 15px;
+    margin-right: 15px;
+    text-shadow: -1px 1px 1px #404040;
+}
+
+.Section4 .f1 div p.line{
+    border-bottom: dotted thin #ffffff;
+    padding-bottom: 20px;
+}
+
+.Section4 .f2{
+    display: block;
+    padding: 10px;
+
+    /*background: rgba(222,222,222,0.5);*/
+    margin-bottom: 10px;
+    height:300px;
+
+
+}
+
+
+.Section4 .f2 span{
+    float: right;
+    width: 20%;
+    height: 300px;
+    display: inline-block;
+    background: url("../img/Wallpaper/Call.jpg") no-repeat center left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-shadow: 0px 2px 3px #000;
+}
+
+.Section4 .f2 div.detail{
+
+
+    top: 10px;
+    display: block;
+
+    width: 80%;
+}
+
+.Section4 .f2 header{
+    display: block;
+    top: 0px;
+    width: 95%;
+    font-family: 'Viga';
+    color: #ffffff;
+    padding:10px;
+    border: solid thin #fff;
+    border-radius: 5px ;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+    opacity: 0;
+}
+
+
+
+.Section4 .f2 p{
+    color: #ffffff;
+    font-size: 25px;
+    font-family: Karla;
+    width: 95%;
+    line-height: 30px;
+    text-align: left;
+    text-shadow: -1px 1px 1px #404040;
+    opacity: 0;
+}
+
+.Section4 .f3{
+    display: block;
+    padding: 10px;
+    min-height: 10px;
+    /*background: rgba(222,222,222,0.5);*/
+    margin-bottom: 10px;
+    height:400px;
+
+
+}
+
+.Section4 .f3 span{
+    position: left;
+    width: 40%;
+    height: 400px;
+    display: inline-block;
+    background: url("../img/Wallpaper/Call3.jpg") no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-shadow: 0px 2px 3px #000;
+}
+
+.Section4 .f3 div.detail{
+    position: relative;
+
+    top: 10px;
+    display: block;
+    float: right;
+    width: 60%;
+}
+
+.Section4 .f3 header{
+    display: block;
+    top: 0px;
+    font-family: Oxygen;
+
+    opacity: 0;
+    width: 80%;
+    margin: 0 auto;
+
+    color: #ffffff;
+    padding:10px;
+    border: solid thin #fff;
+    border-radius: 5px ;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 27px;
+}
+
+
+
+.Section4 .f3 p{
+    color: #ffffff;
+    font-size: 25px;
+    font-family: 'Quando';
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    line-height: 30px;
+    text-shadow: -1px 1px 1px #404040;
+
+    opacity: 0;
+}
+
+.Section4 .f4{
+    display: block;
+    padding: 10px;
+
+    /*background: rgba(222,222,222,0.5);*/
+    margin-bottom: 10px;
+    height:300px;
+
+
+}
+
+
+.Section4 .f4 span{
+    float: right;
+    width: 30%;
+    height: 300px;
+    display: inline-block;
+    background: url("../img/Wallpaper/pay.jpg") no-repeat center left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-shadow: 0px 2px 3px #000;
+}
+
+.Section4 .f4 div.detail{
+
+
+    top: 10px;
+    display: block;
+
+    width: 70%;
+}
+
+.Section4 .f4 header{
+    display: block;
+    top: 0px;
+    width: 95%;
+    font-family: 'Viga';
+    color: #ffffff;
+    padding:10px;
+    border: solid thin #fff;
+    border-radius: 5px ;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+
+    opacity: 0;
+}
+
+
+
+.Section4 .f4 p{
+    color: #ffffff;
+    font-size: 25px;
+    font-family: Karla;
+    width: 95%;
+    line-height: 30px;
+    text-align: left;
+    text-shadow: -1px 1px 1px #404040;
+
+    opacity: 0;
+}
+
+.Section4 div.line
+{
+    padding: 10px;
+    min-height: 1px;
+    margin-bottom: 10px;
+}
+
+.Section4  div.line > div{
+    min-height: 0px;
+    height: 0px;
+    border-top: solid #36353a 1px;
+    border-bottom: solid #818087 1px;
+    display: block;
+}
+
+.Section5{
+ /*   *//* IE10 Consumer Preview *//*
+    background-image: -ms-linear-gradient(top, #73BCEF 0%, #3492D0 100%);
+
+    *//* Mozilla Firefox *//*
+    background-image: -moz-linear-gradient(top, #73BCEF 0%, #3492D0 100%);
+
+    *//* Opera *//*
+    background-image: -o-linear-gradient(top, #73BCEF 0%, #3492D0 100%);
+
+    *//* Webkit (Safari/Chrome 10) *//*
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #73BCEF), color-stop(1, #3492D0));
+
+    *//* Webkit (Chrome 11+) *//*
+    background-image: -webkit-linear-gradient(top, #73BCEF 0%, #3492D0 100%);
+
+    *//* W3C Markup, IE10 Release Preview *//*
+    background-image: linear-gradient(to bottom, #73BCEF 0%, #3492D0 100%);*/
+    background: #808080;
+}
+
+.Section5 > div{
+    width: 90%;
+    min-height: 65%;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    margin-top: 150px;
+
+    display: block;
+
+    position: relative;
+
+}
+
+
+
+.Section5 header{
+
+    padding: 10px;
+    padding-top: 0;
+    position: relative;
+    text-align: center;
+    font-size: 50px;
+    display: inline-block;
+
+    height:60px;
+
+    margin-top: -20px;
+    color: #FFFFFF;
+    font-family: 'Carrois Gothic SC',sans-serif;
+    text-transform: uppercase;
+}
+
+
+.Section6{
+    background: rgb(245, 250, 253);
+    min-height: 350px;
+    height: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    overflow: visible;
+
+}
+
+.Section6 > div{
+    width: 90%;
+
+    margin: 0 auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    display: block;
+
+    position: relative;
+
+}
+
+
+.Section6 header{
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    font-size: 30px;
+    color: #000000;
+    text-align: center;
+
+    font-family: Viga;
+
+    display: block;
+    }
+
+.Section6 > div > div{
+    width: 100%;
+
+    min-height: 20px;
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.Section6 > div > div a{
+    height: 30px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: block;
+    width: 50%;
+    padding: 10px;
+    /*background: #FFFFFF;*/
+    overflow: hidden;
+    /*border-radius: 15px ;
+
+    background: rgb(255,255,255); *//* Old browsers *//*
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 40%, rgba(221,221,221,1) 100%); *//* FF3.6+ *//*
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(255,255,255,1)), color-stop(100%,rgba(221,221,221,1))); *//* Chrome,Safari4+ *//*
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 40%,rgba(221,221,221,1) 100%); *//* Chrome10+,Safari5.1+ *//*
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 40%,rgba(221,221,221,1) 100%); *//* Opera 11.10+ *//*
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 40%,rgba(221,221,221,1) 100%); *//* IE10+ *//*
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 40%,rgba(221,221,221,1) 100%); *//* W3C *//*
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dddddd',GradientType=0 ); *//* IE6-9 */
+    /*border: solid thin #bdbdbd;*/
+    cursor: pointer;
+    /*color: #717171;*/
+
+}
+
+.Section6 > div > div a:focus ,.Section6 > div > div a:hover{
+    /*color: #000;*/
+
+    /*box-shadow: 0px 0px 1px #ffffff;*/
+}
+
+ .Section6 > div > div a:active{
+    /*color: #000;*/
+
+    /*box-shadow: 0px 0px 1px #ffffff;*/
+
+     /*background: rgb(221,221,221); *//* Old browsers *//*
+     background: -moz-linear-gradient(top, rgba(221,221,221,1) 40%, rgba(255,255,255,1) 100%); *//* FF3.6+ *//*
+     background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(221,221,221,1)), color-stop(100%,rgba(255,255,255,1))); *//* Chrome,Safari4+ *//*
+     background: -webkit-linear-gradient(top, rgba(221,221,221,1) 40%,rgba(255,255,255,1) 100%); *//* Chrome10+,Safari5.1+ *//*
+     background: -o-linear-gradient(top, rgba(221,221,221,1) 40%,rgba(255,255,255,1) 100%); *//* Opera 11.10+ *//*
+     background: -ms-linear-gradient(top, rgba(221,221,221,1) 40%,rgba(255,255,255,1) 100%); *//* IE10+ *//*
+     background: linear-gradient(to bottom, rgba(221,221,221,1) 40%,rgba(255,255,255,1) 100%); *//* W3C *//*
+     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#ffffff',GradientType=0 ); *//* IE6-9 *//*
+*/
+ }
+
+
+
+.Section6 > div > div a span{
+    display: block;
+    height: 30px;
+    min-width: 100%;
+    font-family: Karla;
+    font-size: 20px;
+    line-height: 33px;
+    margin-left: 15px;
+    text-align: left;
+}
+
+.Section7{
+    background: url("../img/Wallpaper/section20.jpg") no-repeat center fixed ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+
+}
+
+.Section7 > div{
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-top: 120px;
+    background: rgba(235,235,235,0.5);
+
+}
+
+.Section7 > div > div{
+    width: auto;
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.Section7 header{
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Carrois Gothic SC',sans-serif;
+    text-transform: none;
+    color: #000;
+    font-weight: lighter;
+}
+
+.Section7 header b{
+    color: rgb(25, 117, 180);
     font-weight: bold;
 }
 
-.content_home
-{
-    position: absolute;
-    width: auto;
-    height:250px;
-    padding-top: 150px;
-    margin-bottom: auto;
-    color:#FFF;
+.Section7 div.line{
+    height: 0;
+    display: block;
     width: 100%;
+    margin-top: 20px;
+    border-top:solid thin #636363;
+    border-bottom: solid thin #dcdbdd;
+    opacity: 0.5;
 }
 
-.content_home h1{
-    width: 500px;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: left;
-    font-size: 30px;
+.Section7 p{
     display: block;
-    position: static;
-    color: #006fa1;
-}
-
-.content_home h2{
-    text-align: center;
-    font-size: 136px;
-    width: 700px;
-    margin-right: auto;
-    margin-left: auto;
-    padding: 0;
-    height: 80px;
-    display: block;
-    position: static;
-    margin-top: 50px;
-    text-shadow: 0px 1px 0px #006fa1;
-}
-
-.content_home h3{
-    text-align: right;
+    padding: 10px;
+    margin-top: 20px;
     font-size: 20px;
-    width: 500px;
-    margin-right: auto;
-    margin-left: auto;
-    text-shadow: 0px 1px 0px #006fa1;
+    background: rgba(255, 255, 255, 0.6);
+    line-height: 30px;
+    font-family: 'Varela Round';
 }
 
-.navbar-inner .container .nav-collapse, .nav-collapse.collapse {
+.Section8{
+    background: url("../img/Wallpaper/bg_footer.png") repeat rgb(34, 34, 34);
+    height: auto;
+    min-height: 0;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.Section8 > div{
     display: block;
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgb(34, 34, 34);
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.65);
+    border-width: medium medium medium 4px;
+    border-style: none none none solid;
+    border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color rgb(39, 144, 176);
 }
 
-@media only screen and (min-width: 991px) and (max-width: 1200px)
-{
-
-    .content_home
-    {
-        padding-top: 150px;
-    }
-
-    .content_home h1{
-        width: 500px;
-        font-size: 30px;
-    }
-
-    .content_home h2{
-        width: 500px;
-        height: 80px;
-        font-size: 100px;
-        margin-top: 50px;
-    }
-
-    .content_home h3{
-        width: 500px;
-    }
-
-    .navbar-inner .container .nav-collapse, .nav-collapse.collapse {
-        display: block;
-        height: 40px;
-    }
+.Section8 header{
+    font-size: 30px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px)
-{
-    .content_home
-    {
-        padding-top: 150px;
-    }
-
-    .content_home h1{
-        width: 500px;
-        font-size: 30px;
-    }
-
-    .content_home h2{
-        width: 500px;
-        height: 80px;
-        font-size: 100px;
-        margin-top: 50px;
-    }
-
-    .content_home h3{
-        width: 500px;
-    }
-
-    .navbar-inner .container .nav-collapse, .nav-collapse.collapse {
-        display: block;
-        height: 40px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .content_home
-    {
-        margin-top: 50px;
-    }
-
-    .content_home h1{
-        width: 250px;
-        font-size: 20px;
-    }
-
-    .content_home h2{
-        width: 250px;
-        height: 40px;
-        font-size: 60px;
-        margin-top: 0px;
-    }
-
-    .content_home h3{
-        width: 250px;
-    }
-
-
-    .navbar-inner .container .nav-collapse, .nav-collapse.collapse {
-        display: block;
-        height: 40px;
-    }
-}
-
-
-/*Plugins Parallax*/
-.BG{
-    position: fixed;
-    height: 120%;
-    width: 100%;
-    z-index: 0;
+.Section8 > div > div{
     display: block;
-
-    margin-top: -100px;
-    padding: 0;
-    margin: 0;
-
-
-    /* IE10 Consumer Preview */
-    background-image: -ms-linear-gradient(top, #0160BA 0%, #C1E2F3 100%);
-
-    /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(top, #0160BA 0%, #C1E2F3 100%);
-
-    /* Opera */
-    background-image: -o-linear-gradient(top, #0160BA 0%, #C1E2F3 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(, #0160BA), color-stop(1, #C1E2F3));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(top, #0160BA 0%, #C1E2F3 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: linear-gradient(to bottom, #0160BA 0%, #C1E2F3 100%);
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
 }
 
-.BG .inner{
-    position: relative;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-
+.Section8 textarea{
+    resize: none;
 }
 
-.BG .inner > Div{
-    position: absolute;
-    margin-top: -300px;
+.Section8 input[type="submit"]
+{
+    width:200px;
+
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-left: 300px;
 }
 
-.BG .inner div.sun img{
-    height: 150px;
-    width: 150px;
-    margin-left: 50px;
-    margin-top: 100px;
+.Section8 .control-label{
+    font-family: 'Viga';
+    font-size: 15px;
+    font-weight: lighter;
+
+    color: rgb(39, 144, 176);
 }
 
-
-@media  /* iPhone Reitana */
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (min-device-pixel-ratio: 2) {
-
+.Section8 input , .Section8 select , .Section8 textarea {
+    border-radius: 0px;
+    width: 300px;
 }

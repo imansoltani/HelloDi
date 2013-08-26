@@ -339,7 +339,7 @@ body .navbar .navbar-inner{
     width: 190px;
     font-size: 27px;
     font-weight: normal;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     color: #0f1e00;
     text-decoration: none;
     font-family: 'Carrois Gothic SC', sans-serif;

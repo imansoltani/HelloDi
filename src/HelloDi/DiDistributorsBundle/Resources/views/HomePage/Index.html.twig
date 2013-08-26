@@ -1,35 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Hello Di website
+    </title>
 
-<div class="widget-header">
-    <h3>{{ 'HomePage'|trans({},'homepage') }}</h3>
-<hr>
-    <h2>{{ 'Contact'|trans({},'homepage') }}</h2>
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
 
 
-<form action="{{ path('hellodi_homepage') }}" method="post">
-
-    {{ form_label(formContact.Inquiry) }}
-    {{ form_widget(formContact.Inquiry) }}
-    {{ form_errors(formContact.Inquiry) }}
-<br>
-
-    {{ form_label(formContact.Description) }}
-    {{ form_widget(formContact.Description) }}
-    {{ form_errors(formContact.Description) }}
-    <br>
-    {{ form_label(formContact.Name) }}
-    {{ form_widget(formContact.Name) }}
-    {{ form_errors(formContact.Name) }}
-    <br>
-    {{ form_label(formContact.Email) }}
-    {{ form_widget(formContact.Email) }}
-    {{ form_errors(formContact.Email) }}
-    <br>
-  <input type="submit" value="Send">
-    {{ form_widget(formContact._token) }}
-
-</form>
+    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Main.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Home.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/responsiveslides.css') }}" rel="stylesheet">
 
 
 
-</div> <!-- /widget-header -->
+
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+
+
+
+</head>
+
+<body id="mydiv" >
+
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" >
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" id="brand" href="{{ path('hellodi_homepage') }}">
+                Hello <span>Di</span>
+            </a>
+
+            <ul class="nav pull-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+                    <li class="dropdown">
+
+                        <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+
+
+							<span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                <b class="caret"></b></span>
+                        </a>
+
+                        <ul style="font-size: 16px" class="dropdown-menu">
+                            {% if is_granted("ROLE_MASTER") %}
+                                <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_DISTRIBUTOR") %}
+                                <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_RETAILER") %}
+                                <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
+
+                    </li>
+
+                {% else %}
+
+
+                    <li class="dropdown">
+                        <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                                <span id="user_title_menu" style="display: block" >
+                                   {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                                 </span>
+                        </a>
+                    </li>
+
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+ {#Body#}
+<div class="body Section1" >
+    <div>
+
+
+        <header class="main" >Hello <span>Di</span></header><br>
+        <a  class="main" >Connection Website</a>
+
+
+    </div>
+
+</div>
+<div class="body Section2 Other" >
+    <div>
+        <div>
+            <header class="S1Header" >
+                Our Company
+            </header>
+            <p class="S1Text" >
+                sad sad sadjlksa jsad sad  ss djskad j as dklasjd lkjldj sajd askjdkj askljdj aslkjd asd asd sad asd asd sad asd asd asd d
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="body Section3 Other" >
+    <div class="f1" >
+        <header>Services</header>
+        <div>
+            <p>asd asd asd as sad aszd sad d asd sd asd sad sad asd asd asd sad sd asd asd sd sa dasd sad </p>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="f2" >
+        <div>
+            <p>asd asd asd as sad aszd sad d asd sd asd sad sad asd asd asd sad sd asd asd sd sa dasd sad </p>
+            <span></span>
+        </div>
+    </div>
+
+</div>
+
+<div class="body Section4 Other" >
+    <div>
+        <div class="f1" >
+            <span>
+
+            </span>
+            <div class="detail" >
+                <header>
+                    long distance communications
+                </header>
+                <header1>
+                   Calling Card
+                </header1>
+                <p class="line" >
+                    asd asd sad asd asd sd sad sad sdasd sad sa das  sad sa dsa d
+                </p>
+                <header1>
+                    Pinless
+                </header1>
+                <p>
+                    asd asd sad asd asd sd sad sad sdasd sad sa das  sad sa dsa d
+                </p>
+            </div>
+        </div>
+        <div class="line">
+            <div></div>
+        </div>
+        <div class="f2" >
+            <span>
+
+            </span>
+            <div class="detail" >
+                <header>
+                    domestic mobile top-up
+                </header>
+
+
+
+                <p>
+                    asd asd sad asd asd sd sad sad sdasd sad sa das  sad sa dsa d
+                </p>
+            </div>
+        </div>
+        <div class="line">
+            <div></div>
+        </div>
+
+        <div class="f3" >
+            <span>
+
+            </span>
+            <div class="detail" >
+                <header>
+                    international mobile top-up
+                </header>
+
+                <p class="line" >
+                    asd asd sad asd asd sd sad sad sdasd sad sa das  sad sa dsa d
+                </p>
+
+            </div>
+        </div>
+
+        <div class="line">
+            <div></div>
+        </div>
+
+        <div class="f4" >
+            <span>
+
+            </span>
+            <div class="detail" >
+                <header>
+                    E-payment / e-wallet
+                </header>
+
+
+
+                <p>
+                    asd asd sad asd asd sd sad sad sdasd sad sa das  sad sa dsa d
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="body Section5 Other" >
+    <div>
+        <header style="color: #000;">Net<span style="color: #FFFFFF;" >work</span>
+        </header>
+    </div>
+</div>
+
+<div class="body Section6 Other" >
+    <div>
+        <header>News
+        </header>
+        <div>
+            <center>
+                <a class="btn " >
+                    <span>
+                        asd sa;d sajlksa jkh kjlkj l sad sajhks d oskd ,j hs ad.sad ksd asd sa;d sajlksa jkh kjlkj l sad sajhks d oskd ,j hs ad.sad ksd asd sa;d sajlksa jkh kjlkj l sad sajhks d oskd ,j hs ad.sad ksd asd sa;d sajlksa jkh kjlkj l sad sajhks d oskd ,j hs ad.sad ksd
+                    </span>
+                </a>
+                <a class="btn " >
+                    <span>
+                        asd kjsadl lksajd sajldj lsakjdkl haskljd lkdh lkashdkl hsaklhd sad s
+                    </span>
+                </a>
+                <a class="btn " >
+                    <span>
+                        asd kjsadl lksajd sajldj lsakjdkl haskljd lkdh lkashdkl hsaklhd sad s
+                    </span>
+                </a>
+                <a class="btn" >
+                    <span>
+                        asd kjsadl lksajd sajldj lsakjdkl haskljd lkdh lkashdkl hsaklhd sad s
+                    </span>
+                </a>
+            </center>
+        </div>
+    </div>
+</div>
+
+<div class="body Section7 Other" >
+    <div>
+        <div>
+            <header>About <b>Us</b></header>
+            <div class="line" ></div>
+            <p>
+                sad sad kj dlkb hklsadj jlkhdj.j lj lhdk hkh j dlkh klh ksh djashd khsd j
+                sad sad kj dlkb hklsadj jlkhdj.j lj lhdk hkh j dlkh klh ksh djashd khsd j
+                sad sad kj dlkb hklsadj jlkhdj.j lj lhdk hkh j dlkh klh ksh djashd khsd j
+                sad sad kj dlkb hklsadj jlkhdj.j lj lhdk hkh j dlkh klh ksh djashd khsd j
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="body Section8 Other" >
+    <div>
+        <div>
+            <header>{{ 'Contact'|trans({},'homepage') }}</header>
+            <form class="form-horizontal" action="{{ path('hellodi_homepage') }}" method="post">
+
+                <div class="control-group">
+                    <div class="control-label">
+                        {{ form_label(formContact.Inquiry) }}
+                    </div>
+                    <div class="controls">
+                        {{ form_widget(formContact.Inquiry) }}
+                    </div>
+                    {{ form_errors(formContact.Inquiry) }}
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        {{ form_label(formContact.Description) }}
+                    </div>
+                    <div class="controls">
+                        {{ form_widget(formContact.Description) }}
+                    </div>
+                    {{ form_errors(formContact.Description) }}
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        {{ form_label(formContact.Name) }}
+                    </div>
+                    {{ form_widget(formContact.Name) }}
+                    {{ form_errors(formContact.Name) }}
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        {{ form_label(formContact.Email) }}
+                    </div>
+                    {{ form_widget(formContact.Email) }}
+                    {{ form_errors(formContact.Email) }}
+                </div>
+
+
+
+                <input class="btn btn-large btn-inverse" type="submit" value="Send">
+                {{ form_widget(formContact._token) }}
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{#End Body#}
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/Slide/responsiveslides.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/more/home.js') }}"></script>
+<script type="text/javascript">
+
+
+</script>
+
+
+</body>
+</html>
+
 
