@@ -260,7 +260,7 @@ body .ncoltable2 tr input[type="submit"]:active{
     outline:5px auto -webkit-focus-ring-color;
     outline-offset:-2px
     background-color:#039 \9
-			box-shadow:none;
+		box-shadow:none;
 box-shadow:0px 2px 7px #192296 inset;
     }
 
@@ -278,52 +278,60 @@ body .ncoltable3{
 }
 
 
-.content > table > tbody > tr > td:first-child{
-    display:none ;
-}
 
 .content > table > tbody > tr > td{
-    min-width:100%;
+    max-width:100%;
 
 
 }
 
-.content > table > tbody > tr > td > div:nth-child(1)
+.content > h2
 {
     margin: 0px 0px 20px;
     border-bottom: 2px solid rgb(251, 147, 55);
-    padding-bottom: 3px;
-    padding-right: 20px;
+    padding:0;
+    padding-top:10px;
+    padding-bottom:10px;
+
     margin-left:10px;
+    margin-right:10px;
     margin-top:10px;
+    margin-bottom:10px;
     display: block;
     vertical-align: baseline;
     background: none repeat scroll 0% 0% transparent;
     margin-bottom : 0 ;
+    text-align:center;
 
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(5)
+.content > table.ncoltable1
 {
     margin-top:0;
     border:none;
     padding-bottom:0;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(8)
+.content > table.ncoltable1:nth-child(4)
 {
-    margin-top:0;
+    margin-top:10px;
+}
+
+.content > table.ncoltable1:nth-child(7)
+{
+    margin-top:0px;
     border:none;
     width:100%;
     padding-bottom:0;
+
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(8) td , .content > table > tbody > tr > td > table.ncoltable1:nth-child(8) tr , .content > table > tbody > tr > td > table.ncoltable1:nth-child(8) tbody{
+.content > table.ncoltable1:nth-child(7) td , .content > table.ncoltable1:nth-child(7) tr , .content > table.ncoltable1:nth-child(7) tbody{
     min-width:100%;
     display:block;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(8) td h3
+.content > table.ncoltable1:nth-child(7) td h3
 {
     font-size:20px;
     padding:5px;
@@ -337,7 +345,7 @@ body .ncoltable3{
     color : #2834d8;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(8) td b{
+.content > table.ncoltable1:nth-child(7) td b{
     font-weight:normal ;
     padding: 7px;
     width:300px;
@@ -345,33 +353,33 @@ body .ncoltable3{
     text-align:right;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12)
+.content > table.ncoltable1:nth-child(11)
 {
     margin-top : 0 ;
     border:none;
     padding-bottom:0;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) tr ,  .content > table > tbody > tr > td > table.ncoltable1:nth-child(12) tbody
+.content > table.ncoltable1:nth-child(11) tr ,  .content > table.ncoltable1:nth-child(11) tbody
 {
     min-width:100%;
     display:block;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) td{
+.content > table.ncoltable1:nth-child(11) td{
     min-width:80%;
     display:block;
     margin:0 auto ;
-    margin-left:10%;
+
     text-align:center;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) td small{
+.content > table.ncoltable1:nth-child(11) td small{
     text-align:left;
 }
 
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) td input[type="button"]
+.content > table.ncoltable1:nth-child(11) td input[type="button"]
 {
 
     color:#fff;
@@ -399,7 +407,7 @@ body .ncoltable3{
 
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) td input[type="button"]:hover
+.content > table.ncoltable1:nth-child(11) td input[type="button"]:hover
 {
     color:#fff;
     background-color:#04c;
@@ -413,24 +421,35 @@ body .ncoltable3{
     box-shadow:none;
 }
 
-.content > table > tbody > tr > td > table.ncoltable1:nth-child(12) td input[type="button"]:active{
+.content > table.ncoltable1:nth-child(11) td input[type="button"]:active{
     outline:thin dotted #333;
     outline:5px auto -webkit-focus-ring-color;
     outline-offset:-2px
     background-color:#039 \9
-			box-shadow:none;
+		box-shadow:none;
 box-shadow:0px 2px 7px #192296 inset;
     }
 
 
-.content > table > tbody > tr > td > table.ncoltable3
+.content >  table.ncoltable3
 {
     border-top:#ccc solid thin ;
     width:101%;
 }
 
+.content > table.ncoltable3 tr , .content > table.ncoltable3 tbody{
+    min-width:100%;
+    display:block;
 
-.content > table > tbody > tr > td > table.ncoltable3 input[type="button"]{
+}
+
+.content > table.ncoltable3 tr:last-child td:first-child
+{
+    width:30%;
+    padding-bottom:30px;
+}
+
+.content > table.ncoltable3 input[type="button"]{
     display:inline-block;
     *display:inline;
     padding:4px 12px;
@@ -468,7 +487,7 @@ box-shadow:0px 2px 7px #192296 inset;
     margin-top:10px;
 }
 
-.content > table > tbody > tr > td > table.ncoltable3 input[type="button"]:hover{
+.content > table.ncoltable3 input[type="button"]:hover{
 
     color:#333;
     background-color:#e6e6e6;
@@ -481,9 +500,9 @@ box-shadow:0px 2px 7px #192296 inset;
     transition:background-position .1s linear
 }
 
-.content > table > tbody > tr > td > table.ncoltable3 input[type="button"]:active{
+.content > table.ncoltable3 input[type="button"]:active{
     background-color:#ccc \9
-				outline:0;
+		outline:0;
     -webkit-box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
     -moz-box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
     box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05)
@@ -587,23 +606,24 @@ box-shadow:0px 2px 7px #192296 inset;
         width:35%;
     }
 
-    .content > table > tbody > tr > td > table.ncoltable1:nth-child(8)
+    .content >  table.ncoltable1:nth-child(7)
     {
         display:block;
     }
 
-    .content > table > tbody > tr > td > table.ncoltable1:nth-child(8) td h3
+    .content >  table.ncoltable1:nth-child(7) td h3
     {
         margin:1px;
 
     }
 
-    .content > table > tbody > tr > td > table.ncoltable1:nth-child(8) td b
+    .content >  table.ncoltable1:nth-child(7) td b
     {
         padding-left:3px;
         width:150px;
     }
 }
+
 
 
 </style>
