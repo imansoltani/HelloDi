@@ -6,9 +6,9 @@ parameters:
     database_name: hellodi
     database_user: root
     database_password: null
-    mailer_transport: smtp
-    mailer_host: localhost
-    mailer_user: taghandiky2020@localhost
+    mailer_transport: gmail
+    mailer_host: 127.0.0.1
+    mailer_user: test1@localhost
     mailer_password: '05452006'
     encryption : ssl
     port: 465
@@ -22,7 +22,3 @@ parameters:
     languages: [en, fr, de]
     currency: [CHF, USD]
     currencies: [CHF, USD]
-
-
-
-

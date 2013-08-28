@@ -68,7 +68,7 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     disable_delivery: false
-    auth_mode: %auth_mode%
+#    auth_mode: %auth_mode%
     spool:     { type: memory }
 
 fos_user:

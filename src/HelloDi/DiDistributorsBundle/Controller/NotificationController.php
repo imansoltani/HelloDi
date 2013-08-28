@@ -12,18 +12,32 @@ class NotificationController
 
     private  $em;
     private  $Request;
-    private  $Router;
    public  function  __construct($EntityManage,$Request)
     {
 
 
+
         $this->em= $EntityManage;
         $this->Request=$Request;
+
+
     }
 
  public function NewAction($id,$type,$value=null)
  {
+   if($id!=null)
+       $Account=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+   else
+       $Account=null;
 
+$Exist=$this->em->getRepository('HelloDiDiDistributorsBundle:Notification')->findOneBy(array(
+    'Account'=>$Account,
+    'Type'=>$type,
+    'Value'=>$value
+));
+
+   if(count($Exist)==0)
+ {
  $Not=new Notification();
      if($id!=null)
        $Not->setAccount($this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id));
@@ -34,7 +48,7 @@ class NotificationController
 
  $this->em->persist($Not);
  $this->em->flush();
-
+ }
 return new Response();
 
  }
@@ -46,7 +60,7 @@ return new Response();
         $this->em->remove($Notification);
         $this->em->flush();
 
-    return new Response();
+      return new Response();
 
     }
 

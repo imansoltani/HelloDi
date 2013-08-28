@@ -3,5 +3,5 @@ DistShowNotification:
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ShowNotification }
 
 DistReadNotification:
-    pattern:  /read/{id}/notification
+    pattern:  /read
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ReadNotification }

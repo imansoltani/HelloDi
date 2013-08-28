@@ -3,5 +3,5 @@ RetailerShowNotification:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShowNotification }
 
 RetailerReadNotification:
-    pattern:  /read/{id}/notification
+    pattern:  /read
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ReadNotification }

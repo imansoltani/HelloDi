@@ -3,6 +3,7 @@ Notifications: Notifications
 Read: Read
 DateTimeCreate:
 Type:
+Description:
 
 #Retailer#
 Retailer_account_balance_is_lower_than_equal_%value%: Retailer account balance is lower than equal value

@@ -25,12 +25,16 @@ class RetailersController extends Controller
     public function dashboardAction()
     {
 
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+
+
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig',array(
             'Account' => $Account,
-
+             'Notifications'=>$Notifications
 
         ));
     }
@@ -57,17 +61,58 @@ class RetailersController extends Controller
 
     }
 
-    public function ReadNotificationAction($id)
+    public function ReadNotificationAction(Request $req)
     {
 
-      $this->forward('hello_di_di_notification:ReadAction',array('id'=>$id));
-
-      return  $this->redirect($this->generateUrl('RetailerShowNotification'));
+      return  $this->forward('hello_di_di_notification:ReadAction',array('id'=>$req->get('id')));
 
     }
 
 
-  public  function  countnoteAction()
+    public function ShowLastNotificationAction(){
+
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+        $i=0;
+        $str='';
+        foreach($Notifications as $Notif)
+        {
+            $str.='<li><a href="'.$this->generateUrl('RetailerShowNotification').'" id="#"+'.$Notif->getId().' >';
+
+            if($Notif->getType()==31)
+                $str.= $this->get('translator')->trans('Retailer_account_balance_is_lower_than_equal_%value%',array('value'=>$Notif->getValue()),'notification');
+
+            elseif($Notif->getType()==32)
+                $str.= $this->get('translator')->trans('Balance_increased_%value%',array('value'=>$Notif->getValue()),'notification');
+
+            elseif($Notif->getType()==33)
+                $str.=   $this->get('translator')->trans('CreditLimit_increased_%value%',array('value'=>$Notif->getValue()),'notification');
+
+            elseif($Notif->getType()==34)
+                $str.=  $this->get('translator')->trans('CreditLimit_decreased_%value%',array('value'=>$Notif->getValue()),'notification');
+
+            elseif($Notif->getType()==35)
+                $str.=  $this->get('translator')->trans('Edited_account',array(),'notification');
+
+            elseif($Notif->getType()==36)
+                $str.=  $this->get('translator')->trans('Edited_entity',array(),'notification');
+
+            elseif($Notif->getType()==37)
+                $str.=  $this->get('translator')->trans('Added_user_with_username_%value%',array('value'=>$Notif->getValue()),'notification');
+
+            $str.='</a></li>';
+
+
+
+            if(++$i==3)break;
+        }
+        $str.= '<li><a href="'.$this->generateUrl("RetailerShowNotification").'">'.$this->get('translator')->trans('Notifications',array(),'notification').'</a></li>';
+        return new Response($str);
+    }
+
+
+
+    public  function  countnoteAction()
   {
       $User = $this->getUser();
       $users=$User->getAccount()->getUsers();

@@ -30,10 +30,16 @@ class DistributorsController extends Controller
 
     public function dashboardAction()
     {
+        $em=$this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
-
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig', array('Account' => $Account, 'Entiti' => $Account->getEntiti(), 'User' => $user));
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig', array(
+            'Account' => $Account,
+            'Entiti' => $Account->getEntiti(),
+            'User' => $user,
+            'Notifications'=>$Notifications
+        ));
 
     }
 
@@ -44,6 +50,43 @@ class DistributorsController extends Controller
     {
         return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
     }
+
+
+    public function ShowLastNotificationAction(){
+
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
+        $i=0;
+        $str='';
+        foreach($Notifications as $Notif)
+        {
+            $str.='<li><a href="'.$this->generateUrl('DistShowNotification').'" id="#Notif"'.$Notif->getId().' >';
+            if($Notif->getType()==21)
+                $str.= $this->get('translator')->trans('Added_user_with_username_%value%',array('value'=>$Notif->getValue()),'notification');
+            elseif($Notif->getType()==22)
+                $str.= $this->get('translator')->trans('Balance_increased_%value%',array('value'=>$Notif->getValue()),'notification');
+            elseif($Notif->getType()==23)
+                $str.=   $this->get('translator')->trans('Balance_decreased_%value%',array('value'=>$Notif->getValue()),'notification');
+            elseif($Notif->getType()==24)
+                $str.=  $this->get('translator')->trans('CreditLimit_increased_%value%',array('value'=>$Notif->getValue()),'notification');
+            elseif($Notif->getType()==25)
+                $str.=  $this->get('translator')->trans('CreditLimit_decreased_%value%',array('value'=>$Notif->getValue()),'notification');
+            elseif($Notif->getType()==26)
+                $str.=  $this->get('translator')->trans('Edited_account',array(),'notification');
+            elseif($Notif->getType()==27)
+                $str.=  $this->get('translator')->trans('Edited_entity',array(),'notification');
+            elseif($Notif->getType()==121)
+                $str.=  $this->get('translator')->trans('Distributor_account_balance_is_lower_than_equal_%value%',array('value'=>$Notif->getValue()),'notification');
+            $str.='</a></li>';
+
+            if(++$i==3)break;
+        }
+
+        $str.= '<li><a href="'.$this->generateUrl("DistShowNotification").'">'.$this->get('translator')->trans('Notifications',array(),'notification').'</a></li>';
+        return new Response($str);
+
+    }
+
 
     public function ShowNotificationAction()
     {
@@ -59,11 +102,9 @@ class DistributorsController extends Controller
 
     }
 
-    public function ReadNotificationAction($id)
+    public function ReadNotificationAction(Request $req)
     {
-
-      $this->forward('hello_di_di_notification:ReadAction',array('id'=>$id));
-   return  $this->redirect($this->generateUrl('DistShowNotification'));
+   return $this->forward('hello_di_di_notification:ReadAction',array('id'=>$req->get('id')));
     }
 
     //Retailers
@@ -353,7 +394,7 @@ class DistributorsController extends Controller
                     if($Account->getParent()->getAccBalance()+$Account->getParent()->getAccCreditLimit()<=15000)
                     {
                         $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getParent()->getId(),'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
-                        $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency().'   ('.$Account->getParent()->getAccName().')'));
                     }
 
                     $em->flush();
@@ -452,7 +493,7 @@ if($data['Amount']>0)
          if($Account->getParent()->getAccBalance()+$Account->getParent()->getAccCreditLimit()<=15000)
             {
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getParent()->getId(),'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency()));
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 ' .$Account->getParent()->getAccCurrency().'   ('.$Account->getParent()->getAccName().')'));
             }
 
 
@@ -748,7 +789,7 @@ catch(\Exception $e)
             $AdrsDetai->setEntiti($Entiti);
             $em->persist($AdrsDetai);
             $em->flush();
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>13));
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>13,'value'=>$Account->getAccName()));
             $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
            return $this->redirect($this->generateUrl('retailer_show',array('id',$user->getAccount()->getId())));
             }

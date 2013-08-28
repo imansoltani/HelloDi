@@ -1,26 +1,44 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Home
+    {{ 'Home'|trans({},'menu') }}
 {% endblock title %}
+
+    {% block Link_Head %}
+
+        <script type="text/javascript">
+
+            function HideNotification(id)
+            {
+                $("#Notif"+id).hide('fast');
+
+                $.post('{{ path("MasterReadNotification") }}',{id: id},function(result){
+
+                })
+            }
+
+
+        </script>
+    {% endblock %}
 
 {% block PageTitle %}
     <i class="icon-home"></i>
-    Home Page
+    {{ 'Home'|trans({},'menu') }}
 {% endblock %}
 
 {% block Site_Map %}
-    <span class="link">Home</span>
+    <span class="link">   {{ 'Home'|trans({},'menu') }}</span>
 {% endblock Site_Map %}
 
 {% block Body %}
     <div class="span">
 
+
         <div class="widget stacked">
 
             <div class="widget-content">
                 <div class="widget-header">
-                    <h3>ShortCuts</h3>
+                    <h3>   {{ 'ShortCuts'|trans({},'dashboard') }}</h3>
                 </div> <!-- /widget-header -->
                 <div class="alertdiv" style="border:none" >
                     <center>
@@ -28,57 +46,60 @@
                             <li>
                                 <a href="{{ path('ShowMyAccountProv') }}" class="shortcut">
                                     <i class="shortcut-icon icon-th-large"></i>
-                                    <span class="shortcut-label">Providers</span>
+                                    <span class="shortcut-label">{{ 'Providers'|trans({},'accounts') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ path('ShowMyAccountDist') }}" class="shortcut">
                                     <i class="shortcut-icon icon-briefcase"></i>
-                                    <span class="shortcut-label">Distributors</span>
+                                    <span class="shortcut-label">{{ 'Distributors'|trans({},'accounts') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ path('code') }}" class="shortcut">
                                     <i class="shortcut-icon icon-list-alt"></i>
-                                    <span class="shortcut-label">Codes</span>
+                                    <span class="shortcut-label">{{ 'Codes'|trans({},'code') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ path('item') }}" class="shortcut">
                                     <i class="shortcut-icon icon-tags"></i>
-                                    <span class="shortcut-label">Items</span>
+                                    <span class="shortcut-label">{{ 'Items'|trans({},'item') }}</span>
                                 </a>
                             </li>
 
+                 {% if is_granted('ROLE_MASTER_ADMIN') %}
                             <li>
                                 <a href="{{ path('MasterStaff') }}" class="shortcut">
                                     <i class="shortcut-icon icon-wrench"></i>
-                                    <span class="shortcut-label">Staff</span>
+                                    <span class="shortcut-label">{{ 'Staff'|trans({},'user') }}</span>
                                 </a>
                             </li>
 
 
+                     <li>
+                         <a href="{{ path('MasterProfileEntiti') }}" class="shortcut">
+                             <i class="shortcut-icon icon-user"></i>
+                             <span class="shortcut-label">{{ 'Profile'|trans({},'entity') }}</span>
+                         </a>
+                     </li>
 
+                     {% endif %}
                             <li>
                                 <a href="{{ path('MasterTickets') }}" class="shortcut">
                                     <i class="shortcut-icon icon-comment"></i>
-                                    <span class="shortcut-label">Ticket</span>
+                                    <span class="shortcut-label">{{ 'Tickets'|trans({},'ticket') }}</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;" class="shortcut">
+                                <a href="{{ path('MasterShowNotification') }}" class="shortcut">
                                     <i class="shortcut-icon icon-envelope"></i>
-                                    <span class="shortcut-label">Notification</span>
+                                    <span class="shortcut-label">{{ 'Notification'|trans({},'notification') }}</span>
                                 </a>
                             </li>
 
 
-                            <li>
-                                <a href="{{ path('fos_user_profile_edit') }}" class="shortcut">
-                                    <i class="shortcut-icon icon-user"></i>
-                                    <span class="shortcut-label">Profile</span>
-                                </a>
-                            </li>
+
 
 
 
@@ -106,43 +127,32 @@
             <div class="widget-content">
 
                 <div class="widget-header">
-                    <h3>Recent Alerts</h3>
+                    <h3>{{ 'Notifications'|trans({},'notification') }}</h3>
                 </div> <!-- /widget-header -->
 
                 <div class="alertdiv" >
                     <ul>
-                        <li>
-                            <div class="entity" >
-                                <h4>
-                                    <a>Duis aute irure dolor in reprehenderit</a>
-                                </h4>
-                                <small>08 Mar</small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                        {% for Notfi in Notifications %}
+                        <li  id='Notif{{ Notfi.id }}'>
+                                <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
 
-                            </div>
+                                <p>
+                                    {{ 'Description'|trans({},'notification') }}:
+                                    {% if Notfi.Type==11 %}
+                                        <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==12 %}
+                                        <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==13 %}
+                                        <b>{{ 'Retailer_created_an_account'|trans({},'notification') }}</b>
+                                    {% elseif Notfi.Type==121 %}
+                                        <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% endif %}
+                                </p>
+      <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
                         </li>
 
-                        <li>
-                            <div class="entity" >
-                                <h4>
-                                    <a>Duis aute irure dolor in reprehenderit</a>
-                                </h4>
-                                <small>07 Mar</small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                            {% endfor %}
 
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="entity" >
-                                <h4>
-                                    <a>Duis aute irure dolor in reprehenderit</a>
-                                </h4>
-                                <small>06 Mar</small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-
-                            </div>
-                        </li>
                     </ul>
                 </div>
 

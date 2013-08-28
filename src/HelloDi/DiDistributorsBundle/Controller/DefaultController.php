@@ -11,7 +11,14 @@ class DefaultController extends Controller
 {
     public function dashboardAction()
     {
-        return $this->render('HelloDiDiDistributorsBundle:Dashboard:Master_dashboard.html.twig', array('MU' => 'home'));
+        $em=$this->getDoctrine()->getManager();
+        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>null));
+
+        return $this->render('HelloDiDiDistributorsBundle:Dashboard:Master_dashboard.html.twig',
+            array(
+                'MU' => 'home',
+                 'Notifications'=>$Notifications
+            ));
     }
 
     public function indexAction($locale, Request $req)
@@ -28,7 +35,7 @@ class DefaultController extends Controller
                 $message = \Swift_Message::newInstance()
                     ->setSubject('HelloDi -- from ' . $data['Email'] . ' have a request')
                     ->setTo('taghandiky2020@localhost')
-//            ->setFrom($data['Email'])
+            ->setFrom($data['Email'])
                     ->setBody(
                         $this->renderView(
                             'HelloDiDiDistributorsBundle:HomePage:Contact.html.twig',

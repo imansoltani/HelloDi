@@ -69,7 +69,7 @@ services:
 
     hello_di_di_notification:
         class:  HelloDi\DiDistributorsBundle\Controller\NotificationController
-        arguments: [@doctrine.orm.default_entity_manager,@request,@router]
+        arguments: [@doctrine.orm.default_entity_manager,@request]
         scope: request
 
 
