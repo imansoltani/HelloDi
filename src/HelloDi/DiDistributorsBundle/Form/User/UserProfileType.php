@@ -13,16 +13,17 @@ class UserProfileType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('firstname',null,array('label' => 'User.FirstName','translation_domain' => 'user'))
-            ->add('lastname',null,array('label' => 'User.LastName','translation_domain' => 'user'))
-            ->add('mobile',null,array('label' => 'User.Mobile','translation_domain' => 'user'))
+            ->add('firstname',null,array('label' => 'FirstName','translation_domain' => 'user'))
+            ->add('lastname',null,array('required'=>false,'label' => 'LastName','translation_domain' => 'user'))
+            ->add('mobile',null,array('required'=>false,'label' => 'Mobile','translation_domain' => 'user'))
             ->add('language','choice', array(
                 'choices' => array(
-                    'en' => 'Languages.English',
-                    'fr' => 'Languages.French',
+                    'en' => 'en',
+                    'fr' => 'fr',
+                     'de'=>'de'
                 ),
                 'required'  => true,
-                'label' => 'User.Locale',
+                'label' => 'Language',
                 'translation_domain' => 'user'
             ))
         ;

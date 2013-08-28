@@ -143,7 +143,7 @@
                                     <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
 
                                     <p>
-                                        {{ 'Description'|trans({},'notification') }}:
+
                                         {% if Notfi.Type==31 %}
                                             <b>{{ 'Retailer_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 

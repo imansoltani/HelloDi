@@ -38,98 +38,41 @@
 
 {% block Body %}
 
+<div class="span">
+    <div class="widget widget-nopad stacked">
+        <div class="widget-content">
+            <div class="alertdiv" >
 <ul>
-
-
      {% for Notfi in Notifications %}
 
-
+     <li id="Notif{{ Notfi.id }}">
+         <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+ <p>
       {% if Notfi.Type==21 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
-
+              {{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% elseif Notfi.Type==22 %}
-         <li id="Notif{{ Notfi.id }}">
-             {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-             {{ 'Description'|trans({},'notification') }}:
-             <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-             <br>
-             <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-         </li>
-
+             {{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% elseif Notfi.Type==23 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'Balance_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
+              {{ 'Balance_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% elseif Notfi.Type==24 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
-
+              {{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% elseif Notfi.Type==25 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
+              {{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% elseif Notfi.Type==26 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'Edited_account'|trans({},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
-
+             {{ 'Edited_account'|trans({},'notification') }}
      {% elseif Notfi.Type==27 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-          </li>
-
-
+             {{ 'Edited_entity'|trans({},'notification') }}
       {% elseif Notfi.Type==121 %}
-          <li id="Notif{{ Notfi.id }}">
-              {{ 'DateTimeCreate'|trans({},'notification') }}::{{ Notfi.Date|date('Y/m/d H:i:s') }} <br>
-              {{ 'Description'|trans({},'notification') }}:
-              <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-              <br>
-              <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-
-          </li>
-
-
+             {{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}
      {% endif %}
-
-<br>
-
-         <hr>
-
+         </p>
+         <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
                 {% endfor %}
 </ul>
-    <a href="javascript:history.go(-1)" class="btn"> {{ 'Back' | trans ({}, "common") }}</a>
+    </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

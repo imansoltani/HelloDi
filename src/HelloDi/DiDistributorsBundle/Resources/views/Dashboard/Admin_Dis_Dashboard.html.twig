@@ -142,7 +142,6 @@
                                     <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
 
                                     <p>
-                                        {{ 'Description'|trans({},'notification') }}:
                                         {% if Notfi.Type==21 %}
                                             <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
                                         {% elseif Notfi.Type==22 %}

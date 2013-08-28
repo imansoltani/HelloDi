@@ -13,6 +13,7 @@ namespace FOS\UserBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 
@@ -47,11 +48,16 @@ class ProfileController extends ContainerAware
         }
 
         $form = $this->container->get('fos_user.profile.form');
+
         $formHandler = $this->container->get('fos_user.profile.form.handler');
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'profile.flash.updated');
+
+            $this->container->get('session')->set('_locale',$user->getLanguage());
+            $this->container->get('request')->setLocale($user->getLanguage());
+
+            $this->container->get('session')->getFlashBag()->add('success', $this->container->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
             return new RedirectResponse($this->getRedirectionUrl($user));
         }

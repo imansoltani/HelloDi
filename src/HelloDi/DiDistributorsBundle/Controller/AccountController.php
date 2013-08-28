@@ -566,7 +566,7 @@ class AccountController extends Controller
                                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>121,'value'=>'15000 '.$Account->getAccCurrency()));
                                 $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>121,'value'=>'15000 '.$Account->getAccCurrency().'   ('.$Account->getAccName().')'));
                             }
-                            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>23,'value'=>$data['Amount'].$Account->getAccCurrency()));
+                            $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>23,'value'=>$data['Amount'].' '.$Account->getAccCurrency()));
 
 
                             $this->get('session')->getFlashBag()->add('success',
@@ -630,7 +630,7 @@ if($data['Amount']>0 )
 
                       $Account->setAccCreditLimit($Account->getAccCreditLimit() - $data['Amount']);
 
-                      $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>25,'value'=>$data['Amount'].$Account->getAccCurrency()));
+                      $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>25,'value'=>$data['Amount'].' '.$Account->getAccCurrency()));
 
                       $this->get('session')->getFlashBag()->add('success',
                           $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
@@ -642,7 +642,7 @@ if($data['Amount']>0 )
               case 1:
                   $Account->setAccCreditLimit($Account->getAccCreditLimit() + $data['Amount']);
 
-                  $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>24,'value'=>$data['Amount'].$Account->getAccCurrency()));
+                  $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>24,'value'=>$data['Amount'].' '.$Account->getAccCurrency()));
 
                   $this->get('session')->getFlashBag()->add('success',
                       $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
@@ -1004,7 +1004,7 @@ catch(\Exception $e)
                 $em->flush();
 
 
-          $this->forward('hello_di_di_notification:NewAction',array('id'=>$data['Accounts']->getId(),'type'=>22,'value'=>$data['Amount'].$data['Accounts']->getAccCurrency()));
+          $this->forward('hello_di_di_notification:NewAction',array('id'=>$data['Accounts']->getId(),'type'=>22,'value'=>$data['Amount'].' '.$data['Accounts']->getAccCurrency()));
 
           if($data['Accounts']->getAccBalance()+$data['Accounts']->getAccCreditLimit()<=15000)
           {
@@ -1446,27 +1446,28 @@ catch(\Exception $e)
 
     }
 
-
-    public function ManageDistInfoEditAction(Request $request)
-    {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountDistMasterType(), $Account);
-
-        if ($request->isMethod('POST')) {
-
-            $edit_form->handleRequest($request);
-            if ($edit_form->isValid()) {
-
-                $em->flush();
-                return $this->forward("HelloDiDiDistributorsBundle:Account:ManageDistInfo");
-
-
-            }
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistInfo.html.twig', array('edit_form' => $edit_form->createView(), 'Account' => $Account));
-    }
+//
+//    public function ManageDistInfoEditAction(Request $request)
+//    {
+//        $id = $request->get('id');
+//        $em = $this->getDoctrine()->getManager();
+//        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+//        $edit_form = $this->createForm(new AccountDistMasterType(), $Account);
+//
+//        if ($request->isMethod('POST')) {
+//
+//            $edit_form->handleRequest($request);
+//            if ($edit_form->isValid()) {
+//
+//                $em->flush();
+//
+//                return $this->forward("HelloDiDiDistributorsBundle:Account:ManageDistInfo");
+//
+//
+//            }
+//        }
+//        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistInfo.html.twig', array('edit_form' => $edit_form->createView(), 'Account' => $Account));
+//    }
 
     //items prov
     public function ManageItemsProvAction($id)
@@ -2903,7 +2904,7 @@ try{
                     $em->flush();
 
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$AccountRetailer->getId(),'type'=>32,'value'=>$data['Amount'].$AccountRetailer->getAccCurrency()));
-                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$AccountRetailer->getParent()->getId(),'type'=>23,'value'=>$data['Amount'].$AccountRetailer->getParent()->getAccCurrency().'   ('.$AccountRetailer->getParent()->getAccName().')'));
+                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$AccountRetailer->getParent()->getId(),'type'=>23,'value'=>$data['Amount'].' '.$AccountRetailer->getParent()->getAccCurrency()));
 
                    if($AccountRetailer->getAccBalance()+$AccountRetailer->getAccCreditLimit()<=15000)
                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$AccountRetailer->getId(),'type'=>31,'value'=>'15000 ' .$AccountRetailer->getAccCurrency()));

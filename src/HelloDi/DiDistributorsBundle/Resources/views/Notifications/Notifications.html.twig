@@ -57,7 +57,7 @@
 
                 {% elseif Notfi.Type==13 %}
                      <div id="{{ Notfi.id }}">
-                         <b id="{{ Notfi.id }}">{{ 'Retailer_created_an_account'|trans({},'notification') }}</b>
+                         <b id="{{ Notfi.id }}">{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
 
 
@@ -74,5 +74,5 @@
         </div>
     </div>
 </div>
-    <a href="javascript:history.go(-1)" class="btn"> {{ 'Back' | trans ({}, "common") }}</a>
+
 {% endblock %}

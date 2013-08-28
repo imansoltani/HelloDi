@@ -137,13 +137,12 @@
                                 <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
 
                                 <p>
-                                    {{ 'Description'|trans({},'notification') }}:
                                     {% if Notfi.Type==11 %}
                                         <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
                                     {% elseif Notfi.Type==12 %}
                                         <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
                                     {% elseif Notfi.Type==13 %}
-                                        <b>{{ 'Retailer_created_an_account'|trans({},'notification') }}</b>
+                                        <b>{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
                                     {% elseif Notfi.Type==121 %}
                                         <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
                                     {% endif %}
