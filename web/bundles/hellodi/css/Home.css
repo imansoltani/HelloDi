@@ -79,6 +79,15 @@ body .navbar{
 .Section1{
     height: 100%;
     display: none;
+    background: url("../img/Wallpaper/Sec1.png") repeat;
+}
+
+.Section1 > span{
+    z-index: 900;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: url("../img/Wallpaper/Clouds.png") bottom repeat-x;
 }
 
 .Section1 > div{
@@ -87,6 +96,7 @@ body .navbar{
     display: block;
     width: 100%;
     top:0;
+    z-index: 1000;
 }
 
 header{
@@ -104,6 +114,7 @@ header{
     height:70px;
     text-transform: none;
     font-family: 'Carrois Gothic SC',sans-serif;
+    text-shadow: 1px 1px 1px #FFF;
 }
 
 .Section1 header span{
@@ -113,10 +124,12 @@ header{
 .Section1 >  div > a{
     text-align: center;
     font-size: 250%;
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
     display: block;
-    color: #2c2c2c;
+    color: #FFFFFF;
+    height: 150px;
+    background: url("../img/Wallpaper/down.png") no-repeat bottom center;
 }
 
 .Section2{
@@ -858,4 +871,8 @@ header{
 .Section8 input , .Section8 select , .Section8 textarea {
     border-radius: 0px;
     width: 300px;
+}
+
+body .navbar .container .dropdown > a{
+    font-size: 15px;
 }
