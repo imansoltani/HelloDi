@@ -18,7 +18,11 @@
 
         function HideNotification(id)
         {
-            $("#Notif"+id).hide('fast');
+            $("* #Notif" + id).hide('fast', function () {
+                $("* #Notif" + id).remove();
+            });
+
+            NotificationCount();
 
             $.post('{{ path("DistReadNotification") }}',{id: id},function(result){
 
@@ -119,7 +123,10 @@
         </div> <!-- /widget -->
 
     </div> <!-- /span6 -->
-    <div class="span">
+
+    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+        {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
+    <div class="span NotiSpan">
 
 
 
@@ -134,14 +141,13 @@
                     <h3>{{ 'Notifications'|trans({},'notification') }}</h3>
                 </div> <!-- /widget-header -->
 
-                <div class="alertdiv" >
+                <div class="alertdiv NotiDiv" >
                     <ul>
                         {% for Notfi in Notifications %}
-                            <li id='Notif{{ Notfi.id }}'>
+                            <li id="Notif{{ Notfi.id }}" >
                                 <div class="entity" >
                                     <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
-
-                                    <p>
+                                    <h4>
                                         {% if Notfi.Type==21 %}
                                             <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
                                         {% elseif Notfi.Type==22 %}
@@ -160,9 +166,14 @@
                                             <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
                                         {% endif %}
-                                    </p>
-                                    <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+                                    </h4>
+
+
+
+
+
                                 </div>
+                                <a class="btn btn-info btn-large"   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
                             </li>
 
                         {% endfor %}
@@ -180,4 +191,6 @@
 
 
     </div> <!-- /span6 -->
+            {% endif %}
+    {% endif %}
 {% endblock Body %}

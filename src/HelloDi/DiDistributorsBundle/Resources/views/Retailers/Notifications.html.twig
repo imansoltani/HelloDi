@@ -12,7 +12,11 @@
 
         function HideNotification(id)
         {
-            $("#Notif"+id).hide('fast');
+            $("* #Notif" + id).hide('fast', function () {
+                $("* #Notif" + id).remove();
+            });
+
+            NotificationCount();
 
             $.post('{{ path("RetailerReadNotification") }}',{id: id},function(result){
 
@@ -42,44 +46,53 @@
 <div class="span">
     <div class="widget widget-nopad stacked">
         <div class="widget-content">
-    <div class="alertdiv" >
-    <ul>
-        {% for Notfi in Notifications %}
-            <li id='Notif{{ Notfi.id }}'>
-                <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
-                <p>
-                    {% if Notfi.Type==31 %}
-                        <b>{{ 'Retailer_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+            <div class="alertdiv NotiDiv" >
+                <ul>
+                    {% for Notfi in Notifications %}
+                        <li id="Notif{{ Notfi.id }}" >
+                            <div class="entity" >
+                                <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+                                <h4>
+                                    {% if Notfi.Type==31 %}
+                                        <b>{{ 'Retailer_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-                    {% elseif Notfi.Type==32 %}
-                        <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==32 %}
+                                        <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-                    {% elseif Notfi.Type==33 %}
-                        <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==33 %}
+                                        <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-                    {% elseif Notfi.Type==34 %}
-                        <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==34 %}
+                                        <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-                    {% elseif Notfi.Type==35 %}
-                        <b>{{ 'Edited_account'|trans({},'notification') }}</b>
+                                    {% elseif Notfi.Type==35 %}
+                                        <b>{{ 'Edited_account'|trans({},'notification') }}</b>
 
-                    {% elseif Notfi.Type==36 %}
-                        <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
+                                    {% elseif Notfi.Type==36 %}
+                                        <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
 
-                    {% elseif Notfi.Type==37 %}
-                        <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==37 %}
+                                        <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-                    {% endif %}
+                                    {% endif %}
 
-                </p>
-                <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+                                </h4>
 
-            </li>
 
-        {% endfor %}
 
-    </ul>
-</div></div></div></div>
+
+
+                            </div>
+                            <a class="btn btn-info btn-large"   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

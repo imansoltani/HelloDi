@@ -72,7 +72,7 @@ class AccountController extends Controller
      $str='';
            foreach($Notifications as $Notif)
            {
-               $str.='<li><a href="'.$this->generateUrl('MasterShowNotification').'" id="#Notif"+'.$Notif->getId().' >';
+               $str.='<li id="Notif'.$Notif->getId().'" ><a href="'.$this->generateUrl('MasterShowNotification').'"  >';
 
                    if($Notif->getType()==11)
                      $str.= $this->get('translator')->trans('Codes_for_this_%value%_is_very_low',array('value'=>$Notif->getValue()),'notification');

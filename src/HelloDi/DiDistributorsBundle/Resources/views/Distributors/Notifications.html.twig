@@ -9,9 +9,14 @@
 
     <script type="text/javascript">
 
+
         function HideNotification(id)
         {
-            $("#Notif"+id).hide('fast');
+            $("* #Notif" + id).hide('fast', function () {
+                $("* #Notif" + id).remove();
+            });
+
+            NotificationCount();
 
             $.post('{{ path("DistReadNotification") }}',{id: id},function(result){
 
@@ -41,35 +46,45 @@
 <div class="span">
     <div class="widget widget-nopad stacked">
         <div class="widget-content">
-            <div class="alertdiv" >
-<ul>
-     {% for Notfi in Notifications %}
+            <div class="alertdiv NotiDiv" >
+                <ul>
+                    {% for Notfi in Notifications %}
+                        <li id="Notif{{ Notfi.id }}" >
+                            <div class="entity" >
+                                <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+                                <h4>
+                                    {% if Notfi.Type==21 %}
+                                        <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==22 %}
+                                        <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==23 %}
+                                        <b>{{ 'Balance_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==24 %}
+                                        <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==25 %}
+                                        <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                    {% elseif Notfi.Type==26 %}
+                                        <b>{{ 'Edited_account'|trans({},'notification') }}</b>
+                                    {% elseif Notfi.Type==27 %}
+                                        <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
+                                    {% elseif Notfi.Type==121 %}
+                                        <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
-     <li id="Notif{{ Notfi.id }}">
-         <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
- <p>
-      {% if Notfi.Type==21 %}
-              {{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% elseif Notfi.Type==22 %}
-             {{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% elseif Notfi.Type==23 %}
-              {{ 'Balance_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% elseif Notfi.Type==24 %}
-              {{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% elseif Notfi.Type==25 %}
-              {{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% elseif Notfi.Type==26 %}
-             {{ 'Edited_account'|trans({},'notification') }}
-     {% elseif Notfi.Type==27 %}
-             {{ 'Edited_entity'|trans({},'notification') }}
-      {% elseif Notfi.Type==121 %}
-             {{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}
-     {% endif %}
-         </p>
-         <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-                {% endfor %}
-</ul>
-    </div>
+                                    {% endif %}
+                                </h4>
+
+
+
+
+
+                            </div>
+                            <a class="btn btn-info btn-large"   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+            </div>
         </div>
     </div>
 </div>

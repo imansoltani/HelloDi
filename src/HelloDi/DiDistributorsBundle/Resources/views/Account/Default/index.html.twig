@@ -1,30 +1,43 @@
-<span>
-
-                                               <fieldset>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                               </fieldset>
-
-
-
-
-                                                 </span>
+{% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+    {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0 %}
+        <li class="dropdown Noti">
+            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+               data-toggle="dropdown">
+                <i class="icon-envelope">
+                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) }}</span>
+                </i>
+            </a>
+            <ul class="dropdown-menu">
+                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:ShowLastNotification')) }}
+            </ul>
+        </li>
+    {% endif %}
+{% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+    {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
+        <li class="dropdown Noti">
+            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+               data-toggle="dropdown">
+                <i class="icon-envelope">
+                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) }}</span>
+                </i>
+            </a>
+            <ul class="dropdown-menu">
+                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:ShowLastNotification')) }}
+            </ul>
+        </li>
+    {% endif %}
+{% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
+    {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
+        <li class="dropdown Noti">
+            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+               data-toggle="dropdown">
+                <i class="icon-envelope">
+                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) }}</span>
+                </i>
+            </a>
+            <ul class="dropdown-menu">
+                {{ render(controller('HelloDiDiDistributorsBundle:Account:ShowLastNotification')) }}
+            </ul>
+        </li>
+    {% endif %}
+{% endif %}

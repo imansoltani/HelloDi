@@ -77,7 +77,7 @@ class RetailersController extends Controller
         $str='';
         foreach($Notifications as $Notif)
         {
-            $str.='<li><a href="'.$this->generateUrl('RetailerShowNotification').'" id="#"+'.$Notif->getId().' >';
+            $str.='<li id="Notif'.$Notif->getId().'" ><a href="'.$this->generateUrl('RetailerShowNotification').'" >';
 
             if($Notif->getType()==31)
                 $str.= $this->get('translator')->trans('Retailer_account_balance_is_lower_than_equal_%value%',array('value'=>$Notif->getValue()),'notification');

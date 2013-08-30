@@ -16,11 +16,14 @@
 
     <script type="text/javascript">
 
-        function HideNotification(id)
-        {
-            $("#Notif"+id).hide('fast');
+        function HideNotification(id) {
+            $("* #Notif" + id).hide('fast', function () {
+                $("* #Notif" + id).remove();
+            });
 
-            $.post('{{ path("RetailerReadNotification") }}',{id: id},function(result){
+            NotificationCount();
+
+            $.post('{{ path("RetailerReadNotification") }}', {id: id}, function (result) {
 
             })
         }
@@ -44,10 +47,11 @@
             <div class="widget-content">
                 <div class="widget-header">
                     <h3>{{ 'ShortCuts'|trans({},'dashboard') }}</h3>
-                </div> <!-- /widget-header -->
-                <div class="alertdiv" style="border:none" >
+                </div>
+                <!-- /widget-header -->
+                <div class="alertdiv" style="border:none">
                     <center>
-                        <ul class="shortcuts" >
+                        <ul class="shortcuts">
                             <li>
                                 <a href="{{ path('Retailer_Shop_favourite') }}" class="shortcut">
                                     <i class="shortcut-icon icon-star"></i>
@@ -62,31 +66,31 @@
                                 </a>
                             </li>
 
- {% if is_granted('ROLE_RETAILER_ADMIN') %}
+                            {% if is_granted('ROLE_RETAILER_ADMIN') %}
 
-                            <li>
-                                <a href="{{ path('retailer_transactions_new') }}" class="shortcut">
-                                    <i class="shortcut-icon icon-file"></i>
-                                    <span class="shortcut-label">{{ 'Recharge'|trans({},'transaction') }}</span>
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="{{ path('retailer_transactions_new') }}" class="shortcut">
+                                        <i class="shortcut-icon icon-file"></i>
+                                        <span class="shortcut-label">{{ 'Recharge'|trans({},'transaction') }}</span>
+                                    </a>
+                                </li>
 
-                         <li>
-                             <a href="{{ path('RetailerStaff') }}" class="shortcut">
-                                 <i class="shortcut-icon icon-wrench"></i>
-                                 <span class="shortcut-label">{{ 'Staff'|trans({},'user') }}</span>
-                             </a>
-                         </li>
+                                <li>
+                                    <a href="{{ path('RetailerStaff') }}" class="shortcut">
+                                        <i class="shortcut-icon icon-wrench"></i>
+                                        <span class="shortcut-label">{{ 'Staff'|trans({},'user') }}</span>
+                                    </a>
+                                </li>
 
 
-                     <li>
-                         <a href="{{ path('RetailerProfile') }}" class="shortcut">
-                             <i class="shortcut-icon icon-user"></i>
-                             <span class="shortcut-label">{{ 'Profile'|trans({},'entity') }}</span>
-                         </a>
-                     </li>
+                                <li>
+                                    <a href="{{ path('RetailerProfile') }}" class="shortcut">
+                                        <i class="shortcut-icon icon-user"></i>
+                                        <span class="shortcut-label">{{ 'Profile'|trans({},'entity') }}</span>
+                                    </a>
+                                </li>
 
- {% endif %}
+                            {% endif %}
 
 
 
@@ -106,85 +110,88 @@
                             </li>
 
 
-
-
-
                         </ul>
                     </center>
 
                 </div>
 
 
+            </div>
+            <!-- /widget-content -->
 
-            </div> <!-- /widget-content -->
-
-        </div> <!-- /widget -->
+        </div>
+        <!-- /widget -->
 
     </div> <!-- /span6 -->
-    <div class="span">
+
+    {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+        {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0 %}
+            <div class="span NotiSpan">
 
 
+                <div class="widget widget-nopad stacked">
 
 
-        <div class="widget widget-nopad stacked">
+                    <div class="widget-content">
+
+                        <div class="widget-header">
+                            <h3>{{ 'Notifications'|trans({},'notification') }} </h3>
+                        </div>
+                        <!-- /widget-header -->
+
+                        <div class="alertdiv NotiDiv">
+                            <ul>
+                                {% for Notfi in Notifications %}
+                                    <li id="Notif{{ Notfi.id }}">
+                                        <div class="entity">
+                                            <small>{{ 'DateTimeCreate'|trans({},'notification') }}
+                                                :{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+                                            <h4>
+                                                {% if Notfi.Type==31 %}
+                                                    <b>{{ 'Retailer_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==32 %}
+                                                    <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==33 %}
+                                                    <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==34 %}
+                                                    <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==35 %}
+                                                    <b>{{ 'Edited_account'|trans({},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==36 %}
+                                                    <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
+
+                                                {% elseif Notfi.Type==37 %}
+                                                    <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+
+                                                {% endif %}
+
+                                            </h4>
 
 
+                                        </div>
+                                        <a class="btn btn-info btn-large"
+                                           onclick="HideNotification({{ Notfi.id }})">{{ 'Read'|trans({},'notification') }}</a>
+                                    </li>
 
-            <div class="widget-content">
+                                {% endfor %}
 
-                <div class="widget-header">
-                    <h3>{{ 'Notifications'|trans({},'notification') }} </h3>
-                </div> <!-- /widget-header -->
+                            </ul>
+                        </div>
 
-                <div class="alertdiv" >
-                    <ul>
-                        {% for Notfi in Notifications %}
-                            <li id='Notif{{ Notfi.id }}'>
-                                    <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
 
-                                    <p>
+                    </div>
+                    <!-- /widget-content -->
 
-                                        {% if Notfi.Type==31 %}
-                                            <b>{{ 'Retailer_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==32 %}
-                                            <b>{{ 'Balance_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==33 %}
-                                            <b>{{ 'CreditLimit_increased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==34 %}
-                                            <b>{{ 'CreditLimit_decreased_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==35 %}
-                                            <b>{{ 'Edited_account'|trans({},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==36 %}
-                                            <b>{{ 'Edited_entity'|trans({},'notification') }}</b>
-
-                                        {% elseif Notfi.Type==37 %}
-                                            <b>{{ 'Added_user_with_username_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-
-                                        {% endif %}
-
-                                    </p>
-                                    <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-
-                            </li>
-
-                        {% endfor %}
-
-                    </ul>
                 </div>
+                <!-- /widget -->
 
 
-
-            </div> <!-- /widget-content -->
-
-        </div> <!-- /widget -->
-
-
-
-
-    </div> <!-- /span6 -->
+            </div> <!-- /span6 -->
+        {% endif %}
+    {% endif %}
 {% endblock Body %}

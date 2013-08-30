@@ -10,13 +10,17 @@
 
         <script type="text/javascript">
 
-            function HideNotification(id)
-            {
-                $("#Notif"+id).hide('fast');
+            function HideNotification(id) {
+                $("* #Notif" + id).hide('fast', function () {
+                    $("* #Notif" + id).remove();
+                });
 
-                $.post('{{ path("MasterReadNotification") }}',{id: id},function(result){
+                NotificationCount();
 
-                })
+
+                $.post('{{ path("MasterReadNotification") }}', {id: id}, function (result) {
+
+                });
             }
 
 
@@ -42,35 +46,36 @@
 <div class="span">
     <div class="widget widget-nopad stacked">
         <div class="widget-content">
-            <div class="alertdiv" >
-<ul>
-     {% for Notfi in Notifications %}
-    <li id='Notif{{ Notfi.id }}'>
+            <div class="alertdiv NotiDiv" >
+                <ul>
 
-        <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
-    <p>
-                 {% if Notfi.Type==11 %}
-                         <b >{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
-                 {% elseif Notfi.Type==12 %}
-                         <b id="{{ Notfi.id }}">{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                    {% for Notfi in Notifications %}
+                        <li id="Notif{{ Notfi.id }}" >
+                            <div class="entity" >
+                                <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+                                <h4>
+                                    <a>{% if Notfi.Type==11 %}
+                                            <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==12 %}
+                                            <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==13 %}
+                                            <b>{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==121 %}
+                                            <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% endif %}</a>
+                                </h4>
 
 
-                {% elseif Notfi.Type==13 %}
-                     <div id="{{ Notfi.id }}">
-                         <b id="{{ Notfi.id }}">{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
 
 
 
-                {% elseif Notfi.Type==121 %}
-                         <b id="{{ Notfi.id }}">{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-                {% endif %}
-      </p>
-            <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
-            </li>
-                {% endfor %}
+                            </div>
+                            <a class="btn btn-info btn-large"   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+                        </li>
+                    {% endfor %}
 
-            </ul>
-    </div>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

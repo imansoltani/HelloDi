@@ -131,73 +131,49 @@
                     </a>
                 </li>
 
-                <li class="dropdown">
-                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
-                       data-toggle="dropdown">
-                        <i class="icon-envelope">
-                            {% block Noti_Number %}
-
-  {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-        {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0  %}
-<span>
-    {{ render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) }}
-</span>
-      {% endif %}
-
-{% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-       {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
-<span>
-    {{ render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) }}
-</span>
-        {% endif %}
-
-{% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
-
-    {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
-        <span>
-     {{ render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) }}
-        </span>
-     {% endif %}
-
- {% endif %}
-
-{% endblock %}
-                        </i>
-                    </a>
-
-                    <ul class="dropdown-menu">
-
-                           {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
-                               {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
-                                   {{ render(controller('HelloDiDiDistributorsBundle:Distributors:ShowLastNotification')) }}
-                               {% endif %}
-
-
-                         {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-
-                             {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) > 0 %}
-                                 {{ render(controller('HelloDiDiDistributorsBundle:Retailers:ShowLastNotification')) }}
-                             {% endif %}
-
-
-
-
-                         {% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
-
-                               {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
-                                   {{ render(controller('HelloDiDiDistributorsBundle:Account:ShowLastNotification')) }}
-                               {% endif %}
-
-
-                         {% endif %}
-
-
-
-                        </ul>
-
-                    {% block Noti_Message %}{% endblock %}
-
-                </li>
+                {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+                    {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0 %}
+                        <li class="dropdown Noti">
+                            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+                               data-toggle="dropdown">
+                                <i class="icon-envelope">
+                                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) }}</span>
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:ShowLastNotification')) }}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+                    {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
+                        <li class="dropdown Noti">
+                            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+                               data-toggle="dropdown">
+                                <i class="icon-envelope">
+                                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) }}</span>
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:ShowLastNotification')) }}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
+                    {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
+                        <li class="dropdown Noti">
+                            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
+                               data-toggle="dropdown">
+                                <i class="icon-envelope">
+                                    <span> {{ render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) }}</span>
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{ render(controller('HelloDiDiDistributorsBundle:Account:ShowLastNotification')) }}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endif %}
 
                 <li class="dropdown">
                     <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"

@@ -60,7 +60,7 @@ class DistributorsController extends Controller
         $str='';
         foreach($Notifications as $Notif)
         {
-            $str.='<li><a href="'.$this->generateUrl('DistShowNotification').'" id="#Notif"'.$Notif->getId().' >';
+            $str.='<li id="Notif'.$Notif->getId().'" ><a href="'.$this->generateUrl('DistShowNotification').'"  >';
             if($Notif->getType()==21)
                 $str.= $this->get('translator')->trans('Added_user_with_username_%value%',array('value'=>$Notif->getValue()),'notification');
             elseif($Notif->getType()==22)

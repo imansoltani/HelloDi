@@ -208,7 +208,7 @@ $(document).ready(function(){
 
             $('body,html').stop().animate({
                 scrollTop: x
-            }, 500);
+            }, 1800);
         }
     })
 

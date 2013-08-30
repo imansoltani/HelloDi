@@ -1,15 +1,11 @@
+var time = 0;
 
-var time = 0 ;
-
-$(function(){
-
-
+$(function () {
 
 
     $('.messageshow').hide();
     $('.popupshow').hide();
     $('#popuptop').hide();
-
 
 
     $('* .messagetop ,.messageshow ').click(function () {
@@ -29,52 +25,43 @@ $(function(){
     //AcceptedMessage("hi","hoy");
 
 
-
 });
 
 
+function AlertShow(message, fname, event) {
+    var flag = true;
 
 
-function AlertShow(message,fname,event)
-{
-    var flag = true ;
-
-
-    var i = 0 ;
-    var name = '* .'+fname+' input' ;
-    $(name).each(function(){
-        if($(this).attr('required') == "required")
-        {
-            if($(this).val() == "" || $(this).val() == null  )
-            {
-                flag = false ;
+    var i = 0;
+    var name = '* .' + fname + ' input';
+    $(name).each(function () {
+        if ($(this).attr('required') == "required") {
+            if ($(this).val() == "" || $(this).val() == null) {
+                flag = false;
             }
         }
     });
 
-    name = '* .'+fname+' select' ;
-    $(name).each(function(){
-        if($(this).attr('required') == "required")
-        {
-            if($(this).val() == "" || $(this).val() == null  )
-            {
-                flag = false ;
+    name = '* .' + fname + ' select';
+    $(name).each(function () {
+        if ($(this).attr('required') == "required") {
+            if ($(this).val() == "" || $(this).val() == null) {
+                flag = false;
             }
         }
     });
 
-    if(flag)
-    {
+    if (flag) {
         event.preventDefault();
         var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
-        body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>' ;
-        body += '<h3 id="myModalLabel">Alert</h3></div>' ;
-        body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">' ;
-        body += '<div>'+message+'</div>';
-        body += '</div><div class="containerpop form-actions " style="padding-left: 0px">' ;
-        body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm(\'.'+fname+'\');" >' ;
-        body += '<input type="submit" class="btn" value="No" onclick="PopuptopClose(event)" >' ;
-        body += '</div></form>' ;
+        body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>';
+        body += '<h3 id="myModalLabel">Alert</h3></div>';
+        body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">';
+        body += '<div>' + message + '</div>';
+        body += '</div><div class="containerpop form-actions " style="padding-left: 0px">';
+        body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm(\'.' + fname + '\');" >';
+        body += '<input type="submit" class="btn" value="No" onclick="PopuptopClose(event)" >';
+        body += '</div></form>';
         body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
         $('.popupshow').html(body);
         $('.bodypopup').hide();
@@ -84,33 +71,30 @@ function AlertShow(message,fname,event)
 }
 
 var form = null;
-$(document).ready(function(){
-    $('a.YesNoMessage').click(function(e)
-    {
+$(document).ready(function () {
+    $('a.YesNoMessage').click(function (e) {
         e.preventDefault();
-        PopuptopOpen($(this).attr('header'),$(this).attr('message'),$(this).attr('href'));
+        PopuptopOpen($(this).attr('header'), $(this).attr('message'), $(this).attr('href'));
     });
-    $('form.YesNoMessage').submit(function(e)
-    {
-        if(form == null)
-        {
+    $('form.YesNoMessage').submit(function (e) {
+        if (form == null) {
             e.preventDefault();
             form = $(this);
-            PopuptopOpen($(this).attr('header'),$(this).attr('message'),'javascript:$(form).submit();');
+            PopuptopOpen($(this).attr('header'), $(this).attr('message'), 'javascript:$(form).submit();');
         }
     });
 });
 
-function PopuptopOpen (header,message,action) {
+function PopuptopOpen(header, message, action) {
     var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
-    body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>' ;
-    body += '<h3 id="myModalLabel">'+header+'</h3></div>' ;
-    body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">' ;
-    body += '<div>'+message+'</div>';
-    body += '</div><div class="containerpop form-actions " style="padding-left: 0px">' ;
-    body += '<a href="'+action+'" style="margin-right:5px" class="btn btn-primary">Yes</a>' ;
-    body += '<a href="javascript:;" class="btn" onclick="PopuptopClose(event);" >No</a>' ;
-    body += '</div></form>' ;
+    body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>';
+    body += '<h3 id="myModalLabel">' + header + '</h3></div>';
+    body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">';
+    body += '<div>' + message + '</div>';
+    body += '</div><div class="containerpop form-actions " style="padding-left: 0px">';
+    body += '<a href="' + action + '" style="margin-right:5px" class="btn btn-primary">Yes</a>';
+    body += '<a href="javascript:;" class="btn" onclick="PopuptopClose(event);" >No</a>';
+    body += '</div></form>';
     body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
     $('.popupshow').html(body);
     $('.bodypopup').hide();
@@ -118,9 +102,9 @@ function PopuptopOpen (header,message,action) {
     $('.bodypopup').slideDown();
 }
 
-function SubmitForm(name){
-   $(name).focus();
-   $(name).submit();
+function SubmitForm(name) {
+    $(name).focus();
+    $(name).submit();
 }
 
 function messagetop(subject, body, type) {
@@ -184,4 +168,25 @@ function CheckData(x) {
         return false
     }
     return true;
+}
+
+
+
+
+
+function NotificationCount() {
+    var element = $('.Noti>a span');
+    var x = $(element).html();
+    if (x == 1) {
+        $(element).remove();
+        $('.Noti').fadeOut('fast',function(){
+            $('.Noti').remove();
+        });
+        $('.NotiSpan').fadeOut('fast',function(){
+           $('.NotiSpan').remove();
+        });
+    }
+    else {
+        $(element).html(--x);
+    }
 }

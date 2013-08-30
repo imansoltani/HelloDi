@@ -8,13 +8,17 @@
 
         <script type="text/javascript">
 
-            function HideNotification(id)
-            {
-                $("#Notif"+id).hide('fast');
+            function HideNotification(id) {
+                $("* #Notif" + id).hide('fast', function () {
+                    $("* #Notif" + id).remove();
+                });
 
-                $.post('{{ path("MasterReadNotification") }}',{id: id},function(result){
+                NotificationCount();
 
-                })
+
+                $.post('{{ path("MasterReadNotification") }}', {id: id}, function (result) {
+
+                });
             }
 
 
@@ -115,7 +119,9 @@
         </div> <!-- /widget -->
 
     </div> <!-- /span6 -->
-    <div class="span">
+    {% if app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
+    {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
+    <div class="span NotiSpan">
 
 
 
@@ -130,27 +136,33 @@
                     <h3>{{ 'Notifications'|trans({},'notification') }}</h3>
                 </div> <!-- /widget-header -->
 
-                <div class="alertdiv" >
+                <div class="alertdiv NotiDiv" >
                     <ul>
-                        {% for Notfi in Notifications %}
-                        <li  id='Notif{{ Notfi.id }}'>
+
+    {% for Notfi in Notifications %}
+                        <li id="Notif{{ Notfi.id }}" >
+                            <div class="entity" >
                                 <small>{{ 'DateTimeCreate'|trans({},'notification') }}:{{ Notfi.Date|date('Y/m/d H:m:s') }}</small>
+                                <h4>
+                                    <a>{% if Notfi.Type==11 %}
+                                            <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==12 %}
+                                            <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==13 %}
+                                            <b>{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% elseif Notfi.Type==121 %}
+                                            <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
+                                        {% endif %}</a>
+                                </h4>
 
-                                <p>
-                                    {% if Notfi.Type==11 %}
-                                        <b>{{ 'Codes_for_this_%value%_is_very_low'|trans({'value':Notfi.Value},'notification') }}</b>
-                                    {% elseif Notfi.Type==12 %}
-                                        <b>{{ 'Provider_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-                                    {% elseif Notfi.Type==13 %}
-                                        <b>{{ 'Retailer_created_an_account_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-                                    {% elseif Notfi.Type==121 %}
-                                        <b>{{ 'Distributor_account_balance_is_lower_than_equal_%value%'|trans({'value':Notfi.Value},'notification') }}</b>
-                                    {% endif %}
-                                </p>
-      <a   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
+
+
+
+
+                            </div>
+                            <a class="btn btn-info btn-large"   onclick="HideNotification({{ Notfi.id }})" >{{ 'Read'|trans({},'notification') }}</a>
                         </li>
-
-                            {% endfor %}
+        {% endfor %}
 
                     </ul>
                 </div>
@@ -165,4 +177,6 @@
 
 
     </div> <!-- /span6 -->
+        {% endif %}
+    {% endif %}
 {% endblock Body %}
