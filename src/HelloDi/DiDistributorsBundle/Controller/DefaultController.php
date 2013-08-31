@@ -34,8 +34,8 @@ class DefaultController extends Controller
                 $data = $Form->getData();
                 $message = \Swift_Message::newInstance()
                     ->setSubject('HelloDi -- from ' . $data['Email'] . ' have a request')
-                    ->setTo('taghandiky2020@localhost')
-            ->setFrom($data['Email'])
+//                    ->setTo('taghandiky@gmail.com')
+                    ->setFrom($data['Email'])
                     ->setBody(
                         $this->renderView(
                             'HelloDiDiDistributorsBundle:HomePage:Contact.html.twig',

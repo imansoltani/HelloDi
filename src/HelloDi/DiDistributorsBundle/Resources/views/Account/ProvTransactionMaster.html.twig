@@ -177,17 +177,17 @@
                                 </td>
 
                                 <td>
-                                    {{ -tran.tranAmount }}
+                                    {{ tran.tranAmount|abs }}
 
                                 </td>
 
                              {% endif %}
 
                             <td>
+
                                 {% set balance=tran.tranBalance+tran.tranAmount %}
 
-
-                            {{ balance }}
+                                 {{ balance }}
                             </td>
                             <td class="td-actions">
 {#detail#}
@@ -240,7 +240,7 @@
                                                    <div class="controls">
                                                        <input type="text"
                                                        {% if tran.tranAmount < 0 %}
-                                                           value="{{ -tran.tranAmount }}"
+                                                           value="{{ tran.tranAmount|abs }}"
                                                          {% else %}
                                                              value="---------------"
                                                           {% endif %}
@@ -313,12 +313,6 @@
                                 </a>
 
  {#enddetails#}
-
-
-|
-                                <a class="btn_actions" href="{{ path('MasterProvTransactionDelete',{'id':Account.id,'tranid':tran.id}) }}">
-                                    {{ 'Delete' | trans ({}, "common") }}
-                                </a>
 
                             </td>
                         </tr>
