@@ -6,14 +6,15 @@ parameters:
     database_name: hellodi
     database_user: root
     database_password: null
+
     mailer_transport: smtp
     mailer_host: in.mailjet.com
-    mailer_user: '039ab8ef3e3bf82b932424e66c4260f4'
-    mailer_password: 'e0fa5a908911cc5bc1962c2432e2391f'
+    mailer_user: 039ab8ef3e3bf82b932424e66c4260f4
+    mailer_password: e0fa5a908911cc5bc1962c2432e2391f
     encryption : tls
     port: 587
     mailer_sender_address: i.soltani@hellobell.com
-    auth_mode: login
+
     locale: en
     secret: ThisTokenIsNotSoSecretChangeIt
     ogone_pspid: hellodi

@@ -61,18 +61,13 @@ doctrine:
 # Swiftmailer Configuration
 
 swiftmailer:
+
     transport: %mailer_transport%
-    encryption: %encryption%
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
     port:      %port%
-    sender_address: %mailer_sender_address%
-    delivery_address: taghandiky@gmail.com
-#    disable_delivery: false
-#    auth_mode: %auth_mode%
-#    spool:     { type: memory }
-# spool:     { type: file, path: %kernel.root_dir%/spool }
+    encryption : %encryption%
 
 fos_user:
     db_driver: orm
