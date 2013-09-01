@@ -157,12 +157,7 @@
 
                                         </td>
                                         <td>
-                                            <script type="text/javascript">
-                                                document.write(Math.abs({{ tran.tranAmount  }}));
-                                            </script>
-
-
-
+                                          {{ tran.tranAmount|abs  }}
 
                                         </td>
                                     {% endif %}
@@ -207,19 +202,24 @@
                                                     <input type="text" disabled="" value="{{ tran.tranDescription}}">
                                                 </div>
                                             </div>
-                                            {% set credit,debit='------','------' %}
 
-                                            {% if  tran.tranAmount>0 %}
-                                                {% set credit=tran.tranAmount %}
-                                            {% elseif  tran.tranAmount<0 %}
-                                                {% set debit=tran.tranAmount %}
-                                            {% endif %}
                                             <div class="control-group">
                                                 <label class="control-label">
                                                     {{ 'Credit' | trans ({}, "transaction") }}
                                                 </label>
                                                 <div class="controls">
-                                                    <input type="text" disabled="" value="{{ credit }}">
+                                                    <input type="text" disabled=""
+
+                                                            {% if  tran.tranAmount>0 %}
+                                                           value="{{ tran.tranAmount }}"
+                                                            {% else  %}
+                                                           value="--------"
+
+                                                    {% endif %}
+
+                                                            >
+
+
                                                 </div>
                                             </div>
 
@@ -230,7 +230,17 @@
                                                     {{ 'Debit' | trans ({}, "transaction") }}
                                                 </label>
                                                 <div class="controls">
-                                                    <input type="text" disabled="" value="{{ debit|abs }}">
+                                                    <input type="text" disabled=""
+
+                                                            {% if  tran.tranAmount<0 %}
+                                                           value="{{ tran.tranAmount|abs }}"
+                                                            {% else  %}
+                                                           value="--------"
+
+                                                    {% endif %}
+
+
+                                                    >
                                                 </div>
                                             </div>
 

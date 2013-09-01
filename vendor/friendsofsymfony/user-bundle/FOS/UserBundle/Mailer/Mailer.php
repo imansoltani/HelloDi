@@ -69,7 +69,7 @@ class Mailer implements MailerInterface
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom($fromEmail)
+            ->setFrom('i.soltani@hellobell.com','Iman Soltani')
             ->setTo($toEmail)
             ->setBody($body);
 

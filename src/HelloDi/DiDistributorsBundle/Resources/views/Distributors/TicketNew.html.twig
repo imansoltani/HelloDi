@@ -7,7 +7,7 @@
 {% set MU = '0' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}"> {{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('distributors_dashboard') }}"> {{ 'Home' | trans ({}, "menu") }}</a>
     <a href="{{ path('DistTickets') }}" class="link"> {{ 'Tickets' | trans ({}, "ticket") }}</a>
     <span class="link"> {{ 'NewTicket' | trans ({}, "ticket") }}</span>
 {% endblock Site_Map %}

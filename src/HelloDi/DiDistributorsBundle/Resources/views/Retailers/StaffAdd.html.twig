@@ -7,7 +7,7 @@
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}"> {{ 'Home' | trans ({}, "user") }}</a>
+    <a class="link" href="{{ path('retailers_dashboard') }}"> {{ 'Home' | trans ({}, "user") }}</a>
     <a class="link" href="{{ path('RetailerStaff') }}"> {{ 'Staff' | trans ({}, "user") }}</a>
     <span class="link"> {{ 'AddUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}

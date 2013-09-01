@@ -3,7 +3,7 @@
 {% set tab = '3' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('retailer_show') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
     <a class="link" href="{{ path('DistRetailerUser',{'id':retailerAccount.id}) }}">{{ 'Users' | trans ({}, "user") }}</a>
     <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>

@@ -824,6 +824,8 @@ catch(\Exception $e)
         $form_search= $this->createFormBuilder()
                        ->add('CityName','entity',
                               array(
+                                  'label'=>'City',
+                                  'translation_domain'=>'entity',
                                   'required'=>false,
                                   'class' => 'HelloDiDiDistributorsBundle:Entiti',
                                   'property'=>'entCity',
@@ -837,13 +839,16 @@ catch(\Exception $e)
                                                     )
                        ->add('Balance','choice',
                                array(
+                                   'label'=>'Balance',
+                                   'translation_domain'=>'accounts',
                                    'choices'=>(array(
                                        0=>'<',
                                        1=>'>',
                                        2=>'=' )
                                                      )))
-                       ->add('BalanceValue','integer',
+                       ->add('BalanceValue','money',
                                 array(
+                                    'currency'=>$Account->getAccCurrency(),
                                     'required'=>false)
                                                       )->getForm();
 
@@ -953,24 +958,13 @@ try{
             $qb->select('Tran')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
-            if($data['TypeDate']==0)
-            {
-                if($data['DateStart']!='')
-                $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                if($data['DateEnd']!='')
-                $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-            }
+            if($data['TypeDate']==1)$typedate=1; else $typedate=0;
 
-            if($data['TypeDate']==1)
-            {
-                $typedate=1;
-                if($data['DateStart']!='')
-               $qb->where('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-                if($data['DateEnd']!='')
+            if($data['DateStart']!='')
+               $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+            if($data['DateEnd']!='')
                $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-            }
 
             if ($data['Type'] != 2)
                 $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
@@ -1047,8 +1041,22 @@ catch(\Exception $e){
 
               )))
 
-        ->add('DateStart','text',array('label'=>'From','translation_domain'=>'transaction','required'=>false))
-        ->add('DateEnd','text',array('label'=>'To','translation_domain'=>'transaction','required'=>false))
+        ->add('DateStart','date',
+            array(
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'label'=>'From',
+                'translation_domain'=>'transaction',
+                'required'=>false
+            ))
+        ->add('DateEnd','date',
+            array
+            (   'label'=>'To',
+                'widget'=>'single_text',
+                'format'=>'yyyy/MM/dd',
+                'translation_domain'=>'transaction',
+                'required'=>false)
+        )
         ->add('TypeDate','choice', array('translation_domain'=>'transaction',
             'empty_value'=>'TradeDate',
             'expanded'   => true,
@@ -1070,25 +1078,12 @@ catch(\Exception $e){
             ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
             ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
 
-        if($data['TypeDate']==0)
-        {
-            $typedate=0;
-          if($data['DateStart']!='')
-            $qb->andwhere('Tran.tranDate >= :DateStart')->setParameter('DateStart',$data['DateStart']);
-            if($data['DateEnd']!='')
-            $qb->andwhere('Tran.tranDate <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
-
-        }
-
-        if($data['TypeDate']==1)
-        {
-            $typedate=1;
+        if($data['TypeDate']==1) $typedate=1; else $typedate=0;
         if($data['DateStart']!='')
            $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
         if($data['DateEnd']!='')
             $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
 
-        }
         if ($data['Type'] != 2)
             $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
 

@@ -61,12 +61,11 @@ doctrine:
 # Swiftmailer Configuration
 
 swiftmailer:
-
     transport: %mailer_transport%
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
-    port:      %port%
+    port:      %mailer_port%
     encryption : %encryption%
 
 fos_user:

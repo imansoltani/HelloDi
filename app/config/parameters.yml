@@ -12,7 +12,7 @@ parameters:
     mailer_user: 039ab8ef3e3bf82b932424e66c4260f4
     mailer_password: e0fa5a908911cc5bc1962c2432e2391f
     encryption : tls
-    port: 587
+    mailer_port: 587
     mailer_sender_address: i.soltani@hellobell.com
 
     locale: en
