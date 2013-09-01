@@ -16,7 +16,15 @@
 {% set MU = 'home' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home'|trans({},'menu') }}</a>
+    <a class="link" href="
+{% if is_granted('ROLE_RETAILER') %}
+    {{ path('retailers_dashboard') }}
+{% elseif is_granted('ROLE_DISTRIBUTOR') %}
+    {{ path('distributors_dashboard') }}
+{% elseif is_granted('ROLE_MASTER') %}
+    {{ path('loginsuccess') }}
+{% endif %}
+    ">{{ 'Home'|trans({},'menu') }}</a>
     <span class="link"> {{ 'Profile'|trans({},'user') }}</span>
 {% endblock Site_Map %}
 

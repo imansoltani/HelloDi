@@ -721,7 +721,7 @@ $datetype=0;
 
 // Start kamal
 
-        public function DmtuAction(){
+    public function DmtuAction(){
 
 
         $em = $this->getDoctrine()->getManager();
@@ -892,7 +892,7 @@ $datetype=0;
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error', "You haven't any sale!");
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
@@ -1042,7 +1042,7 @@ $datetype=0;
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($priceid);
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
         if($price == null || $price->getAccount() == null || $price->getAccount() != $myaccount)
         {
             throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Price',array(),'price')),'message'));

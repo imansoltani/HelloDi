@@ -34,7 +34,7 @@
             <span  id="user_pc_menu"  >{{ 'Favorites' | trans ({}, "item") }}</span>
         </a>
     </li>
-    <li class=" {% if MU == 'mob' %}active{% endif %} dropdown">
+    <li class=" {% if MU == 'dmtu' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_dmtu') }}" class="dropdown-toggle">
             <i class="icon-mobile-phone"></i>
             <span  id="user_pc_menu"  >{{ 'Mobile' | trans ({}, "item") }}</span>
@@ -42,14 +42,14 @@
     </li>
 
 
-    <li class=" {% if MU == 'cell' %}active{% endif %} dropdown">
+    <li class=" {% if MU == 'clcu' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_callingCard') }}" class="dropdown-toggle">
             <i class="icon-credit-card"></i>
             <span  id="user_pc_menu"  >{{ 'Calling_Card' | trans ({}, "item") }}</span>
         </a>
     </li>
 
-    <li class=" {% if MU == 'vou' %}active{% endif %} dropdown">
+    <li class=" {% if MU == 'E-payment' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Shop_e-payment') }}" class="dropdown-toggle">
             <i class="icon-flag-alt"></i>
             <span  id="user_pc_menu"  >{{ 'E-payment' | trans ({}, "item") }}</span>
