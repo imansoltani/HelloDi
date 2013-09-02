@@ -65,8 +65,8 @@ swiftmailer:
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
-    port:      %mailer_port%
-    encryption : %encryption%
+    port:      587
+    encryption : tls
 
 fos_user:
     db_driver: orm
@@ -111,3 +111,9 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage
         options:    []
+
+gregwar_captcha:
+    width: 100
+    height: 50
+    length: 4
+    background_color:  [255, 255, 255]

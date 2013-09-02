@@ -32,7 +32,8 @@ class DefaultController extends Controller
         if ($req->isMethod('POST'))
         {
             $Form->handleRequest($req);
-
+           if($Form->isValid())
+           {
             $data = $Form->getData();
 
             $mailer = $this->get('mailer');
@@ -59,6 +60,7 @@ class DefaultController extends Controller
                         'message'));
 
 }
+        }
 
         return $this->render('HelloDiDiDistributorsBundle:HomePage:Index.html.twig',
             array(

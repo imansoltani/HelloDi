@@ -352,12 +352,23 @@
                     {{ form_errors(formContact.Email) }}
                 </div>
 
+                <div class="control-group">
+                    <div class="control-label">
+
+                        {{ form_label(formContact.captcha) }}
+                    </div>
+                    {{ form_widget(formContact.captcha) }}
+                    <b style="color: red">  {{ form_errors(formContact.captcha) }}</b>
+
+                </div>
 
 
-                <input class="btn btn-large btn-inverse" type="submit" value="Send">
+
+
+         <input class="btn btn-large btn-inverse" type="submit" value="Send">
                 {{ form_widget(formContact._token) }}
 
-            </form>
+         </form>
         </div>
     </div>
 </div>
