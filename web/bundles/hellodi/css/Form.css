@@ -1273,26 +1273,31 @@ div.ShowDetailPopUp .control-group .control-label{
 
 
 .Note{
+    padding-top: 5px;
     padding: 7px;
     width: 70%;
     display: inline-block;
     margin-top: 20px;
-    border: dashed 2px #9fa0d2;
+    border: solid 1px #9fa0d2;
     color: #000240;
+    border-radius: 5px;
     float: right;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .Note.Me{
+
+    padding-top: 5px;
     float: left;
     background: none;
-    border: dashed  1px #cbcbcb;
+    border: solid  1px #cbcbcb;
+    border-radius: 5px;
 }
 
 .Note > div:first-child{
     padding-bottom: 5px;
     margin-bottom: 5px;
-    font-size: 17px;
+    font-size: 13px;
     border-bottom: solid thin #9fa0d2;
 }
 
@@ -1304,6 +1309,7 @@ div.ShowDetailPopUp .control-group .control-label{
 
 .Note > div:last-child{
     padding: 5px;
+    font-size: 18px;
     padding-left: 10px;
     color: #000000;
 }

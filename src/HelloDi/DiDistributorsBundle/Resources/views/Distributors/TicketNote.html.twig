@@ -55,10 +55,10 @@
                         <span> {{ 'Status' | trans ({}, "ticket") }}:</span>
                         {% if Ticket.status==0 %}
 
-                            <a style="margin-right: 10px">{{ 'Close' | trans ({}, "ticket") }}</a><a class="btn btn-danger"
+                            <a style="margin-right: 10px">{{ 'Close' | trans ({}, "ticket") }}</a><a class="btn btn-primary"
                                                                       href="{{ path('DistTicketsStatus',{id:Ticket.id}) }}">{{ 'Switch' | trans ({}, "ticket") }}</a>
                         {% else %}
-                            <a style="margin-right: 10px">{{ 'Open' | trans ({}, "ticket") }}</a><a class="btn btn-danger"
+                            <a style="margin-right: 10px">{{ 'Open' | trans ({}, "ticket") }}</a><a class="btn btn-primary"
                                                                      href="{{ path('DistTicketsChangeStatus',{id:Ticket.id}) }}">{{ 'Switch' | trans ({}, "ticket") }}</a>
                         {% endif %}
                     </li>

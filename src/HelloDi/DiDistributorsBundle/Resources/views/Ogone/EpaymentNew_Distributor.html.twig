@@ -53,13 +53,24 @@
                             </script>
                             {{ form_widget(form.PaymentCurrencyISO) }}
                         </div>
+                        <script type="text/javascript">
+                            $(function () {
 
+
+                                var x = '{{ form_errors(form.paymentAmount) }}' ;
+
+                                if(x != "")
+                                    messagetop("",x,"error");
+
+
+                            });
+                        </script>
                     </div>
 
                     {{ form_widget(form._token) }}
 
                     <div class="form-actions">
-                        <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
+                        <input class="button btn btn-primary" type="submit" id="submit" name="submit"
                                value="{{ 'Next'|trans({},'ogone') }}"/>
                     </div>
 

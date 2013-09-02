@@ -51,9 +51,9 @@
                         <span>Current Status:</span>
                         {% if Ticket.status==0 %}
 
-                            <a style="margin-right: 10px" >Close</a><a class="btn btn-danger" href="{{ path('MasterTicketsStatus',{id:Ticket.id}) }}">Switch</a>
+                            <a style="margin-right: 10px" >Close</a><a class="btn btn-primary" href="{{ path('MasterTicketsStatus',{id:Ticket.id}) }}">Switch</a>
                         {% else %}
-                            <a style="margin-right: 10px"  >Open</a><a class="btn btn-danger" href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Switch</a>
+                            <a style="margin-right: 10px"  >Open</a><a class="btn btn-primary" href="{{ path('MasterTicketsChangeStatus',{id:Ticket.id}) }}">Switch</a>
                         {% endif %}
                     </li>
                     <li>
