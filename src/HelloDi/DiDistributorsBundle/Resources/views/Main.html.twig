@@ -123,13 +123,6 @@
 
             <ul class="nav pull-right">
 
-                <li class="dropdown">
-                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
-                       data-toggle="dropdown">
-                        <i class="icon-exclamation-sign"></i>
-                        {% block Alert_Number %}{% endblock %}
-                    </a>
-                </li>
 
                 {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
                     {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0 %}
@@ -250,7 +243,7 @@
                 <li class="dropdown">
                     <a href="{{ path('fos_user_profile_edit') }}" id="lang_ico" class="dropdown-toggle lang_ico"
                        style="font-weight:bold;font-size: 20px;">
-                        Er
+                        {{ app.user.language }}
                     </a>
                 </li>
 

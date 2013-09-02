@@ -1,19 +1,6 @@
 
-{#{% set extend='' %}#}
-{#{% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}#}
-    {#{% set extend='HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}#}
-{#{% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER'  %}#}
-    {#{% set extend= 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}#}
-{#{% endif %}#}
-
-{#{% extends extend %}#}
-
-
-
 {% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
-
-{#{% set MU = 'trans' %}#}
 
 {% block title %}
     Reset Password
@@ -96,7 +83,7 @@
                 </div>
             {% endif %}
 
-
+{{ form_widget(form._token) }}
 
         </div>
 

@@ -11,10 +11,10 @@
             img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
         }
     </script>
-
+        <a class="captcha_reload btn" href="javascript:reload_{{ image_id }}()">{{ 'Renew'|trans({}, 'gregwar_captcha') }}</a>
     {% endif %}
     <br>
-    <a class="captcha_reload btn" href="javascript:reload_{{ image_id }}()">{{ 'Renew'|trans({}, 'gregwar_captcha') }}</a>
+
 <div class="control-group">
     {{ form_widget(form) }}
 </div>

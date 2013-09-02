@@ -2,7 +2,9 @@ body{
 
     margin: 0;
     padding: 0;
-    font-family: 'Quicksand', sans-serif;
+    /*font-family: 'QQ1', sans-serif;*/
+
+
 
 background: #FFF;
 
@@ -14,6 +16,7 @@ background: #FFF;
 }
 
 li.dropdown i > span{
+
     z-index: 12;
     position: absolute;
     right: -5px;
@@ -273,6 +276,7 @@ position: relative;
 body .navbar-fixed-top{
     margin: 0px;
 
+
 }
 
 body .navbar .navbar-inner{
@@ -333,6 +337,7 @@ body .navbar .navbar-inner{
 
 .navbar .container .pull-right{
     margin-top: 5px;
+
 }
 
 .navbar .container .brand , .brand{
@@ -429,11 +434,13 @@ padding: 0;
     color: #0e5c92;
     box-shadow: 0px 0px 3px #569dce inset;
     border:solid thin #85b9dd;
+
 }
 
 .menubarhome .nav li.dropdown.open b.caret , .menubarhome .nav li.dropdown b.caret{
     border-top-color: #0e5c92;
     border-bottom-color: #0e5c92;
+
 }
 
 .navbar .container .dropdown > a  {
@@ -475,6 +482,7 @@ color : #50627f ;
 body .navbar .navbar-inner .container .dropdown.open > a {
     color: #FFF;
     background-color: #314455;
+
 
     /* IE10 Consumer Preview */
     background-image: -ms-linear-gradient(top, #268CE1 0%, #3B6B82 100%);
@@ -963,6 +971,7 @@ color:#FFF;
 }
 
 .widget-content .widget-header h3{
+
     font-size: 17px;
     font-weight: normal;
     text-transform: uppercase;
@@ -1023,6 +1032,7 @@ ul.shortcuts >li > a i{
     display: block;
 }
 ul.shortcuts >li > a span{
+
     font-size: 15px;
     color: #7a7a7a;
     text-align: center;
@@ -1239,6 +1249,7 @@ display: none;
  }
 
 .dropdown-menu li a:hover{
+
     background-color: #ff9900;
     color: #FFF;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
@@ -1470,4 +1481,14 @@ margin-top:5px ;
 
 .MenuBar .menubar_items ul.dropdown-menu li:hover a {
     color: #FFF;
+
+}
+
+@font-face {
+    font-family: 'QQ1';
+    src: url('font/QQ1.eot'); /* IE9 Compat Modes */
+    src: url('font/QQ1.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('font/QQ1.woff') format('woff'), /* Modern Browsers */
+    url('font/QQ1.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('font/QQ1.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
