@@ -1,0 +1,56 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+
+{% block title %}
+    {{ 'Validate'|trans({},'ogone') }}
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Validate'|trans({},'ogone') }}</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    {{ 'Validate'|trans({},'ogone') }}
+{% endblock %}
+
+
+
+{% block Body %}
+    <div class="span">
+
+        <div class="widget stacked">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3>{{ 'Validate'|trans({},'ogone') }}</h3>
+                </div>
+
+                <br>
+
+                <form  class="form-horizontal" >
+
+
+                    <div class="control-group">
+                        <p>
+                            {{ 'are_you_sure_to_payment_%value%_%currency%'|trans({'value':ogonePayment.paymentAmount,'currency':ogonePayment.paymentCurrencyISO},'ogone') }}
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="form-actions">
+                        {{ form | raw }}
+                        <input  class="button btn btn-primary btn-large"  type="submit"  value="{{ 'Accept'|trans({},'common')}}">
+                        </form>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

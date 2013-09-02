@@ -1,0 +1,73 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+
+{% block title %}
+    {{ 'EpaymentNew'|trans({},'ogone') }}
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('distributors_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'EpaymentNew'|trans({},'ogone') }}</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    {{ 'EpaymentNew'|trans({},'ogone') }}
+{% endblock %}
+
+
+{% block Body %}
+    <div class="span">
+
+        <div class="widget stacked">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3>{{ 'EpaymentNew'|trans({},'ogone') }}</h3>
+                </div>
+
+                <br>
+
+                <form action="{{ path('distributor_transactions_new') }}" method="post" class="form-horizontal" >
+
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            {{ form_label(form.paymentAmount) }}
+                        </label>
+
+                        <div class="controls money">
+                            {{ form_widget(form.paymentAmount) }}
+                            {{ form_widget(form.PaymentCurrencyISO) }}
+                        </div>
+
+                    </div>
+
+                    {{ form_widget(form._token) }}
+
+                    <div class="form-actions">
+                        <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
+                               value="{{ 'Next'|trans({},'ogone') }}"/>
+                    </div>
+
+                </form>
+
+                <script type="text/javascript">
+                    $(function () {
+
+                        {% if form_errors(form) in not null %}
+
+
+                        var x = '{{ form_errors(form) }}' ;
+
+                        messagetop("",x,"error");
+
+                        {% endif %}
+
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

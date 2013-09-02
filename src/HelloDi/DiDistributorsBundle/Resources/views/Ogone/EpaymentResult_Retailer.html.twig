@@ -1,0 +1,99 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+
+{% block title %}
+    Result
+{% endblock title %}
+
+{% set MU = 'trans' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">Result</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-file"></i>
+    Result
+{% endblock %}
+
+
+
+{% block Body %}
+    <div class="span">
+
+        <div class="widget stacked">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3>Result</h3>
+                </div>
+
+                <br>
+
+                <form class="form-horizontal">
+
+
+                    <div class="control-group">
+
+
+                        <p>
+                            {% if ogonePayment.status=='accepted' %}
+
+                                <span>
+                the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }} :<br>
+            </span>
+
+
+                                <span>
+                {% set ban=ogonePayment.Transaction.tranBalance %}
+                                    {% set amount=ogonePayment.paymentAmount %}
+
+                                    {{ ogonePayment.Transaction.tranBalance }}
+                                    +<b>{{ ogonePayment.paymentAmount }}</b>=<b
+                                            style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }}
+                                    )
+            </span>
+
+                            {% elseif ogonePayment.status=='canceled' %}
+
+                                canceled
+
+                            {% elseif ogonePayment.status=='declined' %}
+
+                                declined
+
+                            {% elseif ogonePayment.status=='unknown' %}
+
+                                unknown
+
+                            {% elseif ogonePayment.status=='uncertain' %}
+
+                                uncertain
+                            {% else %}
+
+                                {{ ogonePayment.status }}
+
+                            {% endif %}
+                        </p>
+                    </div>
+
+
+                    {% if ogonePayment.status=='accepted' %}
+                        <div class="form-actions">
+                            <a class="btn btn-primary btn-large"
+
+
+
+                                        href="{{ path('RetailerTransaction') }}"
+
+
+                                    > transaction page  </a>
+                        </div>
+                    {% endif %}
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

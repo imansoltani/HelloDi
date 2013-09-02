@@ -1,71 +1,113 @@
-<li class="dropdown">
-    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
-       data-toggle="dropdown">
-        <i class="icon-comment">
+{% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
 
-            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-                {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
-                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
-                            </span>
-                {% endif %}
+{% block title %}
+    Epayment
+{% endblock title %}
 
+{% block bodywidth %}Result{% endblock %}
 
+{% block header %}Epayment Result{% endblock %}
 
-            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-                {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
-                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
-                            </span>
-                {% endif %}
+{% block MoreMenu %}
+    <ul class="nav pull-right">
 
 
 
-            {% else %}
-                {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
-                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
-                            </span>
-                {% endif %}
-            {% endif %}
-        </i>
-    </a>
-    <ul class="dropdown-menu">
-        {% if app.user.roles[0]!='ROLE_MASTER_ADMIN' and app.user.roles[0]!='ROLE_MASTER' %}
-            <li><a
-                        {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
+        <li class="dropdown">
 
-                            href="{{ path('DistTicketsNew') }}"
-
-                        {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-
-                            href="{{ path('RetailerTicketsNew') }}"
-                        {% endif %}
-                        >
-                    {{ 'NewTicket' | trans ({}, "ticket") }}
+            <a style="font-size: 16px" href="
+                    {% if is_granted("ROLE_DISTRIBUTOR_ADMIN") %}
+                    {{ path('distributors_dashboard') }}
+                    {% elseif is_granted("ROLE_RETAILER_ADMIN") %}
+                    {{ path('retailers_dashboard') }}
+                    {% endif %}
+                " id="user_info" class="dropdown-toggle">
 
 
-                </a></li>
-        {% endif %}
-        <li><a
-                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-
-                        href="{{ path('DistTickets') }}"
-
-                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-                        href="{{ path('RetailerTickets') }}"
+                <span >Dashboard</span>
+            </a>
 
 
-                    {% else %}
-                        href="{{ path('MasterTickets') }}"
+
+        </li>
+
+
+    </ul>
+{% endblock %}
+
+{% block fos_user_content %}
+
+    <form>
+
+        <div class="login-fields Result">
+
+
+
+            {% if ogonePayment.status=='accepted'  %}
+
+            <span >
+                the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }}:<br>
+            </span>
+
+
+            <span>
+                {%  set ban=ogonePayment.Transaction.tranBalance %}
+                {%  set amount=ogonePayment.paymentAmount %}
+
+                {{ ogonePayment.Transaction.tranBalance }}+<b>{{ ogonePayment.paymentAmount }}</b>=<b style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }})
+            </span>
+
+
+
+
+            <!-- /field -->
+
+
+
+        </div>
+
+
+
+
+        <div class="login-actions Result">
+
+
+            <a class="btn btn-primary btn-large"
+
+                    {% if is_granted('ROLE_RETAILER_ADMIN') %}
+
+                        href="{{ path('RetailerTransaction') }}"
+
+                    {% elseif is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+                        href="{{ path('DistTransaction') }}"
 
                     {% endif %}
+                    > transaction page  </a>
+
+            {% elseif ogonePayment.status=='canceled' %}
+
+                canceled
+
+            {% elseif ogonePayment.status=='declined' %}
+
+                declined
+
+            {% elseif ogonePayment.status=='unknown' %}
+
+                unknown
+
+            {% elseif ogonePayment.status=='uncertain' %}
+
+                uncertain
+            {% else %}
+
+                {{ ogonePayment.status }}
+
+            {% endif %}
+        </div>
+
+    </form>
 
 
-                    >
 
-                {{ 'Tickets' | trans ({}, "ticket") }}
-
-            </a></li>
-    </ul>
-</li>
+{% endblock %}
