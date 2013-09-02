@@ -487,7 +487,7 @@ if($data['Amount']>0)
             $em->flush();
 
          $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>33,'value'=>$data['Amount'].' '.$Account->getAccCurrency()));
-         $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getParent()->getId(),'type'=>23,'value'=>$data['Amount'].' '.$Account->getParent()->getAccCurrency()));
+
 
          if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));

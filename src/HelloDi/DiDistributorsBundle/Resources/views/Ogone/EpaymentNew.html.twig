@@ -6,11 +6,14 @@
     {#{% set extend= 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}#}
 {#{% endif %}#}
 
-{#{% extends (extend) %}#}
+{#{% extends extend %}#}
 
 
 
 {% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
+
+
+{#{% set MU = 'trans' %}#}
 
 {% block title %}
     {{ 'Epayment'|trans({},'ogone') }}

@@ -1,3 +1,13 @@
+FOS\UserBundle\Form\Model\ChangePassword:
+
+    properties:
+        new:
+            - Length:
+                min: 6
+                max: 25
+                minMessage: "password_must_be_at_least_{{limit}}_characters_length"
+                maxMessage: "pasword_name_cannot_be_longer_than_{{limit}}_characters_length"
+
 HelloDi\DiDistributorsBundle\Entity\Entiti:
     properties:
         entVatNumber:
