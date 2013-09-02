@@ -18,7 +18,13 @@ class ItemController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $items = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findAll();
+
+        $items = $em->createQueryBuilder()
+            ->select("item",'code')
+            ->from("HelloDiDiDistributorsBundle:Item","item")
+            ->LeftJoin("item.Codes","code",'WITH',"code.status = 1")
+            ->getQuery()
+            ->getResult();
 
         return $this->render('HelloDiDiDistributorsBundle:Item:index.html.twig', array(
             'items' => $items,
