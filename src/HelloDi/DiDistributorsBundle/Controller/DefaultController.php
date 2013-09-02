@@ -40,8 +40,8 @@ class DefaultController extends Controller
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Request of HelloDi')
-                ->setFrom('i.soltani@hellobell.com','Iman Soltani')
-                ->setTo('taghandiky@gmail.com','Kazem Taghandiky')
+                ->setFrom('taghandiky@gmail.com')
+                ->setTo('taghandiky@live.com')
                 ->setBody($this->renderView(
                             'HelloDiDiDistributorsBundle:HomePage:Contact.html.twig',
                             array(

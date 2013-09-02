@@ -40,10 +40,25 @@
 
                         <div class="controls money">
                             {{ form_widget(form.paymentAmount) }}
+
+                            <script type="text/javascript">
+                                $(function () {
+
+
+                                    var x = '{{ form_errors(form.paymentAmount) }}' ;
+
+                                    if(x != "")
+                                        messagetop("",x,"error");
+
+
+                                });
+                            </script>
+
                             {{ form_widget(form.PaymentCurrencyISO) }}
                         </div>
 
                     </div>
+
 
                     {{ form_widget(form._token) }}
 
@@ -54,18 +69,6 @@
 
                 </form>
 
-                <script type="text/javascript">
-                    $(function () {
-                        {% if form_errors(form) in not null %}
-
-
-                        var x = '{{ form_errors(form) }}' ;
-
-                        messagetop("",x,"error");
-
-                        {% endif %}
-                    });
-                </script>
             </div>
         </div>
     </div>

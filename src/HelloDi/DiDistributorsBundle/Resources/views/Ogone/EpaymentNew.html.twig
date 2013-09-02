@@ -1,5 +1,5 @@
-{% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+{% if app.user.roles[0]=='ROLE_RETAILER_ADMIN'%}
     {% include "HelloDiDiDistributorsBundle:Ogone:EpaymentNew_Retailer.html.twig" %}
-{% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+{% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN'%}
     {% include "HelloDiDiDistributorsBundle:Ogone:EpaymentNew_Distributor.html.twig" %}
 {% endif %}
