@@ -64,6 +64,12 @@ li.dropdown i > span{
     height: 100%;
     position: fixed;
     z-index: 1400;
+    display: none;
+}
+
+body #popuptop
+{
+    display: none;
 }
 
 .closedoor{

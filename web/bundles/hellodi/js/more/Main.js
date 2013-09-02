@@ -3,9 +3,9 @@ var time = 0;
 $(function () {
 
 
-    $('.messageshow').hide();
-    $('.popupshow').hide();
-    $('#popuptop').hide();
+//    $('.messageshow').hide();
+//    $('.popupshow').hide();
+//    $('#popuptop').hide();
 
 
     $('* .messagetop ,.messageshow ').click(function () {
