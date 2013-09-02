@@ -169,8 +169,19 @@
                 {% endif %}
 
                 <li class="dropdown">
-                    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
-                       data-toggle="dropdown">
+                    <a {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+
+                        href="{{ path('DistTickets') }}"
+
+                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+                        href="{{ path('RetailerTickets') }}"
+
+
+                    {% else %}
+                        href="{{ path('MasterTickets') }}"
+
+                    {% endif %} id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
+                       >
                         <i class="icon-comment">
 
                             {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
@@ -200,44 +211,6 @@
                             {% endif %}
                         </i>
                     </a>
-                    <ul class="dropdown-menu">
-                        {% if app.user.roles[0]!='ROLE_MASTER_ADMIN' and app.user.roles[0]!='ROLE_MASTER' %}
-                        <li><a
-                                {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
-
-                                    href="{{ path('DistTicketsNew') }}"
-
-                                {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-
-                                href="{{ path('RetailerTicketsNew') }}"
-                                {% endif %}
-                                                        >
-                                {{ 'NewTicket' | trans ({}, "ticket") }}
-
-
-                            </a></li>
-                        {% endif %}
-                        <li><a
-                                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-
-                                        href="{{ path('DistTickets') }}"
-
-                                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-                                        href="{{ path('RetailerTickets') }}"
-
-
-                                    {% else %}
-                                        href="{{ path('MasterTickets') }}"
-
-                                    {% endif %}
-
-
-                                    >
-
-                                {{ 'Tickets' | trans ({}, "ticket") }}
-
-                            </a></li>
-                    </ul>
                 </li>
 
                 <li class="dropdown">

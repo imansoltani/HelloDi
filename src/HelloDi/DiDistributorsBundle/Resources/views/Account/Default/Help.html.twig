@@ -1,45 +1,71 @@
-<tr>
-    <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
-    <th>{{ 'Price' | trans ({}, "price") }}</th>
-    <th>{{ 'Status' | trans ({}, "price") }}</th>
-    <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
-</tr>
+<li class="dropdown">
+    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
+       data-toggle="dropdown">
+        <i class="icon-comment">
+
+            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+                {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
+                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
+                            </span>
+                {% endif %}
 
 
-<tbody>
-{% for row in form.checks %}
-    {% set pricerow = null %}
-    {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
-        {% if price.item.id == itemid %}
-            {% set pricerow = price %}
-        {% endif %}
-    {% endfor %}
-    <tr>
-        <td>
-            {{ form.checks.vars.choices[row.vars.value].data.accName }}
-        </td>
-        <td>
-            {% if pricerow is null %}
-                N/A
+
+            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+                {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
+                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
+                            </span>
+                {% endif %}
+
+
+
             {% else %}
-                {{ pricerow.price }}
-            {% endif %}
-            ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
-        </td>
-        <td>
-            {% if pricerow is null %}
-                N/A
-            {% else %}
-                {% if pricerow.priceStatus==1 %}
-                    true
-                {% else %}
-                    false
+                {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
+                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
+                            </span>
                 {% endif %}
             {% endif %}
-        </td>
-        <td class="checkboxs">
-            {{ form_widget(row) }}
-        </td>
-    </tr>
-{% endfor %}
-</tbody>
+        </i>
+    </a>
+    <ul class="dropdown-menu">
+        {% if app.user.roles[0]!='ROLE_MASTER_ADMIN' and app.user.roles[0]!='ROLE_MASTER' %}
+            <li><a
+                        {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
+
+                            href="{{ path('DistTicketsNew') }}"
+
+                        {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+
+                            href="{{ path('RetailerTicketsNew') }}"
+                        {% endif %}
+                        >
+                    {{ 'NewTicket' | trans ({}, "ticket") }}
+
+
+                </a></li>
+        {% endif %}
+        <li><a
+                    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+
+                        href="{{ path('DistTickets') }}"
+
+                    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+                        href="{{ path('RetailerTickets') }}"
+
+
+                    {% else %}
+                        href="{{ path('MasterTickets') }}"
+
+                    {% endif %}
+
+
+                    >
+
+                {{ 'Tickets' | trans ({}, "ticket") }}
+
+            </a></li>
+    </ul>
+</li>

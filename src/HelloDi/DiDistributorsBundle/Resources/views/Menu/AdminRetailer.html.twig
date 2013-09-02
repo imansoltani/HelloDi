@@ -106,7 +106,7 @@
     {% endif %}
 
     <li class=" {% if MU == 'support' %}active{% endif %} dropdown">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="{{ path('RetailerTicketsNew') }}" class="dropdown-toggle">
             <i class="icon-plus-sign"></i>
             <span  id="user_pc_menu"  >{{ 'Support' | trans ({}, "common") }}</span>
         </a>
