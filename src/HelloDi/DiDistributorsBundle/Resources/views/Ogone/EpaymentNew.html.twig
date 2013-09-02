@@ -18,13 +18,10 @@
 
             <li class="dropdown">
 
-                <a style="font-size: 16px" href="{% if is_granted("ROLE_MASTER") %}
-                {{ path('loginsuccess') }}
-                {% endif %}
-                    {% if is_granted("ROLE_DISTRIBUTOR") %}
+                <a style="font-size: 16px" href="
+                    {% if is_granted("ROLE_DISTRIBUTOR_ADMIN") %}
                     {{ path('distributors_dashboard') }}
-                    {% endif %}
-                    {% if is_granted("ROLE_RETAILER") %}
+                    {% elseif is_granted("ROLE_RETAILER_ADMIN") %}
                     {{ path('retailers_dashboard') }}
                     {% endif %}
                 " id="user_info" class="dropdown-toggle">

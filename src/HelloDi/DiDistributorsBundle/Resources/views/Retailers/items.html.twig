@@ -60,7 +60,6 @@
                                     <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
                                     <th>{{ 'ItemType' | trans ({}, "item") }}</th>
                                     <th>{{ 'Price' | trans ({}, "price") }}({{ 'Currency' | trans ({}, "price") }})</th>
-                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
                                 </tr>
 
                                 <tr class="input" >
@@ -69,7 +68,6 @@
                                     <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
                                     <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                     <td><input type="text" name="search_Type" value="Search Type" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                     <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                 </tr>
 
@@ -102,11 +100,6 @@
                                         </td>
                                         <td>{{ price.price }}
                                             {{ price.priceCurrency }}</td>
-                                        <td>
-                                            <a class="btn_actions" href="#">{{ 'Details' | trans ({}, "common") }}</a>
-
-
-                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
