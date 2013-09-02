@@ -1,67 +1,45 @@
-<li class="dropdown Noti">
-    <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold"
-       data-toggle="dropdown">
-        <i class="icon-envelope">
-            {% block Noti_Number %}
+<tr>
+    <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
+    <th>{{ 'Price' | trans ({}, "price") }}</th>
+    <th>{{ 'Status' | trans ({}, "price") }}</th>
+    <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
+</tr>
 
-                {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-                    {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0  %}
-                        <span>
-    {{ render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) }}
-</span>
-                    {% endif %}
 
-                {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-                    {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
-                        <span>
-    {{ render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) }}
-</span>
-                    {% endif %}
-
-                {% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
-
-                    {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
-                        <span>
-     {{ render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) }}
-        </span>
-                    {% endif %}
-
+<tbody>
+{% for row in form.checks %}
+    {% set pricerow = null %}
+    {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
+        {% if price.item.id == itemid %}
+            {% set pricerow = price %}
+        {% endif %}
+    {% endfor %}
+    <tr>
+        <td>
+            {{ form.checks.vars.choices[row.vars.value].data.accName }}
+        </td>
+        <td>
+            {% if pricerow is null %}
+                N/A
+            {% else %}
+                {{ pricerow.price }}
+            {% endif %}
+            ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
+        </td>
+        <td>
+            {% if pricerow is null %}
+                N/A
+            {% else %}
+                {% if pricerow.priceStatus==1 %}
+                    true
+                {% else %}
+                    false
                 {% endif %}
-
-            {% endblock %}
-        </i>
-    </a>
-
-
-
-    {% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}
-        {% if render(controller('HelloDiDiDistributorsBundle:Distributors:CountNotification')) > 0 %}
-            <ul class="dropdown-menu">
-                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:ShowLastNotification')) }}
-            </ul>
-        {% endif %}
-
-
-    {% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-
-        {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification')) > 0 %}
-            <ul class="dropdown-menu"> {{ render(controller('HelloDiDiDistributorsBundle:Retailers:ShowLastNotification')) }} </ul>
-        {% endif %}
-
-
-
-
-    {% elseif app.user.roles[0]=='ROLE_MASTER_ADMIN' or app.user.roles[0]=='ROLE_MASTER' %}
-
-        {% if render(controller('HelloDiDiDistributorsBundle:Account:CountNotification')) > 0 %}
-            <ul class="dropdown-menu">{{ render(controller('HelloDiDiDistributorsBundle:Account:ShowLastNotification')) }}</ul>
-        {% endif %}
-
-
-    {% endif %}
-
-
-
-
-
-</li>
+            {% endif %}
+        </td>
+        <td class="checkboxs">
+            {{ form_widget(row) }}
+        </td>
+    </tr>
+{% endfor %}
+</tbody>

@@ -16,6 +16,26 @@
     {{ 'Staff' | trans ({}, "user") }}
 {% endblock %}
 
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.nightly.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Fix_Size();
+            filterFunction($('#SelectFilter option:selected').text(),1);
+        });
+
+    </script>
+
+{% endblock %}
 
 {% block Link_Footer %}
 
@@ -30,13 +50,12 @@
                 {{ 'AddNewUser' | trans ({}, "user") }}
             </a><br>
 
-            <div class="tablediv">
-                <div class="contenttitle">
-                    <h4>{{ 'Staff' | trans ({}, "user") }}</h4>
-                </div>
-                <form>
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
+            <form>
+            <div style="margin-top: 5px" class="tablediv">
+
+
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
                             <thead>
                                 <tr>
                                     <th>{{ 'Id' | trans ({}, "common") }}</th>
@@ -47,6 +66,15 @@
                                     <th>{{ 'Role' | trans ({}, "user") }}</th>
                                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
 
+                                </tr>
+                                <tr class="input" >
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" name="search_fullname" value="Search FullName" class="search_init" /></td>
+                                    <td><input type="text" name="search_username" value="Search UserName" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +108,7 @@
                         </table>
                         {#{button pagination}#}
                     </div>
+            </div>
                 </form>
                 {#<div class="navigation">#}
                     {#{{ knp_pagination_render(pagination) }}#}

@@ -1,14 +1,117 @@
 
-<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-    {{ form_label(form.new.first) }}
-    {{ form_widget(form.new.first) }}
-    {{ form_errors(form.new.first) }}
-<br>
-    {{ form_label(form.new.second) }}
-    {{ form_widget(form.new.second) }}
-    {{ form_errors(form.new.second) }}
+{#{% set extend='' %}#}
+{#{% if app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR'  %}#}
+    {#{% set extend='HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}#}
+{#{% elseif app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER'  %}#}
+    {#{% set extend= 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}#}
+{#{% endif %}#}
 
-    <div>
-        <input type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
-    </div>
-</form>
+{#{% extends extend %}#}
+
+
+
+{% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
+
+
+{#{% set MU = 'trans' %}#}
+
+{% block title %}
+    Reset Password
+{% endblock title %}
+
+{% block bodywidth %}login{% endblock %}
+
+{% block header %}Reset Password{% endblock %}
+
+{% block MoreMenu %}
+    <ul class="nav pull-right">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+            <li class="dropdown">
+
+                <a style="font-size: 16px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+
+
+							<span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                <b class="caret"></b></span>
+                </a>
+
+                <ul style="font-size: 16px" class="dropdown-menu">
+                    {% if is_granted("ROLE_MASTER") %}
+                        <li><a href="{{ path('loginsuccess') }}">Dashboard</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_DISTRIBUTOR") %}
+                        <li><a href="{{ path('distributors_dashboard') }}">Dashboard</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_RETAILER") %}
+                        <li><a href="{{ path('retailers_dashboard') }}">Dashboard</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                </ul>
+
+            </li>
+
+        {% else %}
+
+
+            <li class="dropdown">
+                <a style="font-size: 16px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                                <span id="user_title_menu" style="display: block" >
+                                   {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                                 </span>
+                </a>
+            </li>
+
+
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block fos_user_content %}
+
+
+    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+
+        <div class="login-fields">
+
+
+            <div class="field Peyment">
+                {{ form_label(form.new.first) }}
+                {{ form_widget(form.new.first) }}
+            </div>
+            <div class="field Peyment">
+                {{ form_label(form.new.second) }}
+                {{ form_widget(form.new.second) }}
+            </div>
+
+            <!-- /field -->
+
+            {% if form_errors(form) is not null %}
+                <div class="Login_error" >
+                    <span>
+                        {{ form_errors(form) }}
+                    </span>
+                </div>
+            {% endif %}
+
+
+
+        </div>
+
+
+
+        <div class="login-actions">
+
+				<span class="login-checkbox">
+
+				</span>
+            <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
+                   value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+        </div>
+        <!-- .actions -->
+
+
+    </form>
+{% endblock %}

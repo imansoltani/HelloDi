@@ -43,78 +43,90 @@
 
 
             <form action="#" method="post" class="form-horizontal">
-                <div class="tablediv">
 
 
-                    <div class="tab-content datatable">
-                        <table id="example" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
-                                <th>{{ 'Price' | trans ({}, "price") }}</th>
-                                <th>{{ 'Status' | trans ({}, "price") }}</th>
-                                <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
-                            </tr>
+                <div style="margin-top: 5px" class="tablediv">
 
-
-                            <tr class="input" >
-                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
-                                    <input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
-                                    <input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" />
-                                    <input type="text"id="text_id2" placeholder="Search Account"  />
-                                </td>
-                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" /></td>
-                                <td><input type="text" name="search_Account" disabled="" value="Search Account" class="search_init" /></td>
-                                <td><input type="text" name="search_Account"  disabled="" value="Search Account" class="search_init" /></td>
-                            </tr>
-
-
-                            </thead>
-                            <tbody>
-                            {% for row in form.checks %}
-                                {% set pricerow = null %}
-                                {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
-                                    {% if price.item.id == itemid %}
-                                        {% set pricerow = price %}
-                                    {% endif %}
-                                {% endfor %}
+                        <div class="tab-content datatable">
+                            <table id="example" class="table postsend">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        {{ form.checks.vars.choices[row.vars.value].data.accName }}
-                                    </td>
-                                    <td>
-                                        {% if pricerow is null %}
-                                            N/A
-                                        {% else %}
-                                            {{ pricerow.price }}
-                                        {% endif %}
-                                        ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
-                                    </td>
-                                    <td>
-                                        {% if pricerow is null %}
-                                            N/A
-                                        {% else %}
-                                            {% if pricerow.priceStatus==1 %}
-                                                true
-                                            {% else %}
-                                                false
-                                            {% endif %}
-                                        {% endif %}
-                                    </td>
-                                    <td class="checkboxs">
-                                        {{ form_widget(row) }}
-                                    </td>
+                                    <th>{{ 'Retailers' | trans ({}, "accounts") }}</th>
+                                    <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                    <th>{{ 'Status' | trans ({}, "price") }}</th>
+                                    <th style="text-align: center" ><input onclick="CheckAll()" id="clickall" type="checkbox"/></th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
 
 
-                    </div>
+                                <tr class="input" >
+                                    <td>
+                                        <input type="text" disabled="" name="search_Operation" value="" class="search_init" />
+                                        <input type="text" disabled="" name="search_Operation" value="" class="search_init" />
+                                        <input type="text" disabled="" name="search_Operation" value="" class="search_init" />
+                                        <input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                {% for row in form.checks %}
+                                    {% set pricerow = null %}
+                                    {% for price in form.checks.vars.choices[row.vars.value].data.prices %}
+                                        {% if price.item.id == itemid %}
+                                            {% set pricerow = price %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <tr>
+                                        <td>
+                                            {{ form.checks.vars.choices[row.vars.value].data.accName }}
+                                        </td>
+                                        <td>
+                                            {% if pricerow is null %}
+                                                N/A
+                                            {% else %}
+                                                {{ pricerow.price }}
+                                            {% endif %}
+                                            ({{ form.checks.vars.choices[row.vars.value].data.accCurrency }})
+                                        </td>
+                                        <td>
+                                            {% if pricerow is null %}
+                                                N/A
+                                            {% else %}
+                                                {% if pricerow.priceStatus==1 %}
+                                                    true
+                                                {% else %}
+                                                    false
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td class="checkboxs">
+                                            {{ form_widget(row) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
 
                 </div>
 
+                <script type="text/javascript">
+                    $(document).ready(function () {
 
+
+                    });
+
+
+                    function CheckAll() {
+                        var clickall = document.getElementById('clickall').checked;
+                        $('* .checkboxs > input').prop("checked", clickall);
+                    }
+
+                </script>
 
 
                 <div style="margin-top: 15px" class="control-group">

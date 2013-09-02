@@ -11,6 +11,35 @@
 
 
 {% extends "HelloDiDiDistributorsBundle::Main0.html.twig" %}
+{% block MoreMenu %}
+    <ul class="nav pull-right">
+
+
+
+            <li class="dropdown">
+
+                <a style="font-size: 16px" href="{% if is_granted("ROLE_MASTER") %}
+                {{ path('loginsuccess') }}
+                {% endif %}
+                    {% if is_granted("ROLE_DISTRIBUTOR") %}
+                    {{ path('distributors_dashboard') }}
+                    {% endif %}
+                    {% if is_granted("ROLE_RETAILER") %}
+                    {{ path('retailers_dashboard') }}
+                    {% endif %}
+                " id="user_info" class="dropdown-toggle">
+
+
+							<span >Dashboard</span>
+                </a>
+
+
+
+            </li>
+
+
+    </ul>
+{% endblock %}
 
 
 {#{% set MU = 'trans' %}#}
