@@ -310,7 +310,7 @@
         ================================================== -->
 
 
-<div class="main">
+<div class="main print">
     <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%">
         <div class="sitemappath">
             <div class="container">
@@ -363,8 +363,8 @@
     </div>
 
 
-    <div class="row {% if hornav is not defined %}bordertop{% endif %}">
-        <div class="container">
+    <div class="row {% if hornav is not defined %}bordertop{% endif %} print">
+        <div class="container print">
             {% block Body %}{% endblock %}
         </div>
     </div>

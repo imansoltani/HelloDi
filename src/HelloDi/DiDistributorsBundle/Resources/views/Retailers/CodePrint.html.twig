@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Di . Shop Code</title>
+{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% if MU == 'epmt' %} {% set MU = 'E-payment' %}{% endif %}
+{% block title %}
+    {{ 'PrintLastSale' | trans ({}, "transaction") }} - {{ MU }}
+{% endblock title %}
 
-    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+{% block Site_Map %}
+    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'PrintLastSale' | trans ({}, "transaction") }}</span>
+{% endblock Site_Map %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    {{ 'PrintLastSale' | trans ({}, "transaction") }}
+{% endblock %}
+
+{% block Link_Head %}
     <style>
         .item
         {
@@ -25,11 +27,11 @@
             {
                 margin: 0.5cm;
             }
-            body>*
+            body *
             {
                 display: none !important;
             }
-            .print
+            .print, .item, .item *
             {
                 display: block !important;
             }
@@ -37,17 +39,46 @@
             {
                 page-break-after: always;
             }
+            .bordertop
+            {
+                border: 0  !important;
+            }
+            .item span
+            {
+                display: inline !important;
+            }
         }
+    {% if print == 'pdf' %}
+        body *
+        {
+            display: none !important;
+        }
+        .print, .item, .item *
+        {
+            display: block !important;
+        }
+        .item
+        {
+            page-break-after: always;
+        }
+        .bordertop
+        {
+            border: 0  !important;
+        }
+        .item span
+        {
+            display: inline !important;
+        }
+    {% endif %}
     </style>
-</head>
-<body>
-{% if print == 'web' %}
+{% endblock %}
+
+{% block Body %}
+
 <div style="text-align: center;margin: 20px">
-    <a type="button" class="btn" href="javascript:window.print();">Print</a>
-    <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
-    <a type="button" class="btn" href="javascript:history.go(-1)">Back</a>
+    <a type="button" class="btn btn-primary" href="javascript:window.print();">Print</a>
+    <a type="button" class="btn btn-primary" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
 </div>
-{% endif %}
 <div class="print">
     {% for tran in trans %}
 
@@ -66,5 +97,5 @@
         </div>
     {% endfor %}
 </div>
-</body>
-</html>
+
+{% endblock %}

@@ -823,8 +823,8 @@ $datetype=0;
             }
             $em->flush();
 
-         if (count($codes[0]->getItem()->getCodes())<=$codes[0]->getItem()->getAlertMinStock())
-              $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$codes[0]->getItem()->getItemName()));
+         if (count($item->getCodes())<=$item->getAlertMinStock())
+              $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$item->getItemName()));
 
             if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
@@ -870,12 +870,13 @@ $datetype=0;
         {
             $duplicate = !$request->getSession()->has('firstprintcode');
             $request->getSession()->remove('firstprintcard');
-
+            $MU = $trans[0]->getCode()->getItem()->getItemType();
             $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
                 'trans'=>$trans,
                 'description'=>$description,
                 'duplicate'=>$duplicate,
-                'print' => $print
+                'print' => $print,
+                'MU'=>$MU
             ));
 
             if($print == 'web')
