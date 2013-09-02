@@ -41,7 +41,7 @@
                             {% if ogonePayment.status=='accepted' %}
 
                                 <span>
-                the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }} :<br>
+                the added value <b>{{ ogonePayment.paymentAmount }}</b> {{ ogonePayment.paymentCurrencyISO }} of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }} :
             </span>
 
 
@@ -50,8 +50,8 @@
                                     {% set amount=ogonePayment.paymentAmount %}
 
                                     {{ ogonePayment.Transaction.tranBalance }}
-                                    +<b>{{ ogonePayment.paymentAmount }}</b>=<b
-                                            style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }}
+                                    +<b>{{ ogonePayment.paymentAmount }}</b>=
+                                            {{ ogonePayment.User.Account.accBalance }}({{ ogonePayment.paymentCurrencyISO }}
                                     )
             </span>
 

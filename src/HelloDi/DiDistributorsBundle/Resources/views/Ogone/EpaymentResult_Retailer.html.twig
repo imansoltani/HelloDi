@@ -8,7 +8,7 @@
 
 {% block Site_Map %}
     <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('distributor_transactions_new') }}">{{ 'EpaymentNew'|trans({},'ogone') }}</a>
+    <a class="link" href="{{ path('retailer_transactions_new') }}">{{ 'EpaymentNew'|trans({},'ogone') }}</a>
     <span class="link">Result</span>
 {% endblock Site_Map %}
 
@@ -41,8 +41,9 @@
                             {% if ogonePayment.status=='accepted' %}
 
                                 <span>
-                the added value <b>{{ ogonePayment.paymentAmount }}</b> of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }} :<br>
+                the added value <b>{{ ogonePayment.paymentAmount }}</b> {{ ogonePayment.paymentCurrencyISO }} of money to Balance your Account in time {{ ogonePayment.createdAt|date('Y-m-d H:i:s') }} :
             </span>
+
 
 
                                 <span>
@@ -50,8 +51,8 @@
                                     {% set amount=ogonePayment.paymentAmount %}
 
                                     {{ ogonePayment.Transaction.tranBalance }}
-                                    +<b>{{ ogonePayment.paymentAmount }}</b>=<b
-                                            style="color:#ff0000 ">{{ ogonePayment.User.Account.accBalance }}</b>({{ ogonePayment.paymentCurrencyISO }}
+                                    +<b>{{ ogonePayment.paymentAmount }}</b>=
+                                    {{ ogonePayment.User.Account.accBalance }}({{ ogonePayment.paymentCurrencyISO }}
                                     )
             </span>
 
