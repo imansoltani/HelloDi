@@ -1394,7 +1394,7 @@ catch(\Exception $e){
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($priceid);
         $oldprice = $price->getPrice();
 
-        $form = $this->createForm(new PriceEditType(), $price);
+        $form = $this->createForm(new PriceEditType(null), $price);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

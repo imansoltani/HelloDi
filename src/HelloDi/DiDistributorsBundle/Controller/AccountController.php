@@ -2,7 +2,6 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
@@ -12,26 +11,14 @@ use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildSearchType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistSearchType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchDistType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountSearchProvType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditRetailerType;
-use HelloDi\DiDistributorsBundle\Form\Account\EntitiAccountprovType;
 use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
-use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
-use HelloDi\DiDistributorsBundle\Form\User\UserDistSearchType;
-use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
-use HelloDi\DiDistributorsBundle\TaxType;
 use Symfony\Component\Form\Extension\Validator\Constraints\FormValidator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,14 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use HelloDi\DiDistributorsBundle\Form\searchProvTransType;
 use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Url;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Tests\ConstraintViolationTest;
 use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
 
 
@@ -1554,7 +1534,7 @@ catch(\Exception $e)
 
         $oldprice = $price->getPrice();
 
-        $form = $this->createForm(new PriceEditType(), $price);
+        $form = $this->createForm(new PriceEditType(null), $price);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -1598,7 +1578,7 @@ catch(\Exception $e)
     {
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-
+        $country = $account->getEntiti()->getCountry();
         if (!$account) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Account',array(),'accounts')),'message'));
         }
@@ -1634,7 +1614,16 @@ catch(\Exception $e)
                 'label' => 'Item','translation_domain' => 'item'
             ))
             ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('Tax','choice')
+            ->add('tax', 'entity', array(
+                'class' => 'HelloDiDiDistributorsBundle:Tax',
+                'property' => 'tax',
+                'query_builder' => function(EntityRepository $er) use ($country) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.id = 1 or u.Country = :country')->setParameter('country',$country)
+                        ->orderBy('u.id', 'DESC');
+                },
+                'label' => 'Tax','translation_domain' => 'vat'
+            ))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1664,7 +1653,7 @@ catch(\Exception $e)
 
     public function EditItemDistAction(Request $request, $id, $itemid)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
 
         if (!$price) {
@@ -1673,7 +1662,7 @@ catch(\Exception $e)
 
         $oldprice = $price->getPrice();
 
-        $form = $this->createForm(new PriceEditType(), $price);
+        $form = $this->createForm(new PriceEditType($price->getAccount()->getEntiti()->getCountry()), $price);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -3231,7 +3220,7 @@ catch(\Exception $e)
 
         $oldprice = $price->getPrice();
 
-        $form = $this->createForm(new PriceEditType(), $price);
+        $form = $this->createForm(new PriceEditType(null), $price);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

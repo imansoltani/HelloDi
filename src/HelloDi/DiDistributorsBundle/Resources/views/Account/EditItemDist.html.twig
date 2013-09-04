@@ -57,6 +57,14 @@
                 {{ form_errors(form.price) }}
             </div>
 
+            <div class="control-group">
+                {{ form_label(form.tax) }}
+                <div class="controls">
+                    {{ form_widget(form.tax) }}
+                </div>
+                {{ form_errors(form.tax) }}
+            </div>
+
             {% for state in form.priceStatus %}
                 <div class="control-group">
                     <label class="control-label">{{ form_label(state) }}</label>

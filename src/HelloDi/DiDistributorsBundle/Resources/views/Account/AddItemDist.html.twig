@@ -39,6 +39,14 @@
                 {{ form_errors(form.price) }}
             </div>
 
+            <div class="control-group">
+                {{ form_label(form.tax) }}
+                <div class="controls money">
+                    {{ form_widget(form.tax) }} <span class="icon-certificate"></span>
+                </div>
+                {{ form_errors(form.tax) }}
+            </div>
+
             {{form_widget(form._token)}}
 
             <div class="form-actions" style="margin-bottom: 0" >

@@ -2,14 +2,22 @@
 
 namespace HelloDi\DiDistributorsBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PriceEditType extends AbstractType
 {
+    private $country;
+    public function __construct($country)
+    {
+        $this->country = $country;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $country = $this->country;
         $builder
             ->add('price','integer',array(
                 'label' => 'Price','translation_domain' => 'price'
@@ -21,6 +29,16 @@ class PriceEditType extends AbstractType
                     1 => 'Active',
                 ),
                 'label' => 'Status','translation_domain' => 'price'
+            ))
+            ->add('tax', 'entity', array(
+                'class' => 'HelloDiDiDistributorsBundle:Tax',
+                'property' => 'tax',
+                'query_builder' => function(EntityRepository $er) use ($country) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.id = 1 or u.Country = :country')->setParameter('country',$country)
+                        ->orderBy('u.id', 'DESC');
+                },
+                'label' => 'Tax','translation_domain' => 'vat'
             ))
         ;
     }
