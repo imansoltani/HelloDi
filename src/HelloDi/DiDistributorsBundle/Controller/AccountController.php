@@ -1634,6 +1634,7 @@ catch(\Exception $e)
                 'label' => 'Item','translation_domain' => 'item'
             ))
             ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('Tax','choice')
             ->getForm();
 
         if ($request->isMethod('POST')) {

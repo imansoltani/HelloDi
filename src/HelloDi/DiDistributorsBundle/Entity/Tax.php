@@ -28,6 +28,10 @@ class Tax
      */
     private $Country;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Tax")
+     */
+    private $Prices;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", mappedBy="Tax")
@@ -68,30 +72,6 @@ class Tax
         return $this->tax;
     }
 
-
-    /**
-     * Set taxend
-     *
-     * @param \DateTime $taxend
-     * @return Tax
-     */
-    public function setTaxend($taxend)
-    {
-        $this->taxend = $taxend;
-    
-        return $this;
-    }
-
-    /**
-     * Get taxend
-     *
-     * @return \DateTime 
-     */
-    public function getTaxend()
-    {
-        return $this->taxend;
-    }
-
     /**
      * Set Country
      *
@@ -120,6 +100,7 @@ class Tax
     public function __construct()
     {
         $this->TaxHistories=  new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
@@ -131,7 +112,7 @@ class Tax
      */
     public function addTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
     {
-        $this->TaxHistorys[] = $taxHistorys;
+        $this->TaxHistories[] = $taxHistorys;
     
         return $this;
     }
@@ -143,7 +124,7 @@ class Tax
      */
     public function removeTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
     {
-        $this->TaxHistorys->removeElement($taxHistorys);
+        $this->TaxHistories->removeElement($taxHistorys);
     }
 
     /**
@@ -153,7 +134,7 @@ class Tax
      */
     public function getTaxHistorys()
     {
-        return $this->TaxHistorys;
+        return $this->TaxHistories;
     }
 
     /**
@@ -187,5 +168,38 @@ class Tax
     public function getTaxHistories()
     {
         return $this->TaxHistories;
+    }
+
+    /**
+     * Add Prices
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @return Tax
+     */
+    public function addPrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    {
+        $this->Prices[] = $prices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Prices
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     */
+    public function removePrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    {
+        $this->Prices->removeElement($prices);
+    }
+
+    /**
+     * Get Prices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPrices()
+    {
+        return $this->Prices;
     }
 }

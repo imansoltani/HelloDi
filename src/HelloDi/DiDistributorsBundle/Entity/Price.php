@@ -45,6 +45,12 @@ class Price
      */
     private $PricesHistory;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="Prices")
+     * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
+     */
+    private $Tax;
+
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="Prices")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
@@ -282,5 +288,28 @@ class Price
     public function getIsFavourite()
     {
         return $this->isFavourite;
+    }
+
+    /**
+     * Set Tax
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $tax
+     * @return Price
+     */
+    public function setTax(\HelloDi\DiDistributorsBundle\Entity\Tax $tax)
+    {
+        $this->Tax = $tax;
+    
+        return $this;
+    }
+
+    /**
+     * Get Tax
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\Tax 
+     */
+    public function getTax()
+    {
+        return $this->Tax;
     }
 }
