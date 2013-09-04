@@ -29,6 +29,18 @@ class Country
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", mappedBy="Country")
      */
     private $Entities;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", mappedBy="Country")
+     */
+    private $Taxs;
+
+  public function getIsoName()
+  {
+      return $this->getIso().' . '.$this->getName();
+  }
+
     /**
      * Constructor
      */
@@ -226,5 +238,38 @@ class Country
     public function getEntities()
     {
         return $this->Entities;
+    }
+
+    /**
+     * Add Taxs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxs
+     * @return Country
+     */
+    public function addTax(\HelloDi\DiDistributorsBundle\Entity\Tax $taxs)
+    {
+        $this->Taxs[] = $taxs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Taxs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxs
+     */
+    public function removeTax(\HelloDi\DiDistributorsBundle\Entity\Tax $taxs)
+    {
+        $this->Taxs->removeElement($taxs);
+    }
+
+    /**
+     * Get Taxs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTaxs()
+    {
+        return $this->Taxs;
     }
 }

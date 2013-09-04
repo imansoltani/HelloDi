@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    Edit User
+    {{ 'Tax' | trans ({}, "vat") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">Home</a>
-    <span class="link">Tax</span>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Tax' | trans ({}, "vat") }}</span>
 
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    Tax and History
+    {{ 'Tax' | trans ({}, "vat") }}
 {% endblock %}
 
 
@@ -28,7 +28,7 @@
             <div class="widget-content">
 
                 <div class="widget-header">
-                    <h3>Tax</h3>
+                    <h3>{{ 'Tax' | trans ({}, "vat") }}</h3>
                 </div>
                 <!-- /widget-header --><br>
 
@@ -36,19 +36,28 @@
 
 
                     <div class="control-group">
-                        {{ form_label(form.tax,'vat :') }}
-                        <div class="controls">
+
+                        {{ form_label(form.tax) }}
+
                             {{ form_widget(form.tax) }}
                             {{ form_errors(form.tax) }}
+
+                    </div>
+
+                    <div class="control-group">
+                        {{ form_label(form.Country) }}
+                        <div class="controls">
+                            {{ form_widget(form.Country) }}
+                            {{ form_errors(form.Country) }}
                         </div>
                     </div>
+
                     {{ form_widget(form._token) }}
 
                     <input type="hidden" value="1" name="page" id="search_page">
 
                     <div class="form-actions" style="margin-bottom: 0">
-                        <input class="btn btn-primary" type="submit" value="Edit">
-                        <a href="javascript:history.go(-1)" class="btn">Cancel</a>
+                        <input  onclick="Reset()" class="btn btn-primary" type="submit" value="{{ 'Save' | trans ({}, "common") }}">
                     </div>
 
                 </form>
@@ -56,7 +65,7 @@
 
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>Tax</h4>
+                        <h4>{{ 'Tax' | trans ({}, "vat") }}</h4>
                     </div>
                     <form>
                         <div class="tab-content">
@@ -64,9 +73,10 @@
                                    class="table table-bordered table-striped table-highlight postsend">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Id' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Tax' | trans ({}, "account") }}</th>
-                                    <th>{{ 'Start Date' | trans ({}, "account") }}</th>
+                                    <th>{{ 'id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Rate' | trans ({}, "vat") }}</th>
+                                    <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                                    <th>{{ 'DateEnd' | trans ({}, "vat") }}</th>
 
                                 </tr>
 
@@ -76,7 +86,9 @@
                                 {% for tx in pagination %}
                                     <tr>
                                         <td>
+
                                             {{ tx.id }}
+
                                         </td>
 
                                         <td>
@@ -84,7 +96,20 @@
                                         </td>
 
                                         <td>
-                                            {{ tx.taxstart|date('y/M/d') }}
+                                            {% if tx.Country is not null %}
+                                            {{ tx.Country.iso}}. {{ tx.Country.name}}
+                                            {% else %}
+                                                ----
+                                           {% endif %}
+                                        </td>
+
+                                        <td>
+                                            {% if tx.taxend is not null %}
+                                                {{ tx.taxend|date('Y/m/d')}}
+                                            {% else %}
+                                               <span class='icon-ok'>
+                                            {% endif %}
+
                                         </td>
 
                                     </tr>
@@ -104,6 +129,15 @@
             </div>
         </div>
 
+<script type="text/javascript">
+ function Reset()
+ {
+
+    $('#Tax').val('');
+
+ }
+
+ </script>
 
     </div>
 

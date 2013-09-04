@@ -10,9 +10,16 @@ class TaxType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('tax')
-//            ->add('taxstart')
+            ->add('tax',null,array('label'=>'Tax','translation_domain'=>'vat'))
+            ->add('Country','entity',
+            array(
+                   'label'=>'Country','translation_domain'=>'entity',
+                   'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
+                    'property'=>'IsoName'
+            )
+            )
         ;
     }
 

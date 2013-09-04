@@ -22,9 +22,16 @@ class Tax
 
 
     /**
-     * @ORM\Column(type="datetime", nullable=false, name="Tax_Start")
+     * @ORM\Column(type="datetime", nullable=true, name="Tax_End")
      */
-    private $taxstart;
+    private $taxend;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Taxs")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     */
+    private $Country;
 
 
      /**
@@ -60,28 +67,50 @@ class Tax
         return $this->tax;
     }
 
+
     /**
-     * Set taxstart
+     * Set taxend
      *
-     * @param \DateTime $taxstart
+     * @param \DateTime $taxend
      * @return Tax
      */
-    public function setTaxstart($taxstart)
+    public function setTaxend($taxend)
     {
-        $this->taxstart= $taxstart;
-
+        $this->taxend = $taxend;
+    
         return $this;
     }
 
     /**
-     * Get taxstart
+     * Get taxend
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
-    public function getTaxstart()
+    public function getTaxend()
     {
-        return $this->taxstart;
+        return $this->taxend;
     }
 
+    /**
+     * Set Country
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Country $country
+     * @return Tax
+     */
+    public function setCountry(\HelloDi\DiDistributorsBundle\Entity\Country $country = null)
+    {
+        $this->Country = $country;
+    
+        return $this;
+    }
 
+    /**
+     * Get Country
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->Country;
+    }
 }
