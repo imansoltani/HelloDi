@@ -794,14 +794,15 @@ $datetype=0;
                 $tranretailer->setTranBookingValue(null);
                 $tranretailer->setTranBalance($Account->getAccBalance());
 
-//                $taxhistory=$em->createQueryBuilder()
-//                    ->select('Th')
-//                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
-//                    ->innerJoin('Th.Tax','ThTx')
-//                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
-//                    ->andWhere($taxhistory->expr()->isNull('Th.taxend'));
+                $taxhistoryretailer=$em->createQueryBuilder();
+                $taxhistoryretailer->select('Th')
+                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
+                    ->innerJoin('Th.Tax','ThTx')
+                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
+                    ->andWhere($taxhistoryretailer->expr()->isNull('Th.taxend'));
+                $taxhistoryretailer=$taxhistoryretailer->getQuery()->getFirstResult();
+                $tranretailer->setTaxHistory($taxhistoryretailer);
 
-//                $tranretailer->setTaxHistory($vsale);
                 $tranretailer->setOrder($ordercode);
                 $ordercode->addTransaction($tranretailer);
 
@@ -819,13 +820,23 @@ $datetype=0;
                 $trandist->setUser($user);
                 $trandist->setTranBookingValue(null);
                 $trandist->setTranBalance($Account->getParent()->getAccBalance());
-                $trandist->setTax($vcom);
+
+                $taxhistorydist=$em->createQueryBuilder();
+                $taxhistorydist->select('Th')
+                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
+                    ->innerJoin('Th.Tax','ThTx')
+                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
+                    ->andWhere($taxhistorydist->expr()->isNull('Th.taxend'));
+                $taxhistorydist=$taxhistorydist->getQuery()->getFirstResult();
+                $trandist->setTaxHistory($taxhistorydist);
+
                 $trandist->setBuyingprice($priceParent->getPrice());
                 $trandist->setOrder($ordercode);
                 $em->persist($tranretailer);
                 $em->persist($trandist);
                 $ordercode->addTransaction($trandist);
-            }
+
+               }
             $em->flush();
 
          if (count($item->getCodes())<=$item->getAlertMinStock())
