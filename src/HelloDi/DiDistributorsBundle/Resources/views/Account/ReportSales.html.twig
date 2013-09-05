@@ -160,13 +160,9 @@
                                 {{ Tr.TR.Account.accName }}({{ Tr.TR.Account.Entiti.entName }})
                             </td>
                             <td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>
-                            <td>{% if group==0 %}
+                            <td>
 
-                                    {{ Tr.TR.tax|number_format(4) }}
-
-                        {% else %}
-                            ------
-                            {% endif %}
+                                    {{ Tr.TR.TaxHistory.vat}}
                             </td>
 
                             <td class="td-actions" >

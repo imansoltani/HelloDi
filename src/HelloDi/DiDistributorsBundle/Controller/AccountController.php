@@ -747,7 +747,8 @@ try{
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
                 ->innerJoin('TrAc.Entiti', 'TrAcEn')
-                ->innerJoin('TrCo.Item', 'TrCoIt');
+                ->innerJoin('TrCo.Item', 'TrCoIt')
+                ->innerJoin('Tr.TaxHistory','TrTh');
                 /**/
 
             if ($data['Account'])
@@ -771,7 +772,7 @@ try{
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
 
             if ($data['GroupBy'])
-                $qb->GroupBy('Tr.tranDate','TrCo.Item','TrAc','Tr.tranAmount');
+                $qb->GroupBy('Tr.tranDate','TrCo.Item','TrAc','Tr.tranAmount','TrTh');
             else
                 $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id', 'desc');
 
@@ -1164,13 +1165,13 @@ catch(\Exception $e)
         $User = $this->getUser();
 
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $vat= $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'))->getTax();
+
         $qb = array();
 
         $form = $this->createFormBuilder()
             ->add('DateStart', 'date',
                 array(
-                    'format'=>'yyyy/MM/d',
+                    'format'=>'yyyy/MM/dd',
                     'widget'=>'single_text',
                     'data'=>((new \DateTime('now'))->sub(new \DateInterval('P7D'))),
                     'disabled' => false,
@@ -1180,7 +1181,7 @@ catch(\Exception $e)
                      ))
             ->add('DateEnd', 'date',
                 array(
-                    'format'=>'yyyy/MM/d',
+                    'format'=>'yyyy/MM/dd',
                     'data'=>(new \DateTime('now')),
                     'widget'=>'single_text',
                     'disabled' => false, 'required' => false, 'label' => 'To','translation_domain'=>'transaction'))
@@ -1222,6 +1223,8 @@ catch(\Exception $e)
                 ->innerJoin('Tr.Account', 'TrAcc')
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('TrCo.Item', 'TrCoIt')
+                ->innerJoin('Tr.TaxHistory', 'TrTh')
+
                 ->where('Tr.Account = :Acc')->setParameter('Acc',$Account)
                 ->andwhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('com')));
             if ($data['DateStart'] != '')
@@ -1234,7 +1237,7 @@ catch(\Exception $e)
                 $qb->andWhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
 
 
-            $qb->groupBy('TrCoIt')->addGroupBy('Tr.BuyingPrice')->addGroupBy('Tr.tax');
+            $qb->groupBy('TrCoIt')->addGroupBy('Tr.BuyingPrice')->addGroupBy('TrTh');
 
             $qb->addOrderBy('Tr.tranInsert', 'desc');
 

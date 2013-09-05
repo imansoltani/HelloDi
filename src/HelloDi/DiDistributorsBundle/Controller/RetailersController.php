@@ -335,7 +335,6 @@ $datetype=0;
         //load first list search
 
 
-        $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
 
 
         $form=$this->createFormBuilder()
@@ -456,7 +455,7 @@ $datetype=0;
              'User'=>$User,
             'Account' =>$User->getAccount(),
             'Entiti' =>$User->getEntiti(),
-            'tax'=>$tax->getTax()
+
             ));
 
     }
@@ -767,9 +766,9 @@ $datetype=0;
             ->innerJoin('Th.Tax','ThTx')
             ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getParent()->getEntiti()->getCountry())
             ->andWhere($tax->expr()->isNull('Th.taxend'));
-        $taxhistory=$tax->getQuery()->getFirstResult();
+        $taxhistory=$tax->getQuery()->getSingleResult();
 
-
+//        die('sd'.count($tax->getQuery()->getResult()));
         $item = $priceChild->getItem();
 
         $codes = $codeselector->lookForAvailableCode($Account, $priceChild, $item, $request->get('numberOfsale'));
