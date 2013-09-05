@@ -80,10 +80,6 @@ class Transaction
      */
     private $tranBalance;
 
-    /**
-     * @ORM\Column(type="float", nullable=true, name="tax")
-     */
-    private $tax;
 
 
     /**
@@ -93,10 +89,20 @@ class Transaction
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", inversedBy="Transactions")
+     * @ORM\JoinColumn(name="taxhistory_id", referencedColumnName="id", nullable=true)
+     */
+    private $TaxHistory;
+
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Transactions")
@@ -600,5 +606,28 @@ class Transaction
     public function getBuyingPrice()
     {
         return $this->BuyingPrice;
+    }
+
+    /**
+     * Set TaxHistory
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistory
+     * @return Transaction
+     */
+    public function setTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistory = null)
+    {
+        $this->TaxHistory = $taxHistory;
+    
+        return $this;
+    }
+
+    /**
+     * Get TaxHistory
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\TaxHistory 
+     */
+    public function getTaxHistory()
+    {
+        return $this->TaxHistory;
     }
 }

@@ -15,23 +15,24 @@ class Tax
      */
     private $id;
 
+
+
     /**
-     * @ORM\Column(type="float", nullable=false, name="tax")
+     * @ORM\Column(type="float", nullable=false, name="tax",nullable=true)
      */
     private $tax;
-
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true, name="Tax_End")
-     */
-    private $taxend;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Taxs")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     private $Country;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", mappedBy="Tax")
+     */
+    private $TaxHistories;
 
 
      /**
@@ -112,5 +113,111 @@ class Tax
     public function getCountry()
     {
         return $this->Country;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add Transactions
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @return Tax
+     */
+    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    {
+        $this->Transactions[] = $transactions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Transactions
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     */
+    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    {
+        $this->Transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get Transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTransactions()
+    {
+        return $this->Transactions;
+    }
+
+    /**
+     * Add TaxHistorys
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys
+     * @return Tax
+     */
+    public function addTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
+    {
+        $this->TaxHistorys[] = $taxHistorys;
+    
+        return $this;
+    }
+
+    /**
+     * Remove TaxHistorys
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys
+     */
+    public function removeTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
+    {
+        $this->TaxHistorys->removeElement($taxHistorys);
+    }
+
+    /**
+     * Get TaxHistorys
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTaxHistorys()
+    {
+        return $this->TaxHistorys;
+    }
+
+    /**
+     * Add TaxHistories
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
+     * @return Tax
+     */
+    public function addTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
+    {
+        $this->TaxHistories[] = $taxHistories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove TaxHistories
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
+     */
+    public function removeTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
+    {
+        $this->TaxHistories->removeElement($taxHistories);
+    }
+
+    /**
+     * Get TaxHistories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTaxHistories()
+    {
+        return $this->TaxHistories;
     }
 }

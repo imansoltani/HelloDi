@@ -92,12 +92,12 @@
                                         </td>
 
                                         <td>
-                                            {{ tx.tax }}
+                                            {{ tx.vat }}
                                         </td>
 
                                         <td>
-                                            {% if tx.Country is not null %}
-                                            {{ tx.Country.iso}}. {{ tx.Country.name}}
+                                            {% if tx.Tax.Country is not null %}
+                                            {{ tx.Tax.Country.iso}}. {{ tx.Tax.Country.name}}
                                             {% else %}
                                                 ----
                                            {% endif %}

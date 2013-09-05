@@ -2,6 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Tax;
+use HelloDi\DiDistributorsBundle\Entity\TaxHistory;
 use HelloDi\DiDistributorsBundle\Form\Tax\TaxType;
 use HelloDi\DiDistributorsBundle\Form\searchProvRemovedType;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ class TaxController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
 
         $newtax=new Tax();
+        $newtaxhistory=new TaxHistory();
 
         $form=$this->createForm(new TaxType(),$newtax);
 
@@ -27,21 +29,46 @@ class TaxController extends Controller
             $form->handleRequest($req);
             if($form->isValid())
             {
-                if($em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array('Country'=>$newtax->getCountry(),'taxend'=>null)))
+                $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array('Country'=>$newtax->getCountry()));
+                if($tax!=null)
                 {
-                    $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array('Country'=>$newtax->getCountry(),'taxend'=>null));
-                    $tax->setTaxend(new \DateTime('now'));
-                }
-                    $em->persist($newtax);
+
+                  $taxhistory=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$tax,'taxend'=>null));
+
+                    $taxhistory->setTaxend(new \DateTime('now'));
                     $em->flush();
-                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                    //new
+                    $newtaxhistory->setVat($newtax->getTax());
+                    $newtaxhistory->setTax($newtax);
+
+
+                    $em->persist($newtaxhistory);
+
+                }
+
+            else
+
+                {
+
+
+                    $newtaxhistory->setTax($newtax);
+
+                    $newtaxhistory->setVat($newtax->getTax());
+
+                    $em->persist($newtax);
+                    $em->persist($newtaxhistory);
+                }
+
+                    $em->flush();
+
+                    $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
 
 
         }
 
 
-      $historytax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findBy(array(),array('id'=>'desc'));
+      $historytax=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findBy(array(),array('id'=>'desc'));
 
 
         $paginator = $this->get('knp_paginator');

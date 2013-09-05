@@ -766,6 +766,7 @@ try{
 //                /*for groupBy*/
                 ->innerJoin('Tr.Code', 'TrCo')
                 ->innerJoin('Tr.Account', 'TrAc')
+                ->innerJoin('TrAc.Entiti', 'TrAcEn')
                 ->innerJoin('TrCo.Item', 'TrCoIt');
                 /**/
 
@@ -790,7 +791,7 @@ try{
                 $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
 
             if ($data['GroupBy'])
-                $qb->GroupBy('Tr.tranDate','TrCo.Item','Tr.Account');
+                $qb->GroupBy('Tr.tranDate','TrCo.Item','TrAc','Tr.tranAmount');
             else
                 $qb->addOrderBy('Tr.tranDate', 'desc')->addOrderBy('Tr.id', 'desc');
 

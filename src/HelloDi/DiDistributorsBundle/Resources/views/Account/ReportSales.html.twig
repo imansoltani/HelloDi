@@ -157,7 +157,7 @@
                             {% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}
                             </td>
                             <td>
-                                {{ Tr.TR.Account.Entiti.entName }}
+                                {{ Tr.TR.Account.accName }}({{ Tr.TR.Account.Entiti.entName }})
                             </td>
                             <td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>
                             <td>{% if group==0 %}
