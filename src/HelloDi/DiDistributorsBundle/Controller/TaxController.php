@@ -34,14 +34,13 @@ class TaxController extends Controller
 
 
                 if($tax!=null)
-                {
+                      {
 
                     $taxhistory=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$tax,'taxend'=>null));
 
                     $tax->setTax($newtax->getTax());
 
                     $taxhistory->setTaxend(new \DateTime('now'));
-
 
                     $newtaxhistory->setVat($tax->getTax());
 
@@ -50,10 +49,10 @@ class TaxController extends Controller
                     $em->persist($newtaxhistory);
 
                     $em->flush();
-                }
+                     }
 
-            else
-            {
+                else
+                     {
                 $em->persist($newtax);
 
                 $newtaxhistory->setVat($newtax->getTax());
@@ -63,7 +62,7 @@ class TaxController extends Controller
                 $em->persist($newtaxhistory);
 
                 $em->flush();
-            }
+                     }
 
                     $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
@@ -81,6 +80,7 @@ class TaxController extends Controller
             $req->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
+
 
      return   $this->render('HelloDiDiDistributorsBundle:Tax:Edit.html.twig',
             array(

@@ -749,7 +749,7 @@ $datetype=0;
 
     public function BuyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -767,9 +767,6 @@ $datetype=0;
 
         $com = $priceChild->getprice() - $priceParent->getprice();
 
-        $vat=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array(),array('taxstart'=>'desc'));
-        $vsale=(($priceChild->getPrice()/(100+$vat->getTax()))*$vat->getTax());
-        $vcom=(($priceParent->getPrice()/(100+$vat->getTax()))*$vat->getTax());
 
 
         if ($codes)
@@ -796,7 +793,15 @@ $datetype=0;
                 $tranretailer->setUser($user);
                 $tranretailer->setTranBookingValue(null);
                 $tranretailer->setTranBalance($Account->getAccBalance());
-                $tranretailer->setTax($vsale);
+
+//                $taxhistory=$em->createQueryBuilder()
+//                    ->select('Th')
+//                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
+//                    ->innerJoin('Th.Tax','ThTx')
+//                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
+//                    ->andWhere($taxhistory->expr()->isNull('Th.taxend'));
+
+//                $tranretailer->setTaxHistory($vsale);
                 $tranretailer->setOrder($ordercode);
                 $ordercode->addTransaction($tranretailer);
 
