@@ -1656,7 +1656,7 @@ catch(\Exception $e)
 
     public function EditItemDistAction(Request $request, $id, $itemid)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($itemid);
 
         if (!$price) {
