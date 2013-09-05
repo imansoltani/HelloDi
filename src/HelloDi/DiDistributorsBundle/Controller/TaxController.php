@@ -31,9 +31,10 @@ class TaxController extends Controller
             if($form->isValid())
             {
                 $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array('Country'=>$newtax->getCountry()));
+
+
                 if($tax!=null)
                 {
-
 
                     $taxhistory=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$tax,'taxend'=>null));
 
@@ -42,31 +43,27 @@ class TaxController extends Controller
                     $taxhistory->setTaxend(new \DateTime('now'));
 
 
-                    //new
+                    $newtaxhistory->setVat($tax->getTax());
 
-                    $newtaxhistory->setVat($newtax->getTax());
-
-                    $newtaxhistory->setTax($newtax);
+                    $newtaxhistory->setTax($tax);
 
                     $em->persist($newtaxhistory);
 
+                    $em->flush();
                 }
 
             else
+            {
+                $em->persist($newtax);
 
-                {
+                $newtaxhistory->setVat($newtax->getTax());
 
+                $newtaxhistory->setTax($newtax);
 
-                    $newtaxhistory->setTax($newtax);
+                $em->persist($newtaxhistory);
 
-                    $newtaxhistory->setVat($newtax->getTax());
-
-                    $em->persist($newtax);
-
-                    $em->persist($newtaxhistory);
-                }
-
-                    $em->flush();
+                $em->flush();
+            }
 
                     $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
