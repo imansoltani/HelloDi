@@ -727,6 +727,8 @@ $datetype=0;
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
+
+
             $qb = $em->createQueryBuilder();
             $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
                 ->from('HelloDiDiDistributorsBundle:Operator','O')
@@ -758,6 +760,15 @@ $datetype=0;
         $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
 
         $Account = $priceChild->getAccount();
+
+        $tax=$em->createQueryBuilder();
+        $tax->select('Th')
+            ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
+            ->innerJoin('Th.Tax','ThTx')
+            ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getParent()->getEntiti()->getCountry())
+            ->andWhere($tax->expr()->isNull('Th.taxend'));
+        $taxhistory=$tax->getQuery()->getFirstResult();
+
 
         $item = $priceChild->getItem();
 
@@ -793,16 +804,7 @@ $datetype=0;
                 $tranretailer->setUser($user);
                 $tranretailer->setTranBookingValue(null);
                 $tranretailer->setTranBalance($Account->getAccBalance());
-
-                $taxhistoryretailer=$em->createQueryBuilder();
-                $taxhistoryretailer->select('Th')
-                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
-                    ->innerJoin('Th.Tax','ThTx')
-                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
-                    ->andWhere($taxhistoryretailer->expr()->isNull('Th.taxend'));
-                $taxhistoryretailer=$taxhistoryretailer->getQuery()->getFirstResult();
-                $tranretailer->setTaxHistory($taxhistoryretailer);
-
+                $tranretailer->setTaxHistory($taxhistory);
                 $tranretailer->setOrder($ordercode);
                 $ordercode->addTransaction($tranretailer);
 
@@ -820,16 +822,7 @@ $datetype=0;
                 $trandist->setUser($user);
                 $trandist->setTranBookingValue(null);
                 $trandist->setTranBalance($Account->getParent()->getAccBalance());
-
-                $taxhistorydist=$em->createQueryBuilder();
-                $taxhistorydist->select('Th')
-                    ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
-                    ->innerJoin('Th.Tax','ThTx')
-                    ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getEntiti()->getCountry())
-                    ->andWhere($taxhistorydist->expr()->isNull('Th.taxend'));
-                $taxhistorydist=$taxhistorydist->getQuery()->getFirstResult();
-                $trandist->setTaxHistory($taxhistorydist);
-
+                $trandist->setTaxHistory($taxhistory);
                 $trandist->setBuyingprice($priceParent->getPrice());
                 $trandist->setOrder($ordercode);
                 $em->persist($tranretailer);
