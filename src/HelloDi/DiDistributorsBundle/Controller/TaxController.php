@@ -20,6 +20,7 @@ class TaxController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
 
         $newtax=new Tax();
+
         $newtaxhistory=new TaxHistory();
 
         $form=$this->createForm(new TaxType(),$newtax);
@@ -33,14 +34,19 @@ class TaxController extends Controller
                 if($tax!=null)
                 {
 
-                  $taxhistory=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$tax,'taxend'=>null));
+
+                    $taxhistory=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$tax,'taxend'=>null));
+
+                    $tax->setTax($newtax->getTax());
 
                     $taxhistory->setTaxend(new \DateTime('now'));
-                    $em->flush();
-                    //new
-                    $newtaxhistory->setVat($newtax->getTax());
-                    $newtaxhistory->setTax($newtax);
 
+
+                    //new
+
+                    $newtaxhistory->setVat($newtax->getTax());
+
+                    $newtaxhistory->setTax($newtax);
 
                     $em->persist($newtaxhistory);
 
@@ -56,6 +62,7 @@ class TaxController extends Controller
                     $newtaxhistory->setVat($newtax->getTax());
 
                     $em->persist($newtax);
+
                     $em->persist($newtaxhistory);
                 }
 

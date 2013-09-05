@@ -30,7 +30,7 @@ class TaxHistory
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="TaxHistories",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="TaxHistories")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
     private $Tax;
