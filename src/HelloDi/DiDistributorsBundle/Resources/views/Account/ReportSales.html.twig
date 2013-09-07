@@ -162,7 +162,9 @@
                             <td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>
                             <td>
 
-                                    {{ Tr.TR.TaxHistory.vat}}
+                                {% set vat=Tr.TR.TaxHistory.vat %}{% set x=Tr.TR.tranAmount|abs %}
+                               <span id='vat'>{{ ((x/100+vat)*vat) }}</span>
+
                             </td>
 
                             <td class="td-actions" >
@@ -227,6 +229,18 @@
                                                 <input type="text" value="{{ com }}" disabled="" >
                                             </div>
                                         </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">
+                                                    {{ 'Vat_Rate' | trans ({}, "vat") }}
+                                                </label>
+                                                <div class="controls">
+
+                                                    <input type="text" value="{{  Tr.TR.TaxHistory.vat}}" disabled="" >
+                                                </div>
+                                            </div>
+
 
                                         <div class="control-group">
                                             <label class="control-label">

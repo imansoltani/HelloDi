@@ -38,7 +38,7 @@
         <thead>
             <tr>
                 <th>Account ID</th>
-                <th>Retailer</th>
+                <th>Retailer(Entity)</th>
                 <th>Total Purchase</th>
                 <th>VAT</th>
                 <th>Revenues</th>
@@ -49,9 +49,16 @@
         {% for Tr in pagination %}
             <tr>
                 <td>{{ Tr.TR.Account.id }}</td>
-                <td>{{ Tr.TR.Account.Entiti.entName }}</td>
+                <td>{{ Tr.TR.Account.accName}}({{ Tr.TR.Account.Entiti.entName }})</td>
                 <td>{{ (Tr.TR.tranAmount * Tr.Quantity)|abs }}</td>
-                <td>{{ Tr.TR.tax|number_format(4) }}</td>
+                <td>
+
+                    {% set vat=Tr.TR.TaxHistory.vat %}
+                    {% set x=Tr.TR.tranAmount|abs %}
+
+                    {{ ((x/100+vat)*vat) }}
+
+                </td>
                 <td>{{ Tr.TR.Code.Item.itemFaceValue * Tr.Quantity}}</td>
             </tr>
         {% endfor %}

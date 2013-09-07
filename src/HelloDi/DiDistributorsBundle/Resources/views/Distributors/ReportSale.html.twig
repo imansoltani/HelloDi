@@ -157,7 +157,9 @@
                                         </td>
 
                                         <td>
-                                            {{ Tr.TaxHistory.vat }}
+
+                                            {% set vat=Tr.TaxHistory.vat %}{% set x=Tr.tranAmount|abs %}
+                                            <span id='vat'>{{ ((x/100+vat)*vat) }}</span>
 
 
 

@@ -76,14 +76,17 @@
         </thead>
 
         <tbody>
+        {% set sumprice=0 %}
         {% for Tr in pagination %}
             {% if Tr.TR.Account.id == ret.id %}
             <tr>
                 <td>{{ Tr.TR.Code.Item.itemCode }}</td>
                 <td>{{ Tr.TR.Code.Item.itemName }} {{ Tr.TR.Code.Item.itemFaceValue }}</td>
                 <td>{{ Tr.Quantity }}</td>
-                <td>{{ Tr.TR.tax|number_format(4) }}</td>
-                <td>{{ Tr.TR.tranAmount|abs }}</td>
+                <td>{{ Tr.TR.TaxHistory.id}}</td>
+                <td>{{ Tr.TR.tranAmount|abs }}
+                    {% set sumprice=sumprice+( Tr.TR.tranAmount|abs) %}
+                </td>
                 <td>
                     {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}
                     {{ com }}
@@ -99,15 +102,29 @@
         <tbody>
         <tr>
             <td style="width: 3cm">Nett</td>
-            <td>-</td>
+            <td>{{ sumprice }} {{  pagination[0].TR.Account.accCurrency  }}</td>
         </tr>
         <tr>
             <td>VAT @ 0.00%</td>
-            <td>-</td>
+            <td>
+
+                {% set a=[] %}{% set sumvat=0 %}
+                {% for Tr in pagination %}
+                      {% set a=[Tr.TR.TaxHistory.id] %}
+                      {% set vat=Tr.TR.TaxHistory.vat %}
+                      {% set x=Tr.TR.tranAmount|abs %}
+
+                      {% set sumvat=sumvat+((x/100+vat)*vat) %}
+                {% endfor %}
+                {{ sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
+            </td>
         </tr>
         <tr>
             <td>Total to Pay</td>
-            <td>-</td>
+            <td>
+
+                {{   sumprice-sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
+            </td>
         </tr>
         </tbody>
     </table>
@@ -124,10 +141,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>-</td>
-            <td>-</td>
-        </tr>
+        {% set a=[] %}
+        {% for Tr in pagination %}
+            {% if Tr.TR.TaxHistory.id not in a %}
+            <tr>
+                <td>{{ Tr.TR.TaxHistory.id}}</td>
+                  {% set a=[Tr.TR.TaxHistory.id] %}
+                <td>{{ Tr.TR.TaxHistory.vat}}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
         </tbody>
     </table>
     <div style="clear: both;page-break-after: always"></div>

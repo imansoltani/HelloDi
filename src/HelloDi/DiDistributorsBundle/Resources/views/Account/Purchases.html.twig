@@ -109,7 +109,12 @@
                              {{ Tr.TR.BuyingPrice }}
 
                             </td>
-                            <td>{{ Tr.TR.TaxHistory.vat}}</td>
+                            <td>
+
+                                {% set vat=Tr.TR.TaxHistory.vat %}{% set x=Tr.TR.BuyingPrice|abs %}
+                                <span id='vat'>{{ ((x/100+vat)*vat) }}</span>
+
+                            </td>
                         </tr>
 
                     {% endfor %}
