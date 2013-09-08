@@ -4,6 +4,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
+use HelloDi\DiDistributorsBundle\Entity\Operator;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Form\ItemDescType;
@@ -325,5 +326,73 @@ class ItemController extends Controller
                 'item' => $desc->getItem(),
                 'itemdescid' => $desc->getId()
             ));
+    }
+
+    public function updateItemsFromB2BAction()
+    {
+        $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
+        $result = $client->GetProducts(array(
+            'GetProductsRequest' => array(
+                'UserInfo' => array(
+                    'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+                    'Password'=>$this->container->getParameter('B2BServer.Password')
+                ),
+                'ClientReferenceData' => array(
+                    'Service'=>'imtu',
+                    'ClientTransactionID'=>$this->container->getParameter('B2BServer.ClientTransactionID'),
+                    'IP'=>$this->container->getParameter('B2BServer.IP'),
+                    'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
+                ),
+                'Parameters' => array(
+                    'DataType'=>''
+                ),
+            )
+        ));
+
+        $ProductsResponse = $result->GetProductsResponse;
+
+        $list = array();
+
+        foreach( $ProductsResponse->ProductList->Product as $product )
+        {
+            $ProductCountries = $product->ProductCountryList->ProductCountry;
+            if(is_array($ProductCountries))
+            {
+                foreach($ProductCountries as $productCountry)
+                {
+                    $this->insertItemFromB2B(array(
+                        'Code'=>$product->Code,
+                        'Name'=>$product->Name,
+                        'Denomination'=>$product->Denomination,
+                        'CountryCode'=>$productCountry->CountryCode,
+                        'CarrierName'=>$productCountry->CarrierList->Carrier->CarrierName
+                    ));
+                }
+            }
+            else
+            {
+                $this->insertItemFromB2B(array(
+                    'Code'=>$product->Code,
+                    'Name'=>$product->Name,
+                    'Denomination'=>$product->Denomination,
+                    'CountryCode'=>$ProductCountries->CountryCode,
+                    'CarrierName'=>$ProductCountries->CarrierList->Carrier->CarrierName
+                ));
+            }
+        }
+        return $this->render("HelloDiDiDistributorsBundle:Item:b2bupdate.html.twig",array('array'=>$list));
+    }
+
+    private function insertItemFromB2B($row)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierName']));
+        if(!$operator)
+        {
+            $operator = new Operator();
+            $operator->setName($row['CarrierName']);
+            $em->persist($operator);
+        }
+
     }
 }

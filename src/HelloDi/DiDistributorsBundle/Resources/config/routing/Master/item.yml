@@ -30,3 +30,7 @@ item_desc_new:
 item_desc_edit:
     pattern:  /{id}/descriptions/{descid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
+
+item_b2b_update:
+    pattern:  /b2bserverupdate
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:updateItemsFromB2B" }

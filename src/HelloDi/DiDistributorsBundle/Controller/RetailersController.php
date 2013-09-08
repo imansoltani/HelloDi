@@ -343,9 +343,10 @@ $datetype=0;
             array('label'=>'ItemType','translation_domain'=>'item',
                 'choices'=>array(
                     'All' => 'All',
-                     'dmtu'=>'Mobile',
-                     'clcd'=>'Calling_Card',
-                     'epmt'=>'E-payment'
+                    'dmtu'=>'Mobile',
+                    'clcd'=>'Calling_Card',
+                    'epmt'=>'E-payment',
+                    'imtu' => 'IMTU',
                   )))
 
             ->add('ItemName', 'entity',
@@ -956,6 +957,29 @@ $datetype=0;
 
     }
 
+    public function ImtuAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+            ->from('HelloDiDiDistributorsBundle:Operator','O')
+            ->innerJoin('O.Item','OI')
+            ->innerJoin('OI.Prices','OIP')
+            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('imtu')))
+            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
+            ->andwhere('OIP.priceStatus = 1');
+        $qb=$qb->getQuery();
+        $qb=$qb->getResult();
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array
+        (
+            'Operators'=>$qb,
+            'Account'=>$Account,
+        ));
+
+    }
 
 
     public  function FavouritesAction(Request $request ){

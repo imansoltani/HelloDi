@@ -129,7 +129,8 @@ class DistributorsController extends Controller
                         'All' => 'All',
                         'dmtu'=>'Mobile',
                         'clcd'=>'Calling_Card',
-                        'epmt'=>'E-payment'
+                        'epmt'=>'E-payment',
+                        'imtu' => 'IMTU',
                     )))
 
             ->add('ItemName', 'entity',

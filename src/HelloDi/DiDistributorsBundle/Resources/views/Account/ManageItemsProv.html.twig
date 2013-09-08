@@ -83,6 +83,8 @@
                         <td>
                             {% if price.item.itemType=='dmtu' %}
                                 {{ 'Mobile' | trans ({}, "item") }}
+                            {% elseif price.item.itemType=='imtu' %}
+                                {{ 'IMTU' | trans ({}, "item") }}
                             {% elseif price.item.itemType=='clcd' %}
                                 {{ 'Calling_Card' | trans ({}, "item") }}
                             {% else %}

@@ -21,8 +21,17 @@ class ItemType extends AbstractType
         $builder
             ->add('itemName',null,array('label' => 'Name','translation_domain' => 'item'))
             ->add('itemFaceValue',null,array('label' => 'FaceValue','translation_domain' => 'item'))
-            ->add('itemCurrency','choice',array('choices'=> array('USD'=>'USD','CHF' =>'CHF'),'label' => 'Currency','translation_domain' => 'item'))
-            ->add('itemType','choice',array('choices'=> array('clcd'=>'Calling_Card','dmtu' =>'Mobile','epmt' =>'E-payment'),'label' => 'ItemType','translation_domain' => 'item'))
+            ->add('itemCurrency','choice',array(
+                'empty_value' => '--',
+                'choices'=> array('USD'=>'USD','CHF' =>'CHF'),
+                'label' => 'Currency',
+                'translation_domain' => 'item'
+            ))
+            ->add('itemType','choice',array(
+                'empty_value' => '--',
+                'choices'=> array('clcd'=>'Calling_Card','dmtu' =>'Mobile','epmt' =>'E-payment','imtu' =>'IMTU'),
+                'label' => 'ItemType','translation_domain' => 'item'
+            ))
             ->add('alertMinStock',null,array('label' => 'MinStock','translation_domain' => 'item'))
             ->add('operator',null,array(
                 'empty_value' => '--',

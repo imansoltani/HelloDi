@@ -57,15 +57,15 @@
                     </div>
                     <div class="control-group">
                         {{ form_label(form.itemCurrency) }}
-                        <div class="controls">
-                            {{ form_widget(form.itemCurrency) }}
+                        <div class="controls money">
+                            {{ form_widget(form.itemCurrency) }} <span class="icon-certificate"></span>
                         </div>
                         {{ form_errors(form.itemCurrency) }}
                     </div>
                     <div class="control-group">
                         {{ form_label(form.itemType) }}
-                        <div class="controls">
-                            {{ form_widget(form.itemType) }}
+                        <div class="controls money">
+                            {{ form_widget(form.itemType) }} <span class="icon-certificate"></span>
                         </div>
                         {{ form_errors(form.itemType) }}
                     </div>
@@ -246,7 +246,7 @@
                         $('.jHtmlArea .ToolBar').removeAttr('style');
                         $('.jHtmlArea > div').attr('style','width:100%');
                         $('.jHtmlArea > div > iframe').removeAttr('style');
-                        $('.jHtmlArea > div > iframe').attr('style','min-height: 200px;width:100%');
+                        $('.jHtmlArea > div > iframe').attr('style','min-height: 300px;width: 8cm;');
                         $('.jHtmlArea .PinButton').html('Pin');
                         $('.jHtmlArea .RemoveStyleButton').html('Remove Border');
                         $('.jHtmlArea .BorderButton').html('Border');

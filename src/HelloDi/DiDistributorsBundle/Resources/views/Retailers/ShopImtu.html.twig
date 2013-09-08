@@ -1,19 +1,19 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
 
 {% block title %}
-    {{ 'Favourites' | trans ({}, "item") }}
+    {{ 'IMTU' | trans ({}, "item") }}
 {% endblock title %}
 
-{% set MU = 'fav' %}
+{% set MU = 'imtu' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link"> {{ 'Favourites' | trans ({}, "item") }}</span>
+    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}  </a>
+    <span class="link">{{ 'IMTU' | trans ({}, "item") }} </span>
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-mobile-phone"></i>
-    {{ 'Favourites' | trans ({}, "item") }}
+    {{ 'IMTU' | trans ({}, "item") }}
 {% endblock %}
 
 {% block Link_Footer %}
@@ -24,7 +24,7 @@
 
 
     <!-- Modal -->
-    <div id="popuptop" class="modal" >
+    <div id="popuptop" class="modal">
         <div class="modal-header containerpop">
             <button type="button" class="close" onclick="PopuptopClose(event)">X</button>
             <h3 id="myModalLabel">{{ 'BuyCard' | trans ({}, "item") }}</h3>
@@ -48,7 +48,9 @@
                     <div class="controls">
                         <input type="text" value="" id="itemname" disabled class="input-large">
                     </div>
-                </div>            <div class="control-group">
+                </div>
+
+                <div class="control-group">
                     <label class="control-label">
                         {{ 'ItemType' | trans ({}, "item") }}
                     </label>
@@ -57,8 +59,6 @@
                         <input type="text" value="" id="itemtype" disabled class="input-large">
                     </div>
                 </div>
-
-
 
                 <div class="control-group">
                     <label class="control-label">
@@ -69,59 +69,18 @@
                         <input type="text" value="" id="facevalue" disabled class="input-large">
                     </div>
                 </div>
-
-                <div class="control-group">
-                    <label class="control-label">
-                        {{ 'Count' | trans ({}, "code") }}
-                    </label>
-
-                    <div class="controls">
-                        <input type="text"
-                               onkeydown="return ( event.ctrlKey || event.altKey
-						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
-						|| (95<event.keyCode && event.keyCode<106)
-						|| (event.keyCode==8) || (event.keyCode==9)
-						|| (event.keyCode>34 && event.keyCode<40)
-						|| (event.keyCode==46) )"
-                               name="numberOfsale" onchange="count_value()" id="itemcount">
-                    </div>
-
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">
-                        {{ 'SumValues' | trans ({}, "price") }}
-                    </label>
-
-                    <div class="controls">
-                        <input id="showsum" type="text" value="2100" disabled class="input-large">
-                    </div>
-                </div>
-                <input  type="hidden" id="itemid" name="item_id" value="">
+                <input type="hidden" id="itemid" name="item_id" value="">
                 <input type="hidden" id="priceid" name="price_id" value="">
 
             </div>
 
             <div class="containerpop form-actions " style="padding-left: 0px">
-                <button class="btn" onclick="PopuptopClose(event)">   {{ 'Cancel' | trans ({}, "common") }}  </button>
-                <input type="submit" class="btn btn-primary" value="   {{ 'Buy' | trans ({}, "common") }}  ">
+                <button class="btn" onclick="PopuptopClose(event)">   {{ 'Close' | trans ({}, "common") }}</button>
+                <input type="submit" class="btn btn-primary" value="{{ 'Buy' | trans ({}, "common") }}">
             </div>
 
         </form>
     </div>
-
-
-
-    <script type="text/javascript">
-        function count_value() {
-            var x = $('#itemcount').val();
-            var y = $('#facevalue').val();
-            x *= y;
-            $('#showsum').val(x);
-        }
-
-
-    </script>
 
     <div class="span">
         <div class="widget stacked">
@@ -133,10 +92,7 @@
                         {{ 'AllOperators' | trans ({}, "operator") }}
                     </div>
 
-
-
                     {% for opr in Operators %}
-
                         <div class="filter" data-filter="{{ opr.oprname }}">
                             {{ opr.oprname }}
                         </div>
@@ -152,14 +108,14 @@
                 </div> -->
 
 
-                <div class="list_items" >
+                <div class="list_items">
                     <ul id="Grid" class="itemulshow">
                         {% for opritm in Operators %}
 
-
-                            <li id="item_buy" class="mix {{ opritm.oprname }}" sfield="{{ opritm.itemfv }}" >
-                                <a  >
-                                    <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opritm.oprlogo }}')" class="item_show">
+                            <li id="item_buy" class="mix {{ opritm.oprname }}" sfield="{{ opritm.itemfv }}">
+                                <a>
+                                    <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opritm.oprlogo }}')"
+                                         class="item_show">
                                         <div class="header">{{ opritm.itemname }}</div>
                                         <div class="body">
                                             <div class="price">
@@ -174,13 +130,7 @@
                                     </div>
 
                                     <input type="hidden" id="item_name1" value="{{ opritm.itemname }}">
-                                    <input type="hidden" id="item_type1"
-                                        {% if opritm.itemtype=='dmtu' %}     value="{{ 'Mobile' | trans ({}, 'item') }}"
-                                        {% elseif opritm.itemType=='imtu' %} value="{{ 'IMTU' | trans ({}, "item") }}"
-                                        {% elseif opritm.itemtype=='epmt' %} value="{{ 'E-payment' | trans ({}, 'item') }}"
-                                        {% elseif opritm.itemtype=='clcd' %} value="{{ 'Calling_Card' | trans ({}, 'item') }}"
-                                        {% endif %}
-                                    >
+                                    <input type="hidden" id="item_type1" value="{{ 'Mobile' | trans ({}, "item") }}">
                                     <input type="hidden" id="face_value1" value="{{ opritm.itemfv }}">
                                     <input type="hidden" id="currency1" value="{{ opritm.itemcur }}">
                                     <input type="hidden" id="operator1" value="{{ opritm.oprname }}">
@@ -216,12 +166,9 @@
                         $('.popupshow #itemname').val($(" #item_name1", this).val());
                         $('.popupshow #itemtype').val($(" #item_type1", this).val());
                         $('.popupshow #facevalue').val($(" #face_value1", this).val());
-                        $('.popupshow #showsum').val($(" #face_value1", this).val());
-                        $('.popupshow #itemcount').val(1);
                         $('.popupshow #itemid').val($(" #item_id1", this).val());
                         $('.popupshow #priceid').val($(" #price_id1", this).val());
                     });
-
 
                     $('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});
 
@@ -230,6 +177,4 @@
         </div>
     </div>
 
-
 {% endblock %}
-

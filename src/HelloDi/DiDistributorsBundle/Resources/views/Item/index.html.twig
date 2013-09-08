@@ -46,6 +46,9 @@
             <a class=" btn btn-primary btn-large" href="{{ path('item_new') }}">
                 {{ 'AddItem' | trans ({}, "item") }}
             </a>
+            <a class=" btn btn-warning btn-large" href="{{ path('item_b2b_update') }}">
+                {{ 'UpdateB2BAPI' | trans ({}, "item") }}
+            </a>
 
 
             <div style="margin-top: 5px" class="tablediv">
@@ -94,6 +97,8 @@
                                     <td>
                                         {% if item.itemType=='dmtu' %}
                                             {{ 'Mobile' | trans ({}, "item") }}
+                                        {% elseif item.itemType=='imtu' %}
+                                            {{ 'IMTU' | trans ({}, "item") }}
                                         {% elseif item.itemType=='clcd' %}
                                             {{ 'Calling_Card' | trans ({}, "item") }}
                                         {% else %}

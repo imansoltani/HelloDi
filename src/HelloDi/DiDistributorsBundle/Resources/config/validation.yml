@@ -81,9 +81,6 @@ HelloDi\DiDistributorsBundle\Entity\ItemDesc:
 HelloDi\DiDistributorsBundle\Entity\Item:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: itemName
-            message: 'This_item_name_exist_already'
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: itemCode
             message: 'This_item_code_exist_already'
 
