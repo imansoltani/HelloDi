@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 class TaxController extends Controller
 {
 
-    public function taxAction(Request $req)
+    public function taxAction(Request $req,$Active)
     {
 
-        $em=$this->getDoctrine()->getEntityManager();
+
+        $em=$this->getDoctrine()->getManager();
 
         $newtax=new Tax();
 
@@ -28,6 +29,7 @@ class TaxController extends Controller
         if($req->isMethod('POST'))
         {
             $form->handleRequest($req);
+
             if($form->isValid())
             {
                 $tax=$em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array('Country'=>$newtax->getCountry()));
@@ -69,23 +71,43 @@ class TaxController extends Controller
 
 
         }
+        $taxhistory2=$em->createQueryBuilder();
+        $taxhistory2->select('Tx')
+            ->from('HelloDiDiDistributorsBundle:TaxHistory','Tx')
+            ->innerJoin('Tx.Tax','TxT')
+            ->innerJoin('TxT.Country','TxTCo')
+        ;
+      if($Active==0)
+      {
+          $taxhistory2->orderBy('Tx.id','desc')->addOrderBy('TxTCo.name');
 
+      }
 
-      $historytax=$em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findBy(array(),array('id'=>'desc'));
+      elseif($Active==1)
+           {
+        $taxhistory2->where(
+                $taxhistory2->expr()->isNull('Tx.taxend')
+            )
+            ->orderBy('Tx.id','desc')->addOrderBy('TxTCo.name');
 
+            }
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $historytax,
-            $req->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+      elseif($Active==2)
+          {
+          $taxhistory2->where(
+                      $taxhistory2->expr()->isNotNull('Tx.taxend')
+                    )
+                  ->orderBy('Tx.id','desc')->addOrderBy('TxTCo.name');
+
+          }
+
+        $historytax=$taxhistory2->getQuery();
 
 
      return   $this->render('HelloDiDiDistributorsBundle:Tax:Edit.html.twig',
             array(
                 'form'=>$form->createView(),
-                'pagination'=>$pagination
+                'pagination'=>$historytax->getResult()
             ));
     }
 

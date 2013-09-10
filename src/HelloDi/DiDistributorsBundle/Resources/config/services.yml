@@ -73,8 +73,15 @@ services:
         scope: request
 
 
+    record_exception:
+        class: HelloDi\DiDistributorsBundle\Listener\Exception
+        arguments: [@doctrine.orm.default_entity_manager,@session,@kernel]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onWriteException }
 
-#    my_cache_clearer:
-#        class: HelloDi\DiDistributorsBundle\Listener\ClearCache
-#        tags:
-#            - { name: kernel.cache_clearer }
+    record_log_info:
+        class: HelloDi\DiDistributorsBundle\Listener\Logs
+        arguments: [@doctrine.orm.default_entity_manager,@session,@request]
+        tags:
+            - {name: kernel.event_listener, event: kernel.request, method: OnWritLog}
+        scope: request

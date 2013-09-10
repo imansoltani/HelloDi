@@ -117,3 +117,17 @@ gregwar_captcha:
     height: 50
     length: 4
     background_color:  [255, 255, 255]
+
+#monolog#
+#monolog:
+#    handlers:
+#        main:
+#            type: stream
+#            path:  "%kernel.root_dir%/symfony.log"
+#            channels: !doctrine
+#            level: debug
+#        doctrine:
+#            type: stream
+#            path: "%kernel.root_dir%/doctrine.log"
+#            channels: doctrine
+#            level: debug

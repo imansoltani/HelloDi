@@ -37,11 +37,11 @@
 
         <thead>
             <tr>
-                <th>Account ID</th>
-                <th>Retailer(Entity)</th>
-                <th>Total Purchase</th>
-                <th>VAT</th>
-                <th>Revenues</th>
+                <th>{{ 'Account_ID' | trans ({}, "print") }}</th>
+                <th>{{ 'Retailer' | trans ({}, "accounts") }}({{ 'Entity' | trans ({}, "entity") }})</th>
+                <th>{{ 'TotalPurchase' | trans ({}, "print") }}</th>
+                <th>{{ 'VAT' | trans ({}, "vat") }}</th>
+                <th>{{ 'Revenues' | trans ({}, "print") }}</th>
             </tr>
         </thead>
 

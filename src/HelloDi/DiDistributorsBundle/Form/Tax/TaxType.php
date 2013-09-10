@@ -8,11 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TaxType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder
-            ->add('tax',null,array('label'=>'Tax','translation_domain'=>'vat'))
+            ->add('tax',null,array('required'=>true,'label'=>'Tax','translation_domain'=>'vat'))
             ->add('Country','entity',
             array(
                    'label'=>'Country','translation_domain'=>'entity',

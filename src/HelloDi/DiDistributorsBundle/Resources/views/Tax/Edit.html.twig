@@ -66,17 +66,26 @@
                 <div class="tablediv">
                     <div class="contenttitle">
                         <h4>{{ 'Tax' | trans ({}, "vat") }}</h4>
+
                     </div>
+
                     <form>
                         <div class="tab-content">
+
                             <table style="margin-top: 20px"
                                    class="table table-bordered table-striped table-highlight postsend">
+
                                 <thead>
+
                                 <tr>
                                     <th>{{ 'id' | trans ({}, "common") }}</th>
                                     <th>{{ 'Rate' | trans ({}, "vat") }}</th>
                                     <th>{{ 'Country' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'DateEnd' | trans ({}, "vat") }}</th>
+                                    <th>{{ 'DateEnd' | trans ({}, "vat") }}&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <a class="icon-check" href="{{ path('Tax',{'Active':1}) }}">
+                                  <a class="icon-calendar" href="{{ path('Tax',{'Active':2}) }}">
+                                  <a class="icon-eye-open" href="{{ path('Tax') }}">
+                                    </th>
 
                                 </tr>
 
@@ -84,6 +93,7 @@
                                 <tbody>
 
                                 {% for tx in pagination %}
+                                    {% if tx.Tax.Country is not null%}
                                     <tr>
                                         <td>
 
@@ -96,24 +106,22 @@
                                         </td>
 
                                         <td>
-                                            {% if tx.Tax.Country is not null %}
+
                                             {{ tx.Tax.Country.iso}}. {{ tx.Tax.Country.name}}
-                                            {% else %}
-                                                ----
-                                           {% endif %}
+
                                         </td>
 
                                         <td>
                                             {% if tx.taxend is not null %}
                                                 {{ tx.taxend|date('Y/m/d')}}
                                             {% else %}
-                                               <span class='icon-ok'>
+                                               <span style="background: #cccccc" class='icon-ok'>
                                             {% endif %}
 
                                         </td>
 
                                     </tr>
-
+                                      {% endif %}
                                 {% endfor %}
 
                                 </tbody>
@@ -122,20 +130,27 @@
                     </form>
                 </div>
 
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
 
             </div>
         </div>
 
 <script type="text/javascript">
- function Reset()
- {
 
-    $('#Tax').val('');
+    {#$(document).ready(function()#}
 
- }
+            {#{#}
+
+                {#$('#VatActive').change(function(){#}
+
+                    {#$.post('{{ path("Tax") }}', {Active:1});#}
+
+
+
+                {#});#}
+
+            {#}#}
+
+    {#)#}
 
  </script>
 

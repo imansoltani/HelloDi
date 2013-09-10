@@ -55,10 +55,10 @@
 <body>
 {% for ret in retailers %}
     <div style='font-size:14px;float:right;border:1px solid #999;width:7cm;padding:3px'>
-        <b>Retailer Details</b><br/>
-        Account Name: {{ ret.AccName }}<br/>
-        Account Balance: {{ ret.AccBalance }}<br/>
-        Account Currency: {{ ret.AccCurrency }}<br/>
+        <b>{{ 'Retailer_Details' | trans ({}, "print") }}</b><br/>
+        {{ 'AccountName' | trans ({}, "accounts") }}: {{ ret.AccName }}<br/>
+        {{ 'Balance' | trans ({}, "accounts") }}: {{ ret.AccBalance }}<br/>
+        {{ 'Currency' | trans ({}, "accounts") }}: {{ ret.AccCurrency }}<br/>
     </div>
     <div style="clear: both"></div>
     <table class="table table-striped" style="margin: 1cm 0">
@@ -66,12 +66,12 @@
         <thead>
         <tr>
             <th>Item Code</th>
-            <th>Item (Name & FaceValue)</th>
-            <th>Quantity</th>
-            <th>VAT</th>
-            <th>Price</th>
-            <th>Discount</th>
-            <th>Total</th>
+            <th>{{ 'Item' | trans ({}, "itam") }} ({{ 'Name' | trans ({}, "common") }} &{{ 'FaceValue' | trans ({}, "itam") }} )</th>
+            <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+            <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+            <th>{{ 'BuyingPrice' | trans ({}, "price") }}</th>
+            <th>{{ 'Discount' | trans ({}, "print") }}</th>
+            <th>{{ 'Total' | trans ({}, "print") }}</th>
         </tr>
         </thead>
 
@@ -101,11 +101,11 @@
     <table class="table table-bordered" style='font-size:14px;float:right;width:7cm'>
         <tbody>
         <tr>
-            <td style="width: 3cm">Nett</td>
+            <td style="width: 3cm">{{ 'Nett' | trans ({}, "print") }}</td>
             <td>{{ sumprice }} {{  pagination[0].TR.Account.accCurrency  }}</td>
         </tr>
         <tr>
-            <td>VAT @ 0.00%</td>
+            <td>{{ 'VAT_@_0.00' | trans ({}, "print") }}%</td>
             <td>
 
                 {% set a=[] %}{% set sumvat=0 %}
@@ -120,7 +120,7 @@
             </td>
         </tr>
         <tr>
-            <td>Total to Pay</td>
+            <td>{{ 'Total_to_Pay' | trans ({}, "print") }}</td>
             <td>
 
                 {{   sumprice-sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
@@ -129,15 +129,15 @@
         </tbody>
     </table>
     <div style='font-size:14px;float:left;border:1px solid #999;width:6.5cm;padding:.25cm;margin-bottom: .5cm'>
-        Condition: <br/>
-        Printed: {{ "now"|date("Y/m/d") }}
+        {{ 'Condition' | trans ({}, "print") }}: <br/>
+        {{ 'Printed' | trans ({}, "print") }}: {{ "now"|date("Y/m/d") }}
     </div>
     <div style="clear: left"></div>
     <table class="table table-bordered" style='font-size:14px;float:left;width:7cm;'>
         <thead>
         <tr>
-            <th>VAT Code</th>
-            <th>VAT %</th>
+            <th>{{ 'VATCode' | trans ({}, "print") }}</th>
+            <th>{{ 'VAT' | trans ({}, "vat") }} %</th>
         </tr>
         </thead>
         <tbody>

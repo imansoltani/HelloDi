@@ -1,0 +1,9 @@
+TestException:
+    path: /{flag}
+    defaults: { _controller: 'HelloDiDiDistributorsBundle:Default:Exceptions','flag':null}
+    requirements:
+        flag: Export|DeleteAll|Log|null
+
+DeleteExceptions:
+    path: /delete
+    defaults: { _controller: HelloDiDiDistributorsBundle:Default:DeleteExceptions}

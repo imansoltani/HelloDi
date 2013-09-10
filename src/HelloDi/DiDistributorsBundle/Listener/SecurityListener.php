@@ -18,7 +18,10 @@ class SecurityListener
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
+
         $locale = $this->security->getToken()->getUser()->getLanguage();
         $this->session->set('_locale', ($locale?$locale:"en"));
+        $user=$this->security->getToken()->getUser();
+        $this->session->set('ExceptionUser',$user->getUsername());
     }
 }

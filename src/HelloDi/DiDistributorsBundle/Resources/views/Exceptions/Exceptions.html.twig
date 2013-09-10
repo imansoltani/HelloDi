@@ -1,0 +1,119 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    {{ 'Exceptions&Logs' | trans ({}, "exception") }}
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link"> {{ 'Exceptions&Logs' | trans ({}, "exception") }}</span>
+
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    {{ 'Exceptions&Logs' | trans ({}, "exception") }}
+{% endblock %}
+
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3> {{ 'Exceptions&Logs' | trans ({}, "exception") }}</h3>
+                </div>
+<br>
+                <a class="btn btn-primary" href="{{ path('TestException',{'flag':'Log'}) }}">{{ 'Export_logs_(info)_To_File' | trans ({}, "exception") }}</a>
+               {% if Exceptions|length>0 %}
+                <a class="btn btn-primary" href="{{ path('TestException',{'flag':'DeleteAll'}) }}">{{ 'DeleteAll' | trans ({}, "common") }}</a>
+                <a class="btn btn-primary" href="{{ path('TestException',{'flag':'Export'}) }}">{{ 'Export_To_File' | trans ({}, "exception") }}</a>
+                <br> <br>
+                 {% endif %}
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4> {{ 'Exceptions&Logs' | trans ({}, "exception") }} (<span id='CountException' style="color: red">{{ Exceptions|length }}</span> )</h4>
+
+                    </div>
+
+
+                    <form>
+                        <div class="tab-content">
+
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+
+                                <thead>
+
+                                <tr>
+                                    <th>{{ 'id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Date' | trans ({}, "exception") }}</th>
+                                    <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                                    <th>{{ 'Description' | trans ({}, "exception") }}</th>
+                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+
+                                {% for Ex in Exceptions|reverse %}
+
+                                        <tr id='Ext{{ Ex.id }}'>
+                                            <td>
+                                               {{ Ex.id }}
+                                            </td>
+
+                                            <td style="font-size:11px">
+                                                {{ Ex.Date|date('Y/m/d H:i:s')}}
+                                            </td>
+
+                                            <td>
+                                                {{ Ex.Username }}
+                                            </td>
+
+                                            <td>
+                                                {{ Ex.Description }}
+                                            </td>
+
+                                            <td>
+                                               <a onclick="DeleteExtension({{ Ex.id }})" class="btn btn-primary">{{ 'Delete' | trans ({}, "common") }}</a>
+                                            </td>
+
+                                        </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function DeleteExtension(id) {
+
+
+                $("#Ext" + id).hide('fast', function () {
+                    $("#Ext" + id).remove();
+                });
+                $.post('{{ path("DeleteExceptions") }}', {id: id}, function (result) {
+                $('#CountException').html(result);
+                })
+            }
+
+        </script>
+
+    </div>
+
+{% endblock %}

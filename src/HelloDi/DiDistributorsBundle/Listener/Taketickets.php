@@ -18,6 +18,7 @@ class Taketickets
 
     public function IsTake(Ticket $ticket,User $user)
     {
+
        $em=$this->em;
       if($ticket->getInchange()!=null)
                return true;

@@ -1,0 +1,124 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    {{ 'Log' | trans ({}, "exception") }}
+{% endblock title %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link"> {{ 'Log' | trans ({}, "exception") }}</span>
+
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-check"></i>
+    {{ 'Log' | trans ({}, "exception") }}
+{% endblock %}
+
+
+{% block Link_Footer %}
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+            <div class="widget-content">
+
+                <div class="widget-header">
+                    <h3> {{ 'Log' | trans ({}, "exception") }}</h3>
+                </div>
+
+
+
+               {% if Logs|length>0 %}
+                   <br>
+                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'DeleteAll'}) }}">DeleteAll</a>
+                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'Export'}) }}">Export To File</a>
+                <br> <br>
+                 {% endif %}
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4> {{ 'Log' | trans ({}, "exception") }} (<span id='CountLog' style="color: red">{{ Logs|length }}</span> )</h4>
+
+                    </div>
+
+
+                    <form>
+                        <div class="tab-content">
+
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+
+                                <thead>
+
+                                <tr>
+                                    <th>{{ 'id' | trans ({}, "common") }}</th>
+                                    <th>{{ 'Date' | trans ({}, "exception") }}</th>
+                                    <th>{{ 'Path' | trans ({}, "user") }}</th>
+                                    <th>{{ 'UserName' | trans ({}, "user") }}</th>
+
+                                    <th>{{ 'Controller' | trans ({}, "exception") }}</th>
+
+                                </tr>
+
+                                </thead>
+                                <tbody>
+
+                                {% for Lg in Logs|reverse %}
+
+                                        <tr id='Ext{{ Lg.id }}'>
+                                            <td>
+                                               {{ Lg.id }}
+                                            </td>
+
+                                            <td style="font-size:11px">
+                                                {{ Lg.Date|date('Y/m/d H:i:s')}}
+                                            </td>
+
+                                            <td>
+                                                {{ Lg.Path }}
+                                            </td>
+
+                                            <td>
+                                                {{ Lg.User }}
+                                            </td>
+
+                                            <td>
+                                                {{ Lg.Controller }}
+                                            </td>
+
+
+                                        </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function DeleteExtension(id) {
+
+
+                $("#Lg" + id).hide('fast', function () {
+                    $("#Lg" + id).remove();
+                });
+                $.post('{{ path("DeleteLog") }}', {id: id}, function (result) {
+                $('#CountLog').html(result);
+                })
+            }
+
+        </script>
+
+    </div>
+
+{% endblock %}

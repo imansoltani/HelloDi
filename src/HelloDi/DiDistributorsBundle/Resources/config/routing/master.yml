@@ -54,6 +54,15 @@ master_tax:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/Tax.yml"
     prefix:   /tax
 
+master_exceptions:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/exceptions.yml"
+    prefix:   /exceptions
+
+
+master_log:
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/log.yml"
+    prefix:   /logs
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }

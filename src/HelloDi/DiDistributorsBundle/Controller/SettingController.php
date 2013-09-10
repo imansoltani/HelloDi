@@ -40,6 +40,7 @@ public  function staffaddAction(Request $req)
 
         $user->setStatus(1);
         if ($form->isValid()) {
+            sds;
             $user->setEntiti($Entiti);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

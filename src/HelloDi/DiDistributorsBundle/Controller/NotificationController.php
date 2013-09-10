@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class NotificationController
 {
@@ -12,11 +13,9 @@ class NotificationController
 
     private  $em;
     private  $Request;
+
    public  function  __construct($EntityManage,$Request)
     {
-
-
-
         $this->em= $EntityManage;
         $this->Request=$Request;
 
@@ -25,6 +24,7 @@ class NotificationController
 
  public function NewAction($id,$type,$value=null)
  {
+
    if($id!=null)
        $Account=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
    else

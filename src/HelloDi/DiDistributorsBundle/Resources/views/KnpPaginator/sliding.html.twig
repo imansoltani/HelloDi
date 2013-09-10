@@ -14,7 +14,7 @@
                     onclick="PagingAction({{ first }});"
                 {% endif %}
                     class="btn dis">
-                <span>First</span>
+                <span>{{ 'First' | trans ({}, "pagination") }}</span>
                 <i class="icon-step-backward" ></i>
             </a></span>
 
@@ -26,7 +26,7 @@
                     {% endif %}
                     class="btn dis"
             >
-                <span>Prev</span>
+                <span>{{ 'Prev' | trans ({}, "pagination") }}</span>
                 <i class="icon-backward" ></i>
             </a></span>
 
@@ -55,7 +55,7 @@
                     {% endif %}
                     class="btn dis"
               >
-                <span>Next</span>
+                <span>{{ 'Next' | trans ({}, "pagination") }}</span>
                 <i class="icon-forward" ></i>
               </a></span>
 
@@ -68,7 +68,7 @@
                     {% endif %}
                     class="btn dis"
                     >
-                <span>Last</span>
+                <span>{{ 'Last' | trans ({}, "pagination") }}</span>
                 <i class="icon-step-forward" ></i>
                     </a></span>
 
