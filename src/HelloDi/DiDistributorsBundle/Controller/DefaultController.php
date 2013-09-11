@@ -139,15 +139,86 @@ class DefaultController extends Controller
 
 
 
-    public  function LogAction($flag)
+    public  function LogAction($flag,Request $request)
     {
 
-        $em=$this->getDoctrine()->getManager();
+        $em=$this->getDoctrine()->getEntityManager();
 
-       if($flag=='DeleteAll')
-            $em->createQuery('delete from HelloDiDiDistributorsBundle:Log')->execute();
+       $form=$this->createFormBuilder()
+           ->add('username','text',array(
+               'required'=>false,
+               'label'=>'UserName','translation_domain'=>'user'
+           ))
+           ->add('from','date',array(
+               'widget'=>'single_text',
+               'format'=>'yyyy/MM/dd',
+               'data'=>(new \DateTime('now'))->sub(new \DateInterval('P1D')),
+               'label'=>'From','translation_domain'=>'transaction'
+
+            ))
+           ->add('to','date',array(
+               'widget'=>'single_text',
+               'format'=>'yyyy/MM/dd',
+               'data'=>new \DateTime('now'),
+               'label'=>'To','translation_domain'=>'transaction'
+           ))->getForm();
 
         $Logs=$em->getRepository('HelloDiDiDistributorsBundle:Log')->findAll();
+
+        if($request->isMethod('POST'))
+        {
+try{
+           $form->handleRequest($request);
+            $data=$form->getData();
+            $qb=$em->createQueryBuilder();
+              $qb->select('Lgs')
+                  ->from('HelloDiDiDistributorsBundle:Log','Lgs');
+                  if($data['username'])
+                  $qb->where($qb->expr()->like('Lgs.User',$qb->expr()->literal('%'.$data['username'].'%')));
+                  $qb->andwhere('Lgs.Date >= :from')->setParameter('from',$data['from'])
+                  ->andWhere('Lgs.Date <= :to')->setParameter('to',$data['to']);
+            $qb=$qb->getQuery();
+            $Logs=$qb->getResult();
+           $this->get('session')->set('From',$data['from']);
+           $this->get('session')->set('To',$data['to']);
+           $this->get('session')->set('User',$data['username']);
+           $this->get('session')->set('Logs',$Logs);
+        }
+        catch(\Exception $e){
+            $this->get('session')->getFlashBag()->add('error',
+                $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+        }
+
+            }
+
+
+
+  if($this->get('session')->has('Logs') and $flag=='DeleteSearch')
+         {
+
+            $em->createQuery('delete from HelloDiDiDistributorsBundle:Log as Lgs
+
+                              where Lgs.Date >= :frDate
+                              and Lgs.Date <= :toDate
+                              or Lgs.User
+                              LIKE  :usr '
+                            )
+                ->setParameters(
+                    array(
+                        'usr'=>$this->get('session')->get('User'),
+                        'frDate'=>$this->get('session')->get('From'),
+                        'toDate'=>$this->get('session')->get('To')
+                    ))
+                ->execute();
+
+         $this->get('session')->remove('Logs');
+         $Logs=array();
+         }
+
+
+        if($flag=='DeleteAll')
+            $em->createQuery('delete from HelloDiDiDistributorsBundle:Log')->execute();
+
 
         if($flag=='Export')
         {
@@ -164,24 +235,12 @@ class DefaultController extends Controller
 
         return $this->render('HelloDiDiDistributorsBundle:Log:Logs.html.twig',
             array(
-                'Logs' =>$Logs
+                'Logs' =>$Logs,
+                'form'=>$form->createView()
             )
 
         );
     }
 
-
-    public function DeleteLogAction(Request $req)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $Log=$em->getRepository('HelloDiDiDistributorsBundle:log')->find($req->get('id'));
-        $em->remove($Log);
-        $em->flush();
-
-        $Logs=$em->getRepository('HelloDiDiDistributorsBundle:Log')->findAll();
-
-        return new Response(count($Logs));
-
-    }
 
 }
