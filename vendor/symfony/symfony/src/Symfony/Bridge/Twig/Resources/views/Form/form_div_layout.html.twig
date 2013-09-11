@@ -14,7 +14,7 @@
 {% spaceless %}
     {% set type = type|default('text') %}
     <div class="controls">
-        <input class="input-large" id="accountusername" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <input class="input-large" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endspaceless %}
 {% endblock form_widget_simple %}

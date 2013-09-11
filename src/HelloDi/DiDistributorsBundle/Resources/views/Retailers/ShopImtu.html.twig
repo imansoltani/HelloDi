@@ -37,7 +37,7 @@
                     </label>
 
                     <div class="controls">
-                        <input type="text" value="Irancell" id="operator" disabled class="input-large">
+                        <input type="text" value="" id="operator" disabled class="input-large">
                     </div>
                 </div>
                 <div class="control-group">
@@ -62,11 +62,21 @@
 
                 <div class="control-group">
                     <label class="control-label">
-                        {{ 'FaceValue' | trans ({}, "itam") }}
+                        {{ 'FaceValue' | trans ({}, "item") }}
                     </label>
 
                     <div class="controls">
                         <input type="text" value="" id="facevalue" disabled class="input-large">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        {{ 'Country' | trans ({}, "item") }}
+                    </label>
+
+                    <div class="controls">
+                        <input type="text" value="" id="country" disabled class="input-large">
                     </div>
                 </div>
                 <input type="hidden" id="itemid" name="item_id" value="">
@@ -136,6 +146,7 @@
                                     <input type="hidden" id="operator1" value="{{ opritm.oprname }}">
                                     <input type="hidden" id="item_id1" value="{{ opritm.itemid }}">
                                     <input type="hidden" id="price_id1" value="{{ opritm.priceid }}">
+                                    <input type="hidden" id="country" value="{{ opritm.country }}">
 
                                 </a>
                             </li>
@@ -168,6 +179,7 @@
                         $('.popupshow #facevalue').val($(" #face_value1", this).val());
                         $('.popupshow #itemid').val($(" #item_id1", this).val());
                         $('.popupshow #priceid').val($(" #price_id1", this).val());
+                        $('.popupshow #country').val($(" #country", this).val());
                     });
 
                     $('#Grid').mixitup({effects: ['fade', 'scale', 'blur']});

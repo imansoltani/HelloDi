@@ -14,6 +14,11 @@ Retailer_Shop_callingCard:
 Retailer_Shop_e-payment:
     pattern:  /e-payment
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Epayment }
+
+Retailer_Shop_imtu:
+    pattern:  /imtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Imtu }
+
 Retailer_Shop_favourite:
     pattern:  /favourites
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Favourites }

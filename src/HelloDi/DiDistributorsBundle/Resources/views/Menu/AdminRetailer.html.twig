@@ -56,6 +56,13 @@
         </a>
     </li>
 
+    <li class=" {% if MU == 'imtu' %}active{% endif %} dropdown">
+        <a href="{{ path('Retailer_Shop_imtu') }}" class="dropdown-toggle">
+            <i class="icon-flag-alt"></i>
+            <span  id="user_pc_menu"  >{{ 'IMTU' | trans ({}, "item") }}</span>
+        </a>
+    </li>
+
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
         <a href="{{ path('Retailer_Items_Show') }}" class="dropdown-toggle">
             <i class="icon-tags"></i>

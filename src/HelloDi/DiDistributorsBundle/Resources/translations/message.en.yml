@@ -54,3 +54,7 @@ ticket_create_successfully: ticket create successfully
 
 ###homepage
 message_send_successfully: message send successfully
+
+###
+error_b2b: Error in connect to B2B server.
+cant_find_b2b_provider: We can't find a provider has 'B2BServer' name.

@@ -48,7 +48,7 @@ class Exceptions
      * Set Date
      *
      * @param \DateTime $date
-     * @return Exception
+     * @return Exceptions
      */
     public function setDate($date)
     {
@@ -71,7 +71,7 @@ class Exceptions
      * Set Description
      *
      * @param string $description
-     * @return Exception
+     * @return Exceptions
      */
     public function setDescription($description)
     {

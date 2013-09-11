@@ -34,3 +34,8 @@ item_desc_edit:
 item_b2b_update:
     pattern:  /b2bserverupdate
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:updateItemsFromB2B" }
+
+item_create_itemCode:
+    pattern:  /CreateItemCode
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:CreateItemCode" }
+    requirements: { _method: post }
