@@ -23,4 +23,3 @@ parameters:
     B2BServer.UserName: hellobell
     B2BServer.Password: hellobell
     B2BServer.IP: 95.38.17.149
-    B2BServer.ClientTransactionID: TestTrans-1

@@ -27,6 +27,10 @@ class CdSearchType extends AbstractType
                 'required'=> false,
                 'empty_value' => 'All',
                 'class' => 'HelloDiDiDistributorsBundle:Item',
+                'query_builder' => function(EntityRepository $er)
+                {
+                    return $er->createQueryBuilder('u')->where("u.itemType != :itemtype ")->setParameter('itemtype','imtu');
+                },
                 'property' => 'itemName',
                 'label' => 'Item','translation_domain' => 'item'
             ))

@@ -1,20 +1,20 @@
 {% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
-    {{ 'Log' | trans ({}, "exception") }}
+    {{ 'Logs' | trans ({}, "log") }}
 {% endblock title %}
 
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link"> {{ 'Log' | trans ({}, "exception") }}</span>
+    <span class="link"> {{ 'Logs' | trans ({}, "log") }}</span>
 
 {% endblock Site_Map %}
 
 {% block PageTitle %}
     <i class="icon-check"></i>
-    {{ 'Log' | trans ({}, "exception") }}
+    {{ 'Logs' | trans ({}, "log") }}
 {% endblock %}
 
 
@@ -28,20 +28,69 @@
             <div class="widget-content">
 
                 <div class="widget-header">
-                    <h3> {{ 'Log' | trans ({}, "exception") }}</h3>
+                    <h3> {{ 'Logs' | trans ({}, "log") }}</h3>
                 </div>
 
 
 
-               {% if Logs|length>0 %}
+
+
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search">{{ 'Search_Logs' | trans ({}, "log") }}</p>
+                        </span>
+                    </h5>
+                    <form class="form-horizontal SearchForm" action="{{ path('TestLog') }}"
+                          method="POST">
+                        <fieldset>
+
+
+
+                            <div class="control-group">
+                                {{ form_label(form.username) }}
+
+                                {{ form_widget(form.username) }}
+
+                            </div>
+                            <div class="control-group datepicker2">
+                                {{ form_label(form.from) }}
+
+                                {{ form_widget(form.from) }}
+
+                            </div>
+
+                            <div class="control-group">
+                                {{ form_label(form.to) }}
+
+                                    {{ form_widget(form.to) }}
+
+                            </div>
+                            <hr>
+
+                            <input class="btn btn-primary" type="submit"  name='search' value="{{ 'Search' | trans ({}, "common") }}">
+       {% if Logs|length>0 and app.session.has('Logs')%}
+                            <a href="{{ path('TestLog',{'flag':'DeleteSearch'}) }}" class="btn btn-primary">{{ 'Delete' | trans ({}, "common") }}</a>
+        {% endif %}
+                        </fieldset>
+                    </form>
+
+                   <script type="text/javascript">
+                    Form_Search(0,"{{'Filter_List'|trans({},'js')  }}");
+                    </script>
+          </div>
+
                    <br>
-                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'DeleteAll'}) }}">DeleteAll</a>
-                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'Export'}) }}">Export To File</a>
+                {% if Logs|length>0 %}
+                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'DeleteAll'}) }}">{{ 'DeleteAll' | trans ({}, "log") }}</a>
+                <a class="btn btn-primary" href="{{ path('TestLog',{'flag':'Export'}) }}">{{  'Export_To_File' | trans ({}, "log") }}</a>
                 <br> <br>
                  {% endif %}
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4> {{ 'Log' | trans ({}, "exception") }} (<span id='CountLog' style="color: red">{{ Logs|length }}</span> )</h4>
+                        <h4> {{ 'Logs' | trans ({}, "log") }} (<span id='CountLog' style="color: red">{{ Logs|length }}</span> )</h4>
 
                     </div>
 
@@ -56,11 +105,11 @@
 
                                 <tr>
                                     <th>{{ 'id' | trans ({}, "common") }}</th>
-                                    <th>{{ 'Date' | trans ({}, "exception") }}</th>
-                                    <th>{{ 'Path' | trans ({}, "user") }}</th>
+                                    <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                                    <th>{{ 'Path' | trans ({}, "log") }}</th>
                                     <th>{{ 'UserName' | trans ({}, "user") }}</th>
 
-                                    <th>{{ 'Controller' | trans ({}, "exception") }}</th>
+                                    <th>{{ 'Controller' | trans ({}, "log") }}</th>
 
                                 </tr>
 

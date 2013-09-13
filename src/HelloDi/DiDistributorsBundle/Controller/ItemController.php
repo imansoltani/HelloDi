@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Form\ItemType;
+use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
@@ -330,60 +331,73 @@ class ItemController extends Controller
 
     public function updateItemsFromB2BAction()
     {
-        $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
-        $result = $client->GetProducts(array(
-            'GetProductsRequest' => array(
-                'UserInfo' => array(
-                    'UserName'=>$this->container->getParameter('B2BServer.UserName'),
-                    'Password'=>$this->container->getParameter('B2BServer.Password')
-                ),
-                'ClientReferenceData' => array(
-                    'Service'=>'imtu',
-                    'ClientTransactionID'=>$this->container->getParameter('B2BServer.ClientTransactionID'),
-                    'IP'=>$this->container->getParameter('B2BServer.IP'),
-                    'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
-                ),
-                'Parameters' => array(
-                    'DataType'=>''
-                ),
-            )
-        ));
-
-        $ProductsResponse = $result->GetProductsResponse;
-
-        $list = array();
-
-        foreach( $ProductsResponse->ProductList->Product as $product )
+        try
         {
-            $ProductCountries = $product->ProductCountryList->ProductCountry;
-            if(is_array($ProductCountries))
+            $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
+            $result = $client->GetProducts(array(
+                'GetProductsRequest' => array(
+                    'UserInfo' => array(
+                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+                        'Password'=>$this->container->getParameter('B2BServer.Password')
+                    ),
+                    'ClientReferenceData' => array(
+                        'Service'=>'imtu',
+                        'ClientTransactionID'=>'TestTrans-1',
+                        'IP'=>$this->container->getParameter('B2BServer.IP'),
+                        'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
+                    ),
+                    'Parameters' => array(
+                        'DataType'=>''
+                    ),
+                )
+            ));
+
+            $ProductsResponse = $result->GetProductsResponse;
+
+            $list = array();
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
+            if(!$provider)
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('cant_find_b2b_provider',array(),'message'));
+
+            foreach( $ProductsResponse->ProductList->Product as $product )
             {
-                foreach($ProductCountries as $productCountry)
+                $ProductCountries = $product->ProductCountryList->ProductCountry;
+                if(is_array($ProductCountries))
                 {
-                    $this->insertItemFromB2B(array(
+                    foreach($ProductCountries as $productCountry)
+                    {
+                        $this->insertItemFromB2B($provider,array(
+                            'Code'=>$product->Code,
+                            'Name'=>$product->Name,
+                            'Denomination'=>$product->Denomination,
+                            'CountryCode'=>$productCountry->CountryCode,
+                            'CarrierName'=>$productCountry->CarrierList->Carrier->CarrierName
+                        ));
+                    }
+                }
+                else
+                {
+                    $this->insertItemFromB2B($provider,array(
                         'Code'=>$product->Code,
                         'Name'=>$product->Name,
                         'Denomination'=>$product->Denomination,
-                        'CountryCode'=>$productCountry->CountryCode,
-                        'CarrierName'=>$productCountry->CarrierList->Carrier->CarrierName
+                        'CountryCode'=>$ProductCountries->CountryCode,
+                        'CarrierName'=>$ProductCountries->CarrierList->Carrier->CarrierName
                     ));
                 }
             }
-            else
-            {
-                $this->insertItemFromB2B(array(
-                    'Code'=>$product->Code,
-                    'Name'=>$product->Name,
-                    'Denomination'=>$product->Denomination,
-                    'CountryCode'=>$ProductCountries->CountryCode,
-                    'CarrierName'=>$ProductCountries->CarrierList->Carrier->CarrierName
-                ));
-            }
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+        }
+        catch(\Exception $e)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
         }
         return $this->render("HelloDiDiDistributorsBundle:Item:b2bupdate.html.twig",array('array'=>$list));
     }
 
-    private function insertItemFromB2B($row)
+    private function insertItemFromB2B($provider,$row)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierName']));
@@ -394,5 +408,64 @@ class ItemController extends Controller
             $em->persist($operator);
         }
 
+        //        countrycode/itemtype/operatorname/itemname(_)
+        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierName'].'/'.str_replace(' ','_',$row['CarrierName']);
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
+        if(!$item)
+        {
+            $item = new Item();
+            $item->setItemName($row['Name']);
+            $item->setItemFaceValue($row['Denomination']/100);
+            $item->setItemCurrency('USD');
+            $item->setItemType('imtu');
+            $item->setAlertMinStock(0);
+            $item->setItemCode($itemcode);
+            $item->setItemDateInsert(new \DateTime('now'));
+            $item->setOperator($operator);
+            $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
+            $em->persist($item);
+        }
+
+        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
+        if(!$price)
+        {
+            $price = new Price();
+            $price->setItem($item);
+            $price->setAccount($provider);
+            $price->setPrice($item->getItemFaceValue());
+            $price->setPriceCurrency($provider->getAccCurrency());
+            $price->setPriceStatus(1);
+            $price->setIsFavourite(0);
+            $em->persist($price);
+            $priceHistory = new PriceHistory();
+            $priceHistory->setDate(new \DateTime('now'));
+            $priceHistory->setPrice($price->getPrice());
+            $priceHistory->setPrices($price);
+            $em->persist($priceHistory);
+        }
+
+        $em->flush();
+    }
+
+    public function CreateItemCodeAction(Request $request)
+    {
+        try
+        {
+            $countryid = $request->get('countryid');
+            $itemtype = $request->get('itemtype');
+            $operatorid = $request->get('operatorid');
+            $itemname = $request->get('itemname');
+
+            $em = $this->getDoctrine()->getEntityManager();
+
+            $countrycode = $em->getRepository('HelloDiDiDistributorsBundle:Country')->find($countryid)->getIso();
+            $operatorname = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->find($operatorid)->getName();
+            $itemcode = $countrycode.'/'.$itemtype.'/'.$operatorname.'/'.str_replace(' ','_',$itemname);
+            return new Response($itemcode);
+        }
+        catch(\Exception $e)
+        {
+            return new Response('');
+        }
     }
 }

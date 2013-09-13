@@ -832,7 +832,7 @@ $datetype=0;
                }
             $em->flush();
 
-         if (count($item->getCodes())<=$item->getAlertMinStock())
+            if (count($item->getCodes())<=$item->getAlertMinStock())
               $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$item->getItemName()));
 
             if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
@@ -844,6 +844,80 @@ $datetype=0;
             $request->getSession()->set('descriptionid', $description->getId());
             $request->getSession()->set('orderid', $ordercode->getId());
             $request->getSession()->set('firstprintcode', true);
+
+            return $this->redirect($this->generateUrl('Retailer_Shop_print'));
+        }
+
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+
+    }
+
+    public function BuyImtuAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+
+        $Account = $priceChild->getAccount();
+
+        $tax=$em->createQueryBuilder();
+        $tax->select('Th')
+            ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
+            ->innerJoin('Th.Tax','ThTx')
+            ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getParent()->getEntiti()->getCountry())
+            ->andWhere($tax->expr()->isNull('Th.taxend'));
+        $taxhistory=$tax->getQuery()->getSingleResult();
+
+        $item = $priceChild->getItem();
+
+        $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=> $Account->getParent(),'Item' => $item));
+
+        $com = $priceChild->getprice() - $priceParent->getprice();
+
+        if (true)
+        {
+            $tranretailer = new Transaction();
+            $trandist = new Transaction();
+
+            $tranretailer->setAccount($Account);
+            $tranretailer->setTranAmount(-($priceChild->getPrice()));
+            $tranretailer->setTranFees(0);
+            $tranretailer->setTranDescription('Code id: ' );
+            $tranretailer->setTranCurrency($Account->getAccCurrency());
+            $tranretailer->setTranDate(new \DateTime('now'));
+            $tranretailer->setTranInsert(new \DateTime('now'));
+            $tranretailer->setTranAction('sale');
+            $tranretailer->setTranType(0);
+            $tranretailer->setUser($user);
+            $tranretailer->setTranBookingValue(null);
+            $tranretailer->setTranBalance($Account->getAccBalance());
+            $tranretailer->setTaxHistory($taxhistory);
+
+            // For distributors
+            $trandist->setAccount($Account->getParent());
+            $trandist->setTranAmount($com);
+            $trandist->setTranFees(0);
+            $trandist->setTranDescription('Code id: ');
+            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
+            $trandist->setTranDate(new \DateTime('now'));
+            $trandist->setTranInsert(new \DateTime('now'));
+            $trandist->setTranAction('com');
+            $trandist->setTranType(1);
+            $trandist->setUser($user);
+            $trandist->setTranBookingValue(null);
+            $trandist->setTranBalance($Account->getParent()->getAccBalance());
+            $trandist->setTaxHistory($taxhistory);
+            $trandist->setBuyingprice($priceParent->getPrice());
+
+            $em->persist($tranretailer);
+            $em->persist($trandist);
+
+            $em->flush();
+
+            if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
 
             return $this->redirect($this->generateUrl('Retailer_Shop_print'));
         }
@@ -963,10 +1037,11 @@ $datetype=0;
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
+        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid','OIC.name as country')
             ->from('HelloDiDiDistributorsBundle:Operator','O')
             ->innerJoin('O.Item','OI')
             ->innerJoin('OI.Prices','OIP')
+            ->innerJoin('OI.Country','OIC')
             ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('imtu')))
             ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
             ->andwhere('OIP.priceStatus = 1');

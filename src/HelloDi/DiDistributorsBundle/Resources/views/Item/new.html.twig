@@ -100,7 +100,9 @@
                     <div class="control-group">
                         {{ form_label(form.itemCode) }}
                         <div class="controls money">
-                            {{ form_widget(form.itemCode) }} <span class="icon-certificate"></span>
+                            {{ form_widget(form.itemCode,{ 'attr' : {'onfocus' : 'if($(this).val()=="")updateItemCode()'} }) }}
+                            <img src="{{ asset('bundles/hellodi/img/refresh/refresh.png') }}" style="cursor: pointer" id="refresh1" onclick="updateItemCode()">
+                            <span class="icon-certificate"></span>
                         </div>
                         {{ form_errors(form.itemCode) }}
                     </div>
@@ -264,12 +266,25 @@
 
 
 
+                    function updateItemCode()
+                    {
+                        country_id = $("#Item_Country").val();
+                        item_type = $("#Item_itemType").val();
+                        operator_id = $("#Item_operator").val();
+                        item_name = $("#Item_itemName").val();
+
+                        if(country_id != "" && item_type!="" && operator_id!="" && item_name!="")
+                        {
+                            $("#refresh1").attr('src','{{ asset('bundles/hellodi/img/refresh/loading.gif') }}');
+                            $.post('{{ path('item_create_itemCode') }}',{countryid:country_id, itemtype:item_type, operatorid:operator_id, itemname:item_name},function(result){
+                                $("#refresh1").attr('src','{{ asset('bundles/hellodi/img/refresh/refresh.png') }}');
+                                $("#Item_itemCode").val(result);
+                            });
+                        }
+                    }
                 </script>
 
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}
