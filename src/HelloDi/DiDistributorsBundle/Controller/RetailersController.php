@@ -1089,9 +1089,10 @@ $datetype=0;
 //start mostafa
     public function ShowItemsAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $prices = $myaccount->getPrices();
+        $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$myaccount,'priceStatus'=>1));
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:items.html.twig', array(
                 'prices' => $prices,

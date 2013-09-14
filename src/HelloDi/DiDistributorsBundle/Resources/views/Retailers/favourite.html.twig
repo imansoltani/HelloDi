@@ -76,14 +76,13 @@
                     </label>
 
                     <div class="controls">
-                        <input type="text"
-                               onkeydown="return ( event.ctrlKey || event.altKey
-						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
-						|| (95<event.keyCode && event.keyCode<106)
-						|| (event.keyCode==8) || (event.keyCode==9)
-						|| (event.keyCode>34 && event.keyCode<40)
-						|| (event.keyCode==46) )"
-                               name="numberOfsale" onchange="count_value()" id="itemcount">
+                        <select name="numberOfsale" onchange="count_value()" id="itemcount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
                     </div>
 
                 </div>
@@ -176,7 +175,7 @@
                                     <input type="hidden" id="item_name1" value="{{ opritm.itemname }}">
                                     <input type="hidden" id="item_type1"
                                         {% if opritm.itemtype=='dmtu' %}     value="{{ 'Mobile' | trans ({}, 'item') }}"
-                                        {% elseif opritm.itemType=='imtu' %} value="{{ 'IMTU' | trans ({}, "item") }}"
+                                        {% elseif opritm.itemtype=='imtu' %} value="{{ 'IMTU' | trans ({}, "item") }}"
                                         {% elseif opritm.itemtype=='epmt' %} value="{{ 'E-payment' | trans ({}, 'item') }}"
                                         {% elseif opritm.itemtype=='clcd' %} value="{{ 'Calling_Card' | trans ({}, 'item') }}"
                                         {% endif %}
