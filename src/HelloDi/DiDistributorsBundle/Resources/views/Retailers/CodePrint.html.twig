@@ -1,19 +1,3 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
-{% if MU == 'epmt' %} {% set MU = 'E-payment' %}{% endif %}
-{% block title %}
-    {{ 'PrintLastSale' | trans ({}, "transaction") }}
-{% endblock title %}
-
-{% block Site_Map %}
-    <a class="link" href="{{ path('retailers_dashboard') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link">{{ 'PrintLastSale' | trans ({}, "transaction") }}</span>
-{% endblock Site_Map %}
-
-{% block PageTitle %}
-    <i class="icon-check"></i>
-    {{ 'PrintLastSale' | trans ({}, "transaction") }}
-{% endblock %}
-
 {% block Link_Head %}
     <style>
         .item
@@ -79,6 +63,7 @@
     <a type="button" class="btn btn-primary" href="javascript:window.print();">Print</a>
     <a type="button" class="btn btn-primary" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
 </div>
+{% endif %}
 <div class="print">
     {% for tran in trans %}
 

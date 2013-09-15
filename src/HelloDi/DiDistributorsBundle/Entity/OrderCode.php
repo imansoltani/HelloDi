@@ -22,6 +22,11 @@ class OrderCode
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=2, nullable=false)
+     */
+    private $lang;
+
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="Order")
      */
     private $Transactions;
@@ -74,5 +79,28 @@ class OrderCode
     public function getTransactions()
     {
         return $this->Transactions;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param string $lang
+     * @return OrderCode
+     */
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
+    
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return string 
+     */
+    public function getLang()
+    {
+        return $this->lang;
     }
 }

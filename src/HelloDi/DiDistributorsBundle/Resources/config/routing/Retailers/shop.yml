@@ -1,11 +1,16 @@
-Retailer_Shop_dmtu:
-    pattern:  /dmtu
-    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
+Retailer_Shop_buy_Imtu:
+    pattern:  /buyImtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:BuyImtu }
+    requirements: { _method: post }
 
 Retailer_Shop_buy:
     pattern:  /buy
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Buy }
     requirements: { _method: post }
+
+Retailer_Shop_dmtu:
+    pattern:  /dmtu
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Dmtu }
 
 Retailer_Shop_callingCard:
     pattern:  /calling-cards

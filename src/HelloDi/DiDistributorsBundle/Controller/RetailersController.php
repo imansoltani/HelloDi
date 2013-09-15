@@ -722,36 +722,28 @@ $datetype=0;
 // Start kamal
 
     public function DmtuAction(){
-
-
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin('p.Item','i')
+            ->where('i.itemType = :type')->setParameter('type','dmtu')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
 
+        $prices=$qb->getQuery()->getResult();
 
-            $qb = $em->createQueryBuilder();
-            $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
-                ->from('HelloDiDiDistributorsBundle:Operator','O')
-                ->innerJoin('O.Item','OI')
-                ->innerJoin('OI.Prices','OIP')
-                ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('dmtu')))
-                ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
-                ->andwhere('OIP.priceStatus = 1');
-            $qb=$qb->getQuery();
-            $qb=$qb->getResult();
-
-
-       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array
-       (
-            'Operators'=>$qb,
+       return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopDmtu.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
-              ));
-
-        }
+       ));
+    }
 
     public function BuyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -783,6 +775,7 @@ $datetype=0;
         if ($codes)
         {
             $ordercode = new OrderCode();
+            $ordercode->setLang($request->get('language'));
             $em->persist($ordercode);
             foreach ($codes as $code)
             {
@@ -838,11 +831,6 @@ $datetype=0;
             if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
 
-
-            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item, 'desclang' => $user->getLanguage()));
-            if(!$description) $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item' => $item));
-            $request->getSession()->set('descriptionid', $description->getId());
-            $request->getSession()->set('orderid', $ordercode->getId());
             $request->getSession()->set('firstprintcode', true);
 
             return $this->redirect($this->generateUrl('Retailer_Shop_print'));
@@ -854,7 +842,7 @@ $datetype=0;
 
     public function BuyImtuAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -930,29 +918,19 @@ $datetype=0;
     {
         $em = $this->getDoctrine()->getManager();
 
-        if($request->getSession()->has('orderid'))
+        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
+        if($lasttran)
         {
-            $descriptionid = $request->getSession()->get('descriptionid');
-            $orderid = $request->getSession()->get('orderid');
-            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$orderid,'tranAction'=>'sale'));
-            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descriptionid);
+            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()));
         }
         else
-        {
-            $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
-            if($lasttran)
-            {
-                $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
-                $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$this->getUser()->getLanguage()));
-            }
-            else
-                $trans = null;
-        }
+            $trans = null;
 
         if($trans!= null)
         {
             $duplicate = !$request->getSession()->has('firstprintcode');
-            $request->getSession()->remove('firstprintcard');
+            $request->getSession()->remove('firstprintcode');
             $MU = $trans[0]->getCode()->getItem()->getItemType();
             $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
                 'trans'=>$trans,
@@ -982,53 +960,43 @@ $datetype=0;
     }
 
     public function CallingCardAction() {
-
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemType as itemtype ','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
-            ->from('HelloDiDiDistributorsBundle:Operator','O')
-            ->innerJoin('O.Item','OI')
-            ->innerJoin('OI.Prices','OIP')
-            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('clcd')))
-            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
-            ->andwhere('OIP.priceStatus = 1');
-        $qb=$qb->getQuery();
-        $qb=$qb->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin('p.Item','i')
+            ->where('i.itemType = :type')->setParameter('type','clcd')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
 
+        $prices=$qb->getQuery()->getResult();
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array
-        (
-            'Operators'=>$qb,
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:CallingCard.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
         ));
-
     }
 
     public function EpaymentAction() {
-
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
-            ->from('HelloDiDiDistributorsBundle:Operator','O')
-            ->innerJoin('O.Item','OI')
-            ->innerJoin('OI.Prices','OIP')
-            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('epmt')))
-            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
-            ->andwhere('OIP.priceStatus = 1');
-        $qb=$qb->getQuery();
-        $qb=$qb->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin('p.Item','i')
+            ->where('i.itemType = :type')->setParameter('type','epmt')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
 
+        $prices=$qb->getQuery()->getResult();
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:E-payment.html.twig',array
-        (
-            'Operators'=>$qb,
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:E-payment.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
         ));
-
     }
 
     public function ImtuAction()
@@ -1036,48 +1004,40 @@ $datetype=0;
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid','OIC.name as country')
-            ->from('HelloDiDiDistributorsBundle:Operator','O')
-            ->innerJoin('O.Item','OI')
-            ->innerJoin('OI.Prices','OIP')
-            ->innerJoin('OI.Country','OIC')
-            ->Where($qb->expr()->like('OI.itemType',$qb->expr()->literal('imtu')))
-            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
-            ->andwhere('OIP.priceStatus = 1');
-        $qb=$qb->getQuery();
-        $qb=$qb->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin('p.Item','i')
+            ->where('i.itemType = :type')->setParameter('type','imtu')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array
-        (
-            'Operators'=>$qb,
+        $prices=$qb->getQuery()->getResult();
+
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
         ));
 
     }
 
 
-    public  function FavouritesAction(Request $request ){
-
-
+    public  function FavouritesAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('O.Logo as oprlogo','OI.itemName as itemname','OI.itemType as itemtype','OI.id as itemid','O.name as oprname','OI.itemFaceValue as itemfv','OI.itemCurrency as itemcur','OIP.id as priceid')
-            ->from('HelloDiDiDistributorsBundle:Operator','O')
-            ->innerJoin('O.Item','OI')
-            ->innerJoin('OI.Prices','OIP')
-            ->where('OIP.isFavourite = 1')
-            ->andwhere('OIP.Account = :Acc')->setParameter('Acc',$Account)
-            ->andwhere('OIP.priceStatus = 1');
-        $qb=$qb->getQuery();
-        $qb=$qb->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->where('p.isFavourite = 1')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
 
+        $prices=$qb->getQuery()->getResult();
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:favourite.html.twig',array
-        (
-            'Operators'=>$qb,
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:favourite.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
         ));
 

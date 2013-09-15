@@ -72,6 +72,16 @@
 
                 <div class="control-group">
                     <label class="control-label">
+                        {{ 'Language' | trans ({}, "item") }}
+                    </label>
+
+                    <div class="controls">
+                        <select id="language"></select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
                         {{ 'Count' | trans ({}, "code") }}
                     </label>
 
@@ -127,18 +137,12 @@
         <div class="widget stacked">
             <div class="widget-content itemshow">
 
-                <div class="filter_Div filter_item">
+                <div class="filter_Div filter_item" id="operatorslist">
 
                     <div class="filter" data-filter="all">
                         {{ 'AllOperators' | trans ({}, "operator") }}
                     </div>
 
-                    {% for opr in Operators %}
-                        <div class="filter" data-filter="{{ opr.oprname }}">
-                            {{ opr.oprname }}
-
-                        </div>
-                    {% endfor %}
                 </div>
 
 
@@ -148,41 +152,51 @@
                         <div class="sort" data-sort="sfield" data-order="asc">Ascending</div>
 
                 </div> -->
-
+                <script type="text/javascript">var operators = [];</script>
 
                 <div class="list_items" >
                     <ul id="Grid" class="itemulshow">
-                        {% for opritm in Operators %}
+                        {% for pr in Prices %}
 
 
-                            <li id="item_buy" class="mix {{ opritm.oprname }}" sfield="{{ opritm.itemfv }}" >
-                                <a  >
-                                    <div style="background-image: url('{{ asset('') }}uploads/logos/{{ opritm.oprlogo }}')" class="item_show">
-                                        <div class="header">{{ opritm.itemname }}</div>
+                            <li id="item_buy" class="mix {{ pr.Item.operator.name }}" sfield="{{ pr.Item.itemFaceValue }}">
+                                <a>
+                                    <div style="background-image: url('{{ asset(pr.Item.operator.webPath) }}')"
+                                         class="item_show">
+                                        <div class="header">{{ pr.Item.itemName }}</div>
                                         <div class="body">
                                             <div class="price">
-                                                {{ opritm.itemfv }}
+                                                {{ pr.Item.itemFaceValue }}
 
                                             </div>
                                             <div class="type">
-                                                {{ opritm.itemcur }}
+                                                {{ pr.Item.itemCurrency }}
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <input type="hidden" id="item_name1" value="{{ opritm.itemname }}">
+                                    <input type="hidden" id="item_name1" value="{{ pr.Item.itemName }}">
                                     <input type="hidden" id="item_type1" value="{{ 'Calling_Card' | trans ({}, "item") }}">
-                                    <input type="hidden" id="face_value1" value="{{ opritm.itemfv }}">
-                                    <input type="hidden" id="currency1" value="{{ opritm.itemcur }}">
-                                    <input type="hidden" id="operator1" value="{{ opritm.oprname }}">
-                                    <input type="hidden" id="item_id1" value="{{ opritm.itemid }}">
-                                    <input type="hidden" id="price_id1" value="{{ opritm.priceid }}">
+                                    <input type="hidden" id="face_value1" value="{{ pr.Item.itemFaceValue }}">
+                                    <input type="hidden" id="currency1" value="{{ pr.Item.itemCurrency }}">
+                                    <input type="hidden" id="operator1" value="{{ pr.Item.operator.name }}">
+                                    <input type="hidden" id="item_id1" value="{{ pr.Item.id }}">
+                                    <input type="hidden" id="price_id1" value="{{ pr.Item.operator.id }}">
 
+                                    {% for itemdesc in pr.Item.ItemDescs %}
+                                        <input type="hidden" id="lang1" value="{{ itemdesc.desclang }}">
+                                    {% endfor %}
                                 </a>
                             </li>
 
-
+                            <script type="text/javascript">
+                                if($.inArray('{{ pr.Item.operator.name }}', operators) === -1)
+                                {
+                                    operators.push("{{ pr.Item.operator.name }}");
+                                    $('#operatorslist').append('<div class="filter" data-filter="{{ pr.Item.operator.name }}">{{ pr.Item.operator.name }}</div>');
+                                }
+                            </script>
 
 
                             {#<p style="background: blanchedalmond">{{  item.itemName }} <a href="#" target="_blank">Go To Print</a> </p>#}
@@ -212,6 +226,10 @@
                         $('.popupshow #itemcount').val(1);
                         $('.popupshow #itemid').val($(" #item_id1", this).val());
                         $('.popupshow #priceid').val($(" #price_id1", this).val());
+
+                        $(" #lang1", this).each(function(){
+                            $('.popupshow #language').append('<option>'+ $(this).val() +'</option>');
+                        });
                     });
 
 
