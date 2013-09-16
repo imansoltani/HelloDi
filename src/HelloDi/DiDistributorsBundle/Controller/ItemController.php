@@ -47,6 +47,9 @@ class ItemController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            if(!$this->checkDescription($itemdesc->getDescdesc()))
+                $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+
             if ($form->isValid()) {
                 $item->setItemDateInsert(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
@@ -272,6 +275,9 @@ class ItemController extends Controller
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
+            if(!$this->checkDescription($desc->getDescdesc()))
+                $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
                 if($finddesc)
@@ -311,6 +317,9 @@ class ItemController extends Controller
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
+            if(!$this->checkDescription($desc->getDescdesc()))
+                $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+
             if ($form->isValid()) {
                 $desc->setDesclang($desclang);
                 $em->persist($desc);
@@ -329,6 +338,29 @@ class ItemController extends Controller
             ));
     }
 
+    private function checkDescription($desc)
+    {
+        $twig = new \Twig_Environment(new \Twig_Loader_String());
+        try{
+            $twig->render($desc,array(
+                "pin"=>1234,
+                "serial"=>4321,
+                "expire"=>"2012/12/12",
+                "printdate"=>"2013/13/13",
+                "duplicate"=>"duplicate",
+                "entityname"=>'Entity Name',
+                "operator"=>'Operator Name',
+                "entityadrs1"=>'Address Line 1',
+                "entityadrs2"=>'Address Line 2',
+                "entityadrs3"=>'Address Line 3'
+            ));
+            return true;
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
+    //b2b server
     public function updateItemsFromB2BAction()
     {
         try

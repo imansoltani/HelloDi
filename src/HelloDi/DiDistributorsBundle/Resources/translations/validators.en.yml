@@ -10,3 +10,8 @@ sn_not_exist: serial not exist in description.
 This_item_name_exist_already: This item name exist already
 This_item_code_exist_already:
 This_operator_name_exist_already:
+
+#----
+expiry_not_exist: Expiry Date not exist in description.
+printdate_not_exist: Print Date not exist in description.
+duplicate_not_exist: Duplicate not exist in description.

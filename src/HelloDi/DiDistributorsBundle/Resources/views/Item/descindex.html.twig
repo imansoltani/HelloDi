@@ -37,7 +37,7 @@
                         <th>{{ 'Id' | trans ({}, "item") }}</th>
                         <th>{{ 'Operation' | trans ({}, "common") }}</th>
                         <th>{{ 'Language' | trans ({}, "item") }}</th>
-                        <th style="width:8cm">{{ 'Sample' | trans ({}, "item") }} ({{ 'Pin' | trans ({}, "code") }}:1234, {{ 'SerialNumber' | trans ({}, "item") }}:4321, {{ 'DateExpiry' | trans ({}, "item") }}:2012/12/12)</th>
+                        <th style="width:7.2cm !important;">{{ 'Sample' | trans ({}, "item") }} ({{ 'Pin' | trans ({}, "code") }}:1234, {{ 'SerialNumber' | trans ({}, "item") }}:4321, {{ 'DateExpiry' | trans ({}, "item") }}:2012/12/12)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,10 +46,24 @@
 
                             <td >{{ itemdesc.id }}</td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
+                                <a class="btn_actions" href="">Print Sample</a>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
-                            <td>{{ include(template_from_string(itemdesc.descdesc),{"pin":1234, "serial":4321, "expire":"2012/12/12"}) }}</td>
+                            <td class="td-actions" >
+                                {{ include(template_from_string(itemdesc.descdesc),{
+                                    "pin":1234,
+                                    "serial":4321,
+                                    "expire":"2012/12/12",
+                                    "printdate":"2013/13/13",
+                                    "duplicate":"duplicate",
+                                    "entityname":'Entity Name',
+                                    "operator":'Operator Name',
+                                    "entityadrs1":'Address Line 1',
+                                    "entityadrs2":'Address Line 2',
+                                    "entityadrs3":'Address Line 3'
+                                }) }}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

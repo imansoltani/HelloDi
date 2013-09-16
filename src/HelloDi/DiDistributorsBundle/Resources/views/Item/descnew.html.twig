@@ -70,15 +70,14 @@
 
             $('#texteditor').htmlarea({
                 toolbar: [
-                    ["bold", "italic", "underline","strikethrough"]
-                    ,
-                    ["justifyleft","justifycenter","justifyright"]
-                    ,["h1", "h2", "h3"]
-                    ,["increasefontsize","decreasefontsize"]
-                    ,["orderedList  ","unorderedList  "]
-                    ,["horizontalrule","superscript","subscript"]
-                    ,["indent","outdent"]
-                    ,["forecolor"],
+                    ["bold", "italic", "underline","strikethrough"],
+                    ["justifyleft","justifycenter","justifyright"],
+                    ["h1", "h2", "h3"],
+                    ["increasefontsize","decreasefontsize"],
+                    ["orderedList  ","unorderedList  "],
+                    ["horizontalrule","superscript","subscript"],
+                    ["indent","outdent"],
+                    ["forecolor"],
                     [
 
                         {
@@ -114,6 +113,25 @@
                                 r.collapse(false);
                                 r.select();
                             }
+                        },
+                        {
+                            css: "RemoveStyleButton Button",
+                            text: "Remove Style",
+                            action: function() {
+                                this.iframe[0].contentWindow.focus();
+                                var node = $.browser.msie
+                                        ? this.getRange().parentElement()
+                                        : this.getRange().startContainer.parentNode;
+                                var highlightedText = node.innerHTML;
+                                if( node.tagName.toLowerCase() != 'body' && node.tagName.toLowerCase() != 'html')
+                                {
+                                    var newNode = this.iframe[0].contentDocument.createTextNode(highlightedText);
+                                    $(newNode).insertBefore(node);
+                                    $(node).remove();
+                                }
+                                node.collapse(false);
+                                node.select();
+                            }
                         }
                     ],
                     [
@@ -140,44 +158,85 @@
                         }
                     ],
                     [
-                            {
-                                css: "RemoveStyleButton Button",
-                                text: "Remove Style",
-                                action: function() {
-                                    this.iframe[0].contentWindow.focus();
-                                    var node = $.browser.msie
-                                            ? this.getRange().parentElement()
-                                            : this.getRange().startContainer.parentNode;
-                                    var highlightedText = node.innerHTML;
-                                    if( node.tagName.toLowerCase() != 'body' && node.tagName.toLowerCase() != 'html')
-                                    {
-                                        var newNode = this.iframe[0].contentDocument.createTextNode(highlightedText);
-                                        $(newNode).insertBefore(node);
-                                        $(node).remove();
-                                    }
-                                    node.collapse(false);
-                                    node.select();
-                                }
+                        {
+                            css: "printDateButton Button",
+                            text: "Add print Date tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;printdate&#125;&#125;');
                             }
+                        },
+                        {
+                            css: "duplicateButton Button",
+                            text: "Add duplicate tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;duplicate&#125;&#125;');
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            css: "entityNameButton Button",
+                            text: "Add Entity Name tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;entityname&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "operatorButton Button",
+                            text: "Add Operator tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;operator&#125;&#125;');
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            css: "entityadrs1Button Button",
+                            text: "Add Entity Address Line 1 tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;entityadrs1&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "entityadrs2Button Button",
+                            text: "Add Entity Address Line 2 tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;entityadrs2&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "entityadrs3Button Button",
+                            text: "Add Entity Address Line 3 tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;entityadrs3&#125;&#125;');
+                            }
+                        }
                     ]
                 ]
 
             });
 
 
+            $('.jHtmlArea').attr('style','width:100%');
+            $('.jHtmlArea > div').append('<div style="clear: both"></div>').attr('style','width:100%');
+            $('.jHtmlArea > div > iframe').attr('style','min-height: 300px;width: 7.6cm')
+                    .contents().find("body").attr('style','width: 7.2cm;word-wrap:break-word;');
 
-            $('.jHtmlArea').removeAttr('style');
-            $('.jHtmlArea').attr('style','max-width:95%');
-            $('.jHtmlArea .ToolBar').removeAttr('style');
-            $('.jHtmlArea > div').attr('style','width:100%');
-            $('.jHtmlArea > div > iframe').removeAttr('style');
-            $('.jHtmlArea > div > iframe').attr('style','min-height: 300px;width: 8cm;');
-            $('.jHtmlArea .PinButton').html('Pin');
-            $('.jHtmlArea .RemoveStyleButton').html('Remove Border');
             $('.jHtmlArea .BorderButton').html('Border');
             $('.jHtmlArea .SpanBorderButton').html('V Border');
+            $('.jHtmlArea .RemoveStyleButton').html('Remove Border');
+
+            $('.jHtmlArea .PinButton').html('Pin');
             $('.jHtmlArea .ExpireButton').html('Expire');
             $('.jHtmlArea .SerialButton').html('Serial');
+
+            $('.jHtmlArea .printDateButton').html('Print Date');
+            $('.jHtmlArea .duplicateButton').html('Duplicate');
+            $('.jHtmlArea .entityNameButton').html('Entity Name');
+            $('.jHtmlArea .operatorButton').html('Operator');
+            $('.jHtmlArea .entityadrs1Button').html('Address Line 1');
+            $('.jHtmlArea .entityadrs2Button').html('Address Line 2');
+            $('.jHtmlArea .entityadrs3Button').html('Address Line 3');
 
             /*var x = $("#editform body").html();
              $("#editform").submit(function(e){

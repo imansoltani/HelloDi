@@ -77,6 +77,18 @@ HelloDi\DiDistributorsBundle\Entity\ItemDesc:
                 pattern: "/{{serial}}/"
                 match:   true
                 message: 'sn_not_exist'
+            - Regex:
+                pattern: "/{{expire}}/"
+                match:   true
+                message: 'expiry_not_exist'
+            - Regex:
+                pattern: "/{{printdate}}/"
+                match:   true
+                message: 'printdate_not_exist'
+            - Regex:
+                pattern: "/{{duplicate}}/"
+                match:   true
+                message: 'duplicate_not_exist'
 
 HelloDi\DiDistributorsBundle\Entity\Item:
     constraints:
