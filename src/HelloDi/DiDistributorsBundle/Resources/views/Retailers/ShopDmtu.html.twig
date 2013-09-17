@@ -29,7 +29,7 @@
             <button type="button" class="close" onclick="PopuptopClose(event)">X</button>
             <h3 id="myModalLabel">{{ 'BuyCard' | trans ({}, "item") }}</h3>
         </div>
-        <form class="form-horizontal" action="{{ path('Retailer_Shop_buy') }}" method="POST">
+        <form class="form-horizontal" action="{{ path('Retailer_Shop_buy') }}" method="POST" target="_blank">
             <div class="modal-body containerpop">
                 <div class="control-group">
                     <label class="control-label">

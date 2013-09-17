@@ -32,3 +32,6 @@ Retailer_Shop_print:
     pattern:  /print/{print}
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Print , print: 'web' }
 
+Retailer_Shop_Error_print:
+    pattern:  /Error
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ErrorOnPrint }

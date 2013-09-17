@@ -798,7 +798,7 @@ $datetype=0;
             return $this->redirect($this->generateUrl('Retailer_Shop_print'));
         }
 
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
 
     }
 
@@ -889,36 +889,39 @@ $datetype=0;
         else
             $trans = null;
 
-        if($trans!= null)
-        {
-            $duplicate = !$request->getSession()->has('firstprintcode');
-            $request->getSession()->remove('firstprintcode');
-            $MU = $trans[0]->getCode()->getItem()->getItemType();
-            $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-                'trans'=>$trans,
-                'description'=>$description,
-                'duplicate'=>$duplicate,
-                'print' => $print,
-                'MU'=>$MU
-            ));
-
-            if($print == 'web')
-                return $html;
-            else
-                return new Response(
-                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
-                    200,
-                    array(
-                        'Content-Type'          => 'application/pdf',
-                        'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
-                    )
-                );
-        }
-        else
+        if($trans == null)
         {
             $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
-            return $this->redirect($this->getRequest()->headers->get('referer'));
+            return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
         }
+
+        $duplicate = !$request->getSession()->has('firstprintcode');
+        $request->getSession()->remove('firstprintcode');
+        $MU = $trans[0]->getCode()->getItem()->getItemType();
+        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+            'trans'=>$trans,
+            'description'=>$description,
+            'duplicate'=>$duplicate,
+            'print' => $print,
+            'MU'=>$MU
+        ));
+
+        if($print == 'web')
+            return $html;
+        else
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                )
+            );
+    }
+
+    public function ErrorOnPrintAction()
+    {
+        return $this->render("HelloDiDiDistributorsBundle:Retailers:ErrorOnPrint.html.twig");
     }
 
     public function DmtuAction(){
@@ -1022,9 +1025,6 @@ $datetype=0;
             'Prices'=>$prices,
             'Account'=>$Account,
         ));
-
-
-
     }
  // End kamal
 

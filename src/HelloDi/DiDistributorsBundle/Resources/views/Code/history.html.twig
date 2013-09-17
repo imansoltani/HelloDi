@@ -25,11 +25,11 @@
 
             <div class="widget-content">
 
-                {% if code.status==0 %}
+                {% if code.status==1 %}
+                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Dead_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'DeadBeat' | trans ({}, "code") }}</a><br/><br/>
+                {% elseif not isremoved %}
                     <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNote' | trans ({}, "code") }}</a>
                     <a href="{{ path('code_creditnoteanddeatbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node_And_Deat_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNoteAndDeadBeat' | trans ({}, "code") }}</a><br/><br/>
-                {% elseif not isremoved %}
-                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Dead_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'DeadBeat' | trans ({}, "code") }}</a><br/><br/>
                 {% endif %}
                 <div class="tablediv">
                     <div class="contenttitle">

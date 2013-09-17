@@ -317,11 +317,11 @@ class ItemController extends Controller
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
+            $desc->setDesclang($desclang);
             if(!$this->checkDescription($desc->getDescdesc()))
                 $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
 
             if ($form->isValid()) {
-                $desc->setDesclang($desclang);
                 $em->persist($desc);
                 $em->flush();
 
