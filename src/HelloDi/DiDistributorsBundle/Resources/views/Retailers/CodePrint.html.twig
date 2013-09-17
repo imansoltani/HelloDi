@@ -1,3 +1,5 @@
+{% set duplicateText = duplicate? 'Duplicate Print Code':'<span class="duplicate"></span>' %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +11,19 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
     <![endif]-->
     <style>
         .item
         {
             width: 8.2cm;
             margin: auto;
-        }
-        .item
-        {
             page-break-after: always;
+            border-bottom: 1px dashed #000000;
         }
         @media print
         {
@@ -37,13 +39,17 @@
             {
                 display: block !important;
             }
+            .item
+            {
+                border-bottom: none;
+            }
         }
     </style>
 </head>
-<body>
+<body onafterprint="$('.duplicate').html('Duplicate Print Code');">
 {% if print == 'web' %}
 <div id="notPrint" style="text-align: center;margin: 20px">
-    <a type="button" class="btn" href="javascript:window.print();">Print</a>
+    <a type="button" class="btn" href="#" onclick="window.print();$('.duplicate').html('Duplicate Print Code');">Print</a>
     <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
     <a href="#" onclick="window.close()" class="btn">Close</a>
 </div>
@@ -52,15 +58,14 @@
     {% for tran in trans %}
 
         <div class="item">
-            {% if duplicate %}<div style="text-align: center;">Duplicate Print Code</div>{% endif %}
 
             {% if description is not null %}
-                {{ include(template_from_string(description.descdesc),{
+                {{ include(template_from_string(description),{
                     "pin":tran.Code.pin,
                     "serial":tran.Code.serialNumber,
                     "expire":tran.Code.Input.dateExpiry|date('Y/m/d'),
                     "printdate":tran.tranInsert|date('Y/m/d H:s:i'),
-                    "duplicate": 'duplicate',
+                    "duplicate": duplicateText,
                     "entityname":tran.Account.Entiti.entName,
                     "operator":tran.Code.Item.operator.name,
                     "entityadrs1":tran.Account.Entiti.entAdrs1,
@@ -71,17 +76,15 @@
 
                 SerialNumber:{{ tran.Code.serialNumber }}<br><br>
                 Code Secret:{{ tran.Code.pin }}<br><br>
+                expire:{{ tran.Code.Input.dateExpiry|date('Y/m/d') }}<br><br>
+                printdate:{{ tran.tranInsert|date('Y/m/d H:s:i') }}<br><br>
+                duplicate: duplicateText<br><br>
+                entityname:{{ tran.Account.Entiti.entName }}<br><br>
 
             {% endif %}
 
         </div>
     {% endfor %}
 </div>
-
-    {#<script type="text/javascript">#}
-        {#$(document).ready(function(){#}
-            {#window.print();#}
-        {#});#}
-    {#</script>#}
 </body>
 </html>

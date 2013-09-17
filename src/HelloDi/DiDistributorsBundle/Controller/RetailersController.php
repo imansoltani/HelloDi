@@ -884,7 +884,7 @@ $datetype=0;
         if($lasttran)
         {
             $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
-            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()));
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()))->getDescdesc();
         }
         else
             $trans = null;
@@ -900,7 +900,7 @@ $datetype=0;
         $MU = $trans[0]->getCode()->getItem()->getItemType();
         $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
             'trans'=>$trans,
-            'description'=>$description,
+            'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
             'duplicate'=>$duplicate,
             'print' => $print,
             'MU'=>$MU
