@@ -51,7 +51,7 @@ master_profile:
     prefix:   /admin/profile
 
 master_tax:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/Tax.yml"
+    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/tax.yml"
     prefix:   /tax
 
 master_exceptions:
