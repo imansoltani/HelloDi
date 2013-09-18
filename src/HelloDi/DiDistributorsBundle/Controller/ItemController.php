@@ -7,6 +7,7 @@ use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
 use HelloDi\DiDistributorsBundle\Entity\Operator;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\ItemDescType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -358,6 +359,50 @@ class ItemController extends Controller
         }catch (\Exception $e){
             return false;
         }
+    }
+
+    public function PrintAction(Request $request,$print,$descid,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid)->getDescdesc();
+
+        $trans = array();
+        for($i = 1;$i<=2;$i++)
+        {
+            $tran = array(
+                "pin" => '12345678'.$i,
+                "serial" => '87654321'.$i,
+                "expire" => "2012/12/12",
+                "printdate" => "2013/13/13",
+                "entityname" => 'Entity Name '.$i,
+                "operator" => 'Operator Name '.$i,
+                "entityadrs1" => 'Address Line 1 '.$i,
+                "entityadrs2" => 'Address Line 2 '.$i,
+                "entityadrs3" => 'Address Line 3 '.$i
+            );
+            $trans[] = $tran;
+        }
+
+        $html = $this->render('HelloDiDiDistributorsBundle:Item:Print.html.twig',array(
+            'trans'=>$trans,
+            'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
+            'duplicate'=> false,
+            'print' => $print,
+            'descid' => $descid,
+            'itemid' => $id
+        ));
+
+        if($print == 'web')
+            return $html;
+        else
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                )
+            );
     }
 
     //b2b server

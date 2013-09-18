@@ -897,13 +897,12 @@ $datetype=0;
 
         $duplicate = !$request->getSession()->has('firstprintcode');
         $request->getSession()->remove('firstprintcode');
-        $MU = $trans[0]->getCode()->getItem()->getItemType();
+
         $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
             'trans'=>$trans,
             'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
             'duplicate'=>$duplicate,
-            'print' => $print,
-            'MU'=>$MU
+            'print' => $print
         ));
 
         if($print == 'web')

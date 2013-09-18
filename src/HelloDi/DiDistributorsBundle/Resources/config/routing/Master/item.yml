@@ -31,6 +31,11 @@ item_desc_edit:
     pattern:  /{id}/descriptions/{descid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
 
+item_desc_print:
+    pattern:  /{id}/descriptions/{descid}/printsample/{print}
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:Print" , print: 'web' }
+
+#b2b server
 item_b2b_update:
     pattern:  /b2bserverupdate
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:updateItemsFromB2B" }
