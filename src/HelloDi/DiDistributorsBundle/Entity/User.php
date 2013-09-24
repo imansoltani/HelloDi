@@ -86,6 +86,10 @@ class User extends BaseUser
      */
     private $OgonePayment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", mappedBy="User")
+     */
+    private $B2BLogs;
 
     /**
      * Constructor
@@ -99,6 +103,7 @@ class User extends BaseUser
         $this->TicketNotes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->B2BLogs = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
     /**
@@ -468,5 +473,38 @@ class User extends BaseUser
     public function getOgonePayment()
     {
         return $this->OgonePayment;
+    }
+
+    /**
+     * Add B2BLogs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     * @return User
+     */
+    public function addB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    {
+        $this->B2BLogs[] = $b2BLogs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove B2BLogs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     */
+    public function removeB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    {
+        $this->B2BLogs->removeElement($b2BLogs);
+    }
+
+    /**
+     * Get B2BLogs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getB2BLogs()
+    {
+        return $this->B2BLogs;
     }
 }
