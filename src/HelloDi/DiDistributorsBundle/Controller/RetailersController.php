@@ -806,74 +806,77 @@ $datetype=0;
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+        $accountRet = $user->getAccount();
+        $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
+        $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
 
-        $priceChild = $em->getRepository('HelloDiDiDistributorsBundle:Price')->find($request->get('price_id'));
+        $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
 
-        $Account = $priceChild->getAccount();
-
-        $tax=$em->createQueryBuilder();
-        $tax->select('Th')
-            ->from('HelloDiDiDistributorsBundle:TaxHistory', 'Th')
-            ->innerJoin('Th.Tax','ThTx')
-            ->Where('ThTx.Country = :Cou')->setParameter('Cou', $Account->getParent()->getEntiti()->getCountry())
-            ->andWhere($tax->expr()->isNull('Th.taxend'));
-        $taxhistory=$tax->getQuery()->getSingleResult();
-
-        $item = $priceChild->getItem();
-
-        $priceParent = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Account'=> $Account->getParent(),'Item' => $item));
-
-        $com = $priceChild->getprice() - $priceParent->getprice();
+        $com = $priceRet->getprice() - $priceDist->getprice();
 
         if (true)
         {
-            $tranretailer = new Transaction();
-            $trandist = new Transaction();
+            $ordercode = new OrderCode();
+            $ordercode->setLang($request->get('language'));
+            foreach (array() as $code)
+            {
+                $tranretailer = new Transaction();
+                $tranretailer->setAccount($accountRet);
+                $tranretailer->setTranAmount(-($priceRet->getPrice()));
+                $tranretailer->setTranFees(0);
+                $tranretailer->setTranDescription('Code id: ' . $code->getId());
+                $tranretailer->setTranCurrency($accountRet->getAccCurrency());
+                $tranretailer->setTranDate(new \DateTime('now'));
+                $tranretailer->setTranInsert(new \DateTime('now'));
+                $tranretailer->setCode($code);
+                $tranretailer->setTranAction('sale');
+                $tranretailer->setTranType(0);
+                $tranretailer->setUser($user);
+                $tranretailer->setTranBookingValue(null);
+                $tranretailer->setTranBalance($accountRet->getAccBalance());
+                $tranretailer->setTaxHistory($taxhistory);
+                $tranretailer->setOrder($ordercode);
+                $ordercode->addTransaction($tranretailer);
 
-            $tranretailer->setAccount($Account);
-            $tranretailer->setTranAmount(-($priceChild->getPrice()));
-            $tranretailer->setTranFees(0);
-            $tranretailer->setTranDescription('Code id: ' );
-            $tranretailer->setTranCurrency($Account->getAccCurrency());
-            $tranretailer->setTranDate(new \DateTime('now'));
-            $tranretailer->setTranInsert(new \DateTime('now'));
-            $tranretailer->setTranAction('sale');
-            $tranretailer->setTranType(0);
-            $tranretailer->setUser($user);
-            $tranretailer->setTranBookingValue(null);
-            $tranretailer->setTranBalance($Account->getAccBalance());
-            $tranretailer->setTaxHistory($taxhistory);
-
-            // For distributors
-            $trandist->setAccount($Account->getParent());
-            $trandist->setTranAmount($com);
-            $trandist->setTranFees(0);
-            $trandist->setTranDescription('Code id: ');
-            $trandist->setTranCurrency($Account->getParent()->getAccCurrency());
-            $trandist->setTranDate(new \DateTime('now'));
-            $trandist->setTranInsert(new \DateTime('now'));
-            $trandist->setTranAction('com');
-            $trandist->setTranType(1);
-            $trandist->setUser($user);
-            $trandist->setTranBookingValue(null);
-            $trandist->setTranBalance($Account->getParent()->getAccBalance());
-            $trandist->setTaxHistory($taxhistory);
-            $trandist->setBuyingprice($priceParent->getPrice());
-
-            $em->persist($tranretailer);
-            $em->persist($trandist);
-
+                // For distributors
+                $trandist = new Transaction();
+                $trandist->setAccount($accountRet->getParent());
+                $trandist->setTranAmount($com);
+                $trandist->setTranFees(0);
+                $trandist->setTranDescription('Code id: ' . $code->getId());
+                $trandist->setTranCurrency($accountRet->getParent()->getAccCurrency());
+                $trandist->setTranDate(new \DateTime('now'));
+                $trandist->setTranInsert(new \DateTime('now'));
+                $trandist->setCode($code);
+                $trandist->setTranAction('com');
+                $trandist->setTranType(1);
+                $trandist->setUser($user);
+                $trandist->setTranBookingValue(null);
+                $trandist->setTranBalance($accountRet->getParent()->getAccBalance());
+                $trandist->setTaxHistory($taxhistory);
+                $trandist->setBuyingprice($priceDist->getPrice());
+                $trandist->setOrder($ordercode);
+                $em->persist($tranretailer);
+                $em->persist($trandist);
+                $ordercode->addTransaction($trandist);
+            }
+            $em->persist($ordercode);
             $em->flush();
 
-            if($Account->getAccBalance()+$Account->getAccCreditLimit()<=15000)
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>31,'value'=>'15000 ' .$Account->getAccCurrency()));
+            if (count($item->getCodes())<=$item->getAlertMinStock())
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$item->getItemName()));
+
+            if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
+                $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
+
+            $request->getSession()->set('firstprintcode', true);
 
             return $this->redirect($this->generateUrl('Retailer_Shop_print'));
         }
 
-        return $this->redirect($this->getRequest()->headers->get('referer'));
-
+        return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
     }
 
     public function PrintAction(Request $request,$print)
