@@ -433,7 +433,7 @@ class ItemController extends Controller
 
             $list = array();
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
             if(!$provider)
                 $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('cant_find_b2b_provider',array(),'message'));
@@ -471,22 +471,23 @@ class ItemController extends Controller
         {
             $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
         }
-        return $this->render("HelloDiDiDistributorsBundle:Item:b2bupdate.html.twig",array('array'=>$list));
+        return $this->redirect($this->generateUrl('item'));
     }
 
     private function insertItemFromB2B($provider,$row)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierName']));
         if(!$operator)
         {
             $operator = new Operator();
             $operator->setName($row['CarrierName']);
             $em->persist($operator);
+            $em->flush();
         }
 
         //        countrycode/itemtype/operatorname/itemname(_)
-        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierName'].'/'.str_replace(' ','_',$row['CarrierName']);
+        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierName'].'/'.str_replace(' ','_',$row['Name']);
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
         if(!$item)
         {
@@ -501,6 +502,7 @@ class ItemController extends Controller
             $item->setOperator($operator);
             $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
             $em->persist($item);
+            $em->flush();
         }
 
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
@@ -519,9 +521,8 @@ class ItemController extends Controller
             $priceHistory->setPrice($price->getPrice());
             $priceHistory->setPrices($price);
             $em->persist($priceHistory);
+            $em->flush();
         }
-
-        $em->flush();
     }
 
     public function CreateItemCodeAction(Request $request)
@@ -533,7 +534,7 @@ class ItemController extends Controller
             $operatorid = $request->get('operatorid');
             $itemname = $request->get('itemname');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             $countrycode = $em->getRepository('HelloDiDiDistributorsBundle:Country')->find($countryid)->getIso();
             $operatorname = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->find($operatorid)->getName();
