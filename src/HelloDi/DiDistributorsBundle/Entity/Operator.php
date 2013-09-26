@@ -136,7 +136,7 @@ class Operator
 
     public function getWebPath()
     {
-        return null === $this->Logo ? null : $this->getUploadDir().'/'.$this->Logo;
+        return $this->getUploadDir().'/'. (null === $this->Logo ? "0.png" : $this->Logo);
     }
 
     protected function getUploadRootDir()

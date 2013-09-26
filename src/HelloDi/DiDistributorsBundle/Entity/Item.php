@@ -225,7 +225,7 @@ class Item
     /**
      * Set operator
      *
-     * @param string $operator
+     * @param \HelloDi\DiDistributorsBundle\Entity\Operator $operator
      * @return Item
      */
     public function setOperator($operator)
@@ -238,7 +238,7 @@ class Item
     /**
      * Get operator
      *
-     * @return string 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Operator
      */
     public function getOperator()
     {

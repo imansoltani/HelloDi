@@ -804,7 +804,9 @@ $datetype=0;
 
     public function BuyImtuAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $mobileNumber = $request->get('mobile_number');
 
         $user = $this->getUser();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
@@ -815,6 +817,63 @@ $datetype=0;
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
 
         $com = $priceRet->getprice() - $priceDist->getprice();
+
+        $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
+        $result = $client->CreateAccount(array(
+            'CreateAccountRequest' => array(
+                'UserInfo' => array(
+                    'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+                    'Password'=>$this->container->getParameter('B2BServer.Password')
+                ),
+                'ClientReferenceData' => array(
+                    'Service'=>'imtu',
+                    'ClientTransactionID'=>'TestTrans-1',
+                    'IP'=>$this->container->getParameter('B2BServer.IP'),
+                    'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
+                ),
+                'Parameters' => array(
+                    'CarrierCode'=>$item->getOperator()->getName(),
+                    'CountryCode'=>$item->getCountry()->getIso(),
+                    'Amount'=>$item->getItemFaceValue()*100,
+                    'MobileNumber'=>$mobileNumber,
+                    'StoreID'=>'55555',
+                    'ChargeType'=>'transfer',
+                    'Recharge'=>'Y',
+                    'SendSMS'=>'N',
+                    'SendEmail'=>'N'
+                ),
+            )
+        ));
+
+        $CreateAccountResponse = $result->CreateAccountResponse;
+
+        $ss = $client->__getLastRequest();
+//        die('--'.print_r(array(
+//                'CreateAccountRequest' => array(
+//                    'UserInfo' => array(
+//                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+//                        'Password'=>$this->container->getParameter('B2BServer.Password')
+//                    ),
+//                    'ClientReferenceData' => array(
+//                        'Service'=>'imtu',
+//                        'ClientTransactionID'=>'TestTrans-1',
+//                        'IP'=>$this->container->getParameter('B2BServer.IP'),
+//                        'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
+//                    ),
+//                    'Parameters' => array(
+//                        'CarrierCode'=>$item->getOperator()->getName(),
+//                        'CountryCode'=>$item->getCountry()->getIso(),
+//                        'Amount'=>$item->getItemFaceValue()*100,
+//                        'MobileNumber'=>$mobileNumber,
+//                        'StoreID'=>'55555',
+//                        'ChargeType'=>'transfer',
+//                        'Recharge'=>'Y',
+//                        'SendSMS'=>'N',
+//                        'SendEmail'=>'N'
+//                    ),
+//                )
+//            )).'--');
+        die('--'.print_r($CreateAccountResponse).'--');
 
         if (true)
         {

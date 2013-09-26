@@ -450,7 +450,7 @@ class ItemController extends Controller
                             'Name'=>$product->Name,
                             'Denomination'=>$product->Denomination,
                             'CountryCode'=>$productCountry->CountryCode,
-                            'CarrierName'=>$productCountry->CarrierList->Carrier->CarrierName
+                            'CarrierCode'=>$productCountry->CarrierList->Carrier->CarrierCode
                         ));
                     }
                 }
@@ -461,7 +461,7 @@ class ItemController extends Controller
                         'Name'=>$product->Name,
                         'Denomination'=>$product->Denomination,
                         'CountryCode'=>$ProductCountries->CountryCode,
-                        'CarrierName'=>$ProductCountries->CarrierList->Carrier->CarrierName
+                        'CarrierCode'=>$ProductCountries->CarrierList->Carrier->CarrierCode
                     ));
                 }
             }
@@ -477,17 +477,17 @@ class ItemController extends Controller
     private function insertItemFromB2B($provider,$row)
     {
         $em = $this->getDoctrine()->getManager();
-        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierName']));
+        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierCode']));
         if(!$operator)
         {
             $operator = new Operator();
-            $operator->setName($row['CarrierName']);
+            $operator->setName($row['CarrierCode']);
             $em->persist($operator);
             $em->flush();
         }
 
         //        countrycode/itemtype/operatorname/itemname(_)
-        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierName'].'/'.str_replace(' ','_',$row['Name']);
+        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierCode'].'/'.str_replace(' ','_',$row['Name']);
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
         if(!$item)
         {
@@ -502,6 +502,15 @@ class ItemController extends Controller
             $item->setOperator($operator);
             $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
             $em->persist($item);
+            $em->flush();
+        }
+        else
+        {
+            $item->setItemName($row['Name']);
+            $item->setItemFaceValue($row['Denomination']/100);
+            $item->setItemDateInsert(new \DateTime('now'));
+            $item->setOperator($operator);
+            $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
             $em->flush();
         }
 
