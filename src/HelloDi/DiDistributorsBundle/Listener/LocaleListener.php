@@ -1,37 +1,28 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Listener;
+
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class LocaleListener implements EventSubscriberInterface
+class LocaleListener
 {
-    private $defaultLocale;
-
-    public function __construct($defaultLocale = 'en')
+    public function onRequest(GetResponseEvent $event)
     {
-        $this->defaultLocale = $defaultLocale;
-    }
-
-    public function onKernelRequest(GetResponseEvent $event)
-    {
-        $request = $event->getRequest();
-        if (!$request->hasPreviousSession()) {
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType())
             return;
-        }
 
-        if ($locale = $request->attributes->get('_locale')) {
-            $request->getSession()->set('_locale', $locale);
-        } else {
-            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
-        }
+        $request = $event->getRequest();
+        $locale = $request->getSession()->get('_locale');
+        $request->setLocale($locale);
     }
 
-    static public function getSubscribedEvents()
+    public function onLogin(InteractiveLoginEvent $event)
     {
-        return array(
-            // must be registered before the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
-        );
+        $session = $event->getRequest()->getSession();
+        $user = $event->getAuthenticationToken()->getUser();
+
+        $session->set('_locale', $user->getLanguage());
+        $session->set('ExceptionUser',$user->getUsername());
     }
 }
