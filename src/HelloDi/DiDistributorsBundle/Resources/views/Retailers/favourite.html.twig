@@ -117,8 +117,22 @@
                     </div>
                 </div>
 
+                <div class="control-group showForImtu"">
+                    <label class="control-label">
+                        {{ 'MobileNumber' | trans ({}, "item") }}
+                    </label>
+
+                    <div class="controls">
+                        <input type="text" value="" class="input-large" name="mobile_number" onkeydown="return ( event.ctrlKey || event.altKey
+                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                        || (95<event.keyCode && event.keyCode<106)
+                        || (event.keyCode==8) || (event.keyCode==9)
+                        || (event.keyCode>34 && event.keyCode<40)
+                        || (event.keyCode==46) )">
+                    </div>
+                </div>
+
                 <input  type="hidden" id="itemid" name="item_id" value="">
-                <input type="hidden" id="priceid" name="price_id" value="">
 
             </div>
 
@@ -252,12 +266,14 @@
                         {
                             $(".showForImtu").show();
                             $(".hideForImtu").hide();
+                            $("#language").removeAttr("required");
                             $("#from_buy").attr('action','{{ path('Retailer_Shop_buy_Imtu') }}');
                         }
                         else
                         {
                             $(".showForImtu").hide();
                             $(".hideForImtu").show();
+                            $("#language").attr( "required", true );
                             $("#from_buy").attr('action','{{ path('Retailer_Shop_buy') }}');
                         }
                     });
