@@ -1,0 +1,41 @@
+Code: Code
+Codes: Codes
+Sales: Ventes
+Sale: Vente
+Count: Nombre
+Trends: Direction
+SerialNumber: Numéros de série
+Pin: Pin
+Status: Statuts
+DateInsert: Insérer la date
+DateProduction: Date de production
+DateExpiry: Date d'expiration
+FileName: Nom du fichier
+File: Fichier
+Batch: Logo
+ExportCSV: Exporter la TVA
+Quantity: Quantité
+History: Histoire
+Info: Info
+All: Tous
+
+CreditNote: Note de crédit
+DeadBeat: Retrait
+CreditNoteAndDeadBeat: Note de crédit et retrait
+
+Available: Disponible
+Unavailable: Pas disponible
+
+FromSerialNumber: Numéros de série à partir de 
+ToSerialNumber: Numéros de série à
+FromInsertDate: Date d'insertion de
+ToInsertDate: Date d'insertion à
+FromExpireDate: Date d'expiration de
+ToExpireDate: Date d'expiration à
+Upload: Télécharger
+Input: Entrée
+Inputs: Entrées
+Value: Valeur
+Delimiter: Séparateur
+ColumnNumSN: Colonne de numéros de série
+ColumnNumPIN: Colonne de numéros de PIN

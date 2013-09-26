@@ -1,0 +1,24 @@
+Entity: Entité
+VatNumber: Numéro de TVA
+Tel1: Tél 1
+Tel2: Tél 2
+Fax: Fax
+WebSite: Site web
+Adrs1: Commune
+Adrs2: Rue
+Adrs3: Supplémentaire
+Np: NP
+City: Ville
+Country: Pays
+Address: Adresse
+EditAddress: Modifier l'adresse
+EntityName: Nom de la société
+EntityInfo: Informations de la société
+AddressInfo: Informations adresse 
+AddressEntity: Société adresse
+Entities: Sociétés
+DateChange: Changer la date
+Profile: Profil
+AdditionalDetails: Détails supplémentaires 
+Info: Info
+

@@ -1,0 +1,32 @@
+Users: Utilisateurs
+User: Utilisateur
+FullName: Nom et prénom
+AddNewUser: Ajouter un nouvel utilisateur
+CreateUser: Crée un nouvel utilisateur
+UserName: Nom d'utilisateur
+EditUser: Modifier l'utilisateur
+Role: Rôle
+select_a_role: Selectionner un rôle
+Language: Langue
+PlainPassword_Second: Deuxième mot de passe 
+PlainPassword_First: Premier mot de passe 
+password.mismatch: Discordance de mot de passe
+Enabled: Activé
+Email: Email
+Mobile: Mobile
+FirstName: Prénom
+LastName: Nom
+Disable: Désactivé
+Enable: Activé
+Setting: Definition
+Profile: Profil
+Staff: Personnel
+Status: Statut
+Seller: Vendeur
+All: Tous
+InActive: Pas actif
+Active: Actif
+
+#jadid#
+Password:
+

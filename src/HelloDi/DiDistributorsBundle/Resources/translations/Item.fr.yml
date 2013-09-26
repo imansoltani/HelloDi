@@ -1,0 +1,42 @@
+Item: Article
+Items: Articles
+Id: ID
+Name: Nom de l'article
+FaceValue: Valeur nominal
+Currency: Monnaie
+MinStock: Stock minimal
+Mobile: Mobile
+Calling_Card: Carte de téléphone
+E-payment: E-paiement
+ItemType: Type de produit
+All: Tous
+Type: Catégorie
+ShopDmtu: Boutique d'opérateur national
+BuyCard: Acheter une carte
+Favorite: Favori
+Favorites: Favoris
+AddItem: Ajouter un élément
+EditItem: Modifier l'élément
+Stock: Stock
+Country: Pays
+ItemCode: Code de l'article
+Info: Info
+Details: Détails
+DateInsert: Insérer la date
+ItemPerDist: Point par distributeur
+ItemPerRetailer: Point par revendeur
+Inactive: Inactive
+Description: Description
+Descriptions: Descriptions
+DescriptionLanguages: Langue de description
+Language: Langue
+AddItemDescription: Ajouter un élément descriptif
+EditItemDescription: Modifier un élément descriptif
+Sample: Échantillon
+
+
+#
+NewItem:
+IMTU:
+UpdateB2BAPI:
+MobileNumber:

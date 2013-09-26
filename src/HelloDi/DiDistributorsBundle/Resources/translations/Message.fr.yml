@@ -1,0 +1,60 @@
+#message#
+
+the_operation_done_successfully: L'opération a été réalisée avec succès
+
+Please_input_a_number_greater_than_zero: S'il vous plaît entrer un nombre supérieur à zéro
+
+Are_you_sure_you_perform_this_operation?: Etes-vous sûr d'effectuer cette opération?
+
+Register_transaction: Inscription transaction
+Make_transfer: Effectuer un transfert
+Fund_distributor: Distributeur de fonds
+Fund_retailer: Revendeur de fonds
+
+Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%: Compte du revendeur a été changé de nouveau revendeur à revendeur courant
+Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Limite de crédit des revendeurs a été changé de nouveau revendeur à revendeur courant
+
+Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Compte du distributeur a été changé de nouveau distributeur à distributeur courant 
+Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Limite de crédit du distributeur a été changé de nouveau distributeur à distributeur courant 
+
+Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Compte du fournisseur a été changé de nouveau fournisseur à fournisseur courant
+
+You_entered_an_invalid: Votre entrée est invalide
+balance_should_more_than_credit_limit: Le solde devrait être plus que la limite de crédit
+balance_is_not_enough: Le solde n'est pas suffisant
+credit_Limit_should_be_positive: La limite de crédit devrait être positif
+
+#------
+Unable_to_find_%object%: Impossible de trouver l'objet
+item_has_not_price_on_provider: L'article n'a pas de prix sur le fournisseur
+apply_new_price_to_account: Appliquer un nouveau prix pour tenir le compte sélectionné
+inactive_item_on_selected_accounts: Article inactif sur les comptes sélectionnés
+change_will_be_affect_retailers_of_distributor: Ce changement affectera les détaillants du distributeur
+the_operation_failed: L'opération a échoué!
+code_must_be_Active: Le code doit être actif!
+code_must_be_Inactive: Le code doit être inactif!
+Are_you_sure_to_Credit_Node: Etes-vous sûr du code de la note de crédit ?
+Are_you_sure_to_Credit_Node_And_Deat_Beat: Etes-vous sûr d'annuler le code de la note de crédit ?
+Are_you_sure_to_Dead_Beat: Etes-vous sûr d'éliminer le code ?
+
+BatchNotValid: Batch n'est pas valide.
+SNNotValid: Numéro de série n'est pas valide.
+PINNotValid: Code PIN n'est pas valide.
+CodesAlreadyExist: Les codes existes déjà.
+FileEmpty: Le fichier est vide.
+ErrorReadingFile: Erreur dans la lecture du fichier.
+FileAlreadyExist: Le fichier sélectionné est existe déjà.
+
+New_price_can_not_less_than_price_on_this_item_in_your_distributor: Nouveau prix ne peut pas être moins cher que le prix de ce produit chez votre distributeur.
+
+have_not_permission_%object%: Vous n'avez pas la permission d'accéder à cet objet!
+
+#######ticket
+ticket_create_successfully: Billet créer avec succès
+
+###homepage
+message_send_successfully: Message envoyer avec succès
+
+###
+error_b2b:
+cant_find_b2b_provider:

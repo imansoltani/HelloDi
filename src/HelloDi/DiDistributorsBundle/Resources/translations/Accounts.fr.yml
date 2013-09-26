@@ -1,0 +1,83 @@
+#Common#
+Setting: Paramètres
+Details: Plus d'informations
+Name: Nom
+All: Tous
+Balance: Solde
+CreditLimit: Limite de crédit
+Terms: Termes
+DefaultLanguage: Langue par défaut
+Currency: Monnaie
+TimeZone: Fuseau horaire
+CreationDate: Date de création
+AccountName: Nom du compte
+AccountType: Type de compte
+Account: Compte
+CreateAccount: Crée un compte
+HaveAccount: Avoir un compte
+AccountSetting: Paramètre du compte
+Type: Catégorie
+select_a_account: Sélectionner un compte
+#End Common#
+
+#Distributors#
+Distributors: Distributeurs
+Distributor: Distributeur
+AccountTransactions: Transaction du compte
+ManageDistributor: Gestion du distributeur
+CountDistributors: Nombre de distributeur
+CreateDistWithEntity: Crée un distributeur avec une société
+CreateANewDistributor: Crée un nouveau distributeur
+ChildNumber: Nombre de revendeur
+FundDistributor: Distributeur de fond
+CurrentDistributorBalance: Solde courant du distributeur 
+FundDistributorBalance: Solde du distributeur
+UpdateDistributorCreditLimit: Mise à jour de la limite de crédit du ditributeur
+CurrentDistributorCreditlimit: Limite du crédit courant du distributeur
+SubAccounts: Nombre de 
+Action: Action
+All: Tous
+UpdatedistributorCreditLimit: Mise à jour de la limite de crédit du distributeur
+CurrentDistributorCreditlimit: Limite du crédit courant du distributeur
+select_a_account: Selectionner un compte
+AccountSales: Compte des ventes
+RetailerAccount: Compte des revendeurs
+RetailerStatements: Déclaration des revendeurs
+RetailerRevenues: Revenus des revendeurs
+DailySalesGroupedByItemAndRetailer: Ventes quotidiennes regroupés par article et détaillant
+PrintToPDF: Imprimer en PDF
+AccountSetting: Paramètre du compte
+
+#End Distributors#
+
+#Providers#
+
+Provider: Fournisseur
+Providers: Fournisseurs
+CountProviders: Nombre de compte fournisseur
+ThisAccountHaveNotUser: Ce compte n'a pas d'utilisateur
+Info: Infos
+CreateProviderWithEntity: Création d'un fournisseur avec une société
+CreateANewProvider: Crée une nouveau fournisseur
+Accounts: Comptes
+This_Entity_have_not_dist_account: Cette société n'a pas de compte de distributeur
+
+
+
+#End Providers#
+
+
+#Retailer#
+
+Retailers: Revendeurs
+Retailer: Revendeur
+Retailer(s): Revendeur(s)
+CreateRetailerWithEntity: Création d'un revendeur avec une société
+CountRetailers: Comptes des revendeurs
+FundRetailers: Les revendeurs de fonds
+AddRetailer: Ajouter un revendeur
+FundRetailerBalance: Fonds du solde revendeurs
+RetailerBalance: Solde du revendeur
+UpdateRetailerCreditLimit: Mise à jour de la limite de crédit du revendeur
+RetailerCreditLimit: Limite de crédit du revendeur
+#End Retailer#

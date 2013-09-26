@@ -1,0 +1,26 @@
+Notification: Notification
+Notifications: Notifications
+Read: Lire
+DateTimeCreate: Crée date et heure
+Type: Type
+Description:
+
+#Retailer#
+Retailer_account_balance_is_lower_than_equal_%value%: Solde du compte du détaillant est inférieure à une valeur égale
+
+#Distributor_Retailer#
+Balance_increased_%value%: Valeur du solde a augmenté
+Balance_decreased_%value%: Valeur du solde a diminué
+CreditLimit_increased_%value%: La valeur de la limite de crédit a augmenté
+CreditLimit_decreased_%value%: La valeur de la limite de crédit a diminué
+Edited_account: Compte modifié
+Edited_entity: Entité modifié
+Added_user_with_username_%value%: Utilisateur ajouté avec identifiant: valeur
+
+#Provider#
+Codes_for_this_%value%_is_very_low: Codes pour cette valeur est très faible
+Provider_account_balance_is_lower_than_equal_%value%: Solde du compte du fournisseur est inférieure à la valeur
+Retailer_created_an_account_%value%: Revendeur a créé un compte
+
+#Distributor#
+Distributor_account_balance_is_lower_than_equal_%value%: Solde du compte de distributeur est inférieure à une valeur égale

@@ -1,0 +1,17 @@
+This_entity_name_is_already_in_use: Ce nom de société est déjà en cours d'utilisation
+Only_numbers_are_accepted: Seuls les chiffres sont acceptés
+This_account_name_is_already_in_use: Ce nom de compte est déjà utilisé
+This_username_is_already_in_use: Ce nom d'utilisateur est déjà en cours d'utilisation
+password.mismatch: Mot de passe incorrect
+password_must_be_at_least_{{limit}}_characters_length: Le mot de passe ne comporte pas assez de caractères
+pasword_name_cannot_be_longer_than_{{limit}}_characters_length: Nom de mot de passe ne peut pas dépasser la limite des caractères
+pin_not_exist: Le numéro de PIN n'existe pas dans la déscription
+sn_not_exist: Le numéro de série n'existe pas dans la déscription
+This_item_name_exist_already: Ce nom d'objet existe déjà
+This_item_code_exist_already: Ce code d'objet existe déjà
+This_operator_name_exist_already: Ce nom d'opérateur existe déjà
+
+#----
+expiry_not_exist:
+printdate_not_exist:
+duplicate_not_exist:

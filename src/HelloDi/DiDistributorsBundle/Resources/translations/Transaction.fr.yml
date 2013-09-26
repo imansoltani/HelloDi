@@ -1,0 +1,66 @@
+Transaction: Transaction
+Transactions: Transactions
+Date: Date
+Description: Description
+Action: Action
+Type: Type
+TypeAction: Type d'action
+Purchases: Achats
+From: À partir de
+To: À
+Amount: Montant
+TradeDate: Date d'échange
+LookingDate: Date d'examination
+Credit: Crédit
+Debit: Débit
+Increase: Augmenter
+Decrease: Diminuer
+All: Tous
+select_a_action: Selectionner une action
+Benefit: Intérêt
+Reports: Rapports
+Report: Rapport
+SalesReport: Rapport des ventes
+SellingPrice: Prix de vente
+Quantity: Quantité
+DateInsert: Insérer la date
+Fees: Honoraires
+Communications: Communications
+Recharge: Rechargez
+As: Comme
+Debit(commission): Débit (commission)
+History: Histoire
+PrintLastSale: Imprimer dernière vente
+daily_sales_grouped_by_item_and_retailer: Les ventes quotidiennes regroupées par point et détaillant
+
+
+RegisterTransaction: Inscription transaction
+MakeTransfer: Effectuer transfert
+TransferTo: Transférer à
+
+#Provider#
+add_new_codes_to_system: Ajouter de nouveaux codes de système
+credit_provider,s_account: Compte de crédit fournisseur(s)
+an_amount_is_credited_to_correct_the_price_of_a_code: Un montant est crédité pour corriger le prix d'un code
+an_amount_is_debited_to_correct_the_price_of_a_code: Un montant est débité pour corriger le prix d'un code
+remove_codes_from_to_system: Retirer codes de système de
+debit_provider,s_account:  Compte à débiter fournisseur(s)
+transfer_credit_from_provider,s_account_to_a_distributor,s_account: Transfert du compte de crédit fournisseur(s) pour un compte de distributeur(s)
+Removed: Supprimer
+
+#Distributors#
+credit_distributor,s_account: Compte de crédit distributeur(s)
+debit-distributor,s_account: Compte de débit distributeur(s)
+issue_a_credit_note_for_a_sold_code: Émettre une note de crédit pour un code vendu
+debit_distributor,s_account_for_the_commisson_payments: Débit du compte distributeur(s) pour les paiements de commissions
+ogone_payment_on_its_own_account: Paiement Ogone pour son propre compte
+transfer_credit_from_provider,s_account_to_a_distributor,s_account: Transfert du compte de crédit fournisseur(s) pour un compte de distributeur(s)
+transfer_credit_from_distributors_account_to_a_retailer,s_account: Virement sur ​​le compte de distributeurs à un compte revendeur(s)
+increase_retailer,s_credit_limit: Augmenter la limite de crédit revendeur(s)
+credit_commissons_when_a_retailer_sells_a_code: Commissons de crédit lorsqu'un détaillant vend un code
+#Retailer#
+debit_balance_when_the_retailer_sell_a_code: Solde débiteur lorsque le détaillant vend un code
+issue_a_credit_note_for_a_sold_code: Émettre une note de crédit pour un code vendu
+transfer_credit_from_distributor,s_account_to_a_retailer,s_account: Virement du compte distributeur(s) pour un compte revendeur(s)
+ogone_payment_on_its_own_account: Paiement Ogone pour son propre compte
+
