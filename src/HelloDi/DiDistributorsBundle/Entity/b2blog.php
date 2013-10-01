@@ -36,20 +36,6 @@ class B2BLog
     private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="CarrierCode", type="string", length=50)
-     */
-    private $carrierCode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="CountryCode", type="string", length=2)
-     */
-    private $countryCode;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="Amount", type="integer")
@@ -66,37 +52,47 @@ class B2BLog
     /**
      * @var string
      *
-     * @ORM\Column(name="TransactionID", type="string", length=20)
+     * @ORM\Column(name="TransactionID", type="string", length=20, nullable=true)
      */
     private $transactionID;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="smallint")
+     * @ORM\Column(name="status", type="smallint", nullable=true)
      */
     private $status;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="ServiceNumber", type="string", length=50)
+     * @ORM\Column(name="status_code", type="string", length=20, nullable=true)
      */
-    private $serviceNumber;
+    private $statusCode;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="StoreDiscount", type="integer")
+     * @ORM\Column(name="StoreDiscount", type="integer", nullable=true)
      */
     private $storeDiscount;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="B2BLogs")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $User;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="B2BLogs")
+     * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
+     */
+    private $Item;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="B2BLog")
+     */
+    private $Transactions;
 
     /**
      * Get id
@@ -152,52 +148,6 @@ class B2BLog
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set carrierCode
-     *
-     * @param string $carrierCode
-     * @return b2blog
-     */
-    public function setCarrierCode($carrierCode)
-    {
-        $this->carrierCode = $carrierCode;
-    
-        return $this;
-    }
-
-    /**
-     * Get carrierCode
-     *
-     * @return string 
-     */
-    public function getCarrierCode()
-    {
-        return $this->carrierCode;
-    }
-
-    /**
-     * Set countryCode
-     *
-     * @param string $countryCode
-     * @return b2blog
-     */
-    public function setCountryCode($countryCode)
-    {
-        $this->countryCode = $countryCode;
-    
-        return $this;
-    }
-
-    /**
-     * Get countryCode
-     *
-     * @return string 
-     */
-    public function getCountryCode()
-    {
-        return $this->countryCode;
     }
 
     /**
@@ -293,29 +243,6 @@ class B2BLog
     }
 
     /**
-     * Set serviceNumber
-     *
-     * @param string $serviceNumber
-     * @return b2blog
-     */
-    public function setServiceNumber($serviceNumber)
-    {
-        $this->serviceNumber = $serviceNumber;
-    
-        return $this;
-    }
-
-    /**
-     * Get serviceNumber
-     *
-     * @return string 
-     */
-    public function getServiceNumber()
-    {
-        return $this->serviceNumber;
-    }
-
-    /**
      * Set storeDiscount
      *
      * @param integer $storeDiscount
@@ -344,7 +271,7 @@ class B2BLog
      * @param \HelloDi\DiDistributorsBundle\Entity\User $user
      * @return B2BLog
      */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user = null)
+    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
     {
         $this->User = $user;
     
@@ -359,5 +286,91 @@ class B2BLog
     public function getUser()
     {
         return $this->User;
+    }
+
+    /**
+     * Set statusCode
+     *
+     * @param string $statusCode
+     * @return B2BLog
+     */
+    public function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
+
+        return $this;
+    }
+
+    /**
+     * Get statusCode
+     *
+     * @return string
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
+
+    /**
+     * Set Item
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @return B2BLog
+     */
+    public function setItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    {
+        $this->Item = $item;
+    
+        return $this;
+    }
+
+    /**
+     * Get Item
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\Item 
+     */
+    public function getItem()
+    {
+        return $this->Item;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add Transactions
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @return B2BLog
+     */
+    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    {
+        $this->Transactions[] = $transactions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Transactions
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     */
+    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    {
+        $this->Transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get Transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTransactions()
+    {
+        return $this->Transactions;
     }
 }

@@ -81,6 +81,11 @@ class Item
      */
     private $Prices;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", mappedBy="Item")
+     */
+    private $B2BLogs;
+
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Items")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
@@ -444,5 +449,38 @@ class Item
     public function getItemDateInsert()
     {
         return $this->itemDateInsert;
+    }
+
+    /**
+     * Add B2BLogs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     * @return Item
+     */
+    public function addB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    {
+        $this->B2BLogs[] = $b2BLogs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove B2BLogs
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     */
+    public function removeB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    {
+        $this->B2BLogs->removeElement($b2BLogs);
+    }
+
+    /**
+     * Get B2BLogs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getB2BLogs()
+    {
+        return $this->B2BLogs;
     }
 }

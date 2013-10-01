@@ -44,3 +44,7 @@ item_create_itemCode:
     pattern:  /CreateItemCode
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:CreateItemCode" }
     requirements: { _method: post }
+
+item_b2b_log_update:
+    pattern:  /b2blogupdate
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:UpdateImtuTransaction" }

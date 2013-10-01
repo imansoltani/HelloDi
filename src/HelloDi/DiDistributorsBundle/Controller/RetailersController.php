@@ -3,6 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\B2BLog;
 use HelloDi\DiDistributorsBundle\Entity\OrderCode;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
@@ -804,111 +805,112 @@ $datetype=0;
 
     public function BuyImtuAction(Request $request)
     {
+        ini_set('max_execution_time', 60);
+        ini_set('default_socket_timeout', 50);
         $em = $this->getDoctrine()->getEntityManager();
 
         $mobileNumber = $request->get('mobile_number');
 
         $user = $this->getUser();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+        $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         $accountRet = $user->getAccount();
         $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
         $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
+        $priceProv = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
+        $clientTranId= $this->CreateTranId();
 
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
 
         $com = $priceRet->getprice() - $priceDist->getprice();
 
-        $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
-        $result = $client->CreateAccount(array(
-            'CreateAccountRequest' => array(
-                'UserInfo' => array(
-                    'UserName'=>$this->container->getParameter('B2BServer.UserName'),
-                    'Password'=>$this->container->getParameter('B2BServer.Password')
-                ),
-                'ClientReferenceData' => array(
-                    'Service'=>'imtu',
-                    'ClientTransactionID'=>'TestTrans-1',
-                    'IP'=>$this->container->getParameter('B2BServer.IP'),
-                    'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
-                ),
-                'Parameters' => array(
-                    'CarrierCode'=>$item->getOperator()->getName(),
-                    'CountryCode'=>$item->getCountry()->getIso(),
-                    'Amount'=>$item->getItemFaceValue()*100,
-                    'MobileNumber'=>$mobileNumber,
-                    'StoreID'=>'55555',
-                    'ChargeType'=>'transfer',
-                    'Recharge'=>'Y',
-                    'SendSMS'=>'N',
-                    'SendEmail'=>'N'
-                ),
-            )
-        ));
-
-        $CreateAccountResponse = $result->CreateAccountResponse;
-
-        $ss = $client->__getLastRequest();
-//        die('--'.print_r(array(
-//                'CreateAccountRequest' => array(
-//                    'UserInfo' => array(
-//                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
-//                        'Password'=>$this->container->getParameter('B2BServer.Password')
-//                    ),
-//                    'ClientReferenceData' => array(
-//                        'Service'=>'imtu',
-//                        'ClientTransactionID'=>'TestTrans-1',
-//                        'IP'=>$this->container->getParameter('B2BServer.IP'),
-//                        'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
-//                    ),
-//                    'Parameters' => array(
-//                        'CarrierCode'=>$item->getOperator()->getName(),
-//                        'CountryCode'=>$item->getCountry()->getIso(),
-//                        'Amount'=>$item->getItemFaceValue()*100,
-//                        'MobileNumber'=>$mobileNumber,
-//                        'StoreID'=>'55555',
-//                        'ChargeType'=>'transfer',
-//                        'Recharge'=>'Y',
-//                        'SendSMS'=>'N',
-//                        'SendEmail'=>'N'
-//                    ),
-//                )
-//            )).'--');
-        die('--'.print_r($CreateAccountResponse).'--');
-
-        if (true)
+        $b2blog = new B2BLog();
+        $b2blog->setUser($user);
+        $b2blog->setAmount($priceProv->getFaceValueImtu());
+        $b2blog->setClientTransactionID($clientTranId);
+        $b2blog->setDate(new \DateTime());
+        $b2blog->setMobileNumber($mobileNumber);
+        $b2blog->setItem($item);
+        $em->persist($b2blog);
+        $em->flush();
+        try
         {
-            $ordercode = new OrderCode();
-            $ordercode->setLang($request->get('language'));
-            foreach (array() as $code)
+            $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'), array("connection_timeout"=>50));
+
+            $result = $client->CreateAccount(array(
+                'CreateAccountRequest' => array(
+                    'UserInfo' => array(
+                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+                        'Password'=>$this->container->getParameter('B2BServer.Password')
+                    ),
+                    'ClientReferenceData' => array(
+                        'Service'=>'imtu',
+                        'ClientTransactionID'=>$clientTranId,
+                        'IP'=>$this->container->getParameter('B2BServer.IP'),
+                        'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
+                    ),
+                    'Parameters' => array(
+                        'CarrierCode'=>$item->getOperator()->getName(),
+                        'CountryCode'=>$item->getCountry()->getIso(),
+                        'Amount'=>$priceProv->getFaceValueImtu(),
+                        'MobileNumber'=>$mobileNumber,
+                        'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
+                        'ChargeType'=>'transfer',
+                        'Recharge'=>'Y',
+                        'SendSMS'=>'N',
+                        'SendEmail'=>'N',
+                        'ServiceNumber'=>'2127211064'
+                    ),
+                )
+            ));
+
+            $CreateAccountResponse = $result->CreateAccountResponse;
+
+            if($CreateAccountResponse->ResponseReferenceData->Success == 'N')
             {
+                $b2blog->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+                $b2blog->setStatus(0);
+                $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
+                $error_codes = "";
+                foreach ($messages as $message)
+                    $error_codes.= $message->StatusCode.',';
+                $b2blog->setStatusCode($error_codes);
+
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
+            }
+            else
+            {
+                $b2blog->setStoreDiscount($CreateAccountResponse->Billing->StoreDiscount);
+                $b2blog->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+                $b2blog->setStatus(1);
+
                 $tranretailer = new Transaction();
                 $tranretailer->setAccount($accountRet);
                 $tranretailer->setTranAmount(-($priceRet->getPrice()));
                 $tranretailer->setTranFees(0);
-                $tranretailer->setTranDescription('Code id: ' . $code->getId());
+                $tranretailer->setTranDescription('ClientTransactionID: ' . $clientTranId);
                 $tranretailer->setTranCurrency($accountRet->getAccCurrency());
                 $tranretailer->setTranDate(new \DateTime('now'));
                 $tranretailer->setTranInsert(new \DateTime('now'));
-                $tranretailer->setCode($code);
                 $tranretailer->setTranAction('sale');
                 $tranretailer->setTranType(0);
                 $tranretailer->setUser($user);
                 $tranretailer->setTranBookingValue(null);
                 $tranretailer->setTranBalance($accountRet->getAccBalance());
                 $tranretailer->setTaxHistory($taxhistory);
-                $tranretailer->setOrder($ordercode);
-                $ordercode->addTransaction($tranretailer);
+                $tranretailer->setB2BLog($b2blog);
+                $b2blog->addTransaction($tranretailer);
+                $em->persist($tranretailer);
 
                 // For distributors
                 $trandist = new Transaction();
                 $trandist->setAccount($accountRet->getParent());
                 $trandist->setTranAmount($com);
                 $trandist->setTranFees(0);
-                $trandist->setTranDescription('Code id: ' . $code->getId());
+                $trandist->setTranDescription('ClientTransactionID: ' . $clientTranId);
                 $trandist->setTranCurrency($accountRet->getParent()->getAccCurrency());
                 $trandist->setTranDate(new \DateTime('now'));
                 $trandist->setTranInsert(new \DateTime('now'));
-                $trandist->setCode($code);
                 $trandist->setTranAction('com');
                 $trandist->setTranType(1);
                 $trandist->setUser($user);
@@ -916,26 +918,24 @@ $datetype=0;
                 $trandist->setTranBalance($accountRet->getParent()->getAccBalance());
                 $trandist->setTaxHistory($taxhistory);
                 $trandist->setBuyingprice($priceDist->getPrice());
-                $trandist->setOrder($ordercode);
-                $em->persist($tranretailer);
+                $trandist->setB2BLog($b2blog);
+                $b2blog->addTransaction($trandist);
                 $em->persist($trandist);
-                $ordercode->addTransaction($trandist);
-            }
-            $em->persist($ordercode);
-            $em->flush();
 
-            if (count($item->getCodes())<=$item->getAlertMinStock())
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>11,'value'=>$item->getItemName()));
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            }
+            $em->flush();
 
             if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
-            $request->getSession()->set('firstprintcode', true);
-
-            return $this->redirect($this->generateUrl('Retailer_Shop_print'));
+            die(print_r($CreateAccountResponse));
         }
-
-        return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
+        catch(\Exception $e)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+        }
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     public function PrintAction(Request $request,$print)
@@ -1165,73 +1165,75 @@ $datetype=0;
 
 //kezem
 
-public function RetailerLoadActiowOwnAction(Request $req)
-{
-    $id=$req->get('id',0);
-    $value='';
-
-
-    switch($id)
+    public function RetailerLoadActiowOwnAction(Request $req)
     {
-        case 0:
-
-            $value.='<option value="sale">'.
-                $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
-                .'</option>';
-            break;
-
-        case 1:
+        $id=$req->get('id',0);
+        $value='';
 
 
-            $value.='<option value="All">'.
-                $this->get('translator')->trans('All',[],'transaction')
-                .'</option>';
+        switch($id)
+        {
+            case 0:
 
-            $value.='<option value="crnt">'.
-                $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
-                .'</option>';
+                $value.='<option value="sale">'.
+                    $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                    .'</option>';
+                break;
 
-            $value.='<option value="tran">'.
-                $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
-                .'</option>';
-
-            $value.='<option value="ogn_pmt">'.
-                $this->get('translator')->trans( 'ogone_payment_on_its_own_account',[],'transaction')
-                .'</option>';
+            case 1:
 
 
-            break;
+                $value.='<option value="All">'.
+                    $this->get('translator')->trans('All',[],'transaction')
+                    .'</option>';
 
-        case 2:
+                $value.='<option value="crnt">'.
+                    $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                    .'</option>';
 
-            $value.='<option value="All">'.
-                $this->get('translator')->trans('All',[],'transaction')
-                .'</option>';
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                    .'</option>';
 
-            $value.='<option value="sale">'.
-                $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
-                .'</option>';
-
-            $value.='<option value="crnt">'.
-                $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
-                .'</option>';
-
-            $value.='<option value="tran">'.
-                $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
-                .'</option>';
-
-            $value.='<option value="ogn_pmt">'.
-                $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
-                .'</option>';
+                $value.='<option value="ogn_pmt">'.
+                    $this->get('translator')->trans( 'ogone_payment_on_its_own_account',[],'transaction')
+                    .'</option>';
 
 
-            break;
+                break;
+
+            case 2:
+
+                $value.='<option value="All">'.
+                    $this->get('translator')->trans('All',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="sale">'.
+                    $this->get('translator')->trans('debit_balance_when_the_retailer_sell_a_code',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="crnt">'.
+                    $this->get('translator')->trans('issue_a_credit_note_for_a_sold_code',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="tran">'.
+                    $this->get('translator')->trans('transfer_credit_from_distributor,s_account_to_a_retailer,s_account',[],'transaction')
+                    .'</option>';
+
+                $value.='<option value="ogn_pmt">'.
+                    $this->get('translator')->trans('ogone_payment_on_its_own_account',[],'transaction')
+                    .'</option>';
+
+
+                break;
+        }
+        return new Response($value);
     }
-    return new Response($value);
-}
 
-
-
-
+    public function CreateTranId()
+    {
+        $userid = $this->getUser()->getId();
+        return "HD-".sprintf("%05s",$userid).'-'.(new \DateTime())->getTimestamp();
+    }
 }
 

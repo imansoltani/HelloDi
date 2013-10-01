@@ -410,6 +410,7 @@ class ItemController extends Controller
     {
         try
         {
+            ini_set('max_execution_time', 60);
             $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
             $result = $client->GetProducts(array(
                 'GetProductsRequest' => array(
@@ -419,7 +420,7 @@ class ItemController extends Controller
                     ),
                     'ClientReferenceData' => array(
                         'Service'=>'imtu',
-                        'ClientTransactionID'=>'TestTrans-1',
+                        'ClientTransactionID'=>$this->CreateTranId(),
                         'IP'=>$this->container->getParameter('B2BServer.IP'),
                         'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
                     ),
@@ -524,12 +525,18 @@ class ItemController extends Controller
             $price->setPriceCurrency($provider->getAccCurrency());
             $price->setPriceStatus(1);
             $price->setIsFavourite(0);
+            $price->setFaceValueImtu($row['Denomination']);
             $em->persist($price);
             $priceHistory = new PriceHistory();
             $priceHistory->setDate(new \DateTime('now'));
             $priceHistory->setPrice($price->getPrice());
             $priceHistory->setPrices($price);
             $em->persist($priceHistory);
+            $em->flush();
+        }
+        else
+        {
+            $price->setFaceValueImtu($row['Denomination']);
             $em->flush();
         }
     }
@@ -553,6 +560,24 @@ class ItemController extends Controller
         catch(\Exception $e)
         {
             return new Response('');
+        }
+    }
+
+    public function CreateTranId()
+    {
+        $userid = $this->getUser()->getId();
+        return "HD-".sprintf("%05s",$userid).'-'.(new \DateTime())->getTimestamp();
+    }
+
+    public function UpdateImtuTransactionAction()
+    {
+        $em= $this->getDoctrine()->getEntityManager();
+
+        $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
+
+        foreach($logs as $log)
+        {
+
         }
     }
 }

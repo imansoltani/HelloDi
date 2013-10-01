@@ -21,6 +21,11 @@ class Price
     private $price;
 
     /**
+     * @ORM\Column(type="integer", nullable=true, name="face_value_imtu")
+     */
+    private $FaceValueImtu;
+
+    /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
      */
     private $isFavourite;
@@ -311,5 +316,28 @@ class Price
     public function getTax()
     {
         return $this->Tax;
+    }
+
+    /**
+     * Set FaceValueImtu
+     *
+     * @param integer $faceValueImtu
+     * @return Price
+     */
+    public function setFaceValueImtu($faceValueImtu)
+    {
+        $this->FaceValueImtu = $faceValueImtu;
+    
+        return $this;
+    }
+
+    /**
+     * Get FaceValueImtu
+     *
+     * @return integer 
+     */
+    public function getFaceValueImtu()
+    {
+        return $this->FaceValueImtu;
     }
 }

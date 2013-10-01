@@ -30,20 +30,9 @@ class Transaction
     private $tranType;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="tran_credit")
-     */
-
-    private $tranCredit;
-
-    /**
      * @ORM\Column(type="decimal", nullable=true, name="tran_Amount")
      */
     private $tranAmount;
-
-    /**
-     * @ORM\Column(type="decimal", nullable=true, name="tran_debit")
-     */
-    private $tranDebit;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
@@ -123,6 +112,12 @@ class Transaction
     private $Order;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", inversedBy="Transactions")
+     * @ORM\JoinColumn(name="b2blog_id", referencedColumnName="id", nullable=true)
+     */
+    private $B2BLog;
+
+    /**
      * Get id
      *
      * @return integer
@@ -153,52 +148,6 @@ class Transaction
     public function getTranBookingValue()
     {
         return $this->tranBookingValue;
-    }
-
-    /**
-     * Set tranCredit
-     *
-     * @param float $tranCredit
-     * @return Transaction
-     */
-    public function setTranCredit($tranCredit)
-    {
-        $this->tranCredit = $tranCredit;
-
-        return $this;
-    }
-
-    /**
-     * Get tranCredit
-     *
-     * @return float
-     */
-    public function getTranCredit()
-    {
-        return $this->tranCredit;
-    }
-
-    /**
-     * Set tranDebit
-     *
-     * @param float $tranDebit
-     * @return Transaction
-     */
-    public function setTranDebit($tranDebit)
-    {
-        $this->tranDebit = $tranDebit;
-
-        return $this;
-    }
-
-    /**
-     * Get tranDebit
-     *
-     * @return float
-     */
-    public function getTranDebit()
-    {
-        return $this->tranDebit;
     }
 
     /**
@@ -421,11 +370,6 @@ class Transaction
 
     }
 
-//    public function __construct($entityManager)
-//    {
-//        $this->entityManager = $entityManager;
-//    }
-
     /**
      * Set tranAmount
      *
@@ -629,5 +573,28 @@ class Transaction
     public function getTaxHistory()
     {
         return $this->TaxHistory;
+    }
+
+    /**
+     * Set B2BLog
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLog
+     * @return Transaction
+     */
+    public function setB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLog = null)
+    {
+        $this->B2BLog = $b2BLog;
+    
+        return $this;
+    }
+
+    /**
+     * Get B2BLog
+     *
+     * @return \HelloDi\DiDistributorsBundle\Entity\B2BLog 
+     */
+    public function getB2BLog()
+    {
+        return $this->B2BLog;
     }
 }

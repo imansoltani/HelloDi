@@ -2,7 +2,6 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use HelloDi\DiDistributorsBundle\Entity\CdSearch;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\CdSearchType;
 use Symfony\Component\HttpFoundation\Request;
