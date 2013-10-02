@@ -873,10 +873,15 @@ $datetype=0;
                 $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
                 $error_codes = "";
                 foreach ($messages as $message)
+                {
                     $error_codes.= $message->StatusCode.',';
+                    switch ($message->StatusCode)
+                    {
+                        case 'INVALID_MISDN':   $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message')); break;
+                        default:                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
+                    }
+                }
                 $b2blog->setStatusCode($error_codes);
-
-                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
             }
             else
             {
@@ -922,14 +927,14 @@ $datetype=0;
                 $b2blog->addTransaction($trandist);
                 $em->persist($trandist);
 
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
             }
             $em->flush();
 
             if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
-            die(print_r($CreateAccountResponse));
+//            die(print_r($CreateAccountResponse));
         }
         catch(\Exception $e)
         {
