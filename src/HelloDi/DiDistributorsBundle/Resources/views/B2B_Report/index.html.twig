@@ -1,0 +1,132 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    {{ 'B2B_Server_Log' | trans ({}, "b2b") }}
+{% endblock title %}
+
+{% set MU = 'report' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'B2B_Server_Log' | trans ({}, "b2b") }}</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-list-alt"></i>
+    {{ 'B2B_Server_Log' | trans ({}, "b2b") }}
+{% endblock %}
+
+{% block Body %}
+
+    <div class="span">
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i>
+                            <p class="title_search"></p>
+                        </span>
+                    </h5>
+
+                    <form class="form-horizontal SearchForm" action="#" method="post" {{ form_enctype(form) }}>
+                        <fieldset>
+                            <div class="control-group">
+                                {{ form_label(form.item) }}
+                                <div class="controls">
+                                    {{ form_widget(form.item) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.user) }}
+                                <div class="controls">
+                                    {{ form_widget(form.user) }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                {{ form_label(form.status) }}
+                                <div class="controls">
+                                    {{ form_widget(form.status) }}
+                                </div>
+                            </div>
+                            <div class="control-group datepicker1">
+                                {{ form_label(form.fromdate) }}
+                                {{ form_widget(form.fromdate) }}
+                            </div>
+                            <div class="control-group datepicker2">
+                                {{ form_label(form.todate) }}
+                                {{ form_widget(form.todate) }}
+                            </div>
+                            {{ form_rest(form) }}
+                            <hr>
+                            <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
+                        </fieldset>
+                    </form>
+                    <script type="text/javascript">
+                        $(function () {
+
+                            Form_Search(0,"{{ 'Search' | trans ({}, "common") }}");
+
+                        });
+                    </script>
+
+                </div>
+
+                <div class="tablediv">
+
+                    <div class="contenttitle">
+                        <h4>{{ 'B2B_Server_Log' | trans ({}, "b2b") }}</h4>
+                    </div>
+                        <div class="tab-content">
+                            <table style="margin-top: 20px"
+                                   class="table table-bordered table-striped table-highlight postsend">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'id' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                    <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                                    <th>{{ 'clientTransactionId' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'serverTransactionId' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'Status' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'errorCode' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'mobileNumber' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'date' | trans ({}, "b2b") }}</th>
+                                    <th>{{ 'amount' | trans ({}, "b2b") }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for log in logs %}
+                                    <tr>
+                                        <td>{{ log.id }}</td>
+                                        <td>{{ log.Item.itemName }}</td>
+                                        <td>{{ log.User.username }}</td>
+                                        <td>{{ log.clientTransactionID }}</td>
+                                        <td>{{ log.transactionID }}</td>
+                                        <td>
+                                            {% if log.status is null %}
+                                                null
+                                            {% elseif log.status == 1 %}
+                                                done
+                                            {% else %}
+                                                error
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ log.statusCode }}</td>
+                                        <td>{{ log.mobileNumber }}</td>
+                                        <td>{{ log.date|date('Y/m/d') }}</td>
+                                        <td>{{ log.amount }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

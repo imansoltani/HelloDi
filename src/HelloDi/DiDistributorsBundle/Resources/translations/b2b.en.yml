@@ -1,0 +1,12 @@
+B2B_Server_Log: B2B Server Log
+
+id: id
+clientTransactionId: client Transaction Id
+serverTransactionId: Server Transaction Id
+dateInsert: date Insert
+amount: Amount
+mobileNumber: Mobile Number
+status: status
+errorCode: error Codes
+fromDate: from date
+toDate: to date

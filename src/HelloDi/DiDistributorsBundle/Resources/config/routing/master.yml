@@ -63,6 +63,10 @@ master_log:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/log.yml"
     prefix:   /logs
 
+b2breport:
+    pattern:  /b2breport
+    defaults: { _controller: HelloDiDiDistributorsBundle:B2BReport:index }
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }
