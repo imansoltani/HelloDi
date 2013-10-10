@@ -826,7 +826,7 @@ $datetype=0;
 
         $b2blog = new B2BLog();
         $b2blog->setUser($user);
-        $b2blog->setAmount($priceProv->getFaceValueImtu());
+        $b2blog->setAmount($priceProv->getDenomination());
         $b2blog->setClientTransactionID($clientTranId);
         $b2blog->setDate(new \DateTime());
         $b2blog->setMobileNumber($mobileNumber);
@@ -852,7 +852,7 @@ $datetype=0;
                     'Parameters' => array(
                         'CarrierCode'=>$item->getOperator()->getName(),
                         'CountryCode'=>$item->getCountry()->getIso(),
-                        'Amount'=>$priceProv->getFaceValueImtu(),
+                        'Amount'=>$priceProv->getDenomination(),
                         'MobileNumber'=>$mobileNumber,
                         'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                         'ChargeType'=>'transfer',

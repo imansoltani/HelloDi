@@ -50,14 +50,14 @@ class B2BReportController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
+        $qb = $em->createQueryBuilder()
+            ->select('b2blog')
+            ->from('HelloDiDiDistributorsBundle:B2BLog','b2blog');
+
         if($request->isMethod('post'))
         {
             $form->handleRequest($request);
             $data = $form->getData();
-
-            $qb = $em->createQueryBuilder()
-                ->select('b2blog')
-                ->from('HelloDiDiDistributorsBundle:B2BLog','b2blog');
 
             if($data['item']!='')   $qb = $qb->where('b2blog.Item = :item')->setParameter('item',$data['item']);
             if($data['user']!='')   $qb = $qb->where('b2blog.User = :user')->setParameter('user',$data['user']);
@@ -69,18 +69,33 @@ class B2BReportController extends Controller
             }
             if($data['fromdate']!='') $qb = $qb->andWhere('b2blog.date >= :fromdate')->setParameter('fromdate',$data['fromdate']);
             if($data['todate']!='')   $qb = $qb->andWhere('b2blog.date <= :todate')->setParameter('todate',$data['todate']);
+        }
 
-            $qb = $qb->orderBy('b2blog.id', 'desc');
-            $logs = $qb->getQuery()->getResult();
-        }
-        else
-        {
-            $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array(),array('id'=>'desc'));
-        }
+        $qb = $qb->orderBy('b2blog.id', 'desc');
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->get('page',1),
+            10,
+            array('distinct' => false)
+        );
 
         return $this->render('HelloDiDiDistributorsBundle:B2B_Report:index.html.twig',array(
-            'logs'=>$logs,
+            'pagination'=>$pagination,
             'form'=>$form->createView()
         ));
+    }
+
+    public function UpdateImtuTransactionAction()
+    {
+        $em= $this->getDoctrine()->getEntityManager();
+
+        $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
+
+        foreach($logs as $log)
+        {
+
+        }
     }
 }

@@ -59,6 +59,7 @@
                                 {{ form_widget(form.todate) }}
                             </div>
                             {{ form_rest(form) }}
+                            <input type="hidden" name="page" id="search_page" value="1"/>
                             <hr>
                             <input class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
                         </fieldset>
@@ -96,7 +97,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for log in logs %}
+                                {% for log in pagination %}
                                     <tr>
                                         <td>{{ log.id }}</td>
                                         <td>{{ log.Item.itemName }}</td>
@@ -120,7 +121,9 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-
+                            <div class="navigation" style="text-align: center">
+                                    {{ knp_pagination_render(pagination) }}
+                            </div>
                         </div>
                 </div>
                 <br/>

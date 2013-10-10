@@ -35,7 +35,7 @@ class ItemType extends AbstractType
             ->add('alertMinStock',null,array('label' => 'MinStock','translation_domain' => 'item'))
             ->add('operator',null,array(
                 'empty_value' => '--',
-                'property'=>'name',
+                'property'=>'NameCarrier',
                 'label' => 'Operator','translation_domain' => 'operator'
             ))
             ->add('itemCode','text',array('label' => 'ItemCode','translation_domain' => 'item'))

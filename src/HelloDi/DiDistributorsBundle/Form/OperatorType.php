@@ -13,6 +13,7 @@ class OperatorType extends AbstractType
         $builder
             ->add('name',null,array('label' => 'Name','translation_domain' => 'operator'))
             ->add('file',null,array('label'=>'Logo','translation_domain' => 'operator','required'=> true))
+            ->add('carrierCode',null,array('label'=>'CarrierCode','translation_domain' => 'operator','required'=> false))
         ;
     }
 

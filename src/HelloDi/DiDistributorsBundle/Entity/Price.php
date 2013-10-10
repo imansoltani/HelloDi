@@ -21,9 +21,9 @@ class Price
     private $price;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, name="face_value_imtu")
+     * @ORM\Column(type="integer", nullable=true, name="denomination")
      */
-    private $FaceValueImtu;
+    private $denomination;
 
     /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
@@ -319,25 +319,25 @@ class Price
     }
 
     /**
-     * Set FaceValueImtu
+     * Set denomination
      *
-     * @param integer $faceValueImtu
+     * @param integer $denomination
      * @return Price
      */
-    public function setFaceValueImtu($faceValueImtu)
+    public function setDenomination($denomination)
     {
-        $this->FaceValueImtu = $faceValueImtu;
+        $this->denomination = $denomination;
     
         return $this;
     }
 
     /**
-     * Get FaceValueImtu
+     * Get denomination
      *
      * @return integer 
      */
-    public function getFaceValueImtu()
+    public function getDenomination()
     {
-        return $this->FaceValueImtu;
+        return $this->denomination;
     }
 }

@@ -361,7 +361,7 @@ class ItemController extends Controller
         }
     }
 
-    public function PrintAction(Request $request,$print,$descid,$id)
+    public function PrintAction($print,$descid,$id)
     {
         $em = $this->getDoctrine()->getManager();
         $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid)->getDescdesc();
@@ -405,142 +405,6 @@ class ItemController extends Controller
             );
     }
 
-    //b2b server
-    public function updateItemsFromB2BAction()
-    {
-        try
-        {
-            ini_set('max_execution_time', 60);
-            $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'));
-            $result = $client->GetProducts(array(
-                'GetProductsRequest' => array(
-                    'UserInfo' => array(
-                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
-                        'Password'=>$this->container->getParameter('B2BServer.Password')
-                    ),
-                    'ClientReferenceData' => array(
-                        'Service'=>'imtu',
-                        'ClientTransactionID'=>$this->CreateTranId(),
-                        'IP'=>$this->container->getParameter('B2BServer.IP'),
-                        'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
-                    ),
-                    'Parameters' => array(
-                        'DataType'=>''
-                    ),
-                )
-            ));
-
-            $ProductsResponse = $result->GetProductsResponse;
-
-            $list = array();
-
-            $em = $this->getDoctrine()->getManager();
-            $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
-            if(!$provider)
-                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('cant_find_b2b_provider',array(),'message'));
-
-            foreach( $ProductsResponse->ProductList->Product as $product )
-            {
-                $ProductCountries = $product->ProductCountryList->ProductCountry;
-                if(is_array($ProductCountries))
-                {
-                    foreach($ProductCountries as $productCountry)
-                    {
-                        $this->insertItemFromB2B($provider,array(
-                            'Code'=>$product->Code,
-                            'Name'=>$product->Name,
-                            'Denomination'=>$product->Denomination,
-                            'CountryCode'=>$productCountry->CountryCode,
-                            'CarrierCode'=>$productCountry->CarrierList->Carrier->CarrierCode
-                        ));
-                    }
-                }
-                else
-                {
-                    $this->insertItemFromB2B($provider,array(
-                        'Code'=>$product->Code,
-                        'Name'=>$product->Name,
-                        'Denomination'=>$product->Denomination,
-                        'CountryCode'=>$ProductCountries->CountryCode,
-                        'CarrierCode'=>$ProductCountries->CarrierList->Carrier->CarrierCode
-                    ));
-                }
-            }
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-        }
-        catch(\Exception $e)
-        {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
-        }
-        return $this->redirect($this->generateUrl('item'));
-    }
-
-    private function insertItemFromB2B($provider,$row)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->findOneBy(array('name'=>$row['CarrierCode']));
-        if(!$operator)
-        {
-            $operator = new Operator();
-            $operator->setName($row['CarrierCode']);
-            $em->persist($operator);
-            $em->flush();
-        }
-
-        //        countrycode/itemtype/operatorname/itemname(_)
-        $itemcode = $row['CountryCode'].'/imtu/'.$row['CarrierCode'].'/'.str_replace(' ','_',$row['Name']);
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
-        if(!$item)
-        {
-            $item = new Item();
-            $item->setItemName($row['Name']);
-            $item->setItemFaceValue($row['Denomination']/100);
-            $item->setItemCurrency('USD');
-            $item->setItemType('imtu');
-            $item->setAlertMinStock(0);
-            $item->setItemCode($itemcode);
-            $item->setItemDateInsert(new \DateTime('now'));
-            $item->setOperator($operator);
-            $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
-            $em->persist($item);
-            $em->flush();
-        }
-        else
-        {
-            $item->setItemName($row['Name']);
-            $item->setItemFaceValue($row['Denomination']/100);
-            $item->setItemDateInsert(new \DateTime('now'));
-            $item->setOperator($operator);
-            $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['CountryCode'])));
-            $em->flush();
-        }
-
-        $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
-        if(!$price)
-        {
-            $price = new Price();
-            $price->setItem($item);
-            $price->setAccount($provider);
-            $price->setPrice($item->getItemFaceValue());
-            $price->setPriceCurrency($provider->getAccCurrency());
-            $price->setPriceStatus(1);
-            $price->setIsFavourite(0);
-            $price->setFaceValueImtu($row['Denomination']);
-            $em->persist($price);
-            $priceHistory = new PriceHistory();
-            $priceHistory->setDate(new \DateTime('now'));
-            $priceHistory->setPrice($price->getPrice());
-            $priceHistory->setPrices($price);
-            $em->persist($priceHistory);
-            $em->flush();
-        }
-        else
-        {
-            $price->setFaceValueImtu($row['Denomination']);
-            $em->flush();
-        }
-    }
-
     public function CreateItemCodeAction(Request $request)
     {
         try
@@ -567,17 +431,5 @@ class ItemController extends Controller
     {
         $userid = $this->getUser()->getId();
         return "HD-".sprintf("%05s",$userid).'-'.(new \DateTime())->getTimestamp();
-    }
-
-    public function UpdateImtuTransactionAction()
-    {
-        $em= $this->getDoctrine()->getEntityManager();
-
-        $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
-
-        foreach($logs as $log)
-        {
-
-        }
     }
 }

@@ -18,9 +18,14 @@ class Operator
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="Name", unique = true)
+     * @ORM\Column(type="string", length=45, nullable=false, name="Name")
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=45, nullable=true, name="carrier_code", unique = true)
+     */
+    private $carrierCode;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=True, name="operator_logo")
@@ -176,6 +181,8 @@ class Operator
 
     public function upload()
     {
+        if($this->file === null) return;
+
         if(file_exists($this->getAbsolutePath()))
             unlink($this->getAbsolutePath());
 
@@ -194,5 +201,33 @@ class Operator
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
+    }
+
+    /**
+     * Set carrierCode
+     *
+     * @param string $carrierCode
+     * @return Operator
+     */
+    public function setCarrierCode($carrierCode)
+    {
+        $this->carrierCode = $carrierCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get carrierCode
+     *
+     * @return string 
+     */
+    public function getCarrierCode()
+    {
+        return $this->carrierCode;
+    }
+
+    public function getNameCarrier()
+    {
+        return $this->name.($this->carrierCode!=null?' ('.$this->carrierCode.')':'');
     }
 }
