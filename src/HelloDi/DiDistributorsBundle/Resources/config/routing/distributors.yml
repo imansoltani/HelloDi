@@ -33,3 +33,7 @@ distributors_tickets:
 distributors_notification:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Distributors/notification.yml"
     prefix:   /notification
+
+distCheckItemCurrEqAccCurr:
+    pattern:  /CheckItemCurrEqAccCurr
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:CheckItemCurrEqAccCurr }

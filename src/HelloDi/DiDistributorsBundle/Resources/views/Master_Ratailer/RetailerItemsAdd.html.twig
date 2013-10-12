@@ -21,7 +21,7 @@
             {{ form_label(form.Item) }}
             <div class="controls money">
                 <div class="controls">
-                    {{ form_widget(form.Item) }}
+                    {{ form_widget(form.Item,{'id': 'item'}) }}
                 </div>
                 <span class="icon-certificate"></span>
             </div>
@@ -36,6 +36,22 @@
             {{ form_errors(form.price) }}
         </div>
 
+        <div class="control-group price">
+            {{ form_label(form.denomination) }}
+            <div class="controls money" >
+                {{ form_widget(form.denomination,{ 'id': 'denomination', 'attr' : {
+                'onfocus' : 'if($(this).val()=="")CheckItemCurrEqAccCurr()',
+                'onkeydown' : 'return ( event.ctrlKey || event.altKey
+						|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+						|| (95<event.keyCode && event.keyCode<106)
+						|| (event.keyCode==8) || (event.keyCode==9)
+						|| (event.keyCode>34 && event.keyCode<40)
+						|| (event.keyCode==46) )'} }) }}
+                <img src="{{ asset('bundles/hellodi/img/refresh/loading.gif') }}" id="refresh1" style="display: none">
+            </div>
+            {{ form_errors(form.denomination) }}
+        </div>
+
         {{form_widget(form._token)}}
 
         <input type="hidden" name="accountid" value="{{  retailerAccount.id }}" />
@@ -46,4 +62,20 @@
         </div>
 
     </form>
+
+    <script type="text/javascript">
+        function CheckItemCurrEqAccCurr()
+        {
+            if($('#item').val()!=null)
+            {
+                var item_id = $('#item').val();
+                var account_id = {{ retailerAccount.id }};
+                $('#refresh1').show();
+                $.post('{{ path('CheckItemCurrEqAccCurr') }}',{accountid:account_id, itemid:item_id},function(result){
+                    $("#denomination").val(result);
+                    $('#refresh1').hide();
+                });
+            }
+        }
+    </script>
 {% endblock %}

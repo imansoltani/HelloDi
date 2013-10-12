@@ -1355,6 +1355,7 @@ catch(\Exception $e){
                     'label' => 'Item','translation_domain' => 'item'
                 ))
             ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('denomination','integer', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -1921,5 +1922,23 @@ public function DistLoadActionRetailerAction(Request $req)
     }
     return new Response($value);
 }
-}
 
+    public function CheckItemCurrEqAccCurrAction(Request $request)
+    {
+        try
+        {
+            $em = $this->getDoctrine()->getManager();
+            $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($request->get('accountid'));
+            $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('itemid'));
+
+            if($account->getAccCurrency()==$item->getItemCurrency())
+                return new Response($item->getItemFaceValue());
+            else
+                return new Response('');
+        }
+        catch(\Exception $e)
+        {
+            return new Response('');
+        }
+    }
+}

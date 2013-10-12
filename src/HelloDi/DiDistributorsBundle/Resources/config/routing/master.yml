@@ -67,6 +67,10 @@ b2breport:
     pattern:  /b2breport
     defaults: { _controller: HelloDiDiDistributorsBundle:B2BReport:index }
 
+CheckItemCurrEqAccCurr:
+    pattern:  /CheckItemCurrEqAccCurr
+    defaults: { _controller: HelloDiDiDistributorsBundle:Account:CheckItemCurrEqAccCurr }
+
 test_index:
     pattern:  /test
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }

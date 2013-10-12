@@ -22,6 +22,9 @@ class PriceEditType extends AbstractType
             ->add('price','integer',array(
                 'label' => 'Price','translation_domain' => 'price'
             ))
+            ->add('denomination','integer', array(
+                'label' => 'denomination','translation_domain' => 'price' , 'required'=>false
+            ))
             ->add('priceStatus','choice', array(
                 'expanded'   => true,
                 'choices'    => array(
