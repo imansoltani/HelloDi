@@ -807,7 +807,7 @@ $datetype=0;
     public function BuyImtuAction(Request $request)
     {
         ini_set('max_execution_time', 60);
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $mobileNumber = $request->get('mobile_number');
 

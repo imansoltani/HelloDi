@@ -142,7 +142,7 @@ class DefaultController extends Controller
     public  function LogAction($flag,Request $request)
     {
 
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
 
        $form=$this->createFormBuilder()
            ->add('username','text',array(

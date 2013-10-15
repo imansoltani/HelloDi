@@ -50,7 +50,7 @@ class B2BReportController extends Controller
             ))
             ->getForm();
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $qb = $em->createQueryBuilder()
             ->select('b2blog')
@@ -92,7 +92,7 @@ class B2BReportController extends Controller
     public function UpdateImtuTransactionAction()
     {
         ini_set('max_execution_time', 60);
-        $em= $this->getDoctrine()->getEntityManager();
+        $em= $this->getDoctrine()->getManager();
         $firstStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'asc'))->getDate();
         $lastStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'desc'))->getDate();
 
