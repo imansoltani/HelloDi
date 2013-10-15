@@ -2,8 +2,10 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class B2BReportController extends Controller
 {
@@ -89,13 +91,80 @@ class B2BReportController extends Controller
 
     public function UpdateImtuTransactionAction()
     {
+        ini_set('max_execution_time', 60);
         $em= $this->getDoctrine()->getEntityManager();
+        $firstStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'asc'))->getDate();
+        $lastStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'desc'))->getDate();
 
-        $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
-
-        foreach($logs as $log)
+        try
         {
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
+            $client->__setTimeout(40);
+            $result = $client->QueryAccount(array(
+                'Request' => array(
+                    'UserInfo' => array(
+                        'UserName'=>$this->container->getParameter('B2BServer.UserName'),
+                        'Password'=>$this->container->getParameter('B2BServer.Password')
+                    ),
+                    'ClientReferenceData' => array(),
+                    'Parameters' => array(
+                        'ServiceNumber' => $this->container->getParameter('B2BServer.ServiceNumber'),
+                        'ReturnBillingHistory' => 'Y',
+                        'DateFrom' => date_format($firstStatusNullDate->modify('-1 day'),'Y-m-d'),
+                        'DateTo' => date_format($lastStatusNullDate->modify('+1 day'),'Y-m-d')
+                    ),
+                )
+            ));
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+            $QueryAccountResponse = $result->QueryAccountResponse;
+            die(print_r($QueryAccountResponse));
+    //        return new Response($client->__getLastResponse(),200,array('Content-Type'=>'xml'));
 
+            $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
+
+            $dataList = $QueryAccountResponse->BillDataList->Data;
+            $i = 0;
+            foreach($logs as $log)
+            {
+                $i = $this->findDatainB2BLog($log->getClientTransactionID(),$dataList,$i);
+                $data = is_array($dataList)?$dataList[$i]:$dataList;
+                $log->setStatus($data->Description=="Success"?1:0);
+                $log->setTransactionID('Update_Log');
+                if($log->getStatus()==1)
+                {
+
+                }
+                else
+                {
+                    $log->setStatusCode('Update_Log');
+                }
+            }
+
+        }
+        catch(\Exception $e)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+        }
+
+    }
+
+    private function findDatainB2BLog($MyClientId,$dataList,$i)
+    {
+        if(is_array($dataList))
+        {
+            while($dataList[$i]->BillTransactionID!=$MyClientId)
+            {
+                $i++;
+                if($i == count($dataList)) return false;
+            }
+            return $i;
+        }
+        else
+        {
+            if ($dataList->BillTransactionID==$MyClientId)
+                return 0;
+            else
+                return false;
         }
     }
 }

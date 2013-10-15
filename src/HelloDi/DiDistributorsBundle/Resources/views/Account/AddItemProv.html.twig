@@ -76,7 +76,7 @@
                 var account_id = {{ Account.id }};
                 $('#refresh1').show();
                 $.post('{{ path('CheckItemCurrEqAccCurr') }}',{accountid:account_id, itemid:item_id},function(result){
-                    $("#denomination").val(result);
+                    if(result!='') $("#denomination").val(result);
                     $('#refresh1').hide();
                 });
             }

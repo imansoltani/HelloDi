@@ -10,6 +10,7 @@ use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserType;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
+use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -806,7 +807,6 @@ $datetype=0;
     public function BuyImtuAction(Request $request)
     {
         ini_set('max_execution_time', 60);
-        ini_set('default_socket_timeout', 50);
         $em = $this->getDoctrine()->getEntityManager();
 
         $mobileNumber = $request->get('mobile_number');
@@ -835,7 +835,8 @@ $datetype=0;
         $em->flush();
         try
         {
-            $client = new \Soapclient($this->container->getParameter('B2BServer.WSDL'), array("connection_timeout"=>50));
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
+            $client->__setTimeout(40);
 
             $result = $client->CreateAccount(array(
                 'CreateAccountRequest' => array(
@@ -859,7 +860,7 @@ $datetype=0;
                         'Recharge'=>'Y',
                         'SendSMS'=>'N',
                         'SendEmail'=>'N',
-                        'ServiceNumber'=>'2127211064'
+                        'ServiceNumber'=>$this->container->getParameter('B2BServer.ServiceNumber')
                     ),
                 )
             ));
