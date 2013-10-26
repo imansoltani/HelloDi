@@ -2,6 +2,8 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\B2BLog;
+use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,7 +100,7 @@ class B2BReportController extends Controller
 
         try
         {
-            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));//,array('trace'=>true));
             $client->__setTimeout(40);
             $result = $client->QueryAccount(array(
                 'Request' => array(
@@ -115,10 +117,7 @@ class B2BReportController extends Controller
                     ),
                 )
             ));
-            return $this->redirect($this->getRequest()->headers->get('referer'));
             $QueryAccountResponse = $result->QueryAccountResponse;
-            die(print_r($QueryAccountResponse));
-    //        return new Response($client->__getLastResponse(),200,array('Content-Type'=>'xml'));
 
             $logs = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findBy(array('status'=>null));
 
@@ -127,25 +126,76 @@ class B2BReportController extends Controller
             foreach($logs as $log)
             {
                 $i = $this->findDatainB2BLog($log->getClientTransactionID(),$dataList,$i);
+                if (!$i) break;
                 $data = is_array($dataList)?$dataList[$i]:$dataList;
                 $log->setStatus($data->Description=="Success"?1:0);
                 $log->setTransactionID('Update_Log');
                 if($log->getStatus()==1)
                 {
+                    $log->setStoreDiscount($data->Commission);
 
+                    $user = $log->getUser();
+                    $item = $log->getItem();
+                    $accountRet = $user->getAccount();
+                    $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
+                    $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
+                    $clientTranId= $log->getClientTransactionID();
+                    $com = $priceRet->getprice() - $priceDist->getprice();
+                    $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
+
+                    // For retailers
+                    $tranretailer = new Transaction();
+                    $tranretailer->setAccount($accountRet);
+                    $tranretailer->setTranAmount(-($priceRet->getPrice()));
+                    $tranretailer->setTranFees(0);
+                    $tranretailer->setTranDescription('ClientTransactionID: ' . $clientTranId);
+                    $tranretailer->setTranCurrency($accountRet->getAccCurrency());
+                    $tranretailer->setTranDate(new \DateTime('now'));
+                    $tranretailer->setTranInsert(new \DateTime('now'));
+                    $tranretailer->setTranAction('sale');
+                    $tranretailer->setTranType(0);
+                    $tranretailer->setUser($user);
+                    $tranretailer->setTranBookingValue(null);
+                    $tranretailer->setTranBalance($accountRet->getAccBalance());
+                    $tranretailer->setTaxHistory($taxhistory);
+                    $tranretailer->setB2BLog($log);
+                    $log->addTransaction($tranretailer);
+                    $em->persist($tranretailer);
+
+                    // For distributors
+                    $trandist = new Transaction();
+                    $trandist->setAccount($accountRet->getParent());
+                    $trandist->setTranAmount($com);
+                    $trandist->setTranFees(0);
+                    $trandist->setTranDescription('ClientTransactionID: ' . $clientTranId);
+                    $trandist->setTranCurrency($accountRet->getParent()->getAccCurrency());
+                    $trandist->setTranDate(new \DateTime('now'));
+                    $trandist->setTranInsert(new \DateTime('now'));
+                    $trandist->setTranAction('com');
+                    $trandist->setTranType(1);
+                    $trandist->setUser($user);
+                    $trandist->setTranBookingValue(null);
+                    $trandist->setTranBalance($accountRet->getParent()->getAccBalance());
+                    $trandist->setTaxHistory($taxhistory);
+                    $trandist->setBuyingprice($priceDist->getPrice());
+                    $trandist->setB2BLog($log);
+                    $log->addTransaction($trandist);
+                    $em->persist($trandist);
                 }
                 else
                 {
                     $log->setStatusCode('Update_Log');
                 }
             }
-
+            $em->flush();
+//            return new Response($client->__getLastResponse(),200,array('Content-Type'=>'xml'));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
         }
         catch(\Exception $e)
         {
             $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
         }
-
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     private function findDatainB2BLog($MyClientId,$dataList,$i)

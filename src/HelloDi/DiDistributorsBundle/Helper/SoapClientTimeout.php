@@ -41,7 +41,7 @@ class SoapClientTimeout extends \SoapClient
 
             if (curl_errno($curl))
             {
-                throw new \Exception(curl_error($curl),-99);
+                throw new \Exception('timout error',-99);
             }
 
             curl_close($curl);

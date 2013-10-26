@@ -890,6 +890,7 @@ $datetype=0;
                 $b2blog->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
                 $b2blog->setStatus(1);
 
+                // For retailers
                 $tranretailer = new Transaction();
                 $tranretailer->setAccount($accountRet);
                 $tranretailer->setTranAmount(-($priceRet->getPrice()));
