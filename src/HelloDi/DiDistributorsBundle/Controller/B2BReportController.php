@@ -95,8 +95,21 @@ class B2BReportController extends Controller
     {
         ini_set('max_execution_time', 60);
         $em= $this->getDoctrine()->getManager();
-        $firstStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'asc'))->getDate();
-        $lastStatusNullDate = clone $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'desc'))->getDate();
+        $firstStatusNullDate = null;
+        $lastStatusNullDate = null;
+        $firstStatusNull = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'asc'));
+        $lastStatusNull = $em->getRepository('HelloDiDiDistributorsBundle:b2blog')->findOneBy(array('status'=>null),array('id'=>'desc'));
+
+        if($firstStatusNull == null || $lastStatusNull == null)
+        {
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+        else
+        {
+            $firstStatusNullDate = clone $firstStatusNull->getDate();
+            $lastStatusNullDate = clone $lastStatusNull->getDate();
+        }
 
         try
         {
