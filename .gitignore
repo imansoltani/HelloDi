@@ -8,6 +8,7 @@ app/bootstrap*
 web/uploads/*
 
 .idea/*
+*.php~
 
 # Configuration files
 app/config/parameters.ini
