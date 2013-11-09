@@ -7,7 +7,7 @@ app/bootstrap*
 */cache/*
 web/uploads/*
 
-.idea/*
+.idea/
 *.php~
 
 # Configuration files
