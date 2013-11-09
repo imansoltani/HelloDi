@@ -1,66 +1,66 @@
 #Common#
-Setting: Setting
-Details: Details
-Name: Name
-All: All
-Balance: Balance
-CreditLimit: Credit limit
-Terms: Terms
-DefaultLanguage: Default language
-Currency: Currency
-TimeZone: Time zone
-CreationDate: Creation date
-AccountName: Account name
-AccountType: Account type
+Setting: Impostazioni
+Details: Dettagli
+Name: Nome
+All: Tutti
+Balance: Saldo
+CreditLimit: Massimale di credito
+Terms: Termini contrattuali
+DefaultLanguage: Lingua predefinita
+Currency: Valuta
+TimeZone: Fuso orario
+CreationDate: Data di creazione
+AccountName: Nome account
+AccountType: Tipo di account
 Account: Account
-CreateAccount: Create account
+CreateAccount: Crea account
 HaveAccount: Have Account
-AccountSetting: Account setting
-Type: Type
-select_a_account: Select a account
+AccountSetting: Impostazioni account
+Type: Digita
+select_a_account: Seleziona un account
 #End Common#
 
 #Distributors#
-Distributors: Distributors
-Distributor: Distributor
-AccountTransactions: Account transactions
-ManageDistributor: Manage distributor
+Distributors: Distributori
+Distributor: Distributore
+AccountTransactions: Transazioni Account
+ManageDistributor: Gestisci il distributore
 CountDistributors: Count distributor
 CreateDistWithEntity: Create distributor with entity
-CreateANewDistributor: Create a new distributor
+CreateANewDistributor: Crea un nuovo distributore
 ChildNumber: Child number
 FundDistributor: Fund distributor
-CurrentDistributorBalance: Current distributor balance
+CurrentDistributorBalance: Saldo corrente del distributore
 FundDistributorBalance: Fund distributor balance
-UpdateDistributorCreditLimit: Update distributor credit limit
-CurrentDistributorCreditlimit: Current distributor credit limit
-SubAccounts: Sub accounts
-Action: Action
-All: All
-UpdatedistributorCreditLimit: Update distributor credit limit
-CurrentDistributorCreditlimit: Current distributor credit limit
-select_a_account: Select a account
+UpdateDistributorCreditLimit: Aggiorna il limite di credito del distributore
+CurrentDistributorCreditlimit: Limite di credito attuale del distributore
+SubAccounts: Sub account
+Action: Vai
+All: Tutti
+UpdatedistributorCreditLimit: Aggiorna il limite di credito del distributore
+CurrentDistributorCreditlimit: Limite di credito attuale del distributore
+select_a_account: Seleziona un account
 AccountSales: Account sales
-RetailerAccount: Retailer account
+RetailerAccount: Account rivenditore
 RetailerStatements: Retailer statements
-RetailerRevenues: Retailer revenues
-DailySalesGroupedByItemAndRetailer: Daily sales grouped by item and retailer
-PrintToPDF: Print to PDF
-AccountSetting: Account setting
+RetailerRevenues: Ricavi rivenditore
+DailySalesGroupedByItemAndRetailer: Ricavi giornalieri raggruppati per oggetto e rivenditore
+PrintToPDF: Stampa in PDF
+AccountSetting: Impostazioni account
 
 #End Distributors#
 
 #Providers#
 
-Provider: Provider
-Providers: Providers
+Provider: Fornitore
+Providers: Fornitori
 CountProviders: Count providers
-ThisAccountHaveNotUser: This account have not user
+ThisAccountHaveNotUser: Questo account non ha utenti collegati
 Info: Info
 CreateProviderWithEntity: Create provider with entity
-CreateANewProvider: Create a new provider
+CreateANewProvider: Crea un nuovo fornitore
 Accounts: Accounts
-This_Entity_have_not_dist_account: This entity have not distributor account
+This_Entity_have_not_dist_account: 1Questo oggetto non ha un account distributore
 
 
 
@@ -69,15 +69,15 @@ This_Entity_have_not_dist_account: This entity have not distributor account
 
 #Retailer#
 
-Retailers: Retailers
-Retailer: Retailer
+Retailers: Rivenditori
+Retailer: Rivenditore
 Retailer(s): Retailer(s)
 CreateRetailerWithEntity: Create retailer with entity
 CountRetailers: Count retailers
 FundRetailers: Fund retailers
-AddRetailer: Add retailer
+AddRetailer: Aggiungi un rivenditore
 FundRetailerBalance: Fund retailer balance
-RetailerBalance: Retailer balance
-UpdateRetailerCreditLimit: Update retailer credit limit
-RetailerCreditLimit: Retailer credit limit
+RetailerBalance: Saldo rivenditore
+UpdateRetailerCreditLimit: Aggiorna il limite di credito del rivenditore
+RetailerCreditLimit: Limite di credito del rivenditore
 #End Retailer#
