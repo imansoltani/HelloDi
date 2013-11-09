@@ -1,34 +1,34 @@
 Id: Id
 Operation: Operation
-Manage: Manage
-Search: Search
-Pleasewait: Please wait
-Details: Details
-Apply: Apply
-Cancel: Cancel
-Update: Update
-Edit: Edit
-Type: Type
-Next: Next
-Previous: Previous
-Name: Name
-Create: Create
-Delete: Delete
+Manage: Gestisci
+Search: Cerca
+Pleasewait: In corso
+Details: Dettagli
+Apply: Applica
+Cancel: Cancella
+Update: Aggiorna
+Edit: Modifica
+Type: Digita
+Next: Avanti
+Previous: Indietro
+Name: Nome
+Create: Crea
+Delete: Cancella
 Info: Info
-Setting: Setting
-Request: Request
+Setting: Impostazioni
+Request: Richiedi
 Master: Master
-Buy: Buy
-Support: Support 
-Profile: Profile
-Accept: Accept
-Add: Add
+Buy: Compra
+Support: Assistenza
+Profile: Profilo
+Accept: Accetta
+Add: Aggiungi
 Reset: Reset
-True: True
-False: False
+True: Vero
+False: Falso
 Alert: Alert
-Back: Back
-Accept: Accept
+Back: Indietro
+Accept: Accetta
 
 
 #jadid#

@@ -1,24 +1,23 @@
 Entity: Entity
-VatNumber: VAT number
+VatNumber: Partita iva
 Tel1: Tel 1
 Tel2: Tel 2
 Fax: Fax
-WebSite: Website
-Adrs1: Town
-Adrs2: Street
+WebSite: Sito web
+Adrs1: Città
+Adrs2: Via
 Adrs3: Additional
-Np: Postal code
-City: City
-Country: Country
-Address: Address
-EditAddress: Edit address
+Np: Cap
+City: Città
+Country: Nazione
+Address: Indirizzo
+EditAddress: Modifica indirizzo
 EntityName: Entity name
 EntityInfo: Entity info
-AddressInfo: Adress info
+AddressInfo: Info indirizzo
 AddressEntity: Adress entity
 Entities: Entities
-DateChange: Date change
-Profile: Profile
-AdditionalDetails: Additional details
+DateChange: Cambia data
+Profile: Profilo
+AdditionalDetails: Ulteriori dettagli
 Info: Info
-

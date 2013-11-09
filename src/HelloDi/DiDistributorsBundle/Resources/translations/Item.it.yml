@@ -2,39 +2,39 @@ Item: Item
 Items: Items
 Id: ID
 Name: Item Name
-FaceValue: Face value
-Currency: Currency
+FaceValue: Valore facciale
+Currency: Valuta
 MinStock: Min stock
-Mobile: Mobile
-Calling_Card: Calling card
+Mobile: Cellulare
+Calling_Card: Carta telefonica
 E-payment: E-payment
 ItemType: Item type
-All: All
-Type: Type
-ShopDmtu: Shop Dmtu
-BuyCard: Buy card
-Favorite: Favorite
-Favorites: Favorites
-AddItem: Add item
-EditItem: Edit item
+All: Tutti
+Type: Digita
+ShopDmtu: Negozio DMTU
+BuyCard: Compra una carta
+Favorite: Preferito
+Favorites: Preferiti
+AddItem: Aggiungi oggeto
+EditItem: Modifica oggeto
 Stock: Stock
-Country: Country
-ItemCode: Item code
+Country: Nazione
+ItemCode: Codice oggetto
 Info: Info
-Details: Details
-DateInsert: Date insert
+Details: Dettagli
+DateInsert: Insersci una data
 ItemPerDist: Item per dist
 ItemPerRetailer: Item per retailer
-Inactive: Inactive
-Description: Description
-Descriptions: Descriptions
-DescriptionLanguages: Description languages
-Language: Language
-AddItemDescription: Add item description
-EditItemDescription: Edit item description
+Inactive: Non attivo
+Description: Descrizione
+Descriptions: Descrizioni
+DescriptionLanguages: Descrizione lingue
+Language: Lingua
+AddItemDescription: Aggiungi una descrizione all'oggetto
+EditItemDescription: Modifica la descrizione dell'oggetto
 Sample: Sample
 
 
-#
+#new
 NewItem:
 IMTU: International Mobile Top-Up

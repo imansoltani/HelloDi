@@ -4,38 +4,38 @@ Sales: Sales
 Sale: Sale
 Count: Count
 Trends: Trends
-SerialNumber: Serial number
+SerialNumber: Numero seriale
 Pin: Pin
-Status: Status
-DateInsert: Date insert
+Status: Stato
+DateInsert: Inserisci data
 DateProduction: Date production
-DateExpiry: Date expiry
-FileName: File name
+DateExpiry: Data di scadenza
+FileName: Nome file
 File: File
 Batch: Batch
-ExportCSV: Export to CSV
-Quantity: Quantity
-History: History
+ExportCSV: Esporta in Csv
+Quantity: Quantità
+History: Cronologia
 Info: Info
-All: All
+All: Tutti
 
-CreditNote: Credit note
+CreditNote: Nota di credito
 DeadBeat: Dead beat
 CreditNoteAndDeadBeat: Credit note and dead beat
 
-Available: Available
-Unavailable: Unvailable
+Available: Disponibile
+Unavailable: No disponibile
 
-FromSerialNumber: Serial number from
-ToSerialNumber: Serial number to
-FromInsertDate: From insert date
-ToInsertDate: To insert date
-FromExpireDate: From expire date
-ToExpireDate: To expire date
-Upload: Upload
-Input: Input
-Inputs: Inputs
-Value: Value
-Delimiter: Delimiter
-ColumnNumSN: Column number serial
-ColumnNumPIN: Column number PIN
+FromSerialNumber: Da numero seriale
+ToSerialNumber: A numero seriale
+FromInsertDate: Inserisci data DA
+ToInsertDate: Inserisci data A
+FromExpireDate: Data di scadenza DA
+ToExpireDate: Data di scadenza A
+Upload: Carica
+Input: Inserisci
+Inputs: Inserisci
+Value: Valuta
+Delimiter: Delimitatore
+ColumnNumSN: Colonna numero seriale
+ColumnNumPIN: Colonna numero PIN
