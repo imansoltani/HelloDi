@@ -1,13 +1,13 @@
 #message#
 
-the_operation_done_successfully: the operation done successfully
+the_operation_done_successfully: L'operazione è stata eseguita con successo
 
-Please_input_a_number_greater_than_zero: Please input a number greater than zero
+Please_input_a_number_greater_than_zero: Si prega di inserire un numero maggiore di zero
 
-Are_you_sure_you_perform_this_operation?: Are you sure you perform this operation?
+Are_you_sure_you_perform_this_operation?: Sei sicuro di voler eseguire questa operazione ?
 
-Register_transaction: Register transaction
-Make_transfer: Make transfer
+Register_transaction: Registra il trasferimento
+Make_transfer: Fai il trasferimento
 Fund_distributor: Fund distributor
 Fund_retailer: Fund retailer
 
@@ -20,40 +20,40 @@ Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Distribu
 Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider account was changed from already provider to current provider
 
 You_entered_an_invalid: You entered an invalid
-balance_should_more_than_credit_limit: Balance should more than credit limit
-balance_is_not_enough: Balance is not enough
-credit_Limit_should_be_positive: Credit Limit should be positive
+balance_should_more_than_credit_limit: Il saldo deve essere superiore al limite di credito
+balance_is_not_enough: Il saldo non è sufficiente
+credit_Limit_should_be_positive: Il limite di credito deve essere positivo
 
 #------
-Unable_to_find_%object%: Unable to find object
-item_has_not_price_on_provider: Item has not price on provider.
+Unable_to_find_%object%: Impossibile trovare l'oggetto
+item_has_not_price_on_provider: Il fornitore non fornisce il prezzo per l'articolo
 apply_new_price_to_account: Apply new price to selected account.
-inactive_item_on_selected_accounts: Inactive item on the selected accounts.
-change_will_be_affect_retailers_of_distributor: This change will be affect the retailers of the distributor.
-the_operation_failed: The operation failed !
-code_must_be_Active: The code must be active !
-code_must_be_Inactive: The code must be inactive!
+inactive_item_on_selected_accounts: Oggetto non attivo sui conti selezionati
+change_will_be_affect_retailers_of_distributor: Questa modifica sarà applicata su tutti i rivenditori del distributore
+the_operation_failed: Operazione non riuscita
+code_must_be_Active: Il codice deve essere attivo
+code_must_be_Inactive: Il codice deve essere inattivo
 Are_you_sure_to_Credit_Node: Are you sure to Credit Note the code?
 Are_you_sure_to_Credit_Node_And_Deat_Beat: Are you sure to Credit Note And Deat Beat the code?
 Are_you_sure_to_Dead_Beat: Are you sure to Dead Beat the code?
 
-BatchNotValid: Batch is not valid.
-SNNotValid: SerialNumber is not valid.
-PINNotValid: PinCode is not valid.
-CodesAlreadyExist: The Codes is already exist.
-FileEmpty: File is empty.
-ErrorReadingFile: Error in Reading File.
-FileAlreadyExist: The selected File is Already Exist.
+BatchNotValid: Batch non valido
+SNNotValid: Numero seriale non valido
+PINNotValid: Il pin non è valido
+CodesAlreadyExist: I codici sono già esistenti
+FileEmpty: Il file è vuoto
+ErrorReadingFile: Errore nella lettura del file
+FileAlreadyExist: Il file selezionato è già esistente
 
 New_price_can_not_less_than_price_on_this_item_in_your_distributor: New price can not less than price on this item in your distributor.
 
-have_not_permission_%object%: You haven't permission to access this object !
+have_not_permission_%object%: Non hai l'autorizzazione per accedere a questo oggetto
 
 #######ticket
-ticket_create_successfully: Ticket create successfully
+ticket_create_successfully: Ticket creato con successo
 
 ###homepage
-message_send_successfully: Message send successfully
+message_send_successfully: Messaggio inviato correttamente
 
 ###
 error_b2b: Error in connect to B2B server.
