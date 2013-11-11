@@ -16,7 +16,7 @@ parameters:
     ogone_sha_in: 'MySha-In@key765?'
     ogone_sha_out: 'MySha-ouT@Key79?'
     ogone_submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
-    languages: [en, fr, de]
+    languages: [en, fr, de, it]
     currency: [CHF, USD]
     currencies: [CHF, USD]
     B2BServer.WSDL: http://169.132.165.178/b2bapi/b2bsvc.asmx?WSDL

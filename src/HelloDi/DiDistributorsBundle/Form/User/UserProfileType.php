@@ -20,7 +20,8 @@ class UserProfileType extends BaseType
                 'choices' => array(
                     'en' => 'en',
                     'fr' => 'fr',
-                     'de'=>'de'
+                     'de'=>'de',
+                    'it'=>'it',
                 ),
                 'required'  => true,
                 'label' => 'Language',
