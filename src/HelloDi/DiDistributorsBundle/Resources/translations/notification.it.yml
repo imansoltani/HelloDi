@@ -1,26 +1,26 @@
-Notification: Notification
-Notifications: Notifications
-Read: Read
-DateTimeCreate: Date time create
-Type: Type
+Notification: Notifica
+Notifications: Notifiche
+Read: Letto
+DateTimeCreate: Data di creazione
+Type: Digita
 Description:
 
 #Retailer#
-Retailer_account_balance_is_lower_than_equal_%value%: Retailer account balance is lower than equal value
+Retailer_account_balance_is_lower_than_equal_%value%: Il saldo del conto Rivenditore è inferiore pari al valore
 
 #Distributor_Retailer#
-Balance_increased_%value%: Balance increased value
-Balance_decreased_%value%: Balance decreased value
-CreditLimit_increased_%value%: Credit Limit increased value
-CreditLimit_decreased_%value%: Credit Limit decreased value
-Edited_account: Edited account
-Edited_entity: Edited entity
-Added_user_with_username_%value%: Added user with username: value
+Balance_increased_%value%: Saldo aumentato valore
+Balance_decreased_%value%: Saldo diminuito valore
+CreditLimit_increased_%value%: Limite di credito aumentato valore
+CreditLimit_decreased_%value%: Limite di credito diminuito valore
+Edited_account: Account modificato
+Edited_entity: Oggetto modificato
+Added_user_with_username_%value%: Aggiunto utente con username : valore
 
 #Provider#
-Codes_for_this_%value%_is_very_low: Codes for this value is very low
+Codes_for_this_%value%_is_very_low: I codici per questo valore sono molto bassi
 Provider_account_balance_is_lower_than_equal_%value%: Provider account balance is lower than equal value
-Retailer_created_an_account_%value%: Retailer created an account
+Retailer_created_an_account: Il rivenditore ha creato un account
 
 #Distributor#
-Distributor_account_balance_is_lower_than_equal_%value%: Distributor account balance is lower than equal value
+Distributor_account_balance_is_lower_than_equal_%value%: Il saldo del conto del distributore è inferiore a pari valore

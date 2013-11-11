@@ -1,9 +1,11 @@
-Operator: Operator
-Operators: Operators
-AllOperators: All operators
-AddOperator: Add operator
-EditOperator: Edit operator
+Operator: Operatore
+Operators: Operatori
+AllOperators: Tutti gli operatori
+AddOperator: Aggiungi operatore
+EditOperator: Modifica operatore
 Id: ID
-Name: Name
+Name: Nome
 Logo: Logo
+
+#new
 CarrierCode: Carrier Code

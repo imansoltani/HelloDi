@@ -1,14 +1,14 @@
-BuyingPrice: Buying price
-SumValues: Sum values
-Value: Value
-Price: Price
-Currency: Currency
-Status: Status
-NewPrice: New price
-History: History
-FromDate: From date
-ToDate: To date
-Active: Active
-Inactive: Inactive
+BuyingPrice: Prezzo di acquisto
+SumValues: Somma valori
+Value: Valore
+Price: Prezzo
+Currency: Valuta
+Status: Stato
+NewPrice: Nuovo prezzo
+History: Cronologia
+FromDate: Da
+ToDate: A
+Active: Attivo
+Inactive: Non attivo
 
 denomination: denomination

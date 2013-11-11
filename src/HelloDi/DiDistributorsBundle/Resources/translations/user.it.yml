@@ -1,31 +1,31 @@
-Users: Users
-User: User
-FullName: Full name
-AddNewUser: Add new user
-CreateUser: Creat user
-UserName: User name
-EditUser: Edit user
-Role: Role
-select_a_role: Select a role
-Language: Language
+Users: Utenti
+User: Utente
+FullName: Nome completo
+AddNewUser: aggiungi un nuovo utente
+CreateUser: Crea utente
+UserName: Nome utente
+EditUser: Modifica utente
+Role: Ruolo
+select_a_role: Seleziona un ruolo
+Language: Lingua
 PlainPassword_Second: Plain password second
 PlainPassword_First: Plain password first
-password.mismatch: Password mismatch
-Enabled: Enabled
+password.mismatch: Password non corrispondente
+Enabled: Abilitato
 Email: Email
-Mobile: Mobile
-FirstName: First name
-LastName: Last name
-Disable: Disable
-Enable: Enable
-Setting: Setting
-Profile: Profile
+Mobile: Cellulare
+FirstName: Nome
+LastName: Cognome
+Disable: Disabilita
+Enable: Abilita
+Setting: Impostazioni
+Profile: Profilo
 Staff: Staff
-Status: Status
-Seller: Seller
-All: All
-InActive: In active
-Active: Active
+Status: Stato
+Seller: Venditore
+All: Tutto
+InActive: Non attivo
+Active: Attivo
 
 #jadid#
 Password:

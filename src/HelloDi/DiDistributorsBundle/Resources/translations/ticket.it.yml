@@ -1,30 +1,30 @@
 Tickets: Tickets
-Ticket: Ticket
-Type: Type
-All: All
-NewTicket: New ticket
-Open: Open
-Close: Close
-Click_for_Switch_to: Click for switch to
-Tickets_In_change: Tickets in change
-Take: Take
-payment_issue: Payment issue
-new_item_request: New item request
-price_change_request: Price change request
-address_change: Address change
-account_change_requests: Account change requests 
+Ticket: Tickets
+Type: Digita
+All: Tutti
+NewTicket: Nuovo ticket
+Open: Apri
+Close: Chiudi
+Click_for_Switch_to: Fai click per passare a
+Tickets_In_change: Tickets in cambiamento
+Take: Prendi
+payment_issue: Problema di pagamento
+new_item_request: Nuova richiesta
+price_change_request: Richiesta di cambio prezzo
+address_change: Cambio indirizzo
+account_change_requests: Richiesta di modifica account
 bug_reporting: Bug reporting
-support: Support
-Change_Address_Or_Detail: Change address or detail
-Request: Request
-Status: Status
-Description: Description
-Subject: Subject
-DateStart: Date start
-DateEnd: Date end
-Send: Send
-Switch: Switch
-AddNote: Add note
-Countact: Countact
-SupportTeam: Support team
+support: Assistenza
+Change_Address_Or_Detail: Modifica
+Request: Richiedi
+Status: Stato
+Description: Descrizione
+Subject: Soggetto
+DateStart: Data di inizio
+DateEnd: Data di fine
+Send: Invia
+Switch: Passa a
+AddNote: Aggiungi nota
+Countact: Contatta
+SupportTeam: Team di assistenza
 AttentionTo: Attention to

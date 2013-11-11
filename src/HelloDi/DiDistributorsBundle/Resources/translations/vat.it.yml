@@ -1,5 +1,7 @@
-Vat: Vat
-Tax: Tax
+Vat: Iva
+Tax: Tassa
+
+#new
 DateEnd:
 Rate:
 Vat:

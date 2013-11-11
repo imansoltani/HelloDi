@@ -1,5 +1,5 @@
-paymentAmount: Payment amount
-EpaymentNew: Epayment New
-Epayment: Epayment
-Validate: Validate
-are_you_sure_to_payment_%value%_%currency%: Are you sure to payment value currency ?
+paymentAmount: Importo del pagamento
+EpaymentNew: Nuovo e-payment
+Epayment: E-payment
+Validate: Conferma
+are_you_sure_to_payment_%value%_%currency%: Sei sicuro della valuta di pagamento

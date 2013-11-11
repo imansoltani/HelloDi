@@ -1,67 +1,67 @@
-Transaction: Transaction
-Transactions: Transactions
-Date: Date
-Description: Description
-Action: Action
-Type: Type
-TypeAction: Type action
-Purchases: Purchases
-From: From
-To: To
-Amount: Amount
-TradeDate: Trade date
-LookingDate: Looking date
-Credit: Credit
-Debit: Debit
-Increase: Increase
-Decrease: Decrease
-All: All
-select_a_action: Select an action
+Transaction: Transazione
+Transactions: Transazioni
+Date: Data
+Description: Descrizione
+Action: Azione
+Type: Digita
+TypeAction: Digita azione
+Purchases: Acquisti
+From: Da
+To: A
+Amount: Importo
+TradeDate: Data di stipula
+LookingDate: Cerca data
+Credit: Credito
+Debit: Debito
+Increase: Aumenta
+Decrease: Diminuisci
+All: Tutto
+select_a_action: Seleziona un'azione
 Benefit: Benefit
 Reports: Reports
 Report: Report
-SalesReport: Sales report
-SellingPrice: Selling price
-Quantity: Quantity
-DateInsert: Date insert
-Fees: Fees
-Communications: Communications
-Recharge: Recharge
-As: As
-Debit(commission): Debit (commission)
-History: History
-PrintLastSale: Print last sale
+SalesReport: Report di vendita
+SellingPrice: Prezzo di vendita
+Quantity: Quantità
+DateInsert: Inserisci data
+Fees: Commissioni
+Communications: Comuniczioni
+Recharge: Ricarica
+As: Come
+Debit(commission): Addebito (commissione)
+History: Cronologia
+PrintLastSale: Stampa l'ultima vendita
 daily_sales_grouped_by_item_and_retailer: Daily sales grouped by item and retaile debit provider(s) account
 
 
-RegisterTransaction: Register transaction
-MakeTransfer: Make transfer
-TransferTo: Transfer to
+RegisterTransaction: Registra transazione
+MakeTransfer: Effettua il trasferimento
+TransferTo: Trasferisci a 
 
 #Provider#
-add_new_codes_to_system: Add new codes to system
+add_new_codes_to_system: Aggiungi nuovi codici al sistema
 credit_provider,s_account: Credit provider(s) account
-an_amount_is_credited_to_correct_the_price_of_a_code: An amount is credited to correct the price of a code
-an_amount_is_debited_to_correct_the_price_of_a_code: An amount is debited to correct the price of a code
-remove_codes_from_to_system: Remove codes from to system
+an_amount_is_credited_to_correct_the_price_of_a_code: Un importo viene accreditati per correggere il prezzo di un codice
+an_amount_is_debited_to_correct_the_price_of_a_code: Un importo viene addebitato per correggere il prezzo di un codice
+remove_codes_from_to_system: Rimuovi codici dal sistema
 debit_provider,s_account: Debit provider(s) account
-transfer_credit_from_provider,s_account_to_a_distributor,s_account: Transfert credit from provider(s) account to a distributor(s) account
-Removed: Removed
+transfer_credit_from_provider,s_account_to_a_distributor,s_account: Ytrasferisci il credito dall'account del fornitore a quello del distributore
+Removed: Rimosso
 
 #Distributors#
-credit_distributor,s_account: Credit distributor(s) account
+credit_distributor,s_account: Conto corrente dostributore
 debit-distributor,s_account: Debit distributor(s) account
-issue_a_credit_note_for_a_sold_code: Issue a credit note for a sold code
+issue_a_credit_note_for_a_sold_code: Emetti una nota di credito per un codice venduto
 debit_distributor,s_account_for_the_commisson_payments: Debit distributor(s) account for the commission payments
 ogone_payment_on_its_own_account: Ogone payment on its own account
-transfer_credit_from_provider,s_account_to_a_distributor,s_account: Transfer credit from provider(s) account to a distributor(s) account
-transfer_credit_from_distributors_account_to_a_retailer,s_account: Transfer credit from distributors account to a retailer(s) account
-increase_retailer,s_credit_limit: Increase retailer(s) credit limit
-credit_commissons_when_a_retailer_sells_a_code: Credit commissons when a retailer sells a code
+transfer_credit_from_provider,s_account_to_a_distributor,s_account: Trasferisci credito dall'account del fornitore a quello del distributore
+transfer_credit_from_distributors_account_to_a_retailer,s_account: Trasferisci credito dall'account del distributore a quello del rivenditore
+increase_retailer,s_credit_limit: Aumenta il limite di credito del rivenditore
+credit_commissons_when_a_retailer_sells_a_code: Commissioni sul credito quendo il rivenditore vende un codice
 #Retailer#
-debit_balance_when_the_retailer_sell_a_code: Debit balance when the retailer sell a code
-issue_a_credit_note_for_a_sold_code: Issue a credit note for a sold code
-transfer_credit_from_distributor,s_account_to_a_retailer,s_account: Transfer credit from distributor(s) account to a retailer(s) account
+debit_balance_when_the_retailer_sell_a_code: Saldo passivo quando il rivenditore vende un codice
+issue_a_credit_note_for_a_sold_code: Emetti una nota di credito per un codice venduto
+transfer_credit_from_distributor,s_account_to_a_retailer,s_account: Trasferisci credito dal conto del distributore a quello del rivenditore
 ogone_payment_on_its_own_account: Ogone payment on its own account
 
 
