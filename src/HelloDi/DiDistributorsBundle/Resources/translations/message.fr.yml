@@ -56,9 +56,9 @@ ticket_create_successfully: Billet créer avec succès
 message_send_successfully: Message envoyer avec succès
 
 ###
-error_b2b:
-cant_find_b2b_provider:
+error_b2b: Erreur de connexion au serveur B2B.
+cant_find_b2b_provider: Nous ne pouvons pas trouver un fournisseur qui porte le nom «B2BServer».
 
-mobile_number_%mobilenumber%_charged:
+mobile_number_%mobilenumber%_charged: Téléphone portable avec le numéro %numéro de téléphone portable% s'est rechargé avec succès.
 ##errors in b2bserver
-INVALID_MISDN:
+INVALID_MISDN: Numéros de téléphone incorrect.

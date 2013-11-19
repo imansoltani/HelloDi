@@ -1,0 +1,15 @@
+Code: Code
+Line: Ligne
+Description: Description
+Exception: Exception
+Exceptions: Exceptions
+Log: Connexion
+Export_logs_(info)_To_File: Exporter les informations au dossier
+Export_To_File: Exporter au dossier
+Exceptions&Logs: Exceptions & journaux
+Date: Date
+
+#Exception In Environment Production#
+Oops!_An_Error_Occurred: Oups! Une erreur s'est produite
+The_server_returned_a_%status_code%_%status_text%: Le serveur a renvoyé un statu_text de code_état
+Something_is_broken._Please_email_us_at_[email]_and_let_us_know_what_you_were_doing_when_this_error_occurred._We_will_fix_it_as_soon_as_possible._Sorry_for_any_inconvenience_caused: Quelque chose est cassé. S'il vous plaît écrivez-nous à [email] et laissez-nous savoir ce que vous faisiez lorsque cette erreur s'est produite. Nous allons y remédier dès que possible. Désolé pour la gêne occasionnée.

@@ -12,6 +12,6 @@ This_item_code_exist_already: Ce code d'objet existe déjà
 This_operator_name_exist_already: Ce nom d'opérateur existe déjà
 
 #----
-expiry_not_exist:
-printdate_not_exist:
-duplicate_not_exist:
+expiry_not_exist: La date d'expiration n'existait pas dans la description.
+printdate_not_exist: La date d'impression n'existe pas dans la description.
+duplicate_not_exist: Le duplicata n'existe pas dans la description.

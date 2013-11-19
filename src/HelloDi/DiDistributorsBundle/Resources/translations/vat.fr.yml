@@ -1,6 +1,6 @@
 Vat: Valeur
 Tax: Taxe
-DateEnd:
-Rate:
-Vat:
-Vat_Rate:
+DateEnd: Date de fin
+Rate: Taux
+Vat: TVA
+Vat_Rate: Taux de TVA

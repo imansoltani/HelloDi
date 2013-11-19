@@ -1,0 +1,13 @@
+B2B_Server_Log: B2B se connecte au serveur
+B2B_Server_Update: B2B se met à jour sur le serveur
+
+id: id
+clientTransactionId: Transaction du client Id
+serverTransactionId: Transaction sur le serveur Id
+dateInsert: Insérer la date
+amount: Montant
+mobileNumber: Numéro de téléphone portable
+status: status
+errorCode: Erreur de code
+fromDate: Date de
+toDate: à ce jour
