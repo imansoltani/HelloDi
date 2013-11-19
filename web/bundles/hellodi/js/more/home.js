@@ -61,6 +61,7 @@ function FixSize(newLoad) {
     }
 
     x /= 4 ;
+    //test
 
     if(mWidth > 850)
 	{
