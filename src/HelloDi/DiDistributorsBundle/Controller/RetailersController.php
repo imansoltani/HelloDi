@@ -847,11 +847,11 @@ $datetype=0;
                             'Recharge'=>'N',
                             'SendSMS'=>'N',
                             'SendEmail'=>'N',
-                            'ServiceNumber'=>$this->container->getParameter('B2BServer.ServiceNumber')
                         ),
                     )
                 ));
 
+            $serviceNumber = $result0->CreateAccountResponse->Result->ServiceNumber;
             if($result0->CreateAccountResponse->ResponseReferenceData->Success == 'Y')
             {
                 $b2blog = new B2BLog();
@@ -885,7 +885,7 @@ $datetype=0;
                             'ChargeType'=>'transfer',
                             'SendSMS'=>'N',
                             'SendEmail'=>'N',
-                            'ServiceNumber'=>$this->container->getParameter('B2BServer.ServiceNumber')
+                            'ServiceNumber'=>$serviceNumber
                         ),
                     )
                 ));

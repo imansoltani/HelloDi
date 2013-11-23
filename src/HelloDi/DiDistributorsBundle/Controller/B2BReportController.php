@@ -123,7 +123,6 @@ class B2BReportController extends Controller
                     ),
                     'ClientReferenceData' => array(),
                     'Parameters' => array(
-                        'ServiceNumber' => $this->container->getParameter('B2BServer.ServiceNumber'),
                         'ReturnBillingHistory' => 'Y',
                         'DateFrom' => date_format($firstStatusNullDate->modify('-1 day'),'Y-m-d'),
                         'DateTo' => date_format($lastStatusNullDate->modify('+1 day'),'Y-m-d')
