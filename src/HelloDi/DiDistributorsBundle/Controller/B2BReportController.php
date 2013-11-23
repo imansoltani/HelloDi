@@ -145,8 +145,6 @@ class B2BReportController extends Controller
                 $log->setTransactionID('Update_Log');
                 if($log->getStatus()==1)
                 {
-                    $log->setStoreDiscount($data->Commission);
-
                     $user = $log->getUser();
                     $item = $log->getItem();
                     $accountRet = $user->getAccount();

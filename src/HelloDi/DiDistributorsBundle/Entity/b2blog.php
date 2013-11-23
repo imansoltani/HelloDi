@@ -71,13 +71,6 @@ class B2BLog
     private $statusCode;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="StoreDiscount", type="integer", nullable=true)
-     */
-    private $storeDiscount;
-
-    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="B2BLogs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
@@ -240,29 +233,6 @@ class B2BLog
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set storeDiscount
-     *
-     * @param integer $storeDiscount
-     * @return b2blog
-     */
-    public function setStoreDiscount($storeDiscount)
-    {
-        $this->storeDiscount = $storeDiscount;
-    
-        return $this;
-    }
-
-    /**
-     * Get storeDiscount
-     *
-     * @return integer 
-     */
-    public function getStoreDiscount()
-    {
-        return $this->storeDiscount;
     }
 
     /**

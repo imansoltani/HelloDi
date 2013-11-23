@@ -62,3 +62,4 @@ cant_find_b2b_provider: Nous ne pouvons pas trouver un fournisseur qui porte le 
 mobile_number_%mobilenumber%_charged: Téléphone portable avec le numéro %numéro de téléphone portable% s'est rechargé avec succès.
 ##errors in b2bserver
 INVALID_MISDN: Numéros de téléphone incorrect.
+PIN_NOT_FOUND: PIN n'existe pas.
