@@ -63,3 +63,4 @@ mobile_number_%mobilenumber%_charged: Téléphone portable avec le numéro %num�
 ##errors in b2bserver
 INVALID_MISDN: Numéros de téléphone incorrect.
 PIN_NOT_FOUND: PIN n'existe pas.
+LOGON_FAILED: Échec de la connexion.

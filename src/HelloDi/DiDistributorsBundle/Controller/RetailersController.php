@@ -851,9 +851,15 @@ $datetype=0;
                     )
                 ));
 
-            $serviceNumber = $result0->CreateAccountResponse->Result->ServiceNumber;
-            if($result0->CreateAccountResponse->ResponseReferenceData->Success == 'Y')
+            if($result0->CreateAccountResponse->ResponseReferenceData->Success == 'N')
             {
+                $messages = $result0->CreateAccountResponse->ResponseReferenceData->MessageList;
+                foreach ($messages as $message)
+                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message'));
+            }
+            else
+            {
+                $serviceNumber = $result0->CreateAccountResponse->Result->ServiceNumber;
                 $b2blog = new B2BLog();
                 $b2blog->setUser($user);
                 $b2blog->setAmount($priceProv->getDenomination());
@@ -901,12 +907,7 @@ $datetype=0;
                     foreach ($messages as $message)
                     {
                         $error_codes.= $message->StatusCode.',';
-                        switch ($message->StatusCode)
-                        {
-                            case 'INVALID_MISDN':   $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message')); break;
-                            case 'PIN_NOT_FOUND':   $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message')); break;
-                            default:                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
-                        }
+                        $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message'));
                     }
                     $b2blog->setStatusCode($error_codes);
                 }
@@ -962,10 +963,6 @@ $datetype=0;
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
 //            die(print_r($CreateAccountResponse));
-            }
-            else
-            {
-                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
             }
         }
         catch(\Exception $e)
