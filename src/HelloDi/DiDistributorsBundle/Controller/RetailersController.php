@@ -1104,14 +1104,16 @@ $datetype=0;
 
     public  function FavouritesAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $qb = $em->createQueryBuilder()
             ->select('p')
             ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin("p.Item","i")
             ->where('p.isFavourite = 1')
             ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere("i.itemType != :type")->setParameter("type","imtu")
             ->andWhere('p.priceStatus = 1');
 
         $prices=$qb->getQuery()->getResult();
