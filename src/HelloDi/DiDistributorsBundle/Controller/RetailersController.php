@@ -1079,28 +1079,50 @@ $datetype=0;
         ));
     }
 
-    public function ImtuAction()
+    public function ImtuAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder()
-            ->select('p')
-            ->from('HelloDiDiDistributorsBundle:Price','p')
-            ->innerJoin('p.Item','i')
-            ->where('i.itemType = :type')->setParameter('type','imtu')
-            ->andWhere('p.Account = :account')->setParameter('account',$Account)
-            ->andWhere('p.priceStatus = 1');
-
-        $prices=$qb->getQuery()->getResult();
+        $form = $this->createFormBuilder()
+            ->add("receiverMobileNumber","text",array(
+                    'label'=>'Receiver mobile number',
+                    'translation_domain'=>'item'
+                ))
+            ->add("denomination","choice",array(
+                    'label'=>'Denomination',
+                    'translation_domain'=>'item'
+                ))
+            ->add("senderMobileNumber","text",array(
+                    'label'=>'Sender mobile number',
+                    'translation_domain'=>'item'
+                ))
+            ->add("email","email")
+            ->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
-            'Prices'=>$prices,
             'Account'=>$Account,
+            'form' => $form->createView()
         ));
-
     }
 
+    public function readNumberAction(Request $request)
+    {
+        //get number
+        $number = $request->get("receiver");
+        if(!$number || !is_numeric($number)) return  new Response("");
+        $number = ltrim($number,"0+-");
+        if(strlen($number)<6)  return  new Response("");
+
+        $columns = array(
+            ""
+        );
+
+        $result = "";
+
+        $result .= "<option>".$number."</option>";
+
+        return  new Response($result);
+    }
 
     public  function FavouritesAction()
     {

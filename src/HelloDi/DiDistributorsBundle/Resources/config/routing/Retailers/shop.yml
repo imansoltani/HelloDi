@@ -35,3 +35,7 @@ Retailer_Shop_print:
 Retailer_Shop_Error_print:
     pattern:  /Error
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ErrorOnPrint }
+
+Retailer_Shop_Read_Number_imtu:
+    pattern:  /readNumber
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:readNumber }
