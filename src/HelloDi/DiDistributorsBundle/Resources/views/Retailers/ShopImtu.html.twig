@@ -75,7 +75,7 @@
                         </div>
 
                         <div id="loading_div" class="FormLoader">
-                            <div id="error_myform">Receiver mobile number is invalid.</div>
+                            <div id="error_myform"></div>
                         </div>
 
                     </div>
@@ -101,12 +101,19 @@
                 success: function(result)
                 {
                     $(".hideForm").removeClass("wait load");
-                    if(result.length>0)
-                        $("#denomination").html(result);
-                    else
+                    if(result.length==0)
                     {
                         $(".hideForm").addClass("wait");
-                        $("#error_myform").show();
+                        $("#error_myform").text("Receiver mobile number is not found.").show();
+                    }
+                    else if(result == "invalid")
+                    {
+                        $(".hideForm").addClass("wait");
+                        $("#error_myform").text("Receiver mobile number is invalid.").show();
+                    }
+                    else
+                    {
+                        $("#denomination").html(result);
                     }
                 }
             });

@@ -7,19 +7,13 @@ use HelloDi\DiDistributorsBundle\Entity\B2BLog;
 use HelloDi\DiDistributorsBundle\Entity\OrderCode;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
-use \HelloDi\DiDistributorsBundle\Form\Retailers\NewUserType;
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use HelloDi\DiDistributorsBundle\Entity\Account;
-use HelloDi\DiDistributorsBundle\Listener\BalanceChecker;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
-use HelloDi\DiDistributorsBundle\Form\TransactionType;
 
 
 class RetailersController extends Controller
@@ -43,7 +37,6 @@ class RetailersController extends Controller
 
 #notifications#
   public function CountNotificationAction()
-
   {
 
     return $this->forward('hello_di_di_notification:CountAction',array('id'=>$this->getUser()->getAccount()->getId()));
@@ -167,7 +160,7 @@ class RetailersController extends Controller
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
         $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $user->setAccount($Account);
@@ -194,7 +187,7 @@ class RetailersController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
+        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User',2), $user, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -1081,6 +1074,24 @@ $datetype=0;
 
     public function ImtuAction(Request $request)
     {
+//        $n = "1934567";
+//
+//        $a = "12";
+//        $b = "19";
+//        $c = "1933";
+//        $d = "1934";
+//        $e = "1935";
+//        $f = "2345";
+//
+//        $resa = strcmp($n,$a);
+//        $resb = strcmp($n,$b);
+//        $resc = strcmp($n,$c);
+//        $resd = strcmp($n,$d);
+//        $rese = strcmp($n,$e);
+//        $resf = strcmp($n,$f);
+//
+//        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
+
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $form = $this->createFormBuilder()
@@ -1109,17 +1120,18 @@ $datetype=0;
     {
         //get number
         $number = $request->get("receiver");
-        if(!$number || !is_numeric($number)) return  new Response("");
+        if(!$number || !is_numeric($number)) return  new Response("invalid");
         $number = ltrim($number,"0+-");
-        if(strlen($number)<6)  return  new Response("");
+        if(strlen($number)<6)  return  new Response("invalid");
 
-        $columns = array(
-            ""
-        );
+        $file = file("robots.txt");
+
 
         $result = "";
 
-        $result .= "<option>".$number."</option>";
+        //try
+//            $result .= "<option>".$number."</option>";
+        //catch
 
         return  new Response($result);
     }
