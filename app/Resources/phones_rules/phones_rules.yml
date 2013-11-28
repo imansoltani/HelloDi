@@ -1,0 +1,20 @@
+parameters:
+    phones_rules:
+        operator_code_min_length: 4
+        operator_code_max_length: 5
+        rules:
+            4:
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 9891, operator_name: 'Hamrah Aval' }
+            5:
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98920, operator_name: RighTel }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98921, operator_name: RighTel }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98930, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98931, operator_name: MTCE }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98932, operator_name: Taliya }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98933, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98934, operator_name: Kish-TCI }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98935, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98936, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98937, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98938, operator_name: 'MTN Irancell' }
+                - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98939, operator_name: 'MTN Irancell' }

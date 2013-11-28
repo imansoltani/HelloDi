@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: ../Resources/phones_rules/phones_rules.yml }
 
 framework:
     #esi:             ~

@@ -29,7 +29,7 @@ Retailer_Shop_favourite:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Favourites }
 
 Retailer_Shop_print:
-    pattern:  /print/{print}
+    pattern:  /print/{print}/
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Print , print: 'web' }
 
 Retailer_Shop_Error_print:

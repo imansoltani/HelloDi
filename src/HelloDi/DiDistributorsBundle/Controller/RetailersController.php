@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use Symfony\Component\Yaml\Dumper;
 
 
 class RetailersController extends Controller
@@ -1124,14 +1125,47 @@ $datetype=0;
         $number = ltrim($number,"0+-");
         if(strlen($number)<6)  return  new Response("invalid");
 
-        $file = file("robots.txt");
+        $phones_rules=$this->container->getParameter('phones_rules');
 
+        $role = null;
+        for($i=$phones_rules["operator_code_max_length"];$i>=$phones_rules["operator_code_min_length"];$i--)
+        {
+            if(!isset($phones_rules["rules"][$i])) continue;
+            $number_code = (int)substr($number,0,$i);
+            foreach ($phones_rules["rules"][$i] as $operatorcode)
+                if($number_code==$operatorcode["operator_code"])
+                {
+                    $role = $operatorcode;
+                    break;
+                }
+        }
 
         $result = "";
+        $result .= "<option>".print_r($role,true)."</option>";
 
-        //try
-//            $result .= "<option>".$number."</option>";
-        //catch
+//        $file = file("../app/Resources/phones_rules/phones_rules.csv");
+//
+//        $array = array();
+//
+//        foreach($file as $line)
+//        {
+//            $row = str_getcsv($line,",");
+//            $length = strlen($row[2]);
+//            if(!isset($array[$length])) $array[$length] = array();
+//            $array[$length] []= array(
+//                "country_iso"=>$row[1],
+//                "number_min_length"=>(int)$row[3],
+//                "number_max_length"=>(int)$row[4],
+//                "operator_code"=>(int)$row[2],
+//                "operator_name"=>$row[5],
+//            );
+//        }
+//
+//        $dumper = new Dumper();
+//
+//        $yaml = $dumper->dump($array,2);
+//
+//        file_put_contents('phones_rules.yml', $yaml);
 
         return  new Response($result);
     }
