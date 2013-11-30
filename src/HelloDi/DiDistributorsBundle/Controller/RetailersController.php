@@ -31,7 +31,6 @@ class RetailersController extends Controller
         return $this->render('HelloDiDiDistributorsBundle:Retailers:dashboard.html.twig',array(
             'Account' => $Account,
              'Notifications'=>$Notifications
-
         ));
     }
 
