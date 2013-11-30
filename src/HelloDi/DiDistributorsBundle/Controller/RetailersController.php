@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use Symfony\Component\Yaml\Dumper;
 
-
 class RetailersController extends Controller
 {
     public function dashboardAction()
