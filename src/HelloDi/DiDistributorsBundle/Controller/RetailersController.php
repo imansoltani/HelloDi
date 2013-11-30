@@ -24,7 +24,6 @@ class RetailersController extends Controller
         $em=$this->getDoctrine()->getManager();
         $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
 
-
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
 
