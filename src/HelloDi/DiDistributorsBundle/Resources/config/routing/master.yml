@@ -80,7 +80,7 @@ test_index:
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index }
 
 test1_index:
-    pattern:  /test1/{id}
+    pattern:  /test1/{id}/
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index1, id: 0 }
 
 testlistlang:

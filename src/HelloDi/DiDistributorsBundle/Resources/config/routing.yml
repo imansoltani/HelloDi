@@ -12,7 +12,7 @@ app_Retailers:
 
 
 hellodi_homepage:
-    path: /{locale}
+    path: /{locale}/
     defaults: { _controller: HelloDiDiDistributorsBundle:Default:index,locale:en}
     requirements:
         locale: en|fr|de

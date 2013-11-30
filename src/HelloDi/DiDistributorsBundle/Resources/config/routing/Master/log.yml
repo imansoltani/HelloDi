@@ -1,5 +1,5 @@
 TestLog:
-    path: /{flag}
+    path: /{flag}/
     defaults: { _controller: 'HelloDiDiDistributorsBundle:Default:Log','flag':null}
     requirements:
         flag: Export|DeleteAll|DeleteSearch|null

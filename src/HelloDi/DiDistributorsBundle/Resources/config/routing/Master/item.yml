@@ -32,7 +32,7 @@ item_desc_edit:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:descEdit" }
 
 item_desc_print:
-    pattern:  /{id}/descriptions/{descid}/printsample/{print}
+    pattern:  /{id}/descriptions/{descid}/printsample/{print}/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:Print" , print: 'web' }
 
 item_create_itemCode:
