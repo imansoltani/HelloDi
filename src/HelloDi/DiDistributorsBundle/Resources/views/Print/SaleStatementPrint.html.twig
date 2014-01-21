@@ -114,7 +114,7 @@
                       {% set vat=Tr.TR.TaxHistory.vat %}
                       {% set x=Tr.TR.tranAmount|abs %}
 
-                      {% set sumvat=sumvat+((x/100+vat)*vat) %}
+                      {% set sumvat=sumvat+(x/(100+vat)*vat) %}
                 {% endfor %}
                 {{ sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
             </td>

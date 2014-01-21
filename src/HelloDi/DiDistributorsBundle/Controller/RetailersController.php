@@ -813,10 +813,10 @@ $datetype=0;
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
-        try
-        {
-            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
-            $client->__setTimeout(40);
+//        try
+//        {
+            $client = new \SoapClient($this->container->getParameter('B2BServer.WSDL'));//,array('trace'=>true));
+            //$client->__setTimeout(40);
             $result0 = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
                         'UserInfo' => array(
@@ -832,7 +832,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination(),
+                            'Amount'=>$priceProv->getDenomination()*100,
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -848,9 +848,14 @@ $datetype=0;
                 $messages = $result0->CreateAccountResponse->ResponseReferenceData->MessageList;
                 foreach ($messages as $message)
                     $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message'));
+//
+//                $s = "request:<br/>".$client->__getLastRequest()."<br/>response:<br/>".$client->__getLastResponse();
+//                die("part1 has error.<br/>".$s);
             }
             else
             {
+//                $s = "request:<br/>".$client->__getLastRequest()."<br/>response:<br/>".$client->__getLastResponse();
+//                die("part1 hasn't error.<br/>".$s);
                 $serviceNumber = $result0->CreateAccountResponse->Result->ServiceNumber;
                 $b2blog = new B2BLog();
                 $b2blog->setUser($user);
@@ -877,7 +882,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination(),
+                            'Amount'=>$priceProv->getDenomination()*100,
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -956,11 +961,11 @@ $datetype=0;
 
 //            die(print_r($CreateAccountResponse));
             }
-        }
-        catch(\Exception $e)
-        {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
-        }
+//        }
+//        catch(\Exception $e)
+//        {
+//            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+//        }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 

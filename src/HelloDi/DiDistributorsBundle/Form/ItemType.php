@@ -23,7 +23,9 @@ class ItemType extends AbstractType
             ->add('itemFaceValue',null,array('label' => 'FaceValue','translation_domain' => 'item'))
             ->add('itemCurrency','choice',array(
                 'empty_value' => '--',
-                'choices'=> array('USD'=>'USD','CHF' =>'CHF'),
+                'choices'=> array('USD'=>'USD','CHF' =>'CHF','BDT'=>'BDT', 'BOB'=>'BOB', 'BRL'=>'BRL', 'COP'=>'COP',
+                    'DOP'=>'DOP', 'NGN'=>'NGN', 'PEN'=>'PEN', 'PHP'=>'PHP', 'PKR'=>'PKR', 'PLN'=>'PLN', 'RUB'=>'RUB',
+                    'XAF'=>'XAF'),
                 'label' => 'Currency',
                 'translation_domain' => 'item'
             ))

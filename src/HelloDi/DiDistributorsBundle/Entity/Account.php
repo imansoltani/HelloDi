@@ -42,7 +42,7 @@ class Account
         return $this->getAccName();
     }
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="acc_balance")
+     * @ORM\Column(type="decimal", nullable=false, name="acc_balance", scale=2)
      */
     private $accBalance;
 
@@ -52,7 +52,7 @@ class Account
     private $accCurrency;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="credit_limit")
+     * @ORM\Column(type="decimal", nullable=false, name="credit_limit", scale=2)
      */
     private $accCreditLimit;
 

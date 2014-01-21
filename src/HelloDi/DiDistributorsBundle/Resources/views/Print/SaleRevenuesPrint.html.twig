@@ -56,7 +56,7 @@
                     {% set vat=Tr.TR.TaxHistory.vat %}
                     {% set x=Tr.TR.tranAmount|abs %}
 
-                    {{ ((x/100+vat)*vat) }}
+                    {{ (x/(100+vat)*vat) }}
 
                 </td>
                 <td>{{ Tr.TR.Code.Item.itemFaceValue * Tr.Quantity}}</td>

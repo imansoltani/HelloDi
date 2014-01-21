@@ -1,5 +1,5 @@
-#Common#
-Setting: Paramètres
+﻿Setting: Paramètres
+Settings: Paramètres
 Details: Plus d'informations
 Name: Nom
 All: Tous
@@ -26,15 +26,15 @@ Distributor: Distributeur
 AccountTransactions: Transaction du compte
 ManageDistributor: Gestion du distributeur
 CountDistributors: Nombre de distributeur
-CreateDistWithEntity: Crée un distributeur avec une société
-CreateANewDistributor: Crée un nouveau distributeur
-ChildNumber: Nombre de revendeur
+CreateDistWithEntity: Crée un distributeur
+CreateANewDistributor: Ajouter un nouveau compte distributeur
+ChildNumber: Nombre de revendeurs
 FundDistributor: Distributeur de fond
 CurrentDistributorBalance: Solde courant du distributeur 
 FundDistributorBalance: Solde du distributeur
 UpdateDistributorCreditLimit: Mise à jour de la limite de crédit du ditributeur
 CurrentDistributorCreditlimit: Limite du crédit courant du distributeur
-SubAccounts: Nombre de 
+SubAccounts: Revendeurs
 Action: Action
 All: Tous
 UpdatedistributorCreditLimit: Mise à jour de la limite de crédit du distributeur

@@ -18,7 +18,7 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", nullable=true, scale=2)
      */
 
     private $tranBookingValue;
@@ -30,12 +30,12 @@ class Transaction
     private $tranType;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="tran_Amount")
+     * @ORM\Column(type="decimal", nullable=true, name="tran_Amount", scale=2)
      */
     private $tranAmount;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="tran_fees")
+     * @ORM\Column(type="decimal", nullable=false, name="tran_fees", scale=2)
      */
     private $tranFees;
 
@@ -65,14 +65,14 @@ class Transaction
     private $tranAction;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="tran_balance")
+     * @ORM\Column(type="decimal", nullable=true, name="tran_balance", scale=2)
      */
     private $tranBalance;
 
 
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="Buying_Price")
+     * @ORM\Column(type="decimal", nullable=true, name="Buying_Price", scale=2)
      */
     private $BuyingPrice;
 

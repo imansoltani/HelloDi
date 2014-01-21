@@ -16,12 +16,12 @@ class ExchangeRate
     private $id;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="CHF")
+     * @ORM\Column(type="decimal", nullable=false, name="CHF", scale=2)
      */
     private $CHF;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="EUR")
+     * @ORM\Column(type="decimal", nullable=false, name="EUR", scale=2)
      */
     private $EUR;
 

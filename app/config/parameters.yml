@@ -19,9 +19,9 @@ parameters:
     languages: [en, fr, de, it]
     currency: [CHF, USD]
     currencies: [CHF, USD]
-    B2BServer.WSDL: http://169.132.165.178/b2bapi/b2bsvc.asmx?WSDL
+    B2BServer.WSDL: https://b2bapi.idt.net/b2bapi/b2bsvc.asmx?wsdl
     B2BServer.UserName: hellobell
     B2BServer.Password: hellobell
-    B2BServer.IP: 95.38.17.149
-    B2BServer.StoreID: 12345
-    B2BServer.ServiceNumber: 2127211064
+    B2BServer.IP: 46.20.242.182
+    B2BServer.StoreID: 309511
+    B2BServer.ServiceNumber: 1179989351

@@ -16,7 +16,7 @@ class ChangingPrice
     private $id;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false)
+     * @ORM\Column(type="decimal", nullable=false, scale=2)
      */
     private $price;
 

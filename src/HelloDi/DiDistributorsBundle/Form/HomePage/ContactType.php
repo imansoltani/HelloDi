@@ -21,8 +21,8 @@ class ContactType extends AbstractType
                 ),
                 'label'=>'Select_your_inquiry',
                 'translation_domain'=>'homepage'
-            ))
-            ->add('captcha', 'captcha');
+            ));
+            //->add('captcha', 'captcha');
     }
 
 
