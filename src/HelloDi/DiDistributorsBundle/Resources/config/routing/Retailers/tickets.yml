@@ -11,7 +11,7 @@ RetailerTicketsClose:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsclose }
 
 RetailerTicketsNew:
-    pattern:  /new/{data}/
+    pattern:  /new/{data}
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ticketsnew,data:1}
 
 RetailerTicketsChangeStatus:

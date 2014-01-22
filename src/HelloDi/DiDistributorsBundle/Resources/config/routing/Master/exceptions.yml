@@ -1,5 +1,5 @@
 TestException:
-    path: /{flag}/
+    path: /{flag}
     defaults: { _controller: 'HelloDiDiDistributorsBundle:Default:Exceptions','flag':null}
     requirements:
         flag: Export|DeleteAll|Log|null

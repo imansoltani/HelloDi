@@ -113,7 +113,7 @@
 
                                href="{{ path('MasterProvTransaction',{'id': account.id }) }}"
                                    {% else %}
-                                        href="{{ path('Master_Retailer_Transaction',{'distid':account.Parent.id,'id': account.id }) }}"
+                                        href="{{ path('Master_Retailer_Transaction',{'id': account.id }) }}"
                                     {% endif %}
 
                                     >

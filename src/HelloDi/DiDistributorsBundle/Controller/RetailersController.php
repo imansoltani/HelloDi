@@ -24,6 +24,7 @@ class RetailersController extends Controller
         $em=$this->getDoctrine()->getManager();
         $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
 
+
         $user = $this->get('security.context')->getToken()->getUser();
         $Account = $user->getAccount();
 
@@ -1075,47 +1076,24 @@ $datetype=0;
         ));
     }
 
-    public function ImtuAction(Request $request)
+    public function ImtuAction()
     {
-//        $n = "1934567";
-//
-//        $a = "12";
-//        $b = "19";
-//        $c = "1933";
-//        $d = "1934";
-//        $e = "1935";
-//        $f = "2345";
-//
-//        $resa = strcmp($n,$a);
-//        $resb = strcmp($n,$b);
-//        $resc = strcmp($n,$c);
-//        $resd = strcmp($n,$d);
-//        $rese = strcmp($n,$e);
-//        $resf = strcmp($n,$f);
-//
-//        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
-
+        $em = $this->getDoctrine()->getManager();
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $form = $this->createFormBuilder()
-            ->add("receiverMobileNumber","text",array(
-                    'label'=>'Receiver mobile number',
-                    'translation_domain'=>'item'
-                ))
-            ->add("denomination","choice",array(
-                    'label'=>'Denomination',
-                    'translation_domain'=>'item'
-                ))
-            ->add("senderMobileNumber","text",array(
-                    'label'=>'Sender mobile number',
-                    'translation_domain'=>'item'
-                ))
-            ->add("email","email")
-            ->getForm();
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from('HelloDiDiDistributorsBundle:Price','p')
+            ->innerJoin('p.Item','i')
+            ->where('i.itemType = :type')->setParameter('type','imtu')
+            ->andWhere('p.Account = :account')->setParameter('account',$Account)
+            ->andWhere('p.priceStatus = 1');
+
+        $prices=$qb->getQuery()->getResult();
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
+            'Prices'=>$prices,
             'Account'=>$Account,
-            'form' => $form->createView()
         ));
     }
 
