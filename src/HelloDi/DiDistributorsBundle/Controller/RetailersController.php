@@ -813,10 +813,10 @@ $datetype=0;
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
-//        try
-//        {
-            $client = new \SoapClient($this->container->getParameter('B2BServer.WSDL'));//,array('trace'=>true));
-            //$client->__setTimeout(40);
+        try
+        {
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
+            $client->__setTimeout(40);
             $result0 = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
                         'UserInfo' => array(
@@ -832,7 +832,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination()*100,
+                            'Amount'=>$priceProv->getDenomination(),
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -882,7 +882,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination()*100,
+                            'Amount'=>$priceProv->getDenomination(),
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -961,11 +961,11 @@ $datetype=0;
 
 //            die(print_r($CreateAccountResponse));
             }
-//        }
-//        catch(\Exception $e)
-//        {
-//            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
-//        }
+        }
+        catch(\Exception $e)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+        }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
@@ -1076,24 +1076,47 @@ $datetype=0;
         ));
     }
 
-    public function ImtuAction()
+    public function ImtuAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+//        $n = "1934567";
+//
+//        $a = "12";
+//        $b = "19";
+//        $c = "1933";
+//        $d = "1934";
+//        $e = "1935";
+//        $f = "2345";
+//
+//        $resa = strcmp($n,$a);
+//        $resb = strcmp($n,$b);
+//        $resc = strcmp($n,$c);
+//        $resd = strcmp($n,$d);
+//        $rese = strcmp($n,$e);
+//        $resf = strcmp($n,$f);
+//
+//        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
+
         $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
 
-        $qb = $em->createQueryBuilder()
-            ->select('p')
-            ->from('HelloDiDiDistributorsBundle:Price','p')
-            ->innerJoin('p.Item','i')
-            ->where('i.itemType = :type')->setParameter('type','imtu')
-            ->andWhere('p.Account = :account')->setParameter('account',$Account)
-            ->andWhere('p.priceStatus = 1');
-
-        $prices=$qb->getQuery()->getResult();
+        $form = $this->createFormBuilder()
+            ->add("receiverMobileNumber","text",array(
+                    'label'=>'Receiver mobile number',
+                    'translation_domain'=>'item'
+                ))
+            ->add("denomination","choice",array(
+                    'label'=>'Denomination',
+                    'translation_domain'=>'item'
+                ))
+            ->add("senderMobileNumber","text",array(
+                    'label'=>'Sender mobile number',
+                    'translation_domain'=>'item'
+                ))
+            ->add("email","email")
+            ->getForm();
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
-            'Prices'=>$prices,
             'Account'=>$Account,
+            'form' => $form->createView()
         ));
     }
 
