@@ -3,5 +3,5 @@ Retailer_Items_Show:
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:ShowItems }
 
 Retailer_Items_Change_Favorite:
-    pattern:  /changeFavorite/{priceid}
+    pattern:  /changeFavorite/{priceid}/
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:SwitchFavoriteItem }

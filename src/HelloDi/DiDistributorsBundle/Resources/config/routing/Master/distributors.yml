@@ -68,7 +68,7 @@ MasterDistUserAdd:
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserAdd" }
 
 MasterDistUserEdit:
-    pattern:  /{id}/users/{userid}
+    pattern:  /{id}/users/{userid}/
     defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserEdit"}
 
 #setting-------------------
