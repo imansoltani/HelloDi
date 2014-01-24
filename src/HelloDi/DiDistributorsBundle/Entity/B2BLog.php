@@ -38,7 +38,7 @@ class B2BLog
     /**
      * @var integer
      *
-     * @ORM\Column(name="Amount", type="integer")
+     * @ORM\Column(name="Amount", type="decimal", scale=2)
      */
     private $amount;
 

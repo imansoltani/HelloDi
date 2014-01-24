@@ -18,29 +18,13 @@ class Account
     /**
      * @ORM\Column(type="string", length=2, nullable=true, name="accdefaultlanguage")
      */
-
     private $accDefaultLanguage;
-
-    public function getLabel()
-    {
-        return $this->accName .', '. $this->accDefaultLanguage ;
-    }
-
-    public function getNamewithCurrency()
-    {
-
-        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
-
-    }
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
      */
     private $accName;
 
-    public  function  __toString(){
-        return $this->getAccName();
-    }
     /** 
      * @ORM\Column(type="decimal", nullable=false, name="acc_balance", scale=2)
      */
@@ -589,5 +573,19 @@ class Account
         $this->accDefaultLanguage = $accDefaultLanguage;
     
         return $this;
+    }
+
+    public function getLabel()
+    {
+        return $this->accName .', '. $this->accDefaultLanguage ;
+    }
+
+    public function getNamewithCurrency()
+    {
+        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
+    }
+
+    public  function  __toString(){
+        return $this->getAccName();
     }
 }

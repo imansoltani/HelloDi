@@ -12,7 +12,7 @@ class PriceType extends AbstractType
     {
         $builder
             ->add('Item', 'entity', array('class' => 'HelloDiDiDistributorsBundle:Item', 'property' => 'itemName'))
-            ->add('price')
+            ->add('price', 'number')
         ;
     }
 

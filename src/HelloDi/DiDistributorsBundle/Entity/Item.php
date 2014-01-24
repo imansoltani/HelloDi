@@ -20,13 +20,8 @@ class Item
      */
     private $itemName;
 
-    function __toString()
-    {
-        return $this->getItemName();
-    }
-
     /** 
-     * @ORM\Column(type="integer", nullable=false, name="item_face_value")
+     * @ORM\Column(type="decimal", scale=2, nullable=false, name="item_face_value")
      */
     private $itemFaceValue;
 
@@ -138,7 +133,7 @@ class Item
     /**
      * Set itemFaceValue
      *
-     * @param integer $itemFaceValue
+     * @param float $itemFaceValue
      * @return Item
      */
     public function setItemFaceValue($itemFaceValue)
@@ -151,7 +146,7 @@ class Item
     /**
      * Get itemFaceValue
      *
-     * @return integer
+     * @return float
      */
     public function getItemFaceValue()
     {
@@ -482,5 +477,10 @@ class Item
     public function getB2BLogs()
     {
         return $this->B2BLogs;
+    }
+
+    function __toString()
+    {
+        return $this->getItemName();
     }
 }

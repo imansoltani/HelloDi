@@ -20,13 +20,11 @@ class Transaction
     /**
      * @ORM\Column(type="decimal", nullable=true, scale=2)
      */
-
     private $tranBookingValue;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-
     private $tranType;
 
     /**
@@ -69,13 +67,10 @@ class Transaction
      */
     private $tranBalance;
 
-
-
     /**
      * @ORM\Column(type="decimal", nullable=true, name="Buying_Price", scale=2)
      */
     private $BuyingPrice;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", inversedBy="Transactions")
@@ -83,15 +78,11 @@ class Transaction
      */
     private $TaxHistory;
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
-
-
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Transactions")

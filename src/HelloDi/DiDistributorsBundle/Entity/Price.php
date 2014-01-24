@@ -21,7 +21,7 @@ class Price
     private $price;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, name="denomination")
+     * @ORM\Column(type="decimal", nullable=true, name="denomination", scale=2)
      */
     private $denomination;
 
@@ -321,7 +321,7 @@ class Price
     /**
      * Set denomination
      *
-     * @param integer $denomination
+     * @param float $denomination
      * @return Price
      */
     public function setDenomination($denomination)
@@ -334,7 +334,7 @@ class Price
     /**
      * Get denomination
      *
-     * @return integer 
+     * @return float
      */
     public function getDenomination()
     {

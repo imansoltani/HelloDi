@@ -1440,8 +1440,8 @@ catch(\Exception $e)
                 },
                 'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','integer', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
+            ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1559,8 +1559,8 @@ catch(\Exception $e)
                 },
                 'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','integer', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
+            ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->add('tax', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Tax',
                 'property' => 'tax',
@@ -3126,8 +3126,8 @@ catch(\Exception $e)
                 },
                 'label' => 'Item','translation_domain' => 'item'
             ))
-            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','integer', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
+            ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

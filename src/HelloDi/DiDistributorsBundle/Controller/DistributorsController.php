@@ -1226,7 +1226,7 @@ catch(\Exception $e){
                             ;
                     }
             ))
-            ->add('NewPrice','text',array('required'=>true,'label' => 'NewPrice','translation_domain' => 'price'))
+            ->add('NewPrice','number',array('required'=>true,'label' => 'NewPrice','translation_domain' => 'price'))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1350,8 +1350,8 @@ catch(\Exception $e){
                     },
                     'label' => 'Item','translation_domain' => 'item'
                 ))
-            ->add('price','integer',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','integer', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
+            ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
+            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

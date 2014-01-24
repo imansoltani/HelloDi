@@ -15,8 +15,6 @@ class Tax
      */
     private $id;
 
-
-
     /**
      * @ORM\Column(type="float", nullable=false, name="tax",nullable=true)
      */
