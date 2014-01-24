@@ -19,15 +19,12 @@ use HelloDi\DiDistributorsBundle\Form\Account\MakeAccountIn2StepType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
 use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
-use Symfony\Component\Form\Extension\Validator\Constraints\FormValidator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
 
 
 class AccountController extends Controller
@@ -129,7 +126,7 @@ class AccountController extends Controller
         $Entiti->addAccount($Account);
 
 
-        $form2step = $this->createForm(new MakeAccountIn2StepType(), $Entiti, array('cascade_validation' => true));
+        $form2step = $this->createForm(new MakeAccountIn2StepType($this->container->getParameter('Currencies.Account')), $Entiti, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form2step->bind($request);
@@ -188,7 +185,7 @@ class AccountController extends Controller
         $User->setAccount($Account);
         $Account->addUser($User);
 
-        $form2step = $this->createForm(new MakeAccountIn2StepType(), $Entiti,
+        $form2step = $this->createForm(new MakeAccountIn2StepType($this->container->getParameter('Currencies.Account')), $Entiti,
             array(
                 'cascade_validation' => true
             ));
@@ -1296,43 +1293,6 @@ catch(\Exception $e)
         }
     }
 
-
-    public function AddAccountDistMasterAction(Request $request)
-    {
-
-        $entitimaster = $this->get('security.context')->getToken()->getUser()->getEntiti();
-
-        if (!$entitimaster) throw $this->createNotFoundException('Unable to find Entiti entity.');
-
-        $Account = new Account();
-
-        $form = $this->createForm(new AccountDistMasterType(), $Account);
-
-        if ($request->isMethod('POST')) {
-
-            $form->submit($request);
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $Account->setEntiti($entitimaster);
-                $Account->setAccCreationDate(new \DateTime('now'));
-                $Account->setAccBalance(0);
-                $Account->setAccType(0);
-                $Account->setAccCreditLimit(0);
-                $em->persist($Account);
-                $em->flush();
-                return $this->redirect($this->generateUrl('ShowMyAccountDist'));
-            }
-
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountDistMaster.html.twig',
-            array(
-                'form' => $form->createView()
-            ));
-
-
-    }
-
     public function ShowMyAccountDistAction(Request $request)
     {
 
@@ -1346,24 +1306,6 @@ catch(\Exception $e)
     }
 
 ////////////////////
-
-    public function ManageDistAction($id)
-    {
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDist.html.twig', array('id' => $id));
-    }
-
-///////////////////
-    public function ManageDistInfoAction(Request $request)
-    {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
-        $edit_form = $this->createForm(new AccountDistMasterType(), $Account);
-        return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistInfo.html.twig',
-            array('edit_form' => $edit_form->createView(), 'Account' => $Account));
-
-    }
-
 
     public function ManageDistChildrenAction(Request $request, $id)
     {

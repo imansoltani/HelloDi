@@ -9,11 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemType extends AbstractType
 {
-    protected $langs;
+    private $langs;
+    private $currencies;
 
-    public function __construct ($langs)
+    public function __construct ($_langs, $_currencies)
     {
-        $this->langs = $langs;
+        $this->langs = array_combine($_langs, $_langs);
+        $this->currencies = array_combine($_currencies, $_currencies);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -23,9 +25,7 @@ class ItemType extends AbstractType
             ->add('itemFaceValue',null,array('label' => 'FaceValue','translation_domain' => 'item'))
             ->add('itemCurrency','choice',array(
                 'empty_value' => '--',
-                'choices'=> array('USD'=>'USD','CHF' =>'CHF','BDT'=>'BDT', 'BOB'=>'BOB', 'BRL'=>'BRL', 'COP'=>'COP',
-                    'DOP'=>'DOP', 'NGN'=>'NGN', 'PEN'=>'PEN', 'PHP'=>'PHP', 'PKR'=>'PKR', 'PLN'=>'PLN', 'RUB'=>'RUB',
-                    'XAF'=>'XAF'),
+                'choices'=> $this->currencies,
                 'label' => 'Currency',
                 'translation_domain' => 'item'
             ))

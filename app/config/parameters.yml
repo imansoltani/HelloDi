@@ -17,11 +17,11 @@ parameters:
     ogone_sha_out: 'MySha-ouT@Key79?'
     ogone_submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
     languages: [en, fr, de, it]
-    currency: [CHF, USD]
-    currencies: [CHF, USD]
     B2BServer.WSDL: https://b2bapi.idt.net/b2bapi/b2bsvc.asmx?wsdl
     B2BServer.UserName: hellobell
     B2BServer.Password: hellobell
     B2BServer.IP: 46.20.242.182
     B2BServer.StoreID: 309511
     B2BServer.ServiceNumber: 1179989351
+    Currencies.Account: [CHF, USD]
+    Currencies.TopUp:   [CHF, USD, BDT, BOB, BRL, COP, DOP, NGN, PEN, PHP, PKR, PLN, RUB, XAF]

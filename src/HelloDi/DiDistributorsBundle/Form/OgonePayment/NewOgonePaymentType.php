@@ -16,10 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class NewOgonePaymentType extends AbstractType
 {
     private $currency;
-    function __construct($currency)
+
+    public function __construct ($_currency)
     {
-        $this->currency=$currency;
+        $this->currency = $_currency;
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 

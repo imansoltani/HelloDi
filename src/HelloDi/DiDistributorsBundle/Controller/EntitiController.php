@@ -2,20 +2,13 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditAddressEntitiType;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiMasterType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiesSearchType;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EntitiType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityType;
-use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationEntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -262,7 +255,7 @@ class EntitiController extends Controller
         $acc->setAccCreditLimit(0);
         $acc->setAccTimeZone(null); /////=========*******
         $acc->getAccDefaultLanguage(null);
-        $form = $this->createForm(new AccountType(),$acc);
+        $form = $this->createForm(new AccountType($this->container->getParameter('Currencies.Account')),$acc);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -292,7 +285,7 @@ class EntitiController extends Controller
         $acc->setAccType(0);
         $acc->setAccCreditLimit(0);
         $acc->setAccTerms(null);
-        $form = $this->createForm(new AccountType(), $acc);
+        $form = $this->createForm(new AccountType($this->container->getParameter('Currencies.Account')), $acc);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

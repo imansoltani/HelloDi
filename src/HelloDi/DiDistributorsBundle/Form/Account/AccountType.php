@@ -8,11 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AccountType extends AbstractType
 {
+    private $currencies;
+
+    public function __construct ($_currencies)
+    {
+        $this->currencies = array_combine($_currencies, $_currencies);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('accName','text',array('required'=>true,'label' => 'Name','translation_domain' => 'accounts'))
-            ->add('accCurrency','choice',array('label' => 'Currency','translation_domain' => 'accounts','choices'=>(array('USD'=>'USD','CHF'=>'CHF'))))
+            ->add('accCurrency','choice',array('label' => 'Currency','translation_domain' => 'accounts','choices'=>$this->currencies))
             ->add('accTerms','text',array('label' => 'Terms','translation_domain' => 'accounts','required'=>false))
             ->add('accTimeZone','timezone',array('label' => 'TimeZone','translation_domain' => 'accounts'))
             ->add('accDefaultLanguage','choice',array('label' => 'DefaultLanguage','translation_domain' => 'accounts',

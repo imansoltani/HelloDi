@@ -36,15 +36,12 @@ class ItemController extends Controller
 
     public function newAction(Request $request)
     {
-        $langs = $this->container->getParameter('languages');
-        $langs = array_combine($langs, $langs);
-
         $item  = new Item();
         $itemdesc = new ItemDesc();
         $itemdesc->setItem($item);
         $item->addItemDesc($itemdesc);
 
-        $form   = $this->createForm(new ItemType($langs), $item, array('cascade_validation' => true));
+        $form   = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -83,7 +80,6 @@ class ItemController extends Controller
 
     public function editAction(Request $request,$id)
     {
-        $langs = $this->container->getParameter('languages');
         $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
@@ -92,7 +88,7 @@ class ItemController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
         }
 
-        $editForm = $this->createForm(new ItemType($langs), $item);
+        $editForm = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item);
         if ($request->isMethod('POST'))
         {
             $editForm->handleRequest($request);

@@ -2,10 +2,6 @@
 
 namespace HelloDi\DiDistributorsBundle\Form\Account;
 
-use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
-use HelloDi\DiDistributorsBundle\Form\AddressType;
-use HelloDi\DiDistributorsBundle\Form\Distributors\NewUserDistributorsType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,6 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MakeAccountIn2StepType extends AbstractType
 {
+    private $currencies;
+
+    public function __construct ($_currencies)
+    {
+        $this->currencies = array_combine($_currencies, $_currencies);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -31,7 +34,7 @@ class MakeAccountIn2StepType extends AbstractType
                 array('label' => 'Country','translation_domain' => 'entity',
                     'class'=>'HelloDi\DiDistributorsBundle\Entity\Country',
                     'property'=>'name',))
-            ->add('Accounts','collection',array('type'=>new AccountType()))
+            ->add('Accounts','collection',array('type'=>new AccountType($this->currencies)))
             ->add('Users','collection',array('type'=>new NewUserType('HelloDi\DiDistributorsBundle\Entity\User',0)))
         ;
     }
