@@ -107,14 +107,10 @@
         <tr>
             <td>{{ 'VAT_@_0.00' | trans ({}, "print") }}%</td>
             <td>
-
                 {% set a=[] %}{% set sumvat=0 %}
                 {% for Tr in pagination %}
-                      {% set a=[Tr.TR.TaxHistory.id] %}
-                      {% set vat=Tr.TR.TaxHistory.vat %}
-                      {% set x=Tr.TR.tranAmount|abs %}
-
-                      {% set sumvat=sumvat+(x/(100+vat)*vat) %}
+                    {% set a=[Tr.TR.TaxHistory.id] %}
+                    {% set sumvat=sumvat+CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) %}
                 {% endfor %}
                 {{ sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
             </td>
@@ -122,8 +118,7 @@
         <tr>
             <td>{{ 'Total_to_Pay' | trans ({}, "print") }}</td>
             <td>
-
-                {{   sumprice-sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
+                {{ sumprice-sumvat }} {{  pagination[0].TR.Account.accCurrency  }}
             </td>
         </tr>
         </tbody>

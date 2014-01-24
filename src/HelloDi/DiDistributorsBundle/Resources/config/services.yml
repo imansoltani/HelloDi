@@ -80,3 +80,7 @@ services:
         tags:
             - {name: kernel.event_listener, event: kernel.request, method: OnWritLog}
         scope: request
+
+    CalcVatFormula:
+        class: HelloDi\DiDistributorsBundle\Listener\CalcVatFormula
+        arguments: [%VatFormula%]

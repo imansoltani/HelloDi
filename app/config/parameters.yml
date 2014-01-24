@@ -25,3 +25,4 @@ parameters:
     B2BServer.ServiceNumber: 1179989351
     Currencies.Account: [CHF, USD]
     Currencies.TopUp:   [CHF, USD, BDT, BOB, BRL, COP, DOP, NGN, PEN, PHP, PKR, PLN, RUB, XAF]
+    VatFormula: "(x/(100+vat)*vat)"

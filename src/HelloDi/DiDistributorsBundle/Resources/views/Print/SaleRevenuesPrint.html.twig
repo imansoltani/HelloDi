@@ -52,12 +52,7 @@
                 <td>{{ Tr.TR.Account.accName}}({{ Tr.TR.Account.Entiti.entName }})</td>
                 <td>{{ (Tr.TR.tranAmount * Tr.Quantity)|abs }}</td>
                 <td>
-
-                    {% set vat=Tr.TR.TaxHistory.vat %}
-                    {% set x=Tr.TR.tranAmount|abs %}
-
-                    {{ (x/(100+vat)*vat) }}
-
+                    {{ CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) }}
                 </td>
                 <td>{{ Tr.TR.Code.Item.itemFaceValue * Tr.Quantity}}</td>
             </tr>

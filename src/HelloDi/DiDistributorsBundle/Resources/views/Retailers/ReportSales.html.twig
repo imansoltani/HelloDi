@@ -119,19 +119,11 @@
                                             <td>{{ Tr.tranInsert|date('Y/m/d H:i:s') }}</td>
                                             <td>{{ Tr.Code.Item.itemName}}</td>
                                             <td>{{ Tr.Code.Item.itemFaceValue}}</td>
-                                            <td>
-
-                                               {{ Tr.tranAmount|abs }}
-
-
-
-                                            </td>
+                                            <td>{{ Tr.tranAmount|abs }}</td>
                                             <td>{{ Tr.Code.serialNumber }}</td>
                                             <td>{{ Tr.User.username }}</td>
                                             <td>
-
-                                                {% set vat=Tr.TaxHistory.vat %}{% set x=Tr.tranAmount|abs %}
-                                                <span id='vat'>{{ (x/(100+vat)*vat) }}</span>
+                                                <span id='vat'>{{ CalcVatFormula.Calc(Tr.tranAmount|abs,Tr.TaxHistory.vat) }}</span>
                                             </td>
 
                                         </tr>

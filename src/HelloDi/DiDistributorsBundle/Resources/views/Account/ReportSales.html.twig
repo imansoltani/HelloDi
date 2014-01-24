@@ -161,10 +161,7 @@
                             </td>
                             <td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>
                             <td>
-
-                                {% set vat=Tr.TR.TaxHistory.vat %}{% set x=Tr.TR.tranAmount|abs %}
-                               <span id='vat'>{{ (x/(100+vat)*vat) }}</span>
-
+                               <span id='vat'>{{ CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) }}</span>
                             </td>
 
                             <td class="td-actions" >

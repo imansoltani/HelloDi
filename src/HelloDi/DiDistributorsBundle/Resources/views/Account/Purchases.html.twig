@@ -110,10 +110,7 @@
 
                             </td>
                             <td>
-
-                                {% set vat=Tr.TR.TaxHistory.vat %}{% set x=Tr.TR.BuyingPrice|abs %}
-                                <span id='vat'>{{ (x/(100+vat)*vat) }}</span>
-
+                                <span id='vat'>{{ CalcVatFormula.Calc(Tr.TR.BuyingPrice|abs,Tr.TR.TaxHistory.vat) }}</span>
                             </td>
                         </tr>
 
