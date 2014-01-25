@@ -4,7 +4,6 @@
     <div class="pagedisc">
         <i> {{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accName }}</span><br>
         <i> {{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
@@ -12,7 +11,6 @@
     <div class="pagedisc">
         <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accName }}</span><br>
         <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-        <i>{{ 'CreditLimit' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accCreditLimit }}</span>
     </div>
 {% endblock %}
 
