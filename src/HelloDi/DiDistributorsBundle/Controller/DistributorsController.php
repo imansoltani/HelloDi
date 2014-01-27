@@ -191,7 +191,7 @@ class DistributorsController extends Controller
             $qb->select('Tr')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')->innerJoin('TrCo.Item','TrCoIt');
+                ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt');
                 /**/
             if($data['Account'])
                 $qb->where('Tr.Account=:ac')->setParameter('ac',$data['Account']);

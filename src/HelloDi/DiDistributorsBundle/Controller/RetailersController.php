@@ -4,7 +4,9 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\B2BLog;
+use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\OrderCode;
+use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
 use HelloDi\DiDistributorsBundle\Entity\User;
@@ -798,12 +800,14 @@ $datetype=0;
 
     public function BuyImtuAction(Request $request)
     {
-        ini_set('max_execution_time', 60);
+        ini_set('max_execution_time', 80);
         $em = $this->getDoctrine()->getManager();
 
-        $mobileNumber = $request->get('mobile_number');
+        $mobileNumber = $request->get('receiverMobileNumber');
+        $senderMobileNumber = $request->get('senderMobileNumber');
+        $senderEmail = $request->get('email');
         $user = $this->getUser();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('item_id'));
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('denomination'));
         $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         $accountRet = $user->getAccount();
         $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
@@ -813,11 +817,24 @@ $datetype=0;
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
+        $b2blog = new B2BLog();
+        $b2blog->setUser($user);
+        $b2blog->setAmount($priceProv->getDenomination());
+        $b2blog->setClientTransactionID($clientTranId);
+        $b2blog->setDate(new \DateTime());
+        $b2blog->setMobileNumber($mobileNumber);
+        $b2blog->setItem($item);
+        $b2blog->setSenderMobileNumber($senderMobileNumber);
+        $b2blog->setSenderEmail($senderEmail);
+        $b2blog->setItem($item);
+        $em->persist($b2blog);
+        $em->flush();
+
         try
         {
             $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
-            $client->__setTimeout(40);
-            $result0 = $client->CreateAccount(array(
+            $client->__setTimeout(60);
+            $result = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
                         'UserInfo' => array(
                             'UserName'=>$this->container->getParameter('B2BServer.UserName'),
@@ -836,59 +853,12 @@ $datetype=0;
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
-                            'Recharge'=>'N',
-                            'SendSMS'=>'N',
-                            'SendEmail'=>'N',
-                        ),
-                    )
-                ));
-
-            if($result0->CreateAccountResponse->ResponseReferenceData->Success == 'N')
-            {
-                $messages = $result0->CreateAccountResponse->ResponseReferenceData->MessageList;
-                foreach ($messages as $message)
-                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message'));
-//
-//                $s = "request:<br/>".$client->__getLastRequest()."<br/>response:<br/>".$client->__getLastResponse();
-//                die("part1 has error.<br/>".$s);
-            }
-            else
-            {
-//                $s = "request:<br/>".$client->__getLastRequest()."<br/>response:<br/>".$client->__getLastResponse();
-//                die("part1 hasn't error.<br/>".$s);
-                $serviceNumber = $result0->CreateAccountResponse->Result->ServiceNumber;
-                $b2blog = new B2BLog();
-                $b2blog->setUser($user);
-                $b2blog->setAmount($priceProv->getDenomination());
-                $b2blog->setClientTransactionID($clientTranId);
-                $b2blog->setDate(new \DateTime());
-                $b2blog->setMobileNumber($mobileNumber);
-                $b2blog->setItem($item);
-                $em->persist($b2blog);
-                $em->flush();
-
-                $result = $client->Recharge(array(
-                    'RechargeRequest' => array(
-                        'UserInfo' => array(
-                            'UserName'=>$this->container->getParameter('B2BServer.UserName'),
-                            'Password'=>$this->container->getParameter('B2BServer.Password')
-                        ),
-                        'ClientReferenceData' => array(
-                            'Service'=>'imtu',
-                            'ClientTransactionID'=>$clientTranId,
-                            'IP'=>$this->container->getParameter('B2BServer.IP'),
-                            'TimeStamp'=>  date_format(new \DateTime(),DATE_ATOM)
-                        ),
-                        'Parameters' => array(
-                            'CarrierCode'=>$item->getOperator()->getName(),
-                            'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination(),
-                            'MobileNumber'=>$mobileNumber,
-                            'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
-                            'ChargeType'=>'transfer',
-                            'SendSMS'=>'N',
-                            'SendEmail'=>'N',
-                            'ServiceNumber'=>$serviceNumber
+                            'Recharge'=>'Y',
+                            'SendSMS'=>'Y',
+                            'SenderNumber'=>$senderMobileNumber,
+                            'NotificationMobile'=>$senderMobileNumber,
+                            'SendEmail'=>'Y',
+                            'NotificationEmail'=>$senderEmail,
                         ),
                     )
                 ));
@@ -960,13 +930,22 @@ $datetype=0;
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
 //            die(print_r($CreateAccountResponse));
-            }
+                return $this->redirect($this->getRequest()->headers->get('referer'));
         }
         catch(\Exception $e)
         {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+            if($e->getCode() == -99)
+            {
+                $b2blog->setStatusCode("noResponse");
+                $b2blog->setStatus(0);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('server_no_response',array(),'message'));
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+            return $this->redirect($this->getRequest()->headers->get('referer'));
         }
-        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     public function PrintAction(Request $request,$print)
@@ -1076,7 +1055,7 @@ $datetype=0;
         ));
     }
 
-    public function ImtuAction(Request $request)
+    public function ImtuAction()
     {
 //        $n = "1934567";
 //
@@ -1096,37 +1075,39 @@ $datetype=0;
 //
 //        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
 
-        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $Account = $this->getUser()->getAccount();
 
-        $form = $this->createFormBuilder()
-            ->add("receiverMobileNumber","text",array(
-                    'label'=>'Receiver mobile number',
-                    'translation_domain'=>'item'
-                ))
-            ->add("denomination","choice",array(
-                    'label'=>'Denomination',
-                    'translation_domain'=>'item'
-                ))
-            ->add("senderMobileNumber","text",array(
-                    'label'=>'Sender mobile number',
-                    'translation_domain'=>'item'
-                ))
-            ->add("email","email")
-            ->getForm();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $operators = $em->createQueryBuilder()
+            ->select('operator')
+            ->from('HelloDiDiDistributorsBundle:Operator','operator')
+            ->innerJoin('operator.Item','item')
+            ->innerJoin('item.Prices','price')
+            ->where('price.Account = :account')->setParameter("account",$Account)
+            ->andWhere('price.priceStatus = :true')->setParameter("true",true)
+            ->getQuery()->getResult()
+        ;
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
             'Account'=>$Account,
-            'form' => $form->createView()
+            'operators' => $operators
         ));
     }
 
     public function readNumberAction(Request $request)
     {
-        //get number
         $number = $request->get("receiver");
+        $operator = $request->get("operator",null);
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        if($operator) $operator = $em->getRepository("HelloDiDiDistributorsBundle:Operator")->find($operator);
+
         if(!$number || !is_numeric($number)) return  new Response("invalid");
         $number = ltrim($number,"0+-");
         if(strlen($number)<6)  return  new Response("invalid");
+        $strlen_number = strlen($number);
 
         $phones_rules=$this->container->getParameter('phones_rules');
 
@@ -1137,14 +1118,31 @@ $datetype=0;
             $number_code = (int)substr($number,0,$i);
             foreach ($phones_rules["rules"][$i] as $operatorcode)
                 if($number_code==$operatorcode["operator_code"])
-                {
-                    $role = $operatorcode;
-                    break;
-                }
+                    if($operatorcode["number_min_length"]<=$strlen_number && $strlen_number<=$operatorcode["number_max_length"])
+                    {
+                        $role = $operatorcode;
+                        break;
+                    }
+            if ($role) break;
         }
 
+        if (!$role) return new Response("not found");
+
+        $items = $em->createQueryBuilder()
+            ->select('item')
+            ->from("HelloDiDiDistributorsBundle:item",'item')
+            ->innerJoin('item.Prices','price')
+            ->innerJoin('item.operator','operator')
+            ->innerJoin('item.Country','country')
+            ->where('price.Account = :account')->setParameter("account",$this->getUser()->getAccount())
+            ->andWhere('price.priceStatus = :true')->setParameter("true",true)
+            ->andWhere('operator.name = :op_name')->setParameter('op_name',$operator?$operator->getName():$role['operator_name'])
+            ->andWhere('country.iso = :country_iso')->setParameter('country_iso',$role['country_iso'])
+            ->getQuery()->getResult();
+
         $result = "";
-        $result .= "<option>".print_r($role,true)."</option>";
+        foreach($items as $item)
+            $result .= "<option value='".$item->getId()."'>".$item->getItemName()." ".$item->getItemCurrency()."</option>";
 
 //        $file = file("../app/Resources/phones_rules/phones_rules.csv");
 //

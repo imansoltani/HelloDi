@@ -52,6 +52,20 @@ class B2BLog
     /**
      * @var string
      *
+     * @ORM\Column(name="SenderMobileNumber", type="string", length=20, nullable=true)
+     */
+    private $SenderMobileNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SenderEmail", type="string", length=50, nullable=true)
+     */
+    private $SenderEmail;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="TransactionID", type="string", length=20, nullable=true)
      */
     private $transactionID;
@@ -342,5 +356,51 @@ class B2BLog
     public function getTransactions()
     {
         return $this->Transactions;
+    }
+
+    /**
+     * Set SenderMobileNumber
+     *
+     * @param string $senderMobileNumber
+     * @return B2BLog
+     */
+    public function setSenderMobileNumber($senderMobileNumber)
+    {
+        $this->SenderMobileNumber = $senderMobileNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get SenderMobileNumber
+     *
+     * @return string 
+     */
+    public function getSenderMobileNumber()
+    {
+        return $this->SenderMobileNumber;
+    }
+
+    /**
+     * Set SenderEmail
+     *
+     * @param string $senderEmail
+     * @return B2BLog
+     */
+    public function setSenderEmail($senderEmail)
+    {
+        $this->SenderEmail = $senderEmail;
+    
+        return $this;
+    }
+
+    /**
+     * Get SenderEmail
+     *
+     * @return string 
+     */
+    public function getSenderEmail()
+    {
+        return $this->SenderEmail;
     }
 }
