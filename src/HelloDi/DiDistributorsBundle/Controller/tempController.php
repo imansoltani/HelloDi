@@ -206,6 +206,7 @@ class tempController extends Controller
         else
         {
             $price->setPrice( $row['DENOMINATION (CHF)']- (intval($row['Discount'])/100*$row['DENOMINATION (CHF)']) );
+            $price->setDenomination($row['DENOMINATION (CHF)']);
 
             $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
             $priceHistory->setPrice($price->getPrice());
