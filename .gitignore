@@ -5,9 +5,17 @@ app/bootstrap*
 # vendor/*
 */logs/*
 */cache/*
+test/*
 web/uploads/*
 
+# phpstorm
+.idea/workspace.xml
+
 *.php~
+
+# Ignore all emacs backup files
+*.md~
+git rm README.md~
 
 # Configuration files
 app/config/parameters.ini
