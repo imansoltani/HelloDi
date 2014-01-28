@@ -18,3 +18,21 @@ parameters:
                 - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98937, operator_name: 'MTN Irancell' }
                 - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98938, operator_name: 'MTN Irancell' }
                 - { country_iso: IR, number_min_length: 12, number_max_length: 12, operator_code: 98939, operator_name: 'MTN Irancell' }
+
+    mobile_country_roles:
+        - { country_iso: CH, country_code: '41', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: BD, country_code: '880', mobile_min_length: '11', mobile_max_length: '13' }
+        - { country_iso: BO, country_code: '591', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: BR, country_code: '55', mobile_min_length: '12', mobile_max_length: '13' }
+        - { country_iso: CO, country_code: '57', mobile_min_length: '12', mobile_max_length: '12' }
+        - { country_iso: CG, country_code: '243', mobile_min_length: '12', mobile_max_length: '12' }
+        - { country_iso: DO, country_code: '1809', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: DO, country_code: '1829', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: DO, country_code: '1849', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: NG, country_code: '234', mobile_min_length: '13', mobile_max_length: '13' }
+        - { country_iso: PK, country_code: '92', mobile_min_length: '12', mobile_max_length: '12' }
+        - { country_iso: PH, country_code: '63', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: PE, country_code: '51', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: PL, country_code: '48', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: RU, country_code: '7', mobile_min_length: '11', mobile_max_length: '11' }
+        - { country_iso: EC, country_code: '593', mobile_min_length: '12', mobile_max_length: '12' }

@@ -1113,74 +1113,46 @@ $datetype=0;
 //
 //        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
 
-        $Account = $this->getUser()->getAccount();
-
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $operators = $em->createQueryBuilder()
-            ->select('operator')
-            ->from('HelloDiDiDistributorsBundle:Operator','operator')
-            ->innerJoin('operator.Item','item')
-            ->innerJoin('item.Prices','price')
-            ->where('price.Account = :account')->setParameter("account",$Account)
-            ->andWhere('price.priceStatus = :true')->setParameter("true",true)
-            ->getQuery()->getResult()
-        ;
-
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
-            'Account'=>$Account,
-            'operators' => $operators
-        ));
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig');
     }
 
     public function readNumberAction(Request $request)
     {
         $number = $request->get("receiver");
-        $operator = $request->get("operator",null);
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        if($operator) $operator = $em->getRepository("HelloDiDiDistributorsBundle:Operator")->find($operator);
-
-        if(!$number || !is_numeric($number)) return  new Response("invalid");
+        if(!$number || !is_numeric($number)) return  new Response("  <option value=''>Invalid Mobile Number</option>");
         $number = ltrim($number,"0+-");
-        if(strlen($number)<6)  return  new Response("invalid");
-        $strlen_number = strlen($number);
+        if(strlen($number)<6)  return  new Response("  <option value=''>Invalid Mobile Number</option>");
 
-        $phones_rules=$this->container->getParameter('phones_rules');
+        $mobile_country_roles=$this->container->getParameter('mobile_country_roles');
 
         $role = null;
-        for($i=$phones_rules["operator_code_max_length"];$i>=$phones_rules["operator_code_min_length"];$i--)
+        foreach($mobile_country_roles as $mobile_country_role)
         {
-            if(!isset($phones_rules["rules"][$i])) continue;
-            $number_code = (int)substr($number,0,$i);
-            foreach ($phones_rules["rules"][$i] as $operatorcode)
-                if($number_code==$operatorcode["operator_code"])
-                    if($operatorcode["number_min_length"]<=$strlen_number && $strlen_number<=$operatorcode["number_max_length"])
-                    {
-                        $role = $operatorcode;
-                        break;
-                    }
-            if ($role) break;
+            $number_country_code = (int)substr($number,0,strlen($mobile_country_role['country_code']));
+            if($number_country_code == $mobile_country_role['country_code'])
+                if($mobile_country_role['mobile_min_length'] <= strlen($number) && strlen($number) <= $mobile_country_role['mobile_max_length'])
+                    $role = $mobile_country_role;
         }
 
-        if (!$role) return new Response("not found");
+        if (!$role) return new Response("  <option value=''>Not found Operator</option>");
 
-        $items = $em->createQueryBuilder()
-            ->select('item')
-            ->from("HelloDiDiDistributorsBundle:item",'item')
+        $operators = $em->createQueryBuilder()
+            ->select('operator')
+            ->from("HelloDiDiDistributorsBundle:Operator",'operator')
+            ->innerJoin('operator.Item','item')
             ->innerJoin('item.Prices','price')
-            ->innerJoin('item.operator','operator')
-            ->innerJoin('item.Country','country')
             ->where('price.Account = :account')->setParameter("account",$this->getUser()->getAccount())
             ->andWhere('price.priceStatus = :true')->setParameter("true",true)
-            ->andWhere('operator.name = :op_name')->setParameter('op_name',$operator?$operator->getName():$role['operator_name'])
+            ->innerJoin('item.Country','country')
             ->andWhere('country.iso = :country_iso')->setParameter('country_iso',$role['country_iso'])
             ->getQuery()->getResult();
 
         $result = "";
-        foreach($items as $item)
-            $result .= "<option value='".$item->getId()."'>".$item->getItemName()." ".$item->getItemCurrency()."</option>";
+        foreach($operators as $operator)
+            $result .= "<option value='".$operator->getId()."'>".$operator->getName()."</option>";
 
 //        $file = file("../app/Resources/phones_rules/phones_rules.csv");
 //
@@ -1206,7 +1178,39 @@ $datetype=0;
 //
 //        file_put_contents('phones_rules.yml', $yaml);
 
-        return  new Response($result);
+        return  new Response($result?$role['country_iso'].$result:"  <option value=''>Not found Operator</option>");
+    }
+
+    public function getPricesAction(Request $request)
+    {
+        $operatorID = $request->get("operatorID");
+        $country = $request->get("country");
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $operator = $em->getRepository("HelloDiDiDistributorsBundle:Operator")->find($operatorID);
+
+        if(!$operator) return  new Response("<option value=''>Not found Denomination.</option>");
+
+        $prices = $em->createQueryBuilder()
+            ->select('price')
+            ->from("HelloDiDiDistributorsBundle:Price","price")
+            ->where('price.Account = :account')->setParameter("account",$this->getUser()->getAccount())
+            ->andWhere('price.priceStatus = :true')->setParameter("true",true)
+            ->innerJoin("price.Item","item")
+            ->andWhere("item.operator = :operator")->setParameter("operator",$operator)
+            ->innerJoin('item.Country','country')
+            ->andWhere('country.iso = :country_iso')->setParameter('country_iso',$country)
+            ->getQuery()->getResult();
+
+        $result = "";
+        foreach($prices as $price)
+            $result .= "<option value='".$price->getId()."'>"
+                .$price->getItem()->getItemFaceValue()." ".$price->getItem()->getItemCurrency()
+                ." (".$price->getDenomination()." ".$price->getAccount()->getAccCurrency().")"
+                ."</option>";
+
+        return  new Response($result?:"<option value=''>Not found Denomination.</option>");
     }
 
     public  function FavouritesAction()
