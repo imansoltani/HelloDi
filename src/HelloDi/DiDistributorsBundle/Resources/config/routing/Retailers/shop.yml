@@ -39,3 +39,7 @@ Retailer_Shop_Error_print:
 Retailer_Shop_Read_Number_imtu:
     pattern:  /readNumber
     defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:readNumber }
+
+Retailer_Shop_imtu_print:
+    pattern:  /printimtu/{id}/{print}/
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:PrintImtu , print: 'web' }

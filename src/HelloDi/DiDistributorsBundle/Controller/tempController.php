@@ -20,11 +20,11 @@ class tempController extends Controller
     private $item_descs_string = array(
         "en"=>"<b>Transaction details</b><br>
             Date: {{printdate}}<br>
-            Transaction No.: --<br>
-            Receiver phone number: --<br>
+            Transaction No.: {{tranid}}<br>
+            Receiver phone number: {{recievernumber}}<br>
             Operator: {{operator}}<br>
-            Value sent: --<br>
-            Value paid: --<br>
+            Value sent: {{valuesent}}<br>
+            Value paid: {{valuepaid}}<br>
             Entity Name: {{entityname}}<br>
             Address: <br>
             {{entityadrs1}}<br>
@@ -32,11 +32,11 @@ class tempController extends Controller
             {{entityadrs3}}<br>",
         "fr"=>"<b>Reçu</b><br>
             Date: {{printdate}}<br>
-            Numéro transaction: --<br>
-            Numéro de téléphone (receveur): --<br>
+            Numéro transaction: {{tranid}}<br>
+            Numéro de téléphone (receveur): {{recievernumber}}<br>
             Opérateur: {{operator}}<br>
-            Valeur envoyée (monnaie locale): --<br>
-            Montant payé: --<br>
+            Valeur envoyée (monnaie locale): {{valuesent}}<br>
+            Montant payé: {{valuepaid}}<br>
             Nom de l'entité: {{entityname}}<br>
             Adresse: <br>
             {{entityadrs1}}<br>
@@ -158,7 +158,12 @@ class tempController extends Controller
             echo("item '".$item_name."' created. item_id=".$item->getId()."<br>");
         }
         else
-            echo("item '".$item_name."' already exist. item_id=".$item->getId()."<br>");
+        {
+            $item->setItemFaceValue($row['Fixed Top Up Value']);
+            $item->setItemCurrency($row['Top Up Currency']);
+            $em->flush();
+            echo("item '".$item_name."' already exist. item_id=".$item->getId()." updated.<br>");
+        }
 
         //----------------find or create item_descs-----------------
         foreach($this->item_descs_string as $lang=>$item_desc_string)

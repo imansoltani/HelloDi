@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Di . Shop IMTU</title>
+
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+    <![endif]-->
+    <style>
+        .item
+        {
+            width: 8.2cm;
+            margin: auto;
+            page-break-after: always;
+            border-bottom: 1px dashed #000000;
+        }
+        @media print
+        {
+            @page
+            {
+                margin: 0.5cm;
+            }
+            body>*
+            {
+                display: none !important;
+            }
+            .print
+            {
+                display: block !important;
+            }
+            .item
+            {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+{% if print == 'web' %}
+<div id="notPrint" style="text-align: center;margin: 20px">
+    <a type="button" class="btn" href="#" onclick="window.print();">Print</a>
+    <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
+    <a href="#" onclick="window.close()" class="btn">Close</a>
+</div>
+{% endif %}
+<div class="print">
+        <div class="item">
+
+            {% if description is not null %}
+                {{ include(template_from_string(description),{
+                    "printdate":b2b.date|date('Y/m/d H:s:i'),
+                    "entityname":b2b.User.Entiti.entName,
+                    "operator":b2b.Item.operator.name,
+                    "entityadrs1":b2b.User.Entiti.entAdrs1,
+                    "entityadrs2":b2b.User.Entiti.entAdrs2,
+                    "entityadrs3":b2b.User.Entiti.entAdrs3,
+                    "tranid":b2b.clientTransactionID,
+                    "recievernumber":b2b.mobileNumber,
+                    "valuesent":b2b.Item.itemFaceValue ~ " " ~ b2b.Item.itemCurrency,
+                    "valuepaid":denomination,
+                }) }}
+            {% else %}
+
+                SerialNumber:aaa<br><br>
+
+            {% endif %}
+
+        </div>
+</div>
+</body>
+</html>

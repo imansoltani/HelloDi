@@ -798,6 +798,48 @@ $datetype=0;
 
     }
 
+    public function PrintAction(Request $request,$print)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
+        if($lasttran)
+        {
+            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
+            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()))->getDescdesc();
+        }
+        else
+            $trans = null;
+
+        if($trans == null)
+        {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
+            return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
+        }
+
+        $duplicate = !$request->getSession()->has('firstprintcode');
+        $request->getSession()->remove('firstprintcode');
+
+        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
+                'trans'=>$trans,
+                'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
+                'duplicate'=>$duplicate,
+                'print' => $print
+            ));
+
+        if($print == 'web')
+            return $html;
+        else
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                )
+            );
+    }
+
     public function BuyImtuAction(Request $request)
     {
         ini_set('max_execution_time', 80);
@@ -922,7 +964,8 @@ $datetype=0;
                     $b2blog->addTransaction($trandist);
                     $em->persist($trandist);
 
-                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
+//                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
+                    return $this->redirect($this->generateUrl("Retailer_Shop_imtu_print",array('id' => $b2blog->getId())));
                 }
                 $em->flush();
 
@@ -930,7 +973,6 @@ $datetype=0;
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
 //            die(print_r($CreateAccountResponse));
-                return $this->redirect($this->getRequest()->headers->get('referer'));
         }
         catch(\Exception $e)
         {
@@ -944,36 +986,32 @@ $datetype=0;
             }
             else
                 $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
-            return $this->redirect($this->getRequest()->headers->get('referer'));
         }
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
-    public function PrintAction(Request $request,$print)
+    public function PrintImtuAction($id,$print)
     {
         $em = $this->getDoctrine()->getManager();
+        $b2blog = $em->getRepository("HelloDiDiDistributorsBundle:B2BLog")->find($id);
 
-        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
-        if($lasttran)
-        {
-            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
-            $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()))->getDescdesc();
-        }
-        else
-            $trans = null;
+        if(!$b2blog) throw $this->createNotFoundException("Unable find b2b id.");
 
-        if($trans == null)
-        {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('You_entered_an_invalid',array(),'message'));
-            return $this->redirect($this->generateUrl('Retailer_Shop_Error_print'));
-        }
+        if($b2blog->getUser() != $this->getUser()) throw $this->createNotFoundException("Unable find b2b id. (2)");
 
-        $duplicate = !$request->getSession()->has('firstprintcode');
-        $request->getSession()->remove('firstprintcode');
+        if($b2blog->getStatus() != 1) throw $this->createNotFoundException("imtu buy failed.");
 
-        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-            'trans'=>$trans,
-            'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
-            'duplicate'=>$duplicate,
+        $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$b2blog->getItem(),'desclang'=>$this->getUser()->getLanguage()));
+        if(!$description) $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$b2blog->getItem()));
+        $description = $description->getDescdesc();
+
+        $b2bserver = $em->getRepository("HelloDiDiDistributorsBundle:Account")->findOneBy(array("accName"=>"B2Bserver"));
+        $denomination = $em->getRepository("HelloDiDiDistributorsBundle:Price")->findOneBy(array("Account"=>$b2bserver,"Item"=>$b2blog->getItem()));
+
+        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:ImtuPrint.html.twig',array(
+            'b2b'=>$b2blog,
+            'description'=>$description,
+            'denomination' => $denomination->getDenomination()." ".$denomination->getPriceCurrency(),
             'print' => $print
         ));
 
@@ -985,7 +1023,7 @@ $datetype=0;
                 200,
                 array(
                     'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                    'Content-Disposition'   => 'attachment; filename="Imtu.pdf"'
                 )
             );
     }
