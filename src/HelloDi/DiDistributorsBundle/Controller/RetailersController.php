@@ -1239,8 +1239,8 @@ $datetype=0;
 //start mostafa
     public function ShowItemsAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getEntityManager();
+        $myaccount = $this->getUser()->getAccount();
 
         $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$myaccount,'priceStatus'=>1));
 

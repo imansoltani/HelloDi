@@ -277,6 +277,7 @@ class tempController extends Controller
                 $discount = ($price_prov->getItem()->getCountry() == $Country_EC || $price_prov->getItem()->getCountry() == $Country_RU)?
                     0.07:0.09;
                 $price_dist->setPrice( $price_prov->getDenomination() - ($discount*$price_prov->getDenomination()) );
+                $price_dist->setDenomination($price_prov->getDenomination());
 
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price_dist));
                 $priceHistory->setPrice($price_dist->getPrice());
@@ -330,6 +331,7 @@ class tempController extends Controller
             else
             {
                 $price_ret->setPrice($price_dist->getPrice());
+                $price_ret->setDenomination($price_dist->getDenomination());
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price_ret));
                 $priceHistory->setPrice($price_ret->getPrice());
                 echo("price for item '".$price_ret->getItem()."' already exist. Price = '".$price_ret->getPrice()." . Updated.'<br>");
