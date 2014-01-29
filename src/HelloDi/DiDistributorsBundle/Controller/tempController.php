@@ -267,6 +267,8 @@ class tempController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
+
         $accountRet = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($RetId);
         if (!$accountRet || $accountRet->getAccType() != 2) die("<span style='color: red'>Unable to find account.</span>");
 
@@ -292,6 +294,7 @@ class tempController extends Controller
                 $price->setDenomination($row['DENOMINATION (CHF)']);
                 $price->setPriceStatus(1);
                 $price->setIsFavourite(0);
+                $price->setTax($tax);
                 $em->persist($price);
 
                 $priceHistory = new PriceHistory();
