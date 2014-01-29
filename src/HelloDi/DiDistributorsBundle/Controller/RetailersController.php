@@ -881,7 +881,7 @@ $datetype=0;
 
         try
         {
-            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'),array('trace'=>true));
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));//,array('trace'=>true));
             $client->__setTimeout(60);
             $result = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
@@ -928,9 +928,9 @@ $datetype=0;
                     $b2blog->setStatusCode($error_codes);
                     $em->flush();
 
-                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
-                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
-                    die($s);
+//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
+//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
+//                    die($s);
                 }
                 else
                 {
