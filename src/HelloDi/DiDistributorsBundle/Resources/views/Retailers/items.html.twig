@@ -57,10 +57,10 @@
                                     <th>{{ 'Id' | trans ({}, "item") }}</th>
                                     <th>{{ 'Favorite' | trans ({}, "item") }}</th>
                                     <th>{{ 'Name' | trans ({}, "item") }}</th>
-                                    <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
+                                    <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
                                     <th>{{ 'ItemType' | trans ({}, "item") }}</th>
-                                    <th>{{ 'Price' | trans ({}, "price") }}</th>
-                                    <th>{{ 'denomination' | trans ({}, "price") }}</th>
+                                    <th>{{ 'denomination' | trans ({}, "price") }} ({{ Account.AccCurrency }})</th>
+                                    <th>{{ 'Price' | trans ({}, "price") }} ({{ Account.AccCurrency }})</th>
                                     <th>{{ 'commission' | trans ({}, "price") }}</th>
                                 </tr>
 
@@ -93,8 +93,8 @@
                                         <td>{{ price.item.itemName }}</td>
                                         <td>{{ price.item.itemFaceValue }} {{ price.item.ItemCurrency }}</td>
                                         <td>{{ price.item.itemType|upper }}</td>
+                                        <td>{{ price.Denomination }}</td>
                                         <td>{{ price.price }}</td>
-                                        <td>{{ price.Denomination }} {{ price.priceCurrency }}</td>
                                         <td>
                                             {% if price.Denomination %}
                                                 {{ '%.2f'|format(1 - price.price/price.Denomination) }} %

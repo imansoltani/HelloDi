@@ -879,9 +879,9 @@ $datetype=0;
         $em->persist($b2blog);
         $em->flush();
 
-//        try
-//        {
-            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'),array('trace'=>true));
+        try
+        {
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));//,array('trace'=>true));
             $client->__setTimeout(60);
             $result = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
@@ -980,20 +980,20 @@ $datetype=0;
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
 //            die(print_r($CreateAccountResponse));
-//        }
-//        catch(\Exception $e)
-//        {
-//            if($e->getCode() == -99)
-//            {
-//                $b2blog->setStatusCode("noResponse");
-//                $b2blog->setStatus(0);
-//                $em->flush();
-//
-//                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('server_no_response',array(),'message'));
-//            }
-//            else
-//                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
-//        }
+        }
+        catch(\Exception $e)
+        {
+            if($e->getCode() == -99)
+            {
+                $b2blog->setStatusCode("noResponse");
+                $b2blog->setStatus(0);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('server_no_response',array(),'message'));
+            }
+            else
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
+        }
 //        $s  = "request: ".$client->__getLastRequest() . "<br/>";
 //        $s .= "response: ".$client->__getLastResponse() . "<br/>";
 //        die($s);
