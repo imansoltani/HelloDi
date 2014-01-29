@@ -898,7 +898,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination(),
+                            'Amount'=>$priceProv->getDenomination()*100,
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -994,9 +994,9 @@ $datetype=0;
 //            else
 //                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
 //        }
-        $s  = "request: ".$client->__getLastRequest() . "<br/>";
-        $s .= "response: ".$client->__getLastResponse() . "<br/>";
-        die($s);
+//        $s  = "request: ".$client->__getLastRequest() . "<br/>";
+//        $s .= "response: ".$client->__getLastResponse() . "<br/>";
+//        die($s);
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
