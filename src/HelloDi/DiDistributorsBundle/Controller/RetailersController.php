@@ -881,7 +881,7 @@ $datetype=0;
 
 //        try
 //        {
-            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'));
+            $client = new SoapClientTimeout($this->container->getParameter('B2BServer.WSDL'),array('trace'=>true));
             $client->__setTimeout(60);
             $result = $client->CreateAccount(array(
                     'CreateAccountRequest' => array(
@@ -994,6 +994,9 @@ $datetype=0;
 //            else
 //                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
 //        }
+        $s  = "request: ".$client->__getLastRequest() . "<br/>";
+        $s .= "response: ".$client->__getLastResponse() . "<br/>";
+        die($s);
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
