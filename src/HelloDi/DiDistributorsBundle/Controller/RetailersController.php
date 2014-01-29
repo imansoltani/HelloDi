@@ -912,13 +912,13 @@ $datetype=0;
                     )
                 ));
 
-                $RechargeResponse = $result->RechargeResponse;
+                $CreateAccountResponse = $result->CreateAccountResponse;
 
-                if($RechargeResponse->ResponseReferenceData->Success == 'N')
+                if($CreateAccountResponse->ResponseReferenceData->Success == 'N')
                 {
-                    $b2blog->setTransactionID($RechargeResponse->ResponseReferenceData->TransactionID);
+                    $b2blog->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
                     $b2blog->setStatus(0);
-                    $messages = $RechargeResponse->ResponseReferenceData->MessageList;
+                    $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
                     $error_codes = "";
                     foreach ($messages as $message)
                     {
@@ -929,7 +929,7 @@ $datetype=0;
                 }
                 else
                 {
-                    $b2blog->setTransactionID($RechargeResponse->ResponseReferenceData->TransactionID);
+                    $b2blog->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
                     $b2blog->setStatus(1);
 
                     // For retailers
