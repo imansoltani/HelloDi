@@ -122,8 +122,9 @@
                     cache: false,
                     success: function(result)
                     {
-                        $("#country").val(result.slice(0,2));
-                        $("#operator").html(result.slice(2)).prop('disabled', false);
+                        var array_sp = result.split("<",2);
+                        $("#country").val(array_sp[0]);
+                        $("#operator").html("<"+array_sp[1]).prop('disabled', false);
                         getItem($("#operator").val());
                     }
                 });

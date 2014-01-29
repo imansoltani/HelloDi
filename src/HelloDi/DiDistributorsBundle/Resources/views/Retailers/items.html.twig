@@ -97,7 +97,7 @@
                                         <td>{{ price.price }}</td>
                                         <td>
                                             {% if price.Denomination %}
-                                                {{ '%.2f'|format(1 - price.price/price.Denomination) }} %
+                                                {{ '%.2f'|format((1 - price.price/price.Denomination)*100) }} %
                                             {% else %}
                                                 NaN
                                             {% endif %}

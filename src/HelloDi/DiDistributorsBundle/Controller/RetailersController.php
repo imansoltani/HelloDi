@@ -903,10 +903,10 @@ $datetype=0;
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
                             'Recharge'=>'Y',
-                            'SendSMS'=>'Y',
+                            'SendSMS'=>($senderMobileNumber!=""?"Y":"N"),
                             'SenderNumber'=>$senderMobileNumber,
                             'NotificationMobile'=>$senderMobileNumber,
-                            'SendEmail'=>'Y',
+                            'SendEmail'=>($senderEmail!=""?"Y":"N"),
                             'NotificationEmail'=>$senderEmail,
                         ),
                     )
@@ -1189,15 +1189,19 @@ $datetype=0;
 //
 //        file_put_contents('phones_rules.yml', $yaml);
 
-        return  new Response($result?$role['country_iso'].$result:"  <option value=''>Not found Operator</option>");
+        $country_name = $em->getRepository("HelloDiDiDistributorsBundle:Country")->findOneBy(array("iso"=>$role['country_iso']));
+
+        return  new Response($result?$country_name->getName().$result:"  <option value=''>Not found Operator</option>");
     }
 
     public function getPricesAction(Request $request)
     {
         $operatorID = $request->get("operatorID");
-        $country = $request->get("country");
+        $country_name = $request->get("country");
 
         $em = $this->getDoctrine()->getEntityManager();
+
+        $country = $em->getRepository("HelloDiDiDistributorsBundle:Country")->findOneBy(array("name"=>$country_name));
 
         $operator = $em->getRepository("HelloDiDiDistributorsBundle:Operator")->find($operatorID);
 
@@ -1210,15 +1214,14 @@ $datetype=0;
             ->andWhere('price.priceStatus = :true')->setParameter("true",true)
             ->innerJoin("price.Item","item")
             ->andWhere("item.operator = :operator")->setParameter("operator",$operator)
-            ->innerJoin('item.Country','country')
-            ->andWhere('country.iso = :country_iso')->setParameter('country_iso',$country)
+            ->andWhere('item.Country = :country')->setParameter('country',$country)
             ->getQuery()->getResult();
 
         $result = "";
         foreach($prices as $price)
             $result .= "<option value='".$price->getItem()->getId()."'>"
-                .$price->getItem()->getItemFaceValue()." ".$price->getItem()->getItemCurrency()
-                ." (".$price->getDenomination()." ".$price->getAccount()->getAccCurrency().")"
+                .$price->getDenomination()." ".$price->getAccount()->getAccCurrency()
+                ." (".$price->getItem()->getItemFaceValue()." ".$price->getItem()->getItemCurrency().")"
                 ."</option>";
 
         return  new Response($result?:"<option value=''>Not found Denomination.</option>");
