@@ -926,6 +926,7 @@ $datetype=0;
                         $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($message->StatusCode,array(),'message'));
                     }
                     $b2blog->setStatusCode($error_codes);
+                    $em->flush();
 
                     $s  = "request: ".$client->__getLastRequest() . "<br/>";
                     $s .= "response: ".$client->__getLastResponse() . "<br/>";
@@ -975,14 +976,14 @@ $datetype=0;
                     $b2blog->addTransaction($trandist);
                     $em->persist($trandist);
 
-                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
-                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
-                    die($s);
+                    $em->flush();
+//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
+//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
+//                    die($s);
 
 //                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
                     return $this->redirect($this->generateUrl("Retailer_Shop_imtu_print",array('id' => $b2blog->getId())));
                 }
-                $em->flush();
 
                 if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
                     $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
@@ -1002,6 +1003,7 @@ $datetype=0;
             else
                 $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
         }
+        $em->flush();
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
