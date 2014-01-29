@@ -975,6 +975,10 @@ $datetype=0;
                     $b2blog->addTransaction($trandist);
                     $em->persist($trandist);
 
+                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
+                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
+                    die($s);
+
 //                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
                     return $this->redirect($this->generateUrl("Retailer_Shop_imtu_print",array('id' => $b2blog->getId())));
                 }
