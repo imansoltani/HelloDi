@@ -56,9 +56,11 @@
                                 <tr>
                                     <th>{{ 'Id' | trans ({}, "item") }}</th>
                                     <th>{{ 'Name' | trans ({}, "item") }}</th>
-                                    <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                                    <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
                                     <th>{{ 'ItemType' | trans ({}, "item") }}</th>
-                                    <th>{{ 'Price' | trans ({}, "price") }}({{ 'Currency' | trans ({}, "price") }})</th>
+                                    <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                    <th>{{ 'denomination' | trans ({}, "price") }}</th>
+                                    <th>{{ 'commission' | trans ({}, "price") }}</th>
                                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
                                 </tr>
 
@@ -70,6 +72,8 @@
                                     <td><input type="text" name="search_type" value="Search Type" class="search_init" /></td>
                                     <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
                                     <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
 
                                 </tr>
 
@@ -79,20 +83,17 @@
                                     <tr>
                                         <td>{{ price.item.id }}</td>
                                         <td>{{  price.item.itemName }}</td>
-                                        <td>{{  price.item.itemFaceValue }}</td>
+                                        <td>{{  price.item.itemFaceValue }} {{ price.item.ItemCurrency }}</td>
+                                        <td>{{ price.item.itemType|upper }}</td>
+                                        <td>{{  price.price }}</td>
+                                        <td>{{ price.Denomination }} {{ price.priceCurrency }}</td>
                                         <td>
-                                            {% if price.item.itemType=='dmtu' %}
-                                                {{ 'Mobile' | trans ({}, "item") }}
-                                            {% elseif price.item.itemType=='imtu' %}
-                                                {{ 'IMTU' | trans ({}, "item") }}
-                                            {% elseif price.item.itemType=='clcd' %}
-                                                {{ 'Calling_Card' | trans ({}, "item") }}
+                                            {% if price.Denomination %}
+                                                {{ '%.2f'|format(1 - price.price/price.Denomination) }} %
                                             {% else %}
-                                                {{ 'E-payment' | trans ({}, "item") }}
+                                                NaN
                                             {% endif %}
                                         </td>
-                                        <td>{{  price.price }}
-                                            {{  price.priceCurrency }}</td>
                                         <td>
                                             <a class="btn_actions" href="{{ path('items_item_per_retailers',{'itemid': price.item.id}) }}">
                                                 {{ 'ItemPerRetailer' | trans ({}, "item") }}

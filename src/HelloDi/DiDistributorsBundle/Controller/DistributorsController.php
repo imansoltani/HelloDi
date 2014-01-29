@@ -1194,9 +1194,10 @@ catch(\Exception $e){
     //items
     public function ShowItemsAction()
     {
-        $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
+        $em = $this->getDoctrine()->getManager();
+        $myaccount = $this->getUser()->getAccount();
 
-        $prices = $myaccount->getPrices();
+        $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$myaccount,'priceStatus'=>1));
 
         return $this->render('HelloDiDiDistributorsBundle:Distributors:items.html.twig', array(
             'prices' => $prices,
