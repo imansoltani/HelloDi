@@ -1,0 +1,175 @@
+Status,CARRIER CODE,COUNTRY CODE,DENOM CODE,DENOMINATION (CHF),Country,Discount,Net Price,Fixed/ Floating,Floating FX Rate,Top Up Currency,Fixed Top Up Value,(Est.) Floating Top Up Value,Additional Information
+Live,Airtel,BD,200,2,Bangladesh,7%,1.86,Fixed,,BDT,100,,
+Live,Airtel,BD,400,4,Bangladesh,7%,3.72,Fixed,,BDT,200,,
+Live,Airtel,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,300,,
+Live,Airtel,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,1000,,
+Live,Airtel,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,500,,
+Live,Banglalink,BD,200,2,Bangladesh,7%,1.86,Fixed,,BDT,1000,,
+Live,Banglalink,BD,400,4,Bangladesh,7%,3.72,Fixed,,BDT,100,,
+Live,Banglalink,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,200,,
+Live,Banglalink,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,300,,
+Live,Banglalink,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,500,,
+Live,CityCell,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,1000,,
+Live,CityCell,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,300,,
+Live,CityCell,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,500,,
+Live,GrameenPhone,BD,200,2,Bangladesh,7%,1.86,Fixed,,BDT,1000,,
+Live,GrameenPhone,BD,400,4,Bangladesh,7%,3.72,Fixed,,BDT,100,,
+Live,GrameenPhone,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,200,,
+Live,GrameenPhone,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,300,,
+Live,GrameenPhone,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,500,,
+Live,Robi,BD,200,2,Bangladesh,7%,1.86,Fixed,,BDT,100,,
+Live,Robi,BD,400,4,Bangladesh,7%,3.72,Fixed,,BDT,200,,
+Live,Robi,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,300,,
+Live,Robi,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,500,,
+Live,Robi,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,1000,,
+Live,TeleTalk,BD,600,6,Bangladesh,7%,5.58,Fixed,,BDT,1000,,
+Live,TeleTalk,BD,1000,10,Bangladesh,7%,9.3,Fixed,,BDT,300,,
+Live,TeleTalk,BD,2000,20,Bangladesh,7%,18.6,Fixed,,BDT,500,,
+Live,Entel,BO,1000,10,Bolivia,7%,9.3,Floating,6.9,BOB,n/a,62.10,9 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Entel,BO,1500,15,Bolivia,7%,13.95,Floating,6.9,BOB,n/a,93.15,13.50 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Entel,BO,2000,20,Bolivia,7%,18.6,Floating,6.9,BOB,n/a,124.20,18 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Tigo,BO,1000,10,Bolivia,7%,9.3,Floating,6.9,BOB,n/a,62.10,9 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Tigo,BO,1500,15,Bolivia,7%,13.95,Floating,6.9,BOB,n/a,93.15,13.50 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Tigo,BO,2000,20,Bolivia,7%,18.6,Floating,6.9,BOB,n/a,124.20,18 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Viva,BO,500,5,Bolivia,7%,4.65,Floating,6.9,BOB,n/a,31.05,4.50 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Viva,BO,1000,10,Bolivia,7%,9.3,Floating,6.9,BOB,n/a,62.10,9 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Viva,BO,1500,15,Bolivia,7%,13.95,Floating,6.9,BOB,n/a,93.15,13.50 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+Live,Viva,BO,2000,20,Bolivia,7%,18.6,Floating,6.9,BOB,n/a,124.20,18 USD (SENT AMOUNT) converted into BOB based on the exchange rate on the day
+NEW,Claro,BR,1110,11.1,Brazil,7%,10.323,Fixed,,BRL,18,,
+NEW,Claro,BR,1850,18.5,Brazil,7%,17.205,Fixed,,BRL,30,,
+NEW,Oi,BR,2150,21.5,Brazil,7%,19.995,Fixed,,BRL,35,,
+NEW,Tim,BR,1660,16.6,Brazil,7%,15.438,Fixed,,BRL,27,,
+Live,MTN,CG,500,5,Congo,7%,4.65,Fixed,,XAF,1867.25,,
+Live,MTN,CG,1000,10,Congo,7%,9.3,Fixed,,XAF,3734.5,,
+Live,MTN,CG,1500,15,Congo,7%,13.95,Fixed,,XAF,5601.75,,
+Live,MTN,CG,2000,20,Congo,7%,18.6,Fixed,,XAF,7469,,
+NEW,Claro,CO,540,5.4,Colombia,7%,5.022,Fixed,,COP,7500,,
+NEW,Claro,CO,710,7.1,Colombia,7%,6.603,Fixed,,COP,10000,,
+NEW,Claro,CO,1070,10.7,Colombia,7%,9.951,Fixed,,COP,15000,,
+NEW,Claro,CO,1500,15,Colombia,7%,13.95,Fixed,,COP,21000,,
+NEW,Claro,CO,2290,22.9,Colombia,7%,21.297,Fixed,,COP,32000,,
+NEW,Claro,CO,5000,50,Colombia,7%,46.5,Fixed,,COP,70000,,
+NEW,Movistar,CO,540,5.4,Colombia,7%,5.022,Fixed,,COP,7500,,
+NEW,Movistar,CO,710,7.1,Colombia,7%,6.603,Fixed,,COP,10000,,
+NEW,Movistar,CO,1070,10.7,Colombia,7%,9.951,Fixed,,COP,15000,,
+NEW,Movistar,CO,1500,15,Colombia,7%,13.95,Fixed,,COP,21000,,
+NEW,Movistar,CO,2290,22.9,Colombia,7%,21.297,Fixed,,COP,32000,,
+NEW,Movistar,CO,5000,50,Colombia,7%,46.5,Fixed,,COP,70000,,
+NEW,Tigo,CO,360,3.6,Colombia,7%,3.348,Fixed,,COP,5000,,
+NEW,Tigo,CO,710,7.1,Colombia,7%,6.603,Fixed,,COP,10000,,
+NEW,Tigo,CO,1070,10.7,Colombia,7%,9.951,Fixed,,COP,15000,,
+NEW,Tigo,CO,1500,15,Colombia,7%,13.95,Fixed,,COP,21000,,
+NEW,Tigo,CO,2290,22.9,Colombia,7%,21.297,Fixed,,COP,32000,,
+NEW,Tigo,CO,5000,50,Colombia,7%,46.5,Fixed,,COP,70000,,
+NEW,Claro,DO,600,6,Dominican Republic,7%,5.58,Fixed,,DOP,200,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Claro,DO,1100,11,Dominican Republic,7%,10.23,Fixed,,DOP,400,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Claro,DO,1700,17,Dominican Republic,7%,15.81,Fixed,,DOP,600,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Claro,DO,2300,23,Dominican Republic,7%,21.39,Fixed,,DOP,800,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Orange,DO,600,6,Dominican Republic,7%,5.58,Fixed,,DOP,200,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Orange,DO,1100,11,Dominican Republic,7%,10.23,Fixed,,DOP,400,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Orange,DO,1700,17,Dominican Republic,7%,15.81,Fixed,,DOP,600,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+NEW,Orange,DO,2300,23,Dominican Republic,7%,21.39,Fixed,,DOP,800,,28% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Alegro,EC,300,3,Ecuador,6%,2.82,Fixed,,USD,3,,
+Live,Alegro,EC,500,5,Ecuador,6%,4.7,Fixed,,USD,5,,
+Live,Alegro,EC,600,6,Ecuador,6%,5.64,Fixed,,USD,6,,
+Live,Alegro,EC,1000,10,Ecuador,6%,9.4,Fixed,,USD,10,,
+Live,Alegro,EC,2100,21,Ecuador,6%,19.74,Fixed,,USD,20,,
+Live,Claro,EC,300,3,Ecuador,6%,2.82,Fixed,,USD,3,,
+Live,Claro,EC,600,6,Ecuador,6%,5.64,Fixed,,USD,6,,
+Live,Claro,EC,1000,10,Ecuador,6%,9.4,Fixed,,USD,10,,
+Live,Claro,EC,2100,21,Ecuador,6%,19.74,Fixed,,USD,20,,
+Live,Airtel,NG,500,5,Nigeria,7%,4.65,Fixed,,NGN,635.25,,
+Live,Airtel,NG,1000,10,Nigeria,7%,9.3,Fixed,,NGN,1270.5,,
+Live,Airtel,NG,1500,15,Nigeria,7%,13.95,Fixed,,NGN,1905.75,,
+Live,Airtel,NG,2000,20,Nigeria,7%,18.6,Fixed,,NGN,2541,,
+Live,Etisalat,NG,500,5,Nigeria,7%,4.65,Fixed,,NGN,635.25,,
+Live,Etisalat,NG,1000,10,Nigeria,7%,9.3,Fixed,,NGN,1270.5,,
+Live,Etisalat,NG,1500,15,Nigeria,7%,13.95,Fixed,,NGN,1905.75,,
+Live,Etisalat,NG,2000,20,Nigeria,7%,18.6,Fixed,,NGN,2541,,
+Live,Glo,NG,500,5,Nigeria,7%,4.65,Fixed,,NGN,712.25,,
+Live,Glo,NG,1000,10,Nigeria,7%,9.3,Fixed,,NGN,1424.5,,
+Live,Glo,NG,1500,15,Nigeria,7%,13.95,Fixed,,NGN,2136.75,,
+Live,Glo,NG,2000,20,Nigeria,7%,18.6,Fixed,,NGN,2849,,
+Live,MTN,NG,500,5,Nigeria,7%,4.65,Fixed,,NGN,616,,
+Live,MTN,NG,1000,10,Nigeria,7%,9.3,Fixed,,NGN,1232,,
+Live,MTN,NG,1500,15,Nigeria,7%,13.95,Fixed,,NGN,1848,,
+Live,MTN,NG,2000,20,Nigeria,7%,18.6,Fixed,,NGN,2464,,
+Live,Visafone,NG,500,5,Nigeria,7%,4.65,Fixed,,NGN,635.25,,
+Live,Visafone,NG,1000,10,Nigeria,7%,9.3,Fixed,,NGN,1270.5,,
+Live,Visafone,NG,1500,15,Nigeria,7%,13.95,Fixed,,NGN,1905.75,,
+Live,Visafone,NG,2000,20,Nigeria,7%,18.6,Fixed,,NGN,2541,,
+NEW,Claro,PE,250,2.5,Peru,7%,2.325,Fixed,,PEN,5,,
+NEW,Claro,PE,500,5,Peru,7%,4.65,Fixed,,PEN,10,,
+NEW,Claro,PE,750,7.5,Peru,7%,6.975,Fixed,,PEN,15,,
+NEW,Claro,PE,1250,12.5,Peru,7%,11.625,Fixed,,PEN,25,,
+NEW,Claro,PE,2500,25,Peru,7%,23.25,Fixed,,PEN,50,,
+NEW,Movistar,PE,500,5,Peru,7%,4.65,Fixed,,PEN,10,,
+NEW,Movistar,PE,750,7.5,Peru,7%,6.975,Fixed,,PEN,15,,
+NEW,Movistar,PE,1250,12.5,Peru,7%,11.625,Fixed,,PEN,25,,
+NEW,Movistar,PE,2500,25,Peru,7%,23.25,Fixed,,PEN,50,,
+Live,Globe,PH,240,2.4,Philippines,7%,2.232,Fixed,,PHP,100,,
+Live,Globe,PH,360,3.6,Philippines,7%,3.348,Fixed,,PHP,150,,
+Live,Globe,PH,480,4.8,Philippines,7%,4.464,Fixed,,PHP,200,,
+Live,Globe,PH,1200,12,Philippines,7%,11.16,Fixed,,PHP,500,,
+Live,Globe,PH,2400,24,Philippines,7%,22.32,Fixed,,PHP,1000,,
+Live,Smart,PH,240,2.4,Philippines,7%,2.232,Fixed,,PHP,115,,
+Live,Smart,PH,280,2.8,Philippines,7%,2.604,Fixed,,PHP,500,,
+Live,Smart,PH,480,4.8,Philippines,7%,4.464,Fixed,,PHP,1000,,
+Live,Smart,PH,1200,12,Philippines,7%,11.16,Fixed,,PHP,100,,
+Live,Smart,PH,2400,24,Philippines,7%,22.32,Fixed,,PHP,200,,
+Live,Sun,PH,240,2.4,Philippines,7%,2.232,Fixed,,PHP,100,,
+Live,Sun,PH,360,3.6,Philippines,7%,3.348,Fixed,,PHP,150,,
+Live,Sun,PH,1200,12,Philippines,7%,11.16,Fixed,,PHP,500,,
+Live,Mobilink,PK,300,3,Pakistan,7%,2.79,Fixed,,PKR,250,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Mobilink,PK,600,6,Pakistan,7%,5.58,Fixed,,PKR,500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Mobilink,PK,1200,12,Pakistan,7%,11.16,Fixed,,PKR,1000,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Mobilink,PK,1800,18,Pakistan,7%,16.74,Fixed,,PKR,1500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Mobilink,PK,3000,30,Pakistan,7%,27.9,Fixed,,PKR,2500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Telenor,PK,300,3,Pakistan,7%,2.79,Fixed,,PKR,250,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Telenor,PK,600,6,Pakistan,7%,5.58,Fixed,,PKR,500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Telenor,PK,1200,12,Pakistan,7%,11.16,Fixed,,PKR,1000,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Telenor,PK,1800,18,Pakistan,7%,16.74,Fixed,,PKR,1500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Telenor,PK,3000,30,Pakistan,7%,27.9,Fixed,,PKR,2500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Ufone,PK,300,3,Pakistan,7%,2.79,Fixed,,PKR,250,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Ufone,PK,600,6,Pakistan,7%,5.58,Fixed,,PKR,500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Ufone,PK,1200,12,Pakistan,7%,11.16,Fixed,,PKR,1000,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Ufone,PK,1800,18,Pakistan,7%,16.74,Fixed,,PKR,1500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Ufone,PK,3000,30,Pakistan,7%,27.9,Fixed,,PKR,2500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Warid,PK,300,3,Pakistan,7%,2.79,Fixed,,PKR,250,,21.41% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Warid,PK,600,6,Pakistan,7%,5.58,Fixed,,PKR,500,,21.41% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Warid,PK,1200,12,Pakistan,7%,11.16,Fixed,,PKR,1000,,21.41% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Warid,PK,1800,18,Pakistan,7%,16.74,Fixed,,PKR,1500,,21.41% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Warid,PK,3000,30,Pakistan,7%,27.9,Fixed,,PKR,2500,,21.41% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Zong,PK,300,3,Pakistan,7%,2.79,Fixed,,PKR,250,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Zong,PK,600,6,Pakistan,7%,5.58,Fixed,,PKR,500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Zong,PK,1200,12,Pakistan,7%,11.16,Fixed,,PKR,1000,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Zong,PK,1800,18,Pakistan,7%,16.74,Fixed,,PKR,1500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Zong,PK,3000,30,Pakistan,7%,27.9,Fixed,,PKR,2500,,25% tax is applied by the local operator and/or authorities to the transferred balance.
+Live,Orange,PL,360,3.6,Poland,7%,3.348,Fixed,,PLN,10,,
+Live,Orange,PL,900,9,Poland,7%,8.37,Fixed,,PLN,25,,
+Live,Orange,PL,1800,18,Poland,7%,16.74,Fixed,,PLN,50,,
+Live,Play,PL,360,3.6,Poland,7%,3.348,Fixed,,PLN,10,,
+Live,Play,PL,900,9,Poland,7%,8.37,Fixed,,PLN,25,,
+Live,Play,PL,1800,18,Poland,7%,16.74,Fixed,,PLN,50,,
+Live,Polkomtel,PL,360,3.6,Poland,7%,3.348,Fixed,,PLN,10,,
+Live,Polkomtel,PL,900,9,Poland,7%,8.37,Fixed,,PLN,25,,
+Live,Polkomtel,PL,1800,18,Poland,7%,16.74,Fixed,,PLN,50,,
+Live,Tmobile,PL,360,3.6,Poland,7%,3.348,Fixed,,PLN,10,,
+Live,Tmobile,PL,900,9,Poland,7%,8.37,Fixed,,PLN,25,,
+Live,Tmobile,PL,1800,18,Poland,7%,16.74,Fixed,,PLN,50,,
+Live,Beeline,RU,350,3.5,Russia,6%,3.29,Fixed,,RUB,100,,
+Live,Beeline,RU,660,6.6,Russia,6%,6.204,Fixed,,RUB,200,,
+Live,Beeline,RU,1000,10,Russia,6%,9.4,Fixed,,RUB,300,,
+Live,Beeline,RU,1650,16.5,Russia,6%,15.51,Fixed,,RUB,500,,
+Live,Megafon,RU,350,3.5,Russia,6%,3.29,Fixed,,RUB,100,,
+Live,Megafon,RU,660,6.6,Russia,6%,6.204,Fixed,,RUB,200,,
+Live,Megafon,RU,1000,10,Russia,6%,9.4,Fixed,,RUB,300,,
+Live,Megafon,RU,1650,16.5,Russia,6%,15.51,Fixed,,RUB,500,,
+Live,MTS,RU,350,3.5,Russia,6%,3.29,Fixed,,RUB,100,,
+Live,MTS,RU,660,6.6,Russia,6%,6.204,Fixed,,RUB,200,,
+Live,MTS,RU,1000,10,Russia,6%,9.4,Fixed,,RUB,300,,
+Live,MTS,RU,1650,16.5,Russia,6%,15.51,Fixed,,RUB,500,,
+Live,Tele2,RU,350,3.5,Russia,6%,3.29,Fixed,,RUB,100,,
+Live,Tele2,RU,660,6.6,Russia,6%,6.204,Fixed,,RUB,200,,
+Live,Tele2,RU,1000,10,Russia,6%,9.4,Fixed,,RUB,300,,
+Live,Tele2,RU,1650,16.5,Russia,6%,15.51,Fixed,,RUB,500,,
