@@ -857,12 +857,12 @@ $datetype=0;
         $priceProv = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
         $clientTranId= $this->CreateTranId();
 
-//        $s  = "denomination = ".(is_null($request->get('denomination'))?"null":"not null")."<br/>";
-//        $s  = "priceDist = ".(is_null($priceDist)?"null":"not null")."<br/>";
-//        $s .= "item = ".(is_null($item)?"null":"not null")."<br/>";
-//        $s .= "accountRet = ".(is_null($accountRet)?"null":"not null")."<br/>";
-//        $s .= "accDist = ".(is_null($accountRet->getParent())?"null":"not null")."<br/>";
-//        die($s);
+        $s  = "denomination = ".(is_null($request->get('denomination'))?"null":"not null")."<br/>";
+        $s  = "priceDist = ".(is_null($priceDist)?"null":"not null")."<br/>";
+        $s .= "item = ".(is_null($item)?"null":"not null")."<br/>";
+        $s .= "accountRet = ".(is_null($accountRet)?"null":"not null")."<br/>";
+        $s .= "accDist = ".(is_null($accountRet->getParent())?"null":"not null")."<br/>";
+        die($s);
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
