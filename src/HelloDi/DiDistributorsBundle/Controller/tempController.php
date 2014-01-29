@@ -249,6 +249,7 @@ class tempController extends Controller
             {
                 $price->setPrice( $row['Net Price'] );
                 $price->setDenomination($row['DENOMINATION (CHF)']);
+                $price->setTax($tax);
 
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
                 $priceHistory->setPrice($price->getPrice());
@@ -309,6 +310,7 @@ class tempController extends Controller
             {
                 $price->setPrice( $row['Net Price'] );
                 $price->setDenomination($row['DENOMINATION (CHF)']);
+                $price->setTax($tax);
 
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
                 $priceHistory->setPrice($price->getPrice());
