@@ -856,6 +856,8 @@ $datetype=0;
         $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
         $priceProv = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
         $clientTranId= $this->CreateTranId();
+
+        die(var_dump(is_null($priceDist)));
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
