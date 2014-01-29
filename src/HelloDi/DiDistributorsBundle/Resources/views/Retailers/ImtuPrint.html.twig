@@ -48,7 +48,7 @@
 {% if print == 'web' %}
 <div id="notPrint" style="text-align: center;margin: 20px">
     <a type="button" class="btn" href="#" onclick="window.print();">Print</a>
-    <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
+    <a type="button" class="btn" href="{{ path('Retailer_Shop_imtu_print',{'id':b2b.id,'print':'pdf'}) }}">Print As PDF</a>
     <a href="#" onclick="window.close()" class="btn">Close</a>
 </div>
 {% endif %}
