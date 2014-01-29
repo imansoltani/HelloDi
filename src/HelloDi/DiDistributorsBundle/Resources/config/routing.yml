@@ -24,17 +24,13 @@ transactions_ogone_template:
         template: HelloDiDiDistributorsBundle:Ogone:EpaymentTemplate.html.twig
 
 item_add_temp:
-    path: /temp/item_add
+    path: /temp/item_add_prov
     defaults: { _controller: HelloDiDiDistributorsBundle:temp:itemAdd}
-
-update_db_temp:
-    path: /temp/update_db
-    defaults: { _controller: HelloDiDiDistributorsBundle:temp:updateDataBase}
 
 item_add_dist:
     path: /temp/item_add_dist/{distId}
     defaults: { _controller: HelloDiDiDistributorsBundle:temp:addIMTUItemsToDist}
 
 item_add_ret:
-    path: /temp/item_add_ret/{distId}/{RetId}
+    path: /temp/item_add_ret/{RetId}
     defaults: { _controller: HelloDiDiDistributorsBundle:temp:addIMTUItemsDistToRet}

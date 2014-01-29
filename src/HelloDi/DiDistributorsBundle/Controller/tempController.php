@@ -8,7 +8,6 @@ use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
 use HelloDi\DiDistributorsBundle\Entity\Operator;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -44,43 +43,6 @@ class tempController extends Controller
             {{entityadrs3}}<br>"
     );
 
-    public function updateDataBaseAction()
-    {
-        $application = new Application($this->get('kernel'));
-        $application->setAutoExit(false);
-
-        $input = new ArrayInput(array(
-            'command' => 'doctrine:schema:update',
-            '--force'  => true,
-        ));
-
-        $retval = $application->run($input);
-        return new Response("status: ".$retval);
-    }
-
-    public function itemAddAction()
-    {
-        //for update db
-        $this->updateDataBaseAction();
-
-        $array = $this->csv_to_array("uploads/temp/CH IMTU Item List 100114 (updated).csv");
-        //return new Response(str_replace(array("\n"," "),array("<br/>","&nbsp;"),print_r($array,true)));
-
-        $em = $this->getDoctrine()->getManager();
-        $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
-        if(!$provider)
-            die("provider not found.");
-        $provider->setAccCurrency("CHF");
-        $em->flush();
-
-        foreach($array as $key=>$row)
-        {
-            if($row["Fixed/ Floating"] == "Fixed") $this->insertItem($provider,$key,$row,$em);
-        }
-
-        return new Response("done");
-    }
-
     private function csv_to_array($filename='', $delimiter=',')
     {
         if(!file_exists($filename) || !is_readable($filename))
@@ -91,14 +53,32 @@ class tempController extends Controller
         {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE)
             {
-                if(!$header)
-                    $header = $row;
-                else
-                    $data[] = array_combine($header, $row);
+                if(!$header) $header = $row;
+                else         $data[] = array_combine($header, $row);
             }
             fclose($handle);
         }
         return $data;
+    }
+
+    public function itemAddAction()
+    {
+        $array = $this->csv_to_array("uploads/temp/provider.csv");
+        if(!$array) die("<span style='color: red'>Unable to read file.</span>");
+
+        $em = $this->getDoctrine()->getManager();
+        $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
+        if(!$provider) die("<span style='color: red'>provider not found.</span>");
+
+        $provider->setAccCurrency("CHF");
+        $em->flush();
+
+        foreach($array as $key=>$row)
+        {
+            if($row["Fixed/ Floating"] == "Fixed") $this->insertItem($provider,$key,$row,$em);
+        }
+
+        return new Response("done");
     }
 
     private function insertItem(Account $provider,$key,array $row,ObjectManager $em)
@@ -114,10 +94,10 @@ class tempController extends Controller
             $operator->setCarrierCode($row['CARRIER CODE']);
             $em->persist($operator);
             $em->flush();
-            echo("operator '".$row['CARRIER CODE']."' created. operator_id=".$operator->getId()."<br>");
+            echo("<span style='color: green'>operator '".$row['CARRIER CODE']."' created. operator_id=".$operator->getId()."</span><br>");
         }
         else
-            echo("operator '".$row['CARRIER CODE']."' already exist. operator_id=".$operator->getId()."<br>");
+            echo("<span style='color: blue'>operator '".$row['CARRIER CODE']."' already exist. operator_id=".$operator->getId()."</span><br>");
 
         //----------------set logo operator if not exist-----------------
         if($operator->getLogo() == null)
@@ -125,9 +105,9 @@ class tempController extends Controller
             $source_path = "uploads/temp/Operator Logos/".$row['COUNTRY CODE']."/".$row['CARRIER CODE']."/".
                 strtolower($row['COUNTRY CODE']."_".$row['CARRIER CODE']).".png";
             if(!file_exists($source_path))
-                echo("++ can't find Logo file ".$source_path."<br>");
+                echo("<span style='color: yellow'>can't find Logo file ".$source_path."</span><br>");
             elseif (!copy($source_path,"uploads/logos/".$operator->getId().".png"))
-                echo("++ can't copy Logo file ".$source_path."<br>");
+                echo("<span style='color: yellow'>can't copy Logo file ".$source_path."</span><br>");
             else
             {
                 $operator->setLogo($operator->getId().".png");
@@ -155,14 +135,14 @@ class tempController extends Controller
             $item->setCountry($em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array('iso'=>$row['COUNTRY CODE'])));
             $em->persist($item);
             $em->flush();
-            echo("item '".$item_name."' created. item_id=".$item->getId()."<br>");
+            echo("<span style='color: green'>item '".$item_name."' created. item_id=".$item->getId()."</span><br>");
         }
         else
         {
             $item->setItemFaceValue($row['Fixed Top Up Value']);
             $item->setItemCurrency($row['Top Up Currency']);
             $em->flush();
-            echo("item '".$item_name."' already exist. item_id=".$item->getId()." updated.<br>");
+            echo("<span style='color: blue'>item '".$item_name."' already exist. item_id=".$item->getId()." updated.</span><br>");
         }
 
         //----------------find or create item_descs-----------------
@@ -184,7 +164,7 @@ class tempController extends Controller
         }
         $em->flush();
 
-        echo("item_descs for item '".$item_name."' created. item_id=".$item->getId()."<br>");
+        echo("<span style='color: green'>item_descs for item '".$item_name."' created. item_id=".$item->getId()."</span><br>");
 
         //----------------find or create price-----------------
         $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
@@ -206,7 +186,7 @@ class tempController extends Controller
             $priceHistory->setPrices($price);
             $em->persist($priceHistory);
             $em->flush();
-            echo("price for item '".$item_name."' created. price_id=".$price->getId()." price_history_id=".$priceHistory->getId()."<br>");
+            echo("<span style='color: green'>price for item '".$item_name."' created. price_id=".$price->getId()." price_history_id=".$priceHistory->getId()."</span><br>");
         }
         else
         {
@@ -215,126 +195,122 @@ class tempController extends Controller
 
             $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
             $priceHistory->setPrice($price->getPrice());
-            echo("price for item '".$item_name."' already exist. price_id=".$price->getId().". Updated.<br>");
+            echo("<span style='color: blue'>price for item '".$item_name."' already exist. price_id=".$price->getId().". Updated.</span><br>");
             $em->flush();
         }
     }
 
     public function addIMTUItemsToDistAction($distId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $array = $this->csv_to_array("uploads/temp/distributor.csv");
+        if(!$array) die("<span style='color: red'>Unable to read file.</span>");
+
+        $em = $this->getDoctrine()->getManager();
+
         $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
-        $accountDist = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($distId);
-        if (!$accountDist || $accountDist->getAccType() != 0) {
-            throw $this->createNotFoundException("Unable to find account.");
-        }
 
-        $PricesOfProv = $em->createQueryBuilder()
-            ->select("price")
-            ->from("HelloDiDiDistributorsBundle:Price","price")
-            ->innerJoin("price.Account","account")
-            ->where("account.accName = :accName")->setParameter("accName","B2Bserver")
-            ->getQuery()->getResult();
+        $dist = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($distId);
+        if (!$dist || $dist->getAccType() != 0) die("<span style='color: red'>Unable to find account.</span>");
 
-        $Country_EC = $em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array("iso"=>"EC"));
-        $Country_RU = $em->getRepository('HelloDiDiDistributorsBundle:Country')->findOneBy(array("iso"=>"RU"));
-
-        foreach($PricesOfProv as $price_prov)
+        foreach($array as $row)
         {
-            $price_dist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-                "Account"=>$accountDist,
-                "Item"=>$price_prov->getItem()
-            ));
-
-            if(!$price_dist)
+            if($row["Fixed/ Floating"] != "Fixed") continue;
+            $item_name = $row['CARRIER CODE']." ".$row['Country']." ".floatval($row['Fixed Top Up Value']).$row['Top Up Currency'];
+            $itemcode = $row['COUNTRY CODE'].'/imtu/'.$row['CARRIER CODE'].'/'.str_replace(' ','_',$item_name);
+            $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
+            if(!$item)
             {
-                $price_dist = new Price();
-                $price_dist->setDenomination($price_prov->getDenomination());
-                $price_dist->setAccount($accountDist);
-                $price_dist->setItem($price_prov->getItem());
-
-                $discount = ($price_prov->getItem()->getCountry() == $Country_EC || $price_prov->getItem()->getCountry() == $Country_RU)?
-                    0.07:0.09;
-
-
-                $price_dist->setPrice( $price_prov->getDenomination()- ($discount*$price_prov->getDenomination()) );
-
-                $price_dist->setPriceCurrency($accountDist->getAccCurrency());
-                $price_dist->setPriceStatus(1);
-                $price_dist->setIsFavourite(0);
-                $price_dist->setTax($tax);
-                $em->persist($price_dist);
+                echo("<span style='color:red'>item '".$item_name."' not found. price can't create.</span><br>");
+                continue;
+            }
+            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$dist));
+            if(!$price)
+            {
+                $price = new Price();
+                $price->setItem($item);
+                $price->setAccount($dist);
+                $price->setPrice( $row['Net Price'] );
+                $price->setPriceCurrency($dist->getAccCurrency());
+                $price->setDenomination($row['DENOMINATION (CHF)']);
+                $price->setPriceStatus(1);
+                $price->setIsFavourite(0);
+                $price->setTax($tax);
+                $em->persist($price);
 
                 $priceHistory = new PriceHistory();
                 $priceHistory->setDate(new \DateTime('now'));
-                $priceHistory->setPrice($price_dist->getPrice());
-                $priceHistory->setPrices($price_dist);
+                $priceHistory->setPrice($price->getPrice());
+                $priceHistory->setPrices($price);
                 $em->persist($priceHistory);
-                echo("price for item '".$price_prov->getItem()."' created.<br>");
+                $em->flush();
+                echo("<span style='color: green'>price for item '".$item_name."' created. price_id=".$price->getId()." price_history_id=".$priceHistory->getId()."<br></span>");
             }
             else
             {
-                $discount = ($price_prov->getItem()->getCountry() == $Country_EC || $price_prov->getItem()->getCountry() == $Country_RU)?
-                    0.07:0.09;
-                $price_dist->setPrice( $price_prov->getDenomination() - ($discount*$price_prov->getDenomination()) );
-                $price_dist->setDenomination($price_prov->getDenomination());
+                $price->setPrice( $row['Net Price'] );
+                $price->setDenomination($row['DENOMINATION (CHF)']);
 
-                $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price_dist));
-                $priceHistory->setPrice($price_dist->getPrice());
-                echo("price for item '".$price_dist->getItem()."' already exist. Price = '".$price_dist->getPrice()." . Updated.'<br>");
+                $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
+                $priceHistory->setPrice($price->getPrice());
+                echo("<span style='color: blue'>price for item '".$item_name."' already exist. price_id=".$price->getId().". Updated.<br></span>");
+                $em->flush();
             }
         }
         $em->flush();
         return new Response("done");
     }
 
-    public function addIMTUItemsDistToRetAction($distId,$RetId)
+    public function addIMTUItemsDistToRetAction($RetId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
-        $accountDist = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($distId);
-        if (!$accountDist || $accountDist->getAccType() != 0) {
-            throw $this->createNotFoundException("Unable to find account dist.");
-        }
+        $array = $this->csv_to_array("uploads/temp/retailer.csv");
+        if(!$array) die("<span style='color: red'>Unable to read file.</span>");
+
+        $em = $this->getDoctrine()->getManager();
+
         $accountRet = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($RetId);
-        if (!$accountRet || $accountRet->getAccType() != 2) {
-            throw $this->createNotFoundException("Unable to find account ret.");
-        }
+        if (!$accountRet || $accountRet->getAccType() != 2) die("<span style='color: red'>Unable to find account.</span>");
 
-        foreach($accountDist->getPrices() as $price_dist)
+        foreach($array as $row)
         {
-            $price_ret = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array(
-                "Account"=>$accountRet,
-                "Item"=>$price_dist->getItem()
-            ));
-
-            if(!$price_ret)
+            if($row["Fixed/ Floating"] != "Fixed") continue;
+            $item_name = $row['CARRIER CODE']." ".$row['Country']." ".floatval($row['Fixed Top Up Value']).$row['Top Up Currency'];
+            $itemcode = $row['COUNTRY CODE'].'/imtu/'.$row['CARRIER CODE'].'/'.str_replace(' ','_',$item_name);
+            $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->findOneBy(array('itemCode'=>$itemcode));
+            if(!$item)
             {
-                $price_ret = new Price();
-                $price_ret->setDenomination($price_dist->getDenomination());
-                $price_ret->setAccount($accountRet);
-                $price_ret->setItem($price_dist->getItem());
-                $price_ret->setPrice($price_dist->getPrice());
-                $price_ret->setPriceCurrency($accountRet->getAccCurrency());
-                $price_ret->setPriceStatus(1);
-                $price_ret->setIsFavourite(0);
-                $price_ret->setTax($tax);
-                $em->persist($price_ret);
+                echo("<span style='color:red'>item '".$item_name."' not found. price can't create.</span><br>");
+                continue;
+            }
+            $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
+            if(!$price)
+            {
+                $price = new Price();
+                $price->setItem($item);
+                $price->setAccount($accountRet);
+                $price->setPrice( $row['Net Price'] );
+                $price->setPriceCurrency($accountRet->getAccCurrency());
+                $price->setDenomination($row['DENOMINATION (CHF)']);
+                $price->setPriceStatus(1);
+                $price->setIsFavourite(0);
+                $em->persist($price);
 
                 $priceHistory = new PriceHistory();
                 $priceHistory->setDate(new \DateTime('now'));
-                $priceHistory->setPrice($price_ret->getPrice());
-                $priceHistory->setPrices($price_ret);
+                $priceHistory->setPrice($price->getPrice());
+                $priceHistory->setPrices($price);
                 $em->persist($priceHistory);
-                echo("price for item '".$price_dist->getItem()."' created.<br>");
+                $em->flush();
+                echo("<span style='color:green'>price for item '".$item_name."' created. price_id=".$price->getId()." price_history_id=".$priceHistory->getId()."</span><br>");
             }
             else
             {
-                $price_ret->setPrice($price_dist->getPrice());
-                $price_ret->setDenomination($price_dist->getDenomination());
-                $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price_ret));
-                $priceHistory->setPrice($price_ret->getPrice());
-                echo("price for item '".$price_ret->getItem()."' already exist. Price = '".$price_ret->getPrice()." . Updated.'<br>");
+                $price->setPrice( $row['Net Price'] );
+                $price->setDenomination($row['DENOMINATION (CHF)']);
+
+                $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
+                $priceHistory->setPrice($price->getPrice());
+                echo("<span style='color:blue'>price for item '".$item_name."' already exist. price_id=".$price->getId().". Updated.</span><br>");
+                $em->flush();
             }
         }
         $em->flush();
