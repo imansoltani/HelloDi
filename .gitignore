@@ -6,8 +6,8 @@
 */logs/*
 */cache/*
 test/*
-web/uploads/*
-!web/uploads/temp
+web/uploads/documents/*
+web/uploads/logos/*
 
 # phpstorm
 .idea/workspace.xml
