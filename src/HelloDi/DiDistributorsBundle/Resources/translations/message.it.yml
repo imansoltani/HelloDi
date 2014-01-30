@@ -59,7 +59,7 @@ message_send_successfully: Messaggio inviato correttamente
 error_b2b: Error in connect to B2B server.
 cant_find_b2b_provider: We can't find a provider has 'B2BServer' name.
 
-mobile_number_%mobilenumber%_charged: Mobile with number %mobilenumber% charged successfully.
+mobile_number_%mobilenumber%_charged: Mobile with number mobilenumber charged successfully.
 ##errors in b2bserver
 INVALID_MISDN: Wrong mobile number.
 PIN_NOT_FOUND: PIN non esiste.

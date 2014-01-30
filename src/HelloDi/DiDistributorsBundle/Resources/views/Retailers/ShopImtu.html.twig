@@ -24,7 +24,7 @@
 
                 <form method="post" class="form-horizontal">
 
-                    {% if b2b_log_id in not null %}
+                    {% if b2b_log_id is not null %}
                     <div style="width: 90%; padding: 20px;border: 1px solid #99bb99;background-color: #aae1aa; border-radius: 10px;margin-bottom: 20px">
                         <a target="_blank" href="{{ path("Retailer_Shop_imtu_print",{"id":b2b_log_id,"print":"web"}) }}" class="btn btn-success" style="margin-left: 100px">{{ 'Print'|trans({},'item') }}</a>
                     </div>
