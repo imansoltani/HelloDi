@@ -73,9 +73,6 @@ class tempController extends Controller
         $provider->setAccCurrency("CHF");
         $em->flush();
 
-        if(!is_dir("uploads/logos"))
-            mkdir("uploads/logos",0777,true);
-
         foreach($array as $key=>$row)
         {
             if($row["Fixed/ Floating"] == "Fixed") $this->insertItem($provider,$key,$row,$em);

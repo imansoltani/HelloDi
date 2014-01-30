@@ -8,6 +8,7 @@
 test/*
 web/uploads/documents/*
 web/uploads/logos/*
+!web/uploads/logos/0.png
 
 # phpstorm
 .idea/workspace.xml
