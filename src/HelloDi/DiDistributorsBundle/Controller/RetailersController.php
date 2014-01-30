@@ -840,7 +840,7 @@ $datetype=0;
             );
     }
 
-    public function BuyImtuAction(Request $request)
+    private function BuyImtu(Request $request)
     {
         ini_set('max_execution_time', 80);
         $em = $this->getDoctrine()->getManager();
@@ -848,8 +848,9 @@ $datetype=0;
         $mobileNumber = $request->get('receiverMobileNumber');
         $senderMobileNumber = $request->get('senderMobileNumber');
         $senderEmail = $request->get('email');
+        $denomination = $request->get('denomination');
         $user = $this->getUser();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('denomination'));
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($denomination);
         $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         $accountRet = $user->getAccount();
         $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
@@ -981,12 +982,14 @@ $datetype=0;
 //                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
 //                    die($s);
 
-//                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
-                    return $this->redirect($this->generateUrl("Retailer_Shop_imtu_print",array('id' => $b2blog->getId())));
+                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('mobile_number_%mobilenumber%_charged',array('mobilenumber'=>$mobileNumber),'message'));
+
+                    if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
+                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
+
+                    return $b2blog->getId();
                 }
 
-                if($accountRet->getAccBalance()+$accountRet->getAccCreditLimit()<=15000)
-                    $this->forward('hello_di_di_notification:NewAction',array('id'=>$accountRet->getId(),'type'=>31,'value'=>'15000 ' .$accountRet->getAccCurrency()));
 
 //            die(print_r($CreateAccountResponse));
         }
@@ -1004,7 +1007,7 @@ $datetype=0;
                 $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error_b2b',array(),'message'));
         }
         $em->flush();
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        return null;
     }
 
     public function PrintImtuAction($id,$print)
@@ -1110,7 +1113,7 @@ $datetype=0;
         ));
     }
 
-    public function ImtuAction()
+    public function ImtuAction(Request $request)
     {
 //        $n = "1934567";
 //
@@ -1129,8 +1132,16 @@ $datetype=0;
 //        $resf = strcmp($n,$f);
 //
 //        die('|'.$resa.'|'.$resb.'|'.$resc.'|'.$resd.'|'.$rese.'|'.$resf.'|');
+        $B2B_log_id = null;
+        if($request->isMethod("post"))
+        {
+            $result = $this->BuyImtu($request);
+            if($result) $B2B_log_id = $result;
 
-        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig');
+        }
+        return $this->render('HelloDiDiDistributorsBundle:Retailers:ShopImtu.html.twig',array(
+                'b2b_log_id' => $B2B_log_id
+            ));
     }
 
     public function readNumberAction(Request $request)
