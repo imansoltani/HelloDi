@@ -234,7 +234,7 @@ body .ncoltable2 tr input[type="submit"]
     width:auto;
     height:auto;
     padding:11px 9px;
-    font-size:17.5px;
+    font-size:18px;
     -webkit-border-radius:6px;
     -moz-border-radius:6px;
     border-radius:6px
@@ -245,7 +245,7 @@ body .ncoltable2 tr input[type="submit"]:focus , body .ncoltable2 tr input[type=
 {
     color:#fff;
     background-color:#04c;
-    *background-color:#003bb3
+    background-color:#003bb3;
     text-decoration:none;
     background-position:0 -15px;
     -webkit-transition:background-position .1s linear;
@@ -258,10 +258,10 @@ body .ncoltable2 tr input[type="submit"]:focus , body .ncoltable2 tr input[type=
 body .ncoltable2 tr input[type="submit"]:active{
     outline:thin dotted #333;
     outline:5px auto -webkit-focus-ring-color;
-    outline-offset:-2px
-    background-color:#039 \9
-		box-shadow:none;
-box-shadow:0px 2px 7px #192296 inset;
+    outline-offset:-2px;
+    background-color:#039;
+    box-shadow:none;
+    box-shadow:0px 2px 7px #192296 inset;
     }
 
 body .ncoltable3{
@@ -400,7 +400,7 @@ body .ncoltable3{
     width:auto;
     height:auto;
     padding:11px 9px;
-    font-size:17.5px;
+    font-size:18px;
     -webkit-border-radius:6px;
     -moz-border-radius:6px;
     border-radius:6px
@@ -411,7 +411,7 @@ body .ncoltable3{
 {
     color:#fff;
     background-color:#04c;
-    *background-color:#003bb3
+    background-color:#003bb3;
     text-decoration:none;
     background-position:0 -15px;
     -webkit-transition:background-position .1s linear;
@@ -424,11 +424,11 @@ body .ncoltable3{
 .content > table.ncoltable1:nth-child(11) td input[type="button"]:active{
     outline:thin dotted #333;
     outline:5px auto -webkit-focus-ring-color;
-    outline-offset:-2px
-    background-color:#039 \9
-		box-shadow:none;
-box-shadow:0px 2px 7px #192296 inset;
-    }
+    outline-offset:-2px;
+    background-color:#039;
+    box-shadow:none;
+    box-shadow:0px 2px 7px #192296 inset;
+}
 
 
 .content >  table.ncoltable3
@@ -491,7 +491,7 @@ box-shadow:0px 2px 7px #192296 inset;
 
     color:#333;
     background-color:#e6e6e6;
-    *background-color:#d9d9d9
+    background-color:#d9d9d9;
     text-decoration:none;
     background-position:0 -15px;
     -webkit-transition:background-position .1s linear;
@@ -501,8 +501,8 @@ box-shadow:0px 2px 7px #192296 inset;
 }
 
 .content > table.ncoltable3 input[type="button"]:active{
-    background-color:#ccc \9
-		outline:0;
+    background-color:#ccc;
+    outline:0;
     -webkit-box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
     -moz-box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
     box-shadow:inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05)
@@ -555,7 +555,6 @@ box-shadow:0px 2px 7px #192296 inset;
 
 
     body .ncoltable2 tr:nth-child(9) td:first-child {
-        margin-left:0;
         margin-left:10px;
         min-width: 80%;
     }
@@ -638,7 +637,7 @@ box-shadow:0px 2px 7px #192296 inset;
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" id="brand" href="">
-                Hello <span>Di</span>
+                <img src="{{ asset('bundles/hellodi/img/logo-mini.png') }}" width="30px"/> Hello <span>Di</span>
             </a>
         </div>
     </div>
@@ -665,4 +664,4 @@ box-shadow:0px 2px 7px #192296 inset;
 
 
 </body>
-</head>
+</html>
