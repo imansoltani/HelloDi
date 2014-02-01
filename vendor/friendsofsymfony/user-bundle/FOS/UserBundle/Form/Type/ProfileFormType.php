@@ -33,8 +33,7 @@ class ProfileFormType extends AbstractType
     {
         if (class_exists('Symfony\Component\Security\Core\Validator\Constraints\UserPassword')) {
             $constraint = new UserPassword();
-        }
-        else {
+        } else {
             // Symfony 2.1 support with the old constraint class
             $constraint = new OldUserPassword();
         }

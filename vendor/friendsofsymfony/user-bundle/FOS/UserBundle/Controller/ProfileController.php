@@ -13,7 +13,6 @@ namespace FOS\UserBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 
@@ -48,12 +47,10 @@ class ProfileController extends ContainerAware
         }
 
         $form = $this->container->get('fos_user.profile.form');
-
         $formHandler = $this->container->get('fos_user.profile.form.handler');
 
         $process = $formHandler->process($user);
         if ($process) {
-
             $this->container->get('session')->set('_locale',$user->getLanguage());
             $this->container->get('request')->setLocale($user->getLanguage());
 

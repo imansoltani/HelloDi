@@ -27,6 +27,9 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         CalcVatFormula: "@CalcVatFormula"
+    form:
+        resources:
+            - '::form_div_layout.html.twig'
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%

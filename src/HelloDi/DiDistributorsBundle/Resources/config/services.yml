@@ -7,12 +7,6 @@ parameters:
 #        arguments: [@service_id, "plain_value", %parameter%]
 
 services:
-    hello_di_di_distributors.registration.form.type:
-        class: HelloDi\DiDistributorsBundle\Form\User\UserRegistrationType
-        arguments: [%fos_user.model.user.class%]
-        tags:
-            - { name: form.type, alias: UserRegistration }
-
     hello_di_di_distributors.profile.form.type:
         class: HelloDi\DiDistributorsBundle\Form\User\UserProfileType
         arguments: [%fos_user.model.user.class%]

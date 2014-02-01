@@ -3,7 +3,6 @@
 namespace HelloDi\DiDistributorsBundle\Form\User;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Form\Userprivilege\UserprivilegeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
@@ -12,7 +11,6 @@ use HelloDi\DiDistributorsBundle\Entity\Entiti;
 class NewUserDistributorsRetailerInEntityType extends BaseType
 {
     protected $Entity;
-    private $class;
     public function __construct ($class,Entiti $entity,$type)
     {
         parent::__construct($class,$type);

@@ -92,7 +92,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
-            'intention' => 'registration',
+            'intention'  => 'registration',
         ));
     }
 

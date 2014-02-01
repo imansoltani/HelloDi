@@ -47,7 +47,15 @@
 <div class="t7 l1" ></div>
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <a class="login" href="{{ path('loginsuccess') }}" >dashboard</a>
+    {% if is_granted("ROLE_MASTER") %}
+        <a class="login" href="{{ path('loginsuccess') }}">Dashboard</a>
+    {% endif %}
+    {% if is_granted("ROLE_DISTRIBUTOR") %}
+        <a class="login" href="{{ path('distributors_dashboard') }}">Dashboard</a>
+    {% endif %}
+    {% if is_granted("ROLE_RETAILER") %}
+        <a class="login" href="{{ path('retailers_dashboard') }}">Dashboard</a>
+    {% endif %}
 {% else %}
     <a class="login" href="{{ path('fos_user_security_login') }}" >{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 {% endif %}

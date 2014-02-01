@@ -3,16 +3,11 @@
 namespace HelloDi\DiDistributorsBundle\Form\Distributors;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistChildType;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountDistRetailerType;
-use HelloDi\DiDistributorsBundle\Form\User\UserRegistrationType;
-use HelloDi\DiDistributorsBundle\Form\Userprivilege\UserprivilegeType;
+use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\Form\FormTypeInterface;
 
 class NewRetailersType extends AbstractType
 {
@@ -40,7 +35,7 @@ class NewRetailersType extends AbstractType
                       )
 
 
-                      ->add('users','collection',array('type' => new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDi\DiDistributorsBundle\Entity\User',2),'label' => 'Entiti.Users','translation_domain' => 'entity'))
+                      ->add('users','collection',array('type' => new NewUserType('HelloDi\DiDistributorsBundle\Entity\User',2),'label' => 'Entiti.Users','translation_domain' => 'entity'))
                       ->add('accounts','collection',array('type' => new AccountDistRetailerType() ,'label' => 'Entiti.Accounts','translation_domain' => 'entity'))
 
                   ;
