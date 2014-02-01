@@ -60,54 +60,6 @@
 <div class="popupshow">
 </div>
 
-
-
-
-
-<script type="text/javascript">
-    $(function () {
-
-        {% if app.session.flashbag.peekAll()|length > 0 %}
-
-            {% if app.session.flashbag.peek('error')|length > 0 %}
-
-                var x = '{% for flashMessage in app.session.flashbag.get('error') %}{{ flashMessage }}<br>{% endfor %}' ;
-
-                messagetop("",x,"error");
-
-
-
-                {% else %}
-                    {% if app.session.flashbag.peek('success')|length > 0 %}
-
-                        var x = '{% for flashMessage in app.session.flashbag.get('success') %}{{ flashMessage }}<br>{% endfor %}' ;
-
-                        messagetop("",x,"success");
-
-                    {% else %}
-                        {% if app.session.flashbag.peek('warning')|length > 0 %}
-
-                            var x = '{% for flashMessage in app.session.flashbag.get('warning') %}{{ flashMessage }}<br>{% endfor %}' ;
-
-                            messagetop("",x,"alert");
-
-                        {% endif %}
-                    {% endif %}
-
-            {% endif %}
-
-        {% endif %}
-
-
-
-
-    });
-</script>
-
-
-
-
-
 <!-- Nav Bar -->
 <div class="navbar navbar-inverse navbar-fixed-top" >
 
@@ -275,6 +227,29 @@
 <!-- Body
         ================================================== -->
 
+<div style="font-weight: bold; line-height: 200%; font-size: 16px">
+    {% if app.session.flashbag.peek('error')|length > 0 %}
+        <div style="background-color:#ffc7c4; color:#ef130a"><div class="container">
+            {% for message in app.session.flashbag.get('error') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+    {% if app.session.flashbag.peek('success')|length > 0 %}
+        <div style="background-color:#b4ecb0; color:#07c425"><div class="container">
+            {% for message in app.session.flashbag.get('success') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+    {% if app.session.flashbag.peek('warning')|length > 0 %}
+        <div style="background-color:#ffe4b5; color:#f39400"><div class="container">
+            {% for message in app.session.flashbag.get('warning') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+</div>
 
 <div class="main print">
     <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%">
