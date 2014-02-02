@@ -49,7 +49,7 @@
             <ul class="nav login">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <li class="dropdown">
-                        <a style="padding:4px; font-size: 16px;border-radius: 5px" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+                        <a style="padding:4px; font-size: 15px;border-radius: 10px;border: thin solid rgb(204, 204, 204)" href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
 							<span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                                 <b class="caret"></b></span>
                         </a>
@@ -69,7 +69,7 @@
                     </li>
                 {% else %}
                     <li class="dropdown">
-                        <a style="padding:4px; font-size: 16px;border-radius: 5px" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                        <a style="padding:4px; font-size: 15px;border-radius: 10px;border: thin solid rgb(204, 204, 204)" href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
                             <span id="user_title_menu" style="display: block" >
                                {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                              </span>
