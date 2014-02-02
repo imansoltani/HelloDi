@@ -561,14 +561,12 @@ catch(\Exception $e)
     public function DistStaffAction()
     {
         $em=$this->getDoctrine()->getManager();
-        $user= $this->getUser();
-         $Account=$user->getAccount();
+         $Account=$this->getUser()->getAccount();
 
         $users =$em->createQueryBuilder()
             ->select('USR')
             ->from('HelloDiDiDistributorsBundle:User','USR')
-            ->where('USR.Account = :Acc')->setParameter('Acc',$Account)
-            ->andWhere('USR != :US ')->setParameter('US',$user);
+            ->where('USR.Account = :Acc')->setParameter('Acc',$Account);
 
         $users=$users->getQuery()->getResult();
 

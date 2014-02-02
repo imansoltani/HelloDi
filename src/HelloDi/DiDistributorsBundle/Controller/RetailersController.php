@@ -135,14 +135,13 @@ class RetailersController extends Controller
     public function RetailerStaffAction()
     {
         $em=$this->getDoctrine()->getManager();
-        $user=$this->get('security.context')->getToken()->getUser();
+        $user=$this->getUser();
 
         $qb=$em->createQueryBuilder()
                   ->select('USR')
                   ->from('HelloDiDiDistributorsBundle:User','USR')
                   ->Where('USR.Account = :Acc')->setParameter('Acc',$user->getAccount())
-                  ->andWhere('USR.Entiti = :Ent')->setParameter('Ent',$user->getEntiti())
-                 ->andwhere('USR != :u')->setParameter('u',$user);
+                  ->andWhere('USR.Entiti = :Ent')->setParameter('Ent',$user->getEntiti());
         $qb=$qb->getQuery();
 
         return $this->render('HelloDiDiDistributorsBundle:Retailers:Staff.html.twig',
