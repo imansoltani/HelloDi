@@ -6,7 +6,6 @@
     <meta charset="utf-8">
 
     <title>
-        Hello Di .
         {% block title %}
 
         {% endblock %}
@@ -229,14 +228,14 @@
         </div></div>
     {% endif %}
     {% if app.session.flashbag.peek('success')|length > 0 %}
-        <div style="background-color:#b4ecb0; color:#07c425"><div class="container">
+        <div style="background-color:#b4ecb0; color:#05a31f"><div class="container">
             {% for message in app.session.flashbag.get('success') %}
                 <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
             {% endfor %}
         </div></div>
     {% endif %}
     {% if app.session.flashbag.peek('warning')|length > 0 %}
-        <div style="background-color:#ffe4b5; color:#f39400"><div class="container">
+        <div style="background-color:#ffe4b5; color:#dd8600"><div class="container">
             {% for message in app.session.flashbag.get('warning') %}
                 <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
             {% endfor %}

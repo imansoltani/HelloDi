@@ -6,9 +6,14 @@ fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /app
 
-fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /app/user/profile
+fos_user_profile_show:
+    path: /app/user/profile
+    defaults: { _controller: FOSUserBundle:Profile:edit}
+    requirements: { _method: GET }
+
+fos_user_profile_edit:
+    path: /app/user/profile/edit
+    defaults: { _controller: FOSUserBundle:Profile:edit}
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
