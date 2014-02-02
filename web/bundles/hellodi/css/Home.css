@@ -153,10 +153,8 @@ h1 , h2 , h3 , h4 , h5
 
 
 
-a.login{
+ul.login{
     padding: 4px 8px;
-    border:solid thin #ccc;
-    border-radius: 10px;
     margin: 5px;
     font-family: Arial;
     font-weight: bold;
@@ -164,16 +162,8 @@ a.login{
     right: 3px;
     top: 3px;
     position: fixed;
-    opacity: 0.4;
     z-index: 10000;
-    transition : opacity 0.3s ;
-    -webkit-transition : opacity 0.3s ;
     cursor: pointer;
-}
-
-a.login:hover
-{
-    opacity: 1;
 }
 
 /*End Menu*/
