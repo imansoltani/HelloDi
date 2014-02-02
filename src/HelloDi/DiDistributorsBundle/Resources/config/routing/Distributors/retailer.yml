@@ -11,10 +11,6 @@ Retailer_Transaction:
     pattern:  /{id}/transactions
     defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
 
-Retailer_DetailsTransaction:
-    pattern:  /{id}/transactions/{tranid}/details
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DetailsRetailerTransaction }
-
 DistRetailerFunding:
     pattern:  /{id}/transactions/transfer
     defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:Funding"}
