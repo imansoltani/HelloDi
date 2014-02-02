@@ -52,6 +52,13 @@
                     <form class="form-horizontal">
 
                         <div class="control-group" >
+                            <label class="control-label">{{ 'AccountName' | trans ({}, "accounts") }}</label>
+                            <div class="controls">
+                                <input class="input-large" disabled="" type="text" value="{{ Account.accName }}" />
+                            </div>
+                        </div>
+
+                        <div class="control-group" >
                             <label class="control-label">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
                             <div class="controls">
                                 <input class="input-large" disabled="" type="text" value="{{ Account.accCreditLimit }}" />

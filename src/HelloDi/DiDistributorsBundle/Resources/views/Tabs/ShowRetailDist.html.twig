@@ -9,21 +9,7 @@
 
 {% block PageTitle %}
     <i class="icon-briefcase"></i>
-    {{ 'Retailers' | trans ({}, "accounts") }}
-{% endblock %}
-
-{% block Dist1 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ retailerAccount.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ retailerAccount.accBalance }} {{ retailerAccount.accCurrency }}</span><br>
-    </div>
-{% endblock %}
-
-{% block Dist2 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ retailerAccount.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ retailerAccount.accBalance }} {{ retailerAccount.accCurrency }}</span><br>
-    </div>
+    {{ retailerAccount.accName }}
 {% endblock %}
 
 {% set hornav = '40px' %}

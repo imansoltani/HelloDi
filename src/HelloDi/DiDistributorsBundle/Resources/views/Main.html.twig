@@ -74,6 +74,11 @@
 
             <ul class="nav pull-right">
 
+                {% if app.user.Account is not null %}
+                <li class="dropdown" style="text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);padding: 5px 10px;font-size: 16px;color: #0e5c92;">
+                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</b>
+                </li>
+                {% endif %}
 
                 {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
                     {% if render(controller('HelloDiDiDistributorsBundle:Retailers:CountNotification'))> 0 %}
@@ -272,16 +277,25 @@
                         {% block Tabs %}{% endblock %}
                     </ul>
                 </div>
+            </div>
 
                 {% if hornav2 is defined %}
+
+            <div class="container">
+                <div class="pagetitle">
+                    {% block PageTitle2 %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="tabbar">
+
                         <div class="container Tab2">
                             <ul class="hornav Tab2">
                                 {% block Tabs2 %}{% endblock %}
                             </ul>
                         </div>
-                {% endif %}
-
             </div>
+                {% endif %}
         {% endif %}
 
 

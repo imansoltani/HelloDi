@@ -9,21 +9,7 @@
 
 {% block PageTitle %}
     <i class="icon-th-large"></i>
-    {{ Account.Entiti.entName }}
-{% endblock %}
-
-{% block Dist1 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ Account.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ Account.accBalance }} {{ Account.accCurrency }}</span><br>
-    </div>
-{% endblock %}
-
-{% block Dist2 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }} :</i><span>{{ Account.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ Account.accBalance }} {{ Account.accCurrency }}</span><br>
-    </div>
+    {{ Account.accName }}
 {% endblock %}
 
 {% set hornav = '38px' %}

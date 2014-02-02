@@ -4,21 +4,6 @@
 
 {% endblock %}
 
-
-{% block Dist1 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }}  :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-    </div>
-{% endblock %}
-
-{% block Dist2 %}
-    <div class="pagedisc">
-        <i>{{ 'AccountName' | trans ({}, "accounts") }}  :</i><span>{{ app.user.Account.accName }}</span><br>
-        <i>{{ 'Balance' | trans ({}, "accounts") }} :</i><span>{{ app.user.Account.accBalance }} {{ app.user.Account.accCurrency }}</span><br>
-    </div>
-{% endblock %}
-
 {% block Main_Menu %}
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
         <a href="{{ path('retailers_dashboard') }}">
