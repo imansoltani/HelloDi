@@ -191,7 +191,8 @@ class DistributorsController extends Controller
             $qb->select('Tr')
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
-                ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt');
+                ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt')
+                ->leftJoin('Tr.B2BLog','Trb2b')->leftJoin('Trb2b.Item','Trb2bIt');
                 /**/
             if($data['Account'])
                 $qb->where('Tr.Account=:ac')->setParameter('ac',$data['Account']);
@@ -207,10 +208,10 @@ class DistributorsController extends Controller
 
 
             if($data['ItemType']!='All')
-               $qb->andwhere($qb->expr()->like('TrCoIt.itemType ', $qb->expr()->literal($data['ItemType'])));
+               $qb->andwhere('TrCoIt.itemType LIKE :type or Trb2bIt.itemType LIKE :type')->setParameter("type",$data['ItemType']);
 
             if($data['ItemName'])
-                $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
+                $qb->andWhere('TrCoIt = :item or Trb2bIt = :item')->setParameter('item',$data['ItemName']);
 
             $qb->orderBy('Tr.tranInsert','desc');
 

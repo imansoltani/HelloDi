@@ -401,8 +401,8 @@ $datetype=0;
             $qb->select(array('Tr'))
                 ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
                 /*for groupBy*/
-                ->innerJoin('Tr.Code','TrCo')
-                ->innerJoin('TrCo.Item','TrCoIt')
+                ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt')
+                ->leftJoin('Tr.B2BLog','Trb2b')->leftJoin('Trb2b.Item','Trb2bIt')
                 /**/
                 ->Where('Tr.Account = :Acc')->setParameter('Acc',$User->getAccount())
                 ->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
@@ -419,11 +419,11 @@ $datetype=0;
                 $qb->andWhere('Tr.User = :usr')->setParameter('usr',$User);
 //
             if($data['ItemType']!='All')
-                $qb->andwhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
+                $qb->andwhere('TrCoIt.itemType LIKE :type or Trb2bIt.itemType LIKE :type')->setParameter("type",$data['ItemType']);
 
 
             if($data['ItemName'])
-                 $qb->andWhere('TrCoIt = :item')->setParameter('item',$data['ItemName']);
+                $qb->andWhere('TrCoIt = :item or Trb2bIt = :item')->setParameter('item',$data['ItemName']);
 
             $qb->orderBy('Tr.tranInsert','desc');
 
@@ -801,7 +801,7 @@ $datetype=0;
     {
         $em = $this->getDoctrine()->getManager();
 
-        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale'),array('id'=>'desc'));
+        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale','B2BLog'=>null),array('id'=>'desc'));
         if($lasttran)
         {
             $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));

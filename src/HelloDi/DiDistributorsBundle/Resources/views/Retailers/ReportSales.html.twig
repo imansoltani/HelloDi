@@ -117,10 +117,28 @@
                                         <tr>
 
                                             <td>{{ Tr.tranInsert|date('Y/m/d H:i:s') }}</td>
-                                            <td>{{ Tr.Code.Item.itemName}}</td>
-                                            <td>{{ Tr.Code.Item.itemFaceValue}}</td>
+                                            <td>
+                                                {% if Tr.Code is not null %}
+                                                    {{ Tr.Code.Item.itemName}}
+                                                {% else %}
+                                                    {{ Tr.B2BLog.Item.itemName}}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if Tr.Code is not null %}
+                                                    {{ Tr.Code.Item.itemFaceValue}}
+                                                {% else %}
+                                                    {{ Tr.B2BLog.Item.itemFaceValue}}
+                                                {% endif %}
+                                            </td>
                                             <td>{{ Tr.tranAmount|abs }}</td>
-                                            <td>{{ Tr.Code.serialNumber }}</td>
+                                            <td>
+                                                {% if Tr.Code is not null %}
+                                                    {{ Tr.Code.serialNumber }}
+                                                {% else %}
+                                                    --
+                                                {% endif %}
+                                            </td>
                                             <td>{{ Tr.User.username }}</td>
                                             <td>
                                                 <span id='vat'>{{ CalcVatFormula.Calc(Tr.tranAmount|abs,Tr.TaxHistory.vat) }}</span>

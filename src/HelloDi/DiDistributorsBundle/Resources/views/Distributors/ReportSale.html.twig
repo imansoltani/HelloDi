@@ -123,8 +123,11 @@
                                         <td>{{ Tr.id}}</td>
                                         <td>{{ Tr.tranInsert|date('Y/m/d H:i:s') }}</td>
                                         <td>
-                                            {{ Tr.Code.Item.itemName}}
-
+                                            {% if Tr.Code is not null %}
+                                                {{ Tr.Code.Item.itemName}}
+                                            {% else %}
+                                                {{ Tr.B2BLog.Item.itemName}}
+                                            {% endif %}
                                         </td>
 
                                         <td>
