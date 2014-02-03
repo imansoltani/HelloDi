@@ -102,7 +102,7 @@ class Item
         $this->ItemDescs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
         $this->B2BLogs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->$Denominations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Denominations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

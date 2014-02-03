@@ -134,6 +134,38 @@
                             }
                         }
                     ],
+                    {% if item.ItemType == "imtu" %}
+                    [
+                        {
+                            css: "recievernumberButton Button",
+                            text: "Add Receiver Number tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;recievernumber&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "valuesentButton Button",
+                            text: "Add ValueSent tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;valuesent&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "valuepaidButton Button",
+                            text: "Add ValuePaid tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;valuepaid&#125;&#125;');
+                            }
+                        },
+                        {
+                            css: "tranidButton Button",
+                            text: "Add Transaction Id tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;tranid&#125;&#125;');
+                            }
+                        }
+                    ],
+                    {% else %}
                     [
                         {
                             css: "PinButton Button",
@@ -155,15 +187,6 @@
                             action: function() {
                                 this.pasteHTML('&#123;&#123;expire&#125;&#125;');
                             }
-                        }
-                    ],
-                    [
-                        {
-                            css: "printDateButton Button",
-                            text: "Add print Date tag",
-                            action: function() {
-                                this.pasteHTML('&#123;&#123;printdate&#125;&#125;');
-                            }
                         },
                         {
                             css: "duplicateButton Button",
@@ -173,7 +196,15 @@
                             }
                         }
                     ],
+                    {% endif %}
                     [
+                        {
+                            css: "printDateButton Button",
+                            text: "Add print Date tag",
+                            action: function() {
+                                this.pasteHTML('&#123;&#123;printdate&#125;&#125;');
+                            }
+                        },
                         {
                             css: "entityNameButton Button",
                             text: "Add Entity Name tag",
@@ -226,12 +257,17 @@
             $('.jHtmlArea .SpanBorderButton').html('V Border');
             $('.jHtmlArea .RemoveStyleButton').html('Remove Border');
 
+            $('.jHtmlArea .recievernumberButton').html('Receiver Number');
+            $('.jHtmlArea .valuesentButton').html('Value Sent');
+            $('.jHtmlArea .valuepaidButton').html('Value Paid');
+            $('.jHtmlArea .tranidButton').html('Transaction ID');
+
             $('.jHtmlArea .PinButton').html('Pin');
             $('.jHtmlArea .ExpireButton').html('Expire');
             $('.jHtmlArea .SerialButton').html('Serial');
+            $('.jHtmlArea .duplicateButton').html('Duplicate');
 
             $('.jHtmlArea .printDateButton').html('Print Date');
-            $('.jHtmlArea .duplicateButton').html('Duplicate');
             $('.jHtmlArea .entityNameButton').html('Entity Name');
             $('.jHtmlArea .operatorButton').html('Operator');
             $('.jHtmlArea .entityadrs1Button').html('Address Line 1');

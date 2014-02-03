@@ -296,7 +296,7 @@ class Price
      * @param \HelloDi\DiDistributorsBundle\Entity\Tax $tax
      * @return Price
      */
-    public function setTax(\HelloDi\DiDistributorsBundle\Entity\Tax $tax)
+    public function setTax(\HelloDi\DiDistributorsBundle\Entity\Tax $tax = null)
     {
         $this->Tax = $tax;
     

@@ -45,8 +45,14 @@ class ItemController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if(!$this->checkDescription($itemdesc->getDescdesc(),$item->getItemType()))
-                $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+            $check = $this->checkDescription($itemdesc->getDescdesc(),$item->getItemType());
+            if($check !== true)
+            {
+                if($check == "invalid")
+                    $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+                else
+                    $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
+            }
 
             if ($form->isValid()) {
                 $item->setItemDateInsert(new \DateTime('now'));
@@ -272,9 +278,14 @@ class ItemController extends Controller
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
-            if(!$this->checkDescription($desc->getDescdesc(),$item->getItemType()))
-                $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
-
+            $check = $this->checkDescription($desc->getDescdesc(),$item->getItemType());
+            if($check !== true)
+            {
+                if($check == "invalid")
+                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+                else
+                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
+            }
             if ($form->isValid()) {
                 $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
                 if($finddesc)
@@ -315,9 +326,14 @@ class ItemController extends Controller
         {
             $form->handleRequest($request);
             $desc->setDesclang($desclang);
-            if(!$this->checkDescription($desc->getDescdesc(),$desc->getItem()->getItemType()))
-                $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
-
+            $check = $this->checkDescription($desc->getDescdesc(),$desc->getItem()->getItemType());
+            if($check !== true)
+            {
+                if($check == "invalid")
+                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
+                else
+                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
+            }
             if ($form->isValid()) {
                 $em->persist($desc);
                 $em->flush();
@@ -337,6 +353,26 @@ class ItemController extends Controller
 
     private function checkDescription($desc,$itemType)
     {
+        $tags = $itemType == "imtu" ?
+            array(
+                "tranid"=>'tranid_not_exist',
+                "recievernumber"=>'recievernumber_not_exist',
+                "printdate"=>'printdate_not_exist'
+            ) :
+            array(
+                "pin"=>'pin_not_exist',
+                "serial"=>'sn_not_exist',
+                "expire"=>'expiry_not_exist',
+                "duplicate"=>'duplicate_not_exist',
+                "printdate"=>'printdate_not_exist'
+            );
+
+        foreach ($tags as $tag=>$message)
+        {
+            $find = strpos($desc,"{{".$tag."}}");
+            if(!$find) return $message;
+        }
+
         $twig = new \Twig_Environment(new \Twig_Loader_String());
         try{
             if($itemType == "imtu")
@@ -351,7 +387,7 @@ class ItemController extends Controller
                     "recievernumber"=>'+12345678',
                     "valuesent"=>'1 CHF',
                     "valuepaid"=>'2 USD',
-                    ));
+                ));
             else
                 $twig->render($desc,array(
                     "pin"=>1234,
@@ -365,10 +401,10 @@ class ItemController extends Controller
                     "entityadrs2"=>'Address Line 2',
                     "entityadrs3"=>'Address Line 3'
                 ));
-            return true;
         }catch (\Exception $e){
-            return false;
+            return "invalid";
         }
+        return true;
     }
 
     public function PrintAction($print,$descid,$id)

@@ -65,30 +65,30 @@ HelloDi\DiDistributorsBundle\Entity\Transaction:
                 message: 'Only_numbers_are_accepted'
 
 #mostafa
-HelloDi\DiDistributorsBundle\Entity\ItemDesc:
-    properties:
-        descdesc:
-            - NotBlank: ~
-            - Regex:
-                pattern: "/{{pin}}/"
-                match:   true
-                message: 'pin_not_exist'
-            - Regex:
-                pattern: "/{{serial}}/"
-                match:   true
-                message: 'sn_not_exist'
-            - Regex:
-                pattern: "/{{expire}}/"
-                match:   true
-                message: 'expiry_not_exist'
-            - Regex:
-                pattern: "/{{printdate}}/"
-                match:   true
-                message: 'printdate_not_exist'
-            - Regex:
-                pattern: "/{{duplicate}}/"
-                match:   true
-                message: 'duplicate_not_exist'
+#HelloDi\DiDistributorsBundle\Entity\ItemDesc:
+#    properties:
+#        descdesc:
+#            - NotBlank: ~
+#            - Regex:
+#                pattern: "/{{pin}}/"
+#                match:   true
+#                message: 'pin_not_exist'
+#            - Regex:
+#                pattern: "/{{serial}}/"
+#                match:   true
+#                message: 'sn_not_exist'
+#            - Regex:
+#                pattern: "/{{expire}}/"
+#                match:   true
+#                message: 'expiry_not_exist'
+#            - Regex:
+#                pattern: "/{{printdate}}/"
+#                match:   true
+#                message: 'printdate_not_exist'
+#            - Regex:
+#                pattern: "/{{duplicate}}/"
+#                match:   true
+#                message: 'duplicate_not_exist'
 
 HelloDi\DiDistributorsBundle\Entity\Item:
     constraints:

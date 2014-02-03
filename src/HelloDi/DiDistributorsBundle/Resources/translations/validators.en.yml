@@ -15,3 +15,5 @@ This_operator_name_exist_already: This operator name exist already
 expiry_not_exist: Expiry Date not exist in description.
 printdate_not_exist: Print Date not exist in description.
 duplicate_not_exist: Duplicate not exist in description.
+tranid_not_exist: Transaction ID not exist in description.
+recievernumber_not_exist: Reciever Number not exist in description.

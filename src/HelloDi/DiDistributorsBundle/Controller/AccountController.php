@@ -1521,7 +1521,7 @@ catch(\Exception $e)
 
     public function AddItemDistAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
         $country = $account->getEntiti()->getCountry();
         if (!$account) {
@@ -1573,6 +1573,15 @@ catch(\Exception $e)
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+
+            $denomination = $em->getRepository("HelloDiDiDistributorsBundle:Denomination")->findOneBy(array(
+                    "Item" => $price->getItem(),
+                    "currency" => $price->getAccount()->getAccCurrency()
+                ));
+
+            if($price->getItem()->getItemCurrency() != $price->getAccount()->getAccCurrency() && $denomination == null)
+                $form->get('Item')->addError(new FormError("Add denomination to this item for your account currency."));
+
             if ($form->isValid()) {
                 $em->persist($price);
 

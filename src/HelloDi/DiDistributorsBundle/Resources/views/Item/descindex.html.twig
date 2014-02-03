@@ -44,13 +44,13 @@
                     {% for itemdesc in itemdescs %}
                         <tr>
 
-                            <td >{{ itemdesc.id }}</td>
+                            <td>{{ itemdesc.id }}</td>
                             <td class="td-actions" >
                                 <a class="btn_actions" href="{{ path('item_desc_edit',{'id':item.id,'descid':itemdesc.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
                                 <a class="btn_actions" href="{{ path('item_desc_print',{'id':item.id,'descid': itemdesc.id}) }}" target="_blank">Print Sample</a>
                             </td>
                             <td>{{ itemdesc.desclang }}</td>
-                            <td class="td-actions" >
+                            <td>
                                 {{ include(template_from_string(itemdesc.descdesc),{
                                     "pin":12345678,
                                     "serial":87654321,
@@ -59,6 +59,10 @@
                                     "duplicate":"duplicate",
                                     "entityname":'Entity Name',
                                     "operator":'Operator Name',
+                                    "tranid":12345678,
+                                    "recievernumber": "+19876543210",
+                                    "valuesent": "2",
+                                    "valuepaid": "2",
                                     "entityadrs1":'Address Line 1',
                                     "entityadrs2":'Address Line 2',
                                     "entityadrs3":'Address Line 3'
