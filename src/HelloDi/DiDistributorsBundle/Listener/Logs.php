@@ -51,7 +51,7 @@ class Logs
         $log->setPath($this->request->getPathInfo());
         $log->setUser($user);
         $this->em->persist($log);
-        $this->em->flush();
+        $this->em->flush($log);
         }
 
     }

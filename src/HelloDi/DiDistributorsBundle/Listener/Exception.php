@@ -44,7 +44,7 @@ class Exception
         $exceptions->setDescription($description);
         $exceptions->setUsername($this->session->get('ExceptionUser')?$this->session->get('ExceptionUser'):'out of system');
         $this->em->persist($exceptions);
-        $this->em->flush();
+        $this->em->flush($exceptions);
 
     }
 

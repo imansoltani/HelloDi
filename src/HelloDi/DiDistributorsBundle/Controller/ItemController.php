@@ -3,11 +3,12 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\Denomination;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
 use HelloDi\DiDistributorsBundle\Entity\Operator;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\DiDistributorsBundle\Form\DenominationType;
 use HelloDi\DiDistributorsBundle\Form\ItemDescType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -407,6 +408,54 @@ class ItemController extends Controller
         return true;
     }
 
+    //denomination
+    public function denominationIndexAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
+        }
+
+        $denominations = $item->getDenominations();
+
+        $form = $this->createFormBuilder(array("Denominations"=>$denominations),array('cascade_validation' => true))
+            ->add("Denominations", 'collection', array('type'=> new DenominationType(),'allow_add'=>true,'allow_delete'=>false))
+            ->getForm();
+
+        if($request->isMethod('post'))
+        {
+            $form->handleRequest($request);
+
+            $currencies = array();
+            $data = $form->getData();
+            foreach($data["Denominations"] as $key=>$denomination)
+            {
+                if(in_array($denomination->getCurrency(),$currencies))
+                    $form->get("Denominations")[$key]->get("denomination")->addError(new FormError("Denomination for this currency already exist."));
+                else
+                    $currencies[] = $denomination->getCurrency();
+            }
+
+            if($form->isValid())
+            {
+                foreach($data["Denominations"] as $denomination)
+                {
+                    $denomination->setItem($item);
+                    $em->persist($denomination);
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Item:denominationindex.html.twig', array(
+                'item'      => $item,
+                'form'      =>$form->createView()
+            ));
+    }
+
+    //-------
     public function PrintAction($print,$descid,$id)
     {
         $em = $this->getDoctrine()->getManager();

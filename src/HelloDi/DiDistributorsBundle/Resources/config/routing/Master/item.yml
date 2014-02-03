@@ -35,6 +35,12 @@ item_desc_print:
     pattern:  /{id}/descriptions/{descid}/printsample/{print}
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:Print" , print: 'web' }
 
+#denomination
+item_denomination:
+    pattern:  /{id}/denominations
+    defaults: { _controller: "HelloDiDiDistributorsBundle:Item:denominationIndex" }
+
+####
 item_create_itemCode:
     pattern:  /CreateItemCode
     defaults: { _controller: "HelloDiDiDistributorsBundle:Item:CreateItemCode" }

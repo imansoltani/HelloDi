@@ -32,6 +32,14 @@
         </a>
     </li>
 
+    {% if item.itemType == 'imtu' %}
+    <li {% if tab == '4' %}class="active"{% endif %} >
+        <a href="{{ path('item_denomination',{'id':item.id}) }}"  >
+            <input type="submit" value="{{ 'denomination' | trans ({}, "price") }}" >
+        </a>
+    </li>
+    {% endif %}
+
 
 {% endblock Tabs %}
 
