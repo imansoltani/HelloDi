@@ -85,11 +85,11 @@
                                         <td>{{  price.item.itemName }}</td>
                                         <td>{{  price.item.itemFaceValue }} {{ price.item.ItemCurrency }}</td>
                                         <td>{{ price.item.itemType|upper }}</td>
-                                        <td>{{ price.Denomination }}</td>
+                                        <td>{{ price.item.DenominationByCurrency(Account.AccCurrency) }}</td>
                                         <td>{{  price.price }}</td>
                                         <td>
-                                            {% if price.Denomination %}
-                                                {{ '%.2f'|format((1 - price.price/price.Denomination)*100) }} %
+                                            {% if price.item.DenominationByCurrency(Account.AccCurrency) %}
+                                                {{ '%.2f'|format((1 - price.price/price.item.DenominationByCurrency(Account.AccCurrency))*100) }} %
                                             {% else %}
                                                 NaN
                                             {% endif %}

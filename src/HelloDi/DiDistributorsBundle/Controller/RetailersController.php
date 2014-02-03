@@ -842,33 +842,26 @@ $datetype=0;
     private function BuyImtu(Request $request)
     {
         ini_set('max_execution_time', 80);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $mobileNumber = $request->get('receiverMobileNumber');
         $senderMobileNumber = $request->get('senderMobileNumber');
         $senderEmail = $request->get('email');
-        $denomination = $request->get('denomination');
+        $denominationSelected = $request->get('denomination');
         $user = $this->getUser();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($denomination);
-        $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         $accountRet = $user->getAccount();
+        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($denominationSelected);
+        $denomination = $em->getRepository('HelloDiDiDistributorsBundle:Denomination')->findOneBy(array('Item'=>$item,'currency'=>$accountRet->getAccCurrency()))->getDenomination();
         $priceRet = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
         $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
-        $priceProv = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$provider));
         $clientTranId= $this->CreateTranId();
 
-//        $s  = "denomination = ".(is_null($request->get('denomination'))?"null":"not null")."<br/>";
-//        $s .= "priceDist = ".(is_null($priceDist)?"null":"not null")."<br/>";
-//        $s .= "item = ".(is_null($item)?"null":"not null")."<br/>";
-//        $s .= "accountRet = ".(is_null($accountRet)?"null":"not null")."<br/>";
-//        $s .= "accDist = ".(is_null($accountRet->getParent())?"null":"not null")."<br/>";
-//        die($s);
         $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
         $com = $priceRet->getprice() - $priceDist->getprice();
 
         $b2blog = new B2BLog();
         $b2blog->setUser($user);
-        $b2blog->setAmount($priceProv->getDenomination());
+        $b2blog->setAmount($denomination);
         $b2blog->setClientTransactionID($clientTranId);
         $b2blog->setDate(new \DateTime());
         $b2blog->setMobileNumber($mobileNumber);
@@ -898,7 +891,7 @@ $datetype=0;
                         'Parameters' => array(
                             'CarrierCode'=>$item->getOperator()->getName(),
                             'CountryCode'=>$item->getCountry()->getIso(),
-                            'Amount'=>$priceProv->getDenomination()*100,
+                            'Amount'=>$denomination*100,
                             'MobileNumber'=>$mobileNumber,
                             'StoreID'=>$this->container->getParameter('B2BServer.StoreID'),
                             'ChargeType'=>'transfer',
@@ -1024,13 +1017,12 @@ $datetype=0;
         if(!$description) $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$b2blog->getItem()));
         $description = $description->getDescdesc();
 
-        $b2bserver = $em->getRepository("HelloDiDiDistributorsBundle:Account")->findOneBy(array("accName"=>"B2Bserver"));
-        $denomination = $em->getRepository("HelloDiDiDistributorsBundle:Price")->findOneBy(array("Account"=>$b2bserver,"Item"=>$b2blog->getItem()));
+        $denomination = $em->getRepository('HelloDiDiDistributorsBundle:Denomination')->findOneBy(array('Item'=>$b2blog->getItem(),'currency'=>$this->getUser()->getAccount()->getAccCurrency()));
 
         $html = $this->render('HelloDiDiDistributorsBundle:Retailers:ImtuPrint.html.twig',array(
             'b2b'=>$b2blog,
             'description'=>$description,
-            'denomination' => $denomination->getDenomination()." ".$denomination->getPriceCurrency(),
+            'denomination' => $denomination->getDenomination()." ".$denomination->getCurrency(),
             'print' => $print
         ));
 
@@ -1231,12 +1223,14 @@ $datetype=0;
             ->innerJoin("price.Item","item")
             ->andWhere("item.operator = :operator")->setParameter("operator",$operator)
             ->andWhere('item.Country = :country')->setParameter('country',$country)
+            ->innerJoin("item.Denominations","denomination")
+            ->andWhere('denomination.currency = :currency')->setParameter('currency',$this->getUser()->getAccount()->getAccCurrency())
             ->getQuery()->getResult();
 
         $result = "";
         foreach($prices as $price)
             $result .= "<option value='".$price->getItem()->getId()."'>"
-                .$price->getDenomination()." ".$price->getAccount()->getAccCurrency()
+                .$price->getItem()->getDenominationByCurrency($price->getAccount()->getAccCurrency())." ".$price->getAccount()->getAccCurrency()
                 ." (".$price->getItem()->getItemFaceValue()." ".$price->getItem()->getItemCurrency().")"
                 ."</option>";
 

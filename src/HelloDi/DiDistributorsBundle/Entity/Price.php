@@ -21,11 +21,6 @@ class Price
     private $price;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="denomination", scale=2)
-     */
-    private $denomination;
-
-    /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
      */
     private $isFavourite;
@@ -316,28 +311,5 @@ class Price
     public function getTax()
     {
         return $this->Tax;
-    }
-
-    /**
-     * Set denomination
-     *
-     * @param float $denomination
-     * @return Price
-     */
-    public function setDenomination($denomination)
-    {
-        $this->denomination = $denomination;
-    
-        return $this;
-    }
-
-    /**
-     * Get denomination
-     *
-     * @return float
-     */
-    public function getDenomination()
-    {
-        return $this->denomination;
     }
 }

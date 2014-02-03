@@ -1351,7 +1351,6 @@ catch(\Exception $e){
                     'label' => 'Item','translation_domain' => 'item'
                 ))
             ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

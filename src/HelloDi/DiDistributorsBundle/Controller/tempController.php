@@ -3,6 +3,7 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\DiDistributorsBundle\Entity\Denomination;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
 use HelloDi\DiDistributorsBundle\Entity\Operator;
@@ -63,6 +64,7 @@ class tempController extends Controller
 
     public function itemAddAction()
     {
+        ini_set('max_execution_time', 80);
         $array = $this->csv_to_array("uploads/temp/provider.csv");
         if(!$array) die("<span style='color: red'>Unable to read file.</span>");
 
@@ -145,6 +147,25 @@ class tempController extends Controller
             echo("<span style='color: blue'>item '".$item_name."' already exist. item_id=".$item->getId()." updated.</span><br>");
         }
 
+        //----------------find or create item_denomination-----------------
+        $denomination = $em->getRepository('HelloDiDiDistributorsBundle:Denomination')->findOneBy(array('currency'=>'CHF','Item'=>$item));
+        if(!$denomination)
+        {
+            $denomination = new Denomination();
+            $denomination->setDenomination($row['DENOMINATION (CHF)']);
+            $denomination->setCurrency('CHF');
+            $denomination->setItem($item);
+            $em->persist($denomination);
+            $em->flush();
+            echo("<span style='color: green'>item denomination for '".$item_name."' created. denomination_id=".$denomination->getId()."</span><br>");
+        }
+        else
+        {
+            $denomination->setDenomination($row['DENOMINATION (CHF)']);
+            $em->flush();
+            echo("<span style='color: blue'>item denomination for '".$item_name."' already exist. denomination_id=".$denomination->getId()." updated.</span><br>");
+        }
+
         //----------------find or create item_descs-----------------
         foreach($this->item_descs_string as $lang=>$item_desc_string)
         {
@@ -175,7 +196,6 @@ class tempController extends Controller
             $price->setAccount($provider);
             $price->setPrice( $row['DENOMINATION (CHF)']- (intval($row['Discount'])/100*$row['DENOMINATION (CHF)']) );
             $price->setPriceCurrency($provider->getAccCurrency());
-            $price->setDenomination($row['DENOMINATION (CHF)']);
             $price->setPriceStatus(1);
             $price->setIsFavourite(0);
             $em->persist($price);
@@ -191,7 +211,6 @@ class tempController extends Controller
         else
         {
             $price->setPrice( $row['DENOMINATION (CHF)']- (intval($row['Discount'])/100*$row['DENOMINATION (CHF)']) );
-            $price->setDenomination($row['DENOMINATION (CHF)']);
 
             $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
             $priceHistory->setPrice($price->getPrice());
@@ -223,6 +242,14 @@ class tempController extends Controller
                 echo("<span style='color:red'>item '".$item_name."' not found. price can't create.</span><br>");
                 continue;
             }
+
+            $denomination = $em->getRepository('HelloDiDiDistributorsBundle:Denomination')->findOneBy(array('currency'=>'CHF','Item'=>$item));
+            if(!$denomination)
+            {
+                echo("<span style='color:red'>item denomination for '".$item_name."' for CHF not found. price can't create.</span><br>");
+                continue;
+            }
+
             $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$dist));
             if(!$price)
             {
@@ -231,7 +258,6 @@ class tempController extends Controller
                 $price->setAccount($dist);
                 $price->setPrice( $row['Net Price'] );
                 $price->setPriceCurrency($dist->getAccCurrency());
-                $price->setDenomination($row['DENOMINATION (CHF)']);
                 $price->setPriceStatus(1);
                 $price->setIsFavourite(0);
                 $price->setTax($tax);
@@ -248,7 +274,6 @@ class tempController extends Controller
             else
             {
                 $price->setPrice( $row['Net Price'] );
-                $price->setDenomination($row['DENOMINATION (CHF)']);
                 $price->setTax($tax);
 
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));
@@ -266,7 +291,7 @@ class tempController extends Controller
         $array = $this->csv_to_array("uploads/temp/retailer.csv");
         if(!$array) die("<span style='color: red'>Unable to read file.</span>");
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
 
@@ -284,6 +309,21 @@ class tempController extends Controller
                 echo("<span style='color:red'>item '".$item_name."' not found. price can't create.</span><br>");
                 continue;
             }
+
+            $price_dist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
+            if(!$price_dist)
+            {
+                echo("<span style='color:red'>item '".$item_name."' for distributor not found. price can't create.</span><br>");
+                continue;
+            }
+
+            $denomination = $em->getRepository('HelloDiDiDistributorsBundle:Denomination')->findOneBy(array('currency'=>'CHF','Item'=>$item));
+            if(!$denomination)
+            {
+                echo("<span style='color:red'>item denomination for '".$item_name."' for CHF not found. price can't create.</span><br>");
+                continue;
+            }
+
             $price = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet));
             if(!$price)
             {
@@ -292,7 +332,6 @@ class tempController extends Controller
                 $price->setAccount($accountRet);
                 $price->setPrice( $row['Net Price'] );
                 $price->setPriceCurrency($accountRet->getAccCurrency());
-                $price->setDenomination($row['DENOMINATION (CHF)']);
                 $price->setPriceStatus(1);
                 $price->setIsFavourite(0);
                 $price->setTax($tax);
@@ -309,7 +348,6 @@ class tempController extends Controller
             else
             {
                 $price->setPrice( $row['Net Price'] );
-                $price->setDenomination($row['DENOMINATION (CHF)']);
                 $price->setTax($tax);
 
                 $priceHistory = $em->getRepository('HelloDiDiDistributorsBundle:PriceHistory')->findOneBy(array('Prices'=>$price));

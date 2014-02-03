@@ -81,11 +81,17 @@ class Item
      */
     private $B2BLogs;
 
-    /** 
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Denomination", mappedBy="Item")
+     */
+    private $Denominations;
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Items")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
      */
     private $Country;
+
     /**
      * Constructor
      */
@@ -95,6 +101,8 @@ class Item
         $this->Inputs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ItemDescs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->B2BLogs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->$Denominations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -482,5 +490,51 @@ class Item
     function __toString()
     {
         return $this->getItemName();
+    }
+
+    /**
+     * Add Denominations
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Denomination $denominations
+     * @return Item
+     */
+    public function addDenomination(\HelloDi\DiDistributorsBundle\Entity\Denomination $denominations)
+    {
+        $this->Denominations[] = $denominations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Denominations
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Denomination $denominations
+     */
+    public function removeDenomination(\HelloDi\DiDistributorsBundle\Entity\Denomination $denominations)
+    {
+        $this->Denominations->removeElement($denominations);
+    }
+
+    /**
+     * Get Denominations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDenominations()
+    {
+        return $this->Denominations;
+    }
+
+    /**
+     * @param $currency
+     * @return float
+     */
+    public function getDenominationByCurrency($currency)
+    {
+        foreach($this->Denominations as $denomination)
+            if($denomination->getCurrency() == $currency)
+                return $denomination->getDenomination();
+
+        return null;
     }
 }

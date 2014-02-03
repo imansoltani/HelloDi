@@ -1441,7 +1441,6 @@ catch(\Exception $e)
                 'label' => 'Item','translation_domain' => 'item'
             ))
             ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -1560,7 +1559,6 @@ catch(\Exception $e)
                 'label' => 'Item','translation_domain' => 'item'
             ))
             ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->add('tax', 'entity', array(
                 'class' => 'HelloDiDiDistributorsBundle:Tax',
                 'property' => 'tax',
@@ -3127,7 +3125,6 @@ catch(\Exception $e)
                 'label' => 'Item','translation_domain' => 'item'
             ))
             ->add('price','number',array('label' => 'Price','translation_domain' => 'price'))
-            ->add('denomination','number', array('label' => 'denomination','translation_domain' => 'price','required'=>false))
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -3201,23 +3198,4 @@ catch(\Exception $e)
     }
 
 //    End Retailer
-
-    public function CheckItemCurrEqAccCurrAction(Request $request)
-    {
-        try
-        {
-            $em = $this->getDoctrine()->getManager();
-            $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($request->get('accountid'));
-            $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('itemid'));
-
-            if($account->getAccCurrency()==$item->getItemCurrency())
-                return new Response($item->getItemFaceValue());
-            else
-                return new Response('');
-        }
-        catch(\Exception $e)
-        {
-            return new Response('');
-        }
-    }
 }
