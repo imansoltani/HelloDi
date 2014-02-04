@@ -411,6 +411,8 @@ class ItemController extends Controller
     //denomination
     public function denominationIndexAction(Request $request,$id)
     {
+        $accountCurrencies = $this->container->getParameter("Currencies.Account");
+
         $em = $this->getDoctrine()->getManager();
         $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
         if (!$item) {
@@ -427,20 +429,23 @@ class ItemController extends Controller
         {
             $form->handleRequest($request);
 
-            $currencies = array();
+            $usedCurrencies = array();
             $data = $form->getData();
             foreach($data["Denominations"] as $key=>$denomination)
             {
-                if(in_array($denomination->getCurrency(),$currencies))
-                    $form->get("Denominations")[$key]->get("denomination")->addError(new FormError("Denomination for this currency already exist."));
+                if(in_array(strtoupper($denomination->getCurrency()),$usedCurrencies))
+                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Denomination for this currency already exist."));
+                elseif (!in_array(strtoupper($denomination->getCurrency()),$accountCurrencies))
+                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Currency is no valid or not allowed."));
                 else
-                    $currencies[] = $denomination->getCurrency();
+                    $usedCurrencies[] = $denomination->getCurrency();
             }
 
             if($form->isValid())
             {
                 foreach($data["Denominations"] as $denomination)
                 {
+                    $denomination->setCurrency(strtoupper($denomination->getCurrency()));
                     $denomination->setItem($item);
                     $em->persist($denomination);
                 }
