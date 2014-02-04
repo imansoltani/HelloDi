@@ -1,0 +1,40 @@
+{% set parent = '' %}
+{% if is_granted('ROLE_RETAILER') %}
+    {% set parent = 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% elseif is_granted('ROLE_DISTRIBUTOR') %}
+    {% set parent = 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+{% elseif is_granted('ROLE_MASTER') %}
+    {% set parent = 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% endif %}
+
+{% extends parent %}
+
+{% block title %}
+    Under Construction
+{% endblock title %}
+
+{% set MU = 'home' %}
+
+{% block Site_Map %}
+    <a class="link" href="
+{% if is_granted('ROLE_RETAILER') %}
+    {{ path('retailers_dashboard') }}
+{% elseif is_granted('ROLE_DISTRIBUTOR') %}
+    {{ path('distributors_dashboard') }}
+{% elseif is_granted('ROLE_MASTER') %}
+    {{ path('loginsuccess') }}
+{% endif %}
+    ">{{ 'Home'|trans({},'menu') }}</a>
+    <span class="link">Under Construction</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-user"></i>
+    Under Construction
+{% endblock %}
+
+{% block Body %}
+<div style="text-align: center;margin-top: 30px">
+    <img src="{{ asset("bundles/hellodi/img/under-consturction.png") }}">
+</div>
+{% endblock %}

@@ -19,6 +19,7 @@ class EpaymentController extends Controller
 
     public function newAction(Request $request)
     {
+        return $this->render("HelloDiDiDistributorsBundle::under_construction.html.twig");
         $ePaymentRoutes = new RoutesContainer($request);
 
         $user = $this->getUser();
@@ -56,6 +57,7 @@ class EpaymentController extends Controller
 
     public function validateAction($id)
     {
+        return $this->render("HelloDiDiDistributorsBundle::under_construction.html.twig");
         $ePaymentRoutes = new RoutesContainer($this->getRequest());
         $em = $this->getDoctrine()->getManager();
         $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
@@ -81,6 +83,7 @@ class EpaymentController extends Controller
 
     public function resultAction()
     {
+        return $this->render("HelloDiDiDistributorsBundle::under_construction.html.twig");
 
         $ePaymentRoutes = new RoutesContainer($this->getRequest());
         $digest = $this->getRequest()->query->all();
