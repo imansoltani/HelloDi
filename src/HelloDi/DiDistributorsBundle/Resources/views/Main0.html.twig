@@ -48,6 +48,8 @@
             </a>
 
             <ul class="nav pull-right">
+                {% block MoreMenu %}
+                {% endblock %}
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
 
@@ -89,9 +91,6 @@
 
 
                 {% endif %}
-
-                {% block MoreMenu %}
-                {% endblock %}
             </ul>
 
         </div>
