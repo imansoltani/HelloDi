@@ -11,7 +11,7 @@ class DenominationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('denomination')
+            ->add('denomination','number',array('precision'=>2))
             ->add('currency')
         ;
     }
