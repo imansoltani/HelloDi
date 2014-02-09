@@ -58,11 +58,6 @@ master_exceptions:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/exceptions.yml"
     prefix:   /exceptions
 
-
-master_log:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/log.yml"
-    prefix:   /logs
-
 b2breport:
     pattern:  /b2breport
     defaults: { _controller: HelloDiDiDistributorsBundle:B2BReport:index }
@@ -78,7 +73,3 @@ test_index:
 test1_index:
     pattern:  /test1/{id}
     defaults: { _controller: HelloDiDiDistributorsBundle:Test:index1, id: 0 }
-
-testlistlang:
-    pattern:  /listlang
-    defaults: { _controller: HelloDiDiDistributorsBundle:Test:listlangs }
