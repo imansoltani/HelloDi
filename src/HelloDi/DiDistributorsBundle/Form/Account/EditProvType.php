@@ -19,7 +19,7 @@ class EditProvType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'HelloDi\DiDistributorsBundle\Entity\Account'
+            'data_class' => 'HelloDi\AccountingBundle\Entity\Account'
         ));
     }
 

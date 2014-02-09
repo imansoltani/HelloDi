@@ -8,7 +8,7 @@ use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\TicketNote;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\Account\EditRetailerType;
 use HelloDi\DiDistributorsBundle\Form\Distributors\NewRetailersType;
 use HelloDi\DiDistributorsBundle\Entity\User;
@@ -17,7 +17,7 @@ use HelloDi\DiDistributorsBundle\Form\PriceEditType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use Symfony\Component\HttpFoundation\Response;
 
 class DistributorsController extends Controller
@@ -147,7 +147,7 @@ class DistributorsController extends Controller
 
             ->add('Account', 'entity',
                 array('label'=>'Retailer(s)','translation_domain'=>'accounts',
-                    'class' => 'HelloDiDiDistributorsBundle:Account',
+                    'class' => 'HelloDiAccountingBundle:Account',
                     'property' => 'accName',
                      'empty_data'=>'',
                     'empty_value'=>'All',
@@ -188,7 +188,7 @@ class DistributorsController extends Controller
             $qb=$em->createQueryBuilder();
 
             $qb->select('Tr')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+                ->from('HelloDiAccountingBundle:Transaction','Tr')
                 /*for groupBy*/
                 ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt')
                 ->leftJoin('Tr.B2BLog','Trb2b')->leftJoin('Trb2b.Item','Trb2bIt');
@@ -253,9 +253,9 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
 
-        $tran=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($id);
+        $tran=$em->getRepository('HelloDiAccountingBundle:Transaction')->find($id);
 
-        $com=$em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array(
+        $com=$em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array(
          'Account'=>$tran->getAccount()->getParent(),
          'Code'=>$tran->getCode(),
          'User'=>$tran->getUser(),
@@ -276,7 +276,7 @@ class DistributorsController extends Controller
 
         $em=$this->getDoctrine()->getManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account=$em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $formapplay=$this->createFormBuilder()
             ->add('Amount','money',array(
@@ -325,7 +325,7 @@ class DistributorsController extends Controller
         $balancechecker=$this->get('hello_di_di_distributors.balancechecker');
         $User= $this->get('security.context')->getToken()->getUser();
         $em=$this->getDoctrine()->getManager();
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account=$em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $formtransfer=$this->createFormBuilder()
             ->add('Amount',null,array('label'=>'Amount','translation_domain'=>'transaction'))
@@ -438,7 +438,7 @@ else
 
         $em=$this->getDoctrine()->getManager();
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account=$em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $formupdate=$this->createFormBuilder()
             ->add('Amount','text',array('label'=>'Amount','translation_domain'=>'transaction'))
@@ -647,7 +647,7 @@ catch(\Exception $e)
         $this->check_ChildAccount($id);
 
         $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         $users = $Account->getUsers();
 
 
@@ -693,7 +693,7 @@ catch(\Exception $e)
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $user = new User();
         $em = $this->getDoctrine()->getManager();
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         $Entiti = $Account->getEntiti();
 
         $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',2),$user);
@@ -796,7 +796,7 @@ catch(\Exception $e)
         $Account = $user->getAccount();
         $qb = $em->createQueryBuilder()
             ->select('retailer')
-            ->from('HelloDiDiDistributorsBundle:Account', 'retailer')
+            ->from('HelloDiAccountingBundle:Account', 'retailer')
             ->innerJoin('retailer.Entiti', 'Ent')
             ->where('retailer.Parent = :prn')
             ->setParameter('prn',$Account);
@@ -879,7 +879,7 @@ catch(\Exception $e)
 
         $this->check_ChildAccount($id);
 
-        $Account=$em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account=$em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         $typedate=0;
 
        $qb=array();
@@ -936,7 +936,7 @@ try{
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select('Tran')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
+                ->from('HelloDiAccountingBundle:Transaction','Tran')
                 ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
 
             if($data['TypeDate']==1)$typedate=1; else $typedate=0;
@@ -1055,7 +1055,7 @@ catch(\Exception $e){
 
         $qb=$em->createQueryBuilder();
         $qb->select('Tran')
-            ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
+            ->from('HelloDiAccountingBundle:Transaction','Tran')
             ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
 
         if($data['TypeDate']==1) $typedate=1; else $typedate=0;
@@ -1110,7 +1110,7 @@ catch(\Exception $e){
 
         $em = $this->getDoctrine()->getManager();
 
-        $Account= $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account= $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         $form = $this->createForm(new EditRetailerType(),$Account);
         if ($req->isMethod('POST')) {
             $form->handleRequest($req);
@@ -1134,7 +1134,7 @@ catch(\Exception $e){
         $this->check_ChildAccount($id);
         $em = $this->getDoctrine()->getManager();
 
-        $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $Account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $entity = $Account->getEntiti();
         $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
@@ -1184,7 +1184,7 @@ catch(\Exception $e){
 
         $form = $this->createFormBuilder()
             ->add('checks', 'entity', array(
-                    'class' => 'HelloDiDiDistributorsBundle:Account',
+                    'class' => 'HelloDiAccountingBundle:Account',
                     'expanded' => 'true',
                     'multiple' => 'true',
                     'query_builder' => function(EntityRepository $er) use ($account,$item) {
@@ -1269,7 +1269,7 @@ catch(\Exception $e){
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $prices = $account->getPrices();
 
@@ -1286,7 +1286,7 @@ catch(\Exception $e){
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
 
         $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
         $price = new Price();
         $price->setPriceCurrency($account->getAccCurrency());
@@ -1410,7 +1410,7 @@ catch(\Exception $e){
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($accountid);
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($accountid);
         if($account == null || $account->getParent() == null || $account->getParent() != $myaccount)
         {
             throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Account',array(),'accounts')),'message'));
@@ -1454,7 +1454,7 @@ catch(\Exception $e){
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $tran = $em->getRepository('HelloDiAccountingBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
         {
             throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));
@@ -1465,7 +1465,7 @@ catch(\Exception $e){
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $tran = $em->getRepository('HelloDiAccountingBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount()->getParent() == null || $tran->getAccount()->getParent() != $myaccount)
         {
             throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));
@@ -1893,7 +1893,7 @@ public function DistLoadActionRetailerAction(Request $req)
         try
         {
             $em = $this->getDoctrine()->getManager();
-            $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($request->get('accountid'));
+            $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($request->get('accountid'));
             $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($request->get('itemid'));
 
             if($account->getAccCurrency()==$item->getItemCurrency())

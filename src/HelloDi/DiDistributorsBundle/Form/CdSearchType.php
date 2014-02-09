@@ -15,7 +15,7 @@ class CdSearchType extends AbstractType
             ->add('provider','entity',array(
                 'required'=> false,
                 'empty_value' => 'All',
-                'class' => 'HelloDiDiDistributorsBundle:Account',
+                'class' => 'HelloDiAccountingBundle:Account',
                 'property' => 'accName',
                 'query_builder' => function(EntityRepository $er)
                 {

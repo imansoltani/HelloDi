@@ -5,13 +5,10 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
 use HelloDi\DiDistributorsBundle\Entity\Price;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiRetailerType;
-use HelloDi\DiDistributorsBundle\Form\testType;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\TransactionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
@@ -25,12 +22,12 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder()
             ->select('account')
-            ->from('HelloDiDiDistributorsBundle:Account', 'account')
+            ->from('HelloDiAccountingBundle:Account', 'account')
             ->where('account.accType != 1');
         $accounts = $qb->getQuery()->getResult();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
 
                 $codes = $em->getRepository('HelloDiDiDistributorsBundle:Code')->findAll();
@@ -81,11 +78,11 @@ class TestController extends Controller
 
         $qb = $em->createQueryBuilder()
             ->select('account')
-            ->from('HelloDiDiDistributorsBundle:Account', 'account')
+            ->from('HelloDiAccountingBundle:Account', 'account')
             ->where('account.accType != 1');
         $accounts = $qb->getQuery()->getResult();
 
-        $account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         if (!$account) {
             $account = $accounts[0];
         }
@@ -109,7 +106,7 @@ class TestController extends Controller
             ->getForm();
         $errors = array();
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             $data = $form->getData();
             $price = $data['Price'];
             $count = $data['count'];

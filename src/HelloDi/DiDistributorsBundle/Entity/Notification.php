@@ -32,7 +32,7 @@ class Notification
     private $Value;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Notification")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Notification")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id",nullable=true)
      */
     private $Account;
@@ -97,10 +97,10 @@ class Notification
     /**
      * Set Account
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
+     * @param \HelloDi\AccountingBundle\Entity\Account $account
      * @return Notification
      */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account = null)
+    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account = null)
     {
         $this->Account = $account;
     
@@ -110,7 +110,7 @@ class Notification
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccount()
     {

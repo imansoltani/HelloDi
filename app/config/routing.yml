@@ -1,3 +1,7 @@
+hello_di_accounting:
+    resource: "@HelloDiAccountingBundle/Resources/config/routing.yml"
+    prefix:   /
+
 hello_di_di_distributors:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing.yml"
     prefix:   /

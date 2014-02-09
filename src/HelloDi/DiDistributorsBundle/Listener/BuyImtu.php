@@ -22,7 +22,7 @@ class BuyImtu {
         $this->em = $em;
         $this->user = $securityContext->getToken()->getUser();
         ini_set('max_execution_time', 60);
-        $this->provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
+        $this->provider = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         $this->accountRet = $this->user->getAccount();
     }
 

@@ -2,12 +2,10 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\B2BLog;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class B2BReportController extends Controller
 {

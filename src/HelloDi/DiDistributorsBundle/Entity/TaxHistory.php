@@ -38,7 +38,7 @@ class TaxHistory
 
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="TaxHistory")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="TaxHistory")
      */
     private $Transactions;
 
@@ -89,10 +89,10 @@ class TaxHistory
     /**
      * Add Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      * @return TaxHistory
      */
-    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions[] = $transactions;
     
@@ -102,9 +102,9 @@ class TaxHistory
     /**
      * Remove Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      */
-    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions->removeElement($transactions);
     }

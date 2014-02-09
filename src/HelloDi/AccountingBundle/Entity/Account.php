@@ -1,5 +1,12 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\AccountingBundle\Entity;
+
+use HelloDi\DiDistributorsBundle\Entity\Entiti;
+use HelloDi\DiDistributorsBundle\Entity\Input;
+use HelloDi\DiDistributorsBundle\Entity\Price;
+use HelloDi\DiDistributorsBundle\Entity\Ticket;
+use HelloDi\DiDistributorsBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -61,7 +68,7 @@ class Account
     private $accType;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", mappedBy="Parent")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="Parent")
      */
     private $Childrens;
 
@@ -81,7 +88,7 @@ class Account
     private $Tickets;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Account")
      */
     private $Transactions;
 
@@ -97,7 +104,7 @@ class Account
     private $Entiti;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Childrens")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Childrens")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $Parent;
@@ -106,12 +113,12 @@ class Account
      */
     public function __construct()
     {
-        $this->Childrens = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Inputs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Tickets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Childrens = new ArrayCollection();
+        $this->Inputs = new ArrayCollection();
+        $this->Prices = new ArrayCollection();
+        $this->Tickets = new ArrayCollection();
+        $this->Transactions = new ArrayCollection();
+        $this->Users = new ArrayCollection();
     }
     
     /**
@@ -321,10 +328,10 @@ class Account
     /**
      * Add Childrens
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $childrens
+     * @param Account $childrens
      * @return Account
      */
-    public function addChildren(\HelloDi\DiDistributorsBundle\Entity\Account $childrens)
+    public function addChildren(Account $childrens)
     {
         $this->Childrens[] = $childrens;
     
@@ -334,9 +341,9 @@ class Account
     /**
      * Remove Childrens
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $childrens
+     * @param Account $childrens
      */
-    public function removeChildren(\HelloDi\DiDistributorsBundle\Entity\Account $childrens)
+    public function removeChildren(Account $childrens)
     {
         $this->Childrens->removeElement($childrens);
     }
@@ -354,10 +361,10 @@ class Account
     /**
      * Add Inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      * @return Account
      */
-    public function addInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function addInput(Input $inputs)
     {
         $this->Inputs[] = $inputs;
     
@@ -367,9 +374,9 @@ class Account
     /**
      * Remove Inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      */
-    public function removeInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function removeInput(Input $inputs)
     {
         $this->Inputs->removeElement($inputs);
     }
@@ -387,10 +394,10 @@ class Account
     /**
      * Add Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param Price $prices
      * @return Account
      */
-    public function addPrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function addPrice(Price $prices)
     {
         $this->Prices[] = $prices;
     
@@ -400,9 +407,9 @@ class Account
     /**
      * Remove Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param Price $prices
      */
-    public function removePrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function removePrice(Price $prices)
     {
         $this->Prices->removeElement($prices);
     }
@@ -420,10 +427,10 @@ class Account
     /**
      * Add Tickets
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ticket $tickets
+     * @param Ticket $tickets
      * @return Account
      */
-    public function addTicket(\HelloDi\DiDistributorsBundle\Entity\Ticket $tickets)
+    public function addTicket(Ticket $tickets)
     {
         $this->Tickets[] = $tickets;
     
@@ -433,9 +440,9 @@ class Account
     /**
      * Remove Tickets
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ticket $tickets
+     * @param Ticket $tickets
      */
-    public function removeTicket(\HelloDi\DiDistributorsBundle\Entity\Ticket $tickets)
+    public function removeTicket(Ticket $tickets)
     {
         $this->Tickets->removeElement($tickets);
     }
@@ -453,10 +460,10 @@ class Account
     /**
      * Add Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param Transaction $transactions
      * @return Account
      */
-    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function addTransaction(Transaction $transactions)
     {
         $this->Transactions[] = $transactions;
     
@@ -466,9 +473,9 @@ class Account
     /**
      * Remove Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param Transaction $transactions
      */
-    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function removeTransaction(Transaction $transactions)
     {
         $this->Transactions->removeElement($transactions);
     }
@@ -486,10 +493,10 @@ class Account
     /**
      * Add Users
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $users
+     * @param User $users
      * @return Account
      */
-    public function addUser(\HelloDi\DiDistributorsBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->Users[] = $users;
     
@@ -499,9 +506,9 @@ class Account
     /**
      * Remove Users
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $users
+     * @param User $users
      */
-    public function removeUser(\HelloDi\DiDistributorsBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->Users->removeElement($users);
     }
@@ -519,10 +526,10 @@ class Account
     /**
      * Set Entiti
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Entiti $entiti
+     * @param Entiti $entiti
      * @return Account
      */
-    public function setEntiti(\HelloDi\DiDistributorsBundle\Entity\Entiti $entiti)
+    public function setEntiti(Entiti $entiti)
     {
         $this->Entiti = $entiti;
     
@@ -532,7 +539,7 @@ class Account
     /**
      * Get Entiti
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Entiti 
+     * @return Entiti
      */
     public function getEntiti()
     {
@@ -542,10 +549,10 @@ class Account
     /**
      * Set Parent
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $parent
+     * @param Account $parent
      * @return Account
      */
-    public function setParent(\HelloDi\DiDistributorsBundle\Entity\Account $parent = null)
+    public function setParent(Account $parent = null)
     {
         $this->Parent = $parent;
     
@@ -555,7 +562,7 @@ class Account
     /**
      * Get Parent
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return Account
      */
     public function getParent()
     {

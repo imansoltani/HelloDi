@@ -3,9 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\Denomination;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
-use HelloDi\DiDistributorsBundle\Entity\Operator;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Form\DenominationType;
@@ -142,7 +140,7 @@ class ItemController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('checks', 'entity', array(
-                    'class' => 'HelloDiDiDistributorsBundle:Account',
+                    'class' => 'HelloDiAccountingBundle:Account',
                     'expanded' => 'true',
                     'multiple' => 'true',
                     'query_builder' => function(EntityRepository $er) use ($item) {

@@ -2,7 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
@@ -148,7 +148,7 @@ class EntitiController extends Controller
 
         $user = new User();
 
-        if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
+        if (count($em->getRepository('HelloDiAccountingBundle:Account')->findBy(array(
                     'Entiti' => $entity,
                     'accType' => 2))
             ) ==1
@@ -309,7 +309,7 @@ public function  EditUserEntitiesAction(Request $request,$userid)
     $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
 
 
-    if (count($em->getRepository('HelloDiDiDistributorsBundle:Account')->findBy(array(
+    if (count($em->getRepository('HelloDiAccountingBundle:Account')->findBy(array(
                 'Entiti' => $user->getEntiti(),
                 'accType' => 2))
         ) ==1

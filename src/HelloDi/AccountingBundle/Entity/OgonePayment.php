@@ -1,10 +1,12 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\AccountingBundle\Entity;
+
+use HelloDi\DiDistributorsBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\OgonePaymentRepository")
+ * @ORM\Entity(repositoryClass="HelloDi\AccountingBundle\Entity\OgonePaymentRepository")
  * @ORM\Table(name="ogone_payment")
  */
 
@@ -59,14 +61,14 @@ class OgonePayment
     private $ogoneRef;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="OgonePayment")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="OgonePayment")
      * @ORM\JoinColumn(name="related_user", referencedColumnName="id", nullable=true)
      */
     private $User;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Transaction")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="related_transaction", referencedColumnName="id", nullable=true)
      */
     private $transaction;
@@ -108,7 +110,7 @@ class OgonePayment
     }
 
     /**
-     * @return \HelloDi\DiDistributorsBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -116,9 +118,9 @@ class OgonePayment
     }
 
     /**
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
+     * @param User $user
      */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->User = $user;
     }
@@ -159,7 +161,7 @@ class OgonePayment
     }
 
     /**
-     * @return \HelloDi\DiDistributorsBundle\Entity\Transaction
+     * @return Transaction
      */
     public function getTransaction()
     {
@@ -167,9 +169,9 @@ class OgonePayment
     }
 
     /**
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transaction
+     * @param Transaction $transaction
      */
-    public function setTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transaction)
+    public function setTransaction(Transaction $transaction)
     {
         $this->transaction = $transaction;
     }

@@ -2,7 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Listener;
 
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 
 class BalanceChecker

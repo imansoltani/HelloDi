@@ -54,7 +54,7 @@ class Input
     private $Item;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Inputs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Inputs")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
@@ -324,10 +324,10 @@ class Input
     /**
      * Set Account
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
+     * @param \HelloDi\AccountingBundle\Entity\Account $account
      * @return Input
      */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
+    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account)
     {
         $this->Account = $account;
     
@@ -337,7 +337,7 @@ class Input
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccount()
     {

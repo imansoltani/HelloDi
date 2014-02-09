@@ -53,14 +53,14 @@ class Ticket
     private $TicketNotes;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Tickets")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Tickets")
      * @ORM\JoinColumn(name="accountdist_id", referencedColumnName="id",nullable=true)
      */
     private $Accountdist;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Tickets")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Tickets")
      * @ORM\JoinColumn(name="accountretailer_id", referencedColumnName="id", nullable=true)
      */
     private $Accountretailer;
@@ -182,29 +182,6 @@ class Ticket
     }
 
     /**
-     * Set importance
-     *
-     * @param integer $importance
-     * @return Ticket
-     */
-    public function setImportance($importance)
-    {
-        $this->importance = $importance;
-    
-        return $this;
-    }
-
-    /**
-     * Get importance
-     *
-     * @return integer 
-     */
-    public function getImportance()
-    {
-        return $this->importance;
-    }
-
-    /**
      * Add TicketNotes
      *
      * @param \HelloDi\DiDistributorsBundle\Entity\TicketNote $ticketNotes
@@ -237,30 +214,6 @@ class Ticket
         return $this->TicketNotes;
     }
 
-
-    /**
-     * Set User
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
-     * @return Ticket
-     */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
-    {
-        $this->User = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get User
-     *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->User;
-    }
-
     /**
      * Set Status
      *
@@ -287,10 +240,10 @@ class Ticket
     /**
      * Set Accountdist
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accountdist
+     * @param \HelloDi\AccountingBundle\Entity\Account $accountdist
      * @return Ticket
      */
-    public function setAccountdist(\HelloDi\DiDistributorsBundle\Entity\Account $accountdist)
+    public function setAccountdist(\HelloDi\AccountingBundle\Entity\Account $accountdist)
     {
         $this->Accountdist = $accountdist;
     
@@ -300,7 +253,7 @@ class Ticket
     /**
      * Get Accountdist
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccountdist()
     {
@@ -310,10 +263,10 @@ class Ticket
     /**
      * Set Accountretailer
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accountretailer
+     * @param \HelloDi\AccountingBundle\Entity\Account $accountretailer
      * @return Ticket
      */
-    public function setAccountretailer(\HelloDi\DiDistributorsBundle\Entity\Account $accountretailer)
+    public function setAccountretailer(\HelloDi\AccountingBundle\Entity\Account $accountretailer)
     {
         $this->Accountretailer = $accountretailer;
     
@@ -323,7 +276,7 @@ class Ticket
     /**
      * Get Accountretailer
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccountretailer()
     {

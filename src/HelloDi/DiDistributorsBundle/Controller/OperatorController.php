@@ -49,7 +49,7 @@ class OperatorController extends Controller
         $operator = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->find($id);
 
         if (!$operator) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Operator',array(),'item')),'operator'));
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Operator',array(),'operator')),'message'));
         }
 
         $editForm = $this->createForm(new OperatorType(), $operator);

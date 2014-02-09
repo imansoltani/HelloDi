@@ -28,7 +28,7 @@ class NewUserDistributorsRetailerInEntityType extends BaseType
             ->add('language','choice',array('choices'=>array('en'=>'en','fr'=>'fr')))
 
              ->add('Account', 'entity', array(
-                     'class'    => 'HelloDiDiDistributorsBundle:Account',
+                     'class'    => 'HelloDiAccountingBundle:Account',
                      'property' => 'accName',
 
                 'query_builder' => function(EntityRepository $er)use ($entity) {

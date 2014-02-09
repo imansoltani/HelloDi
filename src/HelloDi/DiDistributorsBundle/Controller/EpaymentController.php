@@ -1,22 +1,14 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use HelloDi\DiDistributorsBundle\Entity\OgonePayment;
+use HelloDi\AccountingBundle\Entity\OgonePayment;
 use HelloDi\DiDistributorsBundle\Form\OgonePayment\NewOgonePaymentType;
-use Symfony\Component\Validator\Constraints\DateTime;
 use HelloDi\DiDistributorsBundle\Ogone\RoutesContainer;
 
 class EpaymentController extends Controller
-
 {
-
-
-
-
     public function newAction(Request $request)
     {
         return $this->render("HelloDiDiDistributorsBundle::under_construction.html.twig");
@@ -60,7 +52,7 @@ class EpaymentController extends Controller
         return $this->render("HelloDiDiDistributorsBundle::under_construction.html.twig");
         $ePaymentRoutes = new RoutesContainer($this->getRequest());
         $em = $this->getDoctrine()->getManager();
-        $ogonePayment = $em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->find($id);
+        $ogonePayment = $em->getRepository('HelloDiAccountingBundle:OgonePayment')->find($id);
 
         if( null === $ogonePayment || $this->getUser()->getId() !== $ogonePayment->getUser()->getId() )
         {

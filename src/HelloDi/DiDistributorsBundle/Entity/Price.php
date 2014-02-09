@@ -58,7 +58,7 @@ class Price
     private $Item;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Prices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Prices")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
@@ -242,10 +242,10 @@ class Price
     /**
      * Set Account
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
+     * @param \HelloDi\AccountingBundle\Entity\Account $account
      * @return Price
      */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
+    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account)
     {
         $this->Account = $account;
     
@@ -255,7 +255,7 @@ class Price
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccount()
     {

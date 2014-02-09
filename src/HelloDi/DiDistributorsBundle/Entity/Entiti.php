@@ -4,6 +4,7 @@ namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\AccountingBundle\Entity\Account;
 
 /** 
  * @ORM\Entity
@@ -74,7 +75,7 @@ class Entiti
     private $entCity;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", mappedBy="Entiti")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="Entiti")
      */
     private $Accounts;
 

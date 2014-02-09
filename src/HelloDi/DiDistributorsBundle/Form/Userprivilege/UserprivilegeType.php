@@ -13,7 +13,7 @@ class UserprivilegeType extends AbstractType
         $builder
             ->add('privileges','choice',array('choices'=>array(2=>'-',0=>'Seller',1=>'Admin')))
            // ->add('Account')//,'entity',array(
-//                'class'=>'HelloDi\DiDistributorsBundle\Entity\Account',
+//                'class'=>'HelloDi\AccountingBundle\Entity\Account',
 //                'property'=>'accName'
 
 //            ))

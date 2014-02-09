@@ -2,7 +2,7 @@
 
 namespace HelloDi\DiDistributorsBundle\Controller;
 
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Form\CdSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +23,7 @@ class CodeController extends Controller
         if($request->isMethod('GET') && $request->getSession()->has('codesearch'))
         {
             $data = $request->getSession()->get('codesearch');
-            if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($data['provider']);
+            if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiAccountingBundle:Account')->find($data['provider']);
             if($data['item']!=null) $data['item'] = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($data['item']);
             if($data['inputFileName']!=null) $data['inputFileName'] = $em->getRepository('HelloDiDiDistributorsBundle:Input')->find($data['inputFileName']);
             $form->setData($data);
@@ -127,7 +127,7 @@ class CodeController extends Controller
         if (!$code) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
         }
-        $isremoved = ($em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'rmv'))==null ? false : true);
+        $isremoved = ($em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'rmv'))==null ? false : true);
 
         return $this->render('HelloDiDiDistributorsBundle:Code:history.html.twig', array(
             'code'=> $code,
@@ -147,7 +147,7 @@ class CodeController extends Controller
             try
             {
                 $user= $this->get('security.context')->getToken()->getUser();
-                $tranadd = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'add'),array('id'=>'desc'));
+                $tranadd = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'add'),array('id'=>'desc'));
 
                 $code->setStatus(0);
 
@@ -197,8 +197,8 @@ class CodeController extends Controller
             try
             {
                 $user= $this->get('security.context')->getToken()->getUser();
-                $transale = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
-                $trancom = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
+                $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
+                $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
 
                 $code->setStatus(1);
 
@@ -262,8 +262,8 @@ class CodeController extends Controller
             {
                 $user= $this->get('security.context')->getToken()->getUser();
 
-                $transale = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
-                $trancom = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
+                $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
+                $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
 
                 $trancrntsale = new Transaction();
                 $trancrntsale->setAccount($transale->getAccount());
@@ -297,7 +297,7 @@ class CodeController extends Controller
                 $trancrntcom->setTranBalance($trancom->getAccount()->getAccBalance());
                 $em->persist($trancrntcom);
 
-                $tranadd = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'add'),array('id'=>'desc'));
+                $tranadd = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'add'),array('id'=>'desc'));
 
                 $tranrmv = new Transaction();
                 $tranrmv->setAccount($tranadd->getAccount());

@@ -2,6 +2,7 @@
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
+use HelloDi\AccountingBundle\Entity\OgonePayment;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /** 
@@ -65,7 +66,7 @@ class User extends BaseUser
     private $TicketNotes;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="User")
      */
     private $Transactions;
 
@@ -76,13 +77,13 @@ class User extends BaseUser
     private $Entiti;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Users")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Users")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=true)
      */
     private $Account;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\OgonePayment", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\OgonePayment", mappedBy="User")
      */
     private $OgonePayment;
 
@@ -333,10 +334,10 @@ class User extends BaseUser
     /**
      * Add Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      * @return User
      */
-    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions[] = $transactions;
     
@@ -346,9 +347,9 @@ class User extends BaseUser
     /**
      * Remove Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      */
-    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions->removeElement($transactions);
     }
@@ -389,10 +390,10 @@ class User extends BaseUser
     /**
      * Set Account
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
+     * @param \HelloDi\AccountingBundle\Entity\Account $account
      * @return User
      */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
+    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account)
     {
         $this->Account = $account;
     
@@ -402,7 +403,7 @@ class User extends BaseUser
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccount()
     {
@@ -410,42 +411,9 @@ class User extends BaseUser
     }
 
     /**
-     * Add Ogone
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone
-     * @return User
-     */
-    public function addOgone(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone)
-    {
-        $this->OgonePayment[] = $ogone;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Ogone
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogone
-     */
-    public function removeOgone(OgonePayment $ogone)
-    {
-        $this->OgonePayment->removeElement($ogone);
-    }
-
-    /**
-     * Get Ogone
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOgone()
-    {
-        return $this->OgonePayment;
-    }
-
-    /**
      * Add OgonePayment
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @param \HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment
      * @return User
      */
     public function addOgonePayment(OgonePayment $ogonePayment)
@@ -458,9 +426,9 @@ class User extends BaseUser
     /**
      * Remove OgonePayment
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @param \HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment
      */
-    public function removeOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    public function removeOgonePayment(\HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment)
     {
         $this->OgonePayment->removeElement($ogonePayment);
     }

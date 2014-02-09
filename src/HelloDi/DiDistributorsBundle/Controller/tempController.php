@@ -2,7 +2,7 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\Denomination;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
@@ -69,7 +69,7 @@ class tempController extends Controller
         if(!$array) die("<span style='color: red'>Unable to read file.</span>");
 
         $em = $this->getDoctrine()->getManager();
-        $provider = $em->getRepository('HelloDiDiDistributorsBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
+        $provider = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('accName'=>'B2Bserver'));
         if(!$provider) die("<span style='color: red'>provider not found.</span>");
 
         $provider->setAccCurrency("CHF");
@@ -228,7 +228,7 @@ class tempController extends Controller
 
         $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
 
-        $dist = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($distId);
+        $dist = $em->getRepository('HelloDiAccountingBundle:Account')->find($distId);
         if (!$dist || $dist->getAccType() != 0) die("<span style='color: red'>Unable to find account.</span>");
 
         foreach($array as $row)
@@ -291,11 +291,11 @@ class tempController extends Controller
         $array = $this->csv_to_array("uploads/temp/retailer.csv");
         if(!$array) die("<span style='color: red'>Unable to read file.</span>");
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $tax = $em->getRepository('HelloDiDiDistributorsBundle:Tax')->findOneBy(array("Country"=>null));
 
-        $accountRet = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($RetId);
+        $accountRet = $em->getRepository('HelloDiAccountingBundle:Account')->find($RetId);
         if (!$accountRet || $accountRet->getAccType() != 2) die("<span style='color: red'>Unable to find account.</span>");
 
         foreach($array as $row)

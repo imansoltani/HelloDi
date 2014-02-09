@@ -3,7 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 

@@ -31,7 +31,7 @@ class Code
     private $status;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Transaction", mappedBy="Code")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Code")
      */
     private $Transactions;
 
@@ -136,10 +136,10 @@ class Code
     /**
      * Add Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      * @return Code
      */
-    public function addTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions[] = $transactions;
     
@@ -149,9 +149,9 @@ class Code
     /**
      * Remove Transactions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Transaction $transactions
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
      */
-    public function removeTransaction(\HelloDi\DiDistributorsBundle\Entity\Transaction $transactions)
+    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
     {
         $this->Transactions->removeElement($transactions);
     }

@@ -1,4 +1,0 @@
-MasterPrintRetailerStatement:
-    pattern:  /retailer/statement
-    defaults: { _controller: HelloDiDiDistributorsBundle:Print:RetailerStatement }
-

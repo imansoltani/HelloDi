@@ -26,7 +26,7 @@ class TransactionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'HelloDi\DiDistributorsBundle\Entity\Transaction'
+            'data_class' => 'HelloDi\AccountingBundle\Entity\Transaction'
         ));
     }
 

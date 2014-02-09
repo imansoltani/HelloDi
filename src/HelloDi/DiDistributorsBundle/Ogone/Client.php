@@ -1,23 +1,12 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Fils du Soleil
- * Date: 26.06.13
- * Time: 18:21
- * To change this template use File | Settings | File Templates.
- */
-
 namespace HelloDi\DiDistributorsBundle\Ogone;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use HelloDi\DiDistributorsBundle\Entity\OgonePayment;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\OgonePayment;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Exception\OgoneException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\Validator\Constraints\DateTime;
-use HelloDi\DiDistributorsBundle\Ogone\RoutesContainer;
 
 
 class Client
@@ -42,7 +31,6 @@ class Client
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
-
         $this->resultUrl    = $router->generate($routesContainer->getResultUrl(), [], true);
         $this->catalogUrl   = $router->generate($routesContainer->getCatalogUrl(), [], true);
         $this->homeUrl  = $router->generate($routesContainer->getHomeUrl(), [], true);
@@ -51,8 +39,6 @@ class Client
 
     private function getSortedParameters(OgonePayment $payment)
     {
-
-
         return array(
             'ACCEPTURL'     => $this->resultUrl,
             'AMOUNT'        => $payment->getOgoneAmount(),
@@ -71,8 +57,6 @@ class Client
 
     private function generateHashIn(OgonePayment $payment)
     {
-
-
         $fields = [];
         foreach ($this->getSortedParameters($payment) as $fieldName => $fieldValue)
         {
@@ -89,7 +73,7 @@ class Client
             throw new OgoneException('Invalid Ogone datas');
         }
 
-        $ogonePayment = $this->em->getRepository('HelloDiDiDistributorsBundle:OgonePayment')->findOneByOrderReference($fields['orderID']);
+        $ogonePayment = $this->em->getRepository('HelloDiAccountingBundle:OgonePayment')->findOneByOrderReference($fields['orderID']);
 
 
         if (null === $ogonePayment)
@@ -183,8 +167,6 @@ class Client
 
     public function generateForm(OgonePayment $payment)
     {
-
-
 
         $fields[] = sprintf('<form id="form1" name="form1" method="post" action="%s">', $this->submitUrl);
 

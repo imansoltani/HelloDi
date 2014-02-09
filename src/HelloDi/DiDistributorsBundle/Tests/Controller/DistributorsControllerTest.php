@@ -4,9 +4,9 @@ namespace HelloDi\DiDistributorsBundle\Tests\Controller;
 
 use HelloDi\DiDistributorsBundle\Controller\DistributorsController;
 use HelloDi\DiDistributorsBundle\Controller\TestController;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use HelloDi\DiDistributorsBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Account;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Tests\RequestContentProxy;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,8 +72,8 @@ class DistributorsControllerTest extends WebTestCase
 //    {
 //
 //
-//       $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
-//       $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
+//       $AccountDist=$this->em->getRepository('HelloDiAccountingBundle:Account')->find(1);
+//       $AccountRetailer=$this->em->getRepository('HelloDiAccountingBundle:Account')->find(5);
 //
 //       $tranretailer=new Transaction();
 //       $tranDist=new Transaction();
@@ -104,8 +104,8 @@ class DistributorsControllerTest extends WebTestCase
 //
 //     }
 //
-//        $AccountDist=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(1);
-//        $AccountRetailer=$this->em->getRepository('HelloDiDiDistributorsBundle:Account')->find(5);
+//        $AccountDist=$this->em->getRepository('HelloDiAccountingBundle:Account')->find(1);
+//        $AccountRetailer=$this->em->getRepository('HelloDiAccountingBundle:Account')->find(5);
 //
 //        if($this->assertGreaterThan($AccountDist->getAccBalance(),$AccountRetailer->getAccBalance()))
 //             die($AccountDist->getAccBalance().' >'.$AccountRetailer->getAccBalance().'       Balance Parent More Than Balance Child');

@@ -45,7 +45,7 @@ HelloDi\DiDistributorsBundle\Entity\User:
                 minMessage: "password_must_be_at_least_{{limit}}_characters_length"
                 maxMessage: "pasword_name_cannot_be_longer_than_{{limit}}_characters_length"
 
-HelloDi\DiDistributorsBundle\Entity\Account:
+HelloDi\AccountingBundle\Entity\Account:
     properties:
         accTerms:
             - Regex:
@@ -57,7 +57,7 @@ HelloDi\DiDistributorsBundle\Entity\Account:
             fields: accName
             message: 'This_account_name_is_already_in_use'
 
-HelloDi\DiDistributorsBundle\Entity\Transaction:
+HelloDi\AccountingBundle\Entity\Transaction:
         Fees:
             - Regex:
                 pattern: "/\d/"

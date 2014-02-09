@@ -15,7 +15,7 @@ use HelloDi\DiDistributorsBundle\Helper\SoapClientTimeout;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use HelloDi\DiDistributorsBundle\Entity\Transaction;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use Symfony\Component\Yaml\Dumper;
 
 class RetailersController extends Controller
@@ -266,7 +266,7 @@ $datetype=0;
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select('Tran')
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tran')
+                ->from('HelloDiAccountingBundle:Transaction','Tran')
                 ->where('Tran.Account =:Acc')->setParameter('Acc',$Account);
             if($data['TypeDate']==0)
             {
@@ -399,7 +399,7 @@ $datetype=0;
             $data=$form->getData();
             $qb=$em->createQueryBuilder();
             $qb->select(array('Tr'))
-                ->from('HelloDiDiDistributorsBundle:Transaction','Tr')
+                ->from('HelloDiAccountingBundle:Transaction','Tr')
                 /*for groupBy*/
                 ->leftJoin('Tr.Code','TrCo')->leftJoin('TrCo.Item','TrCoIt')
                 ->leftJoin('Tr.B2BLog','Trb2b')->leftJoin('Trb2b.Item','Trb2bIt')
@@ -801,10 +801,10 @@ $datetype=0;
     {
         $em = $this->getDoctrine()->getManager();
 
-        $lasttran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale','B2BLog'=>null),array('id'=>'desc'));
+        $lasttran = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('User'=>$this->getUser(),'tranAction'=>'sale','B2BLog'=>null),array('id'=>'desc'));
         if($lasttran)
         {
-            $trans = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
+            $trans = $em->getRepository('HelloDiAccountingBundle:Transaction')->findBy(array('Order'=>$lasttran->getOrder(),'tranAction'=>'sale'));
             $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$lasttran->getCode()->getItem(),'desclang'=>$lasttran->getOrder()->getLang()))->getDescdesc();
         }
         else
@@ -842,7 +842,7 @@ $datetype=0;
     private function BuyImtu(Request $request)
     {
         ini_set('max_execution_time', 80);
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $mobileNumber = $request->get('receiverMobileNumber');
         $senderMobileNumber = $request->get('senderMobileNumber');
@@ -1139,7 +1139,7 @@ $datetype=0;
     {
         $number = $request->get("receiver");
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         if(!$number || !is_numeric($number)) return  new Response("  <option value=''>Invalid Mobile Number</option>");
         $number = ltrim($number,"0+-");
@@ -1207,7 +1207,7 @@ $datetype=0;
         $operatorID = $request->get("operatorID");
         $country_name = $request->get("country");
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $country = $em->getRepository("HelloDiDiDistributorsBundle:Country")->findOneBy(array("name"=>$country_name));
 
@@ -1263,7 +1263,7 @@ $datetype=0;
 //start mostafa
     public function ShowItemsAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $myaccount = $this->getUser()->getAccount();
 
         $prices = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findBy(array('Account'=>$myaccount,'priceStatus'=>1));
@@ -1303,7 +1303,7 @@ $datetype=0;
     {
         $myaccount = $this->get('security.context')->getToken()->getUser()->getAccount();
         $em = $this->getDoctrine()->getManager();
-        $tran = $em->getRepository('HelloDiDiDistributorsBundle:Transaction')->find($tranid);
+        $tran = $em->getRepository('HelloDiAccountingBundle:Transaction')->find($tranid);
         if($tran == null || $tran->getAccount() == null || $tran->getAccount() != $myaccount)
         {
             throw new \Exception($this->get('translator')->trans('have_not_permission_%object%',array('object'=>$this->get('translator')->trans('Transaction',array(),'transaction')),'message'));

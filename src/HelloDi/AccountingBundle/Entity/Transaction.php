@@ -1,7 +1,13 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\AccountingBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as CTRL;
+use HelloDi\DiDistributorsBundle\Entity\B2BLog;
+use HelloDi\DiDistributorsBundle\Entity\Code;
+use HelloDi\DiDistributorsBundle\Entity\OrderCode;
+use HelloDi\DiDistributorsBundle\Entity\TaxHistory;
+use HelloDi\DiDistributorsBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -79,7 +85,7 @@ class Transaction
     private $TaxHistory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Account", inversedBy="Transactions")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $Account;
@@ -282,10 +288,10 @@ class Transaction
     /**
      * Set Account
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $account
+     * @param Account $account
      * @return Transaction
      */
-    public function setAccount(\HelloDi\DiDistributorsBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->Account = $account;
 
@@ -295,7 +301,7 @@ class Transaction
     /**
      * Get Account
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -305,10 +311,10 @@ class Transaction
     /**
      * Set User
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
+     * @param User $user
      * @return Transaction
      */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->User = $user;
 
@@ -318,7 +324,7 @@ class Transaction
     /**
      * Get User
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -328,10 +334,10 @@ class Transaction
     /**
      * Set Code
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Code $code
+     * @param Code $code
      * @return Transaction
      */
-    public function setCode(\HelloDi\DiDistributorsBundle\Entity\Code $code)
+    public function setCode(Code $code)
     {
         $this->Code = $code;
 
@@ -341,7 +347,7 @@ class Transaction
     /**
      * Get Code
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Code
+     * @return Code
      */
     public function getCode()
     {
@@ -354,11 +360,9 @@ class Transaction
 
     public function updateAccountBalance()
     {
-
-                $amount=$this->getTranAmount();
-                $currentBalance=$this->getAccount()->getAccBalance();
-                $this->getAccount()->setAccBalance($currentBalance+$amount);
-
+        $amount=$this->getTranAmount();
+        $currentBalance=$this->getAccount()->getAccBalance();
+        $this->getAccount()->setAccBalance($currentBalance+$amount);
     }
 
     /**
@@ -388,16 +392,16 @@ class Transaction
      */
     public function __construct()
     {
-        $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->OgonePayment = new ArrayCollection();
     }
     
     /**
      * Add OgonePayment
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @param OgonePayment $ogonePayment
      * @return Transaction
      */
-    public function addOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    public function addOgonePayment(OgonePayment $ogonePayment)
     {
         $this->OgonePayment[] = $ogonePayment;
     
@@ -407,9 +411,9 @@ class Transaction
     /**
      * Remove OgonePayment
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment
+     * @param OgonePayment $ogonePayment
      */
-    public function removeOgonePayment(\HelloDi\DiDistributorsBundle\Entity\OgonePayment $ogonePayment)
+    public function removeOgonePayment(OgonePayment $ogonePayment)
     {
         $this->OgonePayment->removeElement($ogonePayment);
     }
@@ -473,10 +477,10 @@ class Transaction
     /**
      * Set Order
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OrderCode $order
+     * @param OrderCode $order
      * @return Transaction
      */
-    public function setOrder(\HelloDi\DiDistributorsBundle\Entity\OrderCode $order = null)
+    public function setOrder(OrderCode $order = null)
     {
         $this->Order = $order;
     
@@ -486,7 +490,7 @@ class Transaction
     /**
      * Get Order
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\OrderCode 
+     * @return OrderCode
      */
     public function getOrder()
     {
@@ -494,36 +498,9 @@ class Transaction
     }
 
     /**
-     * Set tax
-     *
-     * @param float $tax
-     * @return Transaction
-     */
-    public function setTax($tax)
-    {
-        $this->tax = $tax;
-    
-        return $this;
-    }
-
-    /**
-     * Get tax
-     *
-     * @return float 
-     */
-    public function getTax()
-    {
-        return $this->tax;
-    }
-
-
-
-
-
-    /**
      * Set BuyingPrice
      *
-     * @param decimal $buyingPrice
+     * @param float $buyingPrice
      * @return Transaction
      */
     public function setBuyingPrice($buyingPrice)
@@ -536,7 +513,7 @@ class Transaction
     /**
      * Get BuyingPrice
      *
-     * @return decimal
+     * @return float
      */
     public function getBuyingPrice()
     {
@@ -546,10 +523,10 @@ class Transaction
     /**
      * Set TaxHistory
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistory
+     * @param TaxHistory $taxHistory
      * @return Transaction
      */
-    public function setTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistory = null)
+    public function setTaxHistory(TaxHistory $taxHistory = null)
     {
         $this->TaxHistory = $taxHistory;
     
@@ -559,7 +536,7 @@ class Transaction
     /**
      * Get TaxHistory
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\TaxHistory 
+     * @return TaxHistory
      */
     public function getTaxHistory()
     {
@@ -569,10 +546,10 @@ class Transaction
     /**
      * Set B2BLog
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLog
+     * @param B2BLog $b2BLog
      * @return Transaction
      */
-    public function setB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLog = null)
+    public function setB2BLog(B2BLog $b2BLog = null)
     {
         $this->B2BLog = $b2BLog;
     
@@ -582,7 +559,7 @@ class Transaction
     /**
      * Get B2BLog
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\B2BLog 
+     * @return B2BLog
      */
     public function getB2BLog()
     {

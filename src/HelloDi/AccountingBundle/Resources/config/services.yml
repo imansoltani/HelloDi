@@ -1,0 +1,7 @@
+parameters:
+#    hello_di_accounting.example.class: HelloDi\AccountingBundle\Example
+
+services:
+#    hello_di_accounting.example:
+#        class: %hello_di_accounting.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

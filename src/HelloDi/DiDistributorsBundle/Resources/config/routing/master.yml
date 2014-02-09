@@ -34,10 +34,6 @@ master_settings:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/setting.yml"
     prefix:   /admin/settings
 
-master_print:
-    resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/print.yml"
-    prefix:   /print
-
 master_tickets:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/Master/tickets.yml"
     prefix:   /tickets
