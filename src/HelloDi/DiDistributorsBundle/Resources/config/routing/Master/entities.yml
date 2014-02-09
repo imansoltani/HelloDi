@@ -28,15 +28,6 @@ EditUserEntities:
     pattern:  /{id}/users/{userid}/edit
     defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:EditUserEntities" }
 
-#address-------------------
-Ent_Address:
-    pattern:  /{id}/address
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:address" }
-
-Ent_Edit_Address:
-    pattern:  /{id}/address/{addrid}/edit
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Entiti:editaddress" }
-
 #info----------------------
 Ent_Info:
     pattern:  /{id}/info

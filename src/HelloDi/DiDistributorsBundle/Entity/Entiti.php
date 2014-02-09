@@ -1,5 +1,8 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -76,11 +79,6 @@ class Entiti
     private $Accounts;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\DetailHistory", mappedBy="Entiti")
-     */
-    private $DetailHistories;
-
-    /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="Entiti")
      */
     private $Users;
@@ -95,9 +93,8 @@ class Entiti
      */
     public function __construct()
     {
-        $this->Accounts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->DetailHistories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Accounts = new ArrayCollection();
+        $this->Users = new ArrayCollection();
     }
     
     /**
@@ -366,10 +363,10 @@ class Entiti
     /**
      * Add Accounts
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accounts
+     * @param Account $accounts
      * @return Entiti
      */
-    public function addAccount(\HelloDi\DiDistributorsBundle\Entity\Account $accounts)
+    public function addAccount(Account $accounts)
     {
         $this->Accounts[] = $accounts;
     
@@ -379,9 +376,9 @@ class Entiti
     /**
      * Remove Accounts
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Account $accounts
+     * @param Account $accounts
      */
-    public function removeAccount(\HelloDi\DiDistributorsBundle\Entity\Account $accounts)
+    public function removeAccount(Account $accounts)
     {
         $this->Accounts->removeElement($accounts);
     }
@@ -389,7 +386,7 @@ class Entiti
     /**
      * Get Accounts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getAccounts()
     {
@@ -397,45 +394,12 @@ class Entiti
     }
 
     /**
-     * Add DetailHistories
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\DetailHistory $detailHistories
-     * @return Entiti
-     */
-    public function addDetailHistorie(\HelloDi\DiDistributorsBundle\Entity\DetailHistory $detailHistories)
-    {
-        $this->DetailHistories[] = $detailHistories;
-    
-        return $this;
-    }
-
-    /**
-     * Remove DetailHistories
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\DetailHistory $detailHistories
-     */
-    public function removeDetailHistorie(\HelloDi\DiDistributorsBundle\Entity\DetailHistory $detailHistories)
-    {
-        $this->DetailHistories->removeElement($detailHistories);
-    }
-
-    /**
-     * Get DetailHistories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDetailHistories()
-    {
-        return $this->DetailHistories;
-    }
-
-    /**
      * Add Users
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $users
+     * @param User $users
      * @return Entiti
      */
-    public function addUser(\HelloDi\DiDistributorsBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->Users[] = $users;
     
@@ -445,9 +409,9 @@ class Entiti
     /**
      * Remove Users
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $users
+     * @param User $users
      */
-    public function removeUser(\HelloDi\DiDistributorsBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->Users->removeElement($users);
     }
@@ -455,7 +419,7 @@ class Entiti
     /**
      * Get Users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getUsers()
     {
@@ -465,10 +429,10 @@ class Entiti
     /**
      * Set Country
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Country $country
+     * @param Country $country
      * @return Entiti
      */
-    public function setCountry(\HelloDi\DiDistributorsBundle\Entity\Country $country)
+    public function setCountry(Country $country)
     {
         $this->Country = $country;
 
@@ -478,7 +442,7 @@ class Entiti
     /**
      * Get Country
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Country 
+     * @return Country
      */
     public function getCountry()
     {

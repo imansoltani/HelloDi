@@ -4,14 +4,12 @@ namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Code;
-use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Input;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
 use HelloDi\DiDistributorsBundle\Entity\Transaction;
 use HelloDi\DiDistributorsBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Account\AccountDistMasterType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditDistType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditProvType;
 use HelloDi\DiDistributorsBundle\Form\Account\EditRetailerType;
@@ -105,53 +103,32 @@ class AccountController extends Controller
 
     public function AddAccountProveMaster2StepAction(Request $request)
     {
-
-
         $em = $this->getDoctrine()->getManager();
 
-
-        $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
-
-
         $Account->setAccCreationDate(new \DateTime('now'));
         $Account->setAccTimeZone(null);
         $Account->setAccType(1);
         $Account->setAccBalance(0);
         $Account->setAccCreditLimit(0);
-
-
         $Account->setEntiti($Entiti);
         $Entiti->addAccount($Account);
-
 
         $form2step = $this->createForm(new MakeAccountIn2StepType($this->container->getParameter('Currencies.Account')), $Entiti, array('cascade_validation' => true));
 
         if ($request->isMethod('POST')) {
-            $form2step->bind($request);
+            $form2step->handleRequest($request);
 
             if ($form2step->isValid()) {
                 $em->persist($Entiti);
-                $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
-                $AdrsDetai->setAdrsDate(new \DateTime('now'));
-                $AdrsDetai->setEntiti($Entiti);
-                $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-                $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-                $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-                $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-                $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-                $AdrsDetai->setEntiti($Entiti);
-                $em->persist($AdrsDetai);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountProv'));
             }
-
         }
-
 
         return $this->render('HelloDiDiDistributorsBundle:Account:AddAccountProvMaster2Step.html.twig', array(
             'form2step' => $form2step->createView(),
@@ -161,10 +138,8 @@ class AccountController extends Controller
 
     public function AddAccountDistMaster2StepAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
 
-        $AdrsDetai = new DetailHistory();
         $Entiti = new Entiti();
         $Account = new Account();
         $User = new User();
@@ -177,7 +152,6 @@ class AccountController extends Controller
 
         $Account->setEntiti($Entiti);
         $Entiti->addAccount($Account);
-
 
         $User->setEntiti($Entiti);
         $Entiti->addUser($User);
@@ -194,18 +168,8 @@ class AccountController extends Controller
             $form2step->handleRequest($request);
             if ($form2step->isValid()) {
                 $em->persist($Entiti);
-                $AdrsDetai->setCountry($Entiti->getCountry());
                 $em->persist($Account);
                 $em->persist($User);
-                $AdrsDetai->setAdrsDate(new \DateTime('now'));
-                $AdrsDetai->setEntiti($Entiti);
-                $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-                $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-                $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-                $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-                $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-                $AdrsDetai->setEntiti($Entiti);
-                $em->persist($AdrsDetai);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
                 return $this->redirect($this->generateUrl('ShowMyAccountDist'));
@@ -2697,7 +2661,6 @@ catch(\Exception $e)
         $RetailerAccount = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $entity = $RetailerAccount->getEntiti();
-        $detahis=new DetailHistory();
         $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
 
         if($req->isMethod('post'))
@@ -2705,16 +2668,6 @@ catch(\Exception $e)
             $editForm->handleRequest($req);
             if($editForm->isValid())
             {
-                $detahis->setAdrs1($entity->getEntAdrs1());
-                $detahis->setAdrs2($entity->getEntAdrs2());
-                $detahis->setAdrs3($entity->getEntAdrs3());
-                $detahis->setAdrsCity($entity->getEntCity());
-                $detahis->setAdrsNp($entity->getEntNp());
-                $detahis->setCountry($entity->getCountry());
-                $detahis->setAdrsDate(new \DateTime('now'));
-                $detahis->setEntiti($entity);
-
-                $em->persist($detahis);
                 $em->flush();
 
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$RetailerAccount->getId(),'type'=>36));

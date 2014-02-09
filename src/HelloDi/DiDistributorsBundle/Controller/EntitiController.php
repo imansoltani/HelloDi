@@ -3,10 +3,8 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use HelloDi\DiDistributorsBundle\Entity\Account;
-use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\Account\AccountType;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EditAddressEntitiType;
 use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -355,88 +353,4 @@ public function  EditUserEntitiesAction(Request $request,$userid)
             'User'=>$user
         ));
 }
-
-
-
-
-
-    public  function addressAction(Request $req, $id)
-    {
-
-
-        $em=$this->getDoctrine()->getManager();
-        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
-        $Address=$entity->getDetailHistories();
-
-
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:Address.html.twig', array(
-            'pagination' => $Address,
-            'entity' => $entity,
-        ));
-
-    }
-
-    public  function EditAddressAction(Request $req,$addrid)
-    {
-
-        $em=$this->getDoctrine()->getManager();
-        $entity=$em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($addrid);
-
-        $DetaHis=new DetailHistory();
-        $form=$this->createForm(new EditAddressEntitiType(),$entity);
-
-        $entname=$entity->getEntName();
-        $entvatnumber=$entity->getEntVatNumber();
-        $enttel1=$entity->getEntTel1();
-        $enttel2=$entity->getEntTel2();
-        $entfax=$entity->getEntFax();
-        $entweb=$entity->getEntWebsite();
-
-        if($req->isMethod('POST'))
-        {
-
-            $form->handleRequest($req);
-            if($form->isValid($form))
-            {
-                $entity->setEntName($entname);
-                $entity->setEntVatNumber($entvatnumber);
-                $entity->setEntTel1($enttel1);
-                $entity->setEntTel2($enttel2);
-                $entity->setEntFax($entfax);
-                $entity->setEntWebsite($entweb);
-
-                $DetaHis->setAdrs1($entity->getEntAdrs1());
-                $DetaHis->setAdrs2($entity->getEntAdrs2());
-                $DetaHis->setAdrs3($entity->getEntAdrs3());
-                $DetaHis->setAdrsNp($entity->getEntNp());
-                $DetaHis->setAdrsCity($entity->getEntCity());
-                $DetaHis->setCountry($entity->getCountry());
-                $DetaHis->setEntiti($entity);
-                $DetaHis->setAdrsDate(new \DateTime('now'));
-                $em->persist($DetaHis);
-                $em->flush();
-
-                foreach($entity->getAccounts() as $Account)
-                {
-                    if($Account->getAccType()==0)
-                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>27));
-                    elseif($Account->getAccType()==2)
-                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
-                }
-
-
-                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-            }
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:EditAddress.html.twig', array(
-            'form_edit'=>$form->createView(),
-            'entity' => $entity,
-        ));
-    }
-
-
-
-
-
 }

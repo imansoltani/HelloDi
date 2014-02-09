@@ -3,7 +3,6 @@
 namespace HelloDi\DiDistributorsBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\DetailHistory;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
@@ -734,8 +733,6 @@ catch(\Exception $e)
 
         $user = new User();
 
-        $AdrsDetai = new DetailHistory();
-
         $Entiti = new Entiti();
 
         $Account = new Account();
@@ -771,21 +768,8 @@ catch(\Exception $e)
             if ($form->isValid()) {
 
             $em->persist($Entiti);
-
-            $AdrsDetai->setCountry($Entiti->getCountry());
-
             $em->persist($Account);
             $em->persist($user);
-
-            $AdrsDetai->setAdrsDate(new \DateTime('now'));
-            $AdrsDetai->setEntiti($Entiti);
-            $AdrsDetai->setAdrs1($Entiti->getEntAdrs1());
-            $AdrsDetai->setAdrs2($Entiti->getEntAdrs2());
-            $AdrsDetai->setAdrs3($Entiti->getEntAdrs3());
-            $AdrsDetai->setAdrsCity($Entiti->getEntCity());
-            $AdrsDetai->setAdrsNp($Entiti->getEntNp());
-            $AdrsDetai->setEntiti($Entiti);
-            $em->persist($AdrsDetai);
             $em->flush();
                 $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>13,'value'=>'   ('.$Account->getAccName().')'));
             $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
@@ -1153,7 +1137,6 @@ catch(\Exception $e){
         $Account = $em->getRepository('HelloDiDiDistributorsBundle:Account')->find($id);
 
         $entity = $Account->getEntiti();
-        $detahis=new DetailHistory();
         $editForm = $this->createForm(new EditEntitiRetailerType(),$entity);
 
         if($req->isMethod('post'))
@@ -1161,21 +1144,8 @@ catch(\Exception $e){
          $editForm->handleRequest($req);
          if($editForm->isValid())
          {
-
-             $detahis->setAdrs1($entity->getEntAdrs1());
-             $detahis->setAdrs2($entity->getEntAdrs2());
-             $detahis->setAdrs3($entity->getEntAdrs3());
-             $detahis->setAdrsCity($entity->getEntCity());
-             $detahis->setAdrsNp($entity->getEntNp());
-             $detahis->setCountry($entity->getCountry());
-             $detahis->setAdrsDate(new \DateTime('now'));
-             $detahis->setEntiti($entity);
-
-             $em->persist($detahis);
              $em->flush();
-
              $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
-
 
              $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
          }
