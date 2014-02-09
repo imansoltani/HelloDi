@@ -168,7 +168,7 @@ class ItemController extends Controller
                         if($price != null)
                         {
                             $price->setPriceStatus(0);
-                            $RetAccs = $accountdist->getChildrens()->toArray();
+                            $RetAccs = $accountdist->getChildren()->toArray();
                             if (count($RetAccs)> 0)
                             {
                                 $em ->createQueryBuilder()

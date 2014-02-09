@@ -715,7 +715,7 @@ try{
             if ($data['Account'])
                 $qb->where('Tr.Account =:account')->setParameter('account', $data['Account']);
             else
-                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildrens()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildren()->toArray())==0)?-1:$Account->getChildrens()->toArray());
 
 
                 $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));
@@ -799,7 +799,7 @@ catch(\Exception $e)
             }
             else
             {
-                $retailers = $Account->getChildrens();
+                $retailers = $Account->getChildren();
                 $html = $this->render('HelloDiDiDistributorsBundle:Print:SaleStatementPrint.html.twig',array(
                     'pagination' => $qb->getResult(),
                     'retailers' => $retailers
@@ -882,7 +882,7 @@ catch(\Exception $e)
                 'empty_value' => 'select_a_account',
                 'empty_data' => '',
                 'class' => 'HelloDiAccountingBundle:Account',
-                'property' => 'NamewithCurrency',
+                'property' => 'NameWithCurrency',
                 'required' => true,
                 'query_builder' => function (EntityRepository $er) use ($Account) {
                     return $er->createQueryBuilder('Acc')
@@ -1277,7 +1277,7 @@ catch(\Exception $e)
         $em = $this->getDoctrine()->getManager();
 
         $Account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        $query = $Account->getChildrens();
+        $query = $Account->getChildren();
 
 
         return $this->render('HelloDiDiDistributorsBundle:Account:ManageDistChildren.html.twig',
@@ -1593,7 +1593,7 @@ catch(\Exception $e)
                     $em->persist($pricehistory);
                 }
                 if ($price->getPriceStatus() == 0) {
-                    $RetAccs = $em->getRepository('HelloDiAccountingBundle:Account')->find($id)->getChildrens()->toArray();
+                    $RetAccs = $em->getRepository('HelloDiAccountingBundle:Account')->find($id)->getChildren()->toArray();
                     if(count($RetAccs)>0)
                     {
                         $em->createQueryBuilder()

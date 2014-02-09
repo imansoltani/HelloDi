@@ -24,12 +24,12 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, scale=2)
+     * @ORM\Column(type="decimal", nullable=true, scale=2, name="tran_booking_value")
      */
     private $tranBookingValue;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, name="tran_type")
      */
     private $tranType;
 
@@ -64,7 +64,7 @@ class Transaction
     private $tranDescription;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false, name="tran_action")
      */
     private $tranAction;
 
@@ -74,13 +74,13 @@ class Transaction
     private $tranBalance;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, name="Buying_Price", scale=2)
+     * @ORM\Column(type="decimal", nullable=true, name="buying_price", scale=2)
      */
     private $BuyingPrice;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", inversedBy="Transactions")
-     * @ORM\JoinColumn(name="taxhistory_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="tax_history_id", referencedColumnName="id", nullable=true)
      */
     private $TaxHistory;
 

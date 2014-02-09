@@ -23,7 +23,7 @@ class Account
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=true, name="accdefaultlanguage")
+     * @ORM\Column(type="string", length=2, nullable=true, name="acc_default_language")
      */
     private $accDefaultLanguage;
 
@@ -43,7 +43,7 @@ class Account
     private $accCurrency;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="credit_limit", scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", scale=2)
      */
     private $accCreditLimit;
 
@@ -70,7 +70,7 @@ class Account
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="Parent")
      */
-    private $Childrens;
+    private $children;
 
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="Account")
@@ -104,7 +104,7 @@ class Account
     private $Entiti;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Childrens")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="children")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $Parent;
@@ -113,7 +113,7 @@ class Account
      */
     public function __construct()
     {
-        $this->Childrens = new ArrayCollection();
+        $this->children = new ArrayCollection();
         $this->Inputs = new ArrayCollection();
         $this->Prices = new ArrayCollection();
         $this->Tickets = new ArrayCollection();
@@ -326,36 +326,36 @@ class Account
     }
 
     /**
-     * Add Childrens
+     * Add child
      *
-     * @param Account $childrens
+     * @param Account $children
      * @return Account
      */
-    public function addChildren(Account $childrens)
+    public function addChild(Account $children)
     {
-        $this->Childrens[] = $childrens;
+        $this->children[] = $children;
     
         return $this;
     }
 
     /**
-     * Remove Childrens
+     * Remove child
      *
-     * @param Account $childrens
+     * @param Account $children
      */
-    public function removeChildren(Account $childrens)
+    public function removeChild(Account $children)
     {
-        $this->Childrens->removeElement($childrens);
+        $this->children->removeElement($children);
     }
 
     /**
-     * Get Childrens
+     * Get Children
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getChildrens()
+    public function getChildren()
     {
-        return $this->Childrens;
+        return $this->children;
     }
 
     /**
@@ -587,7 +587,7 @@ class Account
         return $this->accName .', '. $this->accDefaultLanguage ;
     }
 
-    public function getNamewithCurrency()
+    public function getNameWithCurrency()
     {
         return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
     }
