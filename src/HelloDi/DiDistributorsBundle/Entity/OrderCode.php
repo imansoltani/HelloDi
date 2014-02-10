@@ -27,9 +27,9 @@ class OrderCode
     private $lang;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Order")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Pin", mappedBy="order")
      */
-    private $Transactions;
+    private $pins;
 
     /**
      * Get id
@@ -45,40 +45,40 @@ class OrderCode
      */
     public function __construct()
     {
-        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pins = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
-     * Add Transactions
+     * Add pins
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
+     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
      * @return OrderCode
      */
-    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
+    public function addPin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
     {
-        $this->Transactions[] = $transactions;
-    
+        $this->pins[] = $pins;
+
         return $this;
     }
 
     /**
-     * Remove Transactions
+     * Remove pins
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
+     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
      */
-    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
+    public function removePin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
     {
-        $this->Transactions->removeElement($transactions);
+        $this->pins->removeElement($pins);
     }
 
     /**
-     * Get Transactions
+     * Get pins
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTransactions()
+    public function getPins()
     {
-        return $this->Transactions;
+        return $this->pins;
     }
 
     /**

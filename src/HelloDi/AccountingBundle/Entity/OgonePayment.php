@@ -62,14 +62,13 @@ class OgonePayment
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="OgonePayment")
-     * @ORM\JoinColumn(name="related_user", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $User;
 
-
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
-     * @ORM\JoinColumn(name="related_transaction", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="ogonePayment")
+     * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
      */
     private $transaction;
 

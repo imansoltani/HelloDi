@@ -97,9 +97,16 @@ class B2BLog
     private $Item;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="B2BLog")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="sellerB2BLog")
+     * @ORM\JoinColumn(name="sell_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $Transactions;
+    private $sellerTransaction;
+
+    /**
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="commissionerB2BLog")
+     * @ORM\JoinColumn(name="comm_trans_id", referencedColumnName="id", nullable=true)
+     */
+    private $commissionerTransaction;
 
     /**
      * Get id
@@ -402,5 +409,51 @@ class B2BLog
     public function getSenderEmail()
     {
         return $this->SenderEmail;
+    }
+
+    /**
+     * Set sellerTransaction
+     *
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction
+     * @return B2BLog
+     */
+    public function setSellerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction)
+    {
+        $this->sellerTransaction = $sellerTransaction;
+    
+        return $this;
+    }
+
+    /**
+     * Get sellerTransaction
+     *
+     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     */
+    public function getSellerTransaction()
+    {
+        return $this->sellerTransaction;
+    }
+
+    /**
+     * Set commissionerTransaction
+     *
+     * @param \HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction
+     * @return B2BLog
+     */
+    public function setCommissionerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction = null)
+    {
+        $this->commissionerTransaction = $commissionerTransaction;
+    
+        return $this;
+    }
+
+    /**
+     * Get commissionerTransaction
+     *
+     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     */
+    public function getCommissionerTransaction()
+    {
+        return $this->commissionerTransaction;
     }
 }

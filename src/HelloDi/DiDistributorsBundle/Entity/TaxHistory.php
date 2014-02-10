@@ -15,19 +15,15 @@ class TaxHistory
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="datetime",nullable=true, name="Tax_End")
      */
     private $taxend;
 
-
-
     /**
      * @ORM\Column(type="float", nullable=false, name="tax")
      */
     private $vat;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="TaxHistories")
@@ -35,21 +31,17 @@ class TaxHistory
      */
     private $Tax;
 
-
-
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="TaxHistory")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Pin", mappedBy="taxHistory")
      */
-    private $Transactions;
-
-
+    private $pins;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pins = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -84,39 +76,6 @@ class TaxHistory
     public function getTaxend()
     {
         return $this->taxend;
-    }
-
-    /**
-     * Add Transactions
-     *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
-     * @return TaxHistory
-     */
-    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
-    {
-        $this->Transactions[] = $transactions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Transactions
-     *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
-     */
-    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
-    {
-        $this->Transactions->removeElement($transactions);
-    }
-
-    /**
-     * Get Transactions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTransactions()
-    {
-        return $this->Transactions;
     }
 
     /**
@@ -163,5 +122,38 @@ class TaxHistory
     public function getTax()
     {
         return $this->Tax;
+    }
+
+    /**
+     * Add pins
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     * @return TaxHistory
+     */
+    public function addPin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    {
+        $this->pins[] = $pins;
+    
+        return $this;
+    }
+
+    /**
+     * Remove pins
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     */
+    public function removePin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    {
+        $this->pins->removeElement($pins);
+    }
+
+    /**
+     * Get pins
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPins()
+    {
+        return $this->pins;
     }
 }

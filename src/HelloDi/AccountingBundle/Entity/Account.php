@@ -33,9 +33,9 @@ class Account
     private $accName;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="acc_balance", scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="acc_balance", precision=6, scale=2)
      */
-    private $accBalance;
+    private $accBalance = 0.0;
 
     /** 
      * @ORM\Column(type="string", length=3, nullable=false, name="acc_currency")
@@ -43,9 +43,9 @@ class Account
     private $accCurrency;
 
     /** 
-     * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", precision=6, scale=2)
      */
-    private $accCreditLimit;
+    private $accCreditLimit = 0.0;
 
     /** 
      * @ORM\Column(type="date", nullable=false, name="acc_creation_date")
@@ -108,6 +108,12 @@ class Account
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $Parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
+     */
+    private $creditLimit;
+
     /**
      * Constructor
      */
@@ -119,6 +125,7 @@ class Account
         $this->Tickets = new ArrayCollection();
         $this->Transactions = new ArrayCollection();
         $this->Users = new ArrayCollection();
+        $this->creditLimit = new ArrayCollection();
     }
     
     /**
@@ -326,12 +333,12 @@ class Account
     }
 
     /**
-     * Add child
+     * Add children
      *
      * @param Account $children
      * @return Account
      */
-    public function addChild(Account $children)
+    public function addChildren(Account $children)
     {
         $this->children[] = $children;
     
@@ -339,11 +346,11 @@ class Account
     }
 
     /**
-     * Remove child
+     * Remove children
      *
      * @param Account $children
      */
-    public function removeChild(Account $children)
+    public function removeChildren(Account $children)
     {
         $this->children->removeElement($children);
     }
@@ -582,17 +589,59 @@ class Account
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
         return $this->accName .', '. $this->accDefaultLanguage ;
     }
 
+    /**
+     * @return string
+     */
     public function getNameWithCurrency()
     {
         return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
     }
 
+    /**
+     * @return string
+     */
     public  function  __toString(){
         return $this->getAccName();
+    }
+
+    /**
+     * Add creditLimit
+     *
+     * @param CreditLimit $creditLimit
+     * @return Account
+     */
+    public function addCreditLimit(CreditLimit $creditLimit)
+    {
+        $this->creditLimit[] = $creditLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Remove creditLimit
+     *
+     * @param CreditLimit $creditLimit
+     */
+    public function removeCreditLimit(CreditLimit $creditLimit)
+    {
+        $this->creditLimit->removeElement($creditLimit);
+    }
+
+    /**
+     * Get creditLimit
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCreditLimit()
+    {
+        return $this->creditLimit;
     }
 }
