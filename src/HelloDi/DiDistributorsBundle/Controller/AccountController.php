@@ -715,7 +715,7 @@ try{
             if ($data['Account'])
                 $qb->where('Tr.Account =:account')->setParameter('account', $data['Account']);
             else
-                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildren()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+                $qb->where('Tr.Account In (:Acc)')->setParameter('Acc',(count($Account->getChildren()->toArray())==0)?-1:$Account->getChildren()->toArray());
 
 
                 $qb->andWhere($qb->expr()->like('Tr.tranAction', $qb->expr()->literal('sale')));

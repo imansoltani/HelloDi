@@ -197,7 +197,7 @@ class DistributorsController extends Controller
                 $qb->where('Tr.Account=:ac')->setParameter('ac',$data['Account']);
 
             else
-                $qb->where('Tr.Account IN (:Acc)')->setParameter('Acc',(count($Account->getChildren()->toArray())==0)?-1:$Account->getChildrens()->toArray());
+                $qb->where('Tr.Account IN (:Acc)')->setParameter('Acc',(count($Account->getChildren()->toArray())==0)?-1:$Account->getChildren()->toArray());
 
                 $qb->andWhere($qb->expr()->like('Tr.tranAction',$qb->expr()->literal('sale')));
                 if($data['DateStart']!='')
