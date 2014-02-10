@@ -324,45 +324,13 @@ class B2BLog
     {
         return $this->Item;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add Transactions
-     *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
-     * @return B2BLog
-     */
-    public function addTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
-    {
-        $this->Transactions[] = $transactions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Transactions
-     *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $transactions
-     */
-    public function removeTransaction(\HelloDi\AccountingBundle\Entity\Transaction $transactions)
-    {
-        $this->Transactions->removeElement($transactions);
-    }
-
-    /**
-     * Get Transactions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTransactions()
-    {
-        return $this->Transactions;
     }
 
     /**

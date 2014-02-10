@@ -149,7 +149,6 @@ class B2BReportController extends Controller
                     $priceDist = $em->getRepository('HelloDiDiDistributorsBundle:Price')->findOneBy(array('Item'=>$item,'Account'=>$accountRet->getParent()));
                     $clientTranId= $log->getClientTransactionID();
                     $com = $priceRet->getprice() - $priceDist->getprice();
-                    $taxhistory = $em->getRepository('HelloDiDiDistributorsBundle:TaxHistory')->findOneBy(array('Tax'=>$priceDist->getTax(),'taxend'=>null));
 
                     // For retailers
                     $tranretailer = new Transaction();
@@ -157,17 +156,9 @@ class B2BReportController extends Controller
                     $tranretailer->setTranAmount(-($priceRet->getPrice()));
                     $tranretailer->setTranFees(0);
                     $tranretailer->setTranDescription('ClientTransactionID: ' . $clientTranId);
-                    $tranretailer->setTranCurrency($accountRet->getAccCurrency());
                     $tranretailer->setTranDate(new \DateTime('now'));
-                    $tranretailer->setTranInsert(new \DateTime('now'));
-                    $tranretailer->setTranAction('sale');
-                    $tranretailer->setTranType(0);
-                    $tranretailer->setUser($user);
-                    $tranretailer->setTranBookingValue(null);
-                    $tranretailer->setTranBalance($accountRet->getAccBalance());
-                    $tranretailer->setTaxHistory($taxhistory);
-                    $tranretailer->setB2BLog($log);
-                    $log->addTransaction($tranretailer);
+                    $tranretailer->setSellerB2BLog($log);
+                    $log->setSellerTransaction($tranretailer);
                     $em->persist($tranretailer);
 
                     // For distributors
@@ -176,18 +167,9 @@ class B2BReportController extends Controller
                     $trandist->setTranAmount($com);
                     $trandist->setTranFees(0);
                     $trandist->setTranDescription('ClientTransactionID: ' . $clientTranId);
-                    $trandist->setTranCurrency($accountRet->getParent()->getAccCurrency());
                     $trandist->setTranDate(new \DateTime('now'));
-                    $trandist->setTranInsert(new \DateTime('now'));
-                    $trandist->setTranAction('com');
-                    $trandist->setTranType(1);
-                    $trandist->setUser($user);
-                    $trandist->setTranBookingValue(null);
-                    $trandist->setTranBalance($accountRet->getParent()->getAccBalance());
-                    $trandist->setTaxHistory($taxhistory);
-                    $trandist->setBuyingprice($priceDist->getPrice());
-                    $trandist->setB2BLog($log);
-                    $log->addTransaction($trandist);
+                    $trandist->setCommissionerB2BLog($log);
+                    $log->setCommissionerTransaction($trandist);
                     $em->persist($trandist);
                 }
                 else

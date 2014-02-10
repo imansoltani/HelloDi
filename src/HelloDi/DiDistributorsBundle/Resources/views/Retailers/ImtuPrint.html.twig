@@ -69,9 +69,13 @@
                     "valuepaid":denomination,
                 }) }}
             {% else %}
-
-                SerialNumber:aaa<br><br>
-
+                Print Date: {{ b2b.date|date('Y/m/d H:s:i') }}<br><br>
+                Entity Name: {{ b2b.User.Entiti.entName }}<br><br>
+                Operator: {{ b2b.Item.operator.name }}<br><br>
+                Transaction Id: {{ b2b.clientTransactionID }}<br><br>
+                Receiver Number: {{ b2b.mobileNumber }}<br><br>
+                Value Sent: {{ b2b.Item.itemFaceValue ~ " " ~ b2b.Item.itemCurrency }}<br><br>
+                Value Paid: {{ denomination }}<br><br>
             {% endif %}
 
         </div>
