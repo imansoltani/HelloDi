@@ -15,6 +15,10 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Account
 {
+    const DISTRIBUTOR = 0;
+    const PROVIDER = 1;
+    const RETAILER = 2;
+
     /** 
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")

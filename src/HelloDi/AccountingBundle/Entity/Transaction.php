@@ -30,7 +30,7 @@ class Transaction
     private $tranAmount;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="tran_fees", precision=6, scale=2)
+     * @ORM\Column(type="decimal", nullable=true, name="tran_fees", precision=6, scale=2)
      */
     private $tranFees = 0.0;
 
