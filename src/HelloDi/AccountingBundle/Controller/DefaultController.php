@@ -153,8 +153,8 @@ class DefaultController extends Controller
             if($account->getAccType() != Account::RETAILER)
                 throw new \Exception("Destination account must be retailer.");
 
-            $DiffAccountCreditLimit = $amount - $account->getCreditLimit();
-            if($DiffAccountCreditLimit>0)
+            $DiffAccountCreditLimit = $account->getCreditLimit() - $amount;
+            if($DiffAccountCreditLimit < 0)
                 $creditLimit->setTransaction($this->recordTransaction($DiffAccountCreditLimit,$account,$date,"credit limit"));
         }
         else
