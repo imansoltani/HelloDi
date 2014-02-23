@@ -1,9 +1,12 @@
 <?php
 namespace HelloDi\AccountingBundle\Entity;
 
+use HelloDi\DiDistributorsBundle\Entity\Api;
+use HelloDi\DiDistributorsBundle\Entity\Distributor;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
-use HelloDi\DiDistributorsBundle\Entity\Input;
 use HelloDi\DiDistributorsBundle\Entity\Price;
+use HelloDi\DiDistributorsBundle\Entity\Provider;
+use HelloDi\DiDistributorsBundle\Entity\Retailer;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,9 +18,10 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Account
 {
-    const DISTRIBUTOR = 0;
-    const PROVIDER = 1;
-    const RETAILER = 2;
+    const API = 1;
+    const PROVIDER = 2;
+    const DISTRIBUTOR = 3;
+    const RETAILER = 4;
 
     /** 
      * @ORM\Id
@@ -41,12 +45,7 @@ class Account
      */
     private $accBalance = 0.0;
 
-    /** 
-     * @ORM\Column(type="string", length=3, nullable=false, name="acc_currency")
-     */
-    private $accCurrency;
-
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", precision=6, scale=2)
      */
     private $accCreditLimit = 0.0;
@@ -65,21 +64,6 @@ class Account
      * @ORM\Column(type="integer", nullable=true, name="acc_terms")
      */
     private $accTerms;
-
-    /** 
-     * @ORM\Column(type="smallint", nullable=false, name="acc_type")
-     */
-    private $accType;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="Parent")
-     */
-    private $children;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="Account")
-     */
-    private $Inputs;
 
     /** 
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Account")
@@ -107,24 +91,36 @@ class Account
      */
     private $Entiti;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="children")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
-     */
-    private $Parent;
-
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
      */
     private $creditLimit;
 
     /**
+     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Api", mappedBy="account", cascade={"persist"})
+     */
+    private $api;
+
+    /**
+     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Provider", mappedBy="account", cascade={"persist"})
+     */
+    private $provider;
+
+    /**
+     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", mappedBy="account", cascade={"persist"})
+     */
+    private $distributor;
+
+    /**
+     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Retailer", mappedBy="account", cascade={"persist"})
+     */
+    private $retailer;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->children = new ArrayCollection();
-        $this->Inputs = new ArrayCollection();
         $this->Prices = new ArrayCollection();
         $this->Tickets = new ArrayCollection();
         $this->Transactions = new ArrayCollection();
@@ -196,29 +192,6 @@ class Account
     public function getAccBalance()
     {
         return $this->accBalance;
-    }
-
-    /**
-     * Set accCurrency
-     *
-     * @param string $accCurrency
-     * @return Account
-     */
-    public function setAccCurrency($accCurrency)
-    {
-        $this->accCurrency = $accCurrency;
-    
-        return $this;
-    }
-
-    /**
-     * Get accCurrency
-     *
-     * @return string 
-     */
-    public function getAccCurrency()
-    {
-        return $this->accCurrency;
     }
 
     /**
@@ -311,95 +284,6 @@ class Account
     public function getAccTerms()
     {
         return $this->accTerms;
-    }
-
-    /**
-     * Set accType
-     *
-     * @param integer $accType
-     * @return Account
-     */
-    public function setAccType($accType)
-    {
-        $this->accType = $accType;
-    
-        return $this;
-    }
-
-    /**
-     * Get accType
-     *
-     * @return integer 
-     */
-    public function getAccType()
-    {
-        return $this->accType;
-    }
-
-    /**
-     * Add children
-     *
-     * @param Account $children
-     * @return Account
-     */
-    public function addChildren(Account $children)
-    {
-        $this->children[] = $children;
-    
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param Account $children
-     */
-    public function removeChildren(Account $children)
-    {
-        $this->children->removeElement($children);
-    }
-
-    /**
-     * Get Children
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Add Inputs
-     *
-     * @param Input $inputs
-     * @return Account
-     */
-    public function addInput(Input $inputs)
-    {
-        $this->Inputs[] = $inputs;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Inputs
-     *
-     * @param Input $inputs
-     */
-    public function removeInput(Input $inputs)
-    {
-        $this->Inputs->removeElement($inputs);
-    }
-
-    /**
-     * Get Inputs
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getInputs()
-    {
-        return $this->Inputs;
     }
 
     /**
@@ -558,29 +442,6 @@ class Account
     }
 
     /**
-     * Set Parent
-     *
-     * @param Account $parent
-     * @return Account
-     */
-    public function setParent(Account $parent = null)
-    {
-        $this->Parent = $parent;
-    
-        return $this;
-    }
-
-    /**
-     * Get Parent
-     *
-     * @return Account
-     */
-    public function getParent()
-    {
-        return $this->Parent;
-    }
-
-    /**
      * Set accDefaultLanguage
      *
      * @param string $accDefaultLanguage
@@ -606,7 +467,7 @@ class Account
      */
     public function getNameWithCurrency()
     {
-        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getAccCurrency().' )' ;
+        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getDistributor()->getCurrency().' )' ;
     }
 
     /**
@@ -647,5 +508,109 @@ class Account
     public function getCreditLimit()
     {
         return $this->creditLimit;
+    }
+
+    /**
+     * Set api
+     *
+     * @param Api $api
+     * @return Account
+     */
+    public function setApi(Api $api = null)
+    {
+        $this->api = $api;
+    
+        return $this;
+    }
+
+    /**
+     * Get api
+     *
+     * @return Api
+     */
+    public function getApi()
+    {
+        return $this->api;
+    }
+
+    /**
+     * Set provider
+     *
+     * @param Provider $provider
+     * @return Account
+     */
+    public function setProvider(Provider $provider = null)
+    {
+        $this->provider = $provider;
+    
+        return $this;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return Provider
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set distributor
+     *
+     * @param Distributor $distributor
+     * @return Account
+     */
+    public function setDistributor(Distributor $distributor = null)
+    {
+        $this->distributor = $distributor;
+    
+        return $this;
+    }
+
+    /**
+     * Get distributor
+     *
+     * @return Distributor
+     */
+    public function getDistributor()
+    {
+        return $this->distributor;
+    }
+
+    /**
+     * Set retailer
+     *
+     * @param Retailer $retailer
+     * @return Account
+     */
+    public function setRetailer(Retailer $retailer = null)
+    {
+        $this->retailer = $retailer;
+    
+        return $this;
+    }
+
+    /**
+     * Get retailer
+     *
+     * @return Retailer
+     */
+    public function getRetailer()
+    {
+        return $this->retailer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccountType()
+    {
+        if($this->getApi()) return Account::API;
+        if($this->getProvider()) return Account::PROVIDER;
+        if($this->getDistributor()) return Account::DISTRIBUTOR;
+        if($this->getRetailer()) return Account::RETAILER;
+        return 0;
     }
 }

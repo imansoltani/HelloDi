@@ -1,5 +1,6 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -30,6 +31,19 @@ class TaxHistory
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
     private $Tax;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", mappedBy="taxHistory")
+     */
+    private $Distributors;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Distributors = new ArrayCollection();
+    }
     
     /**
      * Get id
@@ -91,10 +105,10 @@ class TaxHistory
     /**
      * Set Tax
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $tax
+     * @param Tax $tax
      * @return TaxHistory
      */
-    public function setTax(\HelloDi\DiDistributorsBundle\Entity\Tax $tax = null)
+    public function setTax(Tax $tax = null)
     {
         $this->Tax = $tax;
     
@@ -104,10 +118,43 @@ class TaxHistory
     /**
      * Get Tax
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Tax 
+     * @return Tax
      */
     public function getTax()
     {
         return $this->Tax;
+    }
+    
+    /**
+     * Add Distributors
+     *
+     * @param Distributor $distributors
+     * @return TaxHistory
+     */
+    public function addDistributor(Distributor $distributors)
+    {
+        $this->Distributors[] = $distributors;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Distributors
+     *
+     * @param Distributor $distributors
+     */
+    public function removeDistributor(Distributor $distributors)
+    {
+        $this->Distributors->removeElement($distributors);
+    }
+
+    /**
+     * Get Distributors
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDistributors()
+    {
+        return $this->Distributors;
     }
 }
