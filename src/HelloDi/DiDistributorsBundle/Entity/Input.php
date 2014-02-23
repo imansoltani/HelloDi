@@ -54,7 +54,7 @@ class Input
     private $Item;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Provider", inversedBy="inputs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Provider", inversedBy="inputs")
      * @ORM\JoinColumn(name="provider_id", referencedColumnName="id", nullable=false)
      */
     private $Account;

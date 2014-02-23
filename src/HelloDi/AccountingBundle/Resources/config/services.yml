@@ -5,5 +5,8 @@ services:
 #    hello_di_accounting.example:
 #        class: %hello_di_accounting.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-    Accounting:
+    accounting:
         class: HelloDi\AccountingBundle\Controller\DefaultController
+
+    reserve_container:
+        class: HelloDi\AccountingBundle\Helper\ReserveContainer
