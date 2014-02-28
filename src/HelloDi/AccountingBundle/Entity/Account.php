@@ -12,7 +12,7 @@ use HelloDi\DiDistributorsBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="account")
  */
@@ -23,7 +23,7 @@ class Account
     const DISTRIBUTOR = 3;
     const RETAILER = 4;
 
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -40,7 +40,7 @@ class Account
      */
     private $accName;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="acc_balance", precision=6, scale=2)
      */
     private $accBalance = 0.0;
@@ -50,42 +50,42 @@ class Account
      */
     private $accCreditLimit = 0.0;
 
-    /** 
+    /**
      * @ORM\Column(type="date", nullable=false, name="acc_creation_date")
      */
     private $accCreationDate;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=true, name="acc_time_zone")
      */
     private $accTimeZone;
 
-    /** 
+    /**
      * @ORM\Column(type="integer", nullable=true, name="acc_terms")
      */
     private $accTerms;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Account")
      */
     private $Prices;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="Account")
      */
     private $Tickets;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Account")
      */
     private $Transactions;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="Account")
      */
     private $Users;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Accounts")
      * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=true)
      */
@@ -127,11 +127,11 @@ class Account
         $this->Users = new ArrayCollection();
         $this->creditLimit = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -141,7 +141,7 @@ class Account
     /**
      * Get accDefaultLanguage
      *
-     * @return string 
+     * @return string
      */
     public function getAccDefaultLanguage()
     {
@@ -157,14 +157,14 @@ class Account
     public function setAccName($accName)
     {
         $this->accName = $accName;
-    
+
         return $this;
     }
 
     /**
      * Get accName
      *
-     * @return string 
+     * @return string
      */
     public function getAccName()
     {
@@ -180,14 +180,14 @@ class Account
     public function setAccBalance($accBalance)
     {
         $this->accBalance = $accBalance;
-    
+
         return $this;
     }
 
     /**
      * Get accBalance
      *
-     * @return float 
+     * @return float
      */
     public function getAccBalance()
     {
@@ -203,14 +203,14 @@ class Account
     public function setAccCreditLimit($accCreditLimit)
     {
         $this->accCreditLimit = $accCreditLimit;
-    
+
         return $this;
     }
 
     /**
      * Get accCreditLimit
      *
-     * @return float 
+     * @return float
      */
     public function getAccCreditLimit()
     {
@@ -226,14 +226,14 @@ class Account
     public function setAccCreationDate($accCreationDate)
     {
         $this->accCreationDate = $accCreationDate;
-    
+
         return $this;
     }
 
     /**
      * Get accCreationDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getAccCreationDate()
     {
@@ -249,14 +249,14 @@ class Account
     public function setAccTimeZone($accTimeZone)
     {
         $this->accTimeZone = $accTimeZone;
-    
+
         return $this;
     }
 
     /**
      * Get accTimeZone
      *
-     * @return string 
+     * @return string
      */
     public function getAccTimeZone()
     {
@@ -272,14 +272,14 @@ class Account
     public function setAccTerms($accTerms)
     {
         $this->accTerms = $accTerms;
-    
+
         return $this;
     }
 
     /**
      * Get accTerms
      *
-     * @return integer 
+     * @return integer
      */
     public function getAccTerms()
     {
@@ -295,7 +295,7 @@ class Account
     public function addPrice(Price $prices)
     {
         $this->Prices[] = $prices;
-    
+
         return $this;
     }
 
@@ -312,7 +312,7 @@ class Account
     /**
      * Get Prices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPrices()
     {
@@ -328,7 +328,7 @@ class Account
     public function addTicket(Ticket $tickets)
     {
         $this->Tickets[] = $tickets;
-    
+
         return $this;
     }
 
@@ -345,7 +345,7 @@ class Account
     /**
      * Get Tickets
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTickets()
     {
@@ -361,7 +361,7 @@ class Account
     public function addTransaction(Transaction $transactions)
     {
         $this->Transactions[] = $transactions;
-    
+
         return $this;
     }
 
@@ -378,7 +378,7 @@ class Account
     /**
      * Get Transactions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTransactions()
     {
@@ -394,7 +394,7 @@ class Account
     public function addUser(User $users)
     {
         $this->Users[] = $users;
-    
+
         return $this;
     }
 
@@ -411,7 +411,7 @@ class Account
     /**
      * Get Users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
@@ -427,7 +427,7 @@ class Account
     public function setEntiti(Entiti $entiti)
     {
         $this->Entiti = $entiti;
-    
+
         return $this;
     }
 
@@ -450,7 +450,7 @@ class Account
     public function setAccDefaultLanguage($accDefaultLanguage)
     {
         $this->accDefaultLanguage = $accDefaultLanguage;
-    
+
         return $this;
     }
 
@@ -459,7 +459,7 @@ class Account
      */
     public function getLabel()
     {
-        return $this->accName .', '. $this->accDefaultLanguage ;
+        return $this->accName . ', ' . $this->accDefaultLanguage;
     }
 
     /**
@@ -467,13 +467,14 @@ class Account
      */
     public function getNameWithCurrency()
     {
-        return $this->getAccName() .' | '.$this->getAccBalance().' ( '. $this->getDistributor()->getCurrency().' )' ;
+        return $this->getAccName() . ' | ' . $this->getAccBalance() . ' ( ' . $this->getDistributor()->getCurrency() . ' )';
     }
 
     /**
      * @return string
      */
-    public  function  __toString(){
+    public function  __toString()
+    {
         return $this->getAccName();
     }
 
@@ -486,7 +487,7 @@ class Account
     public function addCreditLimit(CreditLimit $creditLimit)
     {
         $this->creditLimit[] = $creditLimit;
-    
+
         return $this;
     }
 
@@ -503,7 +504,7 @@ class Account
     /**
      * Get creditLimit
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCreditLimit()
     {
@@ -519,7 +520,7 @@ class Account
     public function setApi(Api $api = null)
     {
         $this->api = $api;
-    
+
         return $this;
     }
 
@@ -542,7 +543,7 @@ class Account
     public function setProvider(Provider $provider = null)
     {
         $this->provider = $provider;
-    
+
         return $this;
     }
 
@@ -565,7 +566,7 @@ class Account
     public function setDistributor(Distributor $distributor = null)
     {
         $this->distributor = $distributor;
-    
+
         return $this;
     }
 
@@ -588,7 +589,7 @@ class Account
     public function setRetailer(Retailer $retailer = null)
     {
         $this->retailer = $retailer;
-    
+
         return $this;
     }
 
