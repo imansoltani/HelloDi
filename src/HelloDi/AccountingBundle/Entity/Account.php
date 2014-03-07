@@ -1,19 +1,15 @@
 <?php
 namespace HelloDi\AccountingBundle\Entity;
 
-use HelloDi\DiDistributorsBundle\Entity\Api;
-use HelloDi\DiDistributorsBundle\Entity\Distributor;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Price;
-use HelloDi\DiDistributorsBundle\Entity\Provider;
-use HelloDi\DiDistributorsBundle\Entity\Retailer;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="HelloDi\AccountingBundle\Entity\AccountRepository")
  * @ORM\Table(name="account")
  */
 class Account
@@ -49,6 +45,16 @@ class Account
      * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", precision=6, scale=2)
      */
     private $accCreditLimit = 0.0;
+
+    /**
+     * @ORM\Column(type="decimal", nullable=false, name="reserve", precision=6, scale=2)
+     */
+    private $reserve = 0.0;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false, name="type")
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="acc_creation_date")
@@ -95,26 +101,6 @@ class Account
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
      */
     private $creditLimit;
-
-    /**
-     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Api", mappedBy="account", cascade={"persist"})
-     */
-    private $api;
-
-    /**
-     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Provider", mappedBy="account", cascade={"persist"})
-     */
-    private $provider;
-
-    /**
-     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", mappedBy="account", cascade={"persist"})
-     */
-    private $distributor;
-
-    /**
-     * @ORM\OneToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Retailer", mappedBy="account", cascade={"persist"})
-     */
-    private $retailer;
 
     /**
      * Constructor
@@ -215,6 +201,52 @@ class Account
     public function getAccCreditLimit()
     {
         return $this->accCreditLimit;
+    }
+
+    /**
+     * Set reserve
+     *
+     * @param float $reserve
+     * @return Account
+     */
+    public function setReserve($reserve)
+    {
+        $this->reserve = $reserve;
+
+        return $this;
+    }
+
+    /**
+     * Get reserve
+     *
+     * @return float
+     */
+    public function getReserve()
+    {
+        return $this->reserve;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Account
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -465,14 +497,6 @@ class Account
     /**
      * @return string
      */
-    public function getNameWithCurrency()
-    {
-        return $this->getAccName() . ' | ' . $this->getAccBalance() . ' ( ' . $this->getDistributor()->getCurrency() . ' )';
-    }
-
-    /**
-     * @return string
-     */
     public function  __toString()
     {
         return $this->getAccName();
@@ -509,109 +533,5 @@ class Account
     public function getCreditLimit()
     {
         return $this->creditLimit;
-    }
-
-    /**
-     * Set api
-     *
-     * @param Api $api
-     * @return Account
-     */
-    public function setApi(Api $api = null)
-    {
-        $this->api = $api;
-
-        return $this;
-    }
-
-    /**
-     * Get api
-     *
-     * @return Api
-     */
-    public function getApi()
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set provider
-     *
-     * @param Provider $provider
-     * @return Account
-     */
-    public function setProvider(Provider $provider = null)
-    {
-        $this->provider = $provider;
-
-        return $this;
-    }
-
-    /**
-     * Get provider
-     *
-     * @return Provider
-     */
-    public function getProvider()
-    {
-        return $this->provider;
-    }
-
-    /**
-     * Set distributor
-     *
-     * @param Distributor $distributor
-     * @return Account
-     */
-    public function setDistributor(Distributor $distributor = null)
-    {
-        $this->distributor = $distributor;
-
-        return $this;
-    }
-
-    /**
-     * Get distributor
-     *
-     * @return Distributor
-     */
-    public function getDistributor()
-    {
-        return $this->distributor;
-    }
-
-    /**
-     * Set retailer
-     *
-     * @param Retailer $retailer
-     * @return Account
-     */
-    public function setRetailer(Retailer $retailer = null)
-    {
-        $this->retailer = $retailer;
-
-        return $this;
-    }
-
-    /**
-     * Get retailer
-     *
-     * @return Retailer
-     */
-    public function getRetailer()
-    {
-        return $this->retailer;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAccountType()
-    {
-        if($this->getApi()) return Account::API;
-        if($this->getProvider()) return Account::PROVIDER;
-        if($this->getDistributor()) return Account::DISTRIBUTOR;
-        if($this->getRetailer()) return Account::RETAILER;
-        return 0;
     }
 }

@@ -7,6 +7,3 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
     accounting:
         class: HelloDi\AccountingBundle\Controller\DefaultController
-
-    reserve_container:
-        class: HelloDi\AccountingBundle\Helper\ReserveContainer

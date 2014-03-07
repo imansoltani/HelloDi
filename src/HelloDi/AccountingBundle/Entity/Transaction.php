@@ -2,8 +2,6 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-use HelloDi\DiDistributorsBundle\Entity\B2BLog;
-use HelloDi\DiDistributorsBundle\Entity\Pin;
 
 /**
  * @ORM\Entity
@@ -206,7 +204,6 @@ class Transaction
     /**
      * @ORM\PrePersist
      */
-
     public function updateAccountBalance()
     {
         $amount=$this->getTranAmount();

@@ -196,4 +196,12 @@ class Distributor
     {
         return $this->account;
     }
+
+    /**
+     * @return string
+     */
+    public function getNameWithCurrency()
+    {
+        return $this->getAccount()->getAccName() . ' | ' . $this->getAccount()->getAccBalance() . ' ( ' . $this->getCurrency() . ' )';
+    }
 }

@@ -10,6 +10,7 @@ use HelloDi\DiDistributorsBundle\Entity\User;
  *
  * @ORM\Table(name="credit_limit")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class CreditLimit
 {
@@ -182,5 +183,13 @@ class CreditLimit
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateCreditLimit()
+    {
+        $this->getAccount()->setAccCreditLimit($this->getAmount());
     }
 }

@@ -21,7 +21,7 @@ class DefaultController extends Controller
     private $em;
 
     /**
-     *
+     * constructor
      */
     public function __construct()
     {
@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     private function checkAvailableBalance($amount, Account $account)
     {
-        return ($account->getAccBalance() + $account->getAccCreditLimit() - $this->get("reserve_container")->get($account)) > $amount;
+        return ($account->getAccBalance() + $account->getAccCreditLimit() - $account->getReserve()) > $amount;
     }
 
     /**
@@ -59,6 +59,15 @@ class DefaultController extends Controller
         return $transaction;
     }
 
+    /**
+     * @param float $amount
+     * @param User $user
+     * @param Account $destination
+     * @param string $descriptionForOrigin
+     * @param string $descriptionForDestination
+     * @return Transfer
+     * @throws \Exception
+     */
     public function processTransfer($amount, User $user, Account $destination, $descriptionForOrigin = "", $descriptionForDestination = "")
     {
         if(!$amount || $amount <= 0)
@@ -80,7 +89,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param int $amount
+     * @param float $amount
      * @param User $user
      * @param Account $account
      * @throws \Exception
@@ -109,36 +118,60 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param $amount
+     * @param float $amount
      * @param Account $account
-     * @return bool
+     * @param boolean $freeze
      * @throws \Exception
+     * @return boolean
      */
-    public function freezeAmount($amount, Account $account)
+    public function reserveAmount($amount, Account $account, $freeze)
     {
         if(!$amount || $amount <= 0)
             throw new \Exception("Amount must be larger than zero.");
 
-        if ($this->checkAvailableBalance($amount,$account))
+        // do freeze
+        if($freeze == true)
         {
-            $this->get("reserve_container")->increase($account,$amount);
+            if ($this->checkAvailableBalance($amount,$account))
+            {
+                $account->setReserve($account->getReserve()+$amount);
+                return true;
+            }
+            return false;
+        }
+        // do unfreeze
+        elseif ($freeze == false)
+        {
+            $account->setReserve($account->getReserve()-$amount);
             return true;
         }
-        return false;
+        throw new \Exception("Freeze must be set.");
     }
 
     /**
-     * @param $amount
-     * @param Account $account
+     * @param array $array array["account","amount,"description","fees"]
      * @return bool
-     * @throws \Exception
      */
-    public function unfreezeAmount($amount, Account $account)
+    public function processTransaction(array $array)
     {
-        if(!$amount || $amount <= 0)
-            throw new \Exception("Amount must be larger than zero.");
+        $groupByAccount = array();
+        foreach($array as $row)
+        {
+            $account_id = $row["account"]->getId();
+            if(!isset($groupByAccount[$account_id]))
+                $groupByAccount[$account_id] = array(0,$row["account"]); // row[amount,account]
+            $groupByAccount[$account_id][0] += $row["amount"];
+        }
 
-        $this->get("reserve_container")->decrease($account,$amount);
+        foreach($groupByAccount as $row) // row[amount,account]
+            if($row[0]<0 && !$this->checkAvailableBalance(-$row[0],$row[1]))
+                return false;
+
+        foreach($array as $row)
+            $this->createTransaction($row["amount"],$row["account"],$row["description"],$row["fees"]);
+
+        $this->em->flush();
+
         return true;
     }
 }
