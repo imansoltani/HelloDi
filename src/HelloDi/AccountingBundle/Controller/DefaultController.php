@@ -2,6 +2,7 @@
 
 namespace HelloDi\AccountingBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
@@ -23,9 +24,9 @@ class DefaultController extends Controller
     /**
      * constructor
      */
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
-        $this->em = $this->getDoctrine()->getManager();
+        $this->em = $em;
     }
 
     /**
@@ -37,7 +38,7 @@ class DefaultController extends Controller
      */
     private function checkAvailableBalance($amount, Account $account)
     {
-        return ($account->getAccBalance() + $account->getAccCreditLimit() - $account->getReserve()) > $amount;
+        return ($account->getAccBalance() + $account->getAccCreditLimit() - $account->getReserve()) >= $amount;
     }
 
     /**

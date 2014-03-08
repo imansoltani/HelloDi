@@ -6,12 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+    private $em;
+    public $accounting;
+
+    public function setUp()
     {
-        $client = static::createClient();
+        static::$kernel = static::createKernel();
+        static::$kernel->boot();
+        $this->em = static::$kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+        $this->accounting = static::$kernel->getContainer()->get('accounting');
+    }
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+    public function testCheckAvailableBalance()
+    {
+        $account = $this->getMock('\HelloDi\AccountingBundle\Entity\Account');
+        $account->expects($this->once())->method('getAccBalance')->will($this->returnValue(1000));
+        $account->expects($this->once())->method('getAccCreditLimit')->will($this->returnValue(1000));
+        $account->expects($this->once())->method('getReserve')->will($this->returnValue(1000));
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+
+        $method = new \ReflectionMethod($this->accounting, 'checkAvailableBalance');
+        $method->setAccessible(TRUE);
+
+        $this->assertTrue($method->invoke($this->accounting,500,$account));
+
+//        $this->assertTrue($this->accounting->checkAvailableBalance(1000,$account));
     }
 }
