@@ -3,6 +3,7 @@
 namespace HelloDi\AccountingBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
@@ -48,12 +49,11 @@ class DefaultController extends Controller
      * @param float $fees
      * @return Transaction
      */
-    private function createTransaction($amount, Account $account, $description = "", $fees = 0.0)
+    private function createTransaction($amount, Account $account, $description, $fees = 0.0)
     {
         $transaction = new Transaction();
         $transaction->setTranAmount($amount);
         $transaction->setAccount($account);
-        $transaction->setTranDate(new \DateTime());
         $transaction->setTranDescription($description);
         $transaction->setTranFees($fees);
         $this->em->persist($transaction);
@@ -71,8 +71,7 @@ class DefaultController extends Controller
      */
     public function processTransfer($amount, User $user, Account $destination, $descriptionForOrigin = "", $descriptionForDestination = "")
     {
-        if(!$amount || $amount <= 0)
-            throw new \Exception("Amount must be larger than zero.");
+        $this->isAmountAcceptable($amount);
 
         $transfer = new Transfer();
 
@@ -98,8 +97,7 @@ class DefaultController extends Controller
      */
     public function newCreditLimit($amount, User $user, Account $account)
     {
-        if(!$amount || $amount <= 0)
-            throw new \Exception("Amount must be larger than zero.");
+        $this->isAmountAcceptable($amount);
 
         $creditLimit = new CreditLimit();
 
@@ -127,8 +125,7 @@ class DefaultController extends Controller
      */
     public function reserveAmount($amount, Account $account, $freeze)
     {
-        if(!$amount || $amount <= 0)
-            throw new \Exception("Amount must be larger than zero.");
+        $this->isAmountAcceptable($amount);
 
         // do freeze
         if($freeze == true)
@@ -150,29 +147,54 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param array $array array["account","amount,"description","fees"]
+     * @param TransactionContainer[] $array
      * @return bool
      */
-    public function processTransaction(array $array)
+    public function processTransaction($array)
     {
-        $groupByAccount = array();
-        foreach($array as $row)
+        usort($array, function (TransactionContainer $a, TransactionContainer $b) {
+            if ($a->getAccount()->getId() == $b->getAccount()->getId()) {
+                return 0;
+            }
+            return ($a->getAccount()->getId() < $b->getAccount()->getId()) ? -1 : 1;
+        });
+
+        $this->em->beginTransaction();
+
+        /** @var Account $lastAccount */
+        $lastAccount = null;
+        $sum = 0;
+
+        foreach($array as $transactionContainer)
         {
-            $account_id = $row["account"]->getId();
-            if(!isset($groupByAccount[$account_id]))
-                $groupByAccount[$account_id] = array(0,$row["account"]); // row[amount,account]
-            $groupByAccount[$account_id][0] += $row["amount"];
+            /** var TransactionContainer $transactionContainer */
+            if(!$lastAccount && $lastAccount->getId() != $transactionContainer->getAccount()->getId())
+            {
+                if($sum<0 && !$this->checkAvailableBalance(-$sum,$lastAccount))
+                {
+                    $this->em->flush();
+                    $this->em->rollback();
+                    return false;
+                }
+                $this->createTransaction(
+                    $transactionContainer->getAmount(),
+                    $transactionContainer->getAccount(),
+                    $transactionContainer->getDescription(),
+                    $transactionContainer->getFees()
+                );
+                $lastAccount = $transactionContainer->getAccount();
+                $sum = 0;
+            }
+            $sum += $transactionContainer->getAmount();
         }
-
-        foreach($groupByAccount as $row) // row[amount,account]
-            if($row[0]<0 && !$this->checkAvailableBalance(-$row[0],$row[1]))
-                return false;
-
-        foreach($array as $row)
-            $this->createTransaction($row["amount"],$row["account"],$row["description"],$row["fees"]);
-
         $this->em->flush();
-
+        $this->em->commit();
         return true;
+    }
+
+    private function isAmountAcceptable($amount)
+    {
+        if(!$amount || $amount <= 0)
+            throw new \Exception("Amount must be larger than zero.");
     }
 }
