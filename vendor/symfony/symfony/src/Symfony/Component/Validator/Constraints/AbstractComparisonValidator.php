@@ -26,7 +26,11 @@ abstract class AbstractComparisonValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$this->compareValues($value, $constraint->value, $constraint)) {
+        if (null === $value) {
+            return;
+        }
+
+        if (!$this->compareValues($value, $constraint->value)) {
             $this->context->addViolation($constraint->message, array(
                 '{{ value }}' => $this->valueToString($constraint->value),
                 '{{ compared_value }}' => $this->valueToString($constraint->value),

@@ -13,7 +13,6 @@ namespace Symfony\Component\Validator\Tests\Constraints;
 
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\EqualToValidator;
-use Symfony\Component\Validator\Tests\Constraints\AbstractComparisonValidatorTestCase;
 
 /**
  * @author Daniel Holmes <daniel@danielholmes.org>
@@ -39,7 +38,8 @@ class EqualToValidatorTest extends AbstractComparisonValidatorTestCase
             array(3, 3),
             array(3, '3'),
             array('a', 'a'),
-            array(new \DateTime('2000-01-01'), new \DateTime('2000-01-01'))
+            array(new \DateTime('2000-01-01'), new \DateTime('2000-01-01')),
+            array(null, 1),
         );
     }
 

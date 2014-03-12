@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    $vendorDir . '/phpunit/dbunit',
+    $vendorDir . '/symfony/yaml',
+    $vendorDir . '/phpunit/php-text-template',
     $vendorDir . '/phpunit/phpunit-mock-objects',
     $vendorDir . '/phpunit/php-timer',
     $vendorDir . '/phpunit/php-token-stream',
@@ -13,5 +16,4 @@ return array(
     $vendorDir . '/phpunit/php-code-coverage',
     $vendorDir . '/phpunit/phpunit',
     $vendorDir . '/symfony/yaml',
-    $vendorDir . '/phpunit/php-text-template',
 );

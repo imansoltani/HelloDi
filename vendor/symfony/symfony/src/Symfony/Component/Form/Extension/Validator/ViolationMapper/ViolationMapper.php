@@ -16,7 +16,6 @@ use Symfony\Component\Form\Util\InheritDataAwareIterator;
 use Symfony\Component\PropertyAccess\PropertyPathIterator;
 use Symfony\Component\PropertyAccess\PropertyPathBuilder;
 use Symfony\Component\PropertyAccess\PropertyPathIteratorInterface;
-use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationPathIterator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -167,7 +166,7 @@ class ViolationMapper implements ViolationMapperInterface
 
         // Skip forms inheriting their parent data when iterating the children
         $childIterator = new \RecursiveIteratorIterator(
-            new InheritDataAwareIterator($form->all())
+            new InheritDataAwareIterator($form)
         );
 
         // Make the path longer until we find a matching child
