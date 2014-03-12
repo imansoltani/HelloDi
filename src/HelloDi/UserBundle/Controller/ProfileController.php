@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Controller;
+namespace HelloDi\UserBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -51,7 +51,10 @@ class ProfileController extends ContainerAware
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'profile.flash.updated');
+            $this->container->get('session')->set('_locale',$user->getLanguage());
+            $this->container->get('request')->setLocale($user->getLanguage());
+
+            $this->container->get('session')->getFlashBag()->add('success', $this->container->get('translator')->trans('the_operation_done_successfully',array(),'message'));
 
             return new RedirectResponse($this->getRedirectionUrl($user));
         }

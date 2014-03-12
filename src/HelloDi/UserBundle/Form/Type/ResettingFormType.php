@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace HelloDi\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,10 +21,10 @@ class ResettingFormType extends AbstractType
     {
         $builder->add('new', 'repeated', array(
             'type' => 'password',
-            'options' => array('translation_domain' => 'FOSUserBundle'),
-            'first_options' => array('label' => 'form.new_password'),
-            'second_options' => array('label' => 'form.new_password_confirmation'),
-            'invalid_message' => 'fos_user.password.mismatch',
+            'options' => array('translation_domain' => 'user'),
+            'first_options' => array('label' => 'PlainPassword_First'),
+            'second_options' => array('label' => 'PlainPassword_Second'),
+            'invalid_message' => 'password.mismatch',
         ));
     }
 

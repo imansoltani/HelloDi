@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Mailer;
+namespace HelloDi\UserBundle\Mailer;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -69,7 +69,7 @@ class Mailer implements MailerInterface
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom($fromEmail)
+            ->setFrom('i.soltani@hellobell.com','Iman Soltani')
             ->setTo($toEmail)
             ->setBody($body);
 

@@ -1,0 +1,7 @@
+parameters:
+#    hello_di_user.example.class: HelloDi\UserBundle\Example
+
+services:
+#    hello_di_user.example:
+#        class: %hello_di_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
