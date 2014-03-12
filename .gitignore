@@ -10,9 +10,6 @@ web/uploads/documents/*
 web/uploads/logos/*
 !web/uploads/logos/0.png
 
-vendor/gregwar/*
-vendor/knplabs/*
-
 # phpstorm
 .idea/workspace.xml
 
