@@ -108,7 +108,7 @@ class Validator implements ValidatorInterface
                 ? '"'.$containingValue.'"'
                 : 'the value of type '.gettype($containingValue);
 
-            throw new ValidatorException(sprintf('The metadata for '.$valueAsString.' does not support properties.'));
+            throw new ValidatorException(sprintf('The metadata for %s does not support properties.', $valueAsString));
         }
 
         foreach ($this->resolveGroups($groups) as $group) {
@@ -186,7 +186,7 @@ class Validator implements ValidatorInterface
                 );
             }
 
-            $context->validateValue($value, $constraint, $groups);
+            $context->validateValue($value, $constraint, '', $groups);
         }
 
         return $context->getViolations();

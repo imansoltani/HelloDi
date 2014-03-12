@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3768917551">
-    <data-source source="LOCAL" name="Data Source" uuid="af8351b6-c28f-4c58-925f-b4f2003491c1">
+  <component name="DataSourceManagerImpl" format="xml" hash="1055486952">
+    <data-source source="LOCAL" name="MySQL - @http://89.165.5.240" uuid="b7277ce2-17fb-4c7c-8535-ed460f3dd462">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://89.165.5.240:3306</jdbc-url>
       <user-name>root</user-name>
-      <default-dialect>MySQL</default-dialect>
-      <libraries>
-        <library>
-          <url>file://C:/a/mysql-connector-java-5.1.22-bin.jar</url>
-        </library>
-      </libraries>
+      <user-password>dfc2dfcfdfc6dfc6dfc5dfcedfc3df9bdf98df99</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
     </data-source>
   </component>
 </project>

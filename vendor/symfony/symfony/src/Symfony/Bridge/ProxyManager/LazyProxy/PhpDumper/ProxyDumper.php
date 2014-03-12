@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\DumperInterface;
 
 /**
- * Generates dumped php code of proxies via reflection.
+ * Generates dumped PHP code of proxies via reflection.
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
@@ -75,9 +75,9 @@ class ProxyDumper implements DumperInterface
 
             $instantiation new $proxyClass(
                 function (&\$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface \$proxy) use (\$container) {
-                    \$proxy->setProxyInitializer(null);
-
                     \$wrappedInstance = \$container->$methodName(false);
+
+                    \$proxy->setProxyInitializer(null);
 
                     return true;
                 }

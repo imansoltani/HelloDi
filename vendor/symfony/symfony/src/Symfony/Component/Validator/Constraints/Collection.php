@@ -12,8 +12,6 @@
 namespace Symfony\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 /**
@@ -49,6 +47,12 @@ class Collection extends Constraint
         }
 
         foreach ($this->fields as $fieldName => $field) {
+            // the XmlFileLoader and YamlFileLoader pass the field Optional
+            // and Required constraint as an array with exactly one element
+            if (is_array($field) && count($field) == 1) {
+                $this->fields[$fieldName] = $field = $field[0];
+            }
+
             if (!$field instanceof Optional && !$field instanceof Required) {
                 $this->fields[$fieldName] = $field = new Required($field);
             }

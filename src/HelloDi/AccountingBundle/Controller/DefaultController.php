@@ -66,7 +66,7 @@ class DefaultController extends Controller
      * @param Account $destination
      * @param string $descriptionForOrigin
      * @param string $descriptionForDestination
-     * @return Transfer
+     * @return Transfer|NULL
      * @throws \Exception
      */
     public function processTransfer($amount, User $user, Account $destination, $descriptionForOrigin = "", $descriptionForDestination = "")
@@ -77,10 +77,12 @@ class DefaultController extends Controller
 
         if($user->getAccount())
         {
+            if(!$this->checkAvailableBalance($amount,$user->getAccount()))
+                return null;
             $transfer->setOriginTransaction($this->createTransaction(-$amount,$user->getAccount(),$descriptionForOrigin));
         }
 
-        $transfer->setOriginTransaction($this->createTransaction($amount,$destination,$descriptionForDestination));
+        $transfer->setDestinationTransaction($this->createTransaction($amount,$destination,$descriptionForDestination));
 
         $transfer->setUser($user);
         $this->em->persist($transfer);
@@ -93,7 +95,7 @@ class DefaultController extends Controller
      * @param User $user
      * @param Account $account
      * @throws \Exception
-     * @return CreditLimit
+     * @return CreditLimit|NULL
      */
     public function newCreditLimit($amount, User $user, Account $account)
     {
@@ -103,6 +105,8 @@ class DefaultController extends Controller
 
         if($userAccount = $user->getAccount())
         {
+            if(!$this->checkAvailableBalance($amount,$user->getAccount()))
+                return null;
             $oldCreditLimit = $userAccount->getAccCreditLimit();
             if($amount > $oldCreditLimit)
                 $creditLimit->setTransaction($this->createTransaction($oldCreditLimit - $amount,$account,"credit limit"));
@@ -192,6 +196,10 @@ class DefaultController extends Controller
         return true;
     }
 
+    /**
+     * @param float $amount
+     * @throws \Exception
+     */
     private function isAmountAcceptable($amount)
     {
         if(!$amount || $amount <= 0)
