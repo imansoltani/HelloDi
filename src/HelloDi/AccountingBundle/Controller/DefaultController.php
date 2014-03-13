@@ -31,6 +31,16 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param float $amount
+     * @throws \Exception
+     */
+    private function isAmountAcceptable($amount)
+    {
+        if(!$amount || $amount <= 0)
+            throw new \Exception("Amount must be larger than zero.");
+    }
+
+    /**
      * if account not set, account of current user selected.
      *
      * @param float $amount
@@ -75,11 +85,11 @@ class DefaultController extends Controller
 
         $transfer = new Transfer();
 
-        if($user->getAccount())
+        if($userAccount = $user->getAccount())
         {
-            if(!$this->checkAvailableBalance($amount,$user->getAccount()))
+            if(!$this->checkAvailableBalance($amount,$userAccount))
                 return null;
-            $transfer->setOriginTransaction($this->createTransaction(-$amount,$user->getAccount(),$descriptionForOrigin));
+            $transfer->setOriginTransaction($this->createTransaction(-$amount,$userAccount,$descriptionForOrigin));
         }
 
         $transfer->setDestinationTransaction($this->createTransaction($amount,$destination,$descriptionForDestination));
@@ -105,9 +115,9 @@ class DefaultController extends Controller
 
         if($userAccount = $user->getAccount())
         {
-            if(!$this->checkAvailableBalance($amount,$user->getAccount()))
+            if(!$this->checkAvailableBalance($amount,$userAccount))
                 return null;
-            $oldCreditLimit = $userAccount->getAccCreditLimit();
+            $oldCreditLimit = $account->getAccCreditLimit();
             if($amount > $oldCreditLimit)
                 $creditLimit->setTransaction($this->createTransaction($oldCreditLimit - $amount,$account,"credit limit"));
         }
@@ -137,6 +147,7 @@ class DefaultController extends Controller
             if ($this->checkAvailableBalance($amount,$account))
             {
                 $account->setReserve($account->getReserve()+$amount);
+                $this->em->flush();
                 return true;
             }
             return false;
@@ -145,6 +156,7 @@ class DefaultController extends Controller
         elseif ($freeze == false)
         {
             $account->setReserve($account->getReserve()-$amount);
+            $this->em->flush();
             return true;
         }
         throw new \Exception("Freeze must be set.");
@@ -163,8 +175,6 @@ class DefaultController extends Controller
             return ($a->getAccount()->getId() < $b->getAccount()->getId()) ? -1 : 1;
         });
 
-        $this->em->beginTransaction();
-
         /** @var Account $lastAccount */
         $lastAccount = null;
         $sum = 0;
@@ -172,37 +182,37 @@ class DefaultController extends Controller
         foreach($array as $transactionContainer)
         {
             /** var TransactionContainer $transactionContainer */
-            if(!$lastAccount && $lastAccount->getId() != $transactionContainer->getAccount()->getId())
+            if($lastAccount && $lastAccount->getId() != $transactionContainer->getAccount()->getId())
             {
                 if($sum<0 && !$this->checkAvailableBalance(-$sum,$lastAccount))
-                {
-                    $this->em->flush();
-                    $this->em->rollback();
                     return false;
-                }
-                $this->createTransaction(
-                    $transactionContainer->getAmount(),
-                    $transactionContainer->getAccount(),
-                    $transactionContainer->getDescription(),
-                    $transactionContainer->getFees()
-                );
+                $lastAccount = null;
+            }
+
+            if(!$lastAccount)
+            {
                 $lastAccount = $transactionContainer->getAccount();
                 $sum = 0;
             }
+
             $sum += $transactionContainer->getAmount();
         }
-        $this->em->flush();
-        $this->em->commit();
-        return true;
-    }
 
-    /**
-     * @param float $amount
-     * @throws \Exception
-     */
-    private function isAmountAcceptable($amount)
-    {
-        if(!$amount || $amount <= 0)
-            throw new \Exception("Amount must be larger than zero.");
+        if($sum<0 && !$this->checkAvailableBalance(-$sum,$lastAccount))
+            return false;
+
+        foreach($array as $transactionContainer)
+        {
+            /** var TransactionContainer $transactionContainer */
+            $this->createTransaction(
+                $transactionContainer->getAmount(),
+                $transactionContainer->getAccount(),
+                $transactionContainer->getDescription(),
+                $transactionContainer->getFees()
+            );
+        }
+
+        $this->em->flush();
+        return true;
     }
 }
