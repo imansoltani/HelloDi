@@ -9,8 +9,8 @@ use HelloDi\AccountingBundle\Entity\Account;
 /**
  * Provider
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="provider")
+ * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\ProviderRepository")
  */
 class Provider
 {

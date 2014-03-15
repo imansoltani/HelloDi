@@ -8,8 +8,8 @@ use HelloDi\AccountingBundle\Entity\Account;
 /**
  * Retailer
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="retailer")
+ * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\RetailerRepository")
  */
 class Retailer
 {
