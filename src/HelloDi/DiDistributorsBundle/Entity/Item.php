@@ -72,7 +72,7 @@ class Item
     private $ItemDescs;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Item")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Item")
      */
     private $Prices;
 
@@ -378,10 +378,10 @@ class Item
     /**
      * Add Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param \HelloDi\PricingBundle\Entity\Price $prices
      * @return Item
      */
-    public function addPrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function addPrice(\HelloDi\PricingBundle\Entity\Price $prices)
     {
         $this->Prices[] = $prices;
     
@@ -391,9 +391,9 @@ class Item
     /**
      * Remove Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param \HelloDi\PricingBundle\Entity\Price $prices
      */
-    public function removePrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function removePrice(\HelloDi\PricingBundle\Entity\Price $prices)
     {
         $this->Prices->removeElement($prices);
     }

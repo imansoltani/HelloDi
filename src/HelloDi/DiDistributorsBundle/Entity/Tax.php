@@ -27,7 +27,7 @@ class Tax
     private $Country;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Tax")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Tax")
      */
     private $Prices;
 
@@ -171,10 +171,10 @@ class Tax
     /**
      * Add Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param \HelloDi\PricingBundle\Entity\Price $prices
      * @return Tax
      */
-    public function addPrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function addPrice(\HelloDi\PricingBundle\Entity\Price $prices)
     {
         $this->Prices[] = $prices;
     
@@ -184,9 +184,9 @@ class Tax
     /**
      * Remove Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param \HelloDi\PricingBundle\Entity\Price $prices
      */
-    public function removePrice(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function removePrice(\HelloDi\PricingBundle\Entity\Price $prices)
     {
         $this->Prices->removeElement($prices);
     }

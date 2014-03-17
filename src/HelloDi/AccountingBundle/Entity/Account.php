@@ -2,7 +2,7 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
-use HelloDi\DiDistributorsBundle\Entity\Price;
+use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -72,7 +72,7 @@ class Account
     private $accTerms;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Account")
      */
     private $Prices;
 
@@ -101,6 +101,11 @@ class Account
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
      */
     private $creditLimit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Model", mappedBy="account")
+     */
+    private $models;
 
     /**
      * Constructor
@@ -533,5 +538,38 @@ class Account
     public function getCreditLimit()
     {
         return $this->creditLimit;
+    }
+
+    /**
+     * Add models
+     *
+     * @param \HelloDi\PricingBundle\Entity\Model $models
+     * @return Account
+     */
+    public function addModel(\HelloDi\PricingBundle\Entity\Model $models)
+    {
+        $this->models[] = $models;
+    
+        return $this;
+    }
+
+    /**
+     * Remove models
+     *
+     * @param \HelloDi\PricingBundle\Entity\Model $models
+     */
+    public function removeModel(\HelloDi\PricingBundle\Entity\Model $models)
+    {
+        $this->models->removeElement($models);
+    }
+
+    /**
+     * Get models
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModels()
+    {
+        return $this->models;
     }
 }

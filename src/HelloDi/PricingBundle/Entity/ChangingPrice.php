@@ -1,5 +1,5 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\PricingBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -26,7 +26,7 @@ class ChangingPrice
     private $changeDate;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Price", inversedBy="ChangingPrices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Price", inversedBy="ChangingPrices")
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id", nullable=false)
      */
     private $Prices;
@@ -90,10 +90,10 @@ class ChangingPrice
     /**
      * Set Prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Price $prices
+     * @param Price $prices
      * @return ChangingPrice
      */
-    public function setPrices(\HelloDi\DiDistributorsBundle\Entity\Price $prices)
+    public function setPrices(Price $prices)
     {
         $this->Prices = $prices;
     
@@ -103,7 +103,7 @@ class ChangingPrice
     /**
      * Get Prices
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Price 
+     * @return Price
      */
     public function getPrices()
     {

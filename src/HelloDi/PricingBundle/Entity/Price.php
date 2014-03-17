@@ -1,6 +1,11 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\PricingBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\DiDistributorsBundle\Entity\Item;
+use HelloDi\DiDistributorsBundle\Entity\Tax;
 
 /** 
  * @ORM\Entity
@@ -36,14 +41,9 @@ class Price
     private $priceStatus;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\ChangingPrice", mappedBy="Prices")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="Prices")
      */
     private $ChangingPrices;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\PriceHistory", mappedBy="Prices")
-     */
-    private $PricesHistory;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="Prices")
@@ -67,8 +67,7 @@ class Price
      */
     public function __construct()
     {
-        $this->ChangingPrices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->PricesHistory = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ChangingPrices = new ArrayCollection();
     }
     
     /**
@@ -153,10 +152,10 @@ class Price
     /**
      * Add ChangingPrices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\ChangingPrice $changingPrices
+     * @param ChangingPrice $changingPrices
      * @return Price
      */
-    public function addChangingPrice(\HelloDi\DiDistributorsBundle\Entity\ChangingPrice $changingPrices)
+    public function addChangingPrice(ChangingPrice $changingPrices)
     {
         $this->ChangingPrices[] = $changingPrices;
     
@@ -166,9 +165,9 @@ class Price
     /**
      * Remove ChangingPrices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\ChangingPrice $changingPrices
+     * @param ChangingPrice $changingPrices
      */
-    public function removeChangingPrice(\HelloDi\DiDistributorsBundle\Entity\ChangingPrice $changingPrices)
+    public function removeChangingPrice(ChangingPrice $changingPrices)
     {
         $this->ChangingPrices->removeElement($changingPrices);
     }
@@ -184,45 +183,12 @@ class Price
     }
 
     /**
-     * Add PricesHistory
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\PriceHistory $pricesHistory
-     * @return Price
-     */
-    public function addPricesHistory(\HelloDi\DiDistributorsBundle\Entity\PriceHistory $pricesHistory)
-    {
-        $this->PricesHistory[] = $pricesHistory;
-    
-        return $this;
-    }
-
-    /**
-     * Remove PricesHistory
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\PriceHistory $pricesHistory
-     */
-    public function removePricesHistory(\HelloDi\DiDistributorsBundle\Entity\PriceHistory $pricesHistory)
-    {
-        $this->PricesHistory->removeElement($pricesHistory);
-    }
-
-    /**
-     * Get PricesHistory
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPricesHistory()
-    {
-        return $this->PricesHistory;
-    }
-
-    /**
      * Set Item
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param Item $item
      * @return Price
      */
-    public function setItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function setItem(Item $item)
     {
         $this->Item = $item;
     
@@ -232,7 +198,7 @@ class Price
     /**
      * Get Item
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Item 
+     * @return Item
      */
     public function getItem()
     {
@@ -242,10 +208,10 @@ class Price
     /**
      * Set Account
      *
-     * @param \HelloDi\AccountingBundle\Entity\Account $account
+     * @param Account $account
      * @return Price
      */
-    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->Account = $account;
     
@@ -260,11 +226,6 @@ class Price
     public function getAccount()
     {
         return $this->Account;
-    }
-
-    public function __toString()
-    {
-        return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
     }
 
     /**
@@ -293,10 +254,10 @@ class Price
     /**
      * Set Tax
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $tax
+     * @param Tax $tax
      * @return Price
      */
-    public function setTax(\HelloDi\DiDistributorsBundle\Entity\Tax $tax = null)
+    public function setTax(Tax $tax = null)
     {
         $this->Tax = $tax;
     
@@ -306,10 +267,15 @@ class Price
     /**
      * Get Tax
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Tax 
+     * @return Tax
      */
     public function getTax()
     {
         return $this->Tax;
+    }
+
+    public function __toString()
+    {
+        return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
     }
 }

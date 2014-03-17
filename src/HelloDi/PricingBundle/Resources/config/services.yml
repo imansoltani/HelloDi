@@ -1,0 +1,10 @@
+parameters:
+#    hello_di_pricing.example.class: HelloDi\PricingBundle\Example
+
+services:
+#    hello_di_pricing.example:
+#        class: %hello_di_pricing.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    pricing:
+        class: HelloDi\PricingBundle\Controller\DefaultController
+        arguments: [@doctrine.orm.default_entity_manager]

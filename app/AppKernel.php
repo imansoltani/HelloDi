@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             //new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new HelloDi\AccountingBundle\HelloDiAccountingBundle(),
             new HelloDi\UserBundle\HelloDiUserBundle(),
+            new HelloDi\PricingBundle\HelloDiPricingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
