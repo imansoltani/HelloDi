@@ -1,15 +1,11 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
+use HelloDi\UserBundle\Entity\User as BaseUser;
 use HelloDi\AccountingBundle\Entity\OgonePayment;
 
 /** 
  * @ORM\Entity
- * @ORM\AttributeOverrides({
- *      @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
- *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
- * })
  * @ORM\Table(name="fos_user")
  */
 class User extends BaseUser

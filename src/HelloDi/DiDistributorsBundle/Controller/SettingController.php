@@ -24,7 +24,7 @@ class SettingController extends Controller
     public function staffaddAction(Request $req)
     {
         $user = new User();
-        $Entiti = $this->get('security.context')->getToken()->getUser()->getEntiti();
+        $Entiti = $this->getUser()->getEntiti();
 
         $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User', 1), $user, array('cascade_validation' => true));
 

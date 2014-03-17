@@ -2,10 +2,9 @@
 
 namespace HelloDi\DiDistributorsBundle\Form\User;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+use HelloDi\UserBundle\Form\Type\ProfileFormType as BaseType;
 
 class UserProfileType extends BaseType
 {

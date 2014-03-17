@@ -53,7 +53,6 @@
 
                 </div>
                 <div class="control-group">
-                    {#{{ form_errors(form.username) }}#}
                     {{ form_label(form.username) }}
 
                     <div class="controls money">
@@ -132,7 +131,7 @@
 
                 <div class="form-actions" style="margin-bottom: 0" >
                     <input class="btn btn-primary" type="submit"  value="  {{ 'Create' | trans ({}, "common") }}">
-                    <a href="javascript:history.go(-1)" class="btn">  {{ 'Canncel' | trans ({}, "common") }}</a>
+                    <a href="javascript:history.go(-1)" class="btn">  {{ 'Cancel' | trans ({}, "common") }}</a>
                 </div>
 
             </form>

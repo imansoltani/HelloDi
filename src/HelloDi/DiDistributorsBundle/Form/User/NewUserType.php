@@ -4,7 +4,7 @@ namespace HelloDi\DiDistributorsBundle\Form\User;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use HelloDi\UserBundle\Form\Type\RegistrationFormType as BaseType;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 
 class NewUserType extends BaseType
