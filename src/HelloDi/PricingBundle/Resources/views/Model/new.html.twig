@@ -1,0 +1,146 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Manage Items Distributor
+{% endblock title %}
+
+{% set MU = '' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">Manage Items Distributor</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Manage Items Distributor
+{% endblock %}
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.json-2.4.min.js') }}"></script>
+
+
+    <script type="text/javascript">
+        var oTable;
+        $(document).ready(function() {
+
+            var data = $.evalJSON('{{ json_data|raw }}');
+
+            var result = "";
+            for(var i=0; i<data.length; i++)
+            {
+                var row = data[i];
+                result +=
+                    "<tr>" +
+                        "<td>"+(i+1)+"</td>" +
+                        "<td>"+row['itemName']+"</td>" +
+                        "<td>"+row['itemCode']+"</td>" +
+                        "<td>"+row['price']+"</td>" +
+                        "<td></td>" +
+                        "<td>"+row['id']+"</td>" +
+                    "</tr>";
+            }
+
+            $("#json-table").html(result);
+
+            oTable = Fix_Size({
+                "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
+                "sPaginationType": "full_numbers",
+                "aoColumnDefs": [
+                    { "aTargets": [4], "sType": "numeric",
+                        "mRender": function ( data, type ) {
+                        if(type === 'display') {
+                            return '<input class="price-input" type="text" value="' + data + '">';
+                        }
+                        return data;
+                    } },
+                    { "aTargets": [ 5 ], "sType": "numeric", "bVisible": false }
+                ]
+            });
+
+            $(".price-input").live('blur',function(){
+                oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 4 , false , false );
+            });
+        } );
+
+        function getJson()
+        {
+            var array = oTable.fnGetData(), result = [], i;
+
+            for(i=0;i<array.length;i++)
+            {
+                if(array[i][4].trim() != "")
+                    result.push({"itemId":array[i][5],"Amount":array[i][4]});
+            }
+
+            return $.toJSON(result);
+        }
+    </script>
+
+    <style>
+        .price-input {
+            font-size:12px !important;
+            font-weight: bold;
+        }
+    </style>
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+
+            <!-- /widget-header -->
+            <a class="dddd" onclick="alert(getJson())">getData</a>
+
+            <div class="widget-content">
+
+                <form method="post">
+                    <label for="name" style="display: inline">Model Name: </label>
+                    <input type="text" name="name" value="" id="name">
+                    <input type="hidden" name="json" value="" id="json">
+                    <input type="submit" class="btn btn-primary" onclick="$('#json').val(getJson());">
+                </form>
+
+                <div style="margin-top: 5px" class="tablediv">
+
+                    <div class="tab-content datatable">
+
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
+                                <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
+                            </tr>
+
+                            <tr class="input" >
+                                <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Amount" value="Search Amount" /></label></td>
+                            </tr>
+
+                            </thead>
+                            <tbody id="json-table">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

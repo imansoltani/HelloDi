@@ -1,6 +1,6 @@
 hello_di_pricing:
     resource: "@HelloDiPricingBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /pricing
 
 hello_di_user:
     resource: "@HelloDiUserBundle/Resources/config/routing.yml"

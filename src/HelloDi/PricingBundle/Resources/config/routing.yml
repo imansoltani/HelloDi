@@ -1,3 +1,7 @@
 hello_di_pricing_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: HelloDiPricingBundle:Default:index }
+
+hello_di_pricing_retailers:
+    pattern: /model/new
+    defaults: { _controller: HelloDiPricingBundle:Model:NewDistributorModel }
