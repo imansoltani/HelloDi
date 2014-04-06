@@ -22,10 +22,19 @@ class ModelController extends Controller
 
         $account = $em->getRepository("HelloDiAccountingBundle:Account")->find(2);//$this->getUser()->getAccount()
 
+        $model = new Model();
+
+        $form = $this->createFormBuilder($model)
+            ->add("name",'text',array('label' => 'Model Name','required'=>true,'translation_domain' => 'transaction'))
+            ->add("json",'hidden')
+            ->getForm();
+
+        $dataArray = [];
+
         if($request->isMethod('post'))
         {
-            $json = $request->get('json','[]');
-            $jsonArray = json_decode($json,true);
+            $form->handleRequest($request);
+            $jsonArray = json_decode($model->getJson(),true);
 
             if(is_array($jsonArray) && count($jsonArray)>0)
             {
@@ -35,22 +44,28 @@ class ModelController extends Controller
                     {
                         $price = $em->getRepository("HelloDiPricingBundle:Price")->find($row['PriceId']);
                         if(!$price || $price->getAccount()!=$account) throw new \Exception('Account has not this item.');
+                        if(!is_numeric($row['Amount'])) throw new \Exception('amount must be numeric.');
                         if($row['Amount'] < $price->getPrice()) throw new \Exception('amount must be larger than price.');
                     }
                 }
                 catch(\Exception $ex)
                 {
-                    return new Response($ex->getMessage());
+                    $form->addError(new FormError($ex->getMessage()));
                 }
-                $model = new Model();
-                $model->setName($request->get('name'));
+            }
+            else
+                $form->addError(new FormError("minimum count must be 1."));
+
+            if($form->isValid())
+            {
                 $model->setAccount($account);
-                $model->setJson($json);
                 $em->persist($model);
                 $em->flush();
                 return new Response('Done');
             }
-            return new Response('Error');
+
+            foreach(json_decode($model->getJson(),true) as $row)
+                $dataArray[$row['PriceId']] = $row['Amount'];
         }
 
         /** @var Query $prices */
@@ -59,12 +74,15 @@ class ModelController extends Controller
             ->from('HelloDiPricingBundle:Price','price')
             ->innerJoin('price.Item','item')
             ->where('price.Account = :acc')->setParameter('acc',$account)
-            ->getQuery();
+            ->getQuery()->getArrayResult();
+
+        foreach($prices as &$price)
+            $price['amount'] = isset($dataArray[$price['id']])?$dataArray[$price['id']]:"";
 
         return $this->render("HelloDiPricingBundle:Model:new.html.twig",array(
-            'json_data'=>json_encode($prices->getArrayResult())
+            'json_data'=>json_encode($prices),
+            'form' => $form->createView(),
         ));
-
     }
 
     public function EditDistributorModelAction(Request $request,$id)
@@ -84,40 +102,21 @@ class ModelController extends Controller
             ->add("json",'hidden')
             ->getForm();
 
-        /** @var Query $prices */
-        $prices = $em->createQueryBuilder()
-            ->select('price.id','item.itemCode','item.itemName','price.price')
-            ->from('HelloDiPricingBundle:Price','price')
-            ->innerJoin('price.Item','item')
-            ->where('price.Account = :acc')->setParameter('acc',$account)
-            ->getQuery()->getArrayResult();
-
-        $dataArray = [];
-
-        if($request->isMethod('get'))
-        {
-            foreach(json_decode($model->getJson(),true) as $row)
-                $dataArray[$row['PriceId']] = $row['Amount'];
-
-            foreach($prices as &$price)
-                $price['amount'] = isset($dataArray[$price['id']])?$dataArray[$price['id']]:"";
-        }
-        elseif($request->isMethod('post'))
+        if($request->isMethod('post'))
         {
             $form->handleRequest($request);
-            foreach(json_decode($model->getJson(),true) as $row)
-                $dataArray[$row['PriceId']] = $row['Amount'];
+            $jsonArray = json_decode($model->getJson(),true);
 
-            if(is_array($dataArray) && count($dataArray)>0)
+            if(is_array($jsonArray) && count($jsonArray)>0)
             {
                 try
                 {
-                    foreach($dataArray as $key=>$value)
+                    foreach($jsonArray as $row)
                     {
-                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($key);
+                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($row['PriceId']);
                         if(!$price || $price->getAccount()!=$account) throw new \Exception('Account has not this item.');
-                        if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
-                        if($value < $price->getPrice()) throw new \Exception('amount must be larger than price.');
+                        if(!is_numeric($row['Amount'])) throw new \Exception('amount must be numeric.');
+                        if($row['Amount'] < $price->getPrice()) throw new \Exception('amount must be larger than price.');
                     }
                 }
                 catch(\Exception $ex)
@@ -133,14 +132,26 @@ class ModelController extends Controller
                 $em->flush();
                 return new Response('Done');
             }
-            foreach($prices as &$price)
-                $price['amount'] = isset($dataArray[$price['id']])?$dataArray[$price['id']]:"";
         }
+
+        /** @var Query $prices */
+        $prices = $em->createQueryBuilder()
+            ->select('price.id','item.itemCode','item.itemName','price.price')
+            ->from('HelloDiPricingBundle:Price','price')
+            ->innerJoin('price.Item','item')
+            ->where('price.Account = :acc')->setParameter('acc',$account)
+            ->getQuery()->getArrayResult();
+
+        $dataArray = [];
+        foreach(json_decode($model->getJson(),true) as $row)
+            $dataArray[$row['PriceId']] = $row['Amount'];
+
+        foreach($prices as &$price)
+            $price['amount'] = isset($dataArray[$price['id']])?$dataArray[$price['id']]:"";
 
         return $this->render("HelloDiPricingBundle:Model:edit.html.twig",array(
             'json_data'=>json_encode($prices),
             'form' => $form->createView(),
         ));
-
     }
 }
