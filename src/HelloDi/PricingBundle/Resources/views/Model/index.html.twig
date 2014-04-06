@@ -1,0 +1,92 @@
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+
+{% block title %}
+    Manage Items Distributor
+{% endblock title %}
+
+{% set MU = '' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">Manage Items Distributor</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Manage Items Distributor
+{% endblock %}
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            Fix_Size();
+        } );
+
+    </script>
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+    <div class="widget stacked">
+
+        <!-- /widget-header -->
+
+        <div class="widget-content">
+            <a class=" btn btn-primary btn-large" href="{{ path('hello_di_pricing_model_index') }}">
+                {{ 'Add Model' | trans ({}, "item") }}
+            </a>
+
+
+            <div style="margin-top: 5px" class="tablediv">
+
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                                <th>{{ 'Name' | trans ({}, "item") }}</th>
+                            </tr>
+
+                            <tr class="input" >
+                                <td><label><input type="text" name="search_Id" value="Search Id" class="search_init"/></label></td>
+                                <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                                <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            {% for model in models %}
+                                <tr>
+
+                                    <td >{{ model.id }}</td>
+                                    <td class="td-actions" >
+                                        <a class="btn_actions" href="{{ path('hello_di_pricing_model_edit',{'id':model.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                    </td>
+                                    <td>{{ model.name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

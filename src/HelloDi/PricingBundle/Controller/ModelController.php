@@ -3,7 +3,9 @@
 namespace HelloDi\PricingBundle\Controller;
 
 use Doctrine\ORM\Query;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\PricingBundle\Entity\Model;
+use HelloDi\PricingBundle\Form\ModelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,21 +15,28 @@ class ModelController extends Controller
 {
     public function indexModelAction()
     {
+        $em = $this->getDoctrine()->getManager();
 
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
+
+        $models = $em->getRepository("HelloDiPricingBundle:Model")->findBy(array("account"=>$account));
+
+        return $this->render("HelloDiPricingBundle:Model:index.html.twig",array(
+            'models' => $models
+        ));
     }
 
     public function NewDistributorModelAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository("HelloDiAccountingBundle:Account")->find(2);//$this->getUser()->getAccount()
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
 
         $model = new Model();
 
-        $form = $this->createFormBuilder($model)
-            ->add("name",'text',array('label' => 'Model Name','required'=>true,'translation_domain' => 'transaction'))
-            ->add("json",'hidden')
-            ->getForm();
+        $form = $this->createForm(new ModelType(),$model);
 
         $dataArray = [];
 
@@ -87,9 +96,10 @@ class ModelController extends Controller
 
     public function EditDistributorModelAction(Request $request,$id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository("HelloDiAccountingBundle:Account")->find(2);//$this->getUser()->getAccount()
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
 
         $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
 
@@ -97,10 +107,7 @@ class ModelController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
         }
 
-        $form = $this->createFormBuilder($model)
-            ->add("name",'text',array('label' => 'Model Name','required'=>true,'translation_domain' => 'transaction'))
-            ->add("json",'hidden')
-            ->getForm();
+        $form = $this->createForm(new ModelType(),$model);
 
         if($request->isMethod('post'))
         {
