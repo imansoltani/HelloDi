@@ -44,7 +44,7 @@
                         "<td>"+row['itemName']+"</td>" +
                         "<td>"+row['itemCode']+"</td>" +
                         "<td>"+row['price']+"</td>" +
-                        "<td></td>" +
+                        "<td>"+row['amount']+"</td>" +
                         "<td>"+row['id']+"</td>" +
                     "</tr>";
             }
@@ -99,17 +99,12 @@
         <div class="widget stacked">
 
             <!-- /widget-header -->
-            <a class="dddd" onclick="alert(getJson())">getData</a>
 
             <div class="widget-content">
 
-                <form method="post">
-                    <label for="name" style="display: inline">Model Name: </label>
-                    <input type="text" name="name" value="" id="name">
-                    <input type="hidden" name="json" value="" id="json">
-                    <input type="submit" value="Save" class="btn btn-primary" onclick="$('#json').val(getJson());">
-                </form>
-
+                <div style="color: red">
+                    {{ form_errors(form) }}
+                </div>
                 <div style="margin-top: 5px" class="tablediv">
 
                     <div class="tab-content datatable">
@@ -139,6 +134,22 @@
 
                     </div>
                 </div>
+
+
+
+                <form method="post" class="form-horizontal" style="margin-top: 5px">
+                    <div class="control-group">
+                        {{ form_label(form.name) }}
+                        <div class="controls money">
+                            {{ form_widget(form.name) }} <span class="icon-certificate"></span>
+                        </div>
+                    </div>
+                    {{ form_widget(form.json, { 'id': 'json' }) }}
+                    {{ form_widget(form._token) }}
+                    <div class="form-actions" style="margin-bottom: 0">
+                        <input type="submit" value="Save" class="btn btn-primary" onclick="$('#json').val(getJson());">
+                    </div>
+                </form>
 
             </div>
         </div>

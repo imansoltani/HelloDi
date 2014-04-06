@@ -39,6 +39,10 @@ class Model
      */
     private $account;
 
+    /**
+     * @ORM\Column(type="text", nullable=true, name="data")
+     */
+    private $json;
 
     /**
      * Get id
@@ -117,5 +121,28 @@ class Model
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set json
+     *
+     * @param string $json
+     * @return Model
+     */
+    public function setJson($json)
+    {
+        $this->json = $json;
+    
+        return $this;
+    }
+
+    /**
+     * Get json
+     *
+     * @return string 
+     */
+    public function getJson()
+    {
+        return $this->json;
     }
 }

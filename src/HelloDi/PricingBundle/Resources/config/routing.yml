@@ -5,3 +5,7 @@ hello_di_pricing_homepage:
 hello_di_pricing_retailers:
     pattern: /model/new
     defaults: { _controller: HelloDiPricingBundle:Model:NewDistributorModel }
+
+hello_di_pricing_retailers_edit:
+    pattern: /model/edit/{id}
+    defaults: { _controller: HelloDiPricingBundle:Model:EditDistributorModel }
