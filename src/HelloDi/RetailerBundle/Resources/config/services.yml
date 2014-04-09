@@ -1,0 +1,7 @@
+parameters:
+#    hello_di_retailer.example.class: HelloDi\RetailerBundle\Example
+
+services:
+#    hello_di_retailer.example:
+#        class: %hello_di_retailer.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
