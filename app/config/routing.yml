@@ -1,3 +1,15 @@
+hello_di_retailer:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+hello_di_distributor:
+    resource: "@HelloDiDistributorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+hello_di_master:
+    resource: "@HelloDiMasterBundle/Resources/config/routing.yml"
+    prefix:   /
+
 hello_di_pricing:
     resource: "@HelloDiPricingBundle/Resources/config/routing.yml"
     prefix:   /pricing
