@@ -9,7 +9,6 @@ use HelloDi\PricingBundle\Form\ModelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class ModelController extends Controller
 {
@@ -70,7 +69,8 @@ class ModelController extends Controller
                 $model->setAccount($account);
                 $em->persist($model);
                 $em->flush();
-                return new Response('Done');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                return $this->redirect($this->generateUrl("hello_di_pricing_model_index"));
             }
 
             foreach(json_decode($model->getJson(),true) as $row)
@@ -103,7 +103,7 @@ class ModelController extends Controller
 
         $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
 
-        if (!$model) {
+        if (!$model || $model->getAccount() != $account) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
         }
 
@@ -136,8 +136,9 @@ class ModelController extends Controller
 
             if($form->isValid())
             {
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 $em->flush();
-                return new Response('Done');
+                return $this->redirect($this->generateUrl("hello_di_pricing_model_index"));
             }
         }
 
@@ -160,5 +161,24 @@ class ModelController extends Controller
             'json_data'=>json_encode($prices),
             'form' => $form->createView(),
         ));
+    }
+
+    public function DeleteDistributorModelAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
+
+        $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
+
+        if (!$model || $model->getAccount() != $account) {
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
+        }
+
+        $em->remove($model);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+        return $this->redirect($this->generateUrl("hello_di_pricing_model_index"));
     }
 }

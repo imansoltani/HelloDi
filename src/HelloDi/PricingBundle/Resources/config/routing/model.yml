@@ -9,3 +9,7 @@ hello_di_pricing_model_add:
 hello_di_pricing_model_edit:
     pattern: /{id}/edit
     defaults: { _controller: HelloDiPricingBundle:Model:EditDistributorModel }
+
+hello_di_pricing_model_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: HelloDiPricingBundle:Model:DeleteDistributorModel }

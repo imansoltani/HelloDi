@@ -3,12 +3,14 @@
 namespace HelloDi\PricingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use HelloDi\AccountingBundle\Entity\Account;
 
 /**
  * Model
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Model
 {
@@ -40,7 +42,7 @@ class Model
     private $account;
 
     /**
-     * @ORM\Column(type="text", nullable=true, name="data")
+     * @var String
      */
     private $json;
 
@@ -103,10 +105,10 @@ class Model
     /**
      * Set account
      *
-     * @param \HelloDi\AccountingBundle\Entity\Account $account
+     * @param Account $account
      * @return Model
      */
-    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
     
@@ -126,23 +128,60 @@ class Model
     /**
      * Set json
      *
-     * @param string $json
+     * @param string|array $json
+     * @throws \Exception
      * @return Model
      */
     public function setJson($json)
     {
+        if(is_array($json)) $json = json_encode($json);
         $this->json = $json;
-    
+
+        if($this->id)
+        {
+            if(!file_put_contents($this->getUploadRootDir().$this->id.".json",$this->json))
+                throw new \Exception('unable to save model in file');
+        }
+
         return $this;
     }
 
     /**
      * Get json
      *
-     * @return string 
+     * @return string
      */
     public function getJson()
     {
-        return $this->json;
+        if($this->id && (!$this->json || $this->json==""))
+            $this->json = file_get_contents($this->getUploadRootDir().$this->id.".json");
+
+        return $this->json?$this->json:"[]";
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/uploads/models/';
+    }
+
+    /**
+     * @ORM\postPersist
+     */
+    public function createJsonFile()
+    {
+        if(!file_put_contents($this->getUploadRootDir().$this->id.".json",$this->json))
+            throw new \Exception('unable to save model in file');
+    }
+
+    /**
+     * @ORM\preRemove
+     */
+    public function removeJsonFile()
+    {
+        if(!unlink($this->getUploadRootDir().$this->id.".json"))
+            throw new \Exception('unable to delete model file.');
     }
 }

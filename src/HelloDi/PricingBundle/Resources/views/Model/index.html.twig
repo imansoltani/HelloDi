@@ -43,7 +43,7 @@
         <!-- /widget-header -->
 
         <div class="widget-content">
-            <a class=" btn btn-primary btn-large" href="{{ path('hello_di_pricing_model_index') }}">
+            <a class=" btn btn-primary btn-large" href="{{ path('hello_di_pricing_model_add') }}">
                 {{ 'Add Model' | trans ({}, "item") }}
             </a>
 
@@ -72,7 +72,9 @@
 
                                     <td >{{ model.id }}</td>
                                     <td class="td-actions" >
-                                        <a class="btn_actions" href="{{ path('hello_di_pricing_model_edit',{'id':model.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                        <a class="btn_actions" href="{{ path('hello_di_pricing_model_edit',{'id':model.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
+                                        <a class="btn_actions YesNoMessage" href="{{ path('hello_di_pricing_model_delete',{'id':model.id}) }}"
+                                           header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Delete' | trans ({}, "message") }}">{{ 'Delete' | trans ({}, "common") }}</a>
                                     </td>
                                     <td>{{ model.name }}</td>
                                 </tr>

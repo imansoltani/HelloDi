@@ -31,38 +31,21 @@
     <script type="text/javascript">
         var oTable;
         $(document).ready(function() {
-
-            var data = $.evalJSON('{{ json_data|raw }}');
-
-            var result = "";
-            for(var i=0; i<data.length; i++)
-            {
-                var row = data[i];
-                result +=
-                    "<tr>" +
-                        "<td>"+(i+1)+"</td>" +
-                        "<td>"+row['itemName']+"</td>" +
-                        "<td>"+row['itemCode']+"</td>" +
-                        "<td>"+row['price']+"</td>" +
-                        "<td>"+row['amount']+"</td>" +
-                        "<td>"+row['id']+"</td>" +
-                    "</tr>";
-            }
-
-            $("#json-table").html(result);
-
             oTable = Fix_Size({
                 "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
                 "sPaginationType": "full_numbers",
-                "aoColumnDefs": [
-                    { "aTargets": [4], "sType": "numeric",
-                        "mRender": function ( data, type ) {
+                "aaData": $.evalJSON('{{ json_data|raw }}'),
+                "aoColumns": [
+                    { "mData": "id", "sType": "numeric", "bVisible": false },
+                    { "mData": "itemName" },
+                    { "mData": "itemCode" },
+                    { "mData": "price" },
+                    { "mData": "amount", "sType": "numeric", "mRender": function ( data, type ) {
                         if(type === 'display') {
                             return '<input class="price-input" type="text" value="' + data + '">';
                         }
                         return data;
-                    } },
-                    { "aTargets": [ 5 ], "sType": "numeric", "bVisible": false }
+                    } }
                 ]
             });
 
@@ -77,8 +60,8 @@
 
             for(i=0;i<array.length;i++)
             {
-                if(array[i][4].trim() != "")
-                    result.push({"PriceId":array[i][5],"Amount":array[i][4]});
+                if(array[i]["amount"].trim() != "")
+                    result.push({"PriceId":array[i]["id"],"Amount":array[i]["amount"]});
             }
 
             return $.toJSON(result);
@@ -99,6 +82,8 @@
         <div class="widget stacked">
 
             <!-- /widget-header -->
+
+            {#<a onclick="$('#json').val(getJson());alert($('#json').val());">aaaaaaaaaaaaa</a>#}
 
             <div class="widget-content">
 
