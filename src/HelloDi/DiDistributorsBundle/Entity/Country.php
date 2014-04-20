@@ -29,9 +29,9 @@ class Country
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", mappedBy="Country")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entity", mappedBy="country")
      */
-    private $Entities;
+    private $entities;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", mappedBy="Country")
@@ -48,7 +48,7 @@ class Country
      */
     public function __construct()
     {
-        $this->Entities = new ArrayCollection();
+        $this->entities = new ArrayCollection();
         $this->Taxs = new ArrayCollection();
     }
 
@@ -109,23 +109,23 @@ class Country
     /**
      * Add Entities
      *
-     * @param Entiti $entities
+     * @param Entity $entities
      * @return Country
      */
-    public function addEntitie(Entiti $entities)
+    public function addEntitie(Entity $entities)
     {
-        $this->Entities[] = $entities;
+        $this->entities[] = $entities;
         return $this;
     }
 
     /**
      * Remove Entities
      *
-     * @param Entiti $entities
+     * @param Entity $entities
      */
-    public function removeEntitie(Entiti $entities)
+    public function removeEntitie(Entity $entities)
     {
-        $this->Entities->removeElement($entities);
+        $this->entities->removeElement($entities);
     }
 
     /**
@@ -135,7 +135,7 @@ class Country
      */
     public function getEntities()
     {
-        return $this->Entities;
+        return $this->entities;
     }
 
     /**

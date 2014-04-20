@@ -63,10 +63,10 @@ class User extends BaseUser
     private $transfers;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Users")
-     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entity", inversedBy="users")
+     * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", nullable=false)
      */
-    private $Entiti;
+    private $entity;
 
     /** 
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Users")
@@ -336,26 +336,26 @@ class User extends BaseUser
     }
 
     /**
-     * Set Entiti
+     * Set Entity
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Entiti $entiti
+     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entity
      * @return User
      */
-    public function setEntiti(\HelloDi\DiDistributorsBundle\Entity\Entiti $entiti)
+    public function setEntiti(\HelloDi\DiDistributorsBundle\Entity\Entity $entity)
     {
-        $this->Entiti = $entiti;
+        $this->entity = $entity;
     
         return $this;
     }
 
     /**
-     * Get Entiti
+     * Get Entity
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Entiti 
+     * @return \HelloDi\DiDistributorsBundle\Entity\Entity
      */
-    public function getEntiti()
+    public function getEntity()
     {
-        return $this->Entiti;
+        return $this->entity;
     }
 
     /**

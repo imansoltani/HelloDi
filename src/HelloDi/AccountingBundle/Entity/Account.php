@@ -1,7 +1,7 @@
 <?php
 namespace HelloDi\AccountingBundle\Entity;
 
-use HelloDi\DiDistributorsBundle\Entity\Entiti;
+use HelloDi\DiDistributorsBundle\Entity\Entity;
 use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
@@ -93,8 +93,8 @@ class Account
     private $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Accounts")
-     * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entity", inversedBy="accounts")
+     * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", nullable=true)
      */
     private $entity;
 
@@ -474,10 +474,10 @@ class Account
     /**
      * Set entity
      *
-     * @param Entiti $entity
+     * @param Entity $entity
      * @return Account
      */
-    public function setEntity(Entiti $entity = null)
+    public function setEntity(Entity $entity = null)
     {
         $this->entity = $entity;
     
@@ -487,7 +487,7 @@ class Account
     /**
      * Get entity
      *
-     * @return Entiti
+     * @return Entity
      */
     public function getEntity()
     {
