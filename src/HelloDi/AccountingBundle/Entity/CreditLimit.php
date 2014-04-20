@@ -50,7 +50,7 @@ class CreditLimit
     private $transaction;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="creditLimit")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="creditLimits")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;
@@ -190,6 +190,6 @@ class CreditLimit
      */
     public function updateCreditLimit()
     {
-        $this->getAccount()->setAccCreditLimit($this->getAmount());
+        $this->getAccount()->setCreditLimitAmount($this->getAmount());
     }
 }

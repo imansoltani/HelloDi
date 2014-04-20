@@ -1,6 +1,10 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\CreditLimit;
+use HelloDi\AccountingBundle\Entity\Transfer;
 use HelloDi\UserBundle\Entity\User as BaseUser;
 use HelloDi\AccountingBundle\Entity\OgonePayment;
 
@@ -69,10 +73,10 @@ class User extends BaseUser
     private $entity;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Users")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="users")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=true)
      */
-    private $Account;
+    private $account;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\OgonePayment", mappedBy="User")
@@ -100,15 +104,15 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->Inputs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->removeElement = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Tickets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->TicketNotes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->transfers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->OgonePayment = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->B2BLogs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->creditLimits = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pins = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Inputs = new ArrayCollection();
+        $this->removeElement = new ArrayCollection();
+        $this->Tickets = new ArrayCollection();
+        $this->TicketNotes = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
+        $this->OgonePayment = new ArrayCollection();
+        $this->B2BLogs = new ArrayCollection();
+        $this->creditLimits = new ArrayCollection();
+        $this->pins = new ArrayCollection();
 	}
 
     /**
@@ -239,10 +243,10 @@ class User extends BaseUser
     /**
      * Add Inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      * @return User
      */
-    public function addInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function addInput(Input $inputs)
     {
         $this->Inputs[] = $inputs;
     
@@ -252,9 +256,9 @@ class User extends BaseUser
     /**
      * Remove Inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      */
-    public function removeInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function removeInput(Input $inputs)
     {
         $this->Inputs->removeElement($inputs);
     }
@@ -272,10 +276,10 @@ class User extends BaseUser
     /**
      * Add Tickets
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ticket $tickets
+     * @param Ticket $tickets
      * @return User
      */
-    public function addTicket(\HelloDi\DiDistributorsBundle\Entity\Ticket $tickets)
+    public function addTicket(Ticket $tickets)
     {
         $this->Tickets[] = $tickets;
     
@@ -285,9 +289,9 @@ class User extends BaseUser
     /**
      * Remove Tickets
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Ticket $tickets
+     * @param Ticket $tickets
      */
-    public function removeTicket(\HelloDi\DiDistributorsBundle\Entity\Ticket $tickets)
+    public function removeTicket(Ticket $tickets)
     {
         $this->Tickets->removeElement($tickets);
     }
@@ -305,10 +309,10 @@ class User extends BaseUser
     /**
      * Add TicketNotes
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TicketNote $ticketNotes
+     * @param TicketNote $ticketNotes
      * @return User
      */
-    public function addTicketNote(\HelloDi\DiDistributorsBundle\Entity\TicketNote $ticketNotes)
+    public function addTicketNote(TicketNote $ticketNotes)
     {
         $this->TicketNotes[] = $ticketNotes;
     
@@ -318,9 +322,9 @@ class User extends BaseUser
     /**
      * Remove TicketNotes
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TicketNote $ticketNotes
+     * @param TicketNote $ticketNotes
      */
-    public function removeTicketNote(\HelloDi\DiDistributorsBundle\Entity\TicketNote $ticketNotes)
+    public function removeTicketNote(TicketNote $ticketNotes)
     {
         $this->TicketNotes->removeElement($ticketNotes);
     }
@@ -338,10 +342,10 @@ class User extends BaseUser
     /**
      * Set Entity
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entity
+     * @param Entity $entity
      * @return User
      */
-    public function setEntiti(\HelloDi\DiDistributorsBundle\Entity\Entity $entity)
+    public function setEntity(Entity $entity)
     {
         $this->entity = $entity;
     
@@ -351,7 +355,7 @@ class User extends BaseUser
     /**
      * Get Entity
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Entity
+     * @return Entity
      */
     public function getEntity()
     {
@@ -361,12 +365,12 @@ class User extends BaseUser
     /**
      * Set Account
      *
-     * @param \HelloDi\AccountingBundle\Entity\Account $account
+     * @param Account $account
      * @return User
      */
-    public function setAccount(\HelloDi\AccountingBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
-        $this->Account = $account;
+        $this->account = $account;
     
         return $this;
     }
@@ -374,17 +378,17 @@ class User extends BaseUser
     /**
      * Get Account
      *
-     * @return \HelloDi\AccountingBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
-        return $this->Account;
+        return $this->account;
     }
 
     /**
      * Add OgonePayment
      *
-     * @param \HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment
+     * @param OgonePayment $ogonePayment
      * @return User
      */
     public function addOgonePayment(OgonePayment $ogonePayment)
@@ -397,9 +401,9 @@ class User extends BaseUser
     /**
      * Remove OgonePayment
      *
-     * @param \HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment
+     * @param OgonePayment $ogonePayment
      */
-    public function removeOgonePayment(\HelloDi\AccountingBundle\Entity\OgonePayment $ogonePayment)
+    public function removeOgonePayment(OgonePayment $ogonePayment)
     {
         $this->OgonePayment->removeElement($ogonePayment);
     }
@@ -417,10 +421,10 @@ class User extends BaseUser
     /**
      * Add B2BLogs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     * @param B2BLog $b2BLogs
      * @return User
      */
-    public function addB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    public function addB2BLog(B2BLog $b2BLogs)
     {
         $this->B2BLogs[] = $b2BLogs;
     
@@ -430,9 +434,9 @@ class User extends BaseUser
     /**
      * Remove B2BLogs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
+     * @param B2BLog $b2BLogs
      */
-    public function removeB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
+    public function removeB2BLog(B2BLog $b2BLogs)
     {
         $this->B2BLogs->removeElement($b2BLogs);
     }
@@ -450,10 +454,10 @@ class User extends BaseUser
     /**
      * Add transfers
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transfer $transfers
+     * @param Transfer $transfers
      * @return User
      */
-    public function addTransfer(\HelloDi\AccountingBundle\Entity\Transfer $transfers)
+    public function addTransfer(Transfer $transfers)
     {
         $this->transfers[] = $transfers;
     
@@ -463,9 +467,9 @@ class User extends BaseUser
     /**
      * Remove transfers
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transfer $transfers
+     * @param Transfer $transfers
      */
-    public function removeTransfer(\HelloDi\AccountingBundle\Entity\Transfer $transfers)
+    public function removeTransfer(Transfer $transfers)
     {
         $this->transfers->removeElement($transfers);
     }
@@ -483,10 +487,10 @@ class User extends BaseUser
     /**
      * Add creditLimits
      *
-     * @param \HelloDi\AccountingBundle\Entity\CreditLimit $creditLimits
+     * @param CreditLimit $creditLimits
      * @return User
      */
-    public function addCreditLimit(\HelloDi\AccountingBundle\Entity\CreditLimit $creditLimits)
+    public function addCreditLimit(CreditLimit $creditLimits)
     {
         $this->creditLimits[] = $creditLimits;
     
@@ -496,9 +500,9 @@ class User extends BaseUser
     /**
      * Remove creditLimits
      *
-     * @param \HelloDi\AccountingBundle\Entity\CreditLimit $creditLimits
+     * @param CreditLimit $creditLimits
      */
-    public function removeCreditLimit(\HelloDi\AccountingBundle\Entity\CreditLimit $creditLimits)
+    public function removeCreditLimit(CreditLimit $creditLimits)
     {
         $this->creditLimits->removeElement($creditLimits);
     }
@@ -516,10 +520,10 @@ class User extends BaseUser
     /**
      * Add Pins
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     * @param Pin $pins
      * @return User
      */
-    public function addPin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    public function addPin(Pin $pins)
     {
         $this->pins[] = $pins;
     
@@ -529,9 +533,9 @@ class User extends BaseUser
     /**
      * Remove Pins
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     * @param Pin $pins
      */
-    public function removePin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    public function removePin(Pin $pins)
     {
         $this->pins->removeElement($pins);
     }

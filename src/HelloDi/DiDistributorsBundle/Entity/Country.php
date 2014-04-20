@@ -3,8 +3,8 @@ namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping AS ORM;
 
+use Doctrine\ORM\Mapping AS ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="country")
@@ -19,12 +19,12 @@ class Country
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=3, nullable=false, name="Iso")
+     * @ORM\Column(type="string", length=3, nullable=false, name="iso")
      */
     private $iso;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="Name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
     private $name;
 
@@ -36,7 +36,7 @@ class Country
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", mappedBy="Country")
      */
-    private $Taxs;
+    private $taxes;
 
     public function getIsoName()
     {
@@ -49,7 +49,7 @@ class Country
     public function __construct()
     {
         $this->entities = new ArrayCollection();
-        $this->Taxs = new ArrayCollection();
+        $this->taxes = new ArrayCollection();
     }
 
     /**
@@ -112,7 +112,7 @@ class Country
      * @param Entity $entities
      * @return Country
      */
-    public function addEntitie(Entity $entities)
+    public function addEntities(Entity $entities)
     {
         $this->entities[] = $entities;
         return $this;
@@ -123,7 +123,7 @@ class Country
      *
      * @param Entity $entities
      */
-    public function removeEntitie(Entity $entities)
+    public function removeEntities(Entity $entities)
     {
         $this->entities->removeElement($entities);
     }
@@ -139,34 +139,34 @@ class Country
     }
 
     /**
-     * Add Taxs
+     * Add Taxes
      *
-     * @param Tax $taxs
+     * @param Tax $taxes
      * @return Country
      */
-    public function addTax(Tax $taxs)
+    public function addTax(Tax $taxes)
     {
-        $this->Taxs[] = $taxs;
+        $this->taxes[] = $taxes;
         return $this;
     }
 
     /**
-     * Remove Taxs
+     * Remove Taxes
      *
-     * @param Tax $taxs
+     * @param Tax $taxes
      */
-    public function removeTax(Tax $taxs)
+    public function removeTax(Tax $taxes)
     {
-        $this->Taxs->removeElement($taxs);
+        $this->taxes->removeElement($taxes);
     }
 
     /**
-     * Get Taxs
+     * Get Taxes
      *
      * @return Collection
      */
-    public function getTaxs()
+    public function getTaxes()
     {
-        return $this->Taxs;
+        return $this->taxes;
     }
 }

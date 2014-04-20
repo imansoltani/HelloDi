@@ -73,22 +73,27 @@ class Account
     private $terms;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="account")
      */
     private $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="accountDist")
      */
-    private $tickets;
+    private $ticketsDist;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="accountRetailer")
+     */
+    private $ticketsRetailer;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="account")
      */
     private $transactions;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="account")
      */
     private $users;
 
@@ -114,13 +119,13 @@ class Account
     public function __construct()
     {
         $this->prices = new ArrayCollection();
-        $this->tickets = new ArrayCollection();
+        $this->ticketsDist = new ArrayCollection();
+        $this->ticketsRetailer = new ArrayCollection();
         $this->transactions = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->creditLimits = new ArrayCollection();
         $this->models = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -373,36 +378,69 @@ class Account
     }
 
     /**
-     * Add tickets
+     * Add ticketsDist
      *
-     * @param Ticket $tickets
+     * @param Ticket $ticketsDist
      * @return Account
      */
-    public function addTicket(Ticket $tickets)
+    public function addTicketsDist(Ticket $ticketsDist)
     {
-        $this->tickets[] = $tickets;
+        $this->ticketsDist[] = $ticketsDist;
     
         return $this;
     }
 
     /**
-     * Remove tickets
+     * Remove ticketsDist
      *
-     * @param Ticket $tickets
+     * @param Ticket $ticketsDist
      */
-    public function removeTicket(Ticket $tickets)
+    public function removeTicketsDist(Ticket $ticketsDist)
     {
-        $this->tickets->removeElement($tickets);
+        $this->ticketsDist->removeElement($ticketsDist);
     }
 
     /**
-     * Get tickets
+     * Get ticketsDist
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTickets()
+    public function getTicketsDist()
     {
-        return $this->tickets;
+        return $this->ticketsDist;
+    }
+
+    /**
+     * Add ticketsRetailer
+     *
+     * @param Ticket $ticketsRetailer
+     * @return Account
+     */
+    public function addTicketsRetailer(Ticket $ticketsRetailer)
+    {
+        $this->ticketsRetailer[] = $ticketsRetailer;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ticketsRetailer
+     *
+     * @param Ticket $ticketsRetailer
+     */
+    public function removeTicketsRetailer(Ticket $ticketsRetailer)
+    {
+        $this->ticketsRetailer->removeElement($ticketsRetailer);
+    }
+
+    /**
+     * Get ticketsRetailer
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTicketsRetailer()
+    {
+        return $this->ticketsRetailer;
     }
 
     /**

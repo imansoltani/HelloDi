@@ -43,10 +43,10 @@ class Transaction
     private $tranDescription = "";
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="Transactions")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $Account;
+    private $account;
 
     public function __construct()
     {
@@ -163,7 +163,7 @@ class Transaction
      */
     public function setAccount(Account $account)
     {
-        $this->Account = $account;
+        $this->account = $account;
 
         return $this;
     }
@@ -175,7 +175,7 @@ class Transaction
      */
     public function getAccount()
     {
-        return $this->Account;
+        return $this->account;
     }
 
     /**
@@ -207,7 +207,9 @@ class Transaction
     public function updateAccountBalance()
     {
         $amount=$this->getTranAmount();
-        $currentBalance=$this->getAccount()->getAccBalance();
-        $this->getAccount()->setAccBalance($currentBalance+$amount);
+        $currentBalance=$this->getAccount()->getBalance();
+        /** @var $amount float */
+        /** @var $currentBalance float */
+        $this->getAccount()->setBalance($currentBalance + $amount);
     }
 }
