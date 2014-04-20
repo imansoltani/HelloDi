@@ -2,6 +2,7 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
+use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\DiDistributorsBundle\Entity\Ticket;
 use HelloDi\DiDistributorsBundle\Entity\User;
@@ -14,10 +15,10 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Account
 {
-    const API = 1;
-    const PROVIDER = 2;
-    const DISTRIBUTOR = 3;
-    const RETAILER = 4;
+    const PROVIDER = 1;
+    const DISTRIBUTOR = 2;
+    const RETAILER = 3;
+    const API = 4;
 
     /**
      * @ORM\Id
@@ -29,22 +30,22 @@ class Account
     /**
      * @ORM\Column(type="string", length=2, nullable=true, name="acc_default_language")
      */
-    private $accDefaultLanguage;
+    private $defaultLanguage;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
      */
-    private $accName;
+    private $name;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="acc_balance", precision=6, scale=2)
      */
-    private $accBalance = 0.0;
+    private $balance = 0.0;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", precision=6, scale=2)
      */
-    private $accCreditLimit = 0.0;
+    private $creditLimitAmount = 0.0;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="reserve", precision=6, scale=2)
@@ -59,48 +60,48 @@ class Account
     /**
      * @ORM\Column(type="date", nullable=false, name="acc_creation_date")
      */
-    private $accCreationDate;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="acc_time_zone")
      */
-    private $accTimeZone;
+    private $timeZone;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="acc_terms")
      */
-    private $accTerms;
+    private $terms;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Account")
      */
-    private $Prices;
+    private $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="Account")
      */
-    private $Tickets;
+    private $tickets;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="Account")
      */
-    private $Transactions;
+    private $transactions;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="Account")
      */
-    private $Users;
+    private $users;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entiti", inversedBy="Accounts")
      * @ORM\JoinColumn(name="entiti_id", referencedColumnName="id", nullable=true)
      */
-    private $Entiti;
+    private $entity;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
      */
-    private $creditLimit;
+    private $creditLimits;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Model", mappedBy="account")
@@ -112,17 +113,19 @@ class Account
      */
     public function __construct()
     {
-        $this->Prices = new ArrayCollection();
-        $this->Tickets = new ArrayCollection();
-        $this->Transactions = new ArrayCollection();
-        $this->Users = new ArrayCollection();
-        $this->creditLimit = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->creditLimits = new ArrayCollection();
+        $this->models = new ArrayCollection();
     }
+
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -130,101 +133,114 @@ class Account
     }
 
     /**
-     * Get accDefaultLanguage
+     * Set defaultLanguage
      *
-     * @return string
-     */
-    public function getAccDefaultLanguage()
-    {
-        return $this->accDefaultLanguage;
-    }
-
-    /**
-     * Set accName
-     *
-     * @param string $accName
+     * @param string $defaultLanguage
      * @return Account
      */
-    public function setAccName($accName)
+    public function setDefaultLanguage($defaultLanguage)
     {
-        $this->accName = $accName;
-
+        $this->defaultLanguage = $defaultLanguage;
+    
         return $this;
     }
 
     /**
-     * Get accName
+     * Get defaultLanguage
      *
-     * @return string
+     * @return string 
      */
-    public function getAccName()
+    public function getDefaultLanguage()
     {
-        return $this->accName;
+        return $this->defaultLanguage;
     }
 
     /**
-     * Set accBalance
+     * Set name
      *
-     * @param float $accBalance
+     * @param string $name
      * @return Account
      */
-    public function setAccBalance($accBalance)
+    public function setName($name)
     {
-        $this->accBalance = $accBalance;
-
+        $this->name = $name;
+    
         return $this;
     }
 
     /**
-     * Get accBalance
+     * Get name
      *
-     * @return float
+     * @return string 
      */
-    public function getAccBalance()
+    public function getName()
     {
-        return $this->accBalance;
+        return $this->name;
     }
 
     /**
-     * Set accCreditLimit
+     * Set balance
      *
-     * @param float $accCreditLimit
+     * @param string $balance
      * @return Account
      */
-    public function setAccCreditLimit($accCreditLimit)
+    public function setBalance($balance)
     {
-        $this->accCreditLimit = $accCreditLimit;
-
+        $this->balance = $balance;
+    
         return $this;
     }
 
     /**
-     * Get accCreditLimit
+     * Get balance
      *
-     * @return float
+     * @return string 
      */
-    public function getAccCreditLimit()
+    public function getBalance()
     {
-        return $this->accCreditLimit;
+        return $this->balance;
+    }
+
+    /**
+     * Set creditLimitAmount
+     *
+     * @param string $creditLimitAmount
+     * @return Account
+     */
+    public function setCreditLimitAmount($creditLimitAmount)
+    {
+        $this->creditLimitAmount = $creditLimitAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get creditLimitAmount
+     *
+     * @return string 
+     */
+    public function getCreditLimitAmount()
+    {
+        return $this->creditLimitAmount;
     }
 
     /**
      * Set reserve
      *
-     * @param float $reserve
+     * @param string $reserve
      * @return Account
      */
     public function setReserve($reserve)
     {
         $this->reserve = $reserve;
-
+    
         return $this;
     }
 
     /**
      * Get reserve
      *
-     * @return float
+     * @return string 
      */
     public function getReserve()
     {
@@ -240,14 +256,14 @@ class Account
     public function setType($type)
     {
         $this->type = $type;
-
+    
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer
+     * @return integer 
      */
     public function getType()
     {
@@ -255,298 +271,269 @@ class Account
     }
 
     /**
-     * Set accCreationDate
+     * Set creationDate
      *
-     * @param \DateTime $accCreationDate
+     * @param \DateTime $creationDate
      * @return Account
      */
-    public function setAccCreationDate($accCreationDate)
+    public function setCreationDate($creationDate)
     {
-        $this->accCreationDate = $accCreationDate;
-
+        $this->creationDate = $creationDate;
+    
         return $this;
     }
 
     /**
-     * Get accCreationDate
+     * Get creationDate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
-    public function getAccCreationDate()
+    public function getCreationDate()
     {
-        return $this->accCreationDate;
+        return $this->creationDate;
     }
 
     /**
-     * Set accTimeZone
+     * Set timeZone
      *
-     * @param string $accTimeZone
+     * @param string $timeZone
      * @return Account
      */
-    public function setAccTimeZone($accTimeZone)
+    public function setTimeZone($timeZone)
     {
-        $this->accTimeZone = $accTimeZone;
-
+        $this->timeZone = $timeZone;
+    
         return $this;
     }
 
     /**
-     * Get accTimeZone
+     * Get timeZone
      *
-     * @return string
+     * @return string 
      */
-    public function getAccTimeZone()
+    public function getTimeZone()
     {
-        return $this->accTimeZone;
+        return $this->timeZone;
     }
 
     /**
-     * Set accTerms
+     * Set terms
      *
-     * @param integer $accTerms
+     * @param integer $terms
      * @return Account
      */
-    public function setAccTerms($accTerms)
+    public function setTerms($terms)
     {
-        $this->accTerms = $accTerms;
-
+        $this->terms = $terms;
+    
         return $this;
     }
 
     /**
-     * Get accTerms
+     * Get terms
      *
-     * @return integer
+     * @return integer 
      */
-    public function getAccTerms()
+    public function getTerms()
     {
-        return $this->accTerms;
+        return $this->terms;
     }
 
     /**
-     * Add Prices
+     * Add prices
      *
      * @param Price $prices
      * @return Account
      */
     public function addPrice(Price $prices)
     {
-        $this->Prices[] = $prices;
-
+        $this->prices[] = $prices;
+    
         return $this;
     }
 
     /**
-     * Remove Prices
+     * Remove prices
      *
      * @param Price $prices
      */
     public function removePrice(Price $prices)
     {
-        $this->Prices->removeElement($prices);
+        $this->prices->removeElement($prices);
     }
 
     /**
-     * Get Prices
+     * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPrices()
     {
-        return $this->Prices;
+        return $this->prices;
     }
 
     /**
-     * Add Tickets
+     * Add tickets
      *
      * @param Ticket $tickets
      * @return Account
      */
     public function addTicket(Ticket $tickets)
     {
-        $this->Tickets[] = $tickets;
-
+        $this->tickets[] = $tickets;
+    
         return $this;
     }
 
     /**
-     * Remove Tickets
+     * Remove tickets
      *
      * @param Ticket $tickets
      */
     public function removeTicket(Ticket $tickets)
     {
-        $this->Tickets->removeElement($tickets);
+        $this->tickets->removeElement($tickets);
     }
 
     /**
-     * Get Tickets
+     * Get tickets
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getTickets()
     {
-        return $this->Tickets;
+        return $this->tickets;
     }
 
     /**
-     * Add Transactions
+     * Add transactions
      *
      * @param Transaction $transactions
      * @return Account
      */
     public function addTransaction(Transaction $transactions)
     {
-        $this->Transactions[] = $transactions;
-
+        $this->transactions[] = $transactions;
+    
         return $this;
     }
 
     /**
-     * Remove Transactions
+     * Remove transactions
      *
      * @param Transaction $transactions
      */
     public function removeTransaction(Transaction $transactions)
     {
-        $this->Transactions->removeElement($transactions);
+        $this->transactions->removeElement($transactions);
     }
 
     /**
-     * Get Transactions
+     * Get transactions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getTransactions()
     {
-        return $this->Transactions;
+        return $this->transactions;
     }
 
     /**
-     * Add Users
+     * Add users
      *
      * @param User $users
      * @return Account
      */
     public function addUser(User $users)
     {
-        $this->Users[] = $users;
-
+        $this->users[] = $users;
+    
         return $this;
     }
 
     /**
-     * Remove Users
+     * Remove users
      *
      * @param User $users
      */
     public function removeUser(User $users)
     {
-        $this->Users->removeElement($users);
+        $this->users->removeElement($users);
     }
 
     /**
-     * Get Users
+     * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getUsers()
     {
-        return $this->Users;
+        return $this->users;
     }
 
     /**
-     * Set Entiti
+     * Set entity
      *
-     * @param Entiti $entiti
+     * @param Entiti $entity
      * @return Account
      */
-    public function setEntiti(Entiti $entiti)
+    public function setEntity(Entiti $entity = null)
     {
-        $this->Entiti = $entiti;
-
+        $this->entity = $entity;
+    
         return $this;
     }
 
     /**
-     * Get Entiti
+     * Get entity
      *
      * @return Entiti
      */
-    public function getEntiti()
+    public function getEntity()
     {
-        return $this->Entiti;
+        return $this->entity;
     }
 
     /**
-     * Set accDefaultLanguage
+     * Add creditLimits
      *
-     * @param string $accDefaultLanguage
+     * @param CreditLimit $creditLimits
      * @return Account
      */
-    public function setAccDefaultLanguage($accDefaultLanguage)
+    public function addCreditLimit(CreditLimit $creditLimits)
     {
-        $this->accDefaultLanguage = $accDefaultLanguage;
-
+        $this->creditLimits[] = $creditLimits;
+    
         return $this;
     }
 
     /**
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->accName . ', ' . $this->accDefaultLanguage;
-    }
-
-    /**
-     * @return string
-     */
-    public function  __toString()
-    {
-        return $this->getAccName();
-    }
-
-    /**
-     * Add creditLimit
+     * Remove creditLimits
      *
-     * @param CreditLimit $creditLimit
-     * @return Account
+     * @param CreditLimit $creditLimits
      */
-    public function addCreditLimit(CreditLimit $creditLimit)
+    public function removeCreditLimit(CreditLimit $creditLimits)
     {
-        $this->creditLimit[] = $creditLimit;
-
-        return $this;
+        $this->creditLimits->removeElement($creditLimits);
     }
 
     /**
-     * Remove creditLimit
+     * Get creditLimits
      *
-     * @param CreditLimit $creditLimit
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function removeCreditLimit(CreditLimit $creditLimit)
+    public function getCreditLimits()
     {
-        $this->creditLimit->removeElement($creditLimit);
-    }
-
-    /**
-     * Get creditLimit
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCreditLimit()
-    {
-        return $this->creditLimit;
+        return $this->creditLimits;
     }
 
     /**
      * Add models
      *
-     * @param \HelloDi\PricingBundle\Entity\Model $models
+     * @param Model $models
      * @return Account
      */
-    public function addModel(\HelloDi\PricingBundle\Entity\Model $models)
+    public function addModel(Model $models)
     {
         $this->models[] = $models;
     
@@ -556,9 +543,9 @@ class Account
     /**
      * Remove models
      *
-     * @param \HelloDi\PricingBundle\Entity\Model $models
+     * @param Model $models
      */
-    public function removeModel(\HelloDi\PricingBundle\Entity\Model $models)
+    public function removeModel(Model $models)
     {
         $this->models->removeElement($models);
     }
@@ -571,5 +558,21 @@ class Account
     public function getModels()
     {
         return $this->models;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->name . ', ' . $this->defaultLanguage;
+    }
+
+    /**
+     * @return string
+     */
+    public function  __toString()
+    {
+        return $this->getName();
     }
 }
