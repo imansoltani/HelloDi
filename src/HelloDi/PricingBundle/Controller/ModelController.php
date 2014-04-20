@@ -83,6 +83,7 @@ class ModelController extends Controller
             ->from('HelloDiPricingBundle:Price','price')
             ->innerJoin('price.Item','item')
             ->where('price.Account = :acc')->setParameter('acc',$account)
+            ->where('price.priceStatus = :true')->setParameter('true',true)
             ->getQuery()->getArrayResult();
 
         foreach($prices as &$price)
@@ -148,6 +149,7 @@ class ModelController extends Controller
             ->from('HelloDiPricingBundle:Price','price')
             ->innerJoin('price.Item','item')
             ->where('price.Account = :acc')->setParameter('acc',$account)
+            ->where('price.priceStatus = :true')->setParameter('true',true)
             ->getQuery()->getArrayResult();
 
         $dataArray = [];

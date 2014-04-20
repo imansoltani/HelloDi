@@ -5,3 +5,7 @@ hello_di_pricing_model:
 pricing:
     pattern: /pricing
     defaults: { _controller: HelloDiPricingBundle:Price:pricing }
+
+updatePrice:
+    pattern: /pricing/update
+    defaults: { _controller: HelloDiPricingBundle:Price:updatePrice }

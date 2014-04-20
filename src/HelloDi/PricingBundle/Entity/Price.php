@@ -31,16 +31,6 @@ class Price
     private $isFavourite;
 
     /** 
-     * @ORM\Column(type="string", length=3, nullable=false, name="price_currency")
-     */
-    private $priceCurrency;
-
-    /** 
-     * @ORM\Column(type="boolean", nullable=false, name="price_status")
-     */
-    private $priceStatus;
-
-    /** 
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="Prices")
      */
     private $ChangingPrices;
@@ -101,52 +91,6 @@ class Price
     public function getPrice()
     {
         return $this->price;
-    }
-
-    /**
-     * Set priceCurrency
-     *
-     * @param string $priceCurrency
-     * @return Price
-     */
-    public function setPriceCurrency($priceCurrency)
-    {
-        $this->priceCurrency = $priceCurrency;
-    
-        return $this;
-    }
-
-    /**
-     * Get priceCurrency
-     *
-     * @return string 
-     */
-    public function getPriceCurrency()
-    {
-        return $this->priceCurrency;
-    }
-
-    /**
-     * Set priceStatus
-     *
-     * @param boolean $priceStatus
-     * @return Price
-     */
-    public function setPriceStatus($priceStatus)
-    {
-        $this->priceStatus = $priceStatus;
-    
-        return $this;
-    }
-
-    /**
-     * Get priceStatus
-     *
-     * @return boolean 
-     */
-    public function getPriceStatus()
-    {
-        return $this->priceStatus;
     }
 
     /**
@@ -276,6 +220,6 @@ class Price
 
     public function __toString()
     {
-        return $this->getItem()->getItemName()." - ".$this->getPrice()." ".$this->getPriceCurrency();
+        return $this->getItem()->getItemName()." - ".$this->getPrice();
     }
 }

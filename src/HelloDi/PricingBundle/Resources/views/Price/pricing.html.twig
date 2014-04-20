@@ -1,7 +1,131 @@
-{% extends "::base.html.twig" %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
-{% block title %}HelloDiPricingBundle:Price:pricing{% endblock %}
+{% block title %}
+    Manage Items Distributor
+{% endblock title %}
 
-{% block body %}
-<h1>Welcome to the Price:pricing page</h1>
+{% set MU = '' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">Manage Items Distributor</span>
+{% endblock Site_Map %}
+
+{% block PageTitle %}
+    <i class="icon-tags"></i>
+    Manage Items Distributor
+{% endblock %}
+
+{% block Link_Head %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/hellodi/js/libs/jquery.json-2.4.min.js') }}"></script>
+
+
+    <script type="text/javascript">
+        var oTable;
+        $(document).ready(function () {
+            oTable = Fix_Size({
+                "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
+                "sPaginationType": "full_numbers",
+                "aaData": $.evalJSON('{{ json_data|raw }}'),
+                "aoColumns": [
+                    { "mData": "id", "sType": "numeric", "bVisible": false },
+                    { "mData": "itemName" },
+                    { "mData": "itemCode" },
+                    { "mData": "itemFaceValue", "sType": "numeric"},
+                    { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
+                        if(data == null) data = "";
+                        if(type === 'display') {
+                            return '<input class="price-input" type="text" value="' + data + '">';
+                        }
+                        return data;
+                    } }
+                ]
+            });
+
+            $(".price-input").live('blur',function(){
+                var row = oTable.fnGetPosition($(this).closest('tr')[0]);
+                oTable.fnUpdate( $(this).val(), row, 4);
+                var rowData = oTable.fnGetData(row);
+                var input = $(oTable.fnGetNodes(row)).find('input');
+                input.addClass('checking');
+                $.ajax({
+                    type: "Post",
+                    url: "{{ path("updatePrice") }}",
+                    data: rowData,
+                    cache: false,
+                    success: function(result)
+                    {
+                        if(result == 'true')
+                            input.removeClass('checking').addClass('accepted');
+                        else if(result == 'false')
+                            input.removeClass('checking').addClass('rejected');
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <style>
+        .price-input {
+            font-size:12px !important;
+            font-weight: bold;
+        }
+        .price-input.accepted {
+            background-color : #afa !important;
+        }
+        .price-input.rejected {
+            background-color : #faa !important;
+        }
+        .price-input.checking {
+            background-color : #eee !important;
+        }
+    </style>
+
+{% endblock %}
+
+{% block Body %}
+    <div class="span">
+        <div class="widget stacked">
+
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <div style="margin-top: 5px" class="tablediv">
+
+                    <div class="tab-content datatable">
+                        <table id="example" class="table postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' | trans ({}, "common") }}</th>
+                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
+                                <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                                <th>{{ 'Price' | trans ({}, "price") }}</th>
+                            </tr>
+
+                            <tr class="input" >
+                                <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}
