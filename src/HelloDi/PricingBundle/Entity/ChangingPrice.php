@@ -1,31 +1,32 @@
 <?php
 namespace HelloDi\PricingBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="changing_price")
  */
 class ChangingPrice
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, scale=2)
      */
     private $price;
 
-    /** 
+    /**
      * @ORM\Column(type="date", nullable=false)
      */
     private $changeDate;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Price", inversedBy="changingPrices")
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id", nullable=false)
      */
@@ -34,7 +35,7 @@ class ChangingPrice
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,7 +51,7 @@ class ChangingPrice
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
@@ -73,14 +74,14 @@ class ChangingPrice
     public function setChangeDate($changeDate)
     {
         $this->changeDate = $changeDate;
-    
+
         return $this;
     }
 
     /**
      * Get changeDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getChangeDate()
     {
@@ -96,7 +97,7 @@ class ChangingPrice
     public function setPrices(Price $prices)
     {
         $this->prices = $prices;
-    
+
         return $this;
     }
 

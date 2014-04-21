@@ -7,20 +7,20 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\DiDistributorsBundle\Entity\Item;
 use HelloDi\DiDistributorsBundle\Entity\Tax;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="price")
  */
 class Price
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="price", scale=2)
      */
     private $price;
@@ -30,7 +30,7 @@ class Price
      */
     private $isFavourite;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")
      */
     private $changingPrices;
@@ -41,13 +41,13 @@ class Price
      */
     private $Tax;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="Prices")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     private $Item;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="prices")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
@@ -64,7 +64,7 @@ class Price
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -80,7 +80,7 @@ class Price
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
@@ -103,14 +103,14 @@ class Price
     public function setIsFavourite($isFavourite)
     {
         $this->isFavourite = $isFavourite;
-    
+
         return $this;
     }
 
     /**
      * Get isFavourite
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsFavourite()
     {
@@ -126,7 +126,7 @@ class Price
     public function addChangingPrice(ChangingPrice $changingPrices)
     {
         $this->changingPrices[] = $changingPrices;
-    
+
         return $this;
     }
 
@@ -143,7 +143,7 @@ class Price
     /**
      * Get changingPrices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChangingPrices()
     {
@@ -159,7 +159,7 @@ class Price
     public function setTax(Tax $tax = null)
     {
         $this->Tax = $tax;
-    
+
         return $this;
     }
 
@@ -182,7 +182,7 @@ class Price
     public function setItem(Item $item)
     {
         $this->Item = $item;
-    
+
         return $this;
     }
 
@@ -205,7 +205,7 @@ class Price
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 
@@ -221,6 +221,6 @@ class Price
 
     public function __toString()
     {
-        return $this->getItem()->getItemName()." - ".$this->getPrice();
+        return $this->getItem()->getItemName() . " - " . $this->getPrice();
     }
 }

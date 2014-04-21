@@ -8,7 +8,7 @@ use HelloDi\AccountingBundle\Entity\Account;
 /**
  * Model
  *
- * @ORM\Table()
+ * @ORM\Table(name="model")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
@@ -49,7 +49,7 @@ class Model
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,14 +65,14 @@ class Model
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -88,14 +88,14 @@ class Model
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -111,14 +111,14 @@ class Model
     public function setAccount(Account $account = null)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 
     /**
      * Get account
      *
-     * @return \HelloDi\AccountingBundle\Entity\Account 
+     * @return \HelloDi\AccountingBundle\Entity\Account
      */
     public function getAccount()
     {
@@ -134,12 +134,11 @@ class Model
      */
     public function setJson($json)
     {
-        if(is_array($json)) $json = json_encode($json);
+        if (is_array($json)) $json = json_encode($json);
         $this->json = $json;
 
-        if($this->id)
-        {
-            if(!file_put_contents($this->getUploadRootDir().$this->id.".json",$this->json))
+        if ($this->id) {
+            if (!file_put_contents($this->getUploadRootDir() . $this->id . ".json", $this->json))
                 throw new \Exception('unable to save model in file');
         }
 
@@ -153,10 +152,10 @@ class Model
      */
     public function getJson()
     {
-        if($this->id && (!$this->json || $this->json==""))
-            $this->json = file_get_contents($this->getUploadRootDir().$this->id.".json");
+        if ($this->id && (!$this->json || $this->json == ""))
+            $this->json = file_get_contents($this->getUploadRootDir() . $this->id . ".json");
 
-        return $this->json?$this->json:"[]";
+        return $this->json ? $this->json : "[]";
     }
 
     /**
@@ -164,7 +163,7 @@ class Model
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/uploads/models/';
+        return __DIR__ . '/../../../../web/uploads/models/';
     }
 
     /**
@@ -172,7 +171,7 @@ class Model
      */
     public function createJsonFile()
     {
-        if(!file_put_contents($this->getUploadRootDir().$this->id.".json",$this->json))
+        if (!file_put_contents($this->getUploadRootDir() . $this->id . ".json", $this->json))
             throw new \Exception('unable to save model in file');
     }
 
@@ -181,7 +180,7 @@ class Model
      */
     public function removeJsonFile()
     {
-        if(!unlink($this->getUploadRootDir().$this->id.".json"))
+        if (!unlink($this->getUploadRootDir() . $this->id . ".json"))
             throw new \Exception('unable to delete model file.');
     }
 }
