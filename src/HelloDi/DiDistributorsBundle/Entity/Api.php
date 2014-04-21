@@ -25,7 +25,7 @@ class Api
     /**
      * @var string
      *
-     * @ORM\Column(name="secretCode", type="string", length=45)
+     * @ORM\Column(name="secret_code", type="string", length=45)
      */
     private $secretCode;
 
@@ -52,7 +52,7 @@ class Api
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,14 +68,14 @@ class Api
     public function setSecretCode($secretCode)
     {
         $this->secretCode = $secretCode;
-    
+
         return $this;
     }
 
     /**
      * Get secretCode
      *
-     * @return string 
+     * @return string
      */
     public function getSecretCode()
     {
@@ -91,14 +91,14 @@ class Api
     public function setIp($ip)
     {
         $this->ip = $ip;
-    
+
         return $this;
     }
 
     /**
      * Get ip
      *
-     * @return string 
+     * @return string
      */
     public function getIp()
     {
@@ -114,14 +114,14 @@ class Api
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -137,7 +137,7 @@ class Api
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 

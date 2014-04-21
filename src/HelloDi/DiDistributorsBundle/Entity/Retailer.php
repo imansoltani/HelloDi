@@ -37,7 +37,7 @@ class Retailer
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,7 +53,7 @@ class Retailer
     public function setDistributor(Distributor $distributor)
     {
         $this->distributor = $distributor;
-    
+
         return $this;
     }
 
@@ -76,7 +76,7 @@ class Retailer
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 
@@ -95,6 +95,6 @@ class Retailer
      */
     public function getNameWithCurrency()
     {
-        return $this->getAccount()->getAccName() . ' | ' . $this->getAccount()->getAccBalance() . ' ( ' . $this->getDistributor()->getCurrency() . ' )';
+        return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getDistributor()->getCurrency() . ' )';
     }
 }

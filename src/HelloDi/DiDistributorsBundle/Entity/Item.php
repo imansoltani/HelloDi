@@ -1,114 +1,117 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
-use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\PricingBundle\Entity\Price;
+
+/**
  * @ORM\Entity
  * @ORM\Table(name="item")
  */
 class Item
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="item_name")
+    /**
+     * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $itemName;
+    private $name;
 
-    /** 
-     * @ORM\Column(type="decimal", scale=2, nullable=false, name="item_face_value")
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=false, name="face_value")
      */
-    private $itemFaceValue;
+    private $faceValue;
 
-    /** 
-     * @ORM\Column(type="string", length=3, nullable=false, name="item_currency")
+    /**
+     * @ORM\Column(type="string", length=3, nullable=false, name="currency")
      */
-    private $itemCurrency;
+    private $currency;
 
-    /** 
-     * @ORM\Column(type="string", length=5, nullable=false, name="item_type")
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false, name="type")
      */
-    private $itemType;
+    private $type;
 
-    /** 
+    /**
      * @ORM\Column(type="integer", nullable=false, name="alert_min_stock")
      */
     private $alertMinStock;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Operator", inversedBy="Item")
+     * @ORM\Column(type="string", length=100, name="code", unique = true)
+     */
+    private $code;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_insert")
+     */
+    private $dateInsert;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Operator", inversedBy="item")
      * @ORM\JoinColumn(name="Operator_id", referencedColumnName="id", nullable=false)
      */
     private $operator;
 
-    /** 
-     * @ORM\Column(type="string", length=100, name="item_code", unique = true)
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", mappedBy="item")
      */
-    private $itemCode;
+    private $codes;
 
     /**
-     * @ORM\Column(type="date", nullable=false, name="item_date_insert")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="item")
      */
-    private $itemDateInsert;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Code", mappedBy="Item")
-     */
-    private $Codes;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="Item")
-     */
-    private $Inputs;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\ItemDesc", mappedBy="Item")
-     */
-    private $ItemDescs;
-
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Item")
-     */
-    private $Prices;
+    private $inputs;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", mappedBy="Item")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\ItemDesc", mappedBy="item")
      */
-    private $B2BLogs;
+    private $itemDescriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Denomination", mappedBy="Item")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="item")
      */
-    private $Denominations;
+    private $prices;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Items")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", mappedBy="item")
+     */
+    private $b2bLogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Denomination", mappedBy="item")
+     */
+    private $denominations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="items")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
      */
-    private $Country;
+    private $country;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Codes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Inputs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->ItemDescs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->B2BLogs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Denominations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->codes = new ArrayCollection();
+        $this->inputs = new ArrayCollection();
+        $this->itemDescriptions = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+        $this->b2bLogs = new ArrayCollection();
+        $this->denominations = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,95 +119,95 @@ class Item
     }
 
     /**
-     * Set itemName
+     * Set name
      *
-     * @param string $itemName
+     * @param string $name
      * @return Item
      */
-    public function setItemName($itemName)
+    public function setName($name)
     {
-        $this->itemName = $itemName;
-    
+        $this->name = $name;
+
         return $this;
     }
 
     /**
-     * Get itemName
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getItemName()
+    public function getName()
     {
-        return $this->itemName;
+        return $this->name;
     }
 
     /**
-     * Set itemFaceValue
+     * Set faceValue
      *
-     * @param float $itemFaceValue
+     * @param float $faceValue
      * @return Item
      */
-    public function setItemFaceValue($itemFaceValue)
+    public function setFaceValue($faceValue)
     {
-        $this->itemFaceValue = $itemFaceValue;
-    
+        $this->faceValue = $faceValue;
+
         return $this;
     }
 
     /**
-     * Get itemFaceValue
+     * Get faceValue
      *
      * @return float
      */
-    public function getItemFaceValue()
+    public function getFaceValue()
     {
-        return $this->itemFaceValue;
+        return $this->faceValue;
     }
 
     /**
-     * Set itemCurrency
+     * Set currency
      *
-     * @param string $itemCurrency
+     * @param string $currency
      * @return Item
      */
-    public function setItemCurrency($itemCurrency)
+    public function setCurrency($currency)
     {
-        $this->itemCurrency = $itemCurrency;
-    
+        $this->currency = $currency;
+
         return $this;
     }
 
     /**
-     * Get itemCurrency
+     * Get currency
      *
-     * @return string 
+     * @return string
      */
-    public function getItemCurrency()
+    public function getCurrency()
     {
-        return $this->itemCurrency;
+        return $this->currency;
     }
 
     /**
-     * Set itemType
+     * Set type
      *
-     * @param integer $itemType
+     * @param string $type
      * @return Item
      */
-    public function setItemType($itemType)
+    public function setType($type)
     {
-        $this->itemType = $itemType;
-    
+        $this->type = $type;
+
         return $this;
     }
 
     /**
-     * Get itemType
+     * Get type
      *
-     * @return integer 
+     * @return string
      */
-    public function getItemType()
+    public function getType()
     {
-        return $this->itemType;
+        return $this->type;
     }
 
     /**
@@ -216,14 +219,14 @@ class Item
     public function setAlertMinStock($alertMinStock)
     {
         $this->alertMinStock = $alertMinStock;
-    
+
         return $this;
     }
 
     /**
      * Get alertMinStock
      *
-     * @return integer 
+     * @return integer
      */
     public function getAlertMinStock()
     {
@@ -231,22 +234,68 @@ class Item
     }
 
     /**
-     * Set operator
+     * Set code
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Operator $operator
+     * @param string $code
      * @return Item
      */
-    public function setOperator($operator)
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set dateInsert
+     *
+     * @param \DateTime $dateInsert
+     * @return Item
+     */
+    public function setDateInsert($dateInsert)
+    {
+        $this->dateInsert = $dateInsert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateInsert
+     *
+     * @return \DateTime
+     */
+    public function getDateInsert()
+    {
+        return $this->dateInsert;
+    }
+
+    /**
+     * Set operator
+     *
+     * @param Operator $operator
+     * @return Item
+     */
+    public function setOperator(Operator $operator)
     {
         $this->operator = $operator;
-    
+
         return $this;
     }
 
     /**
      * Get operator
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Operator
+     * @return Operator
      */
     public function getOperator()
     {
@@ -254,275 +303,224 @@ class Item
     }
 
     /**
-     * Set itemCode
+     * Add codes
      *
-     * @param string $itemCode
+     * @param Code $codes
      * @return Item
      */
-    public function setItemCode($itemCode)
+    public function addCode(Code $codes)
     {
-        $this->itemCode = $itemCode;
-    
+        $this->codes[] = $codes;
+
         return $this;
     }
 
     /**
-     * Get itemCode
+     * Remove codes
      *
-     * @return string 
+     * @param Code $codes
      */
-    public function getItemCode()
+    public function removeCode(Code $codes)
     {
-        return $this->itemCode;
+        $this->codes->removeElement($codes);
     }
 
     /**
-     * Add Codes
+     * Get codes
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Code $codes
-     * @return Item
-     */
-    public function addCode(\HelloDi\DiDistributorsBundle\Entity\Code $codes)
-    {
-        $this->Codes[] = $codes;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Codes
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Code $codes
-     */
-    public function removeCode(\HelloDi\DiDistributorsBundle\Entity\Code $codes)
-    {
-        $this->Codes->removeElement($codes);
-    }
-
-    /**
-     * Get Codes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCodes()
     {
-        return $this->Codes;
+        return $this->codes;
     }
 
     /**
-     * Add Inputs
+     * Add inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      * @return Item
      */
-    public function addInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function addInput(Input $inputs)
     {
-        $this->Inputs[] = $inputs;
-    
+        $this->inputs[] = $inputs;
+
         return $this;
     }
 
     /**
-     * Remove Inputs
+     * Remove inputs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Input $inputs
+     * @param Input $inputs
      */
-    public function removeInput(\HelloDi\DiDistributorsBundle\Entity\Input $inputs)
+    public function removeInput(Input $inputs)
     {
-        $this->Inputs->removeElement($inputs);
+        $this->inputs->removeElement($inputs);
     }
 
     /**
-     * Get Inputs
+     * Get inputs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInputs()
     {
-        return $this->Inputs;
+        return $this->inputs;
     }
 
     /**
-     * Add ItemDescs
+     * Add itemDescriptions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\ItemDesc $itemDescs
+     * @param ItemDesc $itemDescriptions
      * @return Item
      */
-    public function addItemDesc(\HelloDi\DiDistributorsBundle\Entity\ItemDesc $itemDescs)
+    public function addItemDescription(ItemDesc $itemDescriptions)
     {
-        $this->ItemDescs[] = $itemDescs;
-    
+        $this->itemDescriptions[] = $itemDescriptions;
+
         return $this;
     }
 
     /**
-     * Remove ItemDescs
+     * Remove itemDescriptions
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\ItemDesc $itemDescs
+     * @param ItemDesc $itemDescriptions
      */
-    public function removeItemDesc(\HelloDi\DiDistributorsBundle\Entity\ItemDesc $itemDescs)
+    public function removeItemDescription(ItemDesc $itemDescriptions)
     {
-        $this->ItemDescs->removeElement($itemDescs);
+        $this->itemDescriptions->removeElement($itemDescriptions);
     }
 
     /**
-     * Get ItemDescs
+     * Get itemDescriptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItemDescs()
+    public function getItemDescriptions()
     {
-        return $this->ItemDescs;
+        return $this->itemDescriptions;
     }
 
     /**
-     * Add Prices
+     * Add prices
      *
-     * @param \HelloDi\PricingBundle\Entity\Price $prices
+     * @param Price $prices
      * @return Item
      */
-    public function addPrice(\HelloDi\PricingBundle\Entity\Price $prices)
+    public function addPrice(Price $prices)
     {
-        $this->Prices[] = $prices;
-    
+        $this->prices[] = $prices;
+
         return $this;
     }
 
     /**
-     * Remove Prices
+     * Remove prices
      *
-     * @param \HelloDi\PricingBundle\Entity\Price $prices
+     * @param Price $prices
      */
-    public function removePrice(\HelloDi\PricingBundle\Entity\Price $prices)
+    public function removePrice(Price $prices)
     {
-        $this->Prices->removeElement($prices);
+        $this->prices->removeElement($prices);
     }
 
     /**
-     * Get Prices
+     * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPrices()
     {
-        return $this->Prices;
+        return $this->prices;
     }
 
     /**
-     * Set Country
+     * Add b2bLogs
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Country $country
+     * @param B2BLog $b2bLogs
      * @return Item
      */
-    public function setCountry(\HelloDi\DiDistributorsBundle\Entity\Country $country)
+    public function addB2bLog(B2BLog $b2bLogs)
     {
-        $this->Country = $country;
-    
+        $this->b2bLogs[] = $b2bLogs;
+
         return $this;
     }
 
     /**
-     * Get Country
+     * Remove b2bLogs
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Country 
+     * @param B2BLog $b2bLogs
      */
-    public function getCountry()
+    public function removeB2bLog(B2BLog $b2bLogs)
     {
-        return $this->Country;
+        $this->b2bLogs->removeElement($b2bLogs);
     }
 
     /**
-     * Set itemDateInsert
+     * Get b2bLogs
      *
-     * @param \DateTime $itemDateInsert
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getB2bLogs()
+    {
+        return $this->b2bLogs;
+    }
+
+    /**
+     * Add denominations
+     *
+     * @param Denomination $denominations
      * @return Item
      */
-    public function setItemDateInsert($itemDateInsert)
+    public function addDenomination(Denomination $denominations)
     {
-        $this->itemDateInsert = $itemDateInsert;
-    
+        $this->denominations[] = $denominations;
+
         return $this;
     }
 
     /**
-     * Get itemDateInsert
+     * Remove denominations
      *
-     * @return \DateTime 
+     * @param Denomination $denominations
      */
-    public function getItemDateInsert()
+    public function removeDenomination(Denomination $denominations)
     {
-        return $this->itemDateInsert;
+        $this->denominations->removeElement($denominations);
     }
 
     /**
-     * Add B2BLogs
+     * Get denominations
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
-     * @return Item
-     */
-    public function addB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
-    {
-        $this->B2BLogs[] = $b2BLogs;
-    
-        return $this;
-    }
-
-    /**
-     * Remove B2BLogs
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs
-     */
-    public function removeB2BLog(\HelloDi\DiDistributorsBundle\Entity\B2BLog $b2BLogs)
-    {
-        $this->B2BLogs->removeElement($b2BLogs);
-    }
-
-    /**
-     * Get B2BLogs
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getB2BLogs()
-    {
-        return $this->B2BLogs;
-    }
-
-    function __toString()
-    {
-        return $this->getItemName();
-    }
-
-    /**
-     * Add Denominations
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Denomination $denominations
-     * @return Item
-     */
-    public function addDenomination(\HelloDi\DiDistributorsBundle\Entity\Denomination $denominations)
-    {
-        $this->Denominations[] = $denominations;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Denominations
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Denomination $denominations
-     */
-    public function removeDenomination(\HelloDi\DiDistributorsBundle\Entity\Denomination $denominations)
-    {
-        $this->Denominations->removeElement($denominations);
-    }
-
-    /**
-     * Get Denominations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDenominations()
     {
-        return $this->Denominations;
+        return $this->denominations;
+    }
+
+    /**
+     * Set country
+     *
+     * @param Country $country
+     * @return Item
+     */
+    public function setCountry(Country $country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     /**
@@ -531,8 +529,9 @@ class Item
      */
     public function getDenominationByCurrency($currency)
     {
-        foreach($this->Denominations as $denomination)
-            if($denomination->getCurrency() == $currency)
+        foreach ($this->denominations as $denomination)
+            /** @var Denomination $denomination */
+            if ($denomination->getCurrency() == $currency)
                 return $denomination->getDenomination();
 
         return null;

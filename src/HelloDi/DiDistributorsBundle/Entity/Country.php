@@ -2,9 +2,8 @@
 namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-
 use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="country")
@@ -34,14 +33,9 @@ class Country
     private $entities;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", mappedBy="Country")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", mappedBy="country")
      */
     private $taxes;
-
-    public function getIsoName()
-    {
-        return $this->getIso() . ' . ' . $this->getName();
-    }
 
     /**
      * Constructor
@@ -71,6 +65,7 @@ class Country
     public function setIso($iso)
     {
         $this->iso = $iso;
+
         return $this;
     }
 
@@ -93,6 +88,7 @@ class Country
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -107,31 +103,32 @@ class Country
     }
 
     /**
-     * Add Entities
+     * Add entities
      *
      * @param Entity $entities
      * @return Country
      */
-    public function addEntities(Entity $entities)
+    public function addEntity(Entity $entities)
     {
         $this->entities[] = $entities;
+
         return $this;
     }
 
     /**
-     * Remove Entities
+     * Remove entities
      *
      * @param Entity $entities
      */
-    public function removeEntities(Entity $entities)
+    public function removeEntity(Entity $entities)
     {
         $this->entities->removeElement($entities);
     }
 
     /**
-     * Get Entities
+     * Get entities
      *
-     * @return Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEntities()
     {
@@ -139,7 +136,7 @@ class Country
     }
 
     /**
-     * Add Taxes
+     * Add taxes
      *
      * @param Tax $taxes
      * @return Country
@@ -147,11 +144,12 @@ class Country
     public function addTax(Tax $taxes)
     {
         $this->taxes[] = $taxes;
+
         return $this;
     }
 
     /**
-     * Remove Taxes
+     * Remove taxes
      *
      * @param Tax $taxes
      */
@@ -161,13 +159,21 @@ class Country
     }
 
     /**
-     * Get Taxes
+     * Get taxes
      *
-     * @return Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTaxes()
     {
         return $this->taxes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsoName()
+    {
+        return $this->getIso() . ' . ' . $this->getName();
     }
 
     /**

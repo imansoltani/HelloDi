@@ -1,36 +1,37 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
- * @ORM\Table(name="exchangerate")
+ * @ORM\Table(name="exchange_rate")
  */
 class ExchangeRate
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="CHF", scale=2)
      */
     private $CHF;
 
-    /** 
+    /**
      * @ORM\Column(type="decimal", nullable=false, name="EUR", scale=2)
      */
     private $EUR;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=false, name="date")
      */
     private $date;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=false, name="description")
      */
     private $description;
@@ -38,7 +39,7 @@ class ExchangeRate
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -54,14 +55,14 @@ class ExchangeRate
     public function setCHF($cHF)
     {
         $this->CHF = $cHF;
-    
+
         return $this;
     }
 
     /**
      * Get CHF
      *
-     * @return float 
+     * @return float
      */
     public function getCHF()
     {
@@ -77,14 +78,14 @@ class ExchangeRate
     public function setEUR($eUR)
     {
         $this->EUR = $eUR;
-    
+
         return $this;
     }
 
     /**
      * Get EUR
      *
-     * @return float 
+     * @return float
      */
     public function getEUR()
     {
@@ -100,14 +101,14 @@ class ExchangeRate
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -123,14 +124,14 @@ class ExchangeRate
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

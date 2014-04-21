@@ -3,6 +3,7 @@
 namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use HelloDi\AccountingBundle\Entity\Transaction;
 
 /**
  * Pin
@@ -56,13 +57,12 @@ class Pin
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\OrderCode", inversedBy="pins")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
      */
-    private $order;
-
+    private $orderCode;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,14 +78,14 @@ class Pin
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -95,20 +95,20 @@ class Pin
     /**
      * Set user
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
+     * @param User $user
      * @return Pin
      */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -118,20 +118,20 @@ class Pin
     /**
      * Set sellerTransaction
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction
+     * @param Transaction $sellerTransaction
      * @return Pin
      */
-    public function setSellerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction)
+    public function setSellerTransaction(Transaction $sellerTransaction)
     {
         $this->sellerTransaction = $sellerTransaction;
-    
+
         return $this;
     }
 
     /**
      * Get sellerTransaction
      *
-     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     * @return Transaction
      */
     public function getSellerTransaction()
     {
@@ -141,20 +141,20 @@ class Pin
     /**
      * Set commissionerTransaction
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction
+     * @param Transaction $commissionerTransaction
      * @return Pin
      */
-    public function setCommissionerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction = null)
+    public function setCommissionerTransaction(Transaction $commissionerTransaction = null)
     {
         $this->commissionerTransaction = $commissionerTransaction;
-    
+
         return $this;
     }
 
     /**
      * Get commissionerTransaction
      *
-     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     * @return Transaction
      */
     public function getCommissionerTransaction()
     {
@@ -164,20 +164,20 @@ class Pin
     /**
      * Set code
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Code $code
+     * @param Code $code
      * @return Pin
      */
-    public function setCode(\HelloDi\DiDistributorsBundle\Entity\Code $code = null)
+    public function setCode(Code $code = null)
     {
         $this->code = $code;
-    
+
         return $this;
     }
 
     /**
      * Get code
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Code 
+     * @return Code
      */
     public function getCode()
     {
@@ -185,25 +185,25 @@ class Pin
     }
 
     /**
-     * Set order
+     * Set orderCode
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\OrderCode $order
+     * @param OrderCode $orderCode
      * @return Pin
      */
-    public function setOrder(\HelloDi\DiDistributorsBundle\Entity\OrderCode $order = null)
+    public function setOrderCode(OrderCode $orderCode = null)
     {
-        $this->order = $order;
-    
+        $this->orderCode = $orderCode;
+
         return $this;
     }
 
     /**
-     * Get order
+     * Get orderCode
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\OrderCode 
+     * @return OrderCode
      */
-    public function getOrder()
+    public function getOrderCode()
     {
-        return $this->order;
+        return $this->orderCode;
     }
 }

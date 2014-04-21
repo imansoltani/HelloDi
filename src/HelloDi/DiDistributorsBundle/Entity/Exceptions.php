@@ -1,14 +1,15 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="exceptions")
  */
 class Exceptions
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -16,8 +17,8 @@ class Exceptions
     private $id;
 
 
-    /** 
-     * @ORM\Column(type="datetime", nullable=false, name="date")
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date")
      */
     private $Date;
 
@@ -25,19 +26,18 @@ class Exceptions
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $Description;
+    private $description;
 
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $Username;
-
+    private $username;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,14 +53,14 @@ class Exceptions
     public function setDate($date)
     {
         $this->Date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get Date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -68,49 +68,48 @@ class Exceptions
     }
 
     /**
-     * Set Description
+     * Set description
      *
      * @param string $description
      * @return Exceptions
      */
     public function setDescription($description)
     {
-        $this->Description = $description;
-    
+        $this->description = $description;
+
         return $this;
     }
 
     /**
-     * Get Description
+     * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
-        return $this->Description;
+        return $this->description;
     }
 
-
     /**
-     * Set Username
+     * Set username
      *
      * @param string $username
      * @return Exceptions
      */
     public function setUsername($username)
     {
-        $this->Username = $username;
-    
+        $this->username = $username;
+
         return $this;
     }
 
     /**
-     * Get Username
+     * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
-        return $this->Username;
+        return $this->username;
     }
 }

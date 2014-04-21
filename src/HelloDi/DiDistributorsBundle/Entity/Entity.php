@@ -5,89 +5,90 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use HelloDi\AccountingBundle\Entity\Account;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="entity")
  */
 class Entity
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=false, name="ent_name")
+    /**
+     * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
     private $name;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=true, name="ebt_vat_number")
+    /**
+     * @ORM\Column(type="string", length=45, nullable=true, name="vat_number")
      */
     private $vatNumber;
 
-    /** 
-     * @ORM\Column(type="string", length=15, nullable=true, name="ent_tel1")
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true, name="tel1")
      */
     private $tel1;
 
-    /** 
-     * @ORM\Column(type="string", length=15, nullable=true, name="ent_tel2")
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true, name="tel2")
      */
     private $tel2;
 
-    /** 
-     * @ORM\Column(type="string", length=15, nullable=true, name="ent_fax")
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true, name="fax")
      */
     private $fax;
 
-    /** 
-     * @ORM\Column(type="string", length=45, nullable=true, name="ent_website")
+    /**
+     * @ORM\Column(type="string", length=45, nullable=true, name="website")
      */
     private $website;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
     private $address1;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
     private $address2;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
     private $address3;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
     private $NP;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
     private $city;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="entity")
      */
     private $accounts;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="entity")
      */
     private $users;
 
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="entities")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     private $country;
+
     /**
      * Constructor
      */
@@ -100,7 +101,7 @@ class Entity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,14 +117,14 @@ class Entity
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -139,14 +140,14 @@ class Entity
     public function setVatNumber($vatNumber)
     {
         $this->vatNumber = $vatNumber;
-    
+
         return $this;
     }
 
     /**
      * Get vatNumber
      *
-     * @return string 
+     * @return string
      */
     public function getVatNumber()
     {
@@ -162,14 +163,14 @@ class Entity
     public function setTel1($tel1)
     {
         $this->tel1 = $tel1;
-    
+
         return $this;
     }
 
     /**
      * Get tel1
      *
-     * @return string 
+     * @return string
      */
     public function getTel1()
     {
@@ -185,14 +186,14 @@ class Entity
     public function setTel2($tel2)
     {
         $this->tel2 = $tel2;
-    
+
         return $this;
     }
 
     /**
      * Get tel2
      *
-     * @return string 
+     * @return string
      */
     public function getTel2()
     {
@@ -208,14 +209,14 @@ class Entity
     public function setFax($fax)
     {
         $this->fax = $fax;
-    
+
         return $this;
     }
 
     /**
      * Get fax
      *
-     * @return string 
+     * @return string
      */
     public function getFax()
     {
@@ -231,14 +232,14 @@ class Entity
     public function setWebsite($website)
     {
         $this->website = $website;
-    
+
         return $this;
     }
 
     /**
      * Get website
      *
-     * @return string 
+     * @return string
      */
     public function getWebsite()
     {
@@ -254,14 +255,14 @@ class Entity
     public function setAddress1($address1)
     {
         $this->address1 = $address1;
-    
+
         return $this;
     }
 
     /**
      * Get address1
      *
-     * @return string 
+     * @return string
      */
     public function getAddress1()
     {
@@ -277,14 +278,14 @@ class Entity
     public function setAddress2($address2)
     {
         $this->address2 = $address2;
-    
+
         return $this;
     }
 
     /**
      * Get address2
      *
-     * @return string 
+     * @return string
      */
     public function getAddress2()
     {
@@ -300,14 +301,14 @@ class Entity
     public function setAddress3($address3)
     {
         $this->address3 = $address3;
-    
+
         return $this;
     }
 
     /**
      * Get address3
      *
-     * @return string 
+     * @return string
      */
     public function getAddress3()
     {
@@ -323,14 +324,14 @@ class Entity
     public function setNP($nP)
     {
         $this->NP = $nP;
-    
+
         return $this;
     }
 
     /**
      * Get NP
      *
-     * @return string 
+     * @return string
      */
     public function getNP()
     {
@@ -346,14 +347,14 @@ class Entity
     public function setCity($city)
     {
         $this->city = $city;
-    
+
         return $this;
     }
 
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -369,7 +370,7 @@ class Entity
     public function addAccount(Account $accounts)
     {
         $this->accounts[] = $accounts;
-    
+
         return $this;
     }
 
@@ -386,7 +387,7 @@ class Entity
     /**
      * Get accounts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAccounts()
     {
@@ -402,7 +403,7 @@ class Entity
     public function addUser(User $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
@@ -419,7 +420,7 @@ class Entity
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
@@ -435,7 +436,7 @@ class Entity
     public function setCountry(Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 

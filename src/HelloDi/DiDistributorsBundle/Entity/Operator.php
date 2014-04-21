@@ -1,5 +1,7 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,7 +20,7 @@ class Operator
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="Name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
     private $name;
 
@@ -28,27 +30,32 @@ class Operator
     private $carrierCode;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=True, name="operator_logo")
+     * @ORM\Column(type="string", length=45, nullable=True, name="logo")
      */
-    private $Logo;
+    private $logo;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", mappedBy="operator")
      */
-    private $Item;
+    private $item;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Item = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->item = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -64,14 +71,14 @@ class Operator
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -79,85 +86,83 @@ class Operator
     }
 
     /**
-     * Set Logo
+     * Set carrierCode
+     *
+     * @param string $carrierCode
+     * @return Operator
+     */
+    public function setCarrierCode($carrierCode)
+    {
+        $this->carrierCode = $carrierCode;
+
+        return $this;
+    }
+
+    /**
+     * Get carrierCode
+     *
+     * @return string
+     */
+    public function getCarrierCode()
+    {
+        return $this->carrierCode;
+    }
+
+    /**
+     * Set logo
      *
      * @param string $logo
      * @return Operator
      */
     public function setLogo($logo)
     {
-        $this->Logo = $logo;
-    
+        $this->logo = $logo;
+
         return $this;
     }
 
     /**
-     * Get Logo
+     * Get logo
      *
-     * @return string 
+     * @return string
      */
     public function getLogo()
     {
-        return $this->Logo;
+        return $this->logo;
     }
 
     /**
-     * Add Item
+     * Add item
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param Item $item
      * @return Operator
      */
-    public function addItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function addItem(Item $item)
     {
-        $this->Item[] = $item;
-    
+        $this->item[] = $item;
+
         return $this;
     }
 
     /**
-     * Remove Item
+     * Remove item
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param Item $item
      */
-    public function removeItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function removeItem(Item $item)
     {
-        $this->Item->removeElement($item);
+        $this->item->removeElement($item);
     }
 
     /**
-     * Get Item
+     * Get item
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getItem()
     {
-        return $this->Item;
+        return $this->item;
     }
-
-    public function getAbsolutePath()
-    {
-        return null === $this->Logo ? null : $this->getUploadRootDir().'/'.$this->Logo;
-    }
-
-    public function getWebPath()
-    {
-        return $this->getUploadDir().'/'. (null === $this->Logo ? "0.png" : $this->Logo);
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        return 'uploads/logos';
-    }
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    private $file;
 
     /**
      * Sets file.
@@ -179,55 +184,64 @@ class Operator
         return $this->file;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getAbsolutePath()
+    {
+        return null === $this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->getUploadDir() . '/' . (null === $this->logo ? "0.png" : $this->logo);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'uploads/logos';
+    }
+
+    /**
+     * Upload
+     */
     public function upload()
     {
-        if($this->file === null) return;
+        if ($this->file === null)
+            return;
 
-        if(file_exists($this->getAbsolutePath()))
+        if (file_exists($this->getAbsolutePath()))
             unlink($this->getAbsolutePath());
 
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        // move takes the target directory and then the
-        // target filename to move to
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->id.'.'.$this->getFile()->getClientOriginalExtension()
+            $this->id . '.' . $this->getFile()->getClientOriginalExtension()
         );
 
-        // set the path property to the filename where you've saved the file
-        $this->Logo = $this->id.'.'.$this->getFile()->getClientOriginalExtension();
+        $this->logo = $this->id . '.' . $this->getFile()->getClientOriginalExtension();
 
-        // clean up the file property as you won't need it anymore
         $this->file = null;
     }
 
     /**
-     * Set carrierCode
-     *
-     * @param string $carrierCode
-     * @return Operator
+     * @return string
      */
-    public function setCarrierCode($carrierCode)
-    {
-        $this->carrierCode = $carrierCode;
-    
-        return $this;
-    }
-
-    /**
-     * Get carrierCode
-     *
-     * @return string 
-     */
-    public function getCarrierCode()
-    {
-        return $this->carrierCode;
-    }
-
     public function getNameCarrier()
     {
-        return $this->name.($this->carrierCode!=null?' ('.$this->carrierCode.')':'');
+        return $this->name . ($this->carrierCode != null ? ' (' . $this->carrierCode . ')' : '');
     }
 }

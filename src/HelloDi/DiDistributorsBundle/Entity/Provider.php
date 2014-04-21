@@ -33,12 +33,12 @@ class Provider
     /**
      * @var string
      *
-     * @ORM\Column(name="timeZone", type="string", length=45)
+     * @ORM\Column(name="timezone", type="string", length=45)
      */
-    private $timeZone;
+    private $timezone;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="Account")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Input", mappedBy="provider")
      */
     private $inputs;
 
@@ -49,22 +49,23 @@ class Provider
     private $account;
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->inputs = new ArrayCollection();
     }
-    
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * Set currency
      *
@@ -74,14 +75,14 @@ class Provider
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -89,26 +90,26 @@ class Provider
     }
 
     /**
-     * Set timeZone
+     * Set timezone
      *
-     * @param string $timeZone
+     * @param string $timezone
      * @return Provider
      */
-    public function setTimeZone($timeZone)
+    public function setTimezone($timezone)
     {
-        $this->timeZone = $timeZone;
-    
+        $this->timezone = $timezone;
+
         return $this;
     }
 
     /**
-     * Get timeZone
+     * Get timezone
      *
-     * @return string 
+     * @return string
      */
-    public function getTimeZone()
+    public function getTimezone()
     {
-        return $this->timeZone;
+        return $this->timezone;
     }
 
     /**
@@ -120,7 +121,7 @@ class Provider
     public function addInput(Input $inputs)
     {
         $this->inputs[] = $inputs;
-    
+
         return $this;
     }
 
@@ -137,7 +138,7 @@ class Provider
     /**
      * Get inputs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInputs()
     {
@@ -153,7 +154,7 @@ class Provider
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 
@@ -172,6 +173,6 @@ class Provider
      */
     public function getNameWithCurrency()
     {
-        return $this->getAccount()->getAccName() . ' | ' . $this->getAccount()->getAccBalance() . ' ( ' . $this->getCurrency() . ' )';
+        return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getCurrency() . ' )';
     }
 }

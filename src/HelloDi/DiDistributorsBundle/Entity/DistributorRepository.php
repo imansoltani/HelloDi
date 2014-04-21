@@ -16,8 +16,8 @@ class DistributorRepository extends EntityRepository
     public function getByAccountId($id)
     {
         return $this->createQueryBuilder('this')
-            ->innerJoin('this.account','account')
-            ->where('account.id = :id')->setParameter('id',$id)
+            ->innerJoin('this.account', 'account')
+            ->where('account.id = :id')->setParameter('id', $id)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }

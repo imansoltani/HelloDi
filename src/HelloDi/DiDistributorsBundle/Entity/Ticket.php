@@ -1,38 +1,38 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
-use HelloDi\AccountingBundle\Entity\Account;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="ticket")
  */
 class Ticket
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=45, nullable=false, name="subject")
      */
     private $subject;
 
-    /** 
-     * @ORM\Column(type="datetime", nullable=false, name="ticket_start")
+    /**
+     * @ORM\Column(type="datetime", nullable=false, name="start")
      */
-    private $ticketStart;
+    private $start;
 
-    /** 
-     * @ORM\Column(type="datetime", nullable=true, name="ticket_end")
+    /**
+     * @ORM\Column(type="datetime", nullable=true, name="end")
      */
-    private $ticketEnd;
+    private $end;
 
-    /** 
+    /**
      * @ORM\Column(type="integer", nullable=false)
      */
     private $type;
@@ -40,47 +40,48 @@ class Ticket
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $Status;
-    
-    /** 
+    private $status;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $inchange;
+    private $inChange;
 
-    /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TicketNote", mappedBy="Ticket")
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TicketNote", mappedBy="ticket")
      */
-    private $TicketNotes;
+    private $ticketNotes;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="ticketsDist")
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", inversedBy="ticketsDist")
      * @ORM\JoinColumn(name="account_dist_id", referencedColumnName="id", nullable=true)
      */
     private $accountDist;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="ticketsRetailer")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Retailer", inversedBy="ticketsRetailer")
      * @ORM\JoinColumn(name="account_retailer_id", referencedColumnName="id", nullable=true)
      */
     private $accountRetailer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="Tickets")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="tickets")
      * @ORM\JoinColumn(name="last_user_id", referencedColumnName="id", nullable=false)
      */
-    private $lastUser;
+    private $user;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->TicketNotes = new ArrayCollection();
+        $this->ticketNotes = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,14 +97,14 @@ class Ticket
     public function setSubject($subject)
     {
         $this->subject = $subject;
-    
+
         return $this;
     }
 
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -111,49 +112,49 @@ class Ticket
     }
 
     /**
-     * Set ticketStart
+     * Set start
      *
-     * @param \DateTime $ticketStart
+     * @param \DateTime $start
      * @return Ticket
      */
-    public function setTicketStart($ticketStart)
+    public function setStart($start)
     {
-        $this->ticketStart = $ticketStart;
-    
+        $this->start = $start;
+
         return $this;
     }
 
     /**
-     * Get ticketStart
+     * Get start
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getTicketStart()
+    public function getStart()
     {
-        return $this->ticketStart;
+        return $this->start;
     }
 
     /**
-     * Set ticketEnd
+     * Set end
      *
-     * @param \DateTime $ticketEnd
+     * @param \DateTime $end
      * @return Ticket
      */
-    public function setTicketEnd($ticketEnd)
+    public function setEnd($end)
     {
-        $this->ticketEnd = $ticketEnd;
-    
+        $this->end = $end;
+
         return $this;
     }
 
     /**
-     * Get ticketEnd
+     * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getTicketEnd()
+    public function getEnd()
     {
-        return $this->ticketEnd;
+        return $this->end;
     }
 
     /**
@@ -165,14 +166,14 @@ class Ticket
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -180,78 +181,101 @@ class Ticket
     }
 
     /**
-     * Add TicketNotes
-     *
-     * @param TicketNote $ticketNotes
-     * @return Ticket
-     */
-    public function addTicketNote(TicketNote $ticketNotes)
-    {
-        $this->TicketNotes[] = $ticketNotes;
-    
-        return $this;
-    }
-
-    /**
-     * Remove TicketNotes
-     *
-     * @param TicketNote $ticketNotes
-     */
-    public function removeTicketNote(TicketNote $ticketNotes)
-    {
-        $this->TicketNotes->removeElement($ticketNotes);
-    }
-
-    /**
-     * Get TicketNotes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTicketNotes()
-    {
-        return $this->TicketNotes;
-    }
-
-    /**
-     * Set Status
+     * Set status
      *
      * @param integer $status
      * @return Ticket
      */
     public function setStatus($status)
     {
-        $this->Status = $status;
-    
+        $this->status = $status;
+
         return $this;
     }
 
     /**
-     * Get Status
+     * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
-        return $this->Status;
+        return $this->status;
     }
 
     /**
-     * Set Accountdist
+     * Set inChange
      *
-     * @param Account $accountDist
+     * @param integer $inChange
      * @return Ticket
      */
-    public function setAccountDist(Account $accountDist)
+    public function setInChange($inChange)
     {
-        $this->accountDist = $accountDist;
-    
+        $this->inChange = $inChange;
+
         return $this;
     }
 
     /**
-     * Get Accountdist
+     * Get inChange
      *
-     * @return Account
+     * @return integer
+     */
+    public function getInChange()
+    {
+        return $this->inChange;
+    }
+
+    /**
+     * Add ticketNotes
+     *
+     * @param TicketNote $ticketNotes
+     * @return Ticket
+     */
+    public function addTicketNote(TicketNote $ticketNotes)
+    {
+        $this->ticketNotes[] = $ticketNotes;
+
+        return $this;
+    }
+
+    /**
+     * Remove ticketNotes
+     *
+     * @param TicketNote $ticketNotes
+     */
+    public function removeTicketNote(TicketNote $ticketNotes)
+    {
+        $this->ticketNotes->removeElement($ticketNotes);
+    }
+
+    /**
+     * Get ticketNotes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTicketNotes()
+    {
+        return $this->ticketNotes;
+    }
+
+    /**
+     * Set accountDist
+     *
+     * @param Distributor $accountDist
+     * @return Ticket
+     */
+    public function setAccountDist(Distributor $accountDist = null)
+    {
+        $this->accountDist = $accountDist;
+
+        return $this;
+    }
+
+    /**
+     * Get accountDist
+     *
+     * @return Distributor
      */
     public function getAccountDist()
     {
@@ -259,22 +283,22 @@ class Ticket
     }
 
     /**
-     * Set AccountRetailer
+     * Set accountRetailer
      *
-     * @param Account $accountRetailer
+     * @param Retailer $accountRetailer
      * @return Ticket
      */
-    public function setAccountRetailer(Account $accountRetailer)
+    public function setAccountRetailer(Retailer $accountRetailer = null)
     {
         $this->accountRetailer = $accountRetailer;
-    
+
         return $this;
     }
 
     /**
-     * Get Accountretailer
+     * Get accountRetailer
      *
-     * @return Account
+     * @return Retailer
      */
     public function getAccountRetailer()
     {
@@ -282,48 +306,25 @@ class Ticket
     }
 
     /**
-     * Set inchange
+     * Set user
      *
-     * @param integer $inchange
+     * @param User $user
      * @return Ticket
      */
-    public function setInchange($inchange)
+    public function setUser(User $user)
     {
-        $this->inchange = $inchange;
-    
+        $this->user = $user;
+
         return $this;
     }
 
     /**
-     * Get inchange
-     *
-     * @return integer 
-     */
-    public function getInchange()
-    {
-        return $this->inchange;
-    }
-
-    /**
-     * Set lastUser
-     *
-     * @param User $lastUser
-     * @return Ticket
-     */
-    public function setLastUser(User $lastUser)
-    {
-        $this->lastUser = $lastUser;
-    
-        return $this;
-    }
-
-    /**
-     * Get lastUser
+     * Get user
      *
      * @return User
      */
-    public function getLastUser()
+    public function getUser()
     {
-        return $this->lastUser;
+        return $this->user;
     }
 }

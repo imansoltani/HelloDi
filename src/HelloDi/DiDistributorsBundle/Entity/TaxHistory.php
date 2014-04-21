@@ -1,15 +1,16 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
- * @ORM\Table(name="taxhistory")
+ * @ORM\Table(name="tax_history")
  */
 class TaxHistory
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -17,9 +18,9 @@ class TaxHistory
     private $id;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true, name="Tax_End")
+     * @ORM\Column(type="datetime",nullable=true, name="Tax_end")
      */
-    private $taxend;
+    private $taxEnd;
 
     /**
      * @ORM\Column(type="float", nullable=false, name="tax")
@@ -27,56 +28,55 @@ class TaxHistory
     private $vat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="TaxHistories")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="taxHistories")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
-    private $Tax;
+    private $tax;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", mappedBy="taxHistory")
      */
-    private $Distributors;
+    private $distributors;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Distributors = new ArrayCollection();
+        $this->distributors = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-
     /**
-     * Set taxend
+     * Set taxEnd
      *
-     * @param \DateTime $taxend
+     * @param \DateTime $taxEnd
      * @return TaxHistory
      */
-    public function setTaxend($taxend)
+    public function setTaxEnd($taxEnd)
     {
-        $this->taxend = $taxend;
-    
+        $this->taxEnd = $taxEnd;
+
         return $this;
     }
 
     /**
-     * Get taxend
+     * Get taxEnd
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getTaxend()
+    public function getTaxEnd()
     {
-        return $this->taxend;
+        return $this->taxEnd;
     }
 
     /**
@@ -88,14 +88,14 @@ class TaxHistory
     public function setVat($vat)
     {
         $this->vat = $vat;
-    
+
         return $this;
     }
 
     /**
      * Get vat
      *
-     * @return float 
+     * @return float
      */
     public function getVat()
     {
@@ -103,58 +103,58 @@ class TaxHistory
     }
 
     /**
-     * Set Tax
+     * Set tax
      *
      * @param Tax $tax
      * @return TaxHistory
      */
     public function setTax(Tax $tax = null)
     {
-        $this->Tax = $tax;
-    
+        $this->tax = $tax;
+
         return $this;
     }
 
     /**
-     * Get Tax
+     * Get tax
      *
      * @return Tax
      */
     public function getTax()
     {
-        return $this->Tax;
+        return $this->tax;
     }
-    
+
     /**
-     * Add Distributors
+     * Add distributors
      *
      * @param Distributor $distributors
      * @return TaxHistory
      */
     public function addDistributor(Distributor $distributors)
     {
-        $this->Distributors[] = $distributors;
-    
+        $this->distributors[] = $distributors;
+
         return $this;
     }
 
     /**
-     * Remove Distributors
+     * Remove distributors
      *
      * @param Distributor $distributors
      */
     public function removeDistributor(Distributor $distributors)
     {
-        $this->Distributors->removeElement($distributors);
+        $this->distributors->removeElement($distributors);
     }
 
     /**
-     * Get Distributors
+     * Get distributors
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDistributors()
     {
-        return $this->Distributors;
+        return $this->distributors;
     }
 }

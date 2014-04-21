@@ -1,14 +1,17 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
-use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\PricingBundle\Entity\Price;
+
+/**
  * @ORM\Entity
  * @ORM\Table(name="tax")
  */
 class Tax
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,26 +24,34 @@ class Tax
     private $tax;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="Taxs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Country", inversedBy="taxes")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
-    private $Country;
+    private $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="Tax")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="tax")
      */
-    private $Prices;
+    private $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", mappedBy="Tax")
+     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", mappedBy="tax")
      */
-    private $TaxHistories;
+    private $taxHistories;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->taxHistories = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+    }
 
-     /**
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,14 +67,14 @@ class Tax
     public function setTax($tax)
     {
         $this->tax = $tax;
-    
+
         return $this;
     }
 
     /**
      * Get tax
      *
-     * @return float 
+     * @return float
      */
     public function getTax()
     {
@@ -71,133 +82,114 @@ class Tax
     }
 
     /**
-     * Set Country
+     * Set country
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Country $country
+     * @param Country $country
      * @return Tax
      */
-    public function setCountry(\HelloDi\DiDistributorsBundle\Entity\Country $country = null)
+    public function setCountry(Country $country = null)
     {
-        $this->Country = $country;
-    
+        $this->country = $country;
+
         return $this;
     }
 
     /**
-     * Get Country
+     * Get country
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Country 
+     * @return Country
      */
     public function getCountry()
     {
-        return $this->Country;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->TaxHistories=  new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Prices = new \Doctrine\Common\Collections\ArrayCollection();
-
+        return $this->country;
     }
 
     /**
-     * Add TaxHistorys
+     * Add prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys
+     * @param Price $prices
      * @return Tax
      */
-    public function addTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
+    public function addPrice(Price $prices)
     {
-        $this->TaxHistories[] = $taxHistorys;
-    
+        $this->prices[] = $prices;
+
         return $this;
     }
 
     /**
-     * Remove TaxHistorys
+     * Remove prices
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys
+     * @param Price $prices
      */
-    public function removeTaxHistory(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistorys)
+    public function removePrice(Price $prices)
     {
-        $this->TaxHistories->removeElement($taxHistorys);
+        $this->prices->removeElement($prices);
     }
 
     /**
-     * Get TaxHistorys
+     * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTaxHistorys()
+    public function getPrices()
     {
-        return $this->TaxHistories;
+        return $this->prices;
     }
 
     /**
-     * Add TaxHistories
+     * Add taxHistories
+     *
+     * @param TaxHistory $taxHistories
+     * @return Tax
+     */
+    public function addTaxHistory(TaxHistory $taxHistories)
+    {
+        $this->taxHistories[] = $taxHistories;
+
+        return $this;
+    }
+
+    /**
+     * Remove taxHistories
+     *
+     * @param TaxHistory $taxHistories
+     */
+    public function removeTaxHistory(TaxHistory $taxHistories)
+    {
+        $this->taxHistories->removeElement($taxHistories);
+    }
+
+    /**
+     * Get taxHistories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTaxHistories()
+    {
+        return $this->taxHistories;
+    }
+
+    /**
+     * Add taxHistories
      *
      * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
      * @return Tax
      */
     public function addTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
     {
-        $this->TaxHistories[] = $taxHistories;
+        $this->taxHistories[] = $taxHistories;
     
         return $this;
     }
 
     /**
-     * Remove TaxHistories
+     * Remove taxHistories
      *
      * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
      */
     public function removeTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
     {
-        $this->TaxHistories->removeElement($taxHistories);
-    }
-
-    /**
-     * Get TaxHistories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTaxHistories()
-    {
-        return $this->TaxHistories;
-    }
-
-    /**
-     * Add Prices
-     *
-     * @param \HelloDi\PricingBundle\Entity\Price $prices
-     * @return Tax
-     */
-    public function addPrice(\HelloDi\PricingBundle\Entity\Price $prices)
-    {
-        $this->Prices[] = $prices;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Prices
-     *
-     * @param \HelloDi\PricingBundle\Entity\Price $prices
-     */
-    public function removePrice(\HelloDi\PricingBundle\Entity\Price $prices)
-    {
-        $this->Prices->removeElement($prices);
-    }
-
-    /**
-     * Get Prices
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPrices()
-    {
-        return $this->Prices;
+        $this->taxHistories->removeElement($taxHistories);
     }
 }

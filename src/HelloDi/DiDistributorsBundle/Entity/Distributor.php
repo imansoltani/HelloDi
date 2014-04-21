@@ -38,7 +38,7 @@ class Distributor
     private $timeZone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", inversedBy="Distributors")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\TaxHistory", inversedBy="distributors")
      * @ORM\JoinColumn(name="tax_history_id", referencedColumnName="id", nullable=true)
      */
     private $taxHistory;
@@ -65,7 +65,7 @@ class Distributor
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,14 +81,14 @@ class Distributor
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -104,14 +104,14 @@ class Distributor
     public function setTimeZone($timeZone)
     {
         $this->timeZone = $timeZone;
-    
+
         return $this;
     }
 
     /**
      * Get timeZone
      *
-     * @return string 
+     * @return string
      */
     public function getTimeZone()
     {
@@ -127,7 +127,7 @@ class Distributor
     public function setTaxHistory(TaxHistory $taxHistory = null)
     {
         $this->taxHistory = $taxHistory;
-    
+
         return $this;
     }
 
@@ -140,7 +140,7 @@ class Distributor
     {
         return $this->taxHistory;
     }
-    
+
     /**
      * Add retailers
      *
@@ -150,7 +150,7 @@ class Distributor
     public function addRetailer(Retailer $retailers)
     {
         $this->retailers[] = $retailers;
-    
+
         return $this;
     }
 
@@ -167,7 +167,7 @@ class Distributor
     /**
      * Get retailers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRetailers()
     {
@@ -183,7 +183,7 @@ class Distributor
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 
@@ -202,6 +202,6 @@ class Distributor
      */
     public function getNameWithCurrency()
     {
-        return $this->getAccount()->getAccName() . ' | ' . $this->getAccount()->getAccBalance() . ' ( ' . $this->getCurrency() . ' )';
+        return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getCurrency() . ' )';
     }
 }

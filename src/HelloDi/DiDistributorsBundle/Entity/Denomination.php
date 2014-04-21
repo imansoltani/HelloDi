@@ -1,14 +1,15 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(name="denomination")
  */
 class Denomination
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,16 +26,16 @@ class Denomination
      */
     private $currency;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="Denominations")
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="denominations")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $Item;
+    private $item;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,14 +51,14 @@ class Denomination
     public function setDenomination($denomination)
     {
         $this->denomination = $denomination;
-    
+
         return $this;
     }
 
     /**
      * Get denomination
      *
-     * @return float 
+     * @return float
      */
     public function getDenomination()
     {
@@ -73,14 +74,14 @@ class Denomination
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -88,25 +89,25 @@ class Denomination
     }
 
     /**
-     * Set Item
+     * Set item
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param Item $item
      * @return Denomination
      */
-    public function setItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function setItem(Item $item)
     {
-        $this->Item = $item;
-    
+        $this->item = $item;
+
         return $this;
     }
 
     /**
-     * Get Item
+     * Get item
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Item 
+     * @return Item
      */
     public function getItem()
     {
-        return $this->Item;
+        return $this->item;
     }
 }

@@ -1,40 +1,41 @@
 <?php
 namespace HelloDi\DiDistributorsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
- * @ORM\Table(name="itemdesc")
+ * @ORM\Table(name="item_desc")
  */
 class ItemDesc
 {
-    /** 
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /** 
+    /**
      * @ORM\Column(type="text", nullable=false, name="desc_desc")
      */
-    private $descdesc;
+    private $descDesc;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=2, nullable=false, name="desc_lang")
      */
-    private $desclang;
+    private $descLang;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="ItemDescs")
+    /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="itemDescriptions")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $Item;
+    private $item;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -42,71 +43,71 @@ class ItemDesc
     }
 
     /**
-     * Set descdesc
+     * Set descDesc
      *
-     * @param string $descdesc
+     * @param string $descDesc
      * @return ItemDesc
      */
-    public function setDescdesc($descdesc)
+    public function setDescDesc($descDesc)
     {
-        $this->descdesc = $descdesc;
-    
+        $this->descDesc = $descDesc;
+
         return $this;
     }
 
     /**
-     * Get descdesc
+     * Get descDesc
      *
-     * @return string 
+     * @return string
      */
-    public function getDescdesc()
+    public function getDescDesc()
     {
-        return $this->descdesc;
+        return $this->descDesc;
     }
 
     /**
-     * Set desclang
+     * Set descLang
      *
-     * @param string $desclang
+     * @param string $descLang
      * @return ItemDesc
      */
-    public function setDesclang($desclang)
+    public function setDescLang($descLang)
     {
-        $this->desclang = $desclang;
-    
+        $this->descLang = $descLang;
+
         return $this;
     }
 
     /**
-     * Get desclang
+     * Get descLang
      *
-     * @return string 
+     * @return string
      */
-    public function getDesclang()
+    public function getDescLang()
     {
-        return $this->desclang;
+        return $this->descLang;
     }
 
     /**
-     * Set Item
+     * Set item
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param Item $item
      * @return ItemDesc
      */
-    public function setItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function setItem(Item $item)
     {
-        $this->Item = $item;
-    
+        $this->item = $item;
+
         return $this;
     }
 
     /**
-     * Get Item
+     * Get item
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Item 
+     * @return Item
      */
     public function getItem()
     {
-        return $this->Item;
+        return $this->item;
     }
 }

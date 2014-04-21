@@ -3,11 +3,12 @@
 namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use HelloDi\AccountingBundle\Entity\Transaction;
 
 /**
  * b2blog
  *
- * @ORM\Table(name="b2blog")
+ * @ORM\Table(name="b2b_log")
  * @ORM\Entity
  */
 class B2BLog
@@ -24,7 +25,7 @@ class B2BLog
     /**
      * @var string
      *
-     * @ORM\Column(name="ClientTransactionID", type="string", length=50)
+     * @ORM\Column(name="client_transaction_id", type="string", length=50)
      */
     private $clientTransactionID;
 
@@ -36,37 +37,37 @@ class B2BLog
     private $date;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="Amount", type="decimal", scale=2)
+     * @ORM\Column(name="amount", type="decimal", scale=2)
      */
     private $amount;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="MobileNumber", type="string", length=20)
+     * @ORM\Column(name="mobile_number", type="string", length=20)
      */
     private $mobileNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="SenderMobileNumber", type="string", length=20, nullable=true)
+     * @ORM\Column(name="sender_mobile_number", type="string", length=20, nullable=true)
      */
-    private $SenderMobileNumber;
+    private $senderMobileNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="SenderEmail", type="string", length=50, nullable=true)
+     * @ORM\Column(name="sender_email", type="string", length=50, nullable=true)
      */
-    private $SenderEmail;
+    private $senderEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="TransactionID", type="string", length=20, nullable=true)
+     * @ORM\Column(name="Transaction_id", type="string", length=20, nullable=true)
      */
     private $transactionID;
 
@@ -85,16 +86,16 @@ class B2BLog
     private $statusCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="B2BLogs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="b2bLogs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $User;
+    private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="B2BLogs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="b2bLogs")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $Item;
+    private $item;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="sellerB2BLog")
@@ -111,7 +112,7 @@ class B2BLog
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -122,19 +123,19 @@ class B2BLog
      * Set clientTransactionID
      *
      * @param string $clientTransactionID
-     * @return b2blog
+     * @return B2BLog
      */
     public function setClientTransactionID($clientTransactionID)
     {
         $this->clientTransactionID = $clientTransactionID;
-    
+
         return $this;
     }
 
     /**
      * Get clientTransactionID
      *
-     * @return string 
+     * @return string
      */
     public function getClientTransactionID()
     {
@@ -145,19 +146,19 @@ class B2BLog
      * Set date
      *
      * @param \DateTime $date
-     * @return b2blog
+     * @return B2BLog
      */
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -167,20 +168,20 @@ class B2BLog
     /**
      * Set amount
      *
-     * @param integer $amount
-     * @return b2blog
+     * @param float $amount
+     * @return B2BLog
      */
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    
+
         return $this;
     }
 
     /**
      * Get amount
      *
-     * @return integer 
+     * @return float
      */
     public function getAmount()
     {
@@ -191,19 +192,19 @@ class B2BLog
      * Set mobileNumber
      *
      * @param string $mobileNumber
-     * @return b2blog
+     * @return B2BLog
      */
     public function setMobileNumber($mobileNumber)
     {
         $this->mobileNumber = $mobileNumber;
-    
+
         return $this;
     }
 
     /**
      * Get mobileNumber
      *
-     * @return string 
+     * @return string
      */
     public function getMobileNumber()
     {
@@ -211,22 +212,68 @@ class B2BLog
     }
 
     /**
+     * Set senderMobileNumber
+     *
+     * @param string $senderMobileNumber
+     * @return B2BLog
+     */
+    public function setSenderMobileNumber($senderMobileNumber)
+    {
+        $this->senderMobileNumber = $senderMobileNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get senderMobileNumber
+     *
+     * @return string
+     */
+    public function getSenderMobileNumber()
+    {
+        return $this->senderMobileNumber;
+    }
+
+    /**
+     * Set senderEmail
+     *
+     * @param string $senderEmail
+     * @return B2BLog
+     */
+    public function setSenderEmail($senderEmail)
+    {
+        $this->senderEmail = $senderEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get senderEmail
+     *
+     * @return string
+     */
+    public function getSenderEmail()
+    {
+        return $this->senderEmail;
+    }
+
+    /**
      * Set transactionID
      *
      * @param string $transactionID
-     * @return b2blog
+     * @return B2BLog
      */
     public function setTransactionID($transactionID)
     {
         $this->transactionID = $transactionID;
-    
+
         return $this;
     }
 
     /**
      * Get transactionID
      *
-     * @return string 
+     * @return string
      */
     public function getTransactionID()
     {
@@ -237,46 +284,23 @@ class B2BLog
      * Set status
      *
      * @param integer $status
-     * @return b2blog
+     * @return B2BLog
      */
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set User
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\User $user
-     * @return B2BLog
-     */
-    public function setUser(\HelloDi\DiDistributorsBundle\Entity\User $user)
-    {
-        $this->User = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get User
-     *
-     * @return \HelloDi\DiDistributorsBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->User;
     }
 
     /**
@@ -303,99 +327,68 @@ class B2BLog
     }
 
     /**
-     * Set Item
+     * Set user
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Item $item
+     * @param User $user
      * @return B2BLog
      */
-    public function setItem(\HelloDi\DiDistributorsBundle\Entity\Item $item)
+    public function setUser(User $user)
     {
-        $this->Item = $item;
-    
+        $this->user = $user;
+
         return $this;
     }
 
     /**
-     * Get Item
+     * Get user
      *
-     * @return \HelloDi\DiDistributorsBundle\Entity\Item 
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set item
+     *
+     * @param Item $item
+     * @return B2BLog
+     */
+    public function setItem(Item $item)
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return Item
      */
     public function getItem()
     {
-        return $this->Item;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Transactions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set SenderMobileNumber
-     *
-     * @param string $senderMobileNumber
-     * @return B2BLog
-     */
-    public function setSenderMobileNumber($senderMobileNumber)
-    {
-        $this->SenderMobileNumber = $senderMobileNumber;
-    
-        return $this;
-    }
-
-    /**
-     * Get SenderMobileNumber
-     *
-     * @return string 
-     */
-    public function getSenderMobileNumber()
-    {
-        return $this->SenderMobileNumber;
-    }
-
-    /**
-     * Set SenderEmail
-     *
-     * @param string $senderEmail
-     * @return B2BLog
-     */
-    public function setSenderEmail($senderEmail)
-    {
-        $this->SenderEmail = $senderEmail;
-    
-        return $this;
-    }
-
-    /**
-     * Get SenderEmail
-     *
-     * @return string 
-     */
-    public function getSenderEmail()
-    {
-        return $this->SenderEmail;
+        return $this->item;
     }
 
     /**
      * Set sellerTransaction
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction
+     * @param Transaction $sellerTransaction
      * @return B2BLog
      */
-    public function setSellerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $sellerTransaction)
+    public function setSellerTransaction(Transaction $sellerTransaction = null)
     {
         $this->sellerTransaction = $sellerTransaction;
-    
+
         return $this;
     }
 
     /**
      * Get sellerTransaction
      *
-     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     * @return Transaction
      */
     public function getSellerTransaction()
     {
@@ -405,20 +398,20 @@ class B2BLog
     /**
      * Set commissionerTransaction
      *
-     * @param \HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction
+     * @param Transaction $commissionerTransaction
      * @return B2BLog
      */
-    public function setCommissionerTransaction(\HelloDi\AccountingBundle\Entity\Transaction $commissionerTransaction = null)
+    public function setCommissionerTransaction(Transaction $commissionerTransaction = null)
     {
         $this->commissionerTransaction = $commissionerTransaction;
-    
+
         return $this;
     }
 
     /**
      * Get commissionerTransaction
      *
-     * @return \HelloDi\AccountingBundle\Entity\Transaction 
+     * @return Transaction
      */
     public function getCommissionerTransaction()
     {

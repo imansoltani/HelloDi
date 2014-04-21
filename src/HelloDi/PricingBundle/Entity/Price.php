@@ -36,16 +36,16 @@ class Price
     private $changingPrices;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="Prices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="prices")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
-    private $Tax;
+    private $tax;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="Prices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="prices")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $Item;
+    private $item;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="prices")
@@ -158,7 +158,7 @@ class Price
      */
     public function setTax(Tax $tax = null)
     {
-        $this->Tax = $tax;
+        $this->tax = $tax;
 
         return $this;
     }
@@ -170,7 +170,7 @@ class Price
      */
     public function getTax()
     {
-        return $this->Tax;
+        return $this->tax;
     }
 
     /**
@@ -181,7 +181,7 @@ class Price
      */
     public function setItem(Item $item)
     {
-        $this->Item = $item;
+        $this->item = $item;
 
         return $this;
     }
@@ -193,7 +193,7 @@ class Price
      */
     public function getItem()
     {
-        return $this->Item;
+        return $this->item;
     }
 
     /**
@@ -219,8 +219,11 @@ class Price
         return $this->account;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return $this->getItem()->getItemName() . " - " . $this->getPrice();
+        return $this->getItem()->getName() . " - " . $this->getPrice();
     }
 }

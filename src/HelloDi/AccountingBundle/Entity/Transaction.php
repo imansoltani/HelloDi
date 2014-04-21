@@ -211,8 +211,8 @@ class Transaction
     {
         $amount = $this->getAmount();
         $currentBalance = $this->getAccount()->getBalance();
-        /** @var $amount float */
-        /** @var $currentBalance float */
+        /** @var float $amount */
+        /** @var float $currentBalance */
         $this->getAccount()->setBalance($currentBalance + $amount);
     }
 }

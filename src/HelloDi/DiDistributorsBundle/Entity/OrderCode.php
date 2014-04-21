@@ -2,12 +2,13 @@
 
 namespace HelloDi\DiDistributorsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * OrderCode
  *
- * @ORM\Table(name="ordercode")
+ * @ORM\Table(name="order_code")
  * @ORM\Entity
  */
 class OrderCode
@@ -32,29 +33,53 @@ class OrderCode
     private $pins;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pins = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
+
     /**
-     * Constructor
+     * Set lang
+     *
+     * @param string $lang
+     * @return OrderCode
      */
-    public function __construct()
+    public function setLang($lang)
     {
-        $this->pins = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lang = $lang;
+
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return string
+     */
+    public function getLang()
+    {
+        return $this->lang;
     }
 
     /**
      * Add pins
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     * @param Pin $pins
      * @return OrderCode
      */
-    public function addPin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    public function addPin(Pin $pins)
     {
         $this->pins[] = $pins;
 
@@ -64,9 +89,9 @@ class OrderCode
     /**
      * Remove pins
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Pin $pins
+     * @param Pin $pins
      */
-    public function removePin(\HelloDi\DiDistributorsBundle\Entity\Pin $pins)
+    public function removePin(Pin $pins)
     {
         $this->pins->removeElement($pins);
     }
@@ -79,28 +104,5 @@ class OrderCode
     public function getPins()
     {
         return $this->pins;
-    }
-
-    /**
-     * Set lang
-     *
-     * @param string $lang
-     * @return OrderCode
-     */
-    public function setLang($lang)
-    {
-        $this->lang = $lang;
-    
-        return $this;
-    }
-
-    /**
-     * Get lang
-     *
-     * @return string 
-     */
-    public function getLang()
-    {
-        return $this->lang;
     }
 }
