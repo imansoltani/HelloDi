@@ -55,6 +55,9 @@ class CreditLimit
      */
     private $account;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -63,7 +66,7 @@ class CreditLimit
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -79,14 +82,14 @@ class CreditLimit
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -102,14 +105,14 @@ class CreditLimit
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    
+
         return $this;
     }
 
     /**
      * Get amount
      *
-     * @return float 
+     * @return float
      */
     public function getAmount()
     {
@@ -125,7 +128,7 @@ class CreditLimit
     public function setUser(User $user)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
@@ -148,7 +151,7 @@ class CreditLimit
     public function setTransaction(Transaction $transaction = null)
     {
         $this->transaction = $transaction;
-    
+
         return $this;
     }
 
@@ -171,7 +174,7 @@ class CreditLimit
     public function setAccount(Account $account)
     {
         $this->account = $account;
-    
+
         return $this;
     }
 

@@ -4,10 +4,15 @@ namespace HelloDi\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use FOS\UserBundle\Model\Group;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as AbstractUser;
 use FOS\UserBundle\Model\UserInterface;
 
+/**
+ * Class User
+ * @package HelloDi\UserBundle\Entity
+ */
 abstract class User extends AbstractUser
 {
     /**
@@ -262,6 +267,7 @@ abstract class User extends AbstractUser
         $roles = $this->roles;
 
         foreach ($this->getGroups() as $group) {
+            /** @var Group $group */
             $roles = array_merge($roles, $group->getRoles());
         }
 
@@ -413,7 +419,7 @@ abstract class User extends AbstractUser
 
     public function setEnabled($boolean)
     {
-        $this->enabled = (Boolean) $boolean;
+        $this->enabled = (Boolean)$boolean;
 
         return $this;
     }
@@ -427,7 +433,7 @@ abstract class User extends AbstractUser
      */
     public function setExpired($boolean)
     {
-        $this->expired = (Boolean) $boolean;
+        $this->expired = (Boolean)$boolean;
 
         return $this;
     }
@@ -531,13 +537,14 @@ abstract class User extends AbstractUser
      */
     public function getGroups()
     {
-        return $this->groups ?: $this->groups = new ArrayCollection();
+        return $this->groups ? : $this->groups = new ArrayCollection();
     }
 
     public function getGroupNames()
     {
         $names = array();
         foreach ($this->getGroups() as $group) {
+            /** @var Group $group */
             $names[] = $group->getName();
         }
 
@@ -569,13 +576,13 @@ abstract class User extends AbstractUser
 
     public function __toString()
     {
-        return (string) $this->getUsername();
+        return (string)$this->getUsername();
     }
 
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -591,14 +598,14 @@ abstract class User extends AbstractUser
     public function setSalt($salt)
     {
         $this->salt = $salt;
-    
+
         return $this;
     }
 
     /**
      * Get locked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getLocked()
     {
@@ -608,7 +615,7 @@ abstract class User extends AbstractUser
     /**
      * Get expired
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getExpired()
     {
@@ -618,7 +625,7 @@ abstract class User extends AbstractUser
     /**
      * Get expiresAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpiresAt()
     {
@@ -628,7 +635,7 @@ abstract class User extends AbstractUser
     /**
      * Get credentialsExpired
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCredentialsExpired()
     {
@@ -638,7 +645,7 @@ abstract class User extends AbstractUser
     /**
      * Get credentialsExpireAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCredentialsExpireAt()
     {

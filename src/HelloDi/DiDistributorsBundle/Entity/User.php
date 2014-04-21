@@ -79,9 +79,9 @@ class User extends BaseUser
     private $account;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\OgonePayment", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\OgonePayment", mappedBy="user")
      */
-    private $OgonePayment;
+    private $ogonePayment;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\B2BLog", mappedBy="User")

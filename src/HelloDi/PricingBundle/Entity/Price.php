@@ -31,9 +31,9 @@ class Price
     private $isFavourite;
 
     /** 
-     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="Prices")
+     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")
      */
-    private $ChangingPrices;
+    private $changingPrices;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="Prices")
@@ -52,14 +52,15 @@ class Price
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->ChangingPrices = new ArrayCollection();
+        $this->changingPrices = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -86,90 +87,11 @@ class Price
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
         return $this->price;
-    }
-
-    /**
-     * Add ChangingPrices
-     *
-     * @param ChangingPrice $changingPrices
-     * @return Price
-     */
-    public function addChangingPrice(ChangingPrice $changingPrices)
-    {
-        $this->ChangingPrices[] = $changingPrices;
-    
-        return $this;
-    }
-
-    /**
-     * Remove ChangingPrices
-     *
-     * @param ChangingPrice $changingPrices
-     */
-    public function removeChangingPrice(ChangingPrice $changingPrices)
-    {
-        $this->ChangingPrices->removeElement($changingPrices);
-    }
-
-    /**
-     * Get ChangingPrices
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChangingPrices()
-    {
-        return $this->ChangingPrices;
-    }
-
-    /**
-     * Set Item
-     *
-     * @param Item $item
-     * @return Price
-     */
-    public function setItem(Item $item)
-    {
-        $this->Item = $item;
-    
-        return $this;
-    }
-
-    /**
-     * Get Item
-     *
-     * @return Item
-     */
-    public function getItem()
-    {
-        return $this->Item;
-    }
-
-    /**
-     * Set Account
-     *
-     * @param Account $account
-     * @return Price
-     */
-    public function setAccount(Account $account)
-    {
-        $this->account = $account;
-    
-        return $this;
-    }
-
-    /**
-     * Get Account
-     *
-     * @return \HelloDi\AccountingBundle\Entity\Account
-     */
-    public function getAccount()
-    {
-        return $this->account;
     }
 
     /**
@@ -196,6 +118,39 @@ class Price
     }
 
     /**
+     * Add changingPrices
+     *
+     * @param ChangingPrice $changingPrices
+     * @return Price
+     */
+    public function addChangingPrice(ChangingPrice $changingPrices)
+    {
+        $this->changingPrices[] = $changingPrices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove changingPrices
+     *
+     * @param ChangingPrice $changingPrices
+     */
+    public function removeChangingPrice(ChangingPrice $changingPrices)
+    {
+        $this->changingPrices->removeElement($changingPrices);
+    }
+
+    /**
+     * Get changingPrices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChangingPrices()
+    {
+        return $this->changingPrices;
+    }
+
+    /**
      * Set Tax
      *
      * @param Tax $tax
@@ -216,6 +171,52 @@ class Price
     public function getTax()
     {
         return $this->Tax;
+    }
+
+    /**
+     * Set Item
+     *
+     * @param Item $item
+     * @return Price
+     */
+    public function setItem(Item $item)
+    {
+        $this->Item = $item;
+    
+        return $this;
+    }
+
+    /**
+     * Get Item
+     *
+     * @return Item
+     */
+    public function getItem()
+    {
+        return $this->Item;
+    }
+
+    /**
+     * Set account
+     *
+     * @param Account $account
+     * @return Price
+     */
+    public function setAccount(Account $account)
+    {
+        $this->account = $account;
+    
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 
     public function __toString()

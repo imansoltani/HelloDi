@@ -169,4 +169,50 @@ class Country
     {
         return $this->taxes;
     }
+
+    /**
+     * Add entities
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entities
+     * @return Country
+     */
+    public function addEntitie(\HelloDi\DiDistributorsBundle\Entity\Entity $entities)
+    {
+        $this->entities[] = $entities;
+    
+        return $this;
+    }
+
+    /**
+     * Remove entities
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entities
+     */
+    public function removeEntitie(\HelloDi\DiDistributorsBundle\Entity\Entity $entities)
+    {
+        $this->entities->removeElement($entities);
+    }
+
+    /**
+     * Add taxes
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxes
+     * @return Country
+     */
+    public function addTaxe(\HelloDi\DiDistributorsBundle\Entity\Tax $taxes)
+    {
+        $this->taxes[] = $taxes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove taxes
+     *
+     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxes
+     */
+    public function removeTaxe(\HelloDi\DiDistributorsBundle\Entity\Tax $taxes)
+    {
+        $this->taxes->removeElement($taxes);
+    }
 }

@@ -42,7 +42,7 @@ class Transfer
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -58,7 +58,7 @@ class Transfer
     public function setUser(User $user)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Transfer
     public function setOriginTransaction(Transaction $originTransaction = null)
     {
         $this->originTransaction = $originTransaction;
-    
+
         return $this;
     }
 
@@ -104,7 +104,7 @@ class Transfer
     public function setDestinationTransaction(Transaction $destinationTransaction)
     {
         $this->destinationTransaction = $destinationTransaction;
-    
+
         return $this;
     }
 

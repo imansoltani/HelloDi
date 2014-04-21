@@ -3,8 +3,16 @@ namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class OgonePaymentRepository
+ * @package HelloDi\AccountingBundle\Entity
+ */
 class OgonePaymentRepository extends EntityRepository
 {
+    /**
+     * @param string $orderRef
+     * @return OgonePayment|null
+     */
     public function findOneByOrderReference($orderRef)
     {
         /**

@@ -18,29 +18,29 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, precision=6, scale=2, name="tran_booking_value")
+     * @ORM\Column(type="decimal", nullable=true, precision=6, scale=2, name="booking_value")
      */
-    private $tranBookingValue;
+    private $bookingValue;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="tran_Amount", precision=6, scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="amount", precision=6, scale=2)
      */
-    private $tranAmount;
+    private $amount;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="tran_fees", precision=6, scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="fees", precision=6, scale=2)
      */
-    private $tranFees = 0.0;
+    private $fees = 0.0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false, name="tran_date")
+     * @ORM\Column(type="datetime", nullable=false, name="date")
      */
-    private $tranDate;
+    private $date;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="tran_description")
+     * @ORM\Column(type="string", length=45, nullable=false, name="description")
      */
-    private $tranDescription = "";
+    private $description = "";
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="transactions")
@@ -48,9 +48,12 @@ class Transaction
      */
     private $account;
 
+    /**
+     * Construct
+     */
     public function __construct()
     {
-        $this->tranDate = new \DateTime();
+        $this->date = new \DateTime();
     }
 
     /**
@@ -64,99 +67,122 @@ class Transaction
     }
 
     /**
-     * Set tranBookingValue
+     * Set bookingValue
      *
-     * @param float $tranBookingValue
+     * @param string $bookingValue
      * @return Transaction
      */
-    public function setTranBookingValue($tranBookingValue)
+    public function setBookingValue($bookingValue)
     {
-        $this->tranBookingValue = $tranBookingValue;
+        $this->bookingValue = $bookingValue;
 
         return $this;
     }
 
     /**
-     * Get tranBookingValue
-     *
-     * @return float
-     */
-    public function getTranBookingValue()
-    {
-        return $this->tranBookingValue;
-    }
-
-    /**
-     * Set tranFees
-     *
-     * @param float $tranFees
-     * @return Transaction
-     */
-    public function setTranFees($tranFees)
-    {
-        $this->tranFees = $tranFees;
-
-        return $this;
-    }
-
-    /**
-     * Get tranFees
-     *
-     * @return float
-     */
-    public function getTranFees()
-    {
-        return $this->tranFees;
-    }
-
-    /**
-     * Set tranDate
-     *
-     * @param \DateTime $tranDate
-     * @return Transaction
-     */
-    public function setTranDate($tranDate)
-    {
-        $this->tranDate = $tranDate;
-
-        return $this;
-    }
-
-    /**
-     * Get tranDate
-     *
-     * @return \DateTime
-     */
-    public function getTranDate()
-    {
-        return $this->tranDate;
-    }
-
-    /**
-     * Set tranDescription
-     *
-     * @param string $tranDescription
-     * @return Transaction
-     */
-    public function setTranDescription($tranDescription)
-    {
-        $this->tranDescription = $tranDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get tranDescription
+     * Get bookingValue
      *
      * @return string
      */
-    public function getTranDescription()
+    public function getBookingValue()
     {
-        return $this->tranDescription;
+        return $this->bookingValue;
     }
 
     /**
-     * Set Account
+     * Set amount
+     *
+     * @param string $amount
+     * @return Transaction
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return string
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set fees
+     *
+     * @param string $fees
+     * @return Transaction
+     */
+    public function setFees($fees)
+    {
+        $this->fees = $fees;
+
+        return $this;
+    }
+
+    /**
+     * Get fees
+     *
+     * @return string
+     */
+    public function getFees()
+    {
+        return $this->fees;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Transaction
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Transaction
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set account
      *
      * @param Account $account
      * @return Transaction
@@ -169,7 +195,7 @@ class Transaction
     }
 
     /**
-     * Get Account
+     * Get account
      *
      * @return Account
      */
@@ -179,35 +205,12 @@ class Transaction
     }
 
     /**
-     * Set tranAmount
-     *
-     * @param float $tranAmount
-     * @return Transaction
-     */
-    public function setTranAmount($tranAmount)
-    {
-        $this->tranAmount = $tranAmount;
-    
-        return $this;
-    }
-
-    /**
-     * Get tranAmount
-     *
-     * @return float 
-     */
-    public function getTranAmount()
-    {
-        return $this->tranAmount;
-    }
-
-    /**
      * @ORM\PrePersist
      */
     public function updateAccountBalance()
     {
-        $amount=$this->getTranAmount();
-        $currentBalance=$this->getAccount()->getBalance();
+        $amount = $this->getAmount();
+        $currentBalance = $this->getAccount()->getBalance();
         /** @var $amount float */
         /** @var $currentBalance float */
         $this->getAccount()->setBalance($currentBalance + $amount);

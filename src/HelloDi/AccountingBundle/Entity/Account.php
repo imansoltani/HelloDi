@@ -28,22 +28,22 @@ class Account
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=true, name="acc_default_language")
+     * @ORM\Column(type="string", length=2, nullable=true, name="default_language")
      */
     private $defaultLanguage;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="acc_name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="acc_balance", precision=6, scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="balance", precision=6, scale=2)
      */
     private $balance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=false, name="acc_credit_limit", precision=6, scale=2)
+     * @ORM\Column(type="decimal", nullable=false, name="credit_limit_amount", precision=6, scale=2)
      */
     private $creditLimitAmount = 0.0;
 
@@ -58,17 +58,17 @@ class Account
     private $type;
 
     /**
-     * @ORM\Column(type="date", nullable=false, name="acc_creation_date")
+     * @ORM\Column(type="date", nullable=false, name="creation_date")
      */
     private $creationDate;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=true, name="acc_time_zone")
+     * @ORM\Column(type="string", length=45, nullable=true, name="time_zone")
      */
     private $timeZone;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, name="acc_terms")
+     * @ORM\Column(type="integer", nullable=true, name="terms")
      */
     private $terms;
 
@@ -130,7 +130,7 @@ class Account
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -146,14 +146,14 @@ class Account
     public function setDefaultLanguage($defaultLanguage)
     {
         $this->defaultLanguage = $defaultLanguage;
-    
+
         return $this;
     }
 
     /**
      * Get defaultLanguage
      *
-     * @return string 
+     * @return string
      */
     public function getDefaultLanguage()
     {
@@ -169,14 +169,14 @@ class Account
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -192,14 +192,14 @@ class Account
     public function setBalance($balance)
     {
         $this->balance = $balance;
-    
+
         return $this;
     }
 
     /**
      * Get balance
      *
-     * @return string 
+     * @return string
      */
     public function getBalance()
     {
@@ -215,14 +215,14 @@ class Account
     public function setCreditLimitAmount($creditLimitAmount)
     {
         $this->creditLimitAmount = $creditLimitAmount;
-    
+
         return $this;
     }
 
     /**
      * Get creditLimitAmount
      *
-     * @return string 
+     * @return string
      */
     public function getCreditLimitAmount()
     {
@@ -238,14 +238,14 @@ class Account
     public function setReserve($reserve)
     {
         $this->reserve = $reserve;
-    
+
         return $this;
     }
 
     /**
      * Get reserve
      *
-     * @return string 
+     * @return string
      */
     public function getReserve()
     {
@@ -261,14 +261,14 @@ class Account
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -284,14 +284,14 @@ class Account
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-    
+
         return $this;
     }
 
     /**
      * Get creationDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDate()
     {
@@ -307,14 +307,14 @@ class Account
     public function setTimeZone($timeZone)
     {
         $this->timeZone = $timeZone;
-    
+
         return $this;
     }
 
     /**
      * Get timeZone
      *
-     * @return string 
+     * @return string
      */
     public function getTimeZone()
     {
@@ -330,14 +330,14 @@ class Account
     public function setTerms($terms)
     {
         $this->terms = $terms;
-    
+
         return $this;
     }
 
     /**
      * Get terms
      *
-     * @return integer 
+     * @return integer
      */
     public function getTerms()
     {
@@ -353,7 +353,7 @@ class Account
     public function addPrice(Price $prices)
     {
         $this->prices[] = $prices;
-    
+
         return $this;
     }
 
@@ -370,7 +370,7 @@ class Account
     /**
      * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPrices()
     {
@@ -386,7 +386,7 @@ class Account
     public function addTicketsDist(Ticket $ticketsDist)
     {
         $this->ticketsDist[] = $ticketsDist;
-    
+
         return $this;
     }
 
@@ -403,7 +403,7 @@ class Account
     /**
      * Get ticketsDist
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTicketsDist()
     {
@@ -419,7 +419,7 @@ class Account
     public function addTicketsRetailer(Ticket $ticketsRetailer)
     {
         $this->ticketsRetailer[] = $ticketsRetailer;
-    
+
         return $this;
     }
 
@@ -436,7 +436,7 @@ class Account
     /**
      * Get ticketsRetailer
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTicketsRetailer()
     {
@@ -452,7 +452,7 @@ class Account
     public function addTransaction(Transaction $transactions)
     {
         $this->transactions[] = $transactions;
-    
+
         return $this;
     }
 
@@ -469,7 +469,7 @@ class Account
     /**
      * Get transactions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTransactions()
     {
@@ -485,7 +485,7 @@ class Account
     public function addUser(User $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
@@ -502,7 +502,7 @@ class Account
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
@@ -518,7 +518,7 @@ class Account
     public function setEntity(Entity $entity = null)
     {
         $this->entity = $entity;
-    
+
         return $this;
     }
 
@@ -541,7 +541,7 @@ class Account
     public function addCreditLimit(CreditLimit $creditLimits)
     {
         $this->creditLimits[] = $creditLimits;
-    
+
         return $this;
     }
 
@@ -558,7 +558,7 @@ class Account
     /**
      * Get creditLimits
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCreditLimits()
     {
@@ -574,7 +574,7 @@ class Account
     public function addModel(Model $models)
     {
         $this->models[] = $models;
-    
+
         return $this;
     }
 
@@ -591,7 +591,7 @@ class Account
     /**
      * Get models
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModels()
     {

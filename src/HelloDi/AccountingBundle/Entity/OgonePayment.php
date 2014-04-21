@@ -9,20 +9,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="HelloDi\AccountingBundle\Entity\OgonePaymentRepository")
  * @ORM\Table(name="ogone_payment")
  */
-
 class OgonePayment
 {
-    const OGONE_RESULT_ACCPETED     = 5;
-    const OGONE_RESULT_CANCELED     = 1;
-    const OGONE_RESULT_DECLINED     = 2;
-    const OGONE_RESULT_EXCEPTION    = 52;
+    const OGONE_RESULT_ACCEPTED = 5;
+    const OGONE_RESULT_CANCELED = 1;
+    const OGONE_RESULT_DECLINED = 2;
+    const OGONE_RESULT_EXCEPTION = 52;
 
-    const STATUS_ACCEPTED           = 'accepted';
-    const STATUS_CANCELED           = 'canceled';
-    const STATUS_DECLINED           = 'declined';
-    const STATUS_PENDING            = 'pending';
-    const STATUS_UNCERTAIN          = 'uncertain';
-    const STATUS_UNKNOWN            = 'unknown';
+    const STATUS_ACCEPTED = 'accepted';
+    const STATUS_CANCELED = 'canceled';
+    const STATUS_DECLINED = 'declined';
+    const STATUS_PENDING = 'pending';
+    const STATUS_UNCERTAIN = 'uncertain';
+    const STATUS_UNKNOWN = 'unknown';
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -32,20 +31,20 @@ class OgonePayment
     private $id;
 
     /**
-     * @ORM\Column(name="payment_amount", type="float")
+     * @ORM\Column(name="amount", type="float")
      * @Assert\Range(min=100)
      * @Assert\NotBlank
      */
     private $paymentAmount;
 
     /**
-     * @ORM\Column(name="payment_currency_iso", type="string", length=3)
+     * @ORM\Column(name="currency_iso", type="string", length=3)
      * @Assert\NotBlank
      */
     private $paymentCurrencyISO;
 
     /**
-     * @ORM\Column(name="payment_status", type="string")
+     * @ORM\Column(name="status", type="string")
      * @Assert\NotBlank
      */
     private $status;
@@ -61,10 +60,10 @@ class OgonePayment
     private $ogoneRef;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="OgonePayment")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="ogonePayment")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
-    private $User;
+    private $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="ogonePayment")
@@ -72,37 +71,57 @@ class OgonePayment
      */
     private $transaction;
 
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTime;
     }
 
+    /**
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return float
+     */
     public function getPaymentAmount()
     {
         return $this->paymentAmount;
     }
 
+    /**
+     * @param float $paymentAmount
+     */
     public function setPaymentAmount($paymentAmount)
     {
-       $this->paymentAmount = round($paymentAmount, 2);
+        $this->paymentAmount = round($paymentAmount, 2);
     }
 
+    /**
+     * @return float
+     */
     public function getOgoneAmount()
     {
         return $this->paymentAmount * 100;
     }
 
+    /**
+     * @return string
+     */
     public function getPaymentCurrencyISO()
     {
         return $this->paymentCurrencyISO;
     }
 
+    /**
+     * @param string $paymentCurrencyISO
+     */
     public function setPaymentCurrencyISO($paymentCurrencyISO)
     {
         $this->paymentCurrencyISO = $paymentCurrencyISO;
@@ -113,7 +132,7 @@ class OgonePayment
      */
     public function getUser()
     {
-        return $this->User;
+        return $this->user;
     }
 
     /**
@@ -121,39 +140,60 @@ class OgonePayment
      */
     public function setUser(User $user)
     {
-        $this->User = $user;
+        $this->user = $user;
     }
 
+    /**
+     * @return string
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * @param string $status
+     */
     public function setStatus($status)
     {
         $this->status = $status;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param \DateTime $createdAt
+     */
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @return string
+     */
     public function getOgoneRef()
     {
         return $this->ogoneRef;
     }
 
+    /**
+     * @param string $ogoneRef
+     */
     public function setOgoneRef($ogoneRef)
     {
         $this->ogoneRef = $ogoneRef;
     }
 
+    /**
+     * @return string
+     */
     public function getOrderReference()
     {
         return $this->getCreatedAt()->format('ymdHi') . $this->id;
@@ -175,16 +215,25 @@ class OgonePayment
         $this->transaction = $transaction;
     }
 
+    /**
+     * @return bool
+     */
     public function isProcessed()
     {
         return static::STATUS_PENDING !== $this->getStatus();
     }
 
+    /**
+     * @return bool
+     */
     public function isAccepted()
     {
         return static::STATUS_ACCEPTED === $this->getStatus();
     }
 
+    /**
+     * @return bool
+     */
     public function isCanceled()
     {
         return static::STATUS_CANCELED === $this->getStatus();

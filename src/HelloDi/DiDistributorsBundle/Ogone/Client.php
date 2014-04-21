@@ -90,7 +90,7 @@ class Client
 
         switch ($fields['STATUS'])
         {
-            case OgonePayment::OGONE_RESULT_ACCPETED:
+            case OgonePayment::OGONE_RESULT_ACCEPTED:
 
                 $transaction=new Transaction();
                 $transaction->setTranBookingValue(null);

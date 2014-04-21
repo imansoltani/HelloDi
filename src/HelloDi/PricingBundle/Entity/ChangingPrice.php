@@ -4,7 +4,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
- * @ORM\Table(name="changingprice")
+ * @ORM\Table(name="changing_price")
  */
 class ChangingPrice
 {
@@ -26,10 +26,10 @@ class ChangingPrice
     private $changeDate;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Price", inversedBy="ChangingPrices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Price", inversedBy="changingPrices")
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id", nullable=false)
      */
-    private $Prices;
+    private $prices;
 
     /**
      * Get id
@@ -57,7 +57,7 @@ class ChangingPrice
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -88,25 +88,25 @@ class ChangingPrice
     }
 
     /**
-     * Set Prices
+     * Set prices
      *
      * @param Price $prices
      * @return ChangingPrice
      */
     public function setPrices(Price $prices)
     {
-        $this->Prices = $prices;
+        $this->prices = $prices;
     
         return $this;
     }
 
     /**
-     * Get Prices
+     * Get prices
      *
      * @return Price
      */
     public function getPrices()
     {
-        return $this->Prices;
+        return $this->prices;
     }
 }
