@@ -108,7 +108,7 @@ class Country
      * @param Entity $entities
      * @return Country
      */
-    public function addEntity(Entity $entities)
+    public function addEntitie(Entity $entities)
     {
         $this->entities[] = $entities;
 
@@ -120,7 +120,7 @@ class Country
      *
      * @param Entity $entities
      */
-    public function removeEntity(Entity $entities)
+    public function removeEntitie(Entity $entities)
     {
         $this->entities->removeElement($entities);
     }
@@ -141,7 +141,7 @@ class Country
      * @param Tax $taxes
      * @return Country
      */
-    public function addTax(Tax $taxes)
+    public function addTaxe(Tax $taxes)
     {
         $this->taxes[] = $taxes;
 
@@ -153,7 +153,7 @@ class Country
      *
      * @param Tax $taxes
      */
-    public function removeTax(Tax $taxes)
+    public function removeTaxe(Tax $taxes)
     {
         $this->taxes->removeElement($taxes);
     }
@@ -174,51 +174,5 @@ class Country
     public function getIsoName()
     {
         return $this->getIso() . ' . ' . $this->getName();
-    }
-
-    /**
-     * Add entities
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entities
-     * @return Country
-     */
-    public function addEntitie(\HelloDi\DiDistributorsBundle\Entity\Entity $entities)
-    {
-        $this->entities[] = $entities;
-    
-        return $this;
-    }
-
-    /**
-     * Remove entities
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Entity $entities
-     */
-    public function removeEntitie(\HelloDi\DiDistributorsBundle\Entity\Entity $entities)
-    {
-        $this->entities->removeElement($entities);
-    }
-
-    /**
-     * Add taxes
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxes
-     * @return Country
-     */
-    public function addTaxe(\HelloDi\DiDistributorsBundle\Entity\Tax $taxes)
-    {
-        $this->taxes[] = $taxes;
-    
-        return $this;
-    }
-
-    /**
-     * Remove taxes
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\Tax $taxes
-     */
-    public function removeTaxe(\HelloDi\DiDistributorsBundle\Entity\Tax $taxes)
-    {
-        $this->taxes->removeElement($taxes);
     }
 }

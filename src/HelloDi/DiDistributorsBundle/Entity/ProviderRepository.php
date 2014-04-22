@@ -11,7 +11,7 @@ class ProviderRepository extends EntityRepository
 {
     /**
      * @param $id
-     * @return \HelloDi\DiDistributorsBundle\Entity\Provider|null
+     * @return Provider|null
      */
     public function getByAccountId($id)
     {

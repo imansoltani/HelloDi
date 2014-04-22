@@ -51,7 +51,7 @@ class Tax
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -67,14 +67,14 @@ class Tax
     public function setTax($tax)
     {
         $this->tax = $tax;
-
+    
         return $this;
     }
 
     /**
      * Get tax
      *
-     * @return float
+     * @return float 
      */
     public function getTax()
     {
@@ -90,7 +90,7 @@ class Tax
     public function setCountry(Country $country = null)
     {
         $this->country = $country;
-
+    
         return $this;
     }
 
@@ -113,7 +113,7 @@ class Tax
     public function addPrice(Price $prices)
     {
         $this->prices[] = $prices;
-
+    
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Tax
     /**
      * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPrices()
     {
@@ -143,40 +143,7 @@ class Tax
      * @param TaxHistory $taxHistories
      * @return Tax
      */
-    public function addTaxHistory(TaxHistory $taxHistories)
-    {
-        $this->taxHistories[] = $taxHistories;
-
-        return $this;
-    }
-
-    /**
-     * Remove taxHistories
-     *
-     * @param TaxHistory $taxHistories
-     */
-    public function removeTaxHistory(TaxHistory $taxHistories)
-    {
-        $this->taxHistories->removeElement($taxHistories);
-    }
-
-    /**
-     * Get taxHistories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTaxHistories()
-    {
-        return $this->taxHistories;
-    }
-
-    /**
-     * Add taxHistories
-     *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
-     * @return Tax
-     */
-    public function addTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
+    public function addTaxHistorie(TaxHistory $taxHistories)
     {
         $this->taxHistories[] = $taxHistories;
     
@@ -186,10 +153,20 @@ class Tax
     /**
      * Remove taxHistories
      *
-     * @param \HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories
+     * @param TaxHistory $taxHistories
      */
-    public function removeTaxHistorie(\HelloDi\DiDistributorsBundle\Entity\TaxHistory $taxHistories)
+    public function removeTaxHistorie(TaxHistory $taxHistories)
     {
         $this->taxHistories->removeElement($taxHistories);
+    }
+
+    /**
+     * Get taxHistories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTaxHistories()
+    {
+        return $this->taxHistories;
     }
 }

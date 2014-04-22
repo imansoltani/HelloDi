@@ -1,17 +1,17 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\RetailerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class DistributorRepository
- * @package HelloDi\DiDistributorsBundle\Entity
+ * Class RetailerRepository
+ * @package HelloDi\RetailerBundle\Entity
  */
-class DistributorRepository extends EntityRepository
+class RetailerRepository extends EntityRepository
 {
     /**
      * @param $id
-     * @return \HelloDi\DiDistributorsBundle\Entity\Distributor|null
+     * @return Retailer|null
      */
     public function getByAccountId($id)
     {

@@ -1,16 +1,18 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\DistributorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\RetailerBundle\Entity\Retailer;
+use HelloDi\DiDistributorsBundle\Entity\TaxHistory;
 
 /**
  * Distributor
  *
  * @ORM\Table(name="distributor")
- * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\DistributorRepository")
+ * @ORM\Entity(repositoryClass="HelloDi\DistributorBundle\Entity\DistributorRepository")
  */
 class Distributor
 {
@@ -44,7 +46,7 @@ class Distributor
     private $taxHistory;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Retailer", mappedBy="distributor")
+     * @ORM\OneToMany(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", mappedBy="distributor")
      */
     private $retailers;
 

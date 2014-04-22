@@ -2,6 +2,10 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use HelloDi\DiDistributorsBundle\Entity\Api;
+use HelloDi\DiDistributorsBundle\Entity\Provider;
+use HelloDi\DistributorBundle\Entity\Distributor;
+use HelloDi\RetailerBundle\Entity\Retailer;
 
 /**
  * Class AccountRepository
@@ -11,7 +15,7 @@ class AccountRepository extends EntityRepository
 {
     /**
      * @param Account $account
-     * @return \HelloDi\DiDistributorsBundle\Entity\Api|\HelloDi\DiDistributorsBundle\Entity\Distributor|\HelloDi\DiDistributorsBundle\Entity\Provider|\HelloDi\DiDistributorsBundle\Entity\Retailer|null
+     * @return Api|Distributor|Provider|Retailer|null
      */
     public function getAccountType(Account $account)
     {

@@ -1,15 +1,16 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Entity;
+namespace HelloDi\RetailerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\DistributorBundle\Entity\Distributor;
 
 /**
  * Retailer
  *
  * @ORM\Table(name="retailer")
- * @ORM\Entity(repositoryClass="HelloDi\DiDistributorsBundle\Entity\RetailerRepository")
+ * @ORM\Entity(repositoryClass="HelloDi\RetailerBundle\Entity\RetailerRepository")
  */
 class Retailer
 {
@@ -23,7 +24,7 @@ class Retailer
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", inversedBy="retailers")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="retailers")
      * @ORM\JoinColumn(name="distributor_id", referencedColumnName="id", nullable=false)
      */
     private $distributor;

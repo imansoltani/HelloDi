@@ -3,6 +3,8 @@ namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\DistributorBundle\Entity\Distributor;
+use HelloDi\RetailerBundle\Entity\Retailer;
 
 /**
  * @ORM\Entity
@@ -53,13 +55,13 @@ class Ticket
     private $ticketNotes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", inversedBy="ticketsDist")
+     * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="ticketsDist")
      * @ORM\JoinColumn(name="account_dist_id", referencedColumnName="id", nullable=true)
      */
     private $accountDist;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Retailer", inversedBy="ticketsRetailer")
+     * @ORM\ManyToOne(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", inversedBy="ticketsRetailer")
      * @ORM\JoinColumn(name="account_retailer_id", referencedColumnName="id", nullable=true)
      */
     private $accountRetailer;

@@ -11,7 +11,7 @@ class ApiRepository extends EntityRepository
 {
     /**
      * @param $id
-     * @return \HelloDi\DiDistributorsBundle\Entity\Api|null
+     * @return Api|null
      */
     public function getByAccountId($id)
     {

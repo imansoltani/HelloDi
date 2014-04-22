@@ -3,6 +3,7 @@ namespace HelloDi\DiDistributorsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\DistributorBundle\Entity\Distributor;
 
 /**
  * @ORM\Entity
@@ -34,7 +35,7 @@ class TaxHistory
     private $tax;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Distributor", mappedBy="taxHistory")
+     * @ORM\OneToMany(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", mappedBy="taxHistory")
      */
     private $distributors;
 
