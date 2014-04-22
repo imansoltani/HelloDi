@@ -186,7 +186,7 @@ class Account
     /**
      * Set balance
      *
-     * @param string $balance
+     * @param float $balance
      * @return Account
      */
     public function setBalance($balance)
@@ -199,7 +199,7 @@ class Account
     /**
      * Get balance
      *
-     * @return string
+     * @return float
      */
     public function getBalance()
     {
@@ -209,7 +209,7 @@ class Account
     /**
      * Set creditLimitAmount
      *
-     * @param string $creditLimitAmount
+     * @param float $creditLimitAmount
      * @return Account
      */
     public function setCreditLimitAmount($creditLimitAmount)
@@ -222,7 +222,7 @@ class Account
     /**
      * Get creditLimitAmount
      *
-     * @return string
+     * @return float
      */
     public function getCreditLimitAmount()
     {
@@ -232,7 +232,7 @@ class Account
     /**
      * Set reserve
      *
-     * @param string $reserve
+     * @param float $reserve
      * @return Account
      */
     public function setReserve($reserve)
@@ -245,7 +245,7 @@ class Account
     /**
      * Get reserve
      *
-     * @return string
+     * @return float
      */
     public function getReserve()
     {

@@ -69,7 +69,7 @@ class Transaction
     /**
      * Set bookingValue
      *
-     * @param string $bookingValue
+     * @param float $bookingValue
      * @return Transaction
      */
     public function setBookingValue($bookingValue)
@@ -82,7 +82,7 @@ class Transaction
     /**
      * Get bookingValue
      *
-     * @return string
+     * @return float
      */
     public function getBookingValue()
     {
@@ -92,7 +92,7 @@ class Transaction
     /**
      * Set amount
      *
-     * @param string $amount
+     * @param float $amount
      * @return Transaction
      */
     public function setAmount($amount)
@@ -105,7 +105,7 @@ class Transaction
     /**
      * Get amount
      *
-     * @return string
+     * @return float
      */
     public function getAmount()
     {
@@ -115,7 +115,7 @@ class Transaction
     /**
      * Set fees
      *
-     * @param string $fees
+     * @param float $fees
      * @return Transaction
      */
     public function setFees($fees)
@@ -128,7 +128,7 @@ class Transaction
     /**
      * Get fees
      *
-     * @return string
+     * @return float
      */
     public function getFees()
     {

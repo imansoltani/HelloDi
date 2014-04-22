@@ -49,7 +49,7 @@ class DefaultController extends Controller
      */
     private function checkAvailableBalance($amount, Account $account)
     {
-        return ($account->getAccBalance() + $account->getAccCreditLimit() - $account->getReserve()) >= $amount;
+        return ($account->getBalance() + $account->getCreditLimitAmount() - $account->getReserve()) >= $amount;
     }
 
     /**
@@ -62,10 +62,10 @@ class DefaultController extends Controller
     private function createTransaction($amount, Account $account, $description, $fees = 0.0)
     {
         $transaction = new Transaction();
-        $transaction->setTranAmount($amount);
+        $transaction->setAmount($amount);
         $transaction->setAccount($account);
-        $transaction->setTranDescription($description);
-        $transaction->setTranFees($fees);
+        $transaction->setDescription($description);
+        $transaction->setFees($fees);
         $this->em->persist($transaction);
         return $transaction;
     }
@@ -117,7 +117,7 @@ class DefaultController extends Controller
         {
             if(!$this->checkAvailableBalance($amount,$userAccount))
                 return null;
-            $oldCreditLimit = $account->getAccCreditLimit();
+            $oldCreditLimit = $account->getCreditLimitAmount();
             if($amount > $oldCreditLimit)
                 $creditLimit->setTransaction($this->createTransaction($oldCreditLimit - $amount,$account,"credit limit"));
         }
