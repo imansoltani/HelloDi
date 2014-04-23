@@ -84,7 +84,7 @@ class DefaultControllerTest extends WebTestCase
         $userWithOutAccount = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithoutaccount4"));
 
         $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
-        $Account1->setAccBalance(2000);
+        $Account1->setBalance(2000);
 
         $this->em->flush();
 
@@ -93,17 +93,17 @@ class DefaultControllerTest extends WebTestCase
         $this->assertNotNull($transfer);
         $this->assertNull($transfer->getOriginTransaction());
         $this->assertEquals($userWithOutAccount->getId(),$transfer->getUser()->getId());
-        $this->assertEquals("transfer",$transfer->getDestinationTransaction()->getTranDescription());
-        $this->assertEquals(2000+1000.1,$Account1->getAccBalance());
+        $this->assertEquals("transfer",$transfer->getDestinationTransaction()->getDescription());
+        $this->assertEquals(2000+1000.1,$Account1->getBalance());
 
         //---------------
 
         $userWithAccount2 = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithaccount2"));
-        $userWithAccount2->getAccount()->setAccBalance(3000.5);
+        $userWithAccount2->getAccount()->setBalance(3000.5);
         $userWithAccount2->getAccount()->setReserve(1000.5);
 
         $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc3"));
-        $Account3->setAccBalance(2000);
+        $Account3->setBalance(2000);
 
         $this->em->flush();
 
@@ -112,10 +112,10 @@ class DefaultControllerTest extends WebTestCase
         $this->assertNotNull($transfer2);
         $this->assertNotNull($transfer2->getOriginTransaction());
         $this->assertEquals($userWithAccount2->getId(),$transfer2->getUser()->getId());
-        $this->assertEquals("transfer from",$transfer2->getOriginTransaction()->getTranDescription());
-        $this->assertEquals("transfer to",$transfer2->getDestinationTransaction()->getTranDescription());
-        $this->assertEquals(3000.5-1000.1,$userWithAccount2->getAccount()->getAccBalance());
-        $this->assertEquals(2000+1000.1,$Account3->getAccBalance());
+        $this->assertEquals("transfer from",$transfer2->getOriginTransaction()->getDescription());
+        $this->assertEquals("transfer to",$transfer2->getDestinationTransaction()->getDescription());
+        $this->assertEquals(3000.5-1000.1,$userWithAccount2->getAccount()->getBalance());
+        $this->assertEquals(2000+1000.1,$Account3->getBalance());
 
         //---------------
         // 3000.5-1000.5-1000.1 = 999.9 < 1000 ; account hasn't enough money.
@@ -128,7 +128,7 @@ class DefaultControllerTest extends WebTestCase
         $userWithOutAccount = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithoutaccount4"));
 
         $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
-        $Account1->setAccCreditLimit(2000);
+        $Account1->setCreditLimitAmount(2000);
 
         $this->em->flush();
 
@@ -141,14 +141,14 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals((new \DateTime())->getTimestamp(),$creditLimit->getDate()->getTimestamp(),null,10);
         $this->assertEquals(null,$creditLimit->getTransaction());
 
-        $this->assertEquals(1000.1,$Account1->getAccCreditLimit());
+        $this->assertEquals(1000.1,$Account1->getCreditLimitAmount());
         //---------------
 
         $userWithAccount2 = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithaccount2"));
-        $userWithAccount2->getAccount()->setAccBalance(2000);
+        $userWithAccount2->getAccount()->setBalance(2000);
 
         $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc3"));
-        $Account3->setAccCreditLimit(0);
+        $Account3->setCreditLimitAmount(0);
 
         $this->em->flush();
 
@@ -160,7 +160,7 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(500.1,$creditLimit2->getAmount());
         $this->assertEquals((new \DateTime())->getTimestamp(),$creditLimit2->getDate()->getTimestamp(),null,10);
 
-        $this->assertEquals(500.1,$Account3->getAccCreditLimit());
+        $this->assertEquals(500.1,$Account3->getCreditLimitAmount());
 
         //------------------
         $creditLimit3 = $this->accounting->newCreditLimit(500,$userWithAccount2,$Account3);
@@ -171,7 +171,7 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(500,$creditLimit3->getAmount());
         $this->assertEquals((new \DateTime())->getTimestamp(),$creditLimit3->getDate()->getTimestamp(),null,10);
 
-        $this->assertEquals(500,$Account3->getAccCreditLimit());
+        $this->assertEquals(500,$Account3->getCreditLimitAmount());
         //----------------
 
         $creditLimit4 = $this->accounting->newCreditLimit(1000,$userWithAccount2,$Account3);
@@ -181,8 +181,8 @@ class DefaultControllerTest extends WebTestCase
     public function testReserveAmount()
     {
         $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
-        $Account1->setAccBalance(2000);
-        $Account1->setAccCreditLimit(500);
+        $Account1->setBalance(2000);
+        $Account1->setCreditLimitAmount(500);
         $Account1->setReserve(1000.1);
         $this->em->flush();
 
@@ -203,12 +203,12 @@ class DefaultControllerTest extends WebTestCase
     {
         $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
         $Account2 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc2"));
-        $Account1->setAccCreditLimit(0);
+        $Account1->setCreditLimitAmount(0);
         $Account1->setReserve(0);
-        $Account2->setAccCreditLimit(0);
+        $Account2->setCreditLimitAmount(0);
         $Account2->setReserve(0);
 
-        $Account1->setAccBalance(2000);
+        $Account1->setBalance(2000);
         $this->em->flush();
 
         $array1 = array();
@@ -217,10 +217,10 @@ class DefaultControllerTest extends WebTestCase
         $result1 = $this->accounting->processTransaction($array1);
 
         $this->assertTrue($result1);
-        $this->assertEquals(2000+1000,$Account1->getAccBalance());
+        $this->assertEquals(2000+1000,$Account1->getBalance());
 
         //-----------------------------------------------------------------
-        $Account2->setAccBalance(2000);
+        $Account2->setBalance(2000);
         $this->em->flush();
 
         $array2 = array();
@@ -229,10 +229,10 @@ class DefaultControllerTest extends WebTestCase
         $result2 = $this->accounting->processTransaction($array2);
 
         $this->assertTrue($result2);
-        $this->assertEquals(2000-1000,$Account2->getAccBalance());
+        $this->assertEquals(2000-1000,$Account2->getBalance());
 
         //-----------------------------------------------------------------
-        $Account2->setAccBalance(2000);
+        $Account2->setBalance(2000);
         $this->em->flush();
 
         $array2 = array();
@@ -241,11 +241,11 @@ class DefaultControllerTest extends WebTestCase
         $result2 = $this->accounting->processTransaction($array2);
 
         $this->assertFalse($result2);
-        $this->assertEquals(2000,$Account2->getAccBalance());
+        $this->assertEquals(2000,$Account2->getBalance());
 
         //-----------------------------------------------------------------
-        $Account1->setAccBalance(2000);
-        $Account2->setAccBalance(0);
+        $Account1->setBalance(2000);
+        $Account2->setBalance(0);
         $this->em->flush();
 
         $array3 = array();
@@ -259,12 +259,12 @@ class DefaultControllerTest extends WebTestCase
         $result3 = $this->accounting->processTransaction($array3);
 
         $this->assertTrue($result3);
-        $this->assertEquals(2000+1000+500-400,$Account1->getAccBalance());
-        $this->assertEquals(0+500-500+500,$Account2->getAccBalance());
+        $this->assertEquals(2000+1000+500-400,$Account1->getBalance());
+        $this->assertEquals(0+500-500+500,$Account2->getBalance());
 
         //--------------------------------------
-        $Account1->setAccBalance(2000);
-        $Account2->setAccBalance(0);
+        $Account1->setBalance(2000);
+        $Account2->setBalance(0);
         $this->em->flush();
 
         $array4 = array();
@@ -282,7 +282,7 @@ class DefaultControllerTest extends WebTestCase
         $result4 = $this->accounting->processTransaction($array4);
 
         $this->assertFalse($result4);
-        $this->assertEquals(0,$Account2->getAccBalance());
-        $this->assertEquals(2000,$Account1->getAccBalance());
+        $this->assertEquals(0,$Account2->getBalance());
+        $this->assertEquals(2000,$Account1->getBalance());
     }
 }
