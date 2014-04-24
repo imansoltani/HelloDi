@@ -3,7 +3,7 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use HelloDi\DiDistributorsBundle\Entity\User;
+use HelloDi\CoreBundle\Entity\User;
 
 /**
  * CreditLimit
@@ -38,7 +38,7 @@ class CreditLimit
     private $amount;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="creditLimits")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="creditLimits")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;

@@ -1,11 +1,11 @@
 <?php
 namespace HelloDi\AccountingBundle\Entity;
 
-use HelloDi\DiDistributorsBundle\Entity\Entity;
+use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Entity\Price;
-use HelloDi\DiDistributorsBundle\Entity\Ticket;
-use HelloDi\DiDistributorsBundle\Entity\User;
+use HelloDi\CoreBundle\Entity\Ticket;
+use HelloDi\CoreBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -78,12 +78,12 @@ class Account
     private $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="accountDist")
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="accountDist")
      */
     private $ticketsDist;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\Ticket", mappedBy="accountRetailer")
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="accountRetailer")
      */
     private $ticketsRetailer;
 
@@ -93,12 +93,12 @@ class Account
     private $transactions;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\User", mappedBy="account")
      */
     private $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Entity", inversedBy="accounts")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Entity", inversedBy="accounts")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", nullable=true)
      */
     private $entity;

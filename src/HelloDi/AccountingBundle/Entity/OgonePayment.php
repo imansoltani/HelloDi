@@ -1,7 +1,7 @@
 <?php
 namespace HelloDi\AccountingBundle\Entity;
 
-use HelloDi\DiDistributorsBundle\Entity\User;
+use HelloDi\CoreBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,7 +60,7 @@ class OgonePayment
     private $ogoneRef;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\User", inversedBy="ogonePayment")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="ogonePayment")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $user;

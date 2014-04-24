@@ -4,8 +4,8 @@ namespace HelloDi\PricingBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use HelloDi\AccountingBundle\Entity\Account;
-use HelloDi\DiDistributorsBundle\Entity\Item;
-use HelloDi\DiDistributorsBundle\Entity\Tax;
+use HelloDi\CoreBundle\Entity\Item;
+use HelloDi\CoreBundle\Entity\Tax;
 
 /**
  * @ORM\Entity
@@ -36,13 +36,13 @@ class Price
     private $changingPrices;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Tax", inversedBy="prices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Tax", inversedBy="prices")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
     private $tax;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DiDistributorsBundle\Entity\Item", inversedBy="prices")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="prices")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     private $item;

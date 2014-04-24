@@ -2,8 +2,8 @@
 namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\Api;
-use HelloDi\DiDistributorsBundle\Entity\Provider;
+use HelloDi\CoreBundle\Entity\Api;
+use HelloDi\CoreBundle\Entity\Provider;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\RetailerBundle\Entity\Retailer;
 

@@ -1,20 +1,18 @@
 <?php
 
-namespace HelloDi\DistributorBundle\Entity;
+namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
-use HelloDi\RetailerBundle\Entity\Retailer;
-use HelloDi\CoreBundle\Entity\TaxHistory;
 
 /**
- * Distributor
+ * Provider
  *
- * @ORM\Table(name="distributor")
- * @ORM\Entity(repositoryClass="HelloDi\DistributorBundle\Entity\DistributorRepository")
+ * @ORM\Table(name="provider")
+ * @ORM\Entity(repositoryClass="HelloDi\CoreBundle\Entity\ProviderRepository")
  */
-class Distributor
+class Provider
 {
     /**
      * @var integer
@@ -35,23 +33,17 @@ class Distributor
     /**
      * @var string
      *
-     * @ORM\Column(name="timeZone", type="string", length=45)
+     * @ORM\Column(name="timezone", type="string", length=45)
      */
-    private $timeZone;
+    private $timezone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\TaxHistory", inversedBy="distributors")
-     * @ORM\JoinColumn(name="tax_history_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="provider")
      */
-    private $taxHistory;
+    private $inputs;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", mappedBy="distributor")
-     */
-    private $retailers;
-
-    /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="distributor")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="provider")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;
@@ -61,7 +53,7 @@ class Distributor
      */
     public function __construct()
     {
-        $this->retailers = new ArrayCollection();
+        $this->inputs = new ArrayCollection();
     }
 
     /**
@@ -78,7 +70,7 @@ class Distributor
      * Set currency
      *
      * @param string $currency
-     * @return Distributor
+     * @return Provider
      */
     public function setCurrency($currency)
     {
@@ -98,89 +90,66 @@ class Distributor
     }
 
     /**
-     * Set timeZone
+     * Set timezone
      *
-     * @param string $timeZone
-     * @return Distributor
+     * @param string $timezone
+     * @return Provider
      */
-    public function setTimeZone($timeZone)
+    public function setTimezone($timezone)
     {
-        $this->timeZone = $timeZone;
+        $this->timezone = $timezone;
 
         return $this;
     }
 
     /**
-     * Get timeZone
+     * Get timezone
      *
      * @return string
      */
-    public function getTimeZone()
+    public function getTimezone()
     {
-        return $this->timeZone;
+        return $this->timezone;
     }
 
     /**
-     * Set taxHistory
+     * Add inputs
      *
-     * @param TaxHistory $taxHistory
-     * @return Distributor
+     * @param Input $inputs
+     * @return Provider
      */
-    public function setTaxHistory(TaxHistory $taxHistory = null)
+    public function addInput(Input $inputs)
     {
-        $this->taxHistory = $taxHistory;
+        $this->inputs[] = $inputs;
 
         return $this;
     }
 
     /**
-     * Get taxHistory
+     * Remove inputs
      *
-     * @return TaxHistory
+     * @param Input $inputs
      */
-    public function getTaxHistory()
+    public function removeInput(Input $inputs)
     {
-        return $this->taxHistory;
+        $this->inputs->removeElement($inputs);
     }
 
     /**
-     * Add retailers
-     *
-     * @param Retailer $retailers
-     * @return Distributor
-     */
-    public function addRetailer(Retailer $retailers)
-    {
-        $this->retailers[] = $retailers;
-
-        return $this;
-    }
-
-    /**
-     * Remove retailers
-     *
-     * @param Retailer $retailers
-     */
-    public function removeRetailer(Retailer $retailers)
-    {
-        $this->retailers->removeElement($retailers);
-    }
-
-    /**
-     * Get retailers
+     * Get inputs
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRetailers()
+    public function getInputs()
     {
-        return $this->retailers;
+        return $this->inputs;
     }
 
     /**
      * Set account
      *
      * @param Account $account
-     * @return Distributor
+     * @return Provider
      */
     public function setAccount(Account $account)
     {

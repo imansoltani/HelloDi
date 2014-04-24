@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new HelloDi\MasterBundle\HelloDiMasterBundle(),
             new HelloDi\DistributorBundle\HelloDiDistributorBundle(),
             new HelloDi\RetailerBundle\HelloDiRetailerBundle(),
+            new HelloDi\CoreBundle\HelloDiCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
