@@ -1,7 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: ../Resources/phones_rules/phones_rules.yml }
+    - { resource: ../Resources/yml/phones_rules.yml }
+    - { resource: ../Resources/yml/countries.yml }
 
 framework:
     #esi:             ~
@@ -60,9 +61,6 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-        dql:
-            string_functions:
-                GROUP_CONCAT: HelloDi\DiDistributorsBundle\Helper\GroupConcat
 
 # Swiftmailer Configuration
 
@@ -77,7 +75,7 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: HelloDi\DiDistributorsBundle\Entity\User
+    user_class: HelloDi\CoreBundle\Entity\User
     registration:
             form:
                 type:    UserRegistration

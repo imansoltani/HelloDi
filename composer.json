@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "phpunit/phpunit": "*",
         "knplabs/knp-snappy-bundle": "dev-master",
-        "gregwar/captcha-bundle": "dev-master"
+        "gregwar/captcha-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "v2.2.0"
     },
     "scripts": {
         "post-install-cmd": [

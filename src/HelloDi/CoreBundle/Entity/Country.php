@@ -12,8 +12,7 @@ class Country
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer", name="id", nullable=false)
      */
     private $id;
 
@@ -44,6 +43,19 @@ class Country
     {
         $this->entities = new ArrayCollection();
         $this->taxes = new ArrayCollection();
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Country
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

@@ -33,7 +33,7 @@ class Provider
     /**
      * @var string
      *
-     * @ORM\Column(name="timezone", type="string", length=45)
+     * @ORM\Column(name="timezone", type="string", length=45, nullable=true)
      */
     private $timezone;
 
