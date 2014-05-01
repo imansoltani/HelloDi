@@ -33,7 +33,7 @@ class Notification
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="notification")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id",nullable=true)
      */
     private $account;

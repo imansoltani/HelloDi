@@ -90,7 +90,7 @@ class Item
     private $denominations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
      */
     private $country;

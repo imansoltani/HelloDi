@@ -4,7 +4,6 @@ namespace HelloDi\AccountingBundle\Entity;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Entity\Price;
-use HelloDi\CoreBundle\Entity\Ticket;
 use HelloDi\CoreBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
@@ -78,16 +77,6 @@ class Account
     private $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="accountDist")
-     */
-    private $ticketsDist;
-
-    /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="accountRetailer")
-     */
-    private $ticketsRetailer;
-
-    /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="account")
      */
     private $transactions;
@@ -119,8 +108,6 @@ class Account
     public function __construct()
     {
         $this->prices = new ArrayCollection();
-        $this->ticketsDist = new ArrayCollection();
-        $this->ticketsRetailer = new ArrayCollection();
         $this->transactions = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->creditLimits = new ArrayCollection();
@@ -375,72 +362,6 @@ class Account
     public function getPrices()
     {
         return $this->prices;
-    }
-
-    /**
-     * Add ticketsDist
-     *
-     * @param Ticket $ticketsDist
-     * @return Account
-     */
-    public function addTicketsDist(Ticket $ticketsDist)
-    {
-        $this->ticketsDist[] = $ticketsDist;
-
-        return $this;
-    }
-
-    /**
-     * Remove ticketsDist
-     *
-     * @param Ticket $ticketsDist
-     */
-    public function removeTicketsDist(Ticket $ticketsDist)
-    {
-        $this->ticketsDist->removeElement($ticketsDist);
-    }
-
-    /**
-     * Get ticketsDist
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTicketsDist()
-    {
-        return $this->ticketsDist;
-    }
-
-    /**
-     * Add ticketsRetailer
-     *
-     * @param Ticket $ticketsRetailer
-     * @return Account
-     */
-    public function addTicketsRetailer(Ticket $ticketsRetailer)
-    {
-        $this->ticketsRetailer[] = $ticketsRetailer;
-
-        return $this;
-    }
-
-    /**
-     * Remove ticketsRetailer
-     *
-     * @param Ticket $ticketsRetailer
-     */
-    public function removeTicketsRetailer(Ticket $ticketsRetailer)
-    {
-        $this->ticketsRetailer->removeElement($ticketsRetailer);
-    }
-
-    /**
-     * Get ticketsRetailer
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTicketsRetailer()
-    {
-        return $this->ticketsRetailer;
     }
 
     /**

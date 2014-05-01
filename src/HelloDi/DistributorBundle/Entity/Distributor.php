@@ -51,10 +51,15 @@ class Distributor
     private $retailers;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="distributor")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="distributor")
+     */
+    private $tickets;
 
     /**
      * Constructor

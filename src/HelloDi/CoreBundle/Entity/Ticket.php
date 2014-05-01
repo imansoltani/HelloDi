@@ -55,16 +55,16 @@ class Ticket
     private $ticketNotes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="ticketsDist")
-     * @ORM\JoinColumn(name="account_dist_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="tickets")
+     * @ORM\JoinColumn(name="distributor_id", referencedColumnName="id", nullable=true)
      */
-    private $accountDist;
+    private $distributor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", inversedBy="ticketsRetailer")
-     * @ORM\JoinColumn(name="account_retailer_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", inversedBy="tickets")
+     * @ORM\JoinColumn(name="retailer_id", referencedColumnName="id", nullable=true)
      */
-    private $accountRetailer;
+    private $retailer;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="tickets")
@@ -262,49 +262,49 @@ class Ticket
     }
 
     /**
-     * Set accountDist
+     * Set distributor
      *
-     * @param Distributor $accountDist
+     * @param Distributor $distributor
      * @return Ticket
      */
-    public function setAccountDist(Distributor $accountDist = null)
+    public function setDistributor(Distributor $distributor = null)
     {
-        $this->accountDist = $accountDist;
+        $this->distributor = $distributor;
 
         return $this;
     }
 
     /**
-     * Get accountDist
+     * Get distributor
      *
      * @return Distributor
      */
-    public function getAccountDist()
+    public function getDistributor()
     {
-        return $this->accountDist;
+        return $this->distributor;
     }
 
     /**
-     * Set accountRetailer
+     * Set retailer
      *
-     * @param Retailer $accountRetailer
+     * @param Retailer $retailer
      * @return Ticket
      */
-    public function setAccountRetailer(Retailer $accountRetailer = null)
+    public function setRetailer(Retailer $retailer = null)
     {
-        $this->accountRetailer = $accountRetailer;
+        $this->retailer = $retailer;
 
         return $this;
     }
 
     /**
-     * Get accountRetailer
+     * Get retailer
      *
      * @return Retailer
      */
-    public function getAccountRetailer()
+    public function getRetailer()
     {
-        return $this->accountRetailer;
+        return $this->retailer;
     }
 
     /**

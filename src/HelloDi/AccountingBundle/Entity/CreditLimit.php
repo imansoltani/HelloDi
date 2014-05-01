@@ -44,7 +44,7 @@ class CreditLimit
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="creditLimit")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
      */
     private $transaction;

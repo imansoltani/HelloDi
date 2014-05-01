@@ -24,7 +24,7 @@ class TaxHistory
     private $taxEnd;
 
     /**
-     * @ORM\Column(type="float", nullable=false, name="tax")
+     * @ORM\Column(type="float", nullable=false, name="vax")
      */
     private $vat;
 

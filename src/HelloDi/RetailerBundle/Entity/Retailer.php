@@ -30,10 +30,15 @@ class Retailer
     private $distributor;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="retailer")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="retailer")
+     */
+    private $tickets;
 
     /**
      * Get id

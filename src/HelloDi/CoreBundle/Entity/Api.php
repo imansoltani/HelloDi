@@ -44,7 +44,7 @@ class Api
     private $currency;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="api")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;

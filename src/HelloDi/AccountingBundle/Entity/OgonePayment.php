@@ -66,7 +66,7 @@ class OgonePayment
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="ogonePayment")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
      */
     private $transaction;

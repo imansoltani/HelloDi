@@ -43,7 +43,7 @@ class Provider
     private $inputs;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="provider")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
     private $account;

@@ -28,13 +28,13 @@ class Transfer
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="originTransfer")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="origin_trans_id", referencedColumnName="id", nullable=true)
      */
     private $originTransaction;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="destinationTransfer")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="destination_trans_id", referencedColumnName="id", nullable=false)
      */
     private $destinationTransaction;

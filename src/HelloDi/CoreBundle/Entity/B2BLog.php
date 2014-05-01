@@ -98,13 +98,13 @@ class B2BLog
     private $item;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="sellerB2BLog")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="sell_trans_id", referencedColumnName="id", nullable=true)
      */
     private $sellerTransaction;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="commissionerB2BLog")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="comm_trans_id", referencedColumnName="id", nullable=true)
      */
     private $commissionerTransaction;
