@@ -5,6 +5,7 @@ namespace HelloDi\DistributorBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\CoreBundle\Entity\Ticket;
 use HelloDi\RetailerBundle\Entity\Retailer;
 use HelloDi\CoreBundle\Entity\TaxHistory;
 
@@ -67,6 +68,7 @@ class Distributor
     public function __construct()
     {
         $this->retailers = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
     }
 
     /**
@@ -202,6 +204,39 @@ class Distributor
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Add tickets
+     *
+     * @param Ticket $tickets
+     * @return Distributor
+     */
+    public function addTicket(Ticket $tickets)
+    {
+        $this->tickets[] = $tickets;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tickets
+     *
+     * @param Ticket $tickets
+     */
+    public function removeTicket(Ticket $tickets)
+    {
+        $this->tickets->removeElement($tickets);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 
     /**

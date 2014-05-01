@@ -2,8 +2,10 @@
 
 namespace HelloDi\RetailerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\CoreBundle\Entity\Ticket;
 use HelloDi\DistributorBundle\Entity\Distributor;
 
 /**
@@ -39,6 +41,14 @@ class Retailer
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="retailer")
      */
     private $tickets;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,6 +104,39 @@ class Retailer
     public function getAccount()
     {
         return $this->account;
+    }
+    
+    /**
+     * Add tickets
+     *
+     * @param Ticket $tickets
+     * @return Retailer
+     */
+    public function addTicket(Ticket $tickets)
+    {
+        $this->tickets[] = $tickets;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tickets
+     *
+     * @param Ticket $tickets
+     */
+    public function removeTicket(Ticket $tickets)
+    {
+        $this->tickets->removeElement($tickets);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 
     /**
