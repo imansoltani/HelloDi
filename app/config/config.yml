@@ -28,6 +28,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         CalcVatFormula: "@CalcVatFormula"
+        NotificationHandler:   "@notification_handler"
     form:
         resources:
             - '::form_div_layout.html.twig'
@@ -76,13 +77,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: HelloDi\CoreBundle\Entity\User
-    registration:
-            form:
-                type:    UserRegistration
-                handler: hello_di_di_distributors.form.handler.registration
     profile:
-            form:
-                type:    UserProfile
+        form:
+            type: UserProfile
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

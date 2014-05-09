@@ -7,7 +7,7 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\OgonePayment;
 use HelloDi\AccountingBundle\Entity\Transfer;
-use HelloDi\UserBundle\Entity\User as BaseUser;
+use HelloDi\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity

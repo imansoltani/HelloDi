@@ -2,6 +2,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
+        user_db:
+            entity: { class: HelloDi\CoreBundle\Entity\User, property: username }
 
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
@@ -15,6 +17,11 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 success_handler: authentication_handler
+            remember_me:
+                key:      "%secret%"
+                lifetime: 604800 # 7 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
             logout:
                 target: fos_user_security_login
                 path: fos_user_security_logout

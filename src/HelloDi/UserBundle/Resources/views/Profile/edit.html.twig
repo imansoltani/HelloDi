@@ -1,10 +1,10 @@
 {% set parent = '' %}
-{% if is_granted('ROLE_RETAILER') %}
-    {% set parent = 'HelloDiDiDistributorsBundle:Menu:AdminRetailer.html.twig' %}
+{% if is_granted('ROLE_MASTER') %}
+    {% set parent = 'HelloDiMasterBundle::menu.html.twig' %}
 {% elseif is_granted('ROLE_DISTRIBUTOR') %}
-    {% set parent = 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
-{% elseif is_granted('ROLE_MASTER') %}
-    {% set parent = 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+    {% set parent = 'HelloDiDistributorBundle::menu.html.twig' %}
+{% elseif is_granted('ROLE_RETAILER') %}
+    {% set parent = 'HelloDiRetailerBundle::menu.html.twig' %}
 {% endif %}
 
 {% extends parent %}
@@ -64,15 +64,15 @@
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.firstname) }}
-                            {{ form_widget(form.firstname) }}
-                            {{ form_errors(form.firstname) }}
+                            {{ form_label(form.first_name) }}
+                            {{ form_widget(form.first_name) }}
+                            {{ form_errors(form.first_name) }}
                         </div>
 
                         <div class="control-group">
-                            {{ form_label(form.lastname) }}
-                            {{ form_widget(form.lastname) }}
-                            {{ form_errors(form.lastname) }}
+                            {{ form_label(form.last_name) }}
+                            {{ form_widget(form.last_name) }}
+                            {{ form_errors(form.last_name) }}
                         </div>
 
                         <div class="control-group">
@@ -95,6 +95,7 @@
                             <input class="btn btn-primary" type="submit"
                                    value="{{ 'Save'|trans({}, 'common') }}"/>
                             <a href="javascript:history.go(-1)" class="btn" >{{ 'Cancel'|trans({},'common') }}</a>
+                            <a href="{{ path('fos_user_change_password') }}" class="btn">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
                         </div>
                     </fieldset>
                 </form>

@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Form\User;
+namespace HelloDi\UserBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -12,27 +12,26 @@ class UserProfileType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('firstname',null,array('label' => 'FirstName','translation_domain' => 'user'))
-            ->add('lastname',null,array('required'=>false,'label' => 'LastName','translation_domain' => 'user'))
-            ->add('mobile',null,array('required'=>false,'label' => 'Mobile','translation_domain' => 'user'))
-            ->add('language','choice', array(
+            ->add('first_name', null, array('label' => 'FirstName', 'translation_domain' => 'user'))
+            ->add('last_name', null, array('required' => false, 'label' => 'LastName', 'translation_domain' => 'user'))
+            ->add('mobile', null, array('required' => false, 'label' => 'Mobile', 'translation_domain' => 'user'))
+            ->add('language', 'choice', array(
                 'choices' => array(
                     'en' => 'en',
                     'fr' => 'fr',
-                     'de'=>'de',
-                    'it'=>'it',
+                    'de' => 'de',
+                    'it' => 'it',
                 ),
-                'required'  => true,
+                'required' => true,
                 'label' => 'Language',
                 'translation_domain' => 'user'
-            ))
-        ;
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'HelloDi\DiDistributorsBundle\Entity\User'
+            'data_class' => 'HelloDi\CoreBundle\Entity\User'
         ));
     }
 

@@ -2,6 +2,13 @@ parameters:
 #    hello_di_user.example.class: HelloDi\UserBundle\Example
 
 services:
-#    hello_di_user.example:
-#        class: %hello_di_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    hello_di_user_profile_form_type:
+        class: HelloDi\UserBundle\Form\UserProfileType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: UserProfile }
+
+    hello_di_user_profile_edit:
+        class: HelloDi\UserBundle\Listener\ProfileEditListener
+        tags:
+            - { name: kernel.event_subscriber }

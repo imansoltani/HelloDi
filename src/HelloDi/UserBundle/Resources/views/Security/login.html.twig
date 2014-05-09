@@ -1,0 +1,46 @@
+{% extends "HelloDiCoreBundle::Main0.html.twig" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block bodywidth %}login{% endblock %}
+
+{% block header %}Sign in{% endblock %}
+
+{% block fos_user_content %}
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        <div class="login-fields">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            <div class="field">
+                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="text" id="username" name="_username" placeholder="Username" class="login username-field"
+                       value="{{ last_username }}" required="required" tabindex="1"/>
+            </div>
+            <div class="field">
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="password" id="password" name="_password" value="" placeholder="Password"
+                       class="login password-field" required="required" tabindex="2"/>
+            </div>
+        </div>
+        {% if error %}
+            <div class="Login_error">
+                <i class="icon-ban-circle"></i><span>{{ error|trans({}, 'FOSUserBundle') }}</span>
+            </div>
+        {% endif %}
+        <div class="login-actions">
+				<span class="login-checkbox">
+					<input id="Field" name="_remember_me" type="checkbox" class="field login-checkbox" value="on"
+                           tabindex="3"/>
+					<label class="choice"
+                           for="Field">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+				</span>
+            <input class="button btn btn-primary btn-large" type="submit" id="_submit" name="_submit"
+                   value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" tabindex="4"/>
+        </div>
+        <!-- .actions -->
+        <div style="" class="login_remind">
+            <div>
+                <a class="btn btn-info" href="{{ path('fos_user_resetting_request') }}">Remind Password</a>
+            </div>
+        </div>
+    </form>
+{% endblock fos_user_content %}
