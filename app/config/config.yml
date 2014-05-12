@@ -31,7 +31,7 @@ twig:
         NotificationHandler:   "@notification_handler"
     form:
         resources:
-            - '::form_div_layout.html.twig'
+            - '::form_div_layout_override.html.twig'
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
@@ -79,7 +79,7 @@ fos_user:
     user_class: HelloDi\CoreBundle\Entity\User
     profile:
         form:
-            type: UserProfile
+            type: hellodi_user_bundle_user_profile_type
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

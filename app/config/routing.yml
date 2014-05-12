@@ -4,23 +4,19 @@ hello_di_core:
 
 hello_di_retailer:
     resource: "@HelloDiRetailerBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /app/r
 
 hello_di_distributor:
     resource: "@HelloDiDistributorBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /app/d
 
 hello_di_master:
     resource: "@HelloDiMasterBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /app/m
 
 hello_di_pricing:
     resource: "@HelloDiPricingBundle/Resources/config/routing.yml"
     prefix:   /pricing
-
-hello_di_user:
-    resource: "@HelloDiUserBundle/Resources/config/routing.yml"
-    prefix:   /
 
 hello_di_accounting:
     resource: "@HelloDiAccountingBundle/Resources/config/routing.yml"
@@ -28,28 +24,11 @@ hello_di_accounting:
 
 hello_di_di_distributors:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /_old_/
 
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-    prefix: /app
-
-fos_user_profile_show:
-    path: /app/user/profile
-    defaults: { _controller: FOSUserBundle:Profile:edit}
-    requirements: { _method: GET }
-
-fos_user_profile_edit:
-    path: /app/user/profile/edit
-    defaults: { _controller: FOSUserBundle:Profile:edit}
-
-fos_user_resetting:
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /app/user/resetting
-
-fos_user_change_password:
-    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /app/user
+hello_di_user:
+    resource: "@HelloDiUserBundle/Resources/config/routing.yml"
+    prefix:   /app
 
 #gregwar_captcha_routing:
 #    resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
