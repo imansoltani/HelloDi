@@ -13,7 +13,6 @@ class ProviderController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $providers = $em->getRepository('HelloDiCoreBundle:Provider')->findAll();
 
         return $this->render('HelloDiMasterBundle:provider:index.html.twig', array(
