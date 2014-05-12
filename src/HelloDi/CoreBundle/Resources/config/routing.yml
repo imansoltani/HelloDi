@@ -1,3 +1,5 @@
-hello_di_core_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: HelloDiCoreBundle:Default:index }
+hellodi_index_page:
+    path: /{locale}
+    defaults: { _controller: HelloDiCoreBundle:Default:indexPage,locale:en}
+    requirements:
+        locale: en|fr|de

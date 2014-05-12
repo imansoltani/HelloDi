@@ -6,7 +6,7 @@ services:
         class: HelloDi\UserBundle\Form\UserProfileType
         arguments: [%fos_user.model.user.class%]
         tags:
-            - { name: form.type, alias: UserProfile }
+            - { name: form.type, alias: hellodi_user_bundle_user_profile_type }
 
     hello_di_user_profile_edit:
         class: HelloDi\UserBundle\Listener\ProfileEditListener

@@ -1,5 +1,4 @@
 FOS\UserBundle\Form\Model\ChangePassword:
-
     properties:
         new:
             - Length:
@@ -8,17 +7,16 @@ FOS\UserBundle\Form\Model\ChangePassword:
                 minMessage: "password_must_be_at_least_{{limit}}_characters_length"
                 maxMessage: "pasword_name_cannot_be_longer_than_{{limit}}_characters_length"
 
-HelloDi\DiDistributorsBundle\Entity\Entiti:
+HelloDi\DiDistributorsBundle\Entity\Entity:
     properties:
-        entVatNumber:
+        vatNumber:
             - Regex:
                 pattern: "/\d/"
                 match: true
                 message: 'Only_numbers_are_accepted'
-
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: entName
+            fields: name
             message: 'This_entity_name_is_already_in_use'
 
 HelloDi\DiDistributorsBundle\Entity\Tax:
@@ -36,7 +34,6 @@ HelloDi\DiDistributorsBundle\Entity\User:
             fields: usernameCanonical
             errorPath: username
             message: 'This_username_is_already_in_use'
-
     properties:
         plainPassword:
             - Length:
@@ -47,14 +44,14 @@ HelloDi\DiDistributorsBundle\Entity\User:
 
 HelloDi\AccountingBundle\Entity\Account:
     properties:
-        accTerms:
+        terms:
             - Regex:
                 pattern: "/\d/"
                 match:   true
                 message: 'Only_numbers_are_accepted'
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: accName
+            fields: name
             message: 'This_account_name_is_already_in_use'
 
 HelloDi\AccountingBundle\Entity\Transaction:

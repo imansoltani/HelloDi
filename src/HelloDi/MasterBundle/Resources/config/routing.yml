@@ -1,3 +1,7 @@
 hello_di_master_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: HelloDiMasterBundle:Default:index }
+    pattern:  /
+    defaults: { _controller: HelloDiMasterBundle:Default:dashboard }
+
+hello_di_master_provider:
+    resource: "@HelloDiMasterBundle/Resources/config/routing/provider.yml"
+    prefix:   /provider

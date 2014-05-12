@@ -7,27 +7,11 @@ parameters:
 #        arguments: [@service_id, "plain_value", %parameter%]
 
 services:
-    hello_di_di_distributors.profile.form.type:
-        class: HelloDi\DiDistributorsBundle\Form\User\UserProfileType
-        arguments: [%fos_user.model.user.class%]
-        tags:
-            - { name: form.type, alias: UserProfile }
-
-    hello_di_di_distributors.event_listener.locale_listener:
-        class: HelloDi\DiDistributorsBundle\Listener\LocaleListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest}
-            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin}
-
     hello_di_di_distributors.form.handler.registration:
         class: HelloDi\DiDistributorsBundle\Form\Handler\RegistrationFormHandler
         arguments: [@fos_user.registration.form, @request, @fos_user.user_manager, @fos_user.mailer, @fos_user.util.token_generator ,@security.context]
         scope: request
         public: false
-
-    authentication_handler:
-        class: HelloDi\DiDistributorsBundle\Listener\AuthenticationHandler
-        arguments: [@router, @security.context]
 
     hello_di_di_distributors.balancechecker:
         class: HelloDi\DiDistributorsBundle\Listener\BalanceChecker
@@ -55,17 +39,6 @@ services:
         class:        Twig_Extension_StringLoader
         tags:
          - { name: 'twig.extension' }
-
-    hello_di_di_notification:
-        class:  HelloDi\DiDistributorsBundle\Controller\NotificationController
-        arguments: [@doctrine.orm.default_entity_manager,@request]
-        scope: request
-
-    record_exception:
-        class: HelloDi\DiDistributorsBundle\Listener\Exception
-        arguments: [@doctrine.orm.default_entity_manager,@session,@kernel]
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onWriteException }
 
     CalcVatFormula:
         class: HelloDi\DiDistributorsBundle\Listener\CalcVatFormula

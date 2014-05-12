@@ -1,0 +1,37 @@
+{% extends 'HelloDiMasterBundle:provider:stepAdd.html.twig' %}
+
+{% block steps %}
+    <!-- Entity -->
+    <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
+        <div class="widget-header"><h3>{{ 'Entity' | trans ({}, "entity") }}</h3></div>
+        {{ form_row(form.account.entity.name) }}
+        {{ form_row(form.account.entity.vatNumber) }}
+        {{ form_row(form.account.entity.tel1) }}
+        {{ form_row(form.account.entity.tel2) }}
+        {{ form_row(form.account.entity.fax) }}
+        {{ form_row(form.account.entity.website) }}
+    </div>
+
+    <!-- Address -->
+    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
+        <div class="widget-header"><h3>{{ 'Address' | trans ({}, "entity") }}</h3></div>
+        {{ form_row(form.account.entity.country) }}
+        {{ form_row(form.account.entity.city) }}
+        {{ form_row(form.account.entity.address1) }}
+        {{ form_row(form.account.entity.address2) }}
+        {{ form_row(form.account.entity.address3) }}
+        {{ form_row(form.account.entity.NP) }}
+    </div>
+
+    <!-- Account -->
+    <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
+        <div class="widget-header"><h3>{{ 'Account' | trans ({}, "accounts") }}</h3></div>
+        {{ form_row(form.account.name) }}
+        {{ form_row(form.currency) }}
+        {{ form_row(form.account.defaultLanguage) }}
+        {{ form_row(form.account.terms) }}
+        {{ form_row(form.timezone) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+{% endblock %}

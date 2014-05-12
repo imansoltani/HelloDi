@@ -218,29 +218,29 @@ class TicketsController extends Controller
         return $this->redirect($this->generateUrl('MasterTicketsNote', array('id' => $id)));
     }
 
-    public function  countnoteAction()
+    public function countnoteAction()
     {
-        $User = $this->get('security.context')->getToken()->getUser();
-        $users = $User->getEntiti()->getUsers();
+        $User = $this->getUser();
+        $users = $User->getEntity()->getUsers();
         $em = $this->getDoctrine()->getManager();
         $Countnote = $em->createQueryBuilder();
         $Countnote->select('Note')
-            ->from('HelloDiDiDistributorsBundle:TicketNote', 'Note')
-            ->innerJoin('Note.Ticket', 'NoteTic')
+            ->from('HelloDiCoreBundle:TicketNote', 'Note')
+            ->innerJoin('Note.ticket', 'NoteTic')
             ->Where(
                 $Countnote->expr()->orX(
                     $Countnote->expr()->andX(
-                        $Countnote->expr()->isNull('NoteTic.Accountretailer'),
-                        $Countnote->expr()->isNotNull('NoteTic.Accountdist')
+                        $Countnote->expr()->isNull('NoteTic.retailer'),
+                        $Countnote->expr()->isNotNull('NoteTic.distributor')
                     ),
                     $Countnote->expr()->andX(
-                        $Countnote->expr()->isNull('NoteTic.Accountdist'),
-                        $Countnote->expr()->isNotNull('NoteTic.Accountretailer')
+                        $Countnote->expr()->isNull('NoteTic.distributor'),
+                        $Countnote->expr()->isNotNull('NoteTic.retailer')
                     )
                 )
             );
 
-        $Countnote->andWhere('Note.User NOT IN(:usr)')->setParameter('usr', $users->toArray());
+        $Countnote->andWhere('Note.user NOT IN(:usr)')->setParameter('usr', $users->toArray());
 
         $Countnote->andWhere('Note.view = 0');
         return new Response(count($Countnote->getQuery()->getResult()));

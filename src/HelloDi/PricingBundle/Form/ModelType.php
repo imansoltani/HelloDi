@@ -25,6 +25,6 @@ class ModelType extends AbstractType
 
     public function getName()
     {
-        return 'hellodi_pricingbundle_modeltype';
+        return 'hellodi_pricing_bundle_model_type';
     }
 }

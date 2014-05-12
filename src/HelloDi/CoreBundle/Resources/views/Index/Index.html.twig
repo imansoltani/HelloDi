@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Hello Di website
+    </title>
+
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Average+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Main.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Responcive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/connect.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hellodi/css/Home.css') }}" rel="stylesheet">
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+
+
+</head>
+<body>
+<div class="t1 l1"></div>
+<div class="t2 l1"></div>
+<div class="t3 l1"></div>
+<div class="t4 l1"></div>
+<div class="t5 l1"></div>
+<div class="t6 l1"></div>
+<div class="t7 l1"></div>
+
+<ul class="nav login">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li class="dropdown">
+            <a style="padding:4px; font-size: 15px;border-radius: 10px;border: thin solid rgb(204, 204, 204)" href="#"
+               id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+							<span>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                <b class="caret"></b></span>
+            </a>
+            <ul style="font-size: 16px" class="dropdown-menu">
+                {% if is_granted("ROLE_MASTER") %}
+                    <li><a href="{{ path('hello_di_master_homepage') }}">Dashboard</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_DISTRIBUTOR") %}
+                    <li><a href="{{ path('hello_di_distributor_homepage') }}">Dashboard</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_RETAILER") %}
+                    <li><a href="{{ path('hello_di_retailer_homepage') }}">Dashboard</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_profile_edit') }}">Setting</a></li>
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                </li>
+            </ul>
+        </li>
+    {% else %}
+        <li class="dropdown">
+            <a style="padding:4px; font-size: 15px;border-radius: 10px;border: thin solid rgb(204, 204, 204)"
+               href="{{ path('fos_user_security_login') }}" id="user_info" class="dropdown-toggle">
+                            <span id="user_title_menu" style="display: block">
+                               {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                             </span>
+            </a>
+        </li>
+    {% endif %}
+</ul>
+
+<div class="menuBar">
+    <div class="menu">
+        <a class="lGo logo" id="0"></a>
+
+        <ul>
+            <li class="item"><a id="1" class="lGo">
+                    <div></div>
+                    <span>Service</span></a></li>
+            <li class="item"><a id="2" class="lGo">
+                    <div></div>
+                    <span>Produits</span></a></li>
+            <li class="item"><a id="3" class="lGo">
+                    <div></div>
+                    <span>Net Work</span></a></li>
+            <li class="item"><a id="4" class="lGo">
+                    <div></div>
+                    <span>News</span></a></li>
+            <li class="item"><a id="5" class="lGo">
+                    <div></div>
+                    <span>À propos</span></a></li>
+            <li class="item"><a id="6" class="lGo">
+                    <div></div>
+                    <span>Contact</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<div step="0" style="display: block" class="done active Step S_1">
+    <inner>
+        <div class="mainConnect">
+
+            <div class="min m1 color1"></div>
+            <div class="min m2 color2"></div>
+            <div class="min m3 color1"></div>
+            <div class="min m4 color3"></div>
+            <div class="min m5 color1"></div>
+            <div class="min m6 color1"></div>
+            <div class="min m7 color1"></div>
+            <div class="min m8 color1"></div>
+            <div class="min m9 color4"></div>
+            <div class="min m10 color4"></div>
+            <div class="min m11 color1"></div>
+            <div class="min m12 color3"></div>
+            <div class="min m13 color1"></div>
+            <div class="min m14 color1"></div>
+            <div class="min m15 color1"></div>
+
+            <div class="min m16 color3"></div>
+            <div class="min m17 color2"></div>
+            <div class="min m18 color2"></div>
+            <div class="min m19 color4"></div>
+            <div class="min m20 color4"></div>
+            <div class="min m21 color3"></div>
+            <div class="min m22 color2"></div>
+
+            <div class="min m23 color3"></div>
+            <div class="min m24 color1"></div>
+            <div class="min m25 color4"></div>
+            <div class="min m26 color4"></div>
+            <div class="min m27 color4"></div>
+            <div class="min m28 color1"></div>
+            <div class="min m29 right color1"></div>
+            <div class="min m30 right color4"></div>
+            <div class="min m31 right color4"></div>
+            <div class="min m32 right color4"></div>
+            <div class="min m33 right color3"></div>
+            <div class="min m34 right color2"></div>
+            <div class="min m35 right color2"></div>
+            <div class="min m36 right color3"></div>
+            <div class="min m37 right color3"></div>
+            <div class="min m38 right color3 last"></div>
+
+            <div class="cycle c1"><span>Provider</span></div>
+            <div class="cycle c2"><span></span></div>
+            <div class="cycle c3"><span>Distributor</span></div>
+            <div class="cycle c4 right"><span>Retailer</span></div>
+            <div class="cycle c5 right "><span>Retailer</span></div>
+
+            <span class="mainCycle"><span></span></span>
+
+
+        </div>
+        <!--
+                    <div class="bottom">
+                        <ul class="title">
+                            <li ><a>SÉCURITÉ</a><div></div></li>
+                            <li><a>TRANSPARENCE</a><div></div></li>
+                            <li><a>SIMPLE & FIABLE</a><div></div></li>
+                        </ul>
+                        <ul class="text">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>-->
+        <div class="bottom">
+            <ul class="option">
+                <center>
+                    <li slide="0" class="t1 active">
+                        <div class="title">
+                            <a>SÉCURITÉ</a>
+
+                            <div></div>
+                        </div>
+                        <div class="text">
+                            <p>Nous veillons sur la sécurité du réseau dans les règles de l'art. De ce fait, les
+                                technologies de pointes sont réunies au sein de la plateforme HelloDi qui vous protégera
+                                des tentatives frauduleuses.</p>
+                        </div>
+                    </li>
+                    <li slide="1" class="t2 active">
+                        <div class="title">
+                            <a>TRANSPARENCE</a>
+
+                            <div></div>
+                        </div>
+                        <div class="text">
+                            <p>Pour une collaboration saine et à long terme, la confiance est primordiale ! Des outils
+                                simples vous permettent de suivre l'ensemble de vos transactions, et de faire des
+                                rapports de vos activités sur votre compte HelloDi.</p>
+                        </div>
+                    </li>
+                    <li slide="2" class="t3 active">
+                        <div class="title">
+                            <a>SIMPLE & FIABLE</a>
+
+                            <div></div>
+                        </div>
+                        <div class="text">
+                            <p>Les fonctionnalités sont conçues pour vous simplifier l’utilisation et répondre de
+                                manière toujours plus performante à vos exigences ! La logistique de l’entreprise permet
+                                de vous assurer en tout temps une intervention rapide et adaptée à vos besoins.</p>
+                        </div>
+                    </li>
+                </center>
+            </ul>
+            <ul class="slider">
+                <center>
+                    <li><a class="active slide t1" slide="0"></a></li>
+                    <li><a class="slide t2" slide="1"></a></li>
+                    <li><a class="slide t3" slide="2"></a></li>
+                </center>
+            </ul>
+        </div>
+    </inner>
+</div>
+
+<div step="1" class="Step S_2">
+    <inner>
+        <a class="Go lGo" id="2">Produits</a>
+
+        <div>
+            <span></span>
+
+            <div>
+                <img src="">
+
+                <h1>Service</h1>
+                HelloDi est une plateforme de haute technologie pour la distribution d'une large gamme de produits
+                prepaid (prépayés), de télécommunication et de porte-monnaie électronique. Celle-ci est maintenue par
+                une équipe dynamique et innovante. Car la qualité de nos services passe avant tout par la compétence de
+                notre personnel.
+                <br>
+                Fiable et Flexible, HelloDi est un outil performant qui permet au distributeur de former ou d’étendre
+                son propre réseau, sans se soucier de la gestion des produits.<br>
+                Les produits nationaux et internationaux vous sont proposés au sein d'un service adapté à vos besoins et
+                respectueux des lois de votre région :<br>
+                <ul>
+                    <li>Une plateforme multi-devises : notre plateforme est capable d’utiliser la monnaie locale de
+                        chacun, où que vous soyez, afin d’économiser votre temps et votre argent.
+                    </li>
+                    <li>Langue : à l'heure actuelle, 3 langues sont proposées par notre plateforme. Il est par ailleurs
+                        possible d’adapter une nouvelle langue facilement, ce qui nous permet de vous proposer des
+                        services sur mesure pour répondre à vos besoins.
+                    </li>
+                    <li>La TVA et les taxes sont appropriées à votre région.</li>
+                </ul>
+            </div>
+
+        </div>
+    </inner>
+</div>
+
+<div step="2" class="Step S_3">
+    <inner>
+        <a class="Go lGo" id="3">Net Work</a>
+
+        <div class="body">
+            <div class="textMain"><h1>Produits</h1>
+
+                <p>À travers notre plateforme, nous mettons à disposition pour nos clients des produits divers que nous
+                    classons en 3 catégories :</p></div>
+            <ul class="list">
+                <center>
+                    <li>
+                        <div class="main p1">
+                            <bg></bg>
+                            <div class="text">
+                                <div>
+                                    <h2><i></i>
+                                        Cartes téléphoniques</h2>
+                                    <ul>
+                                        <li>Calling Card</li>
+                                        <li>Pinless</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="main p2">
+                            <bg></bg>
+                            <div class="text">
+                                <div>
+                                    <h2><i></i>
+                                        Recharges pour mobile (Mobile Top-Up)</h2>
+                                    <ul>
+                                        <li>DMTU (Recharges des mobiles nationaux)
+                                            <span>Domestic mobile Top-up</span>
+                                        </li>
+                                        <li class="last">IMTU (Recharges mobiles international)
+                                            <span>International mobile Top-up</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="main p3">
+                            <bg></bg>
+                            <div class="text">
+                                <div>
+                                    <h2><i></i>
+                                        E-wallet<br></h2>
+
+                                    <h2 style="text-align: center">(Porte-monnaie électronique)</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </center>
+            </ul>
+        </div>
+    </inner>
+</div>
+
+<div step="3" class="Step S_4">
+    <inner>
+        <a class="Go lGo" id="4">News</a>
+
+        <div class="Network">
+            <div id="map" class="Map">
+                <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                        src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=geneva&amp;aq=&amp;sll=37.47949,-121.984119&amp;sspn=0.078875,0.169086&amp;ie=UTF8&amp;hq=&amp;hnear=Geneva,+Switzerland&amp;ll=46.198392,6.142296&amp;spn=0.034399,0.084543&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+                <br/>
+                <small>
+                    <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=geneva&amp;aq=&amp;sll=37.47949,-121.984119&amp;sspn=0.078875,0.169086&amp;ie=UTF8&amp;hq=&amp;hnear=Geneva,+Switzerland&amp;ll=46.198392,6.142296&amp;spn=0.034399,0.084543&amp;t=m&amp;z=14"
+                       style="color:#0000FF;text-align:left;height:100%;width:100%;">View Larger Map</a></small>
+            </div>
+            <div class="info">
+                <h1>Net Work (réseau)</h1>
+
+                <div class="text">
+                    <h2>Paris :</h2>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+
+        </div>
+    </inner>
+</div>
+
+<div step="4" class="Step S_5">
+    <inner>
+        <a class="Go lGo" id="5">À propos</a>
+
+        <div>
+            <div>
+                <h1>News</h1>
+
+                <div class="news">
+                    <div>
+                        <div>
+                            <h1>20 Sep 2012</h1>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                mollit anim id est laborum
+                            </p>
+                        </div>
+                        <div>
+                            <h1>20 Sep 2012</h1>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                mollit anim id est laborum
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </inner>
+</div>
+
+<div step="5" class="S_6 Step">
+    <inner>
+        <a class="Go lGo" id="6">Contact Us</a>
+
+        <div class="body">
+            <div>
+                <h1>À propos de nous</h1>
+
+                <p>
+                    HelloDi est un service de distribution fourni par la société HelloBell Telecommunication SA.<br>
+                    Nous nous adressons à des sociétés de distribution qui recherchent l’efficacité et le sérieux, car
+                    votre réussite est la nôtre.
+                    Une équipe internationale, innovante et à la recherche de la perfection fera de son mieux pour vous
+                    garantir une qualité irréprochable de ses services.<br>
+                    De plus, les dirigeants sont des personnes qualifiés qui baignent dans le domaine de la téléphonie
+                    et de l’international depuis bien des années.
+
+                </p>
+                <ul>
+                    <center>
+                        <li class="a1"></li>
+                        <li class="a2"><a>Propulsé par</a></li>
+                        <li class="a3"></li>
+                    </center>
+                </ul>
+            </div>
+        </div>
+    </inner>
+</div>
+
+<div class="Step S_7">
+    <inner>
+        <div class="main">
+            <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%">
+                <div class="container">
+                    <div class="pagetitle"><i class="icon-check"></i> Contact Us</div>
+                </div>
+            </div>
+            <div class="row bordertop print">
+                <div class="container print">
+                    <div class="span">
+                        <div class="widget stacked">
+                            <div class="widget-content">
+                                <form class="form-horizontal" action="{{ path('hellodi_index_page') }}" method="post"
+                                      style="margin-top: 20px">
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <label class="control-label">{{ form_label(formContact.Inquiry) }}</label>
+
+                                            <div class="controls">
+                                                {{ form_widget(formContact.Inquiry) }}
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">{{ form_label(formContact.Description) }}</label>
+
+                                            <div class="controls">
+                                                {{ form_widget(formContact.Description) }}
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">{{ form_label(formContact.Name) }}</label>
+
+                                            {{ form_widget(formContact.Name) }}
+
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">{{ form_label(formContact.Email) }}</label>
+
+                                            {{ form_widget(formContact.Email) }}
+
+                                        </div>
+                                        <div class="form-actions" style="margin-bottom: 0">
+                                            <button class="btn btn-primary" type="submit">Send</button>
+
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#  <div class="footer">
+                  <div class="bg"></div>
+              </div>#}
+        </div>
+    </inner>
+</div>
+
+
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/more/jquery.timer.js') }}"></script>
+<script src="{{ asset('bundles/hellodi/js/more/home.js') }}"></script>
+
+
+</body>
+
+</html>

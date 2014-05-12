@@ -62,11 +62,6 @@ class Account
     private $creationDate;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=true, name="time_zone")
-     */
-    private $timeZone;
-
-    /**
      * @ORM\Column(type="integer", nullable=true, name="terms")
      */
     private $terms;
@@ -283,29 +278,6 @@ class Account
     public function getCreationDate()
     {
         return $this->creationDate;
-    }
-
-    /**
-     * Set timeZone
-     *
-     * @param string $timeZone
-     * @return Account
-     */
-    public function setTimeZone($timeZone)
-    {
-        $this->timeZone = $timeZone;
-
-        return $this;
-    }
-
-    /**
-     * Get timeZone
-     *
-     * @return string
-     */
-    public function getTimeZone()
-    {
-        return $this->timeZone;
     }
 
     /**

@@ -37,6 +37,6 @@ class UserProfileType extends BaseType
 
     public function getName()
     {
-        return 'UserProfile';
+        return 'hellodi_user_bundle_user_profile_type';
     }
 }

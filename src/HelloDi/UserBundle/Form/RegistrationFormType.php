@@ -11,94 +11,84 @@
 
 namespace HelloDi\UserBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use HelloDi\AccountingBundle\Entity\Account;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use HelloDi\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
-class RegistrationFormType extends AbstractType
+class RegistrationFormType extends BaseType
 {
-    private $class;
     private $type;
+    private $languages;
 
     /**
-     * @param string $class The User class name
+     * @param string $class
+     * @param array $languages
      * @param int $type
      */
-    public function __construct($class, $type = null)
+    public function __construct($class, array $languages, $type = null)
     {
-        $this->class = $class;
+        parent::__construct($class);
+        $this->languages = array_combine($languages, $languages);
         $this->type = $type;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('username', null, array('required'=>true,'label' => 'UserName', 'translation_domain' => 'user'))
-            ->add('email', 'email', array('required' => false, 'label' => 'Email', 'translation_domain' => 'user'))
-            ->add('plainPassword', 'repeated', array('translation_domain' => 'user',
-                'type' => 'password',
-                'options' => array(),
-                'first_options' => array('label' => 'PlainPassword_First'),
-                'second_options' => array('label' => 'PlainPassword_Second'),
-                'invalid_message' => 'password.mismatch',
+            ->add('firstName',null,array('required'=>true,'label'=>'FirstName','translation_domain' => 'user'))
+            ->add('lastName',null,array('required'=>false,'label'=>'LastName','translation_domain' => 'user'))
+            ->add('mobile',null,array(
+                'required'=>false,
+                'label'=>'Mobile','translation_domain' => 'user',
+                'attr'=> array('class'=>'tel_validation'),
             ))
-            ->add('enabled', 'choice',
-                array(
-                 'label' => 'Active','translation_domain' => 'user',
-                'choices' =>
-                array(
-                    0 => 'Disable',
-                    1 => 'Enable'
-                )
+            ->add('language','choice',array('required'=>true,'label'=>'Language','translation_domain' => 'user',
+                'choices'=>$this->languages
+            ))
+            ->add('enabled', 'choice',array('label' => 'Active','translation_domain' => 'user','choices' =>array(
+                0 => 'Disable',1 => 'Enable'
+            )));
 
-
-
-
-                ));
-        if ($this->type == 2) {
-            $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                'type' => 'choice',
-                'options' => array('label' => 'Role',
-                    'choices' => array(
-                        'ROLE_RETAILER' => 'ROLE_RETAILER',
-                        'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
+        switch ($this->type)
+        {
+            case Account::RETAILER:
+                $builder->add('roles', 'collection', array('translation_domain' => 'user',
+                    'type' => 'choice',
+                    'options' => array('label' => 'Role',
+                        'choices' => array(
+                            'ROLE_RETAILER' => 'ROLE_RETAILER',
+                            'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
+                        ),
                     ),
-                ),
-            ));
-        } elseif ($this->type == 0) {
-            $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                'type' => 'choice',
-                'options' => array('label' => 'Role',
-                    'choices' => array(
-                        'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
-                        'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
+                )); break;
+
+            case Account::DISTRIBUTOR:
+                $builder->add('roles', 'collection', array('translation_domain' => 'user',
+                    'type' => 'choice',
+                    'options' => array('label' => 'Role',
+                        'choices' => array(
+                            'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
+                            'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
+                        ),
                     ),
-                ),
-            ));
-        } elseif ($this->type == 1) {
-            $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                'type' => 'choice',
-                'options' => array('label' => 'Role',
-                    'choices' => array(
-                        'ROLE_MASTER' => 'ROLE_MASTER',
-                        'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
+                )); break;
+            case Account::PROVIDER:
+                $builder->add('roles', 'collection', array('translation_domain' => 'user',
+                    'type' => 'choice',
+                    'options' => array('label' => 'Role',
+                        'choices' => array(
+                            'ROLE_MASTER' => 'ROLE_MASTER',
+                            'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
+                        ),
                     ),
-                ),
-            ));
+                )); break;
         }
-
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->class,
-            'intention'  => 'registration',
-        ));
     }
 
     public function getName()
     {
-        return 'fos_user_registration';
+        return 'hellodi_user_bundle_registration_form_type';
     }
 }

@@ -1,13 +1,17 @@
 <?php
-
 namespace HelloDi\MasterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function dashboardAction()
     {
-        return $this->render('HelloDiMasterBundle:Default:index.html.twig', array('name' => $name));
+        $em = $this->getDoctrine()->getManager();
+        $notifications = $em->getRepository('HelloDiCoreBundle:Notification')->findBy(array('account' => null));
+
+        return $this->render('HelloDiMasterBundle::dashboard.html.twig', array(
+            'Notifications' => $notifications
+        ));
     }
 }

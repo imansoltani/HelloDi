@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="{{ asset('bundles/hellodi/img/favicon.ico.png') }}">
+
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Quando|Carrois+Gothic+SC|Josefin+Slab|Quicksand|Didact+Gothic|Karla|Marcellus+SC|Oxygen|Julius+Sans+One|Viga'>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Noto+Sans|Marcellus+SC|Cinzel|Holtwood+One+SC|Days+One|Archivo+Black|Quicksand|Julius+Sans+One|Varela+Round|Anton|Paytone+One|Oswald|Nunito'>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Average+Sans'>
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/bootstrap.min.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/bootstrap-responsive.min.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/Main.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/Form.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/Responcive.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/ui-lightness/jquery-ui-1.10.0.custom.min.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ asset('bundles/hellodi/css/font-awesome.min.css') }}">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery-1.8.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/more/Main.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/more/form_validation.js') }}" ></script>
+
+    {% block Link_Head %}{% endblock %}
+</head>
+
+<body>
+<div class="messageshow"></div>
+<div class="popupshow"></div>
+
+<!-- Nav Bar -->
+<div class="navbar navbar-inverse navbar-fixed-top" >
+
+    <div class="navbar-inner">
+
+        <div class="container">
+
+            <a class="brand" id="brand" href="{{ path('hellodi_index_page') }}">
+                <img src="{{ asset('bundles/hellodi/img/logo-mini.png') }}" width="30px"/> Hello <span>Di</span>
+            </a>
+
+            <ul class="nav pull-right">
+                {% if app.user.account is not null %}
+                <li class="dropdown" style="text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);padding: 5px 10px;font-size: 16px;color: #0e5c92;">
+                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.account.accBalance }} {{ app.user.account.accCurrency }}</b>
+                </li>
+                {% endif %}
+
+                    {% if NotificationHandler.countNotification()> 0 %}
+                        <li class="dropdown Noti">
+                            <a href="#" id="lang_ico" class="dropdown-toggle lang_ico Noti_icon" style="font-weight:bold" data-toggle="dropdown">
+                                <i class="icon-envelope">
+                                    <span> NotificationHandler.countNotification()</span>
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    {{ render(controller('HelloDiMasterBundle:Account:ShowLastNotification')) }}
+                                {% elseif is_granted('ROLE_DISTRIBUTOR') %}
+                                    {{ render(controller('HelloDiDistributorBundle:Distributors:ShowLastNotification')) }}
+                                {% elseif is_granted('ROLE_RETAILER') %}
+                                    {{ render(controller('HelloDiDiDistributorsBundle:Retailers:ShowLastNotification')) }}
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                <li class="dropdown">
+                    <a id="lang_ico" class="dropdown-toggle lang_ico" style="font-weight:bold"
+                            {% if is_granted('ROLE_DISTRIBUTOR') %}
+                                href="{{ path('DistTickets') }}"
+                            {% elseif is_granted('ROLE_RETAILER') %}
+                                href="{{ path('RetailerTickets') }}"
+                            {% else %}
+                                href="{{ path('MasterTickets') }}"
+                            {% endif %}
+                       >
+                        <i class="icon-comment">
+
+                            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
+                                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
+                            </span>
+                                {% endif %}
+
+                            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
+                                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
+                            </span>
+                                {% endif %}
+
+                            {% else %}
+                                {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
+                                    <span>
+                                {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
+                            </span>
+                                {% endif %}
+                            {% endif %}
+                        </i>
+                    </a>
+                </li>
+
+                <li class="dropdown">
+
+                    <a href="#" id="user_info" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <i class="icon-user"></i>
+							<span id="user_title_menu">{{ app.user.username }}
+                                <b class="caret"></b>
+                            </span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li id="user_icon_menu"><a>{{ app.user.username }}</a></li>
+                        <li id="user_icon_menu" class="divider"></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'Setting' | trans ({}, "common") }}</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+
+
+        </div>
+        <!-- /container -->
+
+    </div>
+    <!-- /navbar-inner -->
+
+</div>
+<!-- /navbar -->
+
+<!-- MenuBar
+        ================================================== -->
+<div class="MenuBar" id="MenuBar1">
+    <div class="menubar_inner" id="menubar_inner1">
+        <div class="container">
+            <div class="menubar_items">
+                <ul class="menubar_main" id="menubar_main1">
+                    {% block Main_Menu %}{% endblock %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Site Map
+        ================================================== -->
+
+
+<!-- Body
+        ================================================== -->
+
+<div style="font-weight: bold; line-height: 200%; font-size: 16px">
+    {% if app.session.flashbag.peek('error')|length > 0 %}
+        <div style="background-color:#ffc7c4; color:#ef130a"><div class="container">
+            {% for message in app.session.flashbag.get('error') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+    {% if app.session.flashbag.peek('success')|length > 0 %}
+        <div style="background-color:#b4ecb0; color:#05a31f"><div class="container">
+            {% for message in app.session.flashbag.get('success') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+    {% if app.session.flashbag.peek('warning')|length > 0 %}
+        <div style="background-color:#ffe4b5; color:#dd8600"><div class="container">
+            {% for message in app.session.flashbag.get('warning') %}
+                <div class="message-row"><span style="margin-right: 10px;cursor: pointer" onclick="$(this).parent().slideUp()">×</span>{{ message }}</div>
+            {% endfor %}
+        </div></div>
+    {% endif %}
+</div>
+
+<div class="main print">
+    <div class="pagetop first" style="display: block;position: relative;z-index: 10;width:100%">
+        <div class="sitemappath">
+            <div class="container">
+                {% block Site_Map %}{% endblock %}
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="pagetitle">
+                {% block PageTitle %}{% endblock %}
+            </div>
+
+
+            {% block Dist1 %}
+
+            {% endblock %}
+
+
+        </div>
+
+
+        {% if hornav is defined %}
+            <div class="tabbar">
+                <div class="container">
+                    <ul class="hornav">
+                        {% block Tabs %}{% endblock %}
+                    </ul>
+                </div>
+            </div>
+
+                {% if hornav2 is defined %}
+
+            <div class="container">
+                <div class="pagetitle">
+                    {% block PageTitle2 %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="tabbar">
+
+                        <div class="container Tab2">
+                            <ul class="hornav Tab2">
+                                {% block Tabs2 %}{% endblock %}
+                            </ul>
+                        </div>
+            </div>
+                {% endif %}
+        {% endif %}
+
+
+
+
+    </div>
+    <div class="pagetop second" style="background: none;display: block;position: absolute;z-index: 11;width:100%">
+        <div class="container">
+            {% block Dist2 %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <div class="row {% if hornav is not defined %}bordertop{% endif %} print">
+        <div class="container print">
+            {% block Body %}{% endblock %}
+        </div>
+    </div>
+
+</div>
+
+
+<div class="footer">
+
+
+    <div id="footer-copyright" class="span6">
+        &copy; 2013-4 yAs UI.
+    </div>
+    <!-- /span6 -->
+
+    <div id="footer-terms" class="span6">
+        Programing by <a href="http://pnsadeghy.ir" target="_blank">Pnsadeghy</a>
+    </div>
+    <!-- /.span6 -->
+
+
+    <!-- /container -->
+
+</div>
+<!-- /footer -->
+
+
+<!-- Le javascript
+        ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<!-- New Ticket Code -->
+<div id="myModal0123" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <h3 id="myModalLabel">New Ticket</h3>
+    </div>
+    <form class="form-horizontal"
+            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                action="{{ path('RetailerTicketsNew') }}"
+            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                action="{{ path('DistTicketsNew') }}"
+            {% endif %}
+          method="POST">
+
+        <div class="modal-body">
+
+
+            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' %}
+                {#{{ render(controller('HelloDiDiDistributorsBundle:Retailers:ticketsnew')) }}#}
+                {#{% include "HelloDiDiDistributorsBundle:Retailers:TicketNew.html.twig" %}#}
+            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' %}
+                {#{{ render(controller('HelloDiDiDistributorsBundle:Distributors:ticketsnew')) }}#}
+                {#{% include "HelloDiDiDistributorsBundle:Retailers:Distributors.html.twig" %}#}
+            {% endif %}
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" class="btn btn-primary" value="Send">
+        </div>
+    </form>
+</div>
+
+
+<script src="{{ asset('bundles/hellodi/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+
+
+<script src="{{ asset('bundles/hellodi/js/libs/bootstrap.min.js') }}"></script>
+
+
+
+{% block Link_Footer %}{% endblock %}
+
+<script src="{{ asset('bundles/hellodi/js/Application.js') }}"></script>
+<script type="text/javascript">
+    {% block Alert_Color %}{% endblock %}
+    {% block Noti_Color %}{% endblock %}
+</script>
+
+<script type="text/javascript">
+
+    var open = 0 ;
+    var header = "" ;
+    var headerClose = "{{ 'Close_Search'|trans({},'js') }}" ;
+    var widthMain = 0 ;
+    var showD = 0 ;
+
+    function Form_Search(close,title){
+        header = title ;
+        open = close ;
+
+        if (open == 0 ) // want be close
+        {
+            $(".SearchForm").hide();
+            $('.title_search').html(header);
+            $('#search_logo').attr('class', 'icon-search');
+        }
+        else
+        {
+            $('.title_search').html(headerClose);
+            $('#search_logo').attr('class', 'icon-remove');
+        }
+    }
+
+
+
+    function FixRightDetail()
+    {
+
+        var x = $('.ShowDetailPopUp').width() ;
+
+        if(500 >= widthMain)
+        {
+            x = '5px' ;
+        }
+        else
+        {
+            var x = widthMain - x ;
+            x = x/2.5;
+        }
+
+        $('.ShowDetailPopUp').css('right',x);
+    }
+
+    function CloseDetail()
+    {
+        var preElement = $('td.td-actions > #show');
+        if(preElement != null)
+        {
+            $(preElement).removeAttr("id");
+            $(preElement).removeAttr("up");
+            $('.ShowDetailPopUp',preElement).fadeOut();
+            $('.ShowDetailPopUp',preElement).remove();
+        }
+    }
+
+    function CloseDetail2()
+    {
+        showD = 1 ;
+    }
+
+    $(function () {
+
+        widthMain = $(window).width();
+
+        $('.datepicker1 input').removeAttr('id');
+        $('.datepicker1 input').attr('id', 'pickdate1');
+        $('.datepicker2 input').removeAttr('id');
+        $('.datepicker2 input').attr('id', 'pickdate2');
+        $('.datepicker3 input').removeAttr('id');
+        $('.datepicker3 input').attr('id', 'pickdate3');
+        $('.datepicker4 input').removeAttr('id');
+        $('.datepicker4 input').attr('id', 'pickdate4');
+
+        $('#pickdate1').datepicker({ dateFormat: 'yy/mm/dd' });
+        $('#pickdate2').datepicker({ dateFormat: 'yy/mm/dd' });
+        $('#pickdate3').datepicker({ dateFormat: 'yy/mm/dd' });
+        $('#pickdate4').datepicker({ dateFormat: 'yy/mm/dd' });
+        //$('#pickdate2').disable();
+
+        // Search Form
+        $('.TitleShow1').click(function () {
+            $('.SearchForm').slideToggle();
+            $('#search_logo').removeAttr('class');
+
+            if (open == 0) {
+                $('.title_search').html(headerClose);
+                $('#search_logo').attr('class', 'icon-remove');
+                open = 1 ;
+            }
+            else {
+                open = 0 ;
+                $('.title_search').html(header);
+                $('#search_logo').attr('class', 'icon-search');
+            }
+
+            var x = $('.form_search').offset().top - 20;
+            $('body,html').animate({
+                scrollTop: x
+            }, 800);
+        });
+
+        $('#element').tooltip({placement:'bottom'});
+
+
+
+
+        $('* .showDetails').click(function(){
+            if($(this).attr("id") != "show")
+            {
+                CloseDetail();
+                $(this).attr("id","show") ;
+                $(this).attr("up","1") ;
+                $(this).append('<div class="ShowDetailPopUp" id="ShowDetailPopUp" up="1" ></div>');
+                var x = '<div class="closeD" ><span onclick="CloseDetail2();" >x</span></div>';
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+x+$('span',this).html()+'</form>');
+                FixRightDetail();
+                $('.ShowDetailPopUp *').attr('up','1');
+                $('.ShowDetailPopUp',this).fadeIn();
+                showD = 0 ;
+            }
+            else
+            {
+                if(showD == 1)
+                {
+                    CloseDetail();
+                }
+
+            }
+        });
+
+        $('body').click(function(event) {
+            var obj=$(event.target);
+            //obj=obj['context'];// context : clicked element inside body
+            var element = $('div.ShowDetailPopUp');
+            if ( $(obj).attr('up')!="1" && element != null )
+            {
+                CloseDetail();
+            }
+        });
+
+
+
+        /*$('* .showDetails').hover(function(){
+            //$('.ShowDetailPopUp',this).remove();
+            //$(this).stop();
+            if($(this).attr("id") != "show")
+            {
+
+                $(this).attr("id","show") ;
+                $(this).append('<div class="ShowDetailPopUp"></div>');
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
+                var x = widthMain - $(this).offset().left ;
+                var y = $('.ShowDetailPopUp').width();
+                if(x + y > widthMain)
+                {
+                    x = '5%' ;
+                }
+                $('.ShowDetailPopUp').css('right',x);
+                $('.ShowDetailPopUp',this).fadeIn();
+            }
+        },function(){
+            if($(this).attr("id") == "show")
+            {
+                $(this).removeAttr("id");
+                $('.ShowDetailPopUp',this).fadeOut();
+                $('.ShowDetailPopUp',this).remove();
+            }
+        });*/
+
+        $('* .showDetailsAjax').click(function(){
+            //$('.ShowDetailPopUp',this).remove();
+            //$(this).stop();
+            if($(this).attr("id") != "show")
+            {
+                $(this).attr("id","show") ;
+                $(this).append('<div class="ShowDetailPopUp"></div>');
+                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
+                $('.ShowDetailPopUp',this).addClass('ShowLoader');
+                $('.ShowDetailPopUp',this).fadeIn();
+
+                var path = $('b',this).attr('id') ;
+                var idtran = $('b',this).attr('class') ;
+
+                $.post(path,{tranid: idtran },function(result){
+                    $('.ShowDetailPopUp',this).fadeOut('fast');
+                    $('.ShowDetailPopUp',this).removeClass('ShowLoader');
+                    $('.ShowDetailPopUp',this).html(result);
+                    $('.ShowDetailPopUp',this).fadeIn('fast');
+                })
+            }
+        });
+
+        $(window).resize(function(){
+            widthMain = $(window).width();
+            FixRightDetail();
+        });
+    });
+
+
+
+
+</script>
+
+
+</body>
+</html>

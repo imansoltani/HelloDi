@@ -1,21 +1,11 @@
 app_master:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/master.yml"
-    prefix:   /app/m
 
 app_Distributors:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/distributors.yml"
-    prefix:   /app/d
 
 app_Retailers:
     resource: "@HelloDiDiDistributorsBundle/Resources/config/routing/retailers.yml"
-    prefix:   /app/r
-
-
-hellodi_homepage:
-    path: /{locale}
-    defaults: { _controller: HelloDiDiDistributorsBundle:Default:index,locale:en}
-    requirements:
-        locale: en|fr|de
 
 transactions_ogone_template:
     path:   /ogone-template

@@ -1,3 +1,3 @@
 hello_di_distributor_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: HelloDiDistributorBundle:Default:index }
+    pattern:  /
+    defaults: { _controller: HelloDiDistributorBundle:Default:dashboard }

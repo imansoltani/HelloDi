@@ -1,0 +1,61 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'CreateProviderWithEntity' | trans ({}, "menu") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-check"></i>{{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'CreateProviderWithEntity' | trans ({}, "menu") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/more/prov.entity.form.js') }}"></script>
+{% endblock %}
+
+{% set MU = 'prov' %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <form method="post" class="form-horizontal form-step">
+                <fieldset>
+                    <div id="wizard" class="swMain">
+                        <ul class="anchor">
+                            <li><a id="step1" rel="1" isdone="1" class="selected" onclick="go(1)">
+                                    <label style="cursor:default" class="stepNumber">1</label>
+                                    <span class="stepDesc">{{ 'Entity' | trans ({}, "entity") }}<br></span>
+                                </a></li>
+                            <li><a id="step2" rel="2" isdone="0" class="disabled" onclick="go(2)">
+                                    <label style="cursor:default" class="stepNumber">2</label>
+                                    <span class="stepDesc">{{ 'Address' | trans ({}, "entity") }}<br></span>
+                                </a></li>
+                            <li><a id="step3" rel="3" isdone="0" class="disabled" onclick="go(3)">
+                                    <label style="cursor:default" class="stepNumber">3</label>
+                                    <span class="stepDesc">{{ 'Account' | trans ({}, "accounts") }}<br></span>
+                                </a></li>
+                        </ul>
+
+                        <div class="stepContainer">
+                            {% block steps %}{% endblock %}
+                        </div>
+
+                        <div class="form-actions" style="margin-bottom: 0">
+                            <a class="btn btn-primary buttonPrevious" onclick="Prev()"
+                               style="display: none">{{ 'Previous' | trans ({}, "common") }}</a>
+                            <a class="btn btn-primary buttonNext"
+                               onclick="Next()"> {{ 'Next' | trans ({}, "common") }}</a>
+                            <a class="btn btn-success finalsubmit" onclick="Done()"
+                               style="display: none">{{ 'Create' | trans ({}, "common") }}</a>
+                            <a class="btn"
+                               href="{{ path('hello_di_master_provider_index') }}">{{ 'Cancel' | trans ({}, "common") }}</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <input type="hidden" class="step_number" value="1"/>
+{% endblock Body %}

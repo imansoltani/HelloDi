@@ -1,0 +1,67 @@
+{% extends 'HelloDiCoreBundle::Main.html.twig' %}
+
+{% block Main_Menu %}
+    <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
+        <a href="{{ path('hello_di_distributor_homepage') }}">
+            <i class="icon-home"></i>
+            <span id="user_pc_menu">{{ 'Home' | trans ({}, "menu") }}</span>
+        </a>
+    </li>
+    <li class=" {% if MU == 'retail' %}active{% endif %} dropdown">
+        <a href="{{ path('retailer_show') }}" class="dropdown-toggle">
+            <i class="icon-briefcase"></i>
+            <span id="user_pc_menu">{{ 'Retailers' | trans ({}, "accounts") }}</span>
+        </a>
+    </li>
+    <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
+        <a href="{{ path('items_show') }}" class="dropdown-toggle">
+            <i class="icon-tags"></i>
+            <span id="user_pc_menu">{{ 'Items' | trans ({}, "item") }}</span>
+        </a>
+    </li>
+    <li class=" {% if MU == 'trans' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-file"></i>
+            <span id="user_pc_menu">{{ 'Transactions' | trans ({}, "transaction") }}</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('DistTransaction') }}">{{ 'History' | trans ({}, "transaction") }}</a></li>
+            {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+                <li>
+                    <a href="{{ path('distributor_transactions_new') }}">{{ 'Recharge' | trans ({}, "transaction") }}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </li>
+    <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-list-alt"></i>
+            <span id="user_pc_menu">{{ 'Reports' | trans ({}, "transaction") }}</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('DistSale') }}">{{ 'Sales' | trans ({}, "code") }}</a></li>
+        </ul>
+    </li>
+    {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+        <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-wrench"></i>
+                <span id="user_pc_menu">{{ 'AccountSetting' | trans ({}, "accounts") }}</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('DistProfile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
+                <li><a href="{{ path('DistStaff') }}">{{ 'Stuff' | trans ({}, "user") }}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+    <li class=" {% if MU == 'support' %}active{% endif %} dropdown">
+        <a href="{{ path('DistTicketsNew') }}" class="dropdown-toggle">
+            <i class="icon-plus-sign"></i>
+            <span id="user_pc_menu">{{ 'Support' | trans ({}, "accounts") }}</span>
+        </a>
+    </li>
+{% endblock Main_Menu %}
+

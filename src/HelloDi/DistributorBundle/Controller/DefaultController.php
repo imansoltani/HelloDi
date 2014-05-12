@@ -1,13 +1,20 @@
 <?php
-
 namespace HelloDi\DistributorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function dashboardAction()
     {
-        return $this->render('HelloDiDistributorBundle:Default:index.html.twig', array('name' => $name));
+        $em = $this->getDoctrine()->getManager();
+
+        $Notifications = $em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array(
+            'Account' => $this->getUser()->getAccount()
+        ));
+
+        return $this->render('HelloDiDistributorBundle::dashboard.html.twig', array(
+            'Notifications' => $Notifications
+        ));
     }
 }

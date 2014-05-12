@@ -8,7 +8,7 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\AccountingBundle\Entity\Transfer;
-use HelloDi\DiDistributorsBundle\Entity\User;
+use HelloDi\CoreBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**

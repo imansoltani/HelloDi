@@ -43,11 +43,6 @@ class User extends BaseUser
     private $language;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $status;
-
-    /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="user")
      */
     private $inputs;
@@ -216,29 +211,6 @@ class User extends BaseUser
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * Set status
-     *
-     * @param boolean $status
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return boolean
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
