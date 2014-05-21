@@ -5,10 +5,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="operator")
+ * @ORM\HasLifecycleCallbacks()
+ * @Unique\UniqueEntity(fields="carrierCode", message="This_operator_carrier_code_already_exist")
  */
 class Operator
 {
@@ -30,9 +33,9 @@ class Operator
     private $carrierCode;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=True, name="logo")
+     * @ORM\Column(type="string", length=45, nullable=true, name="logo_extension")
      */
-    private $logo;
+    private $logoExtension;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Item", mappedBy="operator")
@@ -40,6 +43,7 @@ class Operator
     private $item;
 
     /**
+     * @var UploadedFile
      * @Assert\File(maxSize="6000000")
      */
     private $file;
@@ -109,26 +113,26 @@ class Operator
     }
 
     /**
-     * Set logo
+     * Set logoExtension
      *
-     * @param string $logo
+     * @param string $logoExtension
      * @return Operator
      */
-    public function setLogo($logo)
+    public function setLogoExtension($logoExtension)
     {
-        $this->logo = $logo;
+        $this->logoExtension = $logoExtension;
 
         return $this;
     }
 
     /**
-     * Get logo
+     * Get logoExtension
      *
      * @return string
      */
-    public function getLogo()
+    public function getLogoExtension()
     {
-        return $this->logo;
+        return $this->logoExtension;
     }
 
     /**
@@ -172,6 +176,10 @@ class Operator
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+
+        if (null !== $this->file) {
+            $this->logoExtension .= "?";
+        }
     }
 
     /**
@@ -189,7 +197,7 @@ class Operator
      */
     public function getAbsolutePath()
     {
-        return null === $this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
+        return null === rtrim($this->logoExtension,'?') ? null : $this->getUploadRootDir() . '/' . $this->id."." . rtrim($this->logoExtension,'?');
     }
 
     /**
@@ -197,7 +205,7 @@ class Operator
      */
     public function getWebPath()
     {
-        return $this->getUploadDir() . '/' . (null === $this->logo ? "0.png" : $this->logo);
+        return $this->getUploadDir() . '/' . (null === $this->logoExtension ? "0.png" : $this->id.".".$this->logoExtension);
     }
 
     /**
@@ -217,24 +225,45 @@ class Operator
     }
 
     /**
-     * Upload
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function preUpload()
+    {
+        if ($this->file === null)
+            return;
+
+        if ($this->id && file_exists($this->getAbsolutePath()))
+            unlink($this->getAbsolutePath());
+
+        $this->logoExtension = $this->file->getClientOriginalExtension();
+    }
+
+    /**
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
      */
     public function upload()
     {
         if ($this->file === null)
             return;
 
-        if (file_exists($this->getAbsolutePath()))
-            unlink($this->getAbsolutePath());
-
-        $this->getFile()->move(
+        $this->file->move(
             $this->getUploadRootDir(),
-            $this->id . '.' . $this->getFile()->getClientOriginalExtension()
+            $this->id . '.' . $this->file->getClientOriginalExtension()
         );
 
-        $this->logo = $this->id . '.' . $this->getFile()->getClientOriginalExtension();
-
         $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeFile()
+    {
+        if (file_exists($this->getAbsolutePath())) {
+            unlink($this->getAbsolutePath());
+        }
     }
 
     /**

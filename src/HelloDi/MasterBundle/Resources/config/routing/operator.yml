@@ -1,0 +1,11 @@
+hello_di_master_operator_index:
+    pattern:  /
+    defaults: { _controller: "HelloDiMasterBundle:Operator:index" }
+
+hello_di_master_operator_add:
+    pattern:  /add
+    defaults: { _controller: "HelloDiMasterBundle:Operator:add" }
+
+hello_di_master_operator_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Operator:edit" }

@@ -367,14 +367,10 @@ form .control-group .controls > .controls{
 
 }
 
-form .control-group .controls.money > .controls{
-    margin-left: 0px;
-}
-
-form .control-group .controls.money span{
+.icon-certificate{
     color: #ff0000;
     font-size: 12px;
-    margin-top: 10px;
+    float: left;
     margin-left: 5px;
 }
 
@@ -1140,7 +1136,7 @@ body .main .container.Ticket:hover ,body .main .container.Ticket:active{
 
 
 .tablediv table.table tr td.td-actions div.ShowDetailPopUp.ShowLoader {
-    background: url("../img/ajax-loader.gif") no-repeat center center;
+    /*background: url("../img/ajax-loader.gif") no-repeat center center;*/
     background-size: 40px 40px;
     min-width: 50px;
     min-height: 50px;
@@ -1356,4 +1352,28 @@ background: rgb(252, 252, 252);
 
     border-top: solid thin #c7c8e7 ;
     margin-bottom: 0;
+}
+
+.form-horizontal .choice_expanded .control-label
+{
+    float: none;
+    display: inline;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+button.btn {
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 480px) {
+    .icon-certificate{
+        float: none;
+    }
+    label{
+        display: inline-block;
+    }
+    .form-horizontal .choice_expanded * {
+        width: auto !important;
+    }
 }

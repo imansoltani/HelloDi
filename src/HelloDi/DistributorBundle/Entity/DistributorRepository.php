@@ -13,7 +13,7 @@ class DistributorRepository extends EntityRepository
      * @param $id
      * @return Distributor|null
      */
-    public function getByAccountId($id)
+    public function findByAccountId($id)
     {
         return $this->createQueryBuilder('this')
             ->innerJoin('this.account', 'account')

@@ -13,7 +13,7 @@ class ApiRepository extends EntityRepository
      * @param $id
      * @return Api|null
      */
-    public function getByAccountId($id)
+    public function findByAccountId($id)
     {
         return $this->createQueryBuilder('this')
             ->innerJoin('this.account', 'account')

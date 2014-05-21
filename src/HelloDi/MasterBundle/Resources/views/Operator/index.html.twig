@@ -1,0 +1,65 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Operators' | trans ({}, "operator") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-align-justify"></i>{{ 'Operators' | trans ({}, "operator") }}{% endblock %}
+
+{% set MU = 'operator' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Operator' | trans ({}, "operator") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <a class=" btn btn-primary btn-large" href="{{ path('hello_di_master_operator_add') }}">
+                {{ 'AddOperator' | trans ({}, "operator") }}
+            </a>
+            <div style="margin-top: 5px" class="tablediv">
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "operator") }}</th>
+                            <th>{{ 'Name' | trans ({}, "operator") }}</th>
+                            <th>{{ 'Logo' | trans ({}, "operator") }}</th>
+                            <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        </tr>
+                        <tr class="input" >
+                            <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                            <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                            <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                            <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for operator in operators %}
+                            <tr>
+                                <td >{{ operator.id }}</td>
+                                <td>{{ operator.NameCarrier }}</td>
+                                <td><img src="{{ asset(operator.webPath) }}" style="width: 50px;height: 50px" /></td>
+                                <td class="td-actions" >
+                                    <a class="btn_actions" href="{{ path('hello_di_master_operator_edit',{'id':operator.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

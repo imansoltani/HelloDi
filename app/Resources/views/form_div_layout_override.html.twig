@@ -3,9 +3,9 @@
 {% block form_row %}
     {% spaceless %}
         <div class="control-group">
-            {{ form_label(form) }}
-            <div class="controls {% if required %}money {% endif %}">
-                {{ form_widget(form) }}{% if required %}<span class="icon-certificate" ></span>{% endif %}
+            {{ form_label(form) }}{% if required %}<span class="icon-certificate" ></span>{% endif %}
+            <div class="controls">
+                {{ form_widget(form) }}
             </div>
             {{ form_errors(form) }}
         </div>
@@ -13,19 +13,67 @@
 {% endblock form_row %}
 
 {% block form_label %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
+    {{ parent() }}
+{% endblock form_label %}
+
+{% block choice_widget_expanded %}
     {% spaceless %}
-        {% if label is not sameas(false) %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
-            {% if not compound %}
-                {% set label_attr = label_attr|merge({'for': id}) %}
+        <span class="choice_expanded" {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <div>
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                </div>
+            {% endfor %}
+        </span>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block form_widget_compound %}
+    {% spaceless %}
+        <div>
+            {% if form.parent is empty %}
+                {{ form_errors(form) }}
             {% endif %}
-            {% if required %}
-                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-            {% endif %}
-            {% if label is empty %}
-                {% set label = name|humanize %}
-            {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+            {{ block('form_rows') }}
+            {{ form_rest(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_widget_compound %}
+
+{% block form_start %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-horizontal')|trim}) %}
+    {{ parent() }}
+{% endblock form_start %}
+
+{% block button_widget %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
+    {{ parent() }}
+{% endblock button_widget %}
+
+{% block submit_widget %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn-primary')|trim}) %}
+    {{ parent() }}
+{% endblock submit_widget %}
+
+{% block button_attributes %}
+    {% spaceless %}
+        id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif %}
+        {% for attrname, attrvalue in attr %}
+            {% if attrvalue != 'first-button' and attrvalue != 'last-button'%} {{ attrname }}="{{ attrvalue }}"{% endif %}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock button_attributes %}
+
+{% block button_row %}
+    {% spaceless %}
+        {% if 'first-button' in attr %}
+            <div class="form-actions">
+        {% endif %}
+            {{ form_widget(form) }}
+        {% if 'last-button' in attr %}
+            </div>
         {% endif %}
     {% endspaceless %}
-{% endblock form_label %}
+{% endblock button_row %}

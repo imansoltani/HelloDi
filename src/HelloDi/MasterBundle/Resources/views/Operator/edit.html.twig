@@ -1,0 +1,34 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}Edit Operator{% endblock title %}
+
+{% block PageTitle %}<i class="icon-align-justify"></i>{{ 'EditOperator' | trans ({}, "operator") }}{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_operator_index') }}">{{ 'Operator' | trans ({}, "operator") }}</a>
+    <span class="link">{{ 'EditOperator' | trans ({}, "operator") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% set MU = 'operator' %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            {{ form_start(edit_form) }}
+                {{ form_row(edit_form.name) }}
+                {{ form_row(edit_form.file,{'required':''}) }}
+                <div class="control-group">
+                    <div class="controls">
+                        <img src="{{ asset(operator.webPath) }}" style="max-width: 200px">
+                    </div>
+                </div>
+                {{ form_row(edit_form.carrierCode) }}
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+{% endblock %}

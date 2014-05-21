@@ -29,6 +29,7 @@ twig:
     globals:
         CalcVatFormula: "@CalcVatFormula"
         NotificationHandler:   "@notification_handler"
+        ItemTypes: { DMTU: 'dmtu', IMTU: 'imtu', CLCD: 'clcd', EPMT: 'epmt' }
     form:
         resources:
             - '::form_div_layout_override.html.twig'

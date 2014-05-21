@@ -4,13 +4,26 @@ hello_di_master_provider_index:
 
 hello_di_master_provider_add:
     pattern:  /add
-    defaults: { _controller: "HelloDiMasterBundle:Provider:Add" }
-#
-##transactions--------------
-#MasterProvTransaction:
-#    pattern:  /{id}/transactions
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvTransaction" }
-#
+    defaults: { _controller: "HelloDiMasterBundle:Provider:add" }
+
+#transactions
+hello_di_master_provider_transaction:
+    pattern:  /{id}/transactions
+    defaults: { _controller: "HelloDiMasterBundle:Provider:transactions" }
+
+hello_di_master_provider_transaction_register:
+    pattern:  /{id}/transactions/register
+    defaults: { _controller: "HelloDiMasterBundle:Provider:transactionRegister" }
+
+hello_di_master_provider_transaction_transfer:
+    pattern:  /{id}/transactions/transfer
+    defaults: { _controller: "HelloDiMasterBundle:Provider:transactionTransfer" }
+
+#items
+hello_di_master_provider_items:
+    pattern:  /{id}/items
+    defaults: { _controller: "HelloDiMasterBundle:Provider:items" }
+
 #LoadActionProv:
 #    pattern:  /loadprov
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
@@ -18,10 +31,6 @@ hello_di_master_provider_add:
 #ProvTransfer:
 #    pattern:  /{id}/transactions/transfer
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ProvTransfer" }
-#
-#ProvRegister:
-#    pattern:  /{id}/transactions/register
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Provregister" }
 #
 #MasterProvTransactionDetails:
 #    pattern:  /{id}/transactions/{tranid}/details

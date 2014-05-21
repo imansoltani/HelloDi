@@ -181,7 +181,7 @@ class DefaultController extends Controller
 
         foreach($array as $transactionContainer)
         {
-            /** var TransactionContainer $transactionContainer */
+            /** @var TransactionContainer $transactionContainer */
             if($lastAccount && $lastAccount->getId() != $transactionContainer->getAccount()->getId())
             {
                 if($sum<0 && !$this->checkAvailableBalance(-$sum,$lastAccount))
@@ -203,7 +203,7 @@ class DefaultController extends Controller
 
         foreach($array as $transactionContainer)
         {
-            /** var TransactionContainer $transactionContainer */
+            /** @var TransactionContainer $transactionContainer */
             $this->createTransaction(
                 $transactionContainer->getAmount(),
                 $transactionContainer->getAccount(),

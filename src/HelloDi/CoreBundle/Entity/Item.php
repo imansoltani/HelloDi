@@ -4,13 +4,20 @@ namespace HelloDi\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use HelloDi\PricingBundle\Entity\Price;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="item")
+ * @Unique\UniqueEntity(fields="code", message="This_item_code_already_exist")
  */
 class Item
 {
+    const DMTU = 'dmtu';
+    const IMTU = 'imtu';
+    const CLCD = 'clcd';
+    const EPMT = 'epmt';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")

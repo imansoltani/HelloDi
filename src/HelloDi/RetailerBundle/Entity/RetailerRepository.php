@@ -13,7 +13,7 @@ class RetailerRepository extends EntityRepository
      * @param $id
      * @return Retailer|null
      */
-    public function getByAccountId($id)
+    public function findByAccountId($id)
     {
         return $this->createQueryBuilder('this')
             ->innerJoin('this.account', 'account')

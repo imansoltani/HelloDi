@@ -23,49 +23,44 @@
 {% endblock %}
 
 {% block Body %}
-    <div class="span">
-        <div class="widget stacked ">
-            <div class="widget-content">
-                <a class="button btn btn-primary btn-large" href="{{ path('hello_di_master_provider_add') }}">
-                    {{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}
-                </a>
-                <div style="margin-top: 5px" class="tablediv">
-                    <form method="post">
-                        <div class="tab-content datatable">
-                            <table id="example" class="table postsend">
-                                <thead>
-                                <tr>
-                                    <th>{{ 'Id' | trans ({}, "common") }}</th>
-                                    <th>{{ 'Name' | trans ({}, "common") }}</th>
-                                    <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
-                                    <th>{{ 'Entity' | trans ({}, "entity") }}</th>
-                                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
-
-                                </tr>
-                                <tr class="input" >
-                                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                                    <td><input type="text" name="search_Balance" value="Search Balance" class="search_init" /></td>
-                                    <td><input type="text" disabled="" name="search_Entity_Name" value="Search Entity Name" class="search_init" /></td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for provider in providers %}
-                                    <tr>
-                                        <td style="font-weight: bold">{{ provider.id }}</td>
-                                        <td>{{ provider.account.name }}</td>
-                                        <td>{{ provider.account.balance }}|{{ provider.currency }}</td>
-                                        <td>{{ provider.account.entity.name }}</td>
-                                        <td class="td-actions">
-                                            <a class="btn_actions" href="{{ path('MasterProvTransaction',{'id':provider.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
+    <div class="widget stacked ">
+        <div class="widget-content">
+            <a class="button btn btn-primary btn-large" href="{{ path('hello_di_master_provider_add') }}">
+                {{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}
+            </a>
+            <div style="margin-top: 5px" class="tablediv">
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "common") }}</th>
+                            <th>{{ 'Name' | trans ({}, "common") }}</th>
+                            <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'Entity' | trans ({}, "entity") }}</th>
+                            <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        </tr>
+                        <tr class="input" >
+                            <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
+                            <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                            <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
+                            <td><input type="text" name="search_Balance" value="Search Balance" class="search_init" /></td>
+                            <td><input type="text" disabled="" name="search_Entity_Name" value="Search Entity Name" class="search_init" /></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for provider in providers %}
+                            <tr>
+                                <td style="font-weight: bold">{{ provider.id }}</td>
+                                <td>{{ provider.account.name }}</td>
+                                <td>{{ provider.account.balance }}|{{ provider.currency }}</td>
+                                <td>{{ provider.account.entity.name }}</td>
+                                <td class="td-actions">
+                                    <a class="btn_actions" href="{{ path('hello_di_master_provider_transaction',{'id':provider.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

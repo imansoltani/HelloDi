@@ -1,0 +1,25 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Operators' | trans ({}, "operator") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-align-justify"></i>{{ 'AddOperator' | trans ({}, "operator") }}{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_operator_index') }}">{{ 'Operator' | trans ({}, "operator") }}</a>
+    <span class="link">{{ 'AddOperator' | trans ({}, "operator") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href="{{ asset('bundles/hellodi/css/smart_wizard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% set MU = 'operator' %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}
