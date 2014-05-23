@@ -79,7 +79,7 @@ class Item
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\ItemDesc", mappedBy="item")
      */
-    private $itemDescriptions;
+    private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="item")
@@ -109,7 +109,7 @@ class Item
     {
         $this->codes = new ArrayCollection();
         $this->inputs = new ArrayCollection();
-        $this->itemDescriptions = new ArrayCollection();
+        $this->descriptions = new ArrayCollection();
         $this->prices = new ArrayCollection();
         $this->b2bLogs = new ArrayCollection();
         $this->denominations = new ArrayCollection();
@@ -376,36 +376,36 @@ class Item
     }
 
     /**
-     * Add itemDescriptions
+     * Add descriptions
      *
-     * @param ItemDesc $itemDescriptions
+     * @param ItemDesc $descriptions
      * @return Item
      */
-    public function addItemDescription(ItemDesc $itemDescriptions)
+    public function addDescription(ItemDesc $descriptions)
     {
-        $this->itemDescriptions[] = $itemDescriptions;
+        $this->descriptions[] = $descriptions;
 
         return $this;
     }
 
     /**
-     * Remove itemDescriptions
+     * Remove descriptions
      *
-     * @param ItemDesc $itemDescriptions
+     * @param ItemDesc $descriptions
      */
-    public function removeItemDescription(ItemDesc $itemDescriptions)
+    public function removeDescription(ItemDesc $descriptions)
     {
-        $this->itemDescriptions->removeElement($itemDescriptions);
+        $this->descriptions->removeElement($descriptions);
     }
 
     /**
-     * Get itemDescriptions
+     * Get descriptions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItemDescriptions()
+    public function getDescriptions()
     {
-        return $this->itemDescriptions;
+        return $this->descriptions;
     }
 
     /**

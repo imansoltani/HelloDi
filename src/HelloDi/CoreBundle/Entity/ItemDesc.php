@@ -17,17 +17,17 @@ class ItemDesc
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=false, name="desc_desc")
+     * @ORM\Column(type="text", nullable=false, name="description")
      */
-    private $descDesc;
+    private $description;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=false, name="desc_lang")
+     * @ORM\Column(type="string", length=2, nullable=false, name="language")
      */
-    private $descLang;
+    private $language;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="itemDescriptions")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="descriptions")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     private $item;
@@ -43,49 +43,49 @@ class ItemDesc
     }
 
     /**
-     * Set descDesc
+     * Set description
      *
-     * @param string $descDesc
+     * @param string $description
      * @return ItemDesc
      */
-    public function setDescDesc($descDesc)
+    public function setDescription($description)
     {
-        $this->descDesc = $descDesc;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get descDesc
+     * Get description
      *
      * @return string
      */
-    public function getDescDesc()
+    public function getDescription()
     {
-        return $this->descDesc;
+        return $this->description;
     }
 
     /**
-     * Set descLang
+     * Set language
      *
-     * @param string $descLang
+     * @param string $language
      * @return ItemDesc
      */
-    public function setDescLang($descLang)
+    public function setLanguage($language)
     {
-        $this->descLang = $descLang;
+        $this->language = $language;
 
         return $this;
     }
 
     /**
-     * Get descLang
+     * Get language
      *
      * @return string
      */
-    public function getDescLang()
+    public function getLanguage()
     {
-        return $this->descLang;
+        return $this->language;
     }
 
     /**
