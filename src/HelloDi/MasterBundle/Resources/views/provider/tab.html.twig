@@ -14,31 +14,26 @@
             <input type="submit" value="{{ 'Transactions' | trans ({}, "transaction") }}"/>
         </a>
     </li>
-
     <li {% if tab == '1' %}class="active"{% endif %}  >
         <a href="{{ path('hello_di_master_provider_items',{id:account.id}) }}">
             <input type="submit" value="{{ 'Items' | trans ({}, "item") }}"/>
         </a>
     </li>
-
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a href="{{ path('ManageInputsProv',{id:account.id}) }}">
             <input type="submit" value="{{ 'Inputs' | trans ({}, "code") }}"/>
         </a>
     </li>
-
     <li {% if tab == '6' %}class="active"{% endif %} >
         <a href="{{ path('MasterProvRemoved',{id:account.id}) }}">
             <input type="submit" value="{{ 'Removed' | trans ({}, "transaction") }}"/>
         </a>
     </li>
-
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a href="{{ path('EditAccountProv',{'id':account.id }) }}">
             <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}">
         </a>
     </li>
-
     <li {% if tab == '7' %}class="active"{% endif %} >
         <a href="{{ path('MasterProvEntiti',{'id':account.id }) }}">
             <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}">
@@ -47,13 +42,11 @@
 {% endblock Tabs %}
 
 {% block Body %}
-    <div class="span">
-        <div class="widget stacked">
-            <div class="widget-content">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="Info">
-                        {% block Tab %}{% endblock Tab %}
-                    </div>
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Info">
+                    {% block Tab %}{% endblock Tab %}
                 </div>
             </div>
         </div>

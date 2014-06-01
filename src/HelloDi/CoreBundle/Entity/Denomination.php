@@ -2,10 +2,12 @@
 namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="denomination")
+ * @Unique\UniqueEntity(fields={"currency","item"}, message="currency is duplicate.")
  */
 class Denomination
 {

@@ -9,3 +9,7 @@ hello_di_master_provider:
 hello_di_master_operator:
     resource: "@HelloDiMasterBundle/Resources/config/routing/operator.yml"
     prefix:   /operator
+
+hello_di_master_item:
+    resource: "@HelloDiMasterBundle/Resources/config/routing/item.yml"
+    prefix:   /item

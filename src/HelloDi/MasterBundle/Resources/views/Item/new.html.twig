@@ -1,0 +1,74 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'AddItem' | trans ({}, "item") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-tags"></i><span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_index') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'AddItem' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu.css') }}' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% set MU = 'item' %}
+
+{% block Body %}
+        <div class="widget stacked">
+            <div class="widget-content">
+                <div class="widget-header">
+                    <h3>{{ 'Info' | trans ({}, "item") }}</h3>
+                </div>
+
+                {{ form(form) }}
+
+                <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
+                <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
+                <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/more/editor.js') }}"></script>
+                <script type="text/javascript">
+                    function refreshItemCode() {
+                        var code_input = $("#"+"{{ form.code.vars.id }}");
+                        var code_refresh = code_input.next('.div_refresh_button');
+
+                        var item__name = $("#"+"{{ form.name.vars.id }}").val();
+                        var item__type = $("#"+"{{ form.type.vars.id }}").val();
+                        var operator__id = $("#"+"{{ form.operator.vars.id }}").val();
+                        var country__id = $("#"+"{{ form.country.vars.id }}").val();
+
+                        if(country__id != "" && item__type != "" && operator__id != "" && item__name != "") {
+                            code_refresh.addClass('refresh');
+                            $.ajax({
+                                type: "post",
+                                url: "{{ path("hello_di_master_item_generate_item_code") }}",
+                                data: {
+                                    country_id: country__id,
+                                    item_type: item__type,
+                                    operator_id: operator__id,
+                                    item_name: item__name
+                                },
+                                cache: false,
+                                success: function(result) {
+                                    code_refresh.removeClass('refresh');
+                                    code_input.val(result);
+                                }
+                            });
+                        }
+                    }
+
+                    function changeItemTypes(type) {
+                        if(type == 'imtu') {
+                            $('.jHtmlArea .notIMTU').hide();
+                            $('.jHtmlArea .IMTU').show();
+                        } else {
+                            $('.jHtmlArea .notIMTU').show();
+                            $('.jHtmlArea .IMTU').hide();
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+{% endblock %}

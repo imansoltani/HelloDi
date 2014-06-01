@@ -1,0 +1,74 @@
+{% extends 'HelloDiMasterBundle:item:tab.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block title %}{{ 'Items' | trans ({}, "item") }}{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_index') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Descriptions' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Descriptions' | trans ({}, "item") }}</h3>
+    </div>
+
+    <br/>
+    <a class=" btn btn-primary btn-large" href="{{ path('hello_di_master_item_desc_new',{'id':item.id}) }}">
+        {{ 'AddItemDescription' | trans ({}, "item") }}
+    </a>
+
+    <div style="margin-top: 5px" class="tablediv">
+        <div class="contenttitle">
+            <h4>{{ 'Descriptions' | trans ({}, "item") }}</h4>
+        </div>
+
+        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+            <thead>
+            <tr>
+                <th>{{ 'Id' | trans ({}, "item") }}</th>
+                <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                <th>{{ 'Language' | trans ({}, "item") }}</th>
+                <th style="width:7.2cm !important;">{{ 'Sample' | trans ({}, "item") }} ({{ 'Pin' | trans ({}, "code") }}:1234, {{ 'SerialNumber' | trans ({}, "item") }}:4321, {{ 'DateExpiry' | trans ({}, "item") }}:2012/12/12)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for description in descriptions %}
+                <tr>
+                    <td>{{ description.id }}</td>
+                    <td class="td-actions" >
+                        <a class="btn_actions" href="{{ path('hello_di_master_item_desc_edit',{'id':item.id,'desc_id':description.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
+                        <a class="btn_actions" href="{{ path('hello_di_master_item_desc_print',{'id':item.id,'desc_id': description.id}) }}" target="_blank">Print Sample</a>
+                    </td>
+                    <td>{{ description.language }}</td>
+                    <td>
+                        {{ include(template_from_string(description.description),{
+                            "pin":12345678,
+                            "serial":87654321,
+                            "expire":"2012/12/12",
+                            "print_date":"2013/13/13",
+                            "duplicate":"duplicate",
+                            "entity_name":'Entity Name',
+                            "operator":'Operator Name',
+                            "tran_id":12345678,
+                            "receiver_number": "+19876543210",
+                            "value_sent": "2",
+                            "value_paid": "2",
+                            "entity_address1":'Address Line 1',
+                            "entity_address2":'Address Line 2',
+                            "entity_address3":'Address Line 3'
+                        }) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+

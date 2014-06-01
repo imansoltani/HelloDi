@@ -15,65 +15,59 @@
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-
     <![endif]-->
     <style>
-        .item
-        {
+        .item {
             width: 8.2cm;
             margin: auto;
             page-break-after: always;
             border-bottom: 1px dashed #000000;
         }
-        @media print
-        {
-            @page
-            {
+        @media print {
+            @page {
                 margin: 0.5cm;
             }
-            body>*
-            {
+            body>* {
                 display: none !important;
             }
-            .print
-            {
+            .print {
                 display: block !important;
             }
-            .item
-            {
+            .item {
                 border-bottom: none;
             }
         }
     </style>
 </head>
+
 <body onafterprint="$('.duplicate').html('Duplicate Print Code');">
+
 {% if print == 'web' %}
 <div id="notPrint" style="text-align: center;margin: 20px">
-    <a type="button" class="btn" href="#" onclick="window.print();$('.duplicate').html('Duplicate Print Code');">Print</a>
-    <a type="button" class="btn" href="{{ path('item_desc_print',{'id':itemid,'descid': descid,'print':'pdf'}) }}">Print As PDF</a>
-    <a href="#" onclick="window.close()" class="btn">Close</a>
+    <a type="button" class="btn" onclick="window.print();$('.duplicate').html('Duplicate Print Code');">Print</a>
+    <a type="button" class="btn" href="{{ path('hello_di_master_item_desc_print',{'id':item_id,'desc_id': desc_id,'print':'pdf'}) }}">Print As PDF</a>
+    <a type="button" class="btn" onclick="window.close()">Close</a>
 </div>
 {% endif %}
+
 <div class="print">
     {% for tran in trans %}
-
         <div class="item">
-
                 {{ include(template_from_string(description),{
                     "pin":tran['pin'],
                     "serial":tran['serial'],
                     "expire":tran['expire'],
-                    "printdate":tran['printdate'],
+                    "print_date":tran['print_date'],
                     "duplicate": duplicateText,
-                    "entityname":tran['entityname'],
+                    "entity_name":tran['entity_name'],
                     "operator":tran['operator'],
-                    "entityadrs1":tran['entityadrs1'],
-                    "entityadrs2":tran['entityadrs2'],
-                    "entityadrs3":tran['entityadrs3']
+                    "entity_address1":tran['entity_address1'],
+                    "entity_address2":tran['entity_address2'],
+                    "entity_address3":tran['entity_address3']
                 }) }}
-
         </div>
     {% endfor %}
 </div>
+
 </body>
 </html>

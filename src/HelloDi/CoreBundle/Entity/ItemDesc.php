@@ -2,10 +2,15 @@
 namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="item_desc")
+ * @Assert\Callback(methods={"isDescriptionValid"})
+ * @Unique\UniqueEntity(fields={"language","item"}, message="language is duplicate.")
  */
 class ItemDesc
 {
@@ -109,5 +114,54 @@ class ItemDesc
     public function getItem()
     {
         return $this->item;
+    }
+
+    public function isDescriptionValid(ExecutionContextInterface $context)
+    {
+        $tags = $this->getItem()->getType() == "imtu" ?
+            array("tran_id", "receiver_number", "print_date") :
+            array("pin", "serial", "expire", "duplicate", "print_date")
+        ;
+
+        foreach ($tags as $tag)
+        {
+            $find = strpos($this->getDescription(),"{{".$tag."}}");
+            if(!$find)
+                $context->addViolationAt('description', '%item%_not_exist', array('item'=>$tag));
+        }
+
+        $twig = new \Twig_Environment(new \Twig_Loader_String());
+        try{
+            if($this->getItem()->getType() == "imtu")
+                $twig->render($this->getDescription(),array(
+                        "print_date"=>"2013/13/13",
+                        "entity_name"=>'Entity Name',
+                        "operator"=>'Operator Name',
+                        "entity_address1"=>'Address Line 1',
+                        "entity_address2"=>'Address Line 2',
+                        "entity_address3"=>'Address Line 3',
+                        "tran_id"=>'1234',
+                        "receiver_number"=>'+12345678',
+                        "value_sent"=>'1 CHF',
+                        "value_paid"=>'2 USD',
+                    ));
+            else
+                $twig->render($this->getItem()->getType(),array(
+                        "pin"=>1234,
+                        "serial"=>4321,
+                        "expire"=>"2012/12/12",
+                        "print_date"=>"2013/13/13",
+                        "duplicate"=>"duplicate",
+                        "entity_name"=>'Entity Name',
+                        "operator"=>'Operator Name',
+                        "entity_address1"=>'Address Line 1',
+                        "entity_address2"=>'Address Line 2',
+                        "entity_address3"=>'Address Line 3'
+                    ));
+        }catch (\Exception $e){
+            $context->addViolationAt('description', 'You_entered_an_invalid', array());
+            return;
+        }
+        return;
     }
 }

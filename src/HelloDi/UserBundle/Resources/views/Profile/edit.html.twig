@@ -17,12 +17,12 @@
 
 {% block Site_Map %}
     <a class="link" href="
-{% if is_granted('ROLE_RETAILER') %}
-    {{ path('retailers_dashboard') }}
+{% if is_granted('ROLE_MASTER') %}
+    {{ path('hello_di_master_homepage') }}
 {% elseif is_granted('ROLE_DISTRIBUTOR') %}
-    {{ path('distributors_dashboard') }}
-{% elseif is_granted('ROLE_MASTER') %}
-    {{ path('loginsuccess') }}
+    {{ path('hello_di_distributor_homepage') }}
+{% elseif is_granted('ROLE_RETAILER') %}
+    {{ path('hello_di_retailer_homepage') }}
 {% endif %}
     ">{{ 'Home'|trans({},'menu') }}</a>
     <span class="link"> {{ 'Profile'|trans({},'user') }}</span>

@@ -1,0 +1,46 @@
+hello_di_master_item_index:
+    pattern:  /
+    defaults: { _controller: "HelloDiMasterBundle:Item:index" }
+
+hello_di_master_item_add:
+    pattern:  /add
+    defaults: { _controller: "HelloDiMasterBundle:Item:new" }
+
+hello_di_master_item_generate_item_code:
+    pattern:  /generate_item_code
+    defaults: { _controller: "HelloDiMasterBundle:Item:generateItemCode" }
+    requirements: { _method: post }
+
+hello_di_master_item_details:
+    pattern:  /{id}/details
+    defaults: { _controller: "HelloDiMasterBundle:Item:details" }
+
+hello_di_master_item_edit:
+    pattern:  /{id}/details/edit
+    defaults: { _controller: "HelloDiMasterBundle:Item:edit" }
+
+hello_di_master_item_per_dist:
+    pattern:  /{id}/item-per-distributors
+    defaults: { _controller: "HelloDiMasterBundle:Item:itemPerDist" }
+
+#description
+hello_di_master_item_desc_index:
+    pattern:  /{id}/descriptions
+    defaults: { _controller: "HelloDiMasterBundle:Item:descIndex" }
+
+hello_di_master_item_desc_new:
+    pattern:  /{id}/descriptions/new
+    defaults: { _controller: "HelloDiMasterBundle:Item:descNew" }
+
+hello_di_master_item_desc_edit:
+    pattern:  /{id}/descriptions/{desc_id}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Item:descEdit" }
+
+hello_di_master_item_desc_print:
+    pattern:  /{id}/descriptions/{desc_id}/printsample/{print}
+    defaults: { _controller: "HelloDiMasterBundle:Item:descPrint" , print: 'web' }
+
+#denomination
+hello_di_master_item_denomination:
+    pattern:  /{id}/denominations
+    defaults: { _controller: "HelloDiMasterBundle:Item:denominationIndex" }

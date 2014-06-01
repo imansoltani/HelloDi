@@ -17,3 +17,5 @@ printdate_not_exist: Print Date not exist in description.
 duplicate_not_exist: Duplicate not exist in description.
 tranid_not_exist: Transaction ID not exist in description.
 recievernumber_not_exist: Reciever Number not exist in description.
+
+%item%_not_exist: item not exist in description.

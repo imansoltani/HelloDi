@@ -1,18 +1,21 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Controller;
+namespace HelloDi\MasterBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use HelloDi\DiDistributorsBundle\Entity\ItemDesc;
-use HelloDi\DiDistributorsBundle\Entity\Price;
-use HelloDi\DiDistributorsBundle\Entity\PriceHistory;
-use HelloDi\DiDistributorsBundle\Form\DenominationType;
-use HelloDi\DiDistributorsBundle\Form\ItemDescType;
+use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\CoreBundle\Entity\Denomination;
+use HelloDi\CoreBundle\Entity\ItemDesc;
+use HelloDi\MasterBundle\Form\ItemDenominationType;
+use HelloDi\MasterBundle\Form\ItemType;
+use HelloDi\PricingBundle\Entity\Price;
+use HelloDi\MasterBundle\Form\DenominationType;
+use HelloDi\MasterBundle\Form\ItemDescType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use HelloDi\DiDistributorsBundle\Entity\Item;
-use HelloDi\DiDistributorsBundle\Form\ItemType;
+use HelloDi\CoreBundle\Entity\Item;
 use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
@@ -23,63 +26,87 @@ class ItemController extends Controller
 
         $items = $em->createQueryBuilder()
             ->select("item",'code')
-            ->from("HelloDiDiDistributorsBundle:Item","item")
-            ->LeftJoin("item.Codes","code",'WITH',"code.status = 1")
+            ->from("HelloDiCoreBundle:Item","item")
+            ->LeftJoin("item.codes","code",'WITH',"code.status = 1")
             ->getQuery()
             ->getResult();
 
-        return $this->render('HelloDiDiDistributorsBundle:Item:index.html.twig', array(
+        return $this->render('HelloDiMasterBundle:item:index.html.twig', array(
             'items' => $items,
         ));
     }
 
     public function newAction(Request $request)
     {
-        $item  = new Item();
-        $itemdesc = new ItemDesc();
-        $itemdesc->setItem($item);
-        $item->addItemDesc($itemdesc);
+        $item = new Item();
+        $item->setDateInsert(new \DateTime('now'));
+        $itemDesc = new ItemDesc();
+        $itemDesc->setItem($item);
+        $item->addDescription($itemDesc);
 
-        $form   = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item, array('cascade_validation' => true));
+        $form = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item, array(
+                'cascade_validation' => true,
+            ))
+            ->add('descriptions', 'collection', array('type' => new ItemDescType($this->container->getParameter('languages'))))
+            ->add('submit','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_item_index').'")','last-button')
+                ))
+        ;
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('post')) {
             $form->handleRequest($request);
-            $check = $this->checkDescription($itemdesc->getDescdesc(),$item->getItemType());
-            if($check !== true)
-            {
-                if($check == "invalid")
-                    $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
-                else
-                    $form->get('ItemDescs')->get(0)->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
-            }
-
             if ($form->isValid()) {
-                $item->setItemDateInsert(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($item);
-                $em->persist($itemdesc);
+                $em->persist($itemDesc);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('item'));
+                return $this->redirect($this->generateUrl('hello_di_master_item_index'));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Item:new.html.twig', array(
+
+        return $this->render('HelloDiMasterBundle:item:new.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
-    public function showAction($id)
+    public function generateItemCodeAction(Request $request)
+    {
+        try
+        {
+            $country_id = $request->get('country_id');
+            $item_type = $request->get('item_type');
+            $operator_id = $request->get('operator_id');
+            $item_name = $request->get('item_name');
+
+            $em = $this->getDoctrine()->getManager();
+
+            $country_code = $em->getRepository('HelloDiCoreBundle:Country')->find($country_id)->getIso();
+            $operator_name = $em->getRepository('HelloDiCoreBundle:Operator')->find($operator_id)->getName();
+            $item_code = $country_code.'/'.$item_type.'/'.$operator_name.'/'.str_replace(' ','_',$item_name);
+            return new Response($item_code);
+        }
+        catch(\Exception $e)
+        {
+            return new Response('');
+        }
+    }
+
+    public function detailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-
-        if (!$item) {
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
 
-        return $this->render('HelloDiDiDistributorsBundle:Item:show.html.twig', array(
-            'item'      => $item
+        return $this->render('HelloDiMasterBundle:item:details.html.twig', array(
+            'item' => $item
         ));
     }
 
@@ -87,54 +114,60 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-
-        if (!$item) {
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
 
-        $editForm = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item);
-        if ($request->isMethod('POST'))
+        $form = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item)
+            ->add('submit','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_item_details',array('id'=>$id)).'")','last-button')
+                ))
+        ;
+
+        if ($request->isMethod('post'))
         {
-            $editForm->handleRequest($request);
-            if ($editForm->isValid()) {
-                $em->persist($item);
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->forward("HelloDiDiDistributorsBundle:Item:show", array('id'=>$id));
+                return $this->redirect($this->generateUrl('hello_di_master_item_details',array('id' => $id)));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Item:edit.html.twig', array(
+
+        return $this->render('HelloDiMasterBundle:item:edit.html.twig', array(
             'item'      => $item,
-            'edit_form'   => $editForm->createView()
+            'form'   => $form->createView()
         ));
     }
 
-    public function ItemPerDistAction(Request $request, $id)
+    public function itemPerDistAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
+        $em = $this->getDoctrine()->getEntityManager();
 
-        if (!$item) {
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
 
         $qb = $em->createQueryBuilder()
             ->select("prc")
-            ->from("HelloDiDiDistributorsBundle:Price","prc")
-            ->innerJoin("prc.Account","acc")
-            ->where("acc.accType = 1")
-            ->where("prc.priceStatus = 1")
-            ->where("prc.Item = :itm")->setParameter("itm",$item)
+            ->from("HelloDiPricingBundle:Price","prc")
+            ->innerJoin("prc.account","acc")
+            ->where("acc.type = :acc_type")->setParameter('acc_type',Account::PROVIDER)
+            ->where("prc.item = :itm")->setParameter("itm",$item)
             ->getQuery();
         $haspriceforprov = (count($qb->getResult())>0);
 
         $prices = $em->createQueryBuilder()
-            ->select('DISTINCT p.priceCurrency')
-            ->from("HelloDiDiDistributorsBundle:Price","p")
-            ->join('p.Account','a')
-            ->where('p.Item = :item')->setParameter('item',$item)
-            ->andWhere('a.accType = 0')
+            ->select('DISTINCT a.currency')
+            ->from("HelloDiPricingBundle:Price","p")
+            ->join('p.account','a')
+            ->where('p.item = :item')->setParameter('item',$item)
+            ->andWhere('a.type = :acc_type')->setParameter('acc_type',Account::DISTRIBUTOR)
             ->getQuery()
             ->getResult();
 
@@ -223,7 +256,7 @@ class ItemController extends Controller
             }
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Item:ItemsPerDistributors.html.twig', array(
+        return $this->render('HelloDiMasterBundle:item:itemsPerDist.html.twig', array(
                 'form' => $form->createView(),
                 'itemid' => $id,
                 'item'      => $item,
@@ -231,264 +264,157 @@ class ItemController extends Controller
                 'prices' => $prices
             ));
     }
-    //item desc
 
+    //item desc
     public function descIndexAction($id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-
-        if (!$item) {
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
 
-        $itemdescs = $item->getItemDescs();
+        $descriptions = $item->getDescriptions();
 
-        return $this->render('HelloDiDiDistributorsBundle:Item:descindex.html.twig', array(
+        return $this->render('HelloDiMasterBundle:item:descIndex.html.twig', array(
                 'item'      => $item,
-                'itemdescs' => $itemdescs
+                'descriptions' => $descriptions
             ));
     }
 
-    public function descNewAction(Request $request,$id)
+    public function descNewAction(Request $request, $id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-        if (!$item) {
+
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
-        $desc = new ItemDesc();
-        $langs = $this->container->getParameter('languages');
+
+        $all_languages = $this->container->getParameter('languages');
         $qb = $em->createQueryBuilder()
-            ->select('DISTINCT u.desclang')
-            ->from('HelloDiDiDistributorsBundle:ItemDesc','u')
-            ->where('u.Item = :item')
-            ->setParameter('item',$item)
-            ->getQuery();
+            ->select('DISTINCT u.language')
+            ->from('HelloDiCoreBundle:ItemDesc','u')
+            ->where('u.item = :item')->setParameter('item',$item)
+            ->getQuery()->getResult();
+        $descriptions_languages = array();
+        foreach ($qb as $row)
+            $descriptions_languages[] = $row["language"];
+        $languages = array_diff($all_languages,$descriptions_languages);
 
-        $tt = $qb->getResult();
-        $mylang = array();
-        foreach ($tt as $t)
-            $mylang[] = $t["desclang"];
-        $selectlangs = array_diff($langs,$mylang);
-        $selectlangs = array_combine($selectlangs, $selectlangs);
-        $form = $this->createForm(new ItemDescType($selectlangs),$desc);
-        if ($request->isMethod('POST'))
-        {
+        $desc = new ItemDesc();
+        $desc->setItem($item);
+
+        $form = $this->createForm(new ItemDescType($languages), $desc)
+            ->add('submit','submit', array(
+                'label'=>'Add','translation_domain'=>'common',
+                'attr'=>array('first-button')
+            ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_item_desc_index',array('id' => $item->getId())).'")','last-button')
+                ))
+        ;
+
+        if ($request->isMethod('post')) {
             $form->handleRequest($request);
-            $check = $this->checkDescription($desc->getDescdesc(),$item->getItemType());
-            if($check !== true)
-            {
-                if($check == "invalid")
-                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
-                else
-                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
-            }
-            if ($form->isValid()) {
-                $finddesc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$item,'desclang'=>$desc->getDesclang()));
-                if($finddesc)
-                    $form->get('desclang')->addError(new FormError('language is duplicate.'));
-                else
-                {
-                    $desc->setItem($item);
-                    $em->persist($desc);
-                    $em->flush();
 
-                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                    return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
-                            'id' => $item->getId()
-                        ));
-                }
-            }
-        }
-        return $this->render('HelloDiDiDistributorsBundle:Item:descnew.html.twig', array(
-                'form' => $form->createView(),
-                'item' => $item
-            ));
-    }
-
-    public function descEditAction(Request $request,$descid)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $desc = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid);
-
-        if (!$desc) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Description',array(),'item')),'message'));
-        }
-
-        $desclang = $desc->getDesclang();
-        $langs = $this->container->getParameter('languages');
-        $langs = array_combine($langs, $langs);
-        $form = $this->createForm(new ItemDescType($langs),$desc);
-        if ($request->isMethod('POST'))
-        {
-            $form->handleRequest($request);
-            $desc->setDesclang($desclang);
-            $check = $this->checkDescription($desc->getDescdesc(),$desc->getItem()->getItemType());
-            if($check !== true)
-            {
-                if($check == "invalid")
-                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans('You_entered_an_invalid',array(),'message')));
-                else
-                    $form->get('descdesc')->addError(new FormError($this->get('translator')->trans($check,array(),'validators')));
-            }
             if ($form->isValid()) {
                 $em->persist($desc);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->forward('HelloDiDiDistributorsBundle:Item:descIndex', array(
-                        'id' => $desc->getItem()->getId()
-                    ));
+                return $this->redirect($this->generateUrl('hello_di_master_item_desc_index',array('id' => $id)));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Item:descedit.html.twig', array(
+
+        return $this->render('HelloDiMasterBundle:item:descNew.html.twig', array(
+                'form' => $form->createView(),
+                'item' => $item
+            ));
+    }
+
+    public function descEditAction(Request $request, $id, $desc_id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $desc = $em->getRepository('HelloDiCoreBundle:ItemDesc')->find($desc_id);
+        if (!$desc)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Description',array(),'item')),'message'));
+
+        $all_languages = $this->container->getParameter('languages');
+        $qb = $em->createQueryBuilder()
+            ->select('DISTINCT u.language')
+            ->from('HelloDiCoreBundle:ItemDesc','u')
+            ->where('u.item = :item')->setParameter('item',$desc->getItem())
+            ->andWhere('u != :this')->setParameter('this', $desc)
+            ->getQuery()->getResult();
+        $descriptions_languages = array();
+        foreach ($qb as $row)
+            $descriptions_languages[] = $row["language"];
+        $languages = array_diff($all_languages,$descriptions_languages);
+
+        $form = $this->createForm(new ItemDescType($languages), $desc)
+            ->add('submit','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_item_desc_index',array('id' => $id)).'")','last-button')
+                ))
+        ;
+
+        if ($request->isMethod('post'))
+        {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                return $this->redirect($this->generateUrl('hello_di_master_item_desc_index',array('id' => $id)));
+            }
+        }
+
+        return $this->render('HelloDiMasterBundle:item:descEdit.html.twig', array(
                 'form' => $form->createView(),
                 'item' => $desc->getItem(),
                 'itemdescid' => $desc->getId()
             ));
     }
 
-    private function checkDescription($desc,$itemType)
-    {
-        $tags = $itemType == "imtu" ?
-            array(
-                "tranid"=>'tranid_not_exist',
-                "recievernumber"=>'recievernumber_not_exist',
-                "printdate"=>'printdate_not_exist'
-            ) :
-            array(
-                "pin"=>'pin_not_exist',
-                "serial"=>'sn_not_exist',
-                "expire"=>'expiry_not_exist',
-                "duplicate"=>'duplicate_not_exist',
-                "printdate"=>'printdate_not_exist'
-            );
-
-        foreach ($tags as $tag=>$message)
-        {
-            $find = strpos($desc,"{{".$tag."}}");
-            if(!$find) return $message;
-        }
-
-        $twig = new \Twig_Environment(new \Twig_Loader_String());
-        try{
-            if($itemType == "imtu")
-                $twig->render($desc,array(
-                    "printdate"=>"2013/13/13",
-                    "entityname"=>'Entity Name',
-                    "operator"=>'Operator Name',
-                    "entityadrs1"=>'Address Line 1',
-                    "entityadrs2"=>'Address Line 2',
-                    "entityadrs3"=>'Address Line 3',
-                    "tranid"=>'1234',
-                    "recievernumber"=>'+12345678',
-                    "valuesent"=>'1 CHF',
-                    "valuepaid"=>'2 USD',
-                ));
-            else
-                $twig->render($desc,array(
-                    "pin"=>1234,
-                    "serial"=>4321,
-                    "expire"=>"2012/12/12",
-                    "printdate"=>"2013/13/13",
-                    "duplicate"=>"duplicate",
-                    "entityname"=>'Entity Name',
-                    "operator"=>'Operator Name',
-                    "entityadrs1"=>'Address Line 1',
-                    "entityadrs2"=>'Address Line 2',
-                    "entityadrs3"=>'Address Line 3'
-                ));
-        }catch (\Exception $e){
-            return "invalid";
-        }
-        return true;
-    }
-
-    //denomination
-    public function denominationIndexAction(Request $request,$id)
-    {
-        $accountCurrencies = $this->container->getParameter("Currencies.Account");
-
-        $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($id);
-        if (!$item) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-        }
-
-        $denominations = $item->getDenominations();
-
-        $form = $this->createFormBuilder(array("Denominations"=>$denominations),array('cascade_validation' => true))
-            ->add("Denominations", 'collection', array('type'=> new DenominationType(),'allow_add'=>true,'allow_delete'=>false))
-            ->getForm();
-
-        if($request->isMethod('post'))
-        {
-            $form->handleRequest($request);
-
-            $usedCurrencies = array();
-            $data = $form->getData();
-            foreach($data["Denominations"] as $key=>$denomination)
-            {
-                if(in_array(strtoupper($denomination->getCurrency()),$usedCurrencies))
-                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Denomination for this currency already exist."));
-                elseif (!in_array(strtoupper($denomination->getCurrency()),$accountCurrencies))
-                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Currency is no valid or not allowed."));
-                else
-                    $usedCurrencies[] = $denomination->getCurrency();
-            }
-
-            if($form->isValid())
-            {
-                foreach($data["Denominations"] as $denomination)
-                {
-                    $denomination->setCurrency(strtoupper($denomination->getCurrency()));
-                    $denomination->setItem($item);
-                    $em->persist($denomination);
-                }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-            }
-        }
-
-        return $this->render('HelloDiDiDistributorsBundle:Item:denominationindex.html.twig', array(
-                'item'      => $item,
-                'form'      =>$form->createView()
-            ));
-    }
-
-    //-------
-    public function PrintAction($print,$descid,$id)
+    public function descPrintAction($print ,$id ,$desc_id)
     {
         $em = $this->getDoctrine()->getManager();
-        $description = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->find($descid)->getDescdesc();
+        $description = $em->getRepository('HelloDiCoreBundle:ItemDesc')->find($desc_id)->getDescription();
 
         $trans = array();
-        for($i = 1;$i<=2;$i++)
-        {
+        for ($i = 1; $i <= 2; $i++) {
             $tran = array(
-                "pin" => '12345678'.$i,
-                "serial" => '87654321'.$i,
+                "pin" => '12345678' . $i,
+                "serial" => '87654321' . $i,
                 "expire" => "2012/12/12",
-                "printdate" => "2013/13/13",
-                "entityname" => 'Entity Name '.$i,
-                "operator" => 'Operator Name '.$i,
-                "entityadrs1" => 'Address Line 1 '.$i,
-                "entityadrs2" => 'Address Line 2 '.$i,
-                "entityadrs3" => 'Address Line 3 '.$i
+                "print_date" => "2013/13/13",
+                "entity_name" => 'Entity Name ' . $i,
+                "operator" => 'Operator Name ' . $i,
+                "entity_address1" => 'Address Line 1 ' . $i,
+                "entity_address2" => 'Address Line 2 ' . $i,
+                "entity_address3" => 'Address Line 3 ' . $i
             );
             $trans[] = $tran;
         }
 
-        $html = $this->render('HelloDiDiDistributorsBundle:Item:Print.html.twig',array(
-            'trans'=>$trans,
-            'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
-            'duplicate'=> false,
-            'print' => $print,
-            'descid' => $descid,
-            'itemid' => $id
-        ));
+        $html = $this->render('HelloDiMasterBundle:item:descPrint.html.twig',array(
+                'trans'=>$trans,
+                'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
+                'duplicate'=> false,
+                'print' => $print,
+                'desc_id' => $desc_id,
+                'item_id' => $id
+            ));
 
         if($print == 'web')
             return $html;
@@ -498,36 +424,69 @@ class ItemController extends Controller
                 200,
                 array(
                     'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'attachment; filename="Codes.pdf"'
+                    'Content-Disposition'   => 'attachment; filename="TestPrintCodes.pdf"'
                 )
             );
     }
 
-    public function CreateItemCodeAction(Request $request)
+    //denomination
+    public function denominationIndexAction(Request $request,$id)
     {
-        try
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
+        if (!$item)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
+
+        $currencies = $this->container->getParameter('currencies.account');
+
+        $form = $this->createForm(new ItemDenominationType($currencies), $item, array(
+                'cascade_validation' => true,
+            ))
+            ->add('submit','submit', array(
+                    'label' => 'Apply', 'translation_domain' => 'common',
+                    'attr' => array(
+                        'first-button', 'last-button',
+                        'onmousedown' => "removeLastRowIfEmpty()"
+                    )
+                ))
+        ;
+
+        if($request->isMethod('post'))
         {
-            $countryid = $request->get('countryid');
-            $itemtype = $request->get('itemtype');
-            $operatorid = $request->get('operatorid');
-            $itemname = $request->get('itemname');
+            $form->handleRequest($request);
+//            $accountCurrencies=$this->container->getParameter('currencies.account');
+//            $usedCurrencies = array();
+//            $data = $form->getData();
+//            foreach($data["Denominations"] as $key=>$denomination)
+//            {
+//                /** @var Denomination $denomination */
+//                if(in_array(strtoupper($denomination->getCurrency()),$usedCurrencies))
+//                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Denomination for this currency already exist."));
+//                elseif (!in_array(strtoupper($denomination->getCurrency()),$accountCurrencies))
+//                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Currency is no valid or not allowed."));
+//                else
+//                    $usedCurrencies[] = $denomination->getCurrency();
+//            }
 
-            $em = $this->getDoctrine()->getManager();
-
-            $countrycode = $em->getRepository('HelloDiDiDistributorsBundle:Country')->find($countryid)->getIso();
-            $operatorname = $em->getRepository('HelloDiDiDistributorsBundle:Operator')->find($operatorid)->getName();
-            $itemcode = $countrycode.'/'.$itemtype.'/'.$operatorname.'/'.str_replace(' ','_',$itemname);
-            return new Response($itemcode);
+            if($form->isValid())
+            {
+//                foreach($data["Denominations"] as $denomination)
+//                {
+//                    $denomination->setCurrency(strtoupper($denomination->getCurrency()));
+//                    $denomination->setItem($item);
+//                    $em->persist($denomination);
+//                }
+                $em->persist($item);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            }
         }
-        catch(\Exception $e)
-        {
-            return new Response('');
-        }
-    }
 
-    public function CreateTranId()
-    {
-        $userid = $this->getUser()->getId();
-        return "HD-".sprintf("%05s",$userid).'-'.(new \DateTime())->getTimestamp();
+        return $this->render('HelloDiMasterBundle:item:denominationIndex.html.twig', array(
+                'item'      => $item,
+                'form'      =>$form->createView()
+            ));
     }
 }

@@ -1,0 +1,45 @@
+{% extends 'HelloDiMasterBundle:item:tab.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block title %}{{ 'Items' | trans ({}, "item") }}{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_index') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_desc_index',{'id':item.id}) }}">{{ 'Descriptions' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'EditItemDescription' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu.css') }}' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'EditItemDescription' | trans ({}, "item") }}</h3>
+    </div>
+
+    {{ form(form) }}
+
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/more/editor.js') }}"></script>
+    <script type="text/javascript">
+        function changeItemTypes(type) {
+            if(type == 'imtu') {
+                $('.jHtmlArea .notIMTU').hide();
+                $('.jHtmlArea .IMTU').show();
+            } else {
+                $('.jHtmlArea .notIMTU').show();
+                $('.jHtmlArea .IMTU').hide();
+            }
+        }
+        $(document).ready(function() {
+            changeItemTypes('{{ item.type }}');
+        });
+    </script>
+{% endblock %}

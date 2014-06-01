@@ -10,6 +10,8 @@
       <w>inversed</w>
       <w>nullable</w>
       <w>ogone</w>
+      <w>onfocus</w>
+      <w>onmousedown</w>
       <w>paginator</w>
       <w>referer</w>
       <w>symfony</w>

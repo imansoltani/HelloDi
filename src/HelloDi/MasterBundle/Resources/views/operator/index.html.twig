@@ -39,10 +39,10 @@
                             <th>{{ 'Operation' | trans ({}, "common") }}</th>
                         </tr>
                         <tr class="input" >
-                            <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-                            <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                            <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                            <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                            <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,7 +51,7 @@
                                 <td >{{ operator.id }}</td>
                                 <td>{{ operator.NameCarrier }}</td>
                                 <td><img src="{{ asset(operator.webPath) }}" style="width: 50px;height: 50px" /></td>
-                                <td class="td-actions" >
+                                <td class="td-actions">
                                     <a class="btn_actions" href="{{ path('hello_di_master_operator_edit',{'id':operator.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                                 </td>
                             </tr>

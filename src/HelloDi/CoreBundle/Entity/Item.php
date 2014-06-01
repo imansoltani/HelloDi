@@ -92,7 +92,7 @@ class Item
     private $b2bLogs;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Denomination", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Denomination", mappedBy="item", cascade={"persist"})
      */
     private $denominations;
 
@@ -482,6 +482,7 @@ class Item
      */
     public function addDenomination(Denomination $denominations)
     {
+        $denominations->setItem($this);
         $this->denominations[] = $denominations;
 
         return $this;

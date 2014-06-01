@@ -1,0 +1,53 @@
+{% extends 'HelloDiMasterBundle:item:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block title %}{{ 'Items' | trans ({}, "item") }}{% endblock title %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_index') }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <a class="link" href="{{ path('hello_di_master_item_details',{'id':item.id}) }}">{{ 'Details' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Edit' | trans ({}, "common") }}</span>
+{% endblock Site_Map %}
+
+{% set MU = 'item' %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Details' | trans ({}, "item") }}</h3>
+    </div>
+
+    {{ form(form) }}
+
+    <script type="text/javascript">
+        function refreshItemCode() {
+            var code_input = $("#"+"{{ form.code.vars.id }}");
+            var code_refresh = code_input.next('.div_refresh_button');
+
+            var item__name = $("#"+"{{ form.name.vars.id }}").val();
+            var item__type = $("#"+"{{ form.type.vars.id }}").val();
+            var operator__id = $("#"+"{{ form.operator.vars.id }}").val();
+            var country__id = $("#"+"{{ form.country.vars.id }}").val();
+
+            if(country__id != "" && item__type != "" && operator__id != "" && item__name != "") {
+                code_refresh.addClass('refresh');
+                $.ajax({
+                    type: "post",
+                    url: "{{ path("hello_di_master_item_generate_item_code") }}",
+                    data: {
+                        country_id: country__id,
+                        item_type: item__type,
+                        operator_id: operator__id,
+                        item_name: item__name
+                    },
+                    cache: false,
+                    success: function(result) {
+                        code_refresh.removeClass('refresh');
+                        code_input.val(result);
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
