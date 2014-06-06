@@ -65,13 +65,13 @@
                                 <td>{{ item.faceValue }} {{ item.currency }}</td>
                                 <td>{{ item.code }}</td>
                                 <td>
-                                    {% if item.type == ItemTypes.DMTU %}
+                                    {% if item.type == constant("DMTU",item) %}
                                         {{ 'Mobile' | trans ({}, "item") }}
-                                    {% elseif item.type == ItemTypes.IMTU %}
+                                    {% elseif item.type == constant("IMTU",item) %}
                                         {{ 'IMTU' | trans ({}, "item") }}
-                                    {% elseif item.type == ItemTypes.CLCD %}
+                                    {% elseif item.type == constant("CLCD",item) %}
                                         {{ 'Calling_Card' | trans ({}, "item") }}
-                                    {% elseif item.type == ItemTypes.EPMT %}
+                                    {% elseif item.type == constant("EPMT",item) %}
                                         {{ 'E-payment' | trans ({}, "item") }}
                                     {% endif %}
                                 </td>

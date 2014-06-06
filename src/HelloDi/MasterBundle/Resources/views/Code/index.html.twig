@@ -1,0 +1,86 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Codes' | trans ({}, "code") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-list-alt"></i>{{ 'Codes' | trans ({}, "code") }}{% endblock %}
+
+{% set MU = 'code' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Codes' | trans ({}, "code") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript">
+        $(function(){
+            $('form').submit(function() {
+                $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+            });
+            Form_Search({{ codes|length == 0 ? '1' : '0' }},"{{ 'Search' | trans ({}, "common") }}");
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+        <div class="widget stacked ">
+            <div class="widget-content">
+
+                {% if codes is null %}
+                    <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':''}) }}">Last Search</a>
+                {% endif %}
+
+                <div class="form_search">
+                    <h5 style="cursor:pointer;" class="TitleShow1">
+                        <span>
+                            <i id="search_logo" class="icon-search"></i><p class="title_search"></p>
+                        </span>
+                    </h5>
+                    {{ form(form) }}
+                </div>
+
+                {% if codes is not null %}
+                <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a><br/><br/>
+                <div class="tablediv">
+                    <div class="contenttitle">
+                        <h4>{{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes|length }})</h4>
+                    </div>
+                    <div class="tab-content">
+                        <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Name' | trans ({}, "item") }}</th>
+                                <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                                <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                                <th>{{ 'Status' | trans ({}, "code") }}</th>
+                                <th>{{ 'Provider' | trans ({}, "accounts") }}</th>
+                                <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for code in codes %}
+                                    <tr>
+                                        <td>{{ code.item.name }}</td>
+                                        <td>{{ code.serialNumber }}</td>
+                                        <td>{{ code.input.dateExpiry|date('Y/m/d') }}</td>
+                                        <td>{% if code.status == 1 %}{{ 'Available' | trans ({}, "code") }}{% else %}{{ 'Unavailable' | trans ({}, "code") }}{% endif %}</td>
+                                        <td>{{ code.input.provider.account.name }}</td>
+                                        <td>
+                                            <a href="{{ path('hello_di_master_code_history',{'id':code.id}) }}" class="btn_actions">{{ 'History' | trans ({}, "code") }}</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr><td colspan="6" style="color: red;text-align: center">List is empty.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="navigation" style="text-align: center">
+                    {{ codes ? knp_pagination_render(codes) : "" }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+{% endblock %}
