@@ -1,9 +1,11 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Controller;
+namespace HelloDi\MasterBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Transaction;
-use HelloDi\DiDistributorsBundle\Form\CdSearchType;
+use HelloDi\CoreBundle\Entity\Code;
+use HelloDi\MasterBundle\Form\CodeSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,126 +14,137 @@ class CodeController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new CdSearchType());
-
-        $em = $this->getDoctrine()->getManager();
-
-        $first = 1;
-        $pagination = null;
-        $count = 0;
-
-        if($request->isMethod('GET') && $request->getSession()->has('codesearch'))
+        if($request->query->has('last_search'))
         {
-            $data = $request->getSession()->get('codesearch');
-            if($data['provider']!=null) $data['provider'] = $em->getRepository('HelloDiAccountingBundle:Account')->find($data['provider']);
-            if($data['item']!=null) $data['item'] = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($data['item']);
-            if($data['inputFileName']!=null) $data['inputFileName'] = $em->getRepository('HelloDiDiDistributorsBundle:Input')->find($data['inputFileName']);
-            $form->setData($data);
+            $parameters = $request->getSession()->get('code_search');
+            if($request->query->has('csv'))
+                $parameters ['csv'] = '';
+            return $this->redirect($this->generateUrl('hello_di_master_code_search',$parameters));
         }
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            $data = $form->getData();
-            $first = 0;
+        if($request->query->count()>0)
+            return $this->redirect($this->generateUrl('hello_di_master_code_search',$request->query->all()));
+
+        $form = $this->createForm(new CodeSearchType(), null, array(
+                'attr' => array('class' => 'SearchForm'),
+                'action' => $this->generateUrl('hello_di_master_code_search'),
+                'method' => 'get',
+            ))
+            ->add('submit','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        return $this->render('HelloDiMasterBundle:code:index.html.twig', array(
+                'form' => $form->createView(),
+                'codes' => null
+            ));
+    }
+
+    public function searchAction(Request $request)
+    {
+        $form = $this->createForm(new CodeSearchType(), null, array(
+                'attr' => array('class' => 'SearchForm'),
+                'method' => 'get',
+            ))
+            ->add('submit','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        $fields = $request->query->all();
+        unset($fields['last_search'], $fields['csv']);
+        $form->submit($fields);
+
+        $codes = array();
+
+        if($form->isValid())
+        {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+
+            $form_data = $form->getData();
 
             $qb = $em->createQueryBuilder()
                 ->select('code')
-                ->from('HelloDiDiDistributorsBundle:Code','code')
-                ->join('code.Input','input')
-                ->join('input.Account','account')
-                ->join('code.Item','item');
+                ->from('HelloDiCoreBundle:Code','code')
+                ->join('code.input','input')
+            ;
 
-            if($data['provider'] != null)
-                $qb = $qb->andWhere($qb->expr()->eq('account',intval($data['provider']->getId())));
+            if(isset($form_data['provider']))
+                $qb->andWhere('input.provider = :provider')->setParameter('provider', $form_data['provider']);
 
-            if($data['item']!=null)
-                $qb = $qb->andWhere($qb->expr()->eq('item',intval($data['item']->getId() )));
+            if(isset($form_data['item']))
+                $qb->andWhere('code.item = :item')->setParameter('item', $form_data['item']);
 
-            if($data['inputFileName']!=null)
-                $qb = $qb->andWhere($qb->expr()->eq('input',intval($data['inputFileName']->getId() )));
+            if(isset($form_data['input']))
+                $qb->andWhere('input = :input')->setParameter('input', $form_data['input']);
 
-            if($data['fromserial']!="")
-                $qb = $qb->andWhere('code.serialNumber >= :fromserial')->setParameter('fromserial', $data['fromserial']);
+            if(isset($form_data['fromSerialNumber']))
+                $qb->andWhere('code.serialNumber >= :from_serial')->setParameter('from_serial', $form_data['fromSerialNumber']);
 
-            if($data['toserial']!="")
-                $qb = $qb->andWhere('code.serialNumber <= :toserial')->setParameter('toserial', $data['toserial']);
+            if(isset($form_data['toSerialNumber']))
+                $qb->andWhere('code.serialNumber <= :to_serial')->setParameter('to_serial', $form_data['toSerialNumber']);
 
-            if($data['status']!='3')
-                $qb = $qb->andWhere('code.status = :status')->setParameter('status', $data['status']);
+            if(isset($form_data['status']))
+                $qb->andWhere('code.status = :status')->setParameter('status', $form_data['status']);
 
-            if($data['frominsertdate']!="")
-                $qb = $qb->andWhere("input.dateInsert >= :frominsertdate")->setParameter('frominsertdate', $data['frominsertdate']);
+            if(isset($form_data['fromInsertDate']))
+                $qb->andWhere("input.dateInsert >= :from_insert")->setParameter('from_insert', $form_data['fromInsertDate']);
 
-            if($data['toinsertdate']!="")
-                $qb = $qb->andWhere("input.dateInsert <= :toinsertdate")->setParameter('toinsertdate', $data['toinsertdate']);
+            if(isset($form_data['toInsertDate']))
+                $qb->andWhere("input.dateInsert <= :to_insert")->setParameter('to_insert', $form_data['toInsertDate']);
 
-            if($data['fromexpiredate']!="")
-                $qb = $qb->andWhere("input.dateExpiry >= :fromexpiredate")->setParameter('fromexpiredate', $data['fromexpiredate']);
+            if(isset($form_data['fromExpireDate']))
+                $qb->andWhere("input.dateExpiry >= :from_expire")->setParameter('from_expire', $form_data['fromExpireDate']);
 
-            if($data['toexpiredate']!="")
-                $qb = $qb->andWhere("input.dateExpiry <= :toexpiredate")->setParameter('toexpiredate', $data['toexpiredate']);
+            if(isset($form_data['toExpireDate']))
+                $qb->andWhere("input.dateExpiry <= :to_expire")->setParameter('to_expire', $form_data['toExpireDate']);
 
-            if($data['provider'] != null) $data['provider'] = $data['provider']->getId();
-            if($data['item']!=null) $data['item'] = $data['item']->getId();
-            if($data['inputFileName']!=null) $data['inputFileName'] = $data['inputFileName']->getId();
-            $request->getSession()->set('codesearch',$data);
+            $codes = $request->query->has('csv')
+                ?
+                $qb->getQuery()->getResult()
+                :
+                $this->get('knp_paginator')->paginate($qb, $request->get('page', 1), 20);
 
-            $count = count($qb->getQuery()->getResult());
-
-            $paginator = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $qb,
-                $request->get('page',1),
-                20,
-                array('distinct' => false)
-            );
+            $request->getSession()->set('code_search', $request->query->all());
         }
 
-        $csv= $request->get('csv', 0);
-
-        if($csv==1 && !$first)
-        {
-            $searchresult = $qb->getQuery()->getResult();
+        if($request->query->has('csv')) {
             $result = "";
-            for($i=0;$i<count($searchresult);$i++)
-            {
-                $row = $searchresult[$i];
+            /** @var Code[] $codes */
+            foreach ($codes as $code) {
                 $result .=
-                    $row->getSerialNumber().';'.
-                    $row->getInput()->getDateProduction()->format('Y/m/d').';'.
-                    $row->getInput()->getDateExpiry()->format('Y/m/d').";".
-                    rtrim($row->getPin());
-                if($i<count($searchresult)-1) $result .="\n";
+                    $code->getSerialNumber().';'.
+                    $code->getInput()->getDateProduction()->format('Y/m/d').';'.
+                    $code->getInput()->getDateExpiry()->format('Y/m/d').";".
+                    $code->getPin();
+                if(end($codes) !== $code) $result .= PHP_EOL;
             }
-
             return new Response($result,200,array(
-                        'Content-Type'          => 'text/csv',
-                        'Content-Disposition'   => 'attachment; filename="Codes.csv"'
-             ));
-        }
-        else
-        {
-            return $this->render('HelloDiDiDistributorsBundle:Code:index.html.twig', array(
-                'pagination' => $pagination,
-                'form' => $form->createView(),
-                'count' => $count,
-                'first' => $first
+                'Content-Type'          => 'text/csv',
+                'Content-Disposition'   => 'attachment; filename="Codes.csv"'
             ));
         }
+        else
+            return $this->render('HelloDiMasterBundle:code:index.html.twig', array(
+                    'form' => $form->createView(),
+                    'codes' => $codes
+                ));
     }
 
     public function historyAction($id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
-        if (!$code) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
-        }
-        $isremoved = ($em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'rmv'))==null ? false : true);
 
-        return $this->render('HelloDiDiDistributorsBundle:Code:history.html.twig', array(
+        $code = $em->getRepository('HelloDiCoreBundle:Code')->find($id);
+        if (!$code)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+
+        $removed = false;//($em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'rmv'))==null ? false : true);
+
+        return $this->render('HelloDiMasterBundle:code:history.html.twig', array(
             'code'=> $code,
-            'isremoved' => $isremoved
+            'removed' => $removed
         ));
     }
 
@@ -196,7 +209,7 @@ class CodeController extends Controller
         {
             try
             {
-                $user= $this->get('security.context')->getToken()->getUser();
+                $user= $this->getUser();
                 $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
                 $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
 
@@ -260,7 +273,7 @@ class CodeController extends Controller
         {
             try
             {
-                $user= $this->get('security.context')->getToken()->getUser();
+                $user= $this->getUser();
 
                 $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
                 $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));

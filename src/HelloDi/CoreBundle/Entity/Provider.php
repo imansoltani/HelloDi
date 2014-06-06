@@ -171,6 +171,14 @@ class Provider
     /**
      * @return string
      */
+    public function getName()
+    {
+        return $this->getAccount()->getName();
+    }
+
+    /**
+     * @return string
+     */
     public function getNameWithCurrency()
     {
         return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getCurrency() . ' )';

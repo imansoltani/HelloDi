@@ -338,7 +338,7 @@
     var widthMain = 0 ;
     var showD = 0 ;
 
-    function Form_Search(close,title){
+    function Form_Search(close,title) {
         header = title ;
         open = close ;
 
@@ -393,23 +393,9 @@
     }
 
     $(function () {
-
         widthMain = $(window).width();
 
-        $('.datepicker1 input').removeAttr('id');
-        $('.datepicker1 input').attr('id', 'pickdate1');
-        $('.datepicker2 input').removeAttr('id');
-        $('.datepicker2 input').attr('id', 'pickdate2');
-        $('.datepicker3 input').removeAttr('id');
-        $('.datepicker3 input').attr('id', 'pickdate3');
-        $('.datepicker4 input').removeAttr('id');
-        $('.datepicker4 input').attr('id', 'pickdate4');
-
-        $('#pickdate1').datepicker({ dateFormat: 'yy/mm/dd' });
-        $('#pickdate2').datepicker({ dateFormat: 'yy/mm/dd' });
-        $('#pickdate3').datepicker({ dateFormat: 'yy/mm/dd' });
-        $('#pickdate4').datepicker({ dateFormat: 'yy/mm/dd' });
-        //$('#pickdate2').disable();
+        $('.date_picker').datepicker({ dateFormat: 'yy-mm-dd' });
 
         // Search Form
         $('.TitleShow1').click(function () {
@@ -434,9 +420,6 @@
         });
 
         $('#element').tooltip({placement:'bottom'});
-
-
-
 
         $('* .showDetails').click(function(){
             if($(this).attr("id") != "show")
@@ -472,38 +455,7 @@
             }
         });
 
-
-
-        /*$('* .showDetails').hover(function(){
-            //$('.ShowDetailPopUp',this).remove();
-            //$(this).stop();
-            if($(this).attr("id") != "show")
-            {
-
-                $(this).attr("id","show") ;
-                $(this).append('<div class="ShowDetailPopUp"></div>');
-                $('.ShowDetailPopUp',this).html('<form method="post" class="form-horizontal">'+$('span',this).html()+'</form>');
-                var x = widthMain - $(this).offset().left ;
-                var y = $('.ShowDetailPopUp').width();
-                if(x + y > widthMain)
-                {
-                    x = '5%' ;
-                }
-                $('.ShowDetailPopUp').css('right',x);
-                $('.ShowDetailPopUp',this).fadeIn();
-            }
-        },function(){
-            if($(this).attr("id") == "show")
-            {
-                $(this).removeAttr("id");
-                $('.ShowDetailPopUp',this).fadeOut();
-                $('.ShowDetailPopUp',this).remove();
-            }
-        });*/
-
         $('* .showDetailsAjax').click(function(){
-            //$('.ShowDetailPopUp',this).remove();
-            //$(this).stop();
             if($(this).attr("id") != "show")
             {
                 $(this).attr("id","show") ;
@@ -530,11 +482,7 @@
         });
     });
 
-
-
-
 </script>
-
 
 </body>
 </html>

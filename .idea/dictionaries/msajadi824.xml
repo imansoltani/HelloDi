@@ -2,6 +2,7 @@
   <dictionary name="msajadi824">
     <words>
       <w>clcd</w>
+      <w>csrf</w>
       <w>dmtu</w>
       <w>dropdown</w>
       <w>epmt</w>
@@ -16,6 +17,7 @@
       <w>referer</w>
       <w>symfony</w>
       <w>textarea</w>
+      <w>yyyy</w>
     </words>
   </dictionary>
 </component>

@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Code
 {
+    const AVAILABLE = 1;
+    const UNAVAILABLE = 0;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
@@ -18,17 +21,17 @@ class Code
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=false, name="serial_number")
+     * @ORM\Column(type="bigint", nullable=false, name="serial_number")
      */
     private $serialNumber;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=false, name="pin")
+     * @ORM\Column(type="bigint", nullable=false, name="pin")
      */
     private $pin;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false, name="status")
+     * @ORM\Column(type="boolean", nullable=false, name="status")
      */
     private $status;
 

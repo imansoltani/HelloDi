@@ -101,3 +101,8 @@
         {% endif %}
     {% endspaceless %}
 {% endblock button_row %}
+
+{% block date_widget %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' date_picker')|trim}) %}
+    {{ parent() }}
+{% endblock date_widget %}

@@ -362,7 +362,7 @@ class ItemController extends Controller
                     'attr'=>array('first-button')
                 ))
             ->add('cancel','button',array(
-                    'label'=>'Update','translation_domain'=>'common',
+                    'label'=>'Cancel','translation_domain'=>'common',
                     'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_item_desc_index',array('id' => $id)).'")','last-button')
                 ))
         ;
