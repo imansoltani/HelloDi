@@ -1,0 +1,119 @@
+{% extends 'HelloDiMasterBundle:entity:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_entity_index') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <span class="link">{{ 'Accounts' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Accounts' | trans ({}, "accounts") }}</h3>
+    </div>
+
+    <br>
+    {% if retailers|length == 0 %}
+        {% if is_granted('ROLE_MASTER_ADMIN') %}
+            <a class="btn btn-primary" href="{{path('hello_di_master_entity_accounts_new_provider',{'id':entity.id})  }}">
+                {{'CreateANewProvider' | trans ({}, "accounts")}}
+            </a>
+        {% endif %}
+        <a class=" btn btn-primary" href="{{ path('hello_di_master_entity_accounts_new_distributor',{'id':entity.id}) }}">
+            {{'CreateANewDistributor' | trans ({}, "accounts")}}
+        </a>
+    {% endif %}
+
+    <div style="margin-top: 5px" class="tablediv">
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
+                <thead>
+                <tr>
+                    <th>{{'Id' | trans ({}, "common")}}</th>
+                    <th>{{'Name' | trans ({}, "common")}}</th>
+                    <th>{{'ChildNumber' | trans ({}, "accounts")}}</th>
+                    <th>{{'AccountType' | trans ({}, "accounts")}}</th>
+                    <th>{{'Balance' | trans ({}, "accounts")}}</th>
+                    <th>{{'CreditLimit' | trans ({}, "accounts")}}</th>
+                    <th>{{'Operation' | trans ({}, "common")}}</th>
+                </tr>
+                <tr class="input" >
+                    <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_ChildNumber" value="Search ChildNumber" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Type" value="Search Type" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for api in api_s %}
+                    <tr>
+                        <td>{{ api.account.id }}</td>
+                        <td>{{ api.account.name }}</td>
+                        <td>--</td>
+                        <td>API</td>
+                        <td>{{ api.account.balance }}|<b>{{ api.currency }}</b></td>
+                        <td>{{ api.account.creditLimitAmount }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="">{{'Manage' | trans ({}, "common")}}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for provider in providers %}
+                    <tr>
+                        <td>{{ provider.account.id }}</td>
+                        <td>{{ provider.account.name }}</td>
+                        <td>--</td>
+                        <td>Provider</td>
+                        <td>{{ provider.account.balance }}|<b>{{ provider.currency }}</b></td>
+                        <td>{{ provider.account.creditLimitAmount }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('MasterProvTransaction',{'id': provider.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for distributor in distributors %}
+                    <tr>
+                        <td>{{ distributor.account.id }}</td>
+                        <td>{{ distributor.account.name }}</td>
+                        <td>{{ distributor.retailers|length }}</td>
+                        <td>Distributor</td>
+                        <td>{{ distributor.account.balance }}|<b>{{ distributor.currency }}</b></td>
+                        <td>{{ distributor.account.creditLimitAmount }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('MasterDistTransaction',{'id': distributor.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for retailer in retailers %}
+                    <tr>
+                        <td>{{ retailer.account.id }}</td>
+                        <td>{{ retailer.account.name }}</td>
+                        <td>--</td>
+                        <td>Retailer</td>
+                        <td>{{ retailer.account.balance }}|<b>{{ retailer.distributor.currency }}</b></td>
+                        <td>{{ retailer.account.creditLimitAmount }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('Master_Retailer_Transaction',{'id': retailer.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Entities' | trans ({}, "entity") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-book"></i>{{ 'Entities' | trans ({}, "entity") }}{% endblock %}
+
+{% set MU = 'ent' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Entities' | trans ({}, "entity") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript">
+        $(function(){
+            $('form').submit(function() {
+                $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+            });
+            $(function () {Form_Search(0, "Search Entities");});
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                    <span>
+                        <i id="search_logo" class="icon-search"></i><p class="title_search"></p>
+                    </span>
+                </h5>
+                {{ form(form) }}
+            </div>
+
+            <div class="tablediv" >
+                <div class="contenttitle">
+                    <h4>{{ 'Entities'|trans({},"entity") }}</h4>
+                </div>
+                <div class="tab-content">
+                    <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "common") }}</th>
+                            <th>{{ 'Name' | trans ({}, "common") }}</th>
+                            <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                            <th>{{ 'City' | trans ({}, "entity") }}</th>
+                            <th>{{ 'CountAPIs' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'CountProviders' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'CountDistributors' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'CountRetailers' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity_row in entities %}
+                            <tr>
+                                <td style="font-weight: bold">{{ entity_row.entity.id }}</td>
+                                <td>{{ entity_row.entity.name }}</td>
+                                <td>{{ entity_row.entity.country.iso }}|{{ entity_row.entity.country.Name }}</td>
+                                <td>{{ entity_row.entity.city }}</td>
+                                <td>{{ entity_row.api_count }}</td>
+                                <td>{{ entity_row.provider_count }}</td>
+                                <td>{{ entity_row.distributor_count }}</td>
+                                <td>{{ entity_row.retailer_count }}</td>
+                                <td class="td-actions">
+                                    <a class="btn_actions" href="{{path('hello_di_master_entity_accounts_index', {'id':entity_row.entity.id})  }}" >{{ 'Manage' | trans ({}, "common") }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="navigation" style="text-align: center">
+                {{ knp_pagination_render(entities) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

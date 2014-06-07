@@ -1,0 +1,34 @@
+hello_di_master_entity_index:
+    pattern:  /
+    defaults: { _controller: "HelloDiMasterBundle:Entity:index" }
+
+#accounts
+hello_di_master_entity_accounts_index:
+    pattern:  /{id}/accounts
+    defaults: { _controller: "HelloDiMasterBundle:Entity:accounts" }
+
+hello_di_master_entity_accounts_new_provider:
+    pattern:  /{id}/accounts/new_provider
+    defaults: { _controller: "HelloDiMasterBundle:Entity:newProvider"}
+
+hello_di_master_entity_accounts_new_distributor:
+    pattern:  /{id}/accounts/new_distibutor
+    defaults: { _controller: "HelloDiMasterBundle:Entity:newDistributor"}
+
+#users
+hello_di_master_entity_users_index:
+    pattern:  /{id}/users
+    defaults: { _controller: "HelloDiMasterBundle:Entity:users" }
+
+hello_di_master_entity_users_add:
+    pattern:  /{id}/users/add
+    defaults: { _controller: "HelloDiMasterBundle:Entity:AddNewUserEntiti" }
+
+hello_di_master_entity_users_edit:
+    pattern:  /{id}/users/{userid}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Entity:EditUserEntities" }
+
+#info
+hello_di_master_entity_info:
+    pattern:  /{id}/info
+    defaults: { _controller: "HelloDiMasterBundle:Entity:info" }

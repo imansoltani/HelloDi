@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProviderAccountEntityUserType extends AbstractType
+class ProviderAccountUserType extends AbstractType
 {
     private $currencies;
     private $languages;
@@ -21,10 +21,9 @@ class ProviderAccountEntityUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('account',new AccountUserType($this->languages, Account::PROVIDER))
             ->add('timezone','timezone',array('label' => 'TimeZone','translation_domain' => 'accounts'))
             ->add('currency','choice',array('label' => 'Currency','translation_domain' => 'accounts','choices'=>$this->currencies))
-
-            ->add($builder->create('account',new AccountEntityUserType($this->languages, Account::PROVIDER)))
         ;
     }
 

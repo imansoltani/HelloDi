@@ -17,3 +17,7 @@ hello_di_master_item:
 hello_di_master_code:
     resource: "@HelloDiMasterBundle/Resources/config/routing/code.yml"
     prefix:   /code
+
+hello_di_master_entity:
+    resource: "@HelloDiMasterBundle/Resources/config/routing/entity.yml"
+    prefix:   /entity

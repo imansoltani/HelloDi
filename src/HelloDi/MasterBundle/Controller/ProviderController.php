@@ -6,7 +6,8 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Provider;
-use HelloDi\MasterBundle\Form\ProviderAccountEntityUserType;
+use HelloDi\MasterBundle\Form\EntityType;
+use HelloDi\MasterBundle\Form\ProviderAccountUserType;
 use HelloDi\MasterBundle\Form\TransactionType;
 use HelloDi\MasterBundle\Form\TransferType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,7 +43,8 @@ class ProviderController extends Controller
         $currencies = $this->container->getParameter('Currencies.Account');
         $languages = $this->container->getParameter('languages');
 
-        $form = $this->createForm(new ProviderAccountEntityUserType($currencies,$languages), $provider, array('cascade_validation' => true));
+        $form = $this->createForm(new ProviderAccountUserType($currencies,$languages), $provider, array('cascade_validation' => true));
+        $form->get('account')->add('entity',new EntityType());
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

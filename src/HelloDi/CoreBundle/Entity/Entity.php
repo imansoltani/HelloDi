@@ -85,7 +85,7 @@ class Entity
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="entities")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     private $country;
 

@@ -1,0 +1,40 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Entities' | trans ({}, "entity") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-book"></i>{{ entity.name }}{% endblock %}
+
+{% set MU = 'ent' %}
+
+{% set hornav = '38px' %}
+
+{% block Tabs %}
+    <li {% if tab == '1' %}class="active"{% endif %}  >
+        <a href="{{ path('hello_di_master_entity_accounts_index',{'id':entity.id}) }}">
+            <input type="submit" value="{{ 'Accounts' | trans ({}, "accounts") }}" >
+        </a>
+    </li>
+    <li {% if tab == '2' %}class="active"{% endif %} >
+        <a href="{{ path('hello_di_master_entity_users_index',{'id':entity.id}) }}">
+            <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
+        </a>
+    </li>
+    <li {% if tab == '4' %}class="active"{% endif %} >
+        <a href="{{ path('hello_di_master_entity_info',{'id':entity.id}) }}">
+            <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}" >
+        </a>
+    </li>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Info">
+                    {% block Tab %}
+                    {% endblock Tab %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock Body %}
