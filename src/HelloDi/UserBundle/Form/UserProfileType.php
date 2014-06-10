@@ -8,6 +8,11 @@ use HelloDi\UserBundle\Form\Type\ProfileFormType as BaseType;
 
 class UserProfileType extends BaseType
 {
+    public function __construct()
+    {
+        parent::__construct('HelloDi\CoreBundle\Entity\User');
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

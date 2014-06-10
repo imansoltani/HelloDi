@@ -1,17 +1,18 @@
 {% extends 'HelloDiMasterBundle:entity:tab.html.twig' %}
 
-{% set tab = '4' %}
+{% set tab = '2' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('hello_di_master_entity_index') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
-    <span class="link">{{ 'Info' | trans ({}, "common") }}</span>
+    <a class="link" href="{{ path('hello_di_master_entity_users_index',{'id':entity.id} ) }}">{{ 'Users' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
 {% block Tab %}
     <div class="widget-header">
-        <h3>{{ 'Info' | trans ({}, "entity") }}</h3>
-    </div>
+        <h3>{{ 'EditUser' | trans ({}, "user") }}</h3>
+    </div><br>
 
     {{ form(form) }}
 {% endblock %}

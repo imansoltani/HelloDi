@@ -17,19 +17,18 @@ use HelloDi\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
 class RegistrationFormType extends BaseType
 {
-    private $type;
+    private $accountType;
     private $languages;
 
     /**
-     * @param string $class
      * @param array $languages
-     * @param int $type
+     * @param int $accountType
      */
-    public function __construct($class, array $languages, $type = null)
+    public function __construct(array $languages, $accountType = null)
     {
-        parent::__construct($class);
+        parent::__construct('HelloDi\CoreBundle\Entity\User');
         $this->languages = array_combine($languages, $languages);
-        $this->type = $type;
+        $this->accountType = $accountType;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -51,7 +50,7 @@ class RegistrationFormType extends BaseType
                 0 => 'Disable',1 => 'Enable'
             )));
 
-        switch ($this->type)
+        switch ($this->accountType)
         {
             case Account::RETAILER:
                 $builder->add('roles', 'collection', array('translation_domain' => 'user',

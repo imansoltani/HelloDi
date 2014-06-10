@@ -30,10 +30,10 @@ class EntitySearchType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choices'   => array(
-                        Account::API => 'APIs',
                         Account::PROVIDER => 'Providers',
                         Account::DISTRIBUTOR => 'Distributors',
                         Account::RETAILER => 'Retailers',
+                        Account::API => 'APIs',
                     ),
                 ))
             ;

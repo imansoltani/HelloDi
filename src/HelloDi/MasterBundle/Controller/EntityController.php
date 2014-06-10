@@ -3,6 +3,7 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Provider;
@@ -12,7 +13,9 @@ use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityTy
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\DistributorAccountUserType;
 use HelloDi\MasterBundle\Form\EntitySearchType;
+use HelloDi\MasterBundle\Form\EntityType;
 use HelloDi\MasterBundle\Form\ProviderAccountUserType;
+use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,10 +35,9 @@ class EntityController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em->createQueryBuilder()
-            ->select('entity as entity_row', 'account.type as type', 'count(account) as type_count')
+            ->select('entity')
             ->from('HelloDiCoreBundle:Entity','entity')
-            ->innerJoin('entity.accounts','account')
-            ->groupBy('account.type','entity.id')
+            ->LeftJoin('entity.accounts','account')
             ->where('entity != :my_entity')->setParameter('my_entity', $this->getUser()->getEntity())
         ;
 
@@ -56,30 +58,31 @@ class EntityController extends Controller
         }
 
         $result = array();
-        $row_result = null;
-        foreach ($qb->getQuery()->getResult() as $row) {
-            if($row_result == null || $row_result['entity']->getId() != $row['entity_row']->getId()) {
-                if ($row_result) $result [] = $row_result;
-                $row_result['entity'] = $row['entity_row'];
-                $row_result['provider_count'] = 0;
-                $row_result['distributor_count'] = 0;
-                $row_result['retailer_count'] = 0;
-                $row_result['api_count'] = 0;
+        foreach ($qb->getQuery()->getResult() as $entity) {
+            /** @var Entity $entity */
+            $row_result['entity'] = $entity;
+            $row_result['api_count'] = 0;
+            $row_result['provider_count'] = 0;
+            $row_result['distributor_count'] = 0;
+            $row_result['retailer_count'] = 0;
+
+            foreach ($entity->getAccounts() as $account) {
+                /** @var Account $account */
+                switch ($account->getType()) {
+                    case Account::API: $row_result['api_count']++; break;
+                    case Account::PROVIDER: $row_result['provider_count']++; break;
+                    case Account::DISTRIBUTOR: $row_result['distributor_count']++; break;
+                    case Account::RETAILER: $row_result['retailer_count']++; break;
+                }
             }
-            switch ($row['type']) {
-                case Account::PROVIDER: $row_result['provider_count'] = $row['type_count']; break;
-                case Account::DISTRIBUTOR: $row_result['distributor_count'] = $row['type_count']; break;
-                case Account::RETAILER: $row_result['retailer_count'] = $row['type_count']; break;
-                case Account::API: $row_result['api_count'] = $row['type_count']; break;
-            }
+            $result[] = $row_result;
         }
-        if ($row_result) $result [] = $row_result;
 
         $entities = $this->get('knp_paginator')->paginate($result, $request->get('page', 1), 10);
 
         return $this->render('HelloDiMasterBundle:entity:index.html.twig', array(
-            'entities' => $entities,
-            'form' => $form->createView()
+                'entities' => $entities,
+                'form' => $form->createView(),
         ));
     }
 
@@ -233,167 +236,190 @@ class EntityController extends Controller
     }
 
     //users
-    public function usersAction(Request $req,$id)
+    public function usersAction($id)
     {
-
-
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        $entity = $em->getRepository('HelloDiCoreBundle:Entity')->find($id);
+        if (!$entity || $entity == $this->getUser()->getEntity())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Entity',array(),'entity')),'message'));
 
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:users.html.twig', array(
-            'pagination' =>$entity->getUsers(),
-            'entity' => $entity,
+        $countNotProvider = $em->createQueryBuilder()
+            ->select('count(account)')
+            ->from('HelloDiAccountingBundle:Account', 'account')
+            ->where('account.entity = :entity')->setParameter('entity', $entity)
+            ->andWhere('account.type != :type')->setParameter('type', Account::PROVIDER)
+            ->getQuery()->getSingleResult();
+
+        $haveOnlyProvider = $countNotProvider[1] == 0;
+
+        return $this->render('HelloDiMasterBundle:entity:users.html.twig', array(
+                'entity' => $entity,
+                'haveOnlyProvider' => $haveOnlyProvider,
         ));
     }
 
-    public function AddNewUserEntitiAction(Request $request, $id)
+    public function NewUserAction(Request $request, $id)
     {
-
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        $entity = $em->getRepository('HelloDiCoreBundle:Entity')->find($id);
+        if (!$entity || $entity == $this->getUser()->getEntity())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Entity',array(),'entity')),'message'));
+
+        $accountType = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array(
+                'entity' => $entity,
+                'type' => Account::RETAILER
+            )) ? Account::RETAILER : Account::DISTRIBUTOR;
+
+        $languages = $this->container->getParameter('languages');
 
         $user = new User();
 
-        if (count($em->getRepository('HelloDiAccountingBundle:Account')->findBy(array(
-                    'Entiti' => $entity,
-                    'accType' => 2))
-            ) ==1
-        )
-        {
-
-            $form = $this->createForm(new NewUserDistributorsRetailerInEntityType
-                ('HelloDiDiDistributorsBundle\Entity\User',$entity,2)
-                , $user,
-                array('cascade_validation' => true)
-            );
-        }
-
-
-        else
-        {
-
-            $form = $this->createForm(new NewUserDistributorsRetailerInEntityType
-                ('HelloDiDiDistributorsBundle\Entity\User',$entity,0)
-                , $user,
-                array('cascade_validation' => true)
-            );
-        }
+        $form = $this->createForm(new RegistrationFormType($languages, $accountType), $user, array('cascade_validation' => true))
+            ->add('account', 'entity', array(
+                    'class' => 'HelloDiAccountingBundle:Account', 'property' => 'name',
+                    'required' => true,
+                    'query_builder' => function(EntityRepository $er)use ($entity) {
+                            return $er->createQueryBuilder('u')
+                                ->where('u.type != :type')->setParameter('type', Account::PROVIDER)
+                                ->andwhere('u.entity=:ent')->setParameter('ent',$entity)
+                                ;
+                        },
+                ))
+            ->add('submit','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_entity_users_index',array('id' => $id)).'")','last-button')
+                ))
+        ;
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid())
-            {
-                $user->setEntiti($entity);
+
+            if ($form->isValid()) {
+                $user->setEntity($entity);
+                $entity->addAccount($user->getAccount());
+
+                $em->persist($user->getAccount());
                 $em->persist($user);
                 $em->flush();
 
-              if($user->getAccount()->getAccType()==0)
-                $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>21,'value'=>$user->getUsername()));
-              else
-                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37,'value'=>$user->getUsername()));
+//              if($user->getAccount()->getType()==0)
+//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>21,'value'=>$user->getUsername()));
+//              else
+//                 $this->forward('hello_di_di_notification:NewAction',array('id'=>$user->getAccount()->getId(),'type'=>37,'value'=>$user->getUsername()));
 
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('Ent_Users',array('id'=>$id)));
+                return $this->redirect($this->generateUrl('hello_di_master_entity_users_index',array('id'=>$id)));
             }
-
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:AddNewUserEntiti.html.twig',
-            array(
+        return $this->render('HelloDiMasterBundle:entity:newUser.html.twig', array(
                 'entity' => $entity,
                 'form' => $form->createView(),
             ));
-
     }
 
-    public function  EditUserEntitiesAction(Request $request,$userid)
-{
-    $em=$this->getDoctrine()->getManager();
-
-    $user=$em->getRepository('HelloDiDiDistributorsBundle:User')->find($userid);
-
-
-    if (count($em->getRepository('HelloDiAccountingBundle:Account')->findBy(array(
-                'Entiti' => $user->getEntiti(),
-                'accType' => 2))
-        ) ==1
-    )
+    public function EditUserAction(Request $request, $user_id)
     {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
-        $form_edit = $this->createForm(new NewUserDistributorsRetailerInEntityType
-            ('HelloDiDiDistributorsBundle\Entity\User',$user->getEntiti(),$type=2)
-            , $user,
-            array('cascade_validation' => true)
-        );
+        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
+        if (!$user || $user->getEntity() == $this->getUser()->getEntity())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('User',array(),'user')),'message'));
+
+        $entity = $user->getEntity();
+
+        $accountType = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array(
+                'entity' => $entity,
+                'type' => Account::RETAILER
+            )) ? Account::RETAILER : Account::DISTRIBUTOR;
+
+        $languages = $this->container->getParameter('languages');
+
+        $form = $this->createForm(new RegistrationFormType($languages, $accountType), $user, array('cascade_validation' => true))
+            ->remove('plainPassword')
+            ->add('account', 'entity', array(
+                    'class' => 'HelloDiAccountingBundle:Account', 'property' => 'name',
+                    'required' => true,
+                    'query_builder' => function(EntityRepository $er)use ($entity) {
+                            return $er->createQueryBuilder('u')
+                                ->where('u.type != :type')->setParameter('type', Account::PROVIDER)
+                                ->andwhere('u.entity=:ent')->setParameter('ent',$entity)
+                                ;
+                        },
+                ))
+            ->add('submit','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_entity_users_index',array('id' => $entity->getId())).'")','last-button')
+                ))
+        ;
+
+        if($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if($form->isValid())
+            {
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                return $this->redirect($this->generateUrl('hello_di_master_entity_users_index',array('id' => $entity->getId())));
+            }
+        }
+
+        return $this->render('HelloDiMasterBundle:entity:editUser.html.twig', array(
+                'form' => $form->createView(),
+                'entity' => $entity,
+            ));
     }
-
-
-    else
-    {
-
-        $form_edit = $this->createForm(new NewUserDistributorsRetailerInEntityType
-            ('HelloDiDiDistributorsBundle\Entity\User',$user->getEntiti(),$type=0)
-            , $user,
-            array('cascade_validation' => true)
-        );
-    }
-
-
-
-    if($request->isMethod('POST'))
-{
-    $form_edit->handleRequest($request);
-    if($form_edit->isValid())
-    {
-        $em->flush();
-        $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-    }
-}
-
-    return $this->render('HelloDiDiDistributorsBundle:Entiti:EditUserEntiti.html.twig',
-        array(
-            'form_edit'=>$form_edit->createView(),
-            'entity'=>$user->getEntiti(),
-            'User'=>$user
-        ));
-}
 
     //info
     public function infoAction(Request $request,$id)
     {
-
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HelloDiDiDistributorsBundle:Entiti')->find($id);
+        $entity = $em->getRepository('HelloDiCoreBundle:Entity')->find($id);
+        if (!$entity || $entity == $this->getUser()->getEntity())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Entity',array(),'entity')),'message'));
 
-        $edit_form = $this->createForm(new EditEntitiType(), $entity);
+        $form = $this->createForm(new EntityType(), $entity)
+            ->add('submit','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button','last-button')
+                ))
+        ;
 
         if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
 
-            $edit_form->handleRequest($request);
-
-            if ($edit_form->isValid()) {
-
+            if ($form->isValid()) {
                 $em->flush($entity);
 
-                foreach($entity->getAccounts() as $Account)
-                {
-                    if($Account->getAccType()==0)
-                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>27));
-                    elseif($Account->getAccType()==2)
-                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
-
-                }
+//                foreach($entity->getAccounts() as $Account) {
+//                    if($Account->getAccType()==0)
+//                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>27));
+//                    elseif($Account->getAccType()==2)
+//                        $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
+//                }
 
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Entiti:info.html.twig', array(
-                'edit_form' => $edit_form->createView(),
-                'entityid' => $id,
+        return $this->render('HelloDiMasterBundle:entity:info.html.twig', array(
+                'form' => $form->createView(),
                 'entity' => $entity
             ));
     }

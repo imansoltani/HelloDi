@@ -22,11 +22,11 @@ hello_di_master_entity_users_index:
 
 hello_di_master_entity_users_add:
     pattern:  /{id}/users/add
-    defaults: { _controller: "HelloDiMasterBundle:Entity:AddNewUserEntiti" }
+    defaults: { _controller: "HelloDiMasterBundle:Entity:NewUser" }
 
 hello_di_master_entity_users_edit:
-    pattern:  /{id}/users/{userid}/edit
-    defaults: { _controller: "HelloDiMasterBundle:Entity:EditUserEntities" }
+    pattern:  /{id}/users/{user_id}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Entity:EditUser" }
 
 #info
 hello_di_master_entity_info:

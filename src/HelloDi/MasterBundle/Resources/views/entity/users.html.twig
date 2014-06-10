@@ -1,62 +1,36 @@
-{% extends 'HelloDiDiDistributorsBundle:Tabs:ShowEntityMaster.html.twig' %}
+{% extends 'HelloDiMasterBundle:entity:tab.html.twig' %}
 
 {% set tab = '2' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('Ent_Main') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_entity_index') }}">{{ 'Entities' | trans ({}, "entity") }}</a>
     <span class="link">{{ 'Users' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
-
 {% block Link_Head %}
-
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
-
-
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
     <script type="text/javascript">
-
         $(document).ready(function() {
             Fix_Size();
-        } );
-
+        });
     </script>
-
 {% endblock %}
 
 {% block Tab %}
-
     <div class="widget-header">
         <h3>{{ 'Users' | trans ({}, "user") }}</h3>
-    </div> <!-- /widget-header --><br>
-{% set i=0 %}
-{% for EntAcc in entity.Accounts %}
+    </div><br/>
 
-    {% if EntAcc.accType==1 %}{% set i=i+1 %}{% endif %}
-
-{% endfor %}
-
-    {% if i==entity.Accounts|length %}
-
+    {% if haveOnlyProvider %}
       <b>{{ 'ThisAccountHaveNotUser' | trans ({}, "accounts") }} </b>
-
-
     {% else %}
-
-
-    <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('AddNewUserEntiti',{id:entity.id}) }} ">
-        {{ 'AddNewUser' | trans ({}, "user") }}
-
-    </a>
-
+        <a style="margin-bottom: 5px" class=" btn btn-primary btn-large" href="{{ path('hello_di_master_entity_users_add',{id:entity.id}) }} ">
+            {{ 'AddNewUser' | trans ({}, "user") }}
+        </a>
         <div style="margin-top: 5px" class="tablediv">
-
-
             <div class="tab-content datatable">
                 <table id="example" class="table postsend">
                 <thead>
@@ -68,59 +42,41 @@
                     <th>{{ 'Account' | trans ({}, "accounts") }}</th>
                     <th>{{ 'Role' | trans ({}, "user") }}</th>
                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
-
                 </tr>
-
                 <tr class="input" >
-                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                    <td><input type="text" name="search_UserName" value="Search UserName" class="search_init" /></td>
-                    <td><input type="text" name="search_Email" value="Search Email" class="search_init" /></td>
-                    <td><input type="text" name="search_Account" value="Search Account" class="search_init" /></td>
-                    <td><input type="text" name="search_Role" value="Search Role" class="search_init" /></td>
-                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_UserName" value="Search UserName" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Email" value="Search Email" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Account" value="Search Account" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Role" value="Search Role" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                 </tr>
-
                 </thead>
                 <tbody>
-
-                {% for User in pagination %}
-
+                    {% for user in entity.users %}
                         <tr>
-
-                            <td >{{ User.id }}</td>
-                            <td>{{ User.firstName }}&nbsp;{{ User.lastName }}</td>
-                            <td>{{ User.username }}</td>
-                            <td>{{ User.email }}</td>
-                            <td>
-                                {{ User.Account.accName }}
-
-                            </td>
-                            <td>
-
-                                {{ User.roles[0] }}
-
-                            </td>
+                            <td >{{ user.id }}</td>
+                            <td>{{ user.firstName }}&nbsp;{{ user.lastName }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.account.name }}</td>
+                            <td>{{ user.roles[0] }}</td>
                             <td class="td-actions" >
-                                <a class="btn_actions" href="{{ path('EditUserEntities',{'id':entity.id,'userid':User.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                <a class="btn_actions" href="{{ path('hello_di_master_entity_users_edit',{'id':entity.id,'user_id':user.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             </td>
                         </tr>
-
                 {% endfor %}
                 </tbody>
             </table>
-
         </div>
     </div>
-<div style="display:none ">
-
-    <form class="SearchForm" method="#" action="#">
-        <input type="hidden" value="1" name="page" id="search_page" >
-        <hr>
-        <input  class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
-
-    </form>
+    <div style="display:none ">
+        <form class="SearchForm" method="#" action="#">
+            <input type="hidden" value="1" name="page" id="search_page" >
+            <hr>
+            <input  class="btn btn-primary" type="submit" value="{{ 'Search' | trans ({}, "common") }}">
+        </form>
     <div>
     {% endif %}
 {% endblock %}
-

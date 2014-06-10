@@ -30,7 +30,7 @@ class AccountUserType extends AbstractType
                 'attr'=> array('class'=>'integer_validation'),
             ))
             ->add('users','collection',array(
-                'type'=>new RegistrationFormType('HelloDi\CoreBundle\Entity\User',$this->languages,$this->type)
+                'type'=>new RegistrationFormType($this->languages,$this->type)
             ))
         ;
     }
