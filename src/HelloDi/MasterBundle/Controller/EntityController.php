@@ -8,8 +8,6 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Provider;
 use HelloDi\CoreBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\Entiti\EditEntitiType;
-use HelloDi\DiDistributorsBundle\Form\User\NewUserDistributorsRetailerInEntityType;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\DistributorAccountUserType;
 use HelloDi\MasterBundle\Form\EntitySearchType;

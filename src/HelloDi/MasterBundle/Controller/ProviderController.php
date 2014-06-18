@@ -1,6 +1,7 @@
 <?php
 namespace HelloDi\MasterBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
@@ -17,6 +18,7 @@ class ProviderController extends Controller
 {
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $providers = $em->getRepository('HelloDiCoreBundle:Provider')->findAll();
 
@@ -27,6 +29,7 @@ class ProviderController extends Controller
 
     public function addAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $provider = new Provider();
@@ -67,7 +70,8 @@ class ProviderController extends Controller
 
     //transactions
     public function transactionsAction(Request $request, $id)
-    {
+    {//TODO must be edit
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
@@ -154,6 +158,7 @@ class ProviderController extends Controller
 
     public function transactionRegisterAction($id, Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
 
@@ -206,6 +211,7 @@ class ProviderController extends Controller
 
     public function transactionTransferAction($id, Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
 
@@ -264,17 +270,72 @@ class ProviderController extends Controller
     //items
     public function itemsAction($id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
         if(!$account)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $prices = $account->getPrices();
-
         return $this->render('HelloDiMasterBundle:provider:items.html.twig', array(
                 'account' => $account,
-                'prices' => $prices
+                'prices' => $account->getPrices()
             ));
+    }
+
+    //info
+    public function infoAction(Request $request, $id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
+        if(!$provider)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $form = $this->createFormBuilder($provider->getAccount(), array('data_class' => 'HelloDi\AccountingBundle\Entity\Account'))
+            ->add('terms','text',array(
+                    'label' => 'Terms','translation_domain' => 'accounts',
+                    'required'=>false,
+                    'attr'=> array('class'=>'integer_validation'),
+                ))
+            ->add('submit','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button','last-button')
+                ))
+            ->getForm();
+
+        if ($request->isMethod('post')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'this operation done success!');
+            }
+        }
+
+        return $this->render('HelloDiMasterBundle:provider:info.html.twig', array(
+                'form' => $form->createView(),
+                'account' => $provider->getAccount(),
+                'provider' => $provider,
+            ));
+    }
+
+    //entity
+    public function entityAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
+        if(!$account)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        return $this->render('HelloDiMasterBundle:provider:entity.html.twig', array(
+                'account' => $account,
+                'entity' => $account->getEntity()
+            ));
+
     }
 }

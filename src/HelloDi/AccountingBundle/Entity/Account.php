@@ -64,7 +64,7 @@ class Account
     /**
      * @ORM\Column(type="integer", nullable=true, name="terms")
      */
-    private $terms;
+    private $terms = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="account")

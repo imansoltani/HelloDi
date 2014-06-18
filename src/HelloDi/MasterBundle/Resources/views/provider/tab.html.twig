@@ -30,12 +30,12 @@
         </a>
     </li>
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a href="{{ path('EditAccountProv',{'id':account.id }) }}">
+        <a href="{{ path('hello_di_master_provider_info',{'id':account.id }) }}">
             <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}">
         </a>
     </li>
     <li {% if tab == '7' %}class="active"{% endif %} >
-        <a href="{{ path('MasterProvEntiti',{'id':account.id }) }}">
+        <a href="{{ path('hello_di_master_provider_entity',{'id':account.id }) }}">
             <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}">
         </a>
     </li>

@@ -24,6 +24,16 @@ hello_di_master_provider_items:
     pattern:  /{id}/items
     defaults: { _controller: "HelloDiMasterBundle:Provider:items" }
 
+#info
+hello_di_master_provider_info:
+    pattern:  /{id}/info
+    defaults: { _controller: "HelloDiMasterBundle:Provider:info" }
+
+#entity
+hello_di_master_provider_entity:
+    pattern:  /{id}/entity
+    defaults: { _controller: "HelloDiMasterBundle:Provider:entity" }
+
 #LoadActionProv:
 #    pattern:  /loadprov
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionProv" }
@@ -78,13 +88,3 @@ hello_di_master_provider_items:
 #MasterProvRemoved:
 #    pattern:  /{id}/removed
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvRemoved" }
-#
-##info----------------------
-#EditAccountProv:
-#    pattern:  /{id}/Info
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditAccountProv" }
-#
-##entity--------------------
-#MasterProvEntiti:
-#    pattern:  /{id}/entity
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterProvEntiti" }

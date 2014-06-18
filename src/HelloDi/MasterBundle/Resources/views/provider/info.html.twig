@@ -1,0 +1,62 @@
+{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Info' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Info' | trans ({}, "accounts") }}</h3>
+    </div>
+
+    {{ form_start(form) }}
+        <div class="control-group">
+            <label class="control-label" for="name">{{ 'Name' | trans ({}, "common") }}</label>
+            <div class="controls">
+                <input id="name" type="text" disabled class="input-large" value="{{ provider.account.name }}" >
+            </div>
+        </div>
+        {{ form_row(form.terms) }}
+        <div class="control-group">
+            <label class="control-label" for="balance">{{ 'Balance' | trans ({}, "accounts") }}</label>
+            <div class="controls">
+                <input id="balance" type="text" disabled class="input-large" value="{{ provider.account.balance}}" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="currency">{{ 'Currency' | trans ({}, "accounts") }}</label>
+            <div class="controls">
+                <input id="currency" type="text" disabled class="input-large" value="{{ provider.currency }}" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="creditLimit">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
+            <div class="controls">
+                <input id="creditLimit" type="text" disabled class="input-large" value="{{ provider.account.creditLimitAmount }}" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="defaultLanguage">{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
+            <div class="controls">
+                <input id="defaultLanguage" type="text" disabled class="input-large" value="{{ provider.account.defaultLanguage }}" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="timezone">{{ 'TimeZone' | trans ({}, "accounts") }}</label>
+            <div class="controls">
+                <input id="timezone" type="text" disabled class="input-large" value="{{ provider.timezone ? : '----' }}" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="type">{{ 'Type' | trans ({}, "common") }}</label>
+            <div class="controls">
+                <input id="type" type="text" disabled class="input-large" value="{{ 'Provider' | trans ({}, 'accounts') }}" >
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock Tab %}
