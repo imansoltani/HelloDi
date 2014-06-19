@@ -6,6 +6,10 @@ hello_di_master_provider:
     resource: "@HelloDiMasterBundle/Resources/config/routing/provider.yml"
     prefix:   /provider
 
+hello_di_master_distributor:
+    resource: "@HelloDiMasterBundle/Resources/config/routing/distributor.yml"
+    prefix:   /distributor
+
 hello_di_master_operator:
     resource: "@HelloDiMasterBundle/Resources/config/routing/operator.yml"
     prefix:   /operator

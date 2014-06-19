@@ -75,7 +75,7 @@ class ProviderController extends Controller
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
 
-        if(!$account)
+        if(!$account || $account->getType() != Account::PROVIDER)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $form = $this->createFormBuilder(null,array('attr'=>array('class'=>'SearchForm')))

@@ -11,13 +11,13 @@ Make_transfer: Effectuer un transfert
 Fund_distributor: Distributeur de fonds
 Fund_retailer: Revendeur de fonds
 
-Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%: Compte du revendeur a été changé de nouveau revendeur à revendeur courant
-Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Limite de crédit des revendeurs a été changé de nouveau revendeur à revendeur courant
+Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%: Compte du revendeur a été changé de alredyretailer à currentretailer
+Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Limite de crédit des revendeurs a été changé de alredyretailer à currentretailer
 
-Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Compte du distributeur a été changé de nouveau distributeur à distributeur courant 
-Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Limite de crédit du distributeur a été changé de nouveau distributeur à distributeur courant 
+Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Compte du distributeur a été changé de alredydist à currentdist
+Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Limite de crédit du distributeur a été changé de alredydist à currentdist
 
-Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Compte du fournisseur a été changé de nouveau fournisseur à fournisseur courant
+Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Compte du fournisseur a été changé de alredyprov à currentprov
 
 You_entered_an_invalid: Votre entrée est invalide
 balance_should_more_than_credit_limit: Le solde devrait être plus que la limite de crédit

@@ -1,0 +1,77 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Distributors' | trans ({}, "accounts") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-briefcase"></i>{{ 'Distributors' | trans ({}, "accounts") }}{% endblock %}
+
+{% set MU = 'dist' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link" >{{ 'Distributors' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked ">
+        <div class="widget-content">
+            <a class="button btn btn-primary btn-large" href="{{ path('hello_di_master_distributor_add') }}">
+                {{ 'CreateDistWithEntity' | trans ({}, "accounts") }}
+            </a>
+            <div style="margin-top: 5px" class="tablediv" >
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "common") }}</th>
+                            <th>{{ 'Name' | trans ({}, "common") }}</th>
+                            <th>{{ 'Entity' | trans ({}, "entity") }}</th>
+                            <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'SubAccounts' | trans ({}, "accounts") }}</th>
+                            <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        </tr>
+                        <tr class="input" >
+                            <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_Entity" value="Search Entity" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_Account" value="Search Sub Account" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for distributor in distributors %}
+                            <tr>
+                                <td>{{ distributor.account.id }}</td>
+                                <td>{{ distributor.account.name }}</td>
+                                <td>{{ distributor.account.entity.name }}</td>
+                                <td>{{ distributor.account.balance }}</td>
+                                <td>{{ distributor.currency }} | {{ distributor.account.creditLimitAmount }}</td>
+                                <td>{{ distributor.retailers|length }}</td>
+                                <td class="td-actions" >
+                                    <a class="btn_actions" href="{{ path('hello_di_master_distributor_transaction',{'id': distributor.account.id}) }}" >{{ 'Manage' | trans ({}, "common") }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock Body %}
+
+
+

@@ -9,7 +9,7 @@ hello_di_master_item_add:
 hello_di_master_item_generate_item_code:
     pattern:  /generate_item_code
     defaults: { _controller: "HelloDiMasterBundle:Item:generateItemCode" }
-    requirements: { _method: post }
+    methods: post
 
 hello_di_master_item_details:
     pattern:  /{id}/details

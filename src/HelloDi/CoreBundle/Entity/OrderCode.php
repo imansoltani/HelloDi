@@ -28,7 +28,7 @@ class OrderCode
     private $lang;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="orderCode")
      */
     private $pins;
 

@@ -25,10 +25,10 @@ function Now_Step(x)
 
 function go(y)
 {
-
     if((y == 1 && $('#step1').attr('isdone') == 1)
         || (y == 2 && $('#step2').attr('isdone') == 1)
-        || (y == 3 && $('#step3').attr('isdone') == 1))
+        || (y == 3 && $('#step3').attr('isdone') == 1)
+        )
     {
         var x = Now_Step(0);
         if( x != y)
@@ -73,6 +73,9 @@ function Done()
     return true;
 }
 
+/**
+ * @return {boolean}
+ */
 function Page(x , y)
 {
     if(y == 1)
@@ -152,7 +155,6 @@ function Page(x , y)
         return true ;
     }
     return false ;
-
 }
 
 /**
@@ -169,5 +171,4 @@ function Validation(x)
         }
     });
     return y;
-
 }

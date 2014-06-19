@@ -11,13 +11,13 @@ Make_transfer: Fai il trasferimento
 Fund_distributor: Fund distributor
 Fund_retailer: Fund retailer
 
-Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%: Retailer account was changed from already retailer to current retailer
-Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Retailer credit limit as changed from already retailer to current retailer
+Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%: Retailer account was changed from alredyretailer to currentretailer
+Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%: Retailer credit limit as changed from alredyretailer to currentretailer
 
-Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Distributor account was changed from already distributor to current distributor
-Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Distributor credit limit was changed from already distributor to current distributor
+Distributor_account_was_changed_from_%alredydist%_to_%currentdist%: Distributor account was changed from alredydist to currentdist
+Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%: Distributor credit limit was changed from alredydist to currentdist
 
-Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider account was changed from already provider to current provider
+Provider_account_was_changed_from_%alredyprov%_to_%currentprov%: Provider account was changed from alredyprov to currentprov
 
 You_entered_an_invalid: You entered an invalid
 balance_should_more_than_credit_limit: Il saldo deve essere superiore al limite di credito

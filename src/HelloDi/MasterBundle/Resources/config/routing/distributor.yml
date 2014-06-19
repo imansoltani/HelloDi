@@ -1,0 +1,79 @@
+hello_di_master_distributor_index:
+    pattern:  /
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:index" }
+
+hello_di_master_distributor_add:
+    pattern:  /add
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:add" }
+
+#transactions
+hello_di_master_distributor_transaction:
+    pattern:  /{id}/transactions
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:transactions"}
+
+hello_di_master_distributor_transaction_funding:
+    pattern:  /{id}/transactions/funding
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:funding"}
+
+#LoadActionDist:
+#    pattern:  /loaddist
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionDist" }
+#
+#DetailsMasterDistTransaction:
+#    pattern:  /{id}/transactions/{tranid}/details
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
+#
+##items---------------------
+#ManageItemsDist:
+#    pattern:  /{id}/items
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsDist" }
+#
+#AddItemDist:
+#    pattern:  /{id}/items/add
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDist" }
+#
+#EditItemDist:
+#    pattern:  /{id}/items/{itemid}/edit
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDist" }
+#
+##sales---------------------
+#MasterDistSale:
+#    pattern:  /{id}/sales
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Sale"}
+#
+#MasterDistDetailsSale:
+#    pattern:  /sales/details
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsSale"}
+#
+##purchases-----------------
+#MasterDistPurchases:
+#    pattern:  /{id}/purchases
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:Purchases"}
+#
+##users---------------------
+#ManageDistUser:
+#    pattern:  /{id}/users
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistUser" }
+#
+#MasterDistUserAdd:
+#    pattern:  /{id}/users/add
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserAdd" }
+#
+#MasterDistUserEdit:
+#    pattern:  /{id}/users/{userid}
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DistUserEdit"}
+#
+##setting-------------------
+#ManageDistSettings:
+#    pattern:  /{id}/settings
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistSettings"}
+#
+##subaccounts---------------
+#ManageDistChildren:
+#    pattern:  /{id}/subaccounts
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageDistChildren"}
+#
+##entity--------------------
+#MasterDistEntiti:
+#    pattern:  /{id}/entity
+#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterDistEntiti" }

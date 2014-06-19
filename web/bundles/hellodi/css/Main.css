@@ -40,6 +40,12 @@ li.dropdown i > span{
     border-left: thin solid rgb(204, 204, 204);
 }
 
+@media  only screen and (max-width: 870px) {
+    .span5.LeftSpan {
+        margin-left: 0 !important;
+    }
+}
+
 #back-to-top{
     text-decoration: none;
     background: none repeat scroll 0% 0% rgb(115, 188, 239);
@@ -1566,4 +1572,8 @@ margin-top:5px ;
 
 .div_refresh_button.refresh .refresh_button {
     background-image: url("../img/refresh/loading.gif");
+}
+
+[class*="span"] {
+    float: left;
 }

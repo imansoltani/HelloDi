@@ -36,13 +36,13 @@ class Pin
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="sellerPin")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="sell_trans_id", referencedColumnName="id", nullable=false)
      */
     private $sellerTransaction;
 
     /**
-     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", inversedBy="commissionerPin")
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="comm_trans_id", referencedColumnName="id", nullable=true)
      */
     private $commissionerTransaction;

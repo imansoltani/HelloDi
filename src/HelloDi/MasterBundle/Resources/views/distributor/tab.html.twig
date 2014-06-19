@@ -1,123 +1,64 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
 
-{% block title %}
-    {{ 'Distributor' | trans ({}, "accounts") }}
-
-{% endblock title %}
+{% block title %}{{ 'Distributor' | trans ({}, "accounts") }}{% endblock title %}
 
 {% set MU = 'dist' %}
 
-{% block PageTitle %}
-    <i class="icon-briefcase"></i>
-    {{ Account.accName }}
-{% endblock %}
+{% block PageTitle %}<i class="icon-briefcase"></i>{{ account.name }}{% endblock %}
 
 {% set hornav = '38px' %}
+
 {% block Tabs %}
-
     <li {% if tab == '3' %}class="active"{% endif %} >
-
-
-        <a  href="{{ path('MasterDistTransaction',{'id':Account.id}) }}">
+        <a  href="{{ path('hello_di_master_distributor_transaction',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Transactions' | trans ({}, "transaction") }}" >
         </a>
     </li>
-
     <li {% if tab == '6' %}class="active"{% endif %} >
-        <a href="{{ path('ManageItemsDist',{'id':Account.id}) }}">
-                <input type="submit" value="{{ 'Items' | trans ({}, "item") }}">
+        <a href="{{ path('ManageItemsDist',{'id':account.id}) }}">
+            <input type="submit" value="{{ 'Items' | trans ({}, "item") }}">
         </a>
     </li>
-
     <li {% if tab == '1' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistSale',{'id':Account.id}) }}">
-
+        <a href="{{ path('MasterDistSale',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Sale' | trans ({}, "code") }}" >
-
-
         </a>
     </li>
-
     <li {% if tab == '7' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistPurchases',{'id':Account.id}) }}">
-
-
+        <a href="{{ path('MasterDistPurchases',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Purchases' | trans ({}, "transaction") }}" >
-
-
         </a>
     </li>
-
-
-
     <li {% if tab == '4' %}class="active"{% endif %} >
-
-        <a href="{{ path('ManageDistUser',{'id':Account.id}) }}">
-
-
+        <a href="{{ path('ManageDistUser',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
-
-
         </a>
-
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
-        <a href="{{ path('ManageDistSettings',{'id':Account.id}) }}">
-
-
+        <a href="{{ path('ManageDistSettings',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Settings' | trans ({}, "accounts") }}" >
-
-
         </a>
-
     </li>
-
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a href="{{ path('ManageDistChildren',{'id':Account.id}) }}">
-
-
+        <a href="{{ path('ManageDistChildren',{'id':account.id}) }}">
             <input type="submit" value="{{ 'SubAccounts' | trans ({}, "accounts") }}" >
-
-
         </a>
-
     </li>
-
-
     <li {% if tab == '8' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistEntiti',{'id':Account.id}) }}">
-
-
+        <a href="{{ path('MasterDistEntiti',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
-
-
         </a>
-
     </li>
-
-
 {% endblock Tabs %}
 
 {% block Body %}
-<div class="span">
     <div class="widget stacked">
-
-
-
         <div class="widget-content">
-            <!--<div class="HeadTitle" >
-                    <h1>{{ Account.accName }}</h1>
-                    <div><span>Balance:</span><i>11000000000000</i></div>
-                    <div><span>Entity Name:</span><i>{{ Account.Entiti.entName }}</i></div>
-                </div>-->
-
             <div class="tab-content">
                 <div class="tab-pane active" id="Info">
-                    {% block Tab %}
-                    {% endblock Tab %}
+                    {% block Tab %}{% endblock Tab %}
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+{% endblock Body %}
