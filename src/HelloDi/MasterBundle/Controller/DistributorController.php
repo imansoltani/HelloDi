@@ -2,11 +2,13 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\Entity;
+use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\CreditLimitType;
@@ -266,5 +268,87 @@ class DistributorController extends Controller
             ));
     }
 
+    //items
+    public function itemsAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
+        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
+        if(!$distributor)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        return $this->render('HelloDiMasterBundle:distributor:item.html.twig', array(
+                'account' => $distributor->getAccount(),
+                'distributor' => $distributor
+            ));
+    }
+
+    //purchases
+    public function purchasesAction(Request $request, $id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
+        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $form = $this->createFormBuilder()
+            ->add('dateFrom', 'date', array(
+                    'format'=>'yyyy/MM/dd',
+                    'widget'=>'single_text',
+                    'data'=>((new \DateTime('now'))->sub(new \DateInterval('P7D'))),
+                    'required' => false,
+                    'label' => 'From', 'translation_domain'=>'transaction'
+                ))
+            ->add('dateTo', 'date', array(
+                    'format'=>'yyyy/MM/dd',
+                    'widget'=>'single_text',
+                    'data'=>(new \DateTime('now')),
+                    'required' => false,
+                    'label' => 'To','translation_domain'=>'transaction'
+                ))
+            ->add('itemType', 'choice', array(
+                    'label' => 'ItemType','translation_domain'=>'item',
+                    'required' => false,
+                    'empty_value' => 'All',
+                    'choices' => array(
+                        Item::DMTU => 'Mobile',
+                        Item::CLCD => 'Calling_Card',
+                        Item::EPMT => 'E-payment',
+                        Item::IMTU => 'IMTU',
+                    )
+                ))
+            ->add('itemName', 'entity', array(
+                    'label' => 'Item','translation_domain'=>'item',
+                    'empty_value' => 'All',
+                    'required' => false,
+                    'class' => 'HelloDiCoreBundle:Item',
+                    'property' => 'name',
+                    'query_builder' => function (EntityRepository $er) use ($account) {
+                            return $er->createQueryBuilder('item')
+                                ->innerJoin('item.prices', 'price')
+                                ->andwhere('price.account = :account')->setParameter('account', $account);
+                        }
+                ))
+            ->getForm();
+
+        if($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+
+            }
+        }
+
+        return $this->render('HelloDiDiDistributorsBundle:Account:Purchases.html.twig', array(
+                'pagination' => $qb,
+                'Account' => $Account,
+                'User' => $User,
+                'Entity' => $Account->getEntiti(),
+                'form' => $form->createView()
+            ));
+    }
 }

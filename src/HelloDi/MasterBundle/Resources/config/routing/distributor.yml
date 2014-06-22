@@ -15,6 +15,11 @@ hello_di_master_distributor_transaction_funding:
     pattern:  /{id}/transactions/funding
     defaults: { _controller: "HelloDiMasterBundle:Distributor:funding"}
 
+#items
+hello_di_master_distributor_items:
+    pattern:  /{id}/items
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:items" }
+
 #LoadActionDist:
 #    pattern:  /loaddist
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:LoadActionDist" }
@@ -22,19 +27,6 @@ hello_di_master_distributor_transaction_funding:
 #DetailsMasterDistTransaction:
 #    pattern:  /{id}/transactions/{tranid}/details
 #    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:DetailsTransaction"}
-#
-##items---------------------
-#ManageItemsDist:
-#    pattern:  /{id}/items
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:ManageItemsDist" }
-#
-#AddItemDist:
-#    pattern:  /{id}/items/add
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:AddItemDist" }
-#
-#EditItemDist:
-#    pattern:  /{id}/items/{itemid}/edit
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:EditItemDist" }
 #
 ##sales---------------------
 #MasterDistSale:
