@@ -1,0 +1,34 @@
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_transaction',{'id': account.id}) }}">{{ 'Transactions' | trans ({}, "transaction") }}</a>
+    <span class="link">{{ 'FundDistributor' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="row">
+        <div class="span5">
+            <div class="widget-header">
+                <h3>{{ 'FundDistributorBalance' | trans ({}, "accounts") }}</h3><br>
+                {{ 'CurrentDistributorBalance' | trans ({}, "accounts") }} : {{ account.balance }} {{ distributor.currency }}<br>
+            </div>
+
+            {{ form(balanceForm) }}
+        </div>
+
+        {% if is_granted('ROLE_MASTER_ADMIN') %}
+        <div class="span5 LeftSpan">
+            <div class="widget-header">
+                <h3>{{ 'UpdateDistributorCreditLimit' | trans ({}, "accounts") }}</h3><br>
+                {{ 'CurrentDistributorCreditlimit' | trans ({}, "accounts") }} : {{ account.creditLimitAmount }} {{ distributor.currency }}<br>
+            </div>
+
+            {{ form(creditLimitForm) }}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
