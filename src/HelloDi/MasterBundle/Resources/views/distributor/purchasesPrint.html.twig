@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body{
+            margin:0;
+            font-size:14px;
+        }
+        .table{
+            width:100%;
+            border-spacing:0;
+        }
+        .table caption+thead tr:first-child th,.table caption+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table thead:first-child tr:first-child th,.table thead:first-child tr:first-child td{
+            border-top:0;
+        }
+        .table th,.table td{
+            padding:8px;
+            line-height:20px;
+            text-align:left;
+            vertical-align:top;
+            border-top:1px solid #ddd;
+        }
+        .table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th{
+            background-color:#f9f9f9
+        }
+        table tr{
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>{{ 'Item' | trans ({}, "item") }}</th>
+            <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+            <th>{{ 'BuyingPrice' | trans ({}, "price") }}</th>
+            <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for Tr in transaction %}
+        <tr>
+            <td>{{ Tr.TR.Code.Item}}</td>
+            <td>{{ Tr.Quantity }}</td>
+            <td>{{ Tr.TR.BuyingPrice }}</td>
+            <td>{{ Tr.TR.tax|number_format(4) }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
+</body>
+</html>

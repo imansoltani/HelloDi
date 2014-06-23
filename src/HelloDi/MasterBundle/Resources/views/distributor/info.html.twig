@@ -1,10 +1,10 @@
-{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
 
-{% set tab = '4' %}
+{% set tab = '5' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
     <span class="link">{{ 'Info' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
@@ -17,7 +17,7 @@
         <div class="control-group">
             <label class="control-label" for="name">{{ 'Name' | trans ({}, "common") }}</label>
             <div class="controls">
-                <input id="name" type="text" disabled class="input-large" value="{{ provider.account.name }}" >
+                <input id="name" type="text" disabled class="input-large" value="{{ distributor.account.name }}" >
             </div>
         </div>
 
@@ -26,25 +26,25 @@
         <div class="control-group">
             <label class="control-label" for="balance">{{ 'Balance' | trans ({}, "accounts") }}</label>
             <div class="controls">
-                <input id="balance" type="text" disabled class="input-large" value="{{ provider.account.balance}}" >
+                <input id="balance" type="text" disabled class="input-large" value="{{ distributor.account.balance}}" >
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="currency">{{ 'Currency' | trans ({}, "accounts") }}</label>
             <div class="controls">
-                <input id="currency" type="text" disabled class="input-large" value="{{ provider.currency }}" >
+                <input id="currency" type="text" disabled class="input-large" value="{{ distributor.currency }}" >
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="creditLimit">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
             <div class="controls">
-                <input id="creditLimit" type="text" disabled class="input-large" value="{{ provider.account.creditLimitAmount }}" >
+                <input id="creditLimit" type="text" disabled class="input-large" value="{{ distributor.account.creditLimitAmount }}" >
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="defaultLanguage">{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
             <div class="controls">
-                <input id="defaultLanguage" type="text" disabled class="input-large" value="{{ provider.account.defaultLanguage }}" >
+                <input id="defaultLanguage" type="text" disabled class="input-large" value="{{ distributor.account.defaultLanguage }}" >
             </div>
         </div>
 
@@ -53,7 +53,7 @@
         <div class="control-group">
             <label class="control-label" for="type">{{ 'Type' | trans ({}, "common") }}</label>
             <div class="controls">
-                <input id="type" type="text" disabled class="input-large" value="{{ 'Provider' | trans ({}, 'accounts') }}" >
+                <input id="type" type="text" disabled class="input-large" value="{{ 'Distributor' | trans ({}, 'accounts') }}" >
             </div>
         </div>
     {{ form_end(form) }}

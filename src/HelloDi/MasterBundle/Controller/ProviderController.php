@@ -293,11 +293,18 @@ class ProviderController extends Controller
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $form = $this->createFormBuilder($provider->getAccount(), array('data_class' => 'HelloDi\AccountingBundle\Entity\Account'))
+        $form = $this->createFormBuilder(array(
+                'terms' => $provider->getAccount()->getTerms(),
+                'timezone' => $provider->getTimezone(),
+            ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
                     'required'=>false,
                     'attr'=> array('class'=>'integer_validation'),
+                ))
+            ->add('timezone','timezone',array(
+                    'label' => 'TimeZone','translation_domain' => 'accounts',
+                    'required'=>true,
                 ))
             ->add('submit','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -309,6 +316,11 @@ class ProviderController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $data = $form->getData();
+
+                $provider->setTimezone($data['timezone']);
+                $provider->getAccount()->setTerms($data['terms']);
+
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', 'this operation done success!');

@@ -25,27 +25,27 @@
         </a>
     </li>
     <li {% if tab == '7' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistPurchases',{'id':account.id}) }}">
+        <a href="{{ path('hello_di_master_distributor_purchases',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Purchases' | trans ({}, "transaction") }}" >
         </a>
     </li>
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a href="{{ path('ManageDistUser',{'id':account.id}) }}">
+        <a href="{{ path('hello_di_master_distributor_users',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
         </a>
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
-        <a href="{{ path('ManageDistSettings',{'id':account.id}) }}">
-            <input type="submit" value="{{ 'Settings' | trans ({}, "accounts") }}" >
+        <a href="{{ path('hello_di_master_distributor_info',{'id':account.id}) }}">
+            <input type="submit" value="{{ 'Info' | trans ({}, "entity") }}" >
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a href="{{ path('ManageDistChildren',{'id':account.id}) }}">
-            <input type="submit" value="{{ 'SubAccounts' | trans ({}, "accounts") }}" >
+        <a href="{{ path('hello_di_master_retailer_index',{'dist_id':account.id}) }}">
+            <input type="submit" value="{{ 'Retailers' | trans ({}, "accounts") }}" >
         </a>
     </li>
     <li {% if tab == '8' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistEntiti',{'id':account.id}) }}">
+        <a href="{{ path('hello_di_master_distributor_entity',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
     </li>

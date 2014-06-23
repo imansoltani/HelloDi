@@ -1,0 +1,63 @@
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Users' | trans ({}, "user") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Users' | trans ({}, "user") }}</h3>
+    </div>
+
+    <br>
+    <a class="btn btn-primary btn-large" href="{{ path('hello_di_master_distributor_users_add',{'id':account.id}) }}">{{ 'AddNewUser' | trans ({}, "user") }}</a>
+
+    <div style="margin-top: 5px" class="tablediv">
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'FullName' | trans ({}, "user") }}</th>
+                    <th>{{ 'UserName' | trans ({}, "user") }}</th>
+                    <th>{{ 'Role' | trans ({}, "user") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                </tr>
+                <tr class="input" >
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_UserName" value="Search UserName" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Role" value="Search Role" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for users in users %}
+                    <tr>
+                        <td>{{ users.firstname }} {{ users.lastname }}</td>
+                        <td>{{ users.username }}</td>
+                        <td>{{ users.role }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('hello_di_master_distributor_users_edit',{'id':account.id,'user_id':users.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

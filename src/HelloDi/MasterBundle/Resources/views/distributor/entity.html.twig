@@ -1,10 +1,10 @@
-{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
 
-{% set tab = '7' %}
+{% set tab = '8' %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
     <span class="link">{{ 'Entity' | trans ({}, "entity") }}</span>
 {% endblock Site_Map %}
 

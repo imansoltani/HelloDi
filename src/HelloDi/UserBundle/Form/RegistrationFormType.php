@@ -14,6 +14,7 @@ namespace HelloDi\UserBundle\Form;
 use HelloDi\AccountingBundle\Entity\Account;
 use Symfony\Component\Form\FormBuilderInterface;
 use HelloDi\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RegistrationFormType extends BaseType
 {
@@ -23,10 +24,11 @@ class RegistrationFormType extends BaseType
     /**
      * @param array $languages
      * @param int $accountType
+     * @param string $class The User class name
      */
-    public function __construct(array $languages, $accountType = null)
+    public function __construct(array $languages, $accountType = null, $class = null)
     {
-        parent::__construct('HelloDi\CoreBundle\Entity\User');
+        parent::__construct($class?:'HelloDi\CoreBundle\Entity\User');
         $this->languages = array_combine($languages, $languages);
         $this->accountType = $accountType;
     }
@@ -53,34 +55,26 @@ class RegistrationFormType extends BaseType
         switch ($this->accountType)
         {
             case Account::RETAILER:
-                $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                    'type' => 'choice',
-                    'options' => array('label' => 'Role',
-                        'choices' => array(
-                            'ROLE_RETAILER' => 'ROLE_RETAILER',
-                            'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
-                        ),
+                $builder->add('role', 'choice', array('translation_domain' => 'user',
+                    'choices' => array(
+                        'ROLE_RETAILER' => 'ROLE_RETAILER',
+                        'ROLE_RETAILER_ADMIN' => 'ROLE_RETAILER_ADMIN',
                     ),
-                )); break;
+                ));
+                break;
 
             case Account::DISTRIBUTOR:
-                $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                    'type' => 'choice',
-                    'options' => array('label' => 'Role',
-                        'choices' => array(
-                            'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
-                            'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
-                        ),
+                $builder->add('role', 'choice', array('translation_domain' => 'user',
+                    'choices' => array(
+                        'ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR',
+                        'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN',
                     ),
                 )); break;
             case Account::PROVIDER:
-                $builder->add('roles', 'collection', array('translation_domain' => 'user',
-                    'type' => 'choice',
-                    'options' => array('label' => 'Role',
-                        'choices' => array(
-                            'ROLE_MASTER' => 'ROLE_MASTER',
-                            'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
-                        ),
+                $builder->add('role', 'choice', array('translation_domain' => 'user',
+                    'choices' => array(
+                        'ROLE_MASTER' => 'ROLE_MASTER',
+                        'ROLE_MASTER_ADMIN' => 'ROLE_MASTER_ADMIN',
                     ),
                 )); break;
         }

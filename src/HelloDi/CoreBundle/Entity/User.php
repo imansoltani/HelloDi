@@ -522,4 +522,27 @@ class User extends BaseUser
     {
         return $this->pins;
     }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->setRoles(array($role));
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->getRoles()[0];
+    }
 }

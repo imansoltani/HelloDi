@@ -21,4 +21,29 @@ class RetailerRepository extends EntityRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function findByDistributorId($id)
+    {
+        return $this->createQueryBuilder('this')
+            ->innerJoin('this.distributor', 'distributor')
+            ->where('distributor.id = :id')->setParameter('id', $id)
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function findByDistributorAccountId($id)
+    {
+        return $this->createQueryBuilder('this')
+            ->innerJoin('this.distributor', 'distributor')
+            ->innerJoin('distributor.account', 'account')
+            ->where('account.id = :id')->setParameter('id', $id)
+            ->getQuery()->getResult();
+    }
 }

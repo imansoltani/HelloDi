@@ -1,0 +1,24 @@
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
+
+{% set tab = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_users', {'id':account.id}) }}">{{ 'Users' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'AddNewUser' | trans ({}, "user") }}</span>
+{% endblock Site_Map %}
+
+
+{% block Tab %}
+    <div class="widget-content">
+        <div class="widget-header">
+            <h3>{{ 'CreateUser' | trans ({}, "user") }}</h3>
+        </div>
+
+        {{ form(form) }}
+    </div>
+{% endblock %}
+
+
+

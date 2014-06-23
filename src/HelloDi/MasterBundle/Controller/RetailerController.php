@@ -2,31 +2,16 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use HelloDi\AccountingBundle\Container\TransactionContainer;
-use HelloDi\AccountingBundle\Entity\Account;
-use HelloDi\AccountingBundle\Entity\CreditLimit;
-use HelloDi\AccountingBundle\Entity\Transaction;
-use HelloDi\CoreBundle\Entity\Entity;
-use HelloDi\CoreBundle\Entity\Item;
-use HelloDi\CoreBundle\Entity\User;
-use HelloDi\DistributorBundle\Entity\Distributor;
-use HelloDi\MasterBundle\Form\CreditLimitType;
-use HelloDi\MasterBundle\Form\DistributorAccountUserType;
-use HelloDi\MasterBundle\Form\EntityType;
-use HelloDi\MasterBundle\Form\TransactionType;
-use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-class DistributorController extends Controller
+class RetailerController extends Controller
 {
-    public function indexAction()
+    public function indexAction($dist_id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $distributors = $em->getRepository('HelloDiDistributorBundle:Distributor')->findAll();
+        $distributors = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByDistributorAccountId($dist_id);
 
         return $this->render('HelloDiMasterBundle:distributor:index.html.twig', array(
                 'distributors' => $distributors
