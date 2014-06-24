@@ -1,0 +1,58 @@
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'SubAccounts' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Retailers' | trans ({}, "accounts") }}</h3>
+    </div>
+
+    <div style="margin-top: 5px" class="tablediv">
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
+                <thead>
+                <tr>
+                    <th> {{ 'Id' | trans ({}, "common") }}</th>
+                    <th> {{ 'Name' | trans ({}, "accounts") }}</th>
+                    <th> {{ 'Entity' | trans ({}, "entity") }}</th>
+                    <th> {{ 'Balance' | trans ({}, "accounts") }}</th>
+                    <th> {{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                    <th> {{ 'Operation' | trans ({}, "common") }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for retailer in retailers %}
+                    <tr>
+                        <td>{{ retailer.account.id }}</td>
+                        <td>{{ retailer.account.name }}</td>
+                        <td>{{ retailer.entity.name }}</td>
+                        <td>{{ retailer.account.balance }}</td>
+                        <td>{{ retailer.account.creditLimitAmount }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions"  href="{{ path('Master_Retailer_Transaction',{'distid':account.id,'id':retailer.account.id}) }}"> {{ 'Manage' | trans ({}, "common") }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+

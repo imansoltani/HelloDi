@@ -7,65 +7,23 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RetailerController extends Controller
 {
-    public function indexAction($dist_id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $distributors = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByDistributorAccountId($dist_id);
-
-        return $this->render('HelloDiMasterBundle:distributor:index.html.twig', array(
-                'distributors' => $distributors
-            ));
-    }
-
-    public function addAction(Request $request)
+    public function indexAction($id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $distributor = new Distributor();
+        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
+        if(!$distributor)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $account = new Account();
-        $account->setCreationDate(new \DateTime('now'));
-        $account->setType(Account::DISTRIBUTOR);
-        $distributor->setAccount($account);
+        $retailers = $distributor->getRetailers();
 
-        $entity = new Entity();
-        $account->setEntity($entity);
-        $entity->addAccount($account);
-
-        $user = new User();
-        $user->setAccount($account);
-        $user->setEntity($entity);
-        $account->addUser($user);
-        $entity->addUser($user);
-
-        $currencies = $this->container->getParameter('Currencies.Account');
-        $languages = $this->container->getParameter('languages');
-
-        $form = $this->createForm(new DistributorAccountUserType($currencies,$languages), $distributor, array('cascade_validation' => true));
-        $form->get('account')->add('entity',new EntityType());
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em->persist($distributor);
-                $em->persist($account);
-                $em->persist($entity);
-                $em->persist($user);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
-                return $this->redirect($this->generateUrl('hello_di_master_distributor_index'));
-            }
-        }
-
-        return $this->render('HelloDiMasterBundle:distributor:add.html.twig', array(
-                'form' => $form->createView(),
+        return $this->render('HelloDiMasterBundle:retailer:index.html.twig', array(
+                'account' => $distributor->getAccount(),
+                'retailers' => $retailers,
             ));
     }
-
+    //TODO this file copied from MasterBundle:DistributorController. EDIT IT.
     //transactions
     public function transactionsAction(Request $request, $id)
     {//TODO must be edit

@@ -12,7 +12,7 @@ hello_di_master_distributor:
 
 hello_di_master_retailer:
     resource: "@HelloDiMasterBundle/Resources/config/routing/retailer.yml"
-    prefix:   /distributor/{dist_id}/retailer
+    prefix:   /distributor/{id}/retailer
 
 hello_di_master_operator:
     resource: "@HelloDiMasterBundle/Resources/config/routing/operator.yml"
