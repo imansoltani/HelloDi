@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RetailerController extends Controller
 {
-    public function indexAction($id)
+    public function distributorindexAction($id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

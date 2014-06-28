@@ -2,6 +2,7 @@
 
 namespace HelloDi\PricingBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,18 +13,18 @@ class PriceController extends Controller
 {
     public function pricingAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $account = $this->getUser()->getAccount();
 
         $items = $em->createQueryBuilder()
-            ->select('item.id','item.itemCode','item.itemName','item.itemFaceValue','priceDist.price')
-            ->from('HelloDiDiDistributorsBundle:Item','item')
-            ->innerJoin('item.Prices','priceProv')
-            ->innerJoin('priceProv.Account','accProv')
+            ->select('item.id','item.code','item.name','item.faceValue','priceDist.price')
+            ->from('HelloDiCoreBundle:Item','item')
+            ->innerJoin('item.prices','priceProv')
+            ->innerJoin('priceProv.account','accProv')
             ->where('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
-            ->leftJoin('item.Prices','priceDist','WITH','priceDist.Account = :accDist')
-            ->setParameter('accDist',$account)
+            ->leftJoin('item.prices','priceDist','WITH','priceDist.account = :accDist')->setParameter('accDist',$account)
             ->getQuery()->getArrayResult();
 
         return $this->render("HelloDiPricingBundle:Price:pricing.html.twig",array(
@@ -33,6 +34,7 @@ class PriceController extends Controller
 
     public function updatePriceAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $account = $this->getUser()->getAccount();
@@ -43,15 +45,15 @@ class PriceController extends Controller
         $priceAmount = $request->get('price','');
         if($priceAmount!= "" && (!is_numeric($priceAmount) || $priceAmount<0)) return new Response('false');
 
-        $item = $em->getRepository('HelloDiDiDistributorsBundle:Item')->find($itemId);
+        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($itemId);
         if(!$item) return new Response('false');
 
         /** @var Price $priceDist */
         $priceDist = $em->createQueryBuilder()
             ->select('price')
             ->from('HelloDiPricingBundle:Price','price')
-            ->where('price.Item = :item')->setParameter('item',$item)
-            ->andWhere('price.Account = :accDist')->setParameter('accDist',$account)
+            ->where('price.item = :item')->setParameter('item',$item)
+            ->andWhere('price.account = :accDist')->setParameter('accDist',$account)
             ->getQuery()->getOneOrNullResult();
 
         if($priceDist)                                  //price exist
@@ -68,8 +70,8 @@ class PriceController extends Controller
             $priceProv = $em->createQueryBuilder()      //check for exist price for provider
                 ->select('price')
                 ->from('HelloDiPricingBundle:Price','price')
-                ->where('price.Item = :item')->setParameter('item',$item)
-                ->innerJoin('price.Account','accProv')
+                ->where('price.item = :item')->setParameter('item',$item)
+                ->innerJoin('price.account','accProv')
                 ->andWhere('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
                 ->getQuery()->getOneOrNullResult();
 
@@ -83,7 +85,7 @@ class PriceController extends Controller
                 $em->persist($priceDist);
                 $em->flush();
             }
-            else                                        //error - can't create
+            else                                        //error - can't create - because any provider has not this item
                 return new Response('false');
         }
 

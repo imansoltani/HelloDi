@@ -4,9 +4,9 @@ namespace HelloDi\DistributorBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class RetailerController extends Controller
 {
-    public function dashboardAction()
+    public function indexAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

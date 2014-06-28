@@ -19,22 +19,25 @@ class AccountRepository extends EntityRepository
      */
     public function getAccountType(Account $account)
     {
+        if(!$account)
+            return null;
+
         switch ($account->getType()) {
             case Account::API:
-                return $this->getEntityManager()->getRepository("HelloDiDiDistributorsBundle:Api")
-                    ->findOneBy(array("Account" => $account));
-
-            case Account::DISTRIBUTOR:
-                return $this->getEntityManager()->getRepository("HelloDiDiDistributorsBundle:Distributor")
-                    ->findOneBy(array("Account" => $account));
+                return $this->getEntityManager()->getRepository("HelloDiCoreBundle:Api")
+                    ->findOneBy(array("account" => $account));
 
             case Account::PROVIDER:
-                return $this->getEntityManager()->getRepository("HelloDiDiDistributorsBundle:Provider")
-                    ->findOneBy(array("Account" => $account));
+                return $this->getEntityManager()->getRepository("HelloDiCoreBundle:Provider")
+                    ->findOneBy(array("account" => $account));
+
+            case Account::DISTRIBUTOR:
+                return $this->getEntityManager()->getRepository("HelloDiDistributorBundle:Distributor")
+                    ->findOneBy(array("account" => $account));
 
             case Account::RETAILER:
-                return $this->getEntityManager()->getRepository("HelloDiDiDistributorsBundle:Retailer")
-                    ->findOneBy(array("Account" => $account));
+                return $this->getEntityManager()->getRepository("HelloDiRetailerBundle:Retailer")
+                    ->findOneBy(array("account" => $account));
         }
 
         return null;

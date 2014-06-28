@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
 
 {% block title %}
     Manage Items Distributor
@@ -7,7 +7,7 @@
 {% set MU = '' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <span class="link">Manage Items Distributor</span>
 {% endblock Site_Map %}
 

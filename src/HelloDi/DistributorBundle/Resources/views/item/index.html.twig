@@ -1,0 +1,87 @@
+{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Items' | trans ({}, "item") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-tags"></i>{{ 'Items' | trans ({}, "item") }}{% endblock %}
+
+{% set MU = 'item' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <a class="btn-large button btn btn-primary " href="{{ path('DistTicketsNew',{'data':1}) }}">{{ 'new_item_request' | trans ({}, "ticket") }}</a>
+            <br>
+
+            <div style="margin-top: 5px" class="tablediv">
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "item") }}</th>
+                            <th>{{ 'Name' | trans ({}, "item") }}</th>
+                            <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                            <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                            <th>{{ 'denomination' | trans ({}, "price") }} ({{ distributor.currency }})</th>
+                            <th>{{ 'Price' | trans ({}, "price") }} ({{ distributor.currency }})</th>
+                            <th>{{ 'commission' | trans ({}, "price") }}</th>
+                            <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                        </tr>
+                        <tr class="input" >
+                            <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" name="search_type" value="Search Type" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for price in prices %}
+                            <tr>
+                                <td>{{ price.item.id }}</td>
+                                <td>{{ price.item.name }}</td>
+                                <td>{{ price.item.faceValue }} {{ price.item.currency }}</td>
+                                <td>{{ price.item.type|upper }}</td>
+                                <td>{{ price.item.DenominationByCurrency(distributor.currency) }}</td>
+                                <td>{{ price.price }}</td>
+                                <td>
+                                    {% if price.item.DenominationByCurrency(distributor.currency) %}
+                                        {{ '%.2f'|format((1 - price.price/price.item.DenominationByCurrency(distributor.currency))*100) }} %
+                                    {% else %}
+                                        NaN
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="btn_actions" href="{{ path('items_item_per_retailers',{'itemid': price.item.id}) }}">
+                                        {{ 'ItemPerRetailer' | trans ({}, "item") }}
+                                    </a>
+                                    <br/>
+                                    <a class="btn_actions" href="#">{{ 'Details' | trans ({}, "common") }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

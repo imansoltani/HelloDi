@@ -12,9 +12,10 @@
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
-
     <script type="text/javascript">
-        $(document).ready(function() {Fix_Size()});
+        $(document).ready(function() {
+            Fix_Size()
+        });
     </script>
 {% endblock %}
 
@@ -24,7 +25,7 @@
     </div>
 
     <br/>
-    <a class=" btn btn-primary btn-large" href="{{ path('AddItemProv',{'id':account.id}) }}">{{ 'AddItem' | trans ({}, "item") }}</a>
+    <a class=" btn btn-primary btn-large" href="{{ path('hello_di_master_provider_items_add',{'id':account.id}) }}">{{ 'AddItem' | trans ({}, "item") }}</a>
 
     <div style="margin-top: 5px" class="tablediv">
         <div class="tab-content datatable">
@@ -40,16 +41,15 @@
                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
                 </tr>
                 <tr class="input" >
-                    <td><input type="text" name="search_Id" value="Search Id" class="search_init" /></td>
-                    <td><input type="text" name="search_Name" value="Search Name" class="search_init" /></td>
-                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                    <td><input type="text" name="search_Code" value="Search Code" class="search_init" /></td>
-                    <td><input type="text" name="search_Type" value="Search Type" class="search_init" /></td>
-                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
-                    <td><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></td>
+                    <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Code" value="Search Code" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Type" value="Search Type" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for price in prices %}
                     <tr>
@@ -58,28 +58,27 @@
                         <td>{{ price.item.faceValue }} {{ price.item.currency }}</td>
                         <td>{{ price.item.code }}</td>
                         <td>
-                            {% if     price.item.type == ItemType.DMTU %}
+                            {% if     price.item.type == constant("DMTU",price.item) %}
                                 {{ 'Mobile' | trans ({}, "item") }}
-                            {% elseif price.item.type == ItemType.IMTU %}
+                            {% elseif price.item.type == constant("IMTU",price.item) %}
                                 {{ 'IMTU' | trans ({}, "item") }}
-                            {% elseif price.item.type == ItemType.CLCD %}
+                            {% elseif price.item.type == constant("CLCD",price.item) %}
                                 {{ 'Calling_Card' | trans ({}, "item") }}
-                            {% elseif price.item.type == ItemType.EPMT %}
+                            {% elseif price.item.type == constant("EPMT",price.item) %}
                                 {{ 'E-payment' | trans ({}, "item") }}
                             {% endif %}
                         </td>
-                        <td>{{ price.price }} {{ price.account.currency }}</td>
-                        <td class="td-actions" >
-                            <a class="btn_actions" href="{{ path('EditItemProv',{'id':account.id,'itemid':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                        <td>{{ price.price }} {{ AccountCurrency.get(price.account) }}</td>
+                        <td class="td-actions">
+                            <a class="btn_actions" href="{{ path('hello_di_master_provider_items_edit',{'id':account.id,'price_id':price.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                             <br/>
-                            {% if price.item.itemType !='imtu' %}
+                            {% if price.item.type != constant("IMTU",price.item) %}
                             <a class="btn_actions" href="{{ path('UploadInputProv',{'id':account.id,'itemid':price.item.id}) }}">{{ 'Upload' | trans ({}, "code") }}</a>
                             {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
-
             </table>
         </div>
     </div>

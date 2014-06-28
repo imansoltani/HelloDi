@@ -14,7 +14,7 @@
         </a>
     </li>
     <li class=" {% if MU == 'item' %}active{% endif %} dropdown">
-        <a href="{{ path('items_show') }}" class="dropdown-toggle">
+        <a href="{{ path('hello_di_distributor_item_index') }}" class="dropdown-toggle">
             <i class="icon-tags"></i>
             <span id="user_pc_menu">{{ 'Items' | trans ({}, "item") }}</span>
         </a>
@@ -28,9 +28,7 @@
         <ul class="dropdown-menu">
             <li><a href="{{ path('DistTransaction') }}">{{ 'History' | trans ({}, "transaction") }}</a></li>
             {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
-                <li>
-                    <a href="{{ path('distributor_transactions_new') }}">{{ 'Recharge' | trans ({}, "transaction") }}</a>
-                </li>
+            <li><a href="{{ path('distributor_transactions_new') }}">{{ 'Recharge' | trans ({}, "transaction") }}</a></li>
             {% endif %}
         </ul>
     </li>

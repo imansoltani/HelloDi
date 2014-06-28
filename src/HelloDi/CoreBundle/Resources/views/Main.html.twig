@@ -49,7 +49,7 @@
             <ul class="nav pull-right">
                 {% if app.user.account is not null %}
                 <li class="dropdown" style="text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);padding: 5px 10px;font-size: 16px;color: #0e5c92;">
-                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.account.accBalance }} {{ app.user.account.accCurrency }}</b>
+                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.account.balance }} {{ AccountCurrency.get(app.user.account) }}</b>
                 </li>
                 {% endif %}
 
@@ -84,27 +84,27 @@
                        >
                         <i class="icon-comment">
 
-                            {% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}
-                                {% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}
-                                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}
-                            </span>
-                                {% endif %}
+                            {#{% if app.user.roles[0]=='ROLE_RETAILER_ADMIN' or app.user.roles[0]=='ROLE_RETAILER' %}#}
+                                {#{% if render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) != 0 %}#}
+                                    {#<span>#}
+                                {#{{ render(controller('HelloDiDiDistributorsBundle:Retailers:countnote')) }}#}
+                            {#</span>#}
+                                {#{% endif %}#}
 
-                            {% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}
-                                {% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}
-                                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}
-                            </span>
-                                {% endif %}
+                            {#{% elseif app.user.roles[0]=='ROLE_DISTRIBUTOR_ADMIN' or app.user.roles[0]=='ROLE_DISTRIBUTOR' %}#}
+                                {#{% if render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) != 0 %}#}
+                                    {#<span>#}
+                                {#{{ render(controller('HelloDiDiDistributorsBundle:Distributors:countnote')) }}#}
+                            {#</span>#}
+                                {#{% endif %}#}
 
-                            {% else %}
-                                {% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}
-                                    <span>
-                                {{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}
-                            </span>
-                                {% endif %}
-                            {% endif %}
+                            {#{% else %}#}
+                                {#{% if render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) != 0 %}#}
+                                    {#<span>#}
+                                {#{{ render(controller('HelloDiDiDistributorsBundle:Tickets:countnote')) }}#}
+                            {#</span>#}
+                                {#{% endif %}#}
+                            {#{% endif %}#}
                         </i>
                     </a>
                 </li>

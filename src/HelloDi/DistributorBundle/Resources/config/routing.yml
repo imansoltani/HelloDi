@@ -1,3 +1,11 @@
 hello_di_distributor_homepage:
     pattern:  /
     defaults: { _controller: HelloDiDistributorBundle:Default:dashboard }
+
+hello_di_distributor_retailer:
+    resource: "@HelloDiDistributorBundle/Resources/config/routing/retailer.yml"
+    prefix:   /retailer
+
+hello_di_distributor_item:
+    resource: "@HelloDiDistributorBundle/Resources/config/routing/item.yml"
+    prefix:   /item

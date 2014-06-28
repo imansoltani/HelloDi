@@ -1,9 +1,9 @@
 <?php
-namespace HelloDi\DiDistributorsBundle\Listener;
+namespace HelloDi\CoreBundle\Listener;
 
 /**
  * Class CalcVatFormula
- * @package HelloDi\DiDistributorsBundle\Listener
+ * @package HelloDi\CoreBundle\Listener
  */
 class CalcVatFormula {
 

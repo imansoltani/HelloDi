@@ -1,4 +1,4 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
+{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
 
 {% block title %}
     Manage Items Distributor
@@ -7,7 +7,7 @@
 {% set MU = '' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <span class="link">Manage Items Distributor</span>
 {% endblock Site_Map %}
 
@@ -37,9 +37,9 @@
                 "aaData": $.evalJSON('{{ json_data|raw }}'),
                 "aoColumns": [
                     { "mData": "id", "sType": "numeric", "bVisible": false },
-                    { "mData": "itemName" },
-                    { "mData": "itemCode" },
-                    { "mData": "itemFaceValue", "sType": "numeric"},
+                    { "mData": "name" },
+                    { "mData": "code" },
+                    { "mData": "faceValue", "sType": "numeric"},
                     { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
                         if(data == null) data = "";
                         if(type === 'display') {

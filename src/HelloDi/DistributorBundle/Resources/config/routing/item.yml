@@ -1,0 +1,7 @@
+hello_di_distributor_item_index:
+    pattern:  /
+    defaults: { _controller: HelloDiDistributorBundle:Item:index }
+
+hello_di_distributor_item_per_retailers:
+    pattern:  /{itemid}/item-per-retailers
+    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:ItemPerRetailer }

@@ -2,6 +2,7 @@
 
 namespace HelloDi\DistributorBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DiDistributorsBundle\Entity\Entiti;
 use HelloDi\DiDistributorsBundle\Entity\Price;
@@ -22,23 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DistributorsController extends Controller
 {
-
-    public function dashboardAction()
-    {
-        $em=$this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $Account = $user->getAccount();
-        $Notifications=$em->getRepository('HelloDiDiDistributorsBundle:Notification')->findBy(array('Account'=>$this->getUser()->getAccount()));
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:dashboard.html.twig', array(
-            'Account' => $Account,
-            'Entiti' => $Account->getEntiti(),
-            'User' => $user,
-            'Notifications'=>$Notifications
-        ));
-
-    }
-
-
     public function ShowLastNotificationAction(){
 
         $em=$this->getDoctrine()->getManager();

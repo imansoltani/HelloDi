@@ -20,3 +20,11 @@ services:
     notification_handler:
         class:  HelloDi\CoreBundle\Listener\Notificationhandler
         arguments: [@doctrine.orm.default_entity_manager,@security.context]
+
+    calc_vat_formula:
+        class: HelloDi\CoreBundle\Listener\CalcVatFormula
+        arguments: [%VatFormula%]
+
+    account_currency:
+        class: HelloDi\CoreBundle\Listener\AccountCurrency
+        arguments: [@doctrine.orm.default_entity_manager]

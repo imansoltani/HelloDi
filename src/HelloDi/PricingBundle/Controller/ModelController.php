@@ -2,6 +2,7 @@
 
 namespace HelloDi\PricingBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\PricingBundle\Entity\Model;
@@ -14,6 +15,7 @@ class ModelController extends Controller
 {
     public function indexModelAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var Account $account */
@@ -28,6 +30,7 @@ class ModelController extends Controller
 
     public function NewDistributorModelAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var Account $account */
@@ -79,11 +82,10 @@ class ModelController extends Controller
 
         /** @var Query $prices */
         $prices = $em->createQueryBuilder()
-            ->select('price.id','item.itemCode','item.itemName','price.price')
+            ->select('price.id','item.code','item.name','price.price')
             ->from('HelloDiPricingBundle:Price','price')
-            ->innerJoin('price.Item','item')
-            ->where('price.Account = :acc')->setParameter('acc',$account)
-            ->where('price.priceStatus = :true')->setParameter('true',true)
+            ->innerJoin('price.item','item')
+            ->where('price.account = :acc')->setParameter('acc',$account)
             ->getQuery()->getArrayResult();
 
         foreach($prices as &$price)
