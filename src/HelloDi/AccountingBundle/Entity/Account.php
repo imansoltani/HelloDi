@@ -98,6 +98,12 @@ class Account
     private $models;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Model", inversedBy="accounts")
+     * @ORM\JoinColumn(name="model_id", referencedColumnName="id", nullable=true)
+     */
+    private $model;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -505,5 +511,28 @@ class Account
     public function  __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set model
+     *
+     * @param Model $model
+     * @return Account
+     */
+    public function setModel(Model $model = null)
+    {
+        $this->model = $model;
+    
+        return $this;
+    }
+
+    /**
+     * Get model
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 }

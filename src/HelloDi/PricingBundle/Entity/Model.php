@@ -2,6 +2,7 @@
 
 namespace HelloDi\PricingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
 
@@ -42,9 +43,22 @@ class Model
     private $account;
 
     /**
+     * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="model")
+     */
+    private $accounts;
+
+    /**
      * @var String
      */
     private $json;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -118,7 +132,7 @@ class Model
     /**
      * Get account
      *
-     * @return \HelloDi\AccountingBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -182,5 +196,38 @@ class Model
     {
         if (!unlink($this->getUploadRootDir() . $this->id . ".json"))
             throw new \Exception('unable to delete model file.');
+    }
+    
+    /**
+     * Add accounts
+     *
+     * @param Account $accounts
+     * @return Model
+     */
+    public function addAccount(Account $accounts)
+    {
+        $this->accounts[] = $accounts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove accounts
+     *
+     * @param Account $accounts
+     */
+    public function removeAccount(Account $accounts)
+    {
+        $this->accounts->removeElement($accounts);
+    }
+
+    /**
+     * Get accounts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
     }
 }
