@@ -54,8 +54,8 @@
                                 <td>{{ model.name }}</td>
                                 <td>{{ model.currency }}</td>
                                 <td class="td-actions" >
-                                    <a class="btn_actions" href="{{ path('hello_di_pricing_model_edit',{'id':model.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
-                                    <a class="btn_actions YesNoMessage" href="{{ path('hello_di_pricing_model_delete',{'id':model.id}) }}"
+                                    <a class="btn_actions" href="{{ path('hello_di_pricing_provider_model_edit',{'id':model.id}) }}">{{ 'Edit' | trans ({}, "common") }}</a><br/>
+                                    <a class="btn_actions YesNoMessage" href="{{ path('hello_di_pricing_provider_model_delete',{'id':model.id}) }}"
                                        header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Delete?' | trans ({}, "message") }}">{{ 'Delete' | trans ({}, "common") }}</a>
                                 </td>
                             </tr>

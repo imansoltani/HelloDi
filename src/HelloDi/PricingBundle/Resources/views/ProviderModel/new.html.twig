@@ -24,14 +24,9 @@
             oTable = Fix_Size({
                 "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
                 "sPaginationType": "full_numbers",
-                "aaData": $.evalJSON('{{ json_data|raw }}'),
-                "aoColumns": [
-                    { "mData": "id", "sType": "numeric", "bVisible": false },
-                    { "mData": "name" },
-                    { "mData": "code" },
-                    { "mData": "faceValue" },
-                    { "mData": "currency" },
-                    { "mData": "amount", "sType": "numeric", "mRender": function ( data, type ) {
+                "aoColumnDefs": [
+                    { "aTargets": [ 0 ], "sType": "numeric", "bVisible": false },
+                    { "aTargets": [ 5 ], "sType": "numeric", "mRender": function ( data, type ) {
                         if(type === 'display')
                             return '<input class="price-input" type="text" value="' + data + '">';
                         return data;
@@ -45,10 +40,10 @@
         } );
 
         function getJson() {
-            var array = oTable.fnGetData(), result = [], i;
+            var array = oTable.fnGetData(), result = {}, i;
             for(i=0;i<array.length;i++) {
-                if(array[i]["amount"].trim() != "")
-                    result.push({"id":array[i]["id"],"amount":array[i]["amount"]});
+                if(array[i][5].trim() != "")
+                    result[array[i][0]] = array[i][5].trim();
             }
             return $.toJSON(result);
         }
@@ -73,8 +68,8 @@
                             <th>{{ 'Id' | trans ({}, "common") }}</th>
                             <th>{{ 'Name' | trans ({}, "item") }}</th>
                             <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
-                            <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
-                            <th>{{ 'Currency' | trans ({}, "item") }}</th>
+                            <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
+                            <th>{{ 'Denominations' | trans ({}, "item") }}</th>
                             <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
                         </tr>
                         <tr class="input" >
@@ -86,7 +81,23 @@
                             <td><label><input type="text" class="search_init" name="search_Amount" value="Search Amount" /></label></td>
                         </tr>
                         </thead>
-                        <tbody id="json-table"></tbody>
+                        <tbody id="json-table">
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.code }}</td>
+                                <td>{{ item.faceValue }} ({{ item.currency }})</td>
+                                <td>
+                                    {% for denomination in item.denominations %}
+                                        {{ denomination.currency }}
+                                        {% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ amounts[item.id] is defined ? amounts[item.id] : "" }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>

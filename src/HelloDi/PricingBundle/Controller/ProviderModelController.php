@@ -4,7 +4,6 @@ namespace HelloDi\PricingBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
-use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Form\ModelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -45,19 +44,19 @@ class ProviderModelController extends Controller
                 ))
         ;
 
-        $dataArray = [];
+        $amounts = [];
 
         if($request->isMethod('post'))
         {
             $form->handleRequest($request);
 
-            $jsonArray = json_decode($model->getJson(),true);
+            $amounts = json_decode($model->getJson(),true);
 
-            if(is_array($jsonArray) && count($jsonArray)>0)
+            if(is_array($amounts) && count($amounts)>0)
             {
                 try {
-                    foreach($jsonArray as $row) {
-                        $item = $em->getRepository("HelloDiCoreBundle:Item")->find($row['id']);
+                    foreach($amounts as $key=>$value) {
+                        $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
                         if(!$item) throw new \Exception("Item doesn't exist.");
 
                         if($item->getCurrency() != $model->getCurrency()) {
@@ -68,7 +67,7 @@ class ProviderModelController extends Controller
                                 $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
                         }
 
-                        if(!is_numeric($row['amount'])) throw new \Exception('amount must be numeric.');
+                        if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
                     }
                 }
                 catch(\Exception $ex) {
@@ -80,29 +79,24 @@ class ProviderModelController extends Controller
 
             if($form->isValid())
             {
-                $model->setAccount(null);
                 $em->persist($model);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 return $this->redirect($this->generateUrl("hello_di_pricing_provider_model_index"));
             }
-
-            foreach(json_decode($model->getJson(),true) as $row)
-                $dataArray[$row['id']] = $row['amount'];
         }
 
         $items = $em->createQueryBuilder()
-            ->select('item')
+            ->select('item', 'denominations')
             ->from('HelloDiCoreBundle:Item','item')
-            ->getQuery()->getArrayResult();
-
-        foreach($items as &$item)
-            $item['amount'] = isset($dataArray[$item['id']])?$dataArray[$item['id']]:"";
+            ->LeftJoin('item.denominations', 'denominations')
+            ->getQuery()->getResult();
 
         return $this->render("HelloDiPricingBundle:ProviderModel:new.html.twig",array(
-            'json_data'=>json_encode($items),
-            'form' => $form->createView(),
+                'items' => $items,
+                'amounts' => $amounts,
+                'form' => $form->createView(),
         ));
     }
 
@@ -111,36 +105,52 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var Account $account */
-        $account = $this->getUser()->getAccount();
-
         $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
 
-        if (!$model || $model->getAccount() != $account) {
+        $currencies = $this->container->getParameter('Currencies.Account');
+
+        if (!$model || $model->getAccount() != null) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
         }
 
-        $form = $this->createForm(new ModelType(),$model);
+        $form = $this->createForm(new ModelType($currencies),$model)
+            ->add('submit','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button','onclick'=>"$('#json').val(getJson())")
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('last-button','onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_pricing_provider_model_index').'")')
+                ))
+        ;
+
+        $amounts = json_decode($model->getJson(),true);
 
         if($request->isMethod('post'))
         {
             $form->handleRequest($request);
-            $jsonArray = json_decode($model->getJson(),true);
 
-            if(is_array($jsonArray) && count($jsonArray)>0)
+            $amounts = json_decode($model->getJson(),true);
+
+            if(is_array($amounts) && count($amounts)>0)
             {
-                try
-                {
-                    foreach($jsonArray as $row)
-                    {
-                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($row['PriceId']);
-                        if(!$price || $price->getAccount()!=$account) throw new \Exception('Account has not this item.');
-                        if(!is_numeric($row['Amount'])) throw new \Exception('amount must be numeric.');
-                        if($row['Amount'] < $price->getPrice()) throw new \Exception('amount must be larger than price.');
+                try {
+                    foreach($amounts as $key=>$value) {
+                        $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
+                        if(!$item) throw new \Exception("Item doesn't exist.");
+
+                        if($item->getCurrency() != $model->getCurrency()) {
+                            if(!$em->getRepository('HelloDiCoreBundle:Denomination')->findOneBy(array(
+                                    'item' => $item,
+                                    'currency' => $model->getCurrency()
+                                )))
+                                $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
+                        }
+
+                        if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
                     }
                 }
-                catch(\Exception $ex)
-                {
+                catch(\Exception $ex) {
                     $form->addError(new FormError($ex->getMessage()));
                 }
             }
@@ -149,31 +159,23 @@ class ProviderModelController extends Controller
 
             if($form->isValid())
             {
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
                 $em->flush();
-                return $this->redirect($this->generateUrl("hello_di_pricing_model_index"));
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+                return $this->redirect($this->generateUrl("hello_di_pricing_provider_model_index"));
             }
         }
 
-        /** @var Query $prices */
-        $prices = $em->createQueryBuilder()
-            ->select('price.id','item.itemCode','item.itemName','price.price')
-            ->from('HelloDiPricingBundle:Price','price')
-            ->innerJoin('price.Item','item')
-            ->where('price.Account = :acc')->setParameter('acc',$account)
-            ->where('price.priceStatus = :true')->setParameter('true',true)
-            ->getQuery()->getArrayResult();
-
-        $dataArray = [];
-        foreach(json_decode($model->getJson(),true) as $row)
-            $dataArray[$row['PriceId']] = $row['Amount'];
-
-        foreach($prices as &$price)
-            $price['amount'] = isset($dataArray[$price['id']])?$dataArray[$price['id']]:"";
+        $items = $em->createQueryBuilder()
+            ->select('item', 'denominations')
+            ->from('HelloDiCoreBundle:Item','item')
+            ->LeftJoin('item.denominations', 'denominations')
+            ->getQuery()->getResult();
 
         return $this->render("HelloDiPricingBundle:ProviderModel:edit.html.twig",array(
-            'json_data'=>json_encode($prices),
-            'form' => $form->createView(),
+                'items' => $items,
+                'amounts' => $amounts,
+                'form' => $form->createView(),
         ));
     }
 
