@@ -1,4 +1,4 @@
-{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+{% extends 'HelloDiDiDistributorsBundle:Menu:Master.html.twig' %}
 
 {% block title %}
     Manage Items Distributor
@@ -7,7 +7,7 @@
 {% set MU = '' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('loginsuccess') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <span class="link">Manage Items Distributor</span>
 {% endblock Site_Map %}
 
@@ -30,18 +30,17 @@
 
     <script type="text/javascript">
         var oTable;
-        $(document).ready(function () {
+        $(document).ready(function() {
             oTable = Fix_Size({
                 "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
                 "sPaginationType": "full_numbers",
                 "aaData": $.evalJSON('{{ json_data|raw }}'),
                 "aoColumns": [
                     { "mData": "id", "sType": "numeric", "bVisible": false },
-                    { "mData": "name" },
-                    { "mData": "code" },
-                    { "mData": "faceValue", "sType": "numeric"},
-                    { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
-                        if(data == null) data = "";
+                    { "mData": "itemName" },
+                    { "mData": "itemCode" },
+                    { "mData": "price" },
+                    { "mData": "amount", "sType": "numeric", "mRender": function ( data, type ) {
                         if(type === 'display') {
                             return '<input class="price-input" type="text" value="' + data + '">';
                         }
@@ -51,42 +50,28 @@
             });
 
             $(".price-input").live('blur',function(){
-                var row = oTable.fnGetPosition($(this).closest('tr')[0]);
-                oTable.fnUpdate( $(this).val(), row, 4);
-                var rowData = oTable.fnGetData(row);
-                var input = $(oTable.fnGetNodes(row)).find('input');
-                input.addClass('checking');
-                $.ajax({
-                    type: "Post",
-                    url: "{{ path("updatePrice") }}",
-                    data: rowData,
-                    cache: false,
-                    success: function(result)
-                    {
-                        if(result == 'true')
-                            input.removeClass('checking').addClass('accepted');
-                        else if(result == 'false')
-                            input.removeClass('checking').addClass('rejected');
-                    }
-                });
+                oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 4 , false , false );
             });
-        });
+        } );
 
+        function getJson()
+        {
+            var array = oTable.fnGetData(), result = [], i;
+
+            for(i=0;i<array.length;i++)
+            {
+                if(array[i]["amount"].trim() != "")
+                    result.push({"PriceId":array[i]["id"],"Amount":array[i]["amount"]});
+            }
+
+            return $.toJSON(result);
+        }
     </script>
 
     <style>
         .price-input {
             font-size:12px !important;
             font-weight: bold;
-        }
-        .price-input.accepted {
-            background-color : #afa !important;
-        }
-        .price-input.rejected {
-            background-color : #faa !important;
-        }
-        .price-input.checking {
-            background-color : #eee !important;
         }
     </style>
 
@@ -97,35 +82,62 @@
         <div class="widget stacked">
 
             <!-- /widget-header -->
+
+            {#<a onclick="$('#json').val(getJson());alert($('#json').val());">aaaaaaaaaaaaa</a>#}
+
             <div class="widget-content">
+
+                <div style="color: red">
+                    {{ form_errors(form) }}
+                </div>
+
                 <div style="margin-top: 5px" class="tablediv">
 
                     <div class="tab-content datatable">
+
                         <table id="example" class="table postsend">
                             <thead>
                             <tr>
                                 <th>{{ 'Id' | trans ({}, "common") }}</th>
-                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
                                 <th>{{ 'Name' | trans ({}, "item") }}</th>
-                                <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
                                 <th>{{ 'Price' | trans ({}, "price") }}</th>
+                                <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
                             </tr>
 
                             <tr class="input" >
                                 <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
                                 <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
                                 <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
-                                <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
                                 <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
+                                <td><label><input type="text" class="search_init" name="search_Amount" value="Search Amount" /></label></td>
                             </tr>
+
                             </thead>
-                            <tbody>
+                            <tbody id="json-table">
                             </tbody>
                         </table>
+
                     </div>
                 </div>
-            </div>
 
+
+
+                <form method="post" class="form-horizontal" style="margin-top: 5px">
+                    <div class="control-group">
+                        {{ form_label(form.name) }}
+                        <div class="controls money">
+                            {{ form_widget(form.name) }} <span class="icon-certificate"></span>
+                        </div>
+                    </div>
+                    {{ form_widget(form.json, { 'id': 'json' }) }}
+                    {{ form_widget(form._token) }}
+                    <div class="form-actions" style="margin-bottom: 0">
+                        <input type="submit" value="Save" class="btn btn-primary" onclick="$('#json').val(getJson());">
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 {% endblock %}

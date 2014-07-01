@@ -1,0 +1,97 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}Add Model{% endblock title %}
+
+{% block PageTitle %}<i class="icon-th-large"></i>Add Model{% endblock %}
+
+{% set MU = 'prov' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_pricing_provider_model_index') }}">Models</a>
+    <span class="link">Add Model</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.json-2.4.min.js') }}"></script>
+    <script type="text/javascript">
+        var oTable;
+        $(document).ready(function() {
+            oTable = Fix_Size({
+                "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
+                "sPaginationType": "full_numbers",
+                "aaData": $.evalJSON('{{ json_data|raw }}'),
+                "aoColumns": [
+                    { "mData": "id", "sType": "numeric", "bVisible": false },
+                    { "mData": "name" },
+                    { "mData": "code" },
+                    { "mData": "faceValue" },
+                    { "mData": "currency" },
+                    { "mData": "amount", "sType": "numeric", "mRender": function ( data, type ) {
+                        if(type === 'display')
+                            return '<input class="price-input" type="text" value="' + data + '">';
+                        return data;
+                    } }
+                ]
+            });
+
+            $(".price-input").live('blur',function(){
+                oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 5 , false , false );
+            });
+        } );
+
+        function getJson() {
+            var array = oTable.fnGetData(), result = [], i;
+            for(i=0;i<array.length;i++) {
+                if(array[i]["amount"].trim() != "")
+                    result.push({"id":array[i]["id"],"amount":array[i]["amount"]});
+            }
+            return $.toJSON(result);
+        }
+    </script>
+
+    <style>
+        .price-input {
+            font-size:12px !important;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div style="margin: 5px 0" class="tablediv">
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "common") }}</th>
+                            <th>{{ 'Name' | trans ({}, "item") }}</th>
+                            <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
+                            <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                            <th>{{ 'Currency' | trans ({}, "item") }}</th>
+                            <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
+                        </tr>
+                        <tr class="input" >
+                            <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
+                            <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
+                            <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
+                            <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
+                            <td><label><input type="text" class="search_init" name="search_Currency" value="Search Currency" /></label></td>
+                            <td><label><input type="text" class="search_init" name="search_Amount" value="Search Amount" /></label></td>
+                        </tr>
+                        </thead>
+                        <tbody id="json-table"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

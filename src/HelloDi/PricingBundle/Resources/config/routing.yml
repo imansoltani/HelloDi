@@ -2,6 +2,10 @@ hello_di_pricing_model:
     resource: "@HelloDiPricingBundle/Resources/config/routing/model.yml"
     prefix:  /model
 
+hello_di_pricing_provider_model:
+    resource: "@HelloDiPricingBundle/Resources/config/routing/providerModel.yml"
+    prefix:  /app/m/provider/model
+
 pricing:
     pattern: /pricing
     defaults: { _controller: HelloDiPricingBundle:Price:pricing }

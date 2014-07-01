@@ -16,7 +16,7 @@ hello_di_master:
 
 hello_di_pricing:
     resource: "@HelloDiPricingBundle/Resources/config/routing.yml"
-    prefix:   /pricing
+    prefix:   /
 
 hello_di_accounting:
     resource: "@HelloDiAccountingBundle/Resources/config/routing.yml"

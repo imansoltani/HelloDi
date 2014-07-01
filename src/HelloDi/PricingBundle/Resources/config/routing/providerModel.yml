@@ -1,0 +1,15 @@
+hello_di_pricing_provider_model_index:
+    pattern:  /
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:index }
+
+hello_di_pricing_provider_model_add:
+    pattern: /add
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:Add }
+
+hello_di_pricing_provider_model_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:edit }
+
+hello_di_pricing_provider_model_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:Delete }
