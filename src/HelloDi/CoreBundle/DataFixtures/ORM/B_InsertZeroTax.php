@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Tax;
 use HelloDi\CoreBundle\Entity\TaxHistory;
 
-class InsertZeroTax implements FixtureInterface
+class B_InsertZeroTax implements FixtureInterface
 {
     /**
      * {@inheritDoc}

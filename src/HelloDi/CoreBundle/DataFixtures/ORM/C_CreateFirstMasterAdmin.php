@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\User;
 
-class CreateFirstMasterAdmin implements FixtureInterface
+class C_CreateFirstMasterAdmin implements FixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -27,7 +27,7 @@ class CreateFirstMasterAdmin implements FixtureInterface
         $user_admin = new User();
         $user_admin->setUsername('master_admin');
         $user_admin->setEmail('master_admin@helloDi.com');
-        $user_admin->setPlainPassword('123');
+        $user_admin->setPlainPassword('123456');
         $user_admin->addRole('ROLE_MASTER_ADMIN');
         $user_admin->setFirstName('master_admin');
         $user_admin->setLanguage('en');

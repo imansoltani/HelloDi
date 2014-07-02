@@ -7,7 +7,7 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Provider;
 
-class CreateB2BServerAccount implements FixtureInterface
+class D_CreateB2BServerAccount implements FixtureInterface
 {
     /**
      * {@inheritDoc}

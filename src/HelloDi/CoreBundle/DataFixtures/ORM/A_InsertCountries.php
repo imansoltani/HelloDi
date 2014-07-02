@@ -7,7 +7,7 @@ use HelloDi\CoreBundle\Entity\Country;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class InsertCountries implements FixtureInterface, ContainerAwareInterface
+class A_InsertCountries implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface

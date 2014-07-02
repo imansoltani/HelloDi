@@ -8,6 +8,7 @@ vendor/
 test/*
 web/uploads/documents/*
 web/uploads/logos/*
+web/uploads/models/*
 !web/uploads/logos/0.png
 
 # phpstorm
