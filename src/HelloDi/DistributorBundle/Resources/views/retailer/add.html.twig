@@ -30,23 +30,44 @@
                                 </a></li>
                             <li><a id="step2" rel="2" isdone="0" class="disabled" onclick="go(2)">
                                     <label style="cursor:default" class="stepNumber">2</label>
-                                    <span class="stepDesc">{{ 'Account' | trans ({}, "accounts") }}<br></span>
+                                    <span class="stepDesc">{{ 'Address' | trans ({}, "entity") }}<br></span>
                                 </a></li>
                             <li><a id="step3" rel="3" isdone="0" class="disabled" onclick="go(3)">
                                     <label style="cursor:default" class="stepNumber">3</label>
-                                    <span class="stepDesc">{{ 'User' | trans ({}, "user") }}<br></span>
+                                    <span class="stepDesc">{{ 'Account' | trans ({}, "accounts") }}<br></span>
                                 </a></li>
+                            <li><a id="step4" rel="4" isdone="0" class="disabled" onclick="go(4)">
+                                    <label style="cursor:default" class="stepNumber">4</label>
+                                    <span class="stepDesc">{{ 'User' | trans ({}, "user") }}<br></span>
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="stepContainer">
                             <!-- Entity -->
                             <div style="display: block;position: absolute;z-index: 10" class="content" id="step-1">
                                 <div class="widget-header"><h3>{{ 'Entity' | trans ({}, "entity") }}</h3></div>
-                                {{ form_row(form.account.entity) }}
+                                {{ form_row(form.account.entity.name) }}
+                                {{ form_row(form.account.entity.vatNumber) }}
+                                {{ form_row(form.account.entity.tel1) }}
+                                {{ form_row(form.account.entity.tel2) }}
+                                {{ form_row(form.account.entity.fax) }}
+                                {{ form_row(form.account.entity.website) }}
+                            </div>
+
+                            <!-- Address -->
+                            <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
+                                <div class="widget-header"><h3>{{ 'Address' | trans ({}, "entity") }}</h3></div>
+                                {{ form_row(form.account.entity.country) }}
+                                {{ form_row(form.account.entity.city) }}
+                                {{ form_row(form.account.entity.address1) }}
+                                {{ form_row(form.account.entity.address2) }}
+                                {{ form_row(form.account.entity.address3) }}
+                                {{ form_row(form.account.entity.NP) }}
                             </div>
 
                             <!-- Account -->
-                            <div style="display: none;position: absolute;z-index: 11" class="content" id="step-2">
+                            <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
                                 <div class="widget-header"><h3>{{ 'Account' | trans ({}, "accounts") }}</h3></div>
                                 {{ form_row(form.account.name) }}
                                 {{ form_row(form.account.defaultLanguage) }}
@@ -54,18 +75,18 @@
                             </div>
 
                             <!-- User -->
-                            <div style="display: none;position: absolute;z-index: 11" class="content" id="step-3">
+                            <div style="display: none;position: absolute;z-index: 11" class="content" id="step-4">
                                 <div class="widget-header"><h3>{{ 'User' | trans ({}, "user") }}</h3></div>
                                 {{ form_row(form.account.users[0]) }}
                             </div>
 
-                            {{ form_widget(form._token) }}
+                            {{ form_rest(form) }}
                         </div>
 
                         <div class="form-actions" style="margin-bottom: 0">
                             <a class="btn btn-primary buttonPrevious" onclick="Prev()" style="display: none">{{ 'Previous' | trans ({}, "common") }}</a>
-                            <a class="btn btn-primary buttonNext" onclick="Next()">{{ 'Next' | trans ({}, "common") }}</a>
-                            <a class="btn btn-success finalsubmit" onclick="Done()"  style="display: none">{{ 'Create' | trans ({}, "common") }}</a>
+                            <a class="btn btn-primary buttonNext" onclick="Next()"> {{ 'Next' | trans ({}, "common") }}</a>
+                            <a class="btn btn-success finalsubmit" onclick="Done()" style="display: none">{{ 'Create' | trans ({}, "common") }}</a>
                             <a class="btn" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Cancel' | trans ({}, "common") }}</a>
                         </div>
                     </div>

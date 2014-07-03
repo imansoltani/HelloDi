@@ -36,6 +36,6 @@ class DistributorAccountUserType extends AbstractType
 
     public function getName()
     {
-        return 'hellodi_master_bundle_distributor_account_entity_user_type';
+        return 'hellodi_master_bundle_distributor_account_user_type';
     }
 }

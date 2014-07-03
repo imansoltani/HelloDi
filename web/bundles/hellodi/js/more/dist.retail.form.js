@@ -28,6 +28,7 @@ function go(y)
     if((y == 1 && $('#step1').attr('isdone') == 1)
         || (y == 2 && $('#step2').attr('isdone') == 1)
         || (y == 3 && $('#step3').attr('isdone') == 1)
+        || (y == 4 && $('#step4').attr('isdone') == 1)
         )
     {
         var x = Now_Step(0);
@@ -44,7 +45,7 @@ function go(y)
 function Next()
 {
     var x = Math.round(Now_Step(0));
-    if( x < 3 )
+    if( x < 4 )
     {
         if(!Page(x,1)) return;
         Page(x+1,0);
@@ -144,12 +145,30 @@ function Page(x , y)
             $('#step3').removeAttr('class');
             $('#step3').attr('class','selected');
             if($('#step3').attr('isdone') == 0 )$('#step3').attr('isdone','1');
-            $('.buttonNext').attr('style','display:none');
-            $('.finalsubmit').removeAttr('style');
             return true ;
         }
         $('#step3').removeAttr('class');
         $('#step3').attr('class','done');
+        return true ;
+    }
+
+
+    if(x == 4)
+    {
+        if(y == 0)
+        {
+            ChangeSize(4);
+            $('.content').fadeOut();
+            $('#step-4').fadeIn();
+            $('#step4').removeAttr('class');
+            $('#step4').attr('class','selected');
+            if($('#step4').attr('isdone') == 0 )$('#step4').attr('isdone','1');
+            $('.buttonNext').attr('style','display:none');
+            $('.finalsubmit').removeAttr('style');
+            return true ;
+        }
+        $('#step4').removeAttr('class');
+        $('#step4').attr('class','done');
         $('.buttonNext').removeAttr('style');
         $('.finalsubmit').attr('style','display:none');
         return true ;

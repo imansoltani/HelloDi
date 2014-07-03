@@ -7,7 +7,6 @@ use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DistributorBundle\Form\RetailerAccountUserType;
 use HelloDi\DistributorBundle\Form\RetailerSearchType;
-use HelloDi\MasterBundle\Form\AccountUserType;
 use HelloDi\MasterBundle\Form\EntityType;
 use HelloDi\RetailerBundle\Entity\Retailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

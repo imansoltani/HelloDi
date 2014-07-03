@@ -33,6 +33,6 @@ class RetailerAccountUserType extends AbstractType
 
     public function getName()
     {
-        return 'hellodi_distributor_bundle_retailer_account_entity_user_type';
+        return 'hellodi_distributor_bundle_retailer_account_user_type';
     }
 }
