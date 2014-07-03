@@ -1,13 +1,13 @@
 {% extends 'HelloDiMasterBundle::menu.html.twig' %}
 
-{% block title %}{{ 'CreateProviderWithEntity' | trans ({}, "menu") }}{% endblock title %}
+{% block title %}{{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}{% endblock title %}
 
 {% block PageTitle %}<i class="icon-check"></i>{{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}{% endblock %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
-    <span class="link">{{ 'CreateProviderWithEntity' | trans ({}, "menu") }}</span>
+    <span class="link">{{ 'CreateProviderWithEntity' | trans ({}, "accounts") }}</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}

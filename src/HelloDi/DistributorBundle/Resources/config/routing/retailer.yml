@@ -2,13 +2,9 @@ hello_di_distributor_retailer_index:
     pattern:  /
     defaults: { _controller: "HelloDiDistributorBundle:Retailer:index"}
 
-retailer_show:
-    pattern:  /
-    defaults: { _controller: "HelloDiDiDistributorsBundle:Distributors:ShowRetaierAccount" }
-
-DistNewRetailer:
-    pattern:  /new
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:DistNewRetailer }
+hello_di_distributor_retailer_add:
+    pattern:  /add
+    defaults: { _controller: "HelloDiDistributorBundle:Retailer:add" }
 
 #transactions--------------
 Retailer_Transaction:
