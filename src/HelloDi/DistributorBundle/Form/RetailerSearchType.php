@@ -2,6 +2,7 @@
 
 namespace HelloDi\DistributorBundle\Form;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use Symfony\Component\Form\AbstractType;
@@ -10,37 +11,40 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RetailerSearchType extends AbstractType
 {
     private $distributor;
+    private $em;
 
-    public function __construct(Distributor $distributor)
+    public function __construct(Distributor $distributor, EntityManager $em)
     {
         $this->distributor = $distributor;
+        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $cities = $em->createQueryBuilder()
-//            ->select('entity.city')
-//            ->from('HelloDiDistributorBundle:Distributor', 'distributor')
-////            ->innerJoin('distributor.retailers', 'retailer')
-////            ->innerJoin('retailer.account', 'accountRetailer')
-////            ->innerJoin('accountRetailer.entity', 'entity')
-//            ->innerJoin('distributor.account', 'account')
-//            ->innerJoin('account.entity', 'entity')
-//            ->groupBy('entity.city')
-//            ->getQuery()->getResult();
-//
-//        die(var_dump($cities));
+        $ArrayCities = $this->em->createQueryBuilder()
+            ->select('entity.city')
+            ->from('HelloDiDistributorBundle:Distributor', 'distributor')
+            ->innerJoin('distributor.retailers', 'retailer')
+            ->innerJoin('retailer.account', 'accountRetailer')
+            ->innerJoin('accountRetailer.entity', 'entity')
+            ->where('distributor = :distributor')->setParameter('distributor',$this->distributor)
+            ->groupBy('entity.city')
+            ->getQuery()->getArrayResult();
+
+        $cities = array();
+        foreach ($ArrayCities as $row)
+            $cities [$row['city']] = $row['city'];
 
         $builder
             ->add('city','choice', array(
                     'label'=>'City', 'translation_domain'=>'entity',
-                    'choices' => array(),
+                    'choices' => $cities,
                     'required'=>false,
                     'empty_value'=> 'All',
                 ))
             ->add('balanceType', 'choice', array(
                     'label'=>'Balance', 'translation_domain'=>'accounts',
-                    'choices'=> array(1=>'<', 2=>'=', 3=>'>'),
+                    'choices'=> array('<'=>'<', '='=>'=', '>'=>'>'),
                 ))
             ->add('balanceValue','money', array(
                     'currency' => $this->distributor->getCurrency(),

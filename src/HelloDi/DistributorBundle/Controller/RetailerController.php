@@ -26,7 +26,7 @@ class RetailerController extends Controller
             ->from('HelloDiRetailerBundle:Retailer', 'retailer')
             ->where('retailer.distributor = :distributor')->setParameter('distributor', $distributor);
 
-        $form = $this->createForm(new RetailerSearchType($distributor),null,array('attr'=>array('class'=>'SearchForm')))
+        $form = $this->createForm(new RetailerSearchType($distributor, $em),null,array('attr'=>array('class'=>'SearchForm')))
             ->add('search','submit');
 
         if($request->isMethod('post'))
@@ -43,8 +43,7 @@ class RetailerController extends Controller
                     $qb->andWhere('entity.city = :city')->setParameter('city', $data['city']);
 
                 if(isset($data['balanceValue']))
-                    $qb->andWhere('account.balance :cmp :balance')
-                        ->setParameter('cmp', $data['balanceType'])
+                    $qb->andWhere('account.balance '.$data['balanceType'].' :balance')
                         ->setParameter('balance', $data['balanceValue']);
             }
         }
