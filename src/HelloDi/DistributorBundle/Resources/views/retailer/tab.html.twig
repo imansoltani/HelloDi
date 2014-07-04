@@ -20,17 +20,17 @@
         </a>
     </li>
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a href="{{ path('DistRetailerUser',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('hello_di_distributor_retailer_user',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
         </a>
     </li>
     <li {% if tab == '4' %}class="active"{% endif %} >
-        <a href="{{ path('DistRetailerSetting',{'id':retailerAccount.id}) }}"  >
-            <input type="submit" value="{{ 'Setting' | trans ({}, "common") }}" >
+        <a href="{{ path('hello_di_distributor_retailer_info',{'id':retailerAccount.id}) }}"  >
+            <input type="submit" value="{{ 'Info' | trans ({}, "common") }}" >
         </a>
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
-        <a href="{{ path('Retailer_details',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('hello_di_distributor_retailer_entity',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Details' | trans ({}, "common") }}" >
         </a>
     </li>

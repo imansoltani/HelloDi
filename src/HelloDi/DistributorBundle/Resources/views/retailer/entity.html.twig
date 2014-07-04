@@ -1,0 +1,40 @@
+{% extends 'HelloDiDistributorBundle:retailer:tab.html.twig' %}
+
+{% set tab = '5' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Entity' | trans ({}, "entity") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Entity' | trans ({}, "entity") }}</h3>
+    </div>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.vatNumber) }}
+
+        <div class="control-group" style="border-top: 1px solid #888">
+            <label class="control-label">{{ 'Address' | trans ({}, "entity") }}:</label>
+        </div>
+
+        {{ form_row(form.address1) }}
+        {{ form_row(form.address2) }}
+        {{ form_row(form.address3) }}
+        {{ form_row(form.NP) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.country) }}
+
+        <div class="control-group" style="border-top: 1px solid #888">
+            <label class="control-label">{{ 'AdditionalDetails' | trans ({}, "entity") }}:</label>
+        </div>
+
+        {{ form_row(form.tel1) }}
+        {{ form_row(form.tel2) }}
+        {{ form_row(form.fax) }}
+        {{ form_row(form.website) }}
+    {{ form_end(form) }}
+{% endblock %}

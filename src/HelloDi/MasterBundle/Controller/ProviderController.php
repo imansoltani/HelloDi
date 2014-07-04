@@ -440,9 +440,12 @@ class ProviderController extends Controller
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
+        $languages = $this->container->getParameter('languages');
+
         $form = $this->createFormBuilder(array(
                 'terms' => $provider->getAccount()->getTerms(),
                 'timezone' => $provider->getTimezone(),
+                'defaultLanguage' => $provider->getAccount()->getDefaultLanguage(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -451,6 +454,11 @@ class ProviderController extends Controller
                 ))
             ->add('timezone','timezone',array(
                     'label' => 'TimeZone','translation_domain' => 'accounts',
+                    'required'=>true,
+                ))
+            ->add('defaultLanguage','choice',array(
+                    'label' => 'DefaultLanguage','translation_domain' => 'accounts',
+                    'choices'=>$languages,
                     'required'=>true,
                 ))
             ->add('submit','submit', array(
@@ -467,6 +475,7 @@ class ProviderController extends Controller
 
                 $provider->setTimezone($data['timezone']);
                 $provider->getAccount()->setTerms($data['terms']);
+                $provider->getAccount()->setDefaultLanguage($data['defaultLanguage']);
 
                 $em->flush();
 

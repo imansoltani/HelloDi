@@ -41,12 +41,8 @@
                 <input id="creditLimit" type="text" disabled class="input-large" value="{{ distributor.account.creditLimitAmount }}" >
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="defaultLanguage">{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
-            <div class="controls">
-                <input id="defaultLanguage" type="text" disabled class="input-large" value="{{ distributor.account.defaultLanguage }}" >
-            </div>
-        </div>
+
+        {{ form_row(form.defaultLanguage) }}
 
         {{ form_row(form.timezone) }}
 

@@ -460,7 +460,6 @@ class DistributorController extends Controller
             if ($form->isValid()) {
                 $user->setEntity($account->getEntity());
                 $user->setAccount($account);
-                $user->setEnabled(1);
                 $em->persist($user);
                 $em->flush();
 //                $this->forward('hello_di_di_notification:NewAction',array('id'=>$account->getId(),'type'=>21,'value'=>$user->getUsername()));
@@ -480,8 +479,8 @@ class DistributorController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
 
+        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
         if(!$user || $user->getAccount()->getType() != Account::DISTRIBUTOR)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'user'),'message'));
 
@@ -526,9 +525,12 @@ class DistributorController extends Controller
         if(!$distributor)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
+        $languages = $this->container->getParameter('languages');
+
         $form = $this->createFormBuilder(array(
                 'terms' => $distributor->getAccount()->getTerms(),
                 'timezone' => $distributor->getTimezone(),
+                'defaultLanguage' => $distributor->getAccount()->getDefaultLanguage(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -537,6 +539,11 @@ class DistributorController extends Controller
                 ))
             ->add('timezone','timezone',array(
                     'label' => 'TimeZone','translation_domain' => 'accounts',
+                    'required'=>true,
+                ))
+            ->add('defaultLanguage','choice',array(
+                    'label' => 'DefaultLanguage','translation_domain' => 'accounts',
+                    'choices'=>$languages,
                     'required'=>true,
                 ))
             ->add('submit','submit', array(
@@ -553,6 +560,7 @@ class DistributorController extends Controller
 
                 $distributor->setTimezone($data['timezone']);
                 $distributor->getAccount()->setTerms($data['terms']);
+                $distributor->getAccount()->setDefaultLanguage($data['defaultLanguage']);
 
                 $em->flush();
 //                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>26));

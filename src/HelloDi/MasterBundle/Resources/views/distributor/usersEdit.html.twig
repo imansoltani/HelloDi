@@ -11,13 +11,11 @@
 
 
 {% block Tab %}
-    <div class="widget-content">
-        <div class="widget-header">
-            <h3>{{ 'EditUser' | trans ({}, "user") }}</h3>
-        </div>
-
-        {{ form(form) }}
+    <div class="widget-header">
+        <h3>{{ 'EditUser' | trans ({}, "user") }}</h3>
     </div>
+
+    {{ form(form) }}
 {% endblock %}
 
 
