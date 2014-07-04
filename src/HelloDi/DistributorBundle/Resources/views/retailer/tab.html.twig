@@ -1,22 +1,16 @@
-{% extends 'HelloDiDiDistributorsBundle:Menu:AdminDist.html.twig' %}
+{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
 
-{% block title %}
-    {{ 'Retailers' | trans ({}, "accounts") }}
-{% endblock title %}
+{% block title %}{{ 'Retailers' | trans ({}, "accounts") }}{% endblock title %}
 
+{% block PageTitle %}<i class="icon-briefcase"></i>{{ retailerAccount.name }}{% endblock %}
 
 {% set MU = 'retail' %}
 
-{% block PageTitle %}
-    <i class="icon-briefcase"></i>
-    {{ retailerAccount.accName }}
-{% endblock %}
-
 {% set hornav = '40px' %}
-{% block Tabs %}
 
+{% block Tabs %}
     <li {% if tab == '1' %}class="active"{% endif %} >
-        <a href="{{ path('Retailer_Transaction',{'id':retailerAccount.id}) }}"  >
+        <a href="{{ path('hello_di_distributor_retailer_transaction',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Transaction' | trans ({}, "transaction") }}" >
         </a>
     </li>
@@ -25,42 +19,29 @@
             <input type="submit" value="{{ 'Items' | trans ({}, "item") }}" >
         </a>
     </li>
-
-
     <li {% if tab == '3' %}class="active"{% endif %} >
         <a href="{{ path('DistRetailerUser',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Users' | trans ({}, "user") }}" >
         </a>
     </li>
-
     <li {% if tab == '4' %}class="active"{% endif %} >
         <a href="{{ path('DistRetailerSetting',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Setting' | trans ({}, "common") }}" >
         </a>
     </li>
-
-<li {% if tab == '5' %}class="active"{% endif %} >
-    <a>
+    <li {% if tab == '5' %}class="active"{% endif %} >
         <a href="{{ path('Retailer_details',{'id':retailerAccount.id}) }}"  >
             <input type="submit" value="{{ 'Details' | trans ({}, "common") }}" >
         </a>
-    </a>
-</li>
+    </li>
 {% endblock Tabs %}
 
-
 {% block Body %}
-    <div class="span">
-        <div class="widget stacked">
-
-            <div class="widget-content">
-
-
-                <div class="tab-content">
-                    <div class="tab-pane active" id="Info">
-                        {% block Tab %}
-                        {% endblock Tab %}
-                    </div>
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Info">
+                    {% block Tab %}{% endblock Tab %}
                 </div>
             </div>
         </div>

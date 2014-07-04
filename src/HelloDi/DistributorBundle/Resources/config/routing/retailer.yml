@@ -4,12 +4,12 @@ hello_di_distributor_retailer_index:
 
 hello_di_distributor_retailer_add:
     pattern:  /add
-    defaults: { _controller: "HelloDiDistributorBundle:Retailer:add" }
+    defaults: { _controller: "HelloDiDistributorBundle:Retailer:add"}
 
-#transactions--------------
-Retailer_Transaction:
+#transaction
+hello_di_distributor_retailer_transaction:
     pattern:  /{id}/transactions
-    defaults: { _controller: HelloDiDiDistributorsBundle:Distributors:RetailersTransaction }
+    defaults: { _controller: "HelloDiDistributorBundle:Retailer:transaction"}
 
 DistRetailerFunding:
     pattern:  /{id}/transactions/transfer

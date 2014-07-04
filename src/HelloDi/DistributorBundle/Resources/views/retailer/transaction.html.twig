@@ -1,0 +1,138 @@
+{% extends 'HelloDiDistributorBundle:retailer:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Transactions' | trans ({}, "transaction") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Transactions' | trans ({}, "transaction") }}</h3>
+    </div>
+
+    <br>
+    <a class="btn btn-primary btn-large" href="{{ path('DistRetailerFunding',{'id':retailerAccount.id}) }}">{{ 'FundRetailers' | trans ({}, "accounts") }}</a>
+
+
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span><i id="search_logo" class="icon-search"></i><span class="title_search">Search Transactions</span></span>
+        </h5>
+
+        {{ form(form) }}
+
+        <script type="text/javascript">
+            $(function () {
+                Form_Search(1,"{{'Filter_List'|trans({},'js')  }}");
+            });
+        </script>
+    </div>
+
+    <div class="tablediv">
+        <div class="contenttitle"><h4>{{ 'Transactions' | trans ({}, "transaction") }}</h4></div>
+        <div class="tab-content">
+            <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                    <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                    <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.date|date('Y/m/d H:m:s') }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td class="td-actions">
+
+                            <a class="btn_actions showDetails">{{ 'Details' | trans ({}, "common") }}
+                                <span>
+                                    {#<fieldset>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Id' | trans ({}, "common") }} </label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.id }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Date' | trans ({}, "transaction") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.tranInsert|date('Y/m/d H:m:s') }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Description' | trans ({}, "transaction") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.tranDescription }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Credit' | trans ({}, "transaction") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled=""#}
+                                                       {#value="{{ tran.tranAmount>0 ? tran.tranAmount|abs : "-----" }}"#}
+                                                        {#>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Debit' | trans ({}, "transaction") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled=""#}
+                                                       {#value="{{ tran.tranAmount<0 ? tran.tranAmount|abs : "-----" }}"#}
+                                                        {#>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Balance' | trans ({}, "accounts") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#{% set balance=tran.tranBalance+tran.tranAmount %}#}
+                                                {#<input type="text" disabled="" value=" {{ balance }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'User' | trans ({}, "user") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.User.username }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Account' | trans ({}, "accounts") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.Account.accName }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#{% if tran.code is not null %}#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Code' | trans ({}, "code") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.Code.id }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">{{ 'Item' | trans ({}, "item") }}</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" disabled="" value="{{ tran.Code.Item.itemName }}">#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#{% endif %}#}
+                                    {#</fieldset>#}
+                              </span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(transactions) }}
+    </div>
+{% endblock %}
