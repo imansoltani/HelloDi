@@ -122,7 +122,7 @@ class RetailerController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $transaction = new Transaction();
-        $balanceForm = $this->createForm(new TransactionType($distributor->getCurrency()), $transaction, array('method'=>'post','attr'=>array(
+        $balanceForm = $this->createForm(new TransactionType($distributor->getCurrency()), $transaction, array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
@@ -138,7 +138,7 @@ class RetailerController extends Controller
         ;
 
         $creditLimit = new CreditLimit();
-        $creditLimitForm = $this->createForm(new CreditLimitType($distributor->getCurrency()), $creditLimit, array('method'=>'post','attr'=>array(
+        $creditLimitForm = $this->createForm(new CreditLimitType($distributor->getCurrency()), $creditLimit, array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),

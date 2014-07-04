@@ -8,6 +8,7 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\EntityType;
 use HelloDi\MasterBundle\Form\ProviderAccountUserType;
 use HelloDi\MasterBundle\Form\TransactionType;
@@ -168,7 +169,7 @@ class ProviderController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Provider'),'message'));
 
         $transaction = new Transaction();
-        $form = $this->createForm(new TransactionType($provider->getCurrency()),$transaction,array('method'=>'post','attr'=>array(
+        $form = $this->createForm(new TransactionType($provider->getCurrency()),$transaction,array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Register_transaction',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
@@ -188,6 +189,8 @@ class ProviderController extends Controller
 
             if($form->isValid())
             {
+                $beforeBalance = $provider->getAccount()->getBalance();
+
                 $result = $this->get('accounting')->processTransaction(array(new TransactionContainer(
                         $provider->getAccount(),
                         $transaction->getAmount(),
@@ -197,7 +200,11 @@ class ProviderController extends Controller
 
                 if($result)
                 {
-                    $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
+                            array('alredyprov'=>$beforeBalance,'currentprov'=>$provider->getAccount()->getBalance()),
+                            'message')
+                    );
                     return $this->redirect($this->generateUrl('hello_di_master_provider_transaction',array('id'=>$id)));
                 }
                 else
@@ -220,7 +227,7 @@ class ProviderController extends Controller
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Provider'),'message'));
 
-        $form = $this->createForm(new TransferType($provider),null,array('method'=>'post','attr'=>array(
+        $form = $this->createForm(new TransferType($provider) ,null, array('attr' => array(
                 'class' => 'YesNoMessage',
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
                 'header' => $this->get('translator')->trans('Make_transfer',array(),'message'),
@@ -242,20 +249,35 @@ class ProviderController extends Controller
             {
                 $data = $form->getData();
 
-                /** @var Provider $providerDestination */
-                $providerDestination =  $data['provider'];
+                /** @var Distributor $distributor */
+                $distributor =  $data['distributor'];
 
                 $result = $this->get('accounting')->processTransfer(
                     $data['amount'],
                     $this->getUser(),
-                    $providerDestination->getAccount(),
+                    $distributor->getAccount(),
                     $data['descriptionForOrigin'],
                     $data['descriptionForDestination']
                 );
 
                 if($result)
                 {
-                    $this->get('session')->getFlashBag()->add('success', 'this operation done success !');
+                    $beforeDistributorBalance = $distributor->getAccount()->getBalance();
+                    $beforeProviderBalance = $provider->getAccount()->getBalance();
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$beforeDistributorBalance,'currentdist'=>$distributor->getAccount()->getBalance()),
+                            'message')
+                    );
+
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Provider_account_was_changed_from_%alredyprov%_to_%currentprov%',
+                            array('alredyprov'=>$beforeProviderBalance,'currentprov'=>$provider->getAccount()->getBalance()),
+                            'message')
+                    );
+
                     return $this->redirect($this->generateUrl('hello_di_master_provider_transaction',array('id'=>$id)));
                 }
                 else

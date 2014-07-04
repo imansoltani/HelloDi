@@ -22,7 +22,7 @@ class OperatorController extends Controller
     public function addAction(Request $request)
     {
         $operator = new Operator();
-        $form = $this->createForm(new OperatorType(), $operator, array('method'=>'post'))
+        $form = $this->createForm(new OperatorType(), $operator)
             ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
@@ -59,7 +59,7 @@ class OperatorController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Operator',array(),'operator')),'message'));
         }
 
-        $editForm = $this->createForm(new OperatorType(), $operator, array('method'=>'post'))
+        $editForm = $this->createForm(new OperatorType(), $operator)
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')

@@ -238,9 +238,9 @@ class RetailerController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $transaction = new Transaction();
-        $balanceForm = $this->createForm(new TransactionType($retailer->getDistributor()->getCurrency()), $transaction, array('method'=>'post','attr'=>array(
+        $balanceForm = $this->createForm(new TransactionType($retailer->getDistributor()->getCurrency()), $transaction, array('attr'=>array(
                 'class' => 'YesNoMessage',
-                'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
+                'header' => $this->get('translator')->trans('Fund_retailer',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
             )))
             ->add('apply','submit', array(
@@ -254,9 +254,9 @@ class RetailerController extends Controller
         ;
 
         $creditLimit = new CreditLimit();
-        $creditLimitForm = $this->createForm(new CreditLimitType($retailer->getDistributor()->getCurrency()), $creditLimit, array('method'=>'post','attr'=>array(
+        $creditLimitForm = $this->createForm(new CreditLimitType($retailer->getDistributor()->getCurrency()), $creditLimit, array('attr'=>array(
                 'class' => 'YesNoMessage',
-                'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
+                'header' => $this->get('translator')->trans('Fund_retailer',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
             )))
             ->add('update','submit', array(
@@ -275,22 +275,31 @@ class RetailerController extends Controller
 
             if($balanceForm->isValid())
             {
-                $beforeBalance = $retailer->getAccount()->getBalance();
+                $beforeRetailerBalance = $retailer->getAccount()->getBalance();
+                $beforeDistributorBalance = $retailer->getDistributor()->getAccount()->getBalance();
 
-                $result = $this->get('accounting')->processTransaction(array(new TransactionContainer(
-                        $retailer->getAccount(),
-                        $transaction->getAmount(),
-                        $transaction->getDescription(),
-                        $transaction->getFees()
-                    )));
+                $result = $this->get('accounting')->processTransfer(
+                    $transaction->getAmount(),
+                    $this->getUser(),
+                    $retailer->getAccount(),
+                    'sender transfer - '.$transaction->getDescription(),
+                    'receiver transfer - '.$transaction->getDescription()
+                );
 
                 if($result) {
                     $this->get('session')->getFlashBag()->add('success',
-                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
-                            array('alredydist'=>$beforeBalance,'currentdist'=>$retailer->getAccount()->getBalance()),
+                        $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                            array('alredyretailer'=>$beforeRetailerBalance,'currentretailer'=>$retailer->getAccount()->getBalance()),
                             'message')
                     );
-                    return $this->redirect($this->generateUrl('hello_di_master_distributor_transaction_funding', array('id' => $id)));
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$beforeDistributorBalance,'currentdist'=>$retailer->getDistributor()->getAccount()->getBalance()),
+                            'message')
+                    );
+
+                    return $this->redirect($this->generateUrl('hello_di_distributor_retailer_transaction_funding', array('id' => $id)));
                 }
                 else
                     $this->get('session')->getFlashBag()->add('error', 'this account has not enough balance!');
@@ -299,6 +308,7 @@ class RetailerController extends Controller
             if($creditLimitForm->isValid())
             {
                 $beforeCreditLimit = $retailer->getAccount()->getCreditLimitAmount();
+                $beforeDistributorBalance = $retailer->getDistributor()->getAccount()->getBalance();
 
                 $result = $this->get('accounting')->newCreditLimit(
                     $creditLimit->getAmount(),
@@ -308,18 +318,25 @@ class RetailerController extends Controller
 
                 if($result) {
                     $this->get('session')->getFlashBag()->add('success',
-                        $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
+                        $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
                             array('alredydist'=>$beforeCreditLimit,'currentdist'=>$retailer->getAccount()->getCreditLimitAmount()),
                             'message')
                     );
-                    return $this->redirect($this->generateUrl('hello_di_master_distributor_transaction_funding', array('id' => $id)));
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$beforeDistributorBalance,'currentdist'=>$retailer->getDistributor()->getAccount()->getBalance()),
+                            'message')
+                    );
+
+                    return $this->redirect($this->generateUrl('hello_di_distributor_retailer_transaction_funding', array('id' => $id)));
                 }
                 else
                     $this->get('session')->getFlashBag()->add('error', 'this account has not enough balance!');
             }
         }
 
-        return $this->render('HelloDiMasterBundle:distributor:funding.html.twig', array(
+        return $this->render('HelloDiDistributorBundle:retailer:funding.html.twig', array(
                 'retailer' => $retailer,
                 'retailerAccount' => $retailer->getAccount(),
                 'balanceForm' => $balanceForm->createView(),

@@ -1,0 +1,34 @@
+{% extends 'HelloDiDistributorBundle:retailer:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_transaction',{'id': retailerAccount.id}) }}">{{ 'Transactions' | trans ({}, "transaction") }}</a>
+    <span class="link">{{ 'FundRetailers' | trans ({}, "accounts") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="row">
+        <div class="span5">
+            <div class="widget-header">
+                <h3>{{ 'FundRetailerBalance' | trans ({}, "accounts") }}</h3><br>
+                {{ 'RetailerBalance' | trans ({}, "accounts") }} : {{ retailerAccount.balance }} {{ retailer.distributor.currency }}<br>
+            </div>
+
+            {{ form(balanceForm) }}
+        </div>
+
+        {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}
+        <div class="span5 LeftSpan">
+            <div class="widget-header">
+                <h3>{{ 'UpdateRetailerCreditLimit' | trans ({}, "accounts") }}</h3><br>
+                {{ 'RetailerCreditLimit' | trans ({}, "accounts") }} : {{ retailerAccount.creditLimitAmount }} {{ retailer.distributor.currency }}<br>
+            </div>
+
+            {{ form(creditLimitForm) }}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

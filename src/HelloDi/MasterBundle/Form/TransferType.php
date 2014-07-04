@@ -25,24 +25,23 @@ class TransferType extends AbstractType
             ->add('amount','money', array(
                     'currency' => $provider->getCurrency(),
                     'label'=>'Amount','translation_domain'=>'transaction',
-                    'attr'=> array('class'=>'float_neg_validation'),
+                    'attr'=> array('class'=>'float_validation'),
                     'constraints' => array(
                         new Assert\NotNull(),
                         new Assert\Type(array('type'=>'double')),
                     )
                 ))
-            ->add('provider', 'entity', array(
+            ->add('distributor', 'entity', array(
                     'label'=>'Account', 'translation_domain'=>'accounts',
-                    'empty_value' => 'select_a_account',
-                    'empty_data' => '',
-                    'class' => 'HelloDiCoreBundle:Provider',
+                    'class' => 'HelloDiDistributorBundle:Distributor',
                     'property' => 'NameWithCurrency',
+                    'empty_value' => 'select_a_account',
                     'required' => true,
                     'query_builder' => function (EntityRepository $er) use ($provider) {
-                            return $er->createQueryBuilder('provider')
-                                ->innerJoin('provider.account','account')
+                            return $er->createQueryBuilder('distributor')
+                                ->innerJoin('distributor.account','account')
                                 ->where('account.entity = :entity')->setParameter('entity', $provider->getAccount()->getEntity())
-                                ->andWhere('provider.currency= :currency')->setParameter('currency', $provider->getCurrency())
+                                ->andWhere('distributor.currency= :currency')->setParameter('currency', $provider->getCurrency())
                                 ;
                         },
                     'constraints' => array(
