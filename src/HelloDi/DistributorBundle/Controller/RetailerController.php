@@ -380,7 +380,7 @@ class RetailerController extends Controller
         $languages = $this->container->getParameter('languages');
 
         $form = $this->createForm(new RegistrationFormType($languages, Account::RETAILER), $user)
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -429,7 +429,7 @@ class RetailerController extends Controller
 
         $form = $this->createForm(new RegistrationFormType($languages, Account::RETAILER), $user)
             ->remove('plainPassword')
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -482,7 +482,7 @@ class RetailerController extends Controller
                     'choices'=>$languages,
                     'required'=>true,
                 ))
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))
@@ -521,7 +521,7 @@ class RetailerController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $form = $this->createForm(new EntityType(), $retailer->getAccount()->getEntity())
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))

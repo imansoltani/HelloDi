@@ -70,17 +70,17 @@ function AlertShow(message, fname, event) {
     }
 }
 
-var form = null;
+var form_YesNoMessage = null;
 $(document).ready(function () {
     $('a.YesNoMessage').click(function (e) {
         e.preventDefault();
         PopuptopOpen($(this).attr('header'), $(this).attr('message'), $(this).attr('href'));
     });
     $('form.YesNoMessage').submit(function (e) {
-        if (form == null) {
+        if (form_YesNoMessage == null) {
             e.preventDefault();
-            form = $(this);
-            PopuptopOpen($(this).attr('header'), $(this).attr('message'), 'javascript:$(form).submit();');
+            form_YesNoMessage = $(this);
+            PopuptopOpen($(this).attr('header'), $(this).attr('message'), 'javascript:$(form_YesNoMessage).submit();');
         }
     });
 });
@@ -150,7 +150,7 @@ function PopuptopClose(e) {
     $('.popupshow').fadeOut('fast', function () {
         $('.popupshow').html('');
         $('.popupshow').removeAttr('id');
-        form = null;
+        form_YesNoMessage = null;
     });
 }
 

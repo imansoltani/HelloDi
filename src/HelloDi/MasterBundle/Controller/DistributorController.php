@@ -334,7 +334,7 @@ class DistributorController extends Controller
                                 ->andWhere('price.account = :account')->setParameter('account', $distributor->getAccount());
                         }
                 ))
-            ->add('submit','submit', array(
+            ->add('search','submit', array(
                     'label'=>'Search','translation_domain'=>'common',
                 ))
             ->getForm();
@@ -444,7 +444,7 @@ class DistributorController extends Controller
         $languages = $this->container->getParameter('languages');
 
         $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -488,7 +488,7 @@ class DistributorController extends Controller
 
         $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
             ->remove('plainPassword')
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -546,7 +546,7 @@ class DistributorController extends Controller
                     'choices'=>$languages,
                     'required'=>true,
                 ))
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))

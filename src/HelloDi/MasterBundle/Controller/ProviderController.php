@@ -341,7 +341,7 @@ class ProviderController extends Controller
                     'label' => 'Price','translation_domain' => 'price',
                     'attr'=> array('class'=>'float_validation'),
                 ))
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -403,7 +403,7 @@ class ProviderController extends Controller
                     'label' => 'Price','translation_domain' => 'price',
                     'attr'=> array('class'=>'float_validation'),
                 ))
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -461,7 +461,7 @@ class ProviderController extends Controller
                     'choices'=>$languages,
                     'required'=>true,
                 ))
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))

@@ -30,7 +30,7 @@ class CodeController extends Controller
                 'action' => $this->generateUrl('hello_di_master_code_search'),
                 'method' => 'get',
             ))
-            ->add('submit','submit', array(
+            ->add('search','submit', array(
                     'label'=>'Search','translation_domain'=>'common',
                 ));
 
@@ -46,7 +46,7 @@ class CodeController extends Controller
                 'attr' => array('class' => 'SearchForm'),
                 'method' => 'get',
             ))
-            ->add('submit','submit', array(
+            ->add('search','submit', array(
                     'label'=>'Search','translation_domain'=>'common',
                 ));
 

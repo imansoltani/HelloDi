@@ -25,7 +25,7 @@ class EntityController extends Controller
                 'attr' => array('class' => 'SearchForm'),
                 'method' => 'get',
             ))
-            ->add('submit','submit', array(
+            ->add('search','submit', array(
                     'label'=>'Search','translation_domain'=>'common',
                 ));
 
@@ -153,7 +153,7 @@ class EntityController extends Controller
         $languages = $this->container->getParameter('languages');
 
         $form = $this->createForm(new ProviderAccountUserType($currencies,$languages), $provider, array('cascade_validation' => true))
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -204,7 +204,7 @@ class EntityController extends Controller
         $languages = $this->container->getParameter('languages');
 
         $form = $this->createForm(new DistributorAccountUserType($currencies,$languages), $distributor, array('cascade_validation' => true))
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -287,7 +287,7 @@ class EntityController extends Controller
                                 ;
                         },
                 ))
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -354,7 +354,7 @@ class EntityController extends Controller
                                 ;
                         },
                 ))
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -393,7 +393,7 @@ class EntityController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Entity',array(),'entity')),'message'));
 
         $form = $this->createForm(new EntityType(), $entity)
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))

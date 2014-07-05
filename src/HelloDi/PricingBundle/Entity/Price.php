@@ -28,7 +28,7 @@ class Price
     /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
      */
-    private $isFavourite;
+    private $isFavourite = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")

@@ -13,3 +13,7 @@ hello_di_pricing_provider_model_edit:
 hello_di_pricing_provider_model_delete:
     pattern: /{id}/delete
     defaults: { _controller: HelloDiPricingBundle:ProviderModel:Delete }
+
+hello_di_pricing_provider_model_set:
+    pattern: /set_model/{id}
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:setModel }

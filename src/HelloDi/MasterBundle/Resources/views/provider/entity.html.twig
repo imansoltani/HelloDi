@@ -13,6 +13,9 @@
         <h3>{{ 'Info' | trans ({}, "entity") }}</h3>
     </div>
 
+    <br/>
+    <a class=" btn btn-primary btn-large" href="{{ path('hello_di_master_entity_info', {'id': entity.id}) }}">{{ 'Entity' | trans ({}, "entity") }}</a>
+
     <form class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="name">{{ 'Name' | trans ({}, "common") }}</label>

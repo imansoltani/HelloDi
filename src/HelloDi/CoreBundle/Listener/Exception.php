@@ -37,13 +37,13 @@ class Exception
      */
     public function onWriteException(GetResponseForExceptionEvent $event)
     {
-        $exception = $event->getException();
-        $description = sprintf('This Error says: %s ', $exception->getMessage());
-        $exceptions = new Exceptions();
-        $exceptions->setDate(new \DateTime('now'));
-        $exceptions->setDescription($description);
-        $exceptions->setUsername($this->session->get('ExceptionUser') ? $this->session->get('ExceptionUser') : 'out of system');
-        $this->em->persist($exceptions);
-        $this->em->flush($exceptions);
+//        $exception = $event->getException();
+//        $description = sprintf('This Error says: %s ', $exception->getMessage());
+//        $exceptions = new Exceptions();
+//        $exceptions->setDate(new \DateTime('now'));
+//        $exceptions->setDescription($description);
+//        $exceptions->setUsername($this->session->get('ExceptionUser') ? $this->session->get('ExceptionUser') : 'out of system');
+//        $this->em->persist($exceptions);
+//        $this->em->flush($exceptions);
     }
 }

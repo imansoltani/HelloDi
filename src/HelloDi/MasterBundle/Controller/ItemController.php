@@ -48,7 +48,7 @@ class ItemController extends Controller
                 'cascade_validation' => true,
             ))
             ->add('descriptions', 'collection', array('type' => new ItemDescType($this->container->getParameter('languages'))))
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -119,7 +119,7 @@ class ItemController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
 
         $form = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item)
-            ->add('submit','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -307,7 +307,7 @@ class ItemController extends Controller
         $desc->setItem($item);
 
         $form = $this->createForm(new ItemDescType($languages), $desc)
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                 'label'=>'Add','translation_domain'=>'common',
                 'attr'=>array('first-button')
             ))
@@ -357,7 +357,7 @@ class ItemController extends Controller
         $languages = array_diff($all_languages,$descriptions_languages);
 
         $form = $this->createForm(new ItemDescType($languages), $desc)
-            ->add('submit','submit', array(
+            ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
@@ -444,7 +444,7 @@ class ItemController extends Controller
         $form = $this->createForm(new ItemDenominationType($currencies), $item, array(
                 'cascade_validation' => true,
             ))
-            ->add('submit','submit', array(
+            ->add('apply','submit', array(
                     'label' => 'Apply', 'translation_domain' => 'common',
                     'attr' => array(
                         'first-button', 'last-button',
