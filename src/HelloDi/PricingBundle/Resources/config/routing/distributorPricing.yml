@@ -1,0 +1,12 @@
+hello_di_pricing_distributor_item_index:
+    pattern: /
+    defaults: { _controller: HelloDiPricingBundle:DistributorPricing:pricing }
+
+hello_di_pricing_distributor_item_update:
+    pattern: /update
+    defaults: { _controller: HelloDiPricingBundle:DistributorPricing:updatePrice }
+    requirements: { _method: post }
+
+hello_di_pricing_distributor_item_copy_prices:
+    pattern: /copy_prices
+    defaults: { _controller: HelloDiPricingBundle:DistributorPricing:copyPrices }

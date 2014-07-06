@@ -246,4 +246,12 @@ class Distributor
     {
         return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getCurrency() . ' )';
     }
+
+    /**
+     * @return string
+     */
+    public function getNameWithEntity()
+    {
+        return $this->getAccount()->getName() . ' - ' . $this->getAccount()->getEntity()->getName();
+    }
 }

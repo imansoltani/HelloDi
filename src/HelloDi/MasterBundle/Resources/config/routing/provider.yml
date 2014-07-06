@@ -24,14 +24,6 @@ hello_di_master_provider_items:
     pattern:  /{id}/items
     defaults: { _controller: "HelloDiMasterBundle:Provider:items" }
 
-hello_di_master_provider_items_add:
-    pattern:  /{id}/items/add
-    defaults: { _controller: "HelloDiMasterBundle:Provider:itemsAdd" }
-
-hello_di_master_provider_items_edit:
-    pattern:  /{id}/items/{price_id}/edit
-    defaults: { _controller: "HelloDiMasterBundle:Provider:itemsEdit" }
-
 #info
 hello_di_master_provider_info:
     pattern:  /{id}/info

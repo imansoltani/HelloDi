@@ -120,7 +120,7 @@ class ProviderModelController extends Controller
         $form = $this->createForm(new ModelType($currencies),$model,array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Register_transaction',array(),'message'),
-                'message' => 'Are you sure you perform this operation? All Prices from providers that has this model will be update.',
+                'message' => 'Are you sure you perform this operation?<br>All Prices from providers that has this model will be update.',
             )))
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -217,7 +217,11 @@ class ProviderModelController extends Controller
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $form = $this->createFormBuilder($provider->getAccount())
+        $form = $this->createFormBuilder($provider->getAccount(),array('attr'=>array(
+                'class' => 'YesNoMessage',
+                'header' => $this->get('translator')->trans('Register_transaction',array(),'message'),
+                'message' => 'Are you sure you perform this operation?<br>All Prices from this provider will be change.',
+            )))
             ->add('model', 'entity', array(
                     'class' => 'HelloDiPricingBundle:Model',
                     'property' => 'name',
@@ -226,11 +230,11 @@ class ProviderModelController extends Controller
                                 ->where('u.account is null')
                                 ->andWhere("u.currency = :currency")->setParameter('currency', $provider->getCurrency());
                         },
-                    'empty_value' => "Select a Model",
+                    'expanded' => true,
                     'required' => true,
                     'label' => 'model','translation_domain' => 'model'
                 ))
-            ->add('add','submit', array(
+            ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))

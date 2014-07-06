@@ -6,10 +6,6 @@ hello_di_pricing_provider_model:
     resource: "@HelloDiPricingBundle/Resources/config/routing/providerModel.yml"
     prefix:  /app/m/provider/model
 
-pricing:
-    pattern: /pricing
-    defaults: { _controller: HelloDiPricingBundle:Price:pricing }
-
-updatePrice:
-    pattern: /pricing/update
-    defaults: { _controller: HelloDiPricingBundle:Price:updatePrice }
+hello_di_pricing_distributor_item:
+    resource: "@HelloDiPricingBundle/Resources/config/routing/distributorPricing.yml"
+    prefix:  /app/m/distributor/{id}/items

@@ -59,7 +59,7 @@
                                 <td>{{ provider.account.balance }}|{{ provider.currency }}</td>
                                 <td>{{ provider.account.entity.name }}</td>
                                 <td class="td-actions">
-                                    <a class="btn_actions" href="{{ path('hello_di_master_provider_transaction',{'id':provider.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
+                                    <a class="btn_actions" href="{{ path('hello_di_master_provider_transaction',{'id':provider.account.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
                                 </td>
                             </tr>
                         {% endfor %}

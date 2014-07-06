@@ -1,20 +1,12 @@
-{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
 
-{% block title %}
-    Manage Items Distributor
-{% endblock title %}
-
-{% set MU = '' %}
+{% set tab = '6' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link">Manage Items Distributor</span>
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
 {% endblock Site_Map %}
-
-{% block PageTitle %}
-    <i class="icon-tags"></i>
-    Manage Items Distributor
-{% endblock %}
 
 {% block Link_Head %}
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
@@ -60,7 +52,7 @@
 
                 $.ajax({
                     type: "Post",
-                    url: "{{ path("updatePrice") }}",
+                    url: "{{ path("hello_di_pricing_distributor_item_update", {'id':account.id}) }}",
                     data: rowData,
                     cache: false,
                     success: function(result)
@@ -103,40 +95,38 @@
 
 {% endblock %}
 
-{% block Body %}
-    <div class="span">
-        <div class="widget stacked">
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Items' | trans ({}, "item") }}</h3>
+    </div>
 
-            <!-- /widget-header -->
-            <div class="widget-content">
-                <div style="margin-top: 5px" class="tablediv">
+    <br>
+    <a class="btn btn-primary btn-large" href="{{ path('hello_di_pricing_distributor_item_copy_prices', {'id': account.id}) }}">{{ 'CopyPrices' | trans ({}, "item") }}</a>
 
-                    <div class="tab-content datatable">
-                        <table id="example" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>{{ 'Id' | trans ({}, "common") }}</th>
-                                <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
-                                <th>{{ 'Name' | trans ({}, "item") }}</th>
-                                <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
-                                <th>{{ 'Price' | trans ({}, "price") }}</th>
-                            </tr>
+    <div style="margin-top: 5px" class="tablediv">
 
-                            <tr class="input" >
-                                <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
-                                <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
-                                <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
-                                <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
-                                <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                    <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
+                    <th>{{ 'Name' | trans ({}, "item") }}</th>
+                    <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                    <th>{{ 'Price' | trans ({}, "price") }}</th>
+                </tr>
 
+                <tr class="input" >
+                    <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
+                    <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
+                    <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
+                    <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
+                    <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

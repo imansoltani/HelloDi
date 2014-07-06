@@ -1,0 +1,18 @@
+{% extends 'HelloDiMasterBundle:distributor:tab.html.twig' %}
+
+{% set tab = '6' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributors' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_pricing_distributor_item_index',{'id':account.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'CopyPrices' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'CopyPrices' | trans ({}, "item") }}</h3>
+    </div>
+
+    {{ form(form) }}
+{% endblock Tab %}

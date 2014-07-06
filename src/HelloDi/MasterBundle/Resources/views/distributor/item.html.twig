@@ -38,7 +38,6 @@
                     <th>{{ 'Code' | trans ({}, "code") }}</th>
                     <th>{{ 'ItemType' | trans ({}, "item") }}</th>
                     <th>{{ 'Price' | trans ({}, "price") }} ({{ 'Currency' | trans ({}, "item") }})</th>
-                    <th>{{ 'Status' | trans ({}, "code") }}</th>
                     <th>{{ 'Operation' | trans ({}, "common") }}</th>
                 </tr>
                 <tr class="input" >
@@ -48,7 +47,6 @@
                     <td><label><input type="text" name="search_Code" value="Search Code" class="search_init" /></label></td>
                     <td><label><input type="text" name="search_Type" value="Search Type" class="search_init" /></label></td>
                     <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
-                    <td><label><input type="text" name="search_Status" value="Search Status" class="search_init" /></label></td>
                     <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                 </tr>
                 </thead>
@@ -60,11 +58,11 @@
                         <td>{{ price.item.faceValue }} {{ price.item.currency }}</td>
                         <td>{{ price.item.code }}</td>
                         <td>
-                            {% if price.item.itemType=='dmtu' %}
+                            {% if price.item.type=='dmtu' %}
                                 {{ 'Mobile' | trans ({}, "item") }}
-                            {% elseif price.item.itemType=='imtu' %}
+                            {% elseif price.item.type=='imtu' %}
                                 {{ 'IMTU' | trans ({}, "item") }}
-                            {% elseif price.item.itemType=='clcd' %}
+                            {% elseif price.item.type=='clcd' %}
                                 {{ 'Calling_Card' | trans ({}, "item") }}
                             {% else %}
                                 {{ 'E-payment' | trans ({}, "item") }}

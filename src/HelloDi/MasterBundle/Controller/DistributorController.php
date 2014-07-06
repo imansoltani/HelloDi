@@ -270,22 +270,6 @@ class DistributorController extends Controller
             ));
     }
 
-    //items
-    public function itemsAction($id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
-        if(!$distributor)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
-
-        return $this->render('HelloDiMasterBundle:distributor:item.html.twig', array(
-                'account' => $distributor->getAccount(),
-                'distributor' => $distributor
-            ));
-    }
-
     //purchases
     public function purchasesAction(Request $request, $id)
     {
