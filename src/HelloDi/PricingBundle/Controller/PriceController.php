@@ -16,7 +16,7 @@ class PriceController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $this->getUser()->getAccount();
+        $account = $em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array())->getAccount();
 
         $items = $em->createQueryBuilder()
             ->select('item.id','item.code','item.name','item.faceValue','priceDist.price')
@@ -37,16 +37,16 @@ class PriceController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $this->getUser()->getAccount();
+        $account = $em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array())->getAccount();
 
         $itemId = $request->get('id',0);
-        if($itemId == 0) return new Response('false');
+        if($itemId == 0) return new Response('0-Item ID is incorrect.');
 
         $priceAmount = $request->get('price','');
-        if($priceAmount!= "" && (!is_numeric($priceAmount) || $priceAmount<0)) return new Response('false');
+        if($priceAmount!= "" && (!is_numeric($priceAmount) || $priceAmount<0)) return new Response('0-Price is incorrect.');
 
         $item = $em->getRepository('HelloDiCoreBundle:Item')->find($itemId);
-        if(!$item) return new Response('false');
+        if(!$item) return new Response("0-Couldn't find the Item.");
 
         /** @var Price $priceDist */
         $priceDist = $em->createQueryBuilder()
@@ -86,9 +86,9 @@ class PriceController extends Controller
                 $em->flush();
             }
             else                                        //error - can't create - because any provider has not this item
-                return new Response('false');
+                return new Response("0-No provider has this item.");
         }
 
-        return new Response('true');
+        return new Response('1');
     }
 }

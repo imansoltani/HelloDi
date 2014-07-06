@@ -1552,13 +1552,6 @@ margin-top:5px ;
     url('font/QQ1.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
 
-.div_refresh_button .refresh_button {
-    cursor: pointer;
-    height: 30px;
-    width: 30px;
-    background: url("../img/refresh/refresh.png") no-repeat center;
-}
-
 .div_refresh_button {
     width: 0;
     height: 0;
@@ -1570,8 +1563,34 @@ margin-top:5px ;
     vertical-align: middle;
 }
 
-.div_refresh_button.refresh .refresh_button {
+.div_refresh_button .refresh_button {
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    background: url("../img/refresh/refresh.png") no-repeat center;
+}
+
+.div_refresh_button.refresh .refresh_button, .div_refresh_button.refresh .tooltip_button{
     background-image: url("../img/refresh/loading.gif");
+    display: block;
+}
+
+.div_refresh_button .tooltip_button {
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    background: none;
+    display: none;
+}
+
+.div_refresh_button.ok .tooltip_button{
+    background: url("../img/refresh/ok.png") no-repeat center left;
+    display: block;
+}
+
+.div_refresh_button.warning .tooltip_button{
+    background: url("../img/refresh/warning.png") no-repeat center left;
+    display: block;
 }
 
 [class*="span"] {

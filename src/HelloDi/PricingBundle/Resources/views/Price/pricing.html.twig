@@ -17,20 +17,15 @@
 {% endblock %}
 
 {% block Link_Head %}
-
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/hellodi/js/libs/jquery.json-2.4.min.js') }}"></script>
-
-
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.json-2.4.min.js') }}"></script>
     <script type="text/javascript">
         var oTable;
         $(document).ready(function () {
+            $('.div_refresh_button .tooltip_button').tooltip();
+
             oTable = Fix_Size({
                 "aLengthMenu": [[10, 20, 100, -1], [10, 20, 100, "All"]],
                 "sPaginationType": "full_numbers",
@@ -43,7 +38,10 @@
                     { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
                         if(data == null) data = "";
                         if(type === 'display') {
-                            return '<input class="price-input" type="text" value="' + data + '">';
+                            return '<input class="price-input" type="text" value="' + data + '">' +
+                                    '<div class="div_refresh_button" id="refresh">'+
+                                        '<div class="tooltip_button" title=""></div>' +
+                                    '</div>';
                         }
                         return data;
                     } }
@@ -54,8 +52,12 @@
                 var row = oTable.fnGetPosition($(this).closest('tr')[0]);
                 oTable.fnUpdate( $(this).val(), row, 4);
                 var rowData = oTable.fnGetData(row);
+
                 var input = $(oTable.fnGetNodes(row)).find('input');
+                var tooltip_button = input.next('.div_refresh_button');
                 input.addClass('checking');
+                tooltip_button.addClass('refresh');
+
                 $.ajax({
                     type: "Post",
                     url: "{{ path("updatePrice") }}",
@@ -63,13 +65,22 @@
                     cache: false,
                     success: function(result)
                     {
-                        if(result == 'true')
-                            input.removeClass('checking').addClass('accepted');
-                        else if(result == 'false')
-                            input.removeClass('checking').addClass('rejected');
+                        input.removeClass('checking');
+                        tooltip_button.removeClass('refresh');
+
+                        if(result[0] == '1') {
+                            input.addClass('accepted');
+                            tooltip_button.addClass('ok').children('.tooltip_button').prop("title","OK!").tooltip();
+                        }
+                        else if(result[0] == '0') {
+                            input.addClass('rejected');
+                            tooltip_button.addClass('warning').children('.tooltip_button').prop("title",result.substr(2)).tooltip("show");
+                        }
                     }
                 });
             });
+
+            $(".div_refresh_button").tooltip();
         });
 
     </script>
