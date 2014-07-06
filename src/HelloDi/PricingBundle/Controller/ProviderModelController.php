@@ -23,7 +23,7 @@ class ProviderModelController extends Controller
 
         $models = $em->getRepository("HelloDiPricingBundle:Model")->findBy(array("account" => null));
 
-        return $this->render("HelloDiPricingBundle:ProviderModel:index.html.twig",array(
+        return $this->render("HelloDiPricingBundle:providerModel:index.html.twig",array(
             'models' => $models
         ));
     }
@@ -97,7 +97,7 @@ class ProviderModelController extends Controller
             ->LeftJoin('item.denominations', 'denominations')
             ->getQuery()->getResult();
 
-        return $this->render("HelloDiPricingBundle:ProviderModel:new.html.twig",array(
+        return $this->render("HelloDiPricingBundle:providerModel:new.html.twig",array(
                 'items' => $items,
                 'amounts' => $amounts,
                 'form' => $form->createView(),
@@ -184,7 +184,7 @@ class ProviderModelController extends Controller
             ->LeftJoin('item.denominations', 'denominations')
             ->getQuery()->getResult();
 
-        return $this->render("HelloDiPricingBundle:ProviderModel:edit.html.twig",array(
+        return $this->render("HelloDiPricingBundle:providerModel:edit.html.twig",array(
                 'items' => $items,
                 'amounts' => $amounts,
                 'form' => $form->createView(),
@@ -259,7 +259,7 @@ class ProviderModelController extends Controller
             }
         }
 
-        return $this->render('HelloDiPricingBundle:ProviderModel:setModel.html.twig', array(
+        return $this->render('HelloDiPricingBundle:providerModel:setModel.html.twig', array(
                 'account' => $provider->getAccount(),
                 'form' => $form->createView()
             ));

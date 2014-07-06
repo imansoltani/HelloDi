@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PriceController extends Controller
+class DistributorPricingController extends Controller
 {
     public function pricingAction($id)
     {
