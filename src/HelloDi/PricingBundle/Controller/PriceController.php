@@ -48,6 +48,8 @@ class PriceController extends Controller
         $item = $em->getRepository('HelloDiCoreBundle:Item')->find($itemId);
         if(!$item) return new Response("0-Couldn't find the Item.");
 
+        $info = "";
+
         /** @var Price $priceDist */
         $priceDist = $em->createQueryBuilder()
             ->select('price')
@@ -56,17 +58,17 @@ class PriceController extends Controller
             ->andWhere('price.account = :accDist')->setParameter('accDist',$account)
             ->getQuery()->getOneOrNullResult();
 
-        if($priceDist)                                  //price exist
-        {
-            if($priceAmount == '')                      //remove
-                $em->remove($priceDist);
-            else
+        if($priceDist) {                                //price exist
+            if($priceAmount == '') {
+                $em->remove($priceDist);                //remove
+                $info = 'removed';
+            }
+            else {
                 $priceDist->setPrice($priceAmount);     //update
-
-            $em->flush();
+                $info = 'updated';
+            }
         }
-        elseif($priceAmount != '')                      //amount not empty and price doesn't exist
-        {
+        elseif($priceAmount != '') {                    //amount not empty and price doesn't exist
             $priceProv = $em->createQueryBuilder()      //check for exist price for provider
                 ->select('price')
                 ->from('HelloDiPricingBundle:Price','price')
@@ -75,20 +77,20 @@ class PriceController extends Controller
                 ->andWhere('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
                 ->getQuery()->getOneOrNullResult();
 
-            if($priceProv)                              //create
-            {
+            if($priceProv) {                            //create
                 $priceDist = new Price();
                 $priceDist->setAccount($account);
                 $priceDist->setPrice($priceAmount);
                 $priceDist->setItem($item);
                 $priceDist->setIsFavourite(false);
                 $em->persist($priceDist);
-                $em->flush();
+                $info = 'created';
             }
             else                                        //error - can't create - because any provider has not this item
                 return new Response("0-No provider has this item.");
         }
 
-        return new Response('1');
+        $em->flush();
+        return new Response('1-'.$info);
     }
 }

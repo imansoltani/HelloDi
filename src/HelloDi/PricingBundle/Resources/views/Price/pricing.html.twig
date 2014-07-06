@@ -70,7 +70,7 @@
 
                         if(result[0] == '1') {
                             input.addClass('accepted');
-                            tooltip_button.addClass('ok').children('.tooltip_button').prop("title","OK!").tooltip();
+                            tooltip_button.addClass('ok').children('.tooltip_button').prop("title",result.substr(2)).tooltip("show");
                         }
                         else if(result[0] == '0') {
                             input.addClass('rejected');
