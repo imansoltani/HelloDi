@@ -1,7 +1,3 @@
-hello_di_pricing_model:
-    resource: "@HelloDiPricingBundle/Resources/config/routing/model.yml"
-    prefix:  /model
-
 hello_di_pricing_provider_model:
     resource: "@HelloDiPricingBundle/Resources/config/routing/providerModel.yml"
     prefix:  /app/m/provider/model
@@ -9,3 +5,7 @@ hello_di_pricing_provider_model:
 hello_di_pricing_distributor_item:
     resource: "@HelloDiPricingBundle/Resources/config/routing/distributorPricing.yml"
     prefix:  /app/m/distributor/{id}/items
+
+hello_di_pricing_retailer_model:
+    resource: "@HelloDiPricingBundle/Resources/config/routing/retailerModel.yml"
+    prefix:  /app/d/retailer/model

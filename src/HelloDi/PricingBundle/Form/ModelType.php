@@ -12,19 +12,20 @@ class ModelType extends AbstractType
 
     public function __construct (array $currencies = null)
     {
-        $this->currencies = array_combine($currencies, $currencies);
+        $this->currencies = $currencies ? array_combine($currencies, $currencies) : null;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add("name",null,array('label' => 'Model Name','required'=>true,'translation_domain' => 'transaction'))
-            ->add('currency','choice',array(
-                    'label' => 'Currency','translation_domain' => 'accounts',
-                    'choices'=>$this->currencies
-                ))
             ->add("json",'hidden')
         ;
+        if($this->currencies)
+            $builder->add('currency','choice',array(
+                    'label' => 'Currency','translation_domain' => 'accounts',
+                    'choices'=>$this->currencies
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

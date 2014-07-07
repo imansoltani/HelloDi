@@ -1,16 +1,16 @@
-{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
 
-{% block title %}Add Model{% endblock title %}
+{% block title %}Edit Model{% endblock title %}
 
-{% block PageTitle %}<i class="icon-th-large"></i>Add Model{% endblock %}
+{% block PageTitle %}<i class="icon-th-large"></i>Edit Model{% endblock %}
 
-{% set MU = 'prov' %}
+{% set MU = 'retail' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
-    <a class="link" href="{{ path('hello_di_pricing_provider_model_index') }}">Models</a>
-    <span class="link">Add Model</span>
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_pricing_retailer_model_index') }}">Models</a>
+    <span class="link">Edit Model</span>
 {% endblock Site_Map %}
 
 {% block Link_Head %}
@@ -26,7 +26,7 @@
                 "sPaginationType": "full_numbers",
                 "aoColumnDefs": [
                     { "aTargets": [ 0 ], "sType": "numeric", "bVisible": false },
-                    { "aTargets": [ 5 ], "sType": "numeric", "mRender": function ( data, type ) {
+                    { "aTargets": [ 4 ], "sType": "numeric", "mRender": function ( data, type ) {
                         if(type === 'display')
                             return '<input class="price-input float_validation" type="text" value="' + data + '">';
                         return data;
@@ -35,15 +35,15 @@
             });
 
             $(".price-input").live('blur',function(){
-                oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 5 , false , false );
+                oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 4 , false , false );
             });
         } );
 
         function getJson() {
             var array = oTable.fnGetData(), result = {}, i;
             for(i=0;i<array.length;i++) {
-                if(array[i][5].trim() != "")
-                    result[array[i][0]] = array[i][5].trim();
+                if(array[i][4].trim() != "")
+                    result[array[i][0]] = array[i][4].trim();
             }
             return $.toJSON(result);
         }
@@ -68,33 +68,25 @@
                             <th>{{ 'Id' | trans ({}, "common") }}</th>
                             <th>{{ 'Name' | trans ({}, "item") }}</th>
                             <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
-                            <th>{{ 'FaceValue' | trans ({}, "item") }} ({{ 'Currency' | trans ({}, "item") }})</th>
-                            <th>{{ 'Denominations' | trans ({}, "item") }}</th>
+                            <th>{{ 'Price' | trans ({}, "price") }}</th>
                             <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
                         </tr>
                         <tr class="input" >
                             <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
                             <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
                             <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
-                            <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
-                            <td><label><input type="text" class="search_init" name="search_Currency" value="Search Currency" /></label></td>
+                            <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
                             <td><label><input type="text" class="search_init" name="search_Amount" value="Search Amount" /></label></td>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for item in items %}
+                        {% for price in prices %}
                             <tr>
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.code }}</td>
-                                <td>{{ item.faceValue }} ({{ item.currency }})</td>
-                                <td>
-                                    {% for denomination in item.denominations %}
-                                        {{ denomination.currency }}
-                                        {% if not loop.last %}, {% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>{{ amounts[item.id] is defined ? amounts[item.id] : "" }}</td>
+                                <td>{{ price.id }}</td>
+                                <td>{{ price.item.name }}</td>
+                                <td>{{ price.item.code }}</td>
+                                <td>{{ price.item.faceValue }} ({{ price.item.currency }})</td>
+                                <td>{{ amounts[price.id] is defined ? amounts[price.id] : "" }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

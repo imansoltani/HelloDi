@@ -1,5 +1,5 @@
 hello_di_pricing_provider_model_index:
-    pattern:  /
+    pattern: /
     defaults: { _controller: HelloDiPricingBundle:ProviderModel:index }
 
 hello_di_pricing_provider_model_add:

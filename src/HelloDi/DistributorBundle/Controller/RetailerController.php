@@ -346,7 +346,22 @@ class RetailerController extends Controller
     }
 
     //items
-    //TODO --
+    public function itemAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountId($id);
+        if(!$retailer || $retailer->getDistributor()->getAccount() != $this->getUser()->getAccount())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $prices = $retailer->getAccount()->getPrices();
+
+        return $this->render('HelloDiDistributorBundle:retailer:item.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
+                'prices' => $prices
+            ));
+    }
 
     //users
     public function userAction($id)

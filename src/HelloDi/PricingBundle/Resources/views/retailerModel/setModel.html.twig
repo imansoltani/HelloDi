@@ -1,0 +1,18 @@
+{% extends 'HelloDiDistributorBundle:retailer:tab.html.twig' %}
+
+{% set tab = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_index') }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_distributor_retailer_item',{id:retailerAccount.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'SetModel' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'SetModel' | trans ({}, "item") }}</h3>
+    </div>
+
+    {{ form(form) }}
+{% endblock Tab %}

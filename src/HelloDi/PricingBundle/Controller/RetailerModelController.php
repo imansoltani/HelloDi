@@ -14,16 +14,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProviderModelController extends Controller
+class RetailerModelController extends Controller
 {
     public function indexAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $models = $em->getRepository("HelloDiPricingBundle:Model")->findBy(array("account" => null));
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
 
-        return $this->render("HelloDiPricingBundle:providerModel:index.html.twig",array(
+        $models = $em->getRepository("HelloDiPricingBundle:Model")->findBy(array("account"=>$account));
+
+        return $this->render("HelloDiPricingBundle:retailerModel:index.html.twig",array(
             'models' => $models
         ));
     }
@@ -33,18 +36,19 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Account $distAccount */
+        $distAccount = $this->getUser()->getAccount();
+
         $model = new Model();
 
-        $currencies = $this->container->getParameter('Currencies.Account');
-
-        $form = $this->createForm(new ModelType($currencies),$model)
+        $form = $this->createForm(new ModelType(),$model)
             ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button','onclick'=>"$('#json').val(getJson())")
                 ))
             ->add('cancel','button',array(
                     'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('last-button','onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_pricing_provider_model_index').'")')
+                    'attr'=>array('last-button','onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_pricing_retailer_model_index').'")')
                 ))
         ;
 
@@ -60,18 +64,12 @@ class ProviderModelController extends Controller
             {
                 try {
                     foreach($amounts as $key=>$value) {
-                        $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
-                        if(!$item) throw new \Exception("Item doesn't exist.");
-
-                        if($item->getCurrency() != $model->getCurrency()) {
-                            if(!$em->getRepository('HelloDiCoreBundle:Denomination')->findOneBy(array(
-                                    'item' => $item,
-                                    'currency' => $model->getCurrency()
-                                )))
-                                $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
-                        }
+                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($key);
+                        if(!$price || $price->getAccount() != $distAccount) throw new \Exception('Account has not this item.');
 
                         if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
+
+                        if($value < $price->getPrice()) throw new \Exception('amount must be larger than price.');
                     }
                 }
                 catch(\Exception $ex) {
@@ -83,22 +81,23 @@ class ProviderModelController extends Controller
 
             if($form->isValid())
             {
+                $model->setAccount($distAccount);
                 $em->persist($model);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl("hello_di_pricing_provider_model_index"));
+                return $this->redirect($this->generateUrl("hello_di_pricing_retailer_model_index"));
             }
         }
 
-        $items = $em->createQueryBuilder()
-            ->select('item', 'denominations')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->LeftJoin('item.denominations', 'denominations')
+        $prices = $em->createQueryBuilder()
+            ->select('price')
+            ->from('HelloDiPricingBundle:Price','price')
+            ->where('price.account = :account')->setParameter('account', $distAccount)
             ->getQuery()->getResult();
 
-        return $this->render("HelloDiPricingBundle:providerModel:new.html.twig",array(
-                'items' => $items,
+        return $this->render("HelloDiPricingBundle:retailerModel:new.html.twig",array(
+                'prices' => $prices,
                 'amounts' => $amounts,
                 'form' => $form->createView(),
         ));
@@ -109,18 +108,19 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Account $distAccount */
+        $distAccount = $this->getUser()->getAccount();
+
         $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
 
-        $currencies = $this->container->getParameter('Currencies.Account');
-
-        if (!$model || $model->getAccount() != null) {
+        if (!$model || $model->getAccount() != $distAccount) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
         }
 
-        $form = $this->createForm(new ModelType($currencies),$model,array('attr'=>array(
+        $form = $this->createForm(new ModelType(),$model,array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Register_transaction',array(),'message'),
-                'message' => 'Are you sure you perform this operation?<br>All Prices from providers that has this model will be update.',
+                'message' => 'Are you sure you perform this operation?<br>All Prices from retailers that has this model will be update.',
             )))
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -128,7 +128,7 @@ class ProviderModelController extends Controller
                 ))
             ->add('cancel','button',array(
                     'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('last-button','onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_pricing_provider_model_index').'")')
+                    'attr'=>array('last-button','onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_pricing_retailer_model_index').'")')
                 ))
         ;
 
@@ -144,18 +144,12 @@ class ProviderModelController extends Controller
             {
                 try {
                     foreach($amounts as $key=>$value) {
-                        $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
-                        if(!$item) throw new \Exception("Item doesn't exist.");
-
-                        if($item->getCurrency() != $model->getCurrency()) {
-                            if(!$em->getRepository('HelloDiCoreBundle:Denomination')->findOneBy(array(
-                                    'item' => $item,
-                                    'currency' => $model->getCurrency()
-                                )))
-                                $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
-                        }
+                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($key);
+                        if(!$price || $price->getAccount() != $distAccount) throw new \Exception('Account has not this item.');
 
                         if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
+
+                        if($value < $price->getPrice()) throw new \Exception('amount must be larger than price.');
                     }
                 }
                 catch(\Exception $ex) {
@@ -174,21 +168,21 @@ class ProviderModelController extends Controller
                 else
                     $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('Error in updating prices of this account.',array(),'message'));
 
-                return $this->redirect($this->generateUrl("hello_di_pricing_provider_model_index"));
+                return $this->redirect($this->generateUrl("hello_di_pricing_retailer_model_index"));
             }
         }
 
-        $items = $em->createQueryBuilder()
-            ->select('item', 'denominations')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->LeftJoin('item.denominations', 'denominations')
+        $prices = $em->createQueryBuilder()
+            ->select('price')
+            ->from('HelloDiPricingBundle:Price','price')
+            ->where('price.account = :account')->setParameter('account', $distAccount)
             ->getQuery()->getResult();
 
-        return $this->render("HelloDiPricingBundle:providerModel:edit.html.twig",array(
-                'items' => $items,
+        return $this->render("HelloDiPricingBundle:retailerModel:edit.html.twig",array(
+                'prices' => $prices,
                 'amounts' => $amounts,
                 'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function DeleteAction($id)
@@ -196,9 +190,12 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Account $account */
+        $account = $this->getUser()->getAccount();
+
         $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
 
-        if (!$model || $model->getAccount() != null) {
+        if (!$model || $model->getAccount() != $account) {
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
         }
 
@@ -206,7 +203,7 @@ class ProviderModelController extends Controller
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-        return $this->redirect($this->generateUrl("hello_di_pricing_provider_model_index"));
+        return $this->redirect($this->generateUrl("hello_di_pricing_retailer_model_index"));
     }
 
     public function setModelAction(Request $request, $id)
@@ -214,22 +211,21 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
-        if(!$provider)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountId($id);
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $form = $this->createFormBuilder($provider->getAccount(),array('attr'=>array(
+        $form = $this->createFormBuilder($retailer->getAccount(),array('attr'=>array(
                 'class' => 'YesNoMessage',
                 'header' => $this->get('translator')->trans('Register_transaction',array(),'message'),
-                'message' => 'Are you sure you perform this operation?<br>All Prices from this provider will be change.',
+                'message' => 'Are you sure you perform this operation?<br>All Prices from this retailer will be change.',
             )))
             ->add('model', 'entity', array(
                     'class' => 'HelloDiPricingBundle:Model',
                     'property' => 'name',
-                    'query_builder' => function (EntityRepository $er) use ($provider) {
+                    'query_builder' => function (EntityRepository $er) use ($retailer) {
                             return $er->createQueryBuilder('u')
-                                ->where('u.account is null')
-                                ->andWhere("u.currency = :currency")->setParameter('currency', $provider->getCurrency());
+                                ->where('u.account = :distAccount')->setParameter('distAccount', $retailer->getDistributor()->getAccount());
                         },
                     'expanded' => true,
                     'required' => true,
@@ -241,7 +237,7 @@ class ProviderModelController extends Controller
                 ))
             ->add('cancel','button',array(
                     'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_provider_items', array('id' => $id)).'")','last-button')
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_distributor_retailer_item', array('id' => $id)).'")','last-button')
                 ))
             ->getForm();
 
@@ -251,17 +247,17 @@ class ProviderModelController extends Controller
             if ($form->isValid()) {
                 $em->flush();
 
-                if($this->updatePricesFromModel($provider->getAccount()->getModel(), $provider->getAccount()))
+                if($this->updatePricesFromModel($retailer->getAccount()->getModel(), $retailer->getAccount()))
                     $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('All prices of this account updated.',array(),'message'));
                 else
                     $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('Error in updating prices of this account.',array(),'message'));
 
-                return $this->redirect($this->generateUrl('hello_di_master_provider_items', array('id' => $id)));
+                return $this->redirect($this->generateUrl('hello_di_distributor_retailer_item', array('id' => $id)));
             }
         }
 
-        return $this->render('HelloDiPricingBundle:providerModel:setModel.html.twig', array(
-                'account' => $provider->getAccount(),
+        return $this->render('HelloDiPricingBundle:retailerModel:setModel.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
                 'form' => $form->createView()
             ));
     }
@@ -275,8 +271,8 @@ class ProviderModelController extends Controller
 
             $new_prices = json_decode($model->getJson(), true);
 
-            /** @var Item[] $items */
-            $items = array();
+            /** @var Price[] $prices */
+            $prices = array();
 
             /** @var Account[] $accounts */
             $accounts = $account ? array($account) : $model->getAccounts();
@@ -297,13 +293,13 @@ class ProviderModelController extends Controller
                 foreach ($new_prices as $key=>$new_price)
                 {
                     if($new_price != 'read'){
-                        if(!isset($items[$key]))
-                            $items[$key] = $em->getRepository('HelloDiCoreBundle:Item')->find($key);
+                        if(!isset($prices[$key]))
+                            $prices[$key] = $em->getRepository('HelloDiPricingBundle:Price')->find($key);
 
                         $price = new Price();
                         $price->setPrice($new_price);
                         $price->setAccount($account);
-                        $price->setItem($items[$key]);
+                        $price->setItem($prices[$key]->getItem());
                         $em->persist($price);
                     }
                 }

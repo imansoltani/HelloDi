@@ -1,0 +1,19 @@
+hello_di_pricing_retailer_model_index:
+    pattern: /
+    defaults: { _controller: HelloDiPricingBundle:RetailerModel:index }
+
+hello_di_pricing_retailer_model_add:
+    pattern: /add
+    defaults: { _controller: HelloDiPricingBundle:RetailerModel:add }
+
+hello_di_pricing_retailer_model_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: HelloDiPricingBundle:RetailerModel:edit }
+
+hello_di_pricing_retailer_model_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: HelloDiPricingBundle:RetailerModel:Delete }
+
+hello_di_pricing_retailer_model_set:
+    pattern: /set_model/{id}
+    defaults: { _controller: HelloDiPricingBundle:RetailerModel:setModel }
