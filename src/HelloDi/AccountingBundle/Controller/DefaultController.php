@@ -119,7 +119,7 @@ class DefaultController extends Controller
                 return null;
             $oldCreditLimit = $account->getCreditLimitAmount();
             if($amount > $oldCreditLimit)
-                $creditLimit->setTransaction($this->createTransaction($oldCreditLimit - $amount,$account,"credit limit"));
+                $creditLimit->setTransaction($this->createTransaction($oldCreditLimit - $amount ,$userAccount, "credit limit"));
         }
 
         $creditLimit->setUser($user);

@@ -115,58 +115,58 @@ class DistributorsControllerTest extends WebTestCase
 //
 //    }
 
-private  $x;
- private  $y;
-
-public  function testA()
-{
-
-
-  $dist=new TestController();
-    $client=static::createClient();
-
-    $crowler =$client->request(
-        'get',
-
-        '/login',
-
-        array('name'=>' Kazem   ','family'=>'  Taghandiky'),
-
-        array(),
-
-        array(),
-
-        null,
-
-        true
-    );
-
-
-    print $crowler->filter('a')->count();
-    print $dist->A_1Action($client->getRequest(),2);
-
-//    print 'vasat';
-
-//    $this->markTestIncomplete('in camel nist');
-}
-
-
-    public  function setUp()
-    {
-        $this->x=10;
-
-        print 'x : '.$this->x.'      ';
-    }
-
-    public  function tearDown()
-    {
-        $this->y=$this->x+10;
-
-        print 'x : '.$this->y.'      ';
-    }
-
-
-}
+//private  $x;
+// private  $y;
+//
+//public  function testA()
+//{
+//
+//
+//  $dist=new TestController();
+//    $client=static::createClient();
+//
+//    $crowler =$client->request(
+//        'get',
+//
+//        '/login',
+//
+//        array('name'=>' Kazem   ','family'=>'  Taghandiky'),
+//
+//        array(),
+//
+//        array(),
+//
+//        null,
+//
+//        true
+//    );
+//
+//
+//    print $crowler->filter('a')->count();
+//    print $dist->A_1Action($client->getRequest(),2);
+//
+////    print 'vasat';
+//
+////    $this->markTestIncomplete('in camel nist');
+//}
+//
+//
+//    public  function setUp()
+//    {
+//        $this->x=10;
+//
+//        print 'x : '.$this->x.'      ';
+//    }
+//
+//    public  function tearDown()
+//    {
+//        $this->y=$this->x+10;
+//
+//        print 'x : '.$this->y.'      ';
+//    }
+//
+//
+//}
 
   //  }
 //
@@ -214,4 +214,4 @@ public  function testA()
 //        $crawler = $client->request('GET', '/hello/Fabien');
 //
 //        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-//    }
+    }

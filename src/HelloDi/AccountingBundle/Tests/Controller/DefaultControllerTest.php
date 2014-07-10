@@ -4,18 +4,16 @@ namespace HelloDi\AccountingBundle\Tests\Controller;
 
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\CoreBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    /**
-    * @var \Doctrine\ORM\EntityManager
-    */
+    /** @var \Doctrine\ORM\EntityManager */
     private $em;
 
-    /**
-     * @var \HelloDi\AccountingBundle\Controller\DefaultController
-     */
+    /** @var \HelloDi\AccountingBundle\Controller\DefaultController */
     public $accounting;
 
     /**
@@ -23,10 +21,10 @@ class DefaultControllerTest extends WebTestCase
      */
     protected function setUp()
     {
-        static::$kernel = static::createKernel();
-        static::$kernel->boot();
-        $this->em = static::$kernel->getContainer()->get('doctrine.orm.default_entity_manager');
-        $this->accounting = static::$kernel->getContainer()->get('accounting');
+        $client = static::createClient();
+
+        $this->em = $client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $this->accounting = $client->getContainer()->get('accounting');
     }
 
     /**
@@ -56,8 +54,8 @@ class DefaultControllerTest extends WebTestCase
     public function testCheckAvailableBalance()
     {
         $account = $this->getMock('\HelloDi\AccountingBundle\Entity\Account');
-        $account->expects($this->exactly(3))->method('getAccBalance')->will($this->returnValue(1000));
-        $account->expects($this->exactly(3))->method('getAccCreditLimit')->will($this->returnValue(1000));
+        $account->expects($this->exactly(3))->method('getBalance')->will($this->returnValue(1000));
+        $account->expects($this->exactly(3))->method('getCreditLimitAmount')->will($this->returnValue(1000));
         $account->expects($this->exactly(3))->method('getReserve')->will($this->returnValue(1000));
 
         $this->assertTrue ($this->privateToPublic($this->accounting,'checkAvailableBalance',array(1000,$account)));
@@ -70,20 +68,23 @@ class DefaultControllerTest extends WebTestCase
         $account = $this->getMock('\HelloDi\AccountingBundle\Entity\Account');
         $account->expects($this->once())->method('getId')->will($this->returnValue(1));
 
+        /** @var Transaction $transaction */
         $transaction = $this->privateToPublic($this->accounting, 'createTransaction',array(1000,$account,"test description",2.0));
 
-        $this->assertEquals(1000,$transaction->getTranAmount());
+        $this->assertEquals(1000,$transaction->getAmount());
         $this->assertEquals(1,$transaction->getAccount()->getId());
-        $this->assertEquals((new \DateTime())->getTimestamp(),$transaction->getTranDate()->getTimestamp(),null,3);
-        $this->assertEquals("test description",$transaction->getTranDescription());
-        $this->assertEquals(2.0,$transaction->getTranFees());
+        $this->assertEquals((new \DateTime())->getTimestamp(),$transaction->getDate()->getTimestamp(),null,3);
+        $this->assertEquals("test description",$transaction->getDescription());
+        $this->assertEquals(2.0,$transaction->getFees());
     }
 
     public function testProcessTransfer()
     {
-        $userWithOutAccount = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithoutaccount4"));
+        /** @var User $userWithOutAccount */
+        $userWithOutAccount = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"master_admin"));
 
-        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
+        /** @var Account $Account1 */
+        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"dist1"));
         $Account1->setBalance(2000);
 
         $this->em->flush();
@@ -98,11 +99,13 @@ class DefaultControllerTest extends WebTestCase
 
         //---------------
 
-        $userWithAccount2 = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithaccount2"));
+        /** @var User $userWithAccount2 */
+        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin"));
         $userWithAccount2->getAccount()->setBalance(3000.5);
         $userWithAccount2->getAccount()->setReserve(1000.5);
 
-        $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc3"));
+        /** @var Account $Account3 */
+        $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"B2B Server"));
         $Account3->setBalance(2000);
 
         $this->em->flush();
@@ -115,6 +118,7 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals("transfer from",$transfer2->getOriginTransaction()->getDescription());
         $this->assertEquals("transfer to",$transfer2->getDestinationTransaction()->getDescription());
         $this->assertEquals(3000.5-1000.1,$userWithAccount2->getAccount()->getBalance());
+        $this->assertEquals(1000.5,$userWithAccount2->getAccount()->getReserve());
         $this->assertEquals(2000+1000.1,$Account3->getBalance());
 
         //---------------
@@ -125,9 +129,11 @@ class DefaultControllerTest extends WebTestCase
 
     public function testNewCreditLimit()
     {
-        $userWithOutAccount = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithoutaccount4"));
+        /** @var User $userWithOutAccount */
+        $userWithOutAccount = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"master_admin"));
 
-        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
+        /** @var Account $Account1 */
+        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"dist1"));
         $Account1->setCreditLimitAmount(2000);
 
         $this->em->flush();
@@ -144,10 +150,12 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(1000.1,$Account1->getCreditLimitAmount());
         //---------------
 
-        $userWithAccount2 = $this->em->getRepository("HelloDiDiDistributorsBundle:User")->findOneBy(array("username"=>"userwithaccount2"));
+        /** @var User $userWithAccount2 */
+        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin"));
         $userWithAccount2->getAccount()->setBalance(2000);
 
-        $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc3"));
+        /** @var Account $Account3 */
+        $Account3 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"B2B Server"));
         $Account3->setCreditLimitAmount(0);
 
         $this->em->flush();
@@ -161,6 +169,7 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals((new \DateTime())->getTimestamp(),$creditLimit2->getDate()->getTimestamp(),null,10);
 
         $this->assertEquals(500.1,$Account3->getCreditLimitAmount());
+        $this->assertEquals(2000 - 500.1,$userWithAccount2->getAccount()->getBalance());
 
         //------------------
         $creditLimit3 = $this->accounting->newCreditLimit(500,$userWithAccount2,$Account3);
@@ -172,15 +181,21 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals((new \DateTime())->getTimestamp(),$creditLimit3->getDate()->getTimestamp(),null,10);
 
         $this->assertEquals(500,$Account3->getCreditLimitAmount());
+        $this->assertEquals(2000 - 500.1,$userWithAccount2->getAccount()->getBalance());
         //----------------
 
-        $creditLimit4 = $this->accounting->newCreditLimit(1000,$userWithAccount2,$Account3);
+        $creditLimit4 = $this->accounting->newCreditLimit(1500,$userWithAccount2,$Account3);
+
         $this->assertEquals(null,$creditLimit4);
+
+        $this->assertEquals(500,$Account3->getCreditLimitAmount());
+        $this->assertEquals(2000 - 500.1,$userWithAccount2->getAccount()->getBalance());
     }
 
     public function testReserveAmount()
     {
-        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
+        /** @var Account $Account1 */
+        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"dist1"));
         $Account1->setBalance(2000);
         $Account1->setCreditLimitAmount(500);
         $Account1->setReserve(1000.1);
@@ -201,10 +216,15 @@ class DefaultControllerTest extends WebTestCase
 
     public function testProcessTransaction()
     {
-        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc1"));
-        $Account2 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("accName"=>"acc2"));
+        /** @var Account $Account1 */
+        $Account1 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"dist1"));
+
+        /** @var Account $Account2 */
+        $Account2 = $this->em->getRepository("HelloDiAccountingBundle:Account")->findOneBy(array("name"=>"B2B Server"));
+
         $Account1->setCreditLimitAmount(0);
         $Account1->setReserve(0);
+
         $Account2->setCreditLimitAmount(0);
         $Account2->setReserve(0);
 
