@@ -4,7 +4,7 @@ hello_di_pricing_provider_model_index:
 
 hello_di_pricing_provider_model_add:
     pattern: /add
-    defaults: { _controller: HelloDiPricingBundle:ProviderModel:Add }
+    defaults: { _controller: HelloDiPricingBundle:ProviderModel:add }
 
 hello_di_pricing_provider_model_edit:
     pattern: /{id}/edit

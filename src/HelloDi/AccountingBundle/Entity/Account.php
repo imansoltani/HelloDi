@@ -99,7 +99,7 @@ class Account
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Model", inversedBy="accounts")
-     * @ORM\JoinColumn(name="model_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="model_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $model;
 
