@@ -273,8 +273,6 @@ class ProviderModelController extends Controller
             /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
 
-            $new_prices = json_decode($model->getJson(), true);
-
             /** @var Item[] $items */
             $items = array();
 
@@ -283,12 +281,14 @@ class ProviderModelController extends Controller
 
             foreach ($accounts as $account)
             {
+                $new_prices = json_decode($model->getJson(), true);
+
                 foreach ($account->getPrices() as $price)
                 {
                     /** @var Price $price */
-                    if(isset($new_prices[$price->getId()])){
-                        $price->setPrice($new_prices[$price->getId()]);
-                        $new_prices[$price->getId()] = 'read';
+                    if(isset($new_prices[$price->getItem()->getId()])){
+                        $price->setPrice($new_prices[$price->getItem()->getId()]);
+                        $new_prices[$price->getItem()->getId()] = 'read';
                     }
                     else
                         $em->remove($price);
@@ -304,6 +304,7 @@ class ProviderModelController extends Controller
                         $price->setPrice($new_price);
                         $price->setAccount($account);
                         $price->setItem($items[$key]);
+                        $account->addPrice($price);
                         $em->persist($price);
                     }
                 }
