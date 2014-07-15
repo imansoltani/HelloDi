@@ -10,7 +10,7 @@ use HelloDi\DistributorBundle\Entity\Distributor;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class E_CreateADistributor_Test implements FixtureInterface, ContainerAwareInterface
+class G_CreateADistributor_Test implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -77,6 +77,6 @@ class E_CreateADistributor_Test implements FixtureInterface, ContainerAwareInter
      */
     public function getOrder()
     {
-        return 5;
+        return 6;
     }
 }

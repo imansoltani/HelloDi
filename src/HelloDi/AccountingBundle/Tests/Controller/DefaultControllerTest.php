@@ -305,4 +305,6 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(0,$Account2->getBalance());
         $this->assertEquals(2000,$Account1->getBalance());
     }
+
+
 }

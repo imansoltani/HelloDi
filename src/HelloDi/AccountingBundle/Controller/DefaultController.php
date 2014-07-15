@@ -66,6 +66,7 @@ class DefaultController extends Controller
         $transaction->setAccount($account);
         $transaction->setDescription($description);
         $transaction->setFees($fees);
+        $account->addTransaction($transaction);
         $this->em->persist($transaction);
         return $transaction;
     }
@@ -95,6 +96,7 @@ class DefaultController extends Controller
         $transfer->setDestinationTransaction($this->createTransaction($amount,$destination,$descriptionForDestination));
 
         $transfer->setUser($user);
+        $user->addTransfer($transfer);
         $this->em->persist($transfer);
         $this->em->flush();
         return $transfer;
@@ -123,8 +125,10 @@ class DefaultController extends Controller
         }
 
         $creditLimit->setUser($user);
+        $user->addCreditLimit($creditLimit);
         $creditLimit->setAmount($amount);
         $creditLimit->setAccount($account);
+        $account->addCreditLimit($creditLimit);
         $this->em->persist($creditLimit);
         $this->em->flush();
         return $creditLimit;

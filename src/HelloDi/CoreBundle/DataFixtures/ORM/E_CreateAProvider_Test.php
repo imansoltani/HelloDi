@@ -5,14 +5,11 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
-use HelloDi\CoreBundle\Entity\Item;
-use HelloDi\CoreBundle\Entity\Operator;
-use HelloDi\CoreBundle\Entity\User;
-use HelloDi\DistributorBundle\Entity\Distributor;
+use HelloDi\CoreBundle\Entity\Provider;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class F_CreateOperatorAndItems_Test implements FixtureInterface, ContainerAwareInterface
+class E_CreateAProvider_Test implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -36,26 +33,27 @@ class F_CreateOperatorAndItems_Test implements FixtureInterface, ContainerAwareI
 
         $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
 
-        $currencies = array('USD', 'CHF');
+        $entity = new Entity();
+        $entity->setName('prov1');
+        $entity->setVatNumber(1);
+        $entity->setAddress1('');
+        $entity->setNP(1);
+        $entity->setCity('');
+        $entity->setCountry($country);
+        $em->persist($entity);
 
-        $operator = new Operator();
-        $operator->setName('op1');
-        $em->persist($operator);
+        $account = new Account();
+        $account->setDefaultLanguage('en');
+        $account->setName('prov1');
+        $account->setType(Account::PROVIDER);
+        $account->setEntity($entity);
+        $account->setCreationDate(new \DateTime());
+        $em->persist($account);
 
-        for ($i=1; $i<=4; $i++)
-        {
-            $item = new Item();
-            $item->setName('item'.$i);
-            $item->setAlertMinStock(0);
-            $item->setCountry($country);
-            $item->setCurrency($currencies[$i%2]);
-            $item->setType(Item::DMTU);
-            $item->setFaceValue(10+$i);
-            $item->setDateInsert(new \DateTime());
-            $item->setCode("code_item".$i);
-            $item->setOperator($operator);
-            $em->persist($item);
-        }
+        $provider = new Provider();
+        $provider->setCurrency('USD');
+        $provider->setAccount($account);
+        $em->persist($provider);
 
         $em->flush();
     }
@@ -65,6 +63,6 @@ class F_CreateOperatorAndItems_Test implements FixtureInterface, ContainerAwareI
      */
     public function getOrder()
     {
-        return 6;
+        return 5;
     }
 }
