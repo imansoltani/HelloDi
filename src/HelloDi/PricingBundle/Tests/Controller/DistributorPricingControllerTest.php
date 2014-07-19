@@ -181,7 +181,7 @@ class DistributorPricingControllerTest extends WebTestCase
             ->from('HelloDiPricingBundle:Price', 'price')
             ->innerJoin('price.account', 'account')
             ->innerJoin('price.item', 'item')
-            ->where('price.account = :account')->setParameter('account', $priceDistributor->getAccount())
+            ->where('price.account = :account')->setParameter('account', $distributor->getAccount())
             ->andWhere('price.item = :item')->setParameter('item', $item)
             ->getQuery()->getResult();
 
