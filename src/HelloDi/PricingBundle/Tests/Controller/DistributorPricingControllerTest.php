@@ -77,7 +77,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>1, 'price'=>-1),
+            array('item_id'=>1, 'price'=>-1),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );
@@ -89,7 +89,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>900000,'price'=>''),
+            array('item_id'=>900000,'price'=>''),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );
@@ -124,7 +124,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>$item->getId(),'price'=>200),
+            array('item_id'=>$item->getId(),'price'=>200),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );
@@ -148,7 +148,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>$item->getId(),'price'=>200),
+            array('item_id'=>$item->getId(),'price'=>200),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );
@@ -162,11 +162,12 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->assertEquals($item, $priceDistributor->getItem());
         $this->assertEquals(200, $priceDistributor->getPrice());
 
+        $this->em->clear('HelloDi\PricingBundle\Entity\Price');
         //-----------------
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>$item->getId(),'price'=>300),
+            array('item_id'=>$item->getId(),'price'=>300),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );
@@ -174,21 +175,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertEquals('1-updated', $this->client->getResponse()->getContent());
 
-        $this->em->flush();
-
-        $priceDistributor = $this->em->createQueryBuilder()
-            ->select('price.id as id', 'price.price as priceAmount', 'account.id as account_id', 'item.id as item_id')
-            ->from('HelloDiPricingBundle:Price', 'price')
-            ->innerJoin('price.account', 'account')
-            ->innerJoin('price.item', 'item')
-            ->where('price.account = :account')->setParameter('account', $distributor->getAccount())
-            ->andWhere('price.item = :item')->setParameter('item', $item)
-            ->getQuery()->getResult();
-
-        echo "\n----------------------\n".var_dump($priceDistributor);
         $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array('account'=>$distributor->getAccount(),'item'=>$item));
-
-        echo "\n--price:".$priceDistributor->getPrice().'--price_id:'.$priceDistributor->getId().'-acc_id:'.$priceDistributor->getAccount()->getId()."--\n";
         $this->assertNotNull($priceDistributor);
         $this->assertEquals($distributor->getAccount(), $priceDistributor->getAccount());
         $this->assertEquals($item, $priceDistributor->getItem());
@@ -198,7 +185,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $this->client->request(
             'POST',
             '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/update',
-            array('id'=>$item->getId(),'price'=>''),
+            array('item_id'=>$item->getId(),'price'=>''),
             array(),
             array('HTTP_X-Requested-With' => 'XMLHttpRequest')
         );

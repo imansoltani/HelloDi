@@ -23,7 +23,7 @@ class DistributorPricingController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $items = $em->createQueryBuilder()
-            ->select('item.id','item.code','item.name','item.faceValue','priceDist.price')
+            ->select('item.id as item_id','item.code','item.name','item.faceValue','priceDist.price')
             ->from('HelloDiCoreBundle:Item','item')
             ->innerJoin('item.prices','priceProv')
             ->innerJoin('priceProv.account','accProv')
@@ -46,7 +46,7 @@ class DistributorPricingController extends Controller
         if(!$distributor)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $itemId = $request->request->get('id',0);
+        $itemId = $request->request->get('item_id',0);
         if($itemId <= 0) return new Response('0-Item ID is incorrect.');
 
         $priceAmount = $request->request->get('price','');
