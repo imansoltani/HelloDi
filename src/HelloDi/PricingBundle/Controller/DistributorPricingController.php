@@ -47,7 +47,7 @@ class DistributorPricingController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $itemId = $request->request->get('id',0);
-        if($itemId == 0) return new Response('0-Item ID is incorrect.');
+        if($itemId <= 0) return new Response('0-Item ID is incorrect.');
 
         $priceAmount = $request->request->get('price','');
         if($priceAmount!= "" && (!is_numeric($priceAmount) || $priceAmount<0)) return new Response('0-Price is incorrect.');
@@ -156,7 +156,7 @@ class DistributorPricingController extends Controller
             ));
     }
 
-    public function copyPrices(Distributor $from, Distributor $to)
+    private function copyPrices(Distributor $from, Distributor $to)
     {
         try {
             /** @var EntityManager $em */

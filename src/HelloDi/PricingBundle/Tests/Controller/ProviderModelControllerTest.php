@@ -2,6 +2,7 @@
 
 namespace HelloDi\PricingBundle\Tests\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\CoreBundle\Entity\Provider;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,7 +14,7 @@ class ProviderModelControllerTest extends WebTestCase
     /** @var Client $client */
     private $client = null;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var EntityManager */
     private $em;
 
     public function setUp()
