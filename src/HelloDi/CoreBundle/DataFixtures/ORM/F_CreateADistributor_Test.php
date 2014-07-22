@@ -34,40 +34,42 @@ class G_CreateADistributor_Test implements FixtureInterface, ContainerAwareInter
 
         $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
 
-        $entity = new Entity();
-        $entity->setName('dist1');
-        $entity->setVatNumber(1);
-        $entity->setAddress1('');
-        $entity->setNP(1);
-        $entity->setCity('');
-        $entity->setCountry($country);
-        $em->persist($entity);
+        for($i=1; $i<=2; $i++) {
+            $entity = new Entity();
+            $entity->setName('dist'.$i);
+            $entity->setVatNumber(1);
+            $entity->setAddress1('');
+            $entity->setNP(1);
+            $entity->setCity('');
+            $entity->setCountry($country);
+            $em->persist($entity);
 
-        $account = new Account();
-        $account->setDefaultLanguage('en');
-        $account->setName('dist1');
-        $account->setType(Account::DISTRIBUTOR);
-        $account->setEntity($entity);
-        $account->setCreationDate(new \DateTime());
-        $em->persist($account);
+            $account = new Account();
+            $account->setDefaultLanguage('en');
+            $account->setName('dist'.$i);
+            $account->setType(Account::DISTRIBUTOR);
+            $account->setEntity($entity);
+            $account->setCreationDate(new \DateTime());
+            $em->persist($account);
 
-        $distributor = new Distributor();
-        $distributor->setCurrency('USD');
-        $distributor->setTimeZone("Asia/Tehran");
-        $distributor->setAccount($account);
-        $em->persist($distributor);
+            $distributor = new Distributor();
+            $distributor->setCurrency('USD');
+            $distributor->setTimeZone("Asia/Tehran");
+            $distributor->setAccount($account);
+            $em->persist($distributor);
 
-        $dist_admin = new User();
-        $dist_admin->setUsername('dist_admin');
-        $dist_admin->setEmail('dist_admin@helloDi.com');
-        $dist_admin->setPlainPassword('123456');
-        $dist_admin->addRole('ROLE_DISTRIBUTOR_ADMIN');
-        $dist_admin->setFirstName('dist_admin');
-        $dist_admin->setLanguage('en');
-        $dist_admin->setEntity($entity);
-        $dist_admin->setAccount($account);
-        $dist_admin->setEnabled(true);
-        $em->persist($dist_admin);
+            $dist_admin = new User();
+            $dist_admin->setUsername('dist_admin'.$i);
+            $dist_admin->setEmail('dist_admin'.$i.'@helloDi.com');
+            $dist_admin->setPlainPassword('123456');
+            $dist_admin->addRole('ROLE_DISTRIBUTOR_ADMIN');
+            $dist_admin->setFirstName('dist_admin'.$i);
+            $dist_admin->setLanguage('en');
+            $dist_admin->setEntity($entity);
+            $dist_admin->setAccount($account);
+            $dist_admin->setEnabled(true);
+            $em->persist($dist_admin);
+        }
 
         $em->flush();
     }

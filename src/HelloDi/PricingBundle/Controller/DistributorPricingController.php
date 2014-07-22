@@ -172,6 +172,7 @@ class DistributorPricingController extends Controller
                 $priceTo = new Price();
                 $priceTo->setItem($priceFrom->getItem());
                 $priceTo->setAccount($to->getAccount());
+                $to->getAccount()->addPrice($priceTo);
                 $priceTo->setPrice($priceFrom->getPrice());
                 $priceTo->setTax($priceFrom->getTax());
 

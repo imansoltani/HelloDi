@@ -100,7 +100,7 @@ class DefaultControllerTest extends WebTestCase
         //---------------
 
         /** @var User $userWithAccount2 */
-        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin"));
+        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin1"));
         $userWithAccount2->getAccount()->setBalance(3000.5);
         $userWithAccount2->getAccount()->setReserve(1000.5);
 
@@ -151,7 +151,7 @@ class DefaultControllerTest extends WebTestCase
         //---------------
 
         /** @var User $userWithAccount2 */
-        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin"));
+        $userWithAccount2 = $this->em->getRepository("HelloDiCoreBundle:User")->findOneBy(array("username"=>"dist_admin1"));
         $userWithAccount2->getAccount()->setBalance(2000);
 
         /** @var Account $Account3 */

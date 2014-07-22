@@ -4,6 +4,7 @@ namespace HelloDi\PricingBundle\Tests\Controller;
 
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\PricingBundle\Controller\DistributorPricingController;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -16,7 +17,7 @@ class DistributorPricingControllerTest extends WebTestCase
     /** @var EntityManager */
     private $em;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->client = static::createClient(array(), array(
                 'PHP_AUTH_USER' => 'master_admin',
@@ -38,6 +39,15 @@ class DistributorPricingControllerTest extends WebTestCase
         $method->setAccessible(TRUE);
 
         return $method->invokeArgs($class,$argumentForFunction);
+    }
+
+    protected function countPricesOfAccount(Account $account)
+    {
+        return $this->em->createQueryBuilder()
+            ->select('count(price)')
+            ->from('HelloDiPricingBundle:Price', 'price')
+            ->where('price.account = :account')->setParameter('account', $account)
+            ->getQuery()->getSingleScalarResult();
     }
 
     public function testPricing()
@@ -195,5 +205,114 @@ class DistributorPricingControllerTest extends WebTestCase
 
         $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array('account'=>$distributor->getAccount(),'item'=>$item));
         $this->assertNull($priceDistributor);
+    }
+
+    public function testCopyPrices()
+    {
+        $distributor = $this->em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array('currency'=>'usd'));
+        $this->assertNotNull($distributor);
+
+        $crawler = $this->client->request('GET', '/app/m/distributor/'.$distributor->getAccount()->getId().'/items/copy_prices');
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful(), 'Error in opening page.');
+
+        $countDistributors = $this->em->createQueryBuilder()
+            ->select('count(distributor)')
+            ->from('HelloDiDistributorBundle:Distributor', 'distributor')
+            ->where('distributor != :this')->setParameter('this', $distributor)
+            ->andWhere("distributor.currency = :currency")->setParameter('currency', $distributor->getCurrency())
+            ->getQuery()->getSingleScalarResult();
+
+        $input_tags = $crawler->filter('form span#form_distributor input[type="radio"]');
+
+        $this->assertEquals(count($input_tags), $countDistributors);
+
+        $this->assertGreaterThan(0, $countDistributors);
+
+        //------------
+        $form = $crawler->selectButton('Update')->form();
+
+        $firstDistributorsID = $this->em->createQueryBuilder()
+            ->select('distributor.id')
+            ->from('HelloDiDistributorBundle:Distributor', 'distributor')
+            ->where('distributor != :this')->setParameter('this', $distributor)
+            ->andWhere("distributor.currency = :currency")->setParameter('currency', $distributor->getCurrency())
+            ->getQuery()->getSingleScalarResult();
+
+        $form['form[distributor]'] = $firstDistributorsID;
+
+        $this->client->submit($form);
+
+        $this->assertTrue($this->client->getResponse()->isRedirect('/app/m/distributor/'.$distributor->getAccount()->getId().'/items/'));
+    }
+
+    public function testCopyPricesP()
+    {
+        $distributors = $this->em->getRepository('HelloDiDistributorBundle:Distributor')->findBy(array(),null,2);
+        $this->assertEquals(2, count($distributors));
+
+        $items = $this->em->getRepository('HelloDiCoreBundle:Item')->findBy(array(),null,3);
+        $this->assertEquals(3, count($items));
+
+        //clear price of first dist
+        foreach($distributors[0]->getAccount()->getPrices() as $price) {
+            $this->em->remove($price);
+            $distributors[0]->getAccount()->removePrice($price);
+        }
+
+        //create two price for first dist
+        for ($i=0; $i<2; $i++) {
+            $price = new Price();
+            $price->setPrice(100*($i+1));
+            $price->setItem($items[$i]);
+            $price->setAccount($distributors[0]->getAccount());
+            $distributors[0]->getAccount()->addPrice($price);
+            $this->em->persist($price);
+        }
+
+        //clear price of second dist
+        foreach($distributors[1]->getAccount()->getPrices() as $price) {
+            $this->em->remove($price);
+            $distributors[1]->getAccount()->removePrice($price);
+        }
+
+        $this->em->flush();
+
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[0]->getAccount()));
+        $this->assertEquals(0, $this->countPricesOfAccount($distributors[1]->getAccount()));
+
+        $DistributorPricingController = new DistributorPricingController();
+        $DistributorPricingController->setContainer($this->client->getContainer());
+        $this->assertTrue($this->privateToPublic($DistributorPricingController,'copyPrices',array($distributors[0], $distributors[1])));
+
+
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[0]->getAccount()));
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[1]->getAccount()));
+
+        //--------------------
+        //clear price of second dist
+        foreach($distributors[1]->getAccount()->getPrices() as $price) {
+            $this->em->remove($price);
+            $distributors[1]->getAccount()->removePrice($price);
+        }
+
+        //add a extra price for second dist
+        $price = new Price();
+        $price->setPrice(300);
+        $price->setItem($items[2]);
+        $price->setAccount($distributors[1]->getAccount());
+        $distributors[1]->getAccount()->addPrice($price);
+        $this->em->persist($price);
+        $this->em->flush();
+
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[0]->getAccount()));
+        $this->assertEquals(1, $this->countPricesOfAccount($distributors[1]->getAccount()));
+
+        $DistributorPricingController = new DistributorPricingController();
+        $DistributorPricingController->setContainer($this->client->getContainer());
+        $this->assertTrue($this->privateToPublic($DistributorPricingController,'copyPrices',array($distributors[0], $distributors[1])));
+
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[0]->getAccount()));
+        $this->assertEquals(2, $this->countPricesOfAccount($distributors[1]->getAccount()));
     }
 }
