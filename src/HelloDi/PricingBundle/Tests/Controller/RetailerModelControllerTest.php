@@ -323,11 +323,19 @@ class RetailerModelControllerTest extends WebTestCase
         $this->assertEquals(count($model_prices), count($retailer_prices), "count(model_prices)=".count($model_prices)." count(retailer_prices)=".count($retailer_prices));
 
         $is_equal = true;
-        foreach($retailer_prices as $price)
-            if ($price->getPrice() != $model_prices[$price->getId()]){
+        foreach($retailer_prices as $price) {
+            $priceDistId = $this->em->createQueryBuilder()
+                ->select('price.id')
+                ->from('HelloDiPricingBundle:Price', 'price')
+                ->where('price.account = :account')->setParameter('account', $this->distributor->getAccount())
+                ->andWhere('price.item = :item')->setParameter('item', $price->getItem())
+                ->getQuery()->getSingleScalarResult();
+
+            if ($price->getPrice() != $model_prices[$priceDistId]){
                 $is_equal = false;
                 break;
             }
+        }
 
         $this->assertTrue($is_equal, 'A Price in Retailer exist that his price is not equal');
 
@@ -351,11 +359,19 @@ class RetailerModelControllerTest extends WebTestCase
             $this->assertEquals(count($model_prices), count($retailer_prices), "Account[".$retailer->getAccount()->getId()."]: count(model_prices)=".count($model_prices)." count(retailer_prices)=".count($retailer_prices));
 
             $is_equal = true;
-            foreach($retailer_prices as $price)
-                if ($price->getPrice() != $model_prices[$price->getId()]){
+            foreach($retailer_prices as $price) {
+                $priceDistId = $this->em->createQueryBuilder()
+                    ->select('price.id')
+                    ->from('HelloDiPricingBundle:Price', 'price')
+                    ->where('price.account = :account')->setParameter('account', $this->distributor->getAccount())
+                    ->andWhere('price.item = :item')->setParameter('item', $price->getItem())
+                    ->getQuery()->getSingleScalarResult();
+
+                if ($price->getPrice() != $model_prices[$priceDistId]){
                     $is_equal = false;
                     break;
                 }
+            }
             $this->assertTrue($is_equal, 'A Price in Retailer exist that his price is not equal');
         }
     }
