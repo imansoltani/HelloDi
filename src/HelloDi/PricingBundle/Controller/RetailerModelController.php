@@ -269,8 +269,6 @@ class RetailerModelController extends Controller
             /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
 
-            $new_prices = json_decode($model->getJson(), true);
-
             /** @var Price[] $prices */
             $prices = array();
 
@@ -279,6 +277,8 @@ class RetailerModelController extends Controller
 
             foreach ($accounts as $account)
             {
+                $new_prices = json_decode($model->getJson(), true);
+
                 foreach ($account->getPrices() as $price)
                 {
                     /** @var Price $price */
@@ -300,6 +300,7 @@ class RetailerModelController extends Controller
                         $price->setPrice($new_price);
                         $price->setAccount($account);
                         $price->setItem($prices[$key]->getItem());
+                        $account->addPrice($price);
                         $em->persist($price);
                     }
                 }

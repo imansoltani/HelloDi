@@ -5,11 +5,10 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\Operator;
-use HelloDi\PricingBundle\Entity\Model;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class H_CreateModels_Test implements FixtureInterface, ContainerAwareInterface
+class H_CreateOperatorAndItems_Test implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -31,14 +30,28 @@ class H_CreateModels_Test implements FixtureInterface, ContainerAwareInterface
     {
         if("test" != $this->container->get('kernel')->getEnvironment()) return;
 
-        $item = $em->getRepository('HelloDiCoreBundle:Item')->findOneBy(array('currency'=>'usd'));
+        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
 
-        $model = new Model();
-        $model->setName('model_provider');
-        $model->setCurrency('USD');
-        $model->setAccount(null);
-        $model->setJson(json_encode(array($item->getId()=>15)));
-        $em->persist($model);
+        $currencies = array('USD', 'CHF');
+
+        $operator = new Operator();
+        $operator->setName('op1');
+        $em->persist($operator);
+
+        for ($i=1; $i<=4; $i++)
+        {
+            $item = new Item();
+            $item->setName('item'.$i);
+            $item->setAlertMinStock(0);
+            $item->setCountry($country);
+            $item->setCurrency($currencies[$i%2]);
+            $item->setType(Item::DMTU);
+            $item->setFaceValue(10+$i);
+            $item->setDateInsert(new \DateTime());
+            $item->setCode("code_item".$i);
+            $item->setOperator($operator);
+            $em->persist($item);
+        }
 
         $em->flush();
     }

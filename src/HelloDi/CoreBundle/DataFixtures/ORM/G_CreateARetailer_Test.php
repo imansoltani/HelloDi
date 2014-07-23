@@ -7,10 +7,11 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DistributorBundle\Entity\Distributor;
+use HelloDi\RetailerBundle\Entity\Retailer;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class F_CreateADistributor_Test implements FixtureInterface, ContainerAwareInterface
+class G_CreateARetailer_Test implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -34,9 +35,11 @@ class F_CreateADistributor_Test implements FixtureInterface, ContainerAwareInter
 
         $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
 
+        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array());
+
         for($i=1; $i<=2; $i++) {
             $entity = new Entity();
-            $entity->setName('dist'.$i);
+            $entity->setName('ret'.$i);
             $entity->setVatNumber(1);
             $entity->setAddress1('');
             $entity->setNP(1);
@@ -46,24 +49,23 @@ class F_CreateADistributor_Test implements FixtureInterface, ContainerAwareInter
 
             $account = new Account();
             $account->setDefaultLanguage('en');
-            $account->setName('dist'.$i);
-            $account->setType(Account::DISTRIBUTOR);
+            $account->setName('ret'.$i);
+            $account->setType(Account::RETAILER);
             $account->setEntity($entity);
             $account->setCreationDate(new \DateTime());
             $em->persist($account);
 
-            $distributor = new Distributor();
-            $distributor->setCurrency('USD');
-            $distributor->setTimeZone("Asia/Tehran");
-            $distributor->setAccount($account);
-            $em->persist($distributor);
+            $retailer = new Retailer();
+            $retailer->setDistributor($distributor);
+            $retailer->setAccount($account);
+            $em->persist($retailer);
 
             $dist_admin = new User();
-            $dist_admin->setUsername('dist_admin'.$i);
-            $dist_admin->setEmail('dist_admin'.$i.'@helloDi.com');
+            $dist_admin->setUsername('ret_admin'.$i);
+            $dist_admin->setEmail('ret_admin'.$i.'@helloDi.com');
             $dist_admin->setPlainPassword('123456');
-            $dist_admin->addRole('ROLE_DISTRIBUTOR_ADMIN');
-            $dist_admin->setFirstName('dist_admin'.$i);
+            $dist_admin->addRole('ROLE_RETAILER_ADMIN');
+            $dist_admin->setFirstName('ret_admin'.$i);
             $dist_admin->setLanguage('en');
             $dist_admin->setEntity($entity);
             $dist_admin->setAccount($account);
@@ -79,6 +81,6 @@ class F_CreateADistributor_Test implements FixtureInterface, ContainerAwareInter
      */
     public function getOrder()
     {
-        return 6;
+        return 7;
     }
 }

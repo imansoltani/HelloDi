@@ -99,7 +99,7 @@ class Model
      * @param string $currency
      * @return Model
      */
-    public function setCurrency($currency)
+    public function setCurrency($currency = null)
     {
         $this->currency = $currency;
 
