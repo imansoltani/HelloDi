@@ -1,3 +1,15 @@
 hello_di_master_setting_profile:
     pattern:  /profile
     defaults: { _controller: "HelloDiMasterBundle:Setting:profile" }
+
+hello_di_master_setting_staff_index:
+    pattern:  /staff
+    defaults: { _controller: "HelloDiMasterBundle:Setting:staff" }
+
+hello_di_master_setting_staff_add:
+    pattern:  /staff/add
+    defaults: { _controller: "HelloDiMasterBundle:Setting:staffAdd" }
+
+hello_di_master_setting_staff_edit:
+    pattern:  /staff/{user_id}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Setting:staffEdit" }

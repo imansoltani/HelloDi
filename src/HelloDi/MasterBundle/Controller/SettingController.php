@@ -3,9 +3,10 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\User;
-use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
 use HelloDi\MasterBundle\Form\EntityType;
+use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -40,58 +41,87 @@ class SettingController extends Controller
 
     public function staffAction()
     {
-        $User = $this->get('security.context')->getToken()->getUser();
-        $Users = $User->getEntiti()->getUsers();
+        $users = $this->getUser()->getEntity()->getUsers();
 
-        return $this->render('HelloDiDiDistributorsBundle:Setting:staff.html.twig', array(
-            'Entiti' => $User->getEntiti(),
-            'users' => $Users
-        ));
+        return $this->render('HelloDiMasterBundle:setting:staff.html.twig', array(
+                'users' => $users
+            ));
     }
 
-    public function staffaddAction(Request $req)
+    public function staffAddAction(Request $request)
     {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
         $user = new User();
-        $Entiti = $this->getUser()->getEntiti();
 
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User', 1), $user, array('cascade_validation' => true));
+        $languages = $this->container->getParameter('languages');
 
-        if ($req->isMethod('POST')) {
-            $form->handleRequest($req);
-            $user->setStatus(1);
+        $form = $this->createForm(new RegistrationFormType($languages, Account::PROVIDER), $user)
+            ->add('add','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_setting_staff_index').'")','last-button')
+                ))
+        ;
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
             if ($form->isValid()) {
-                $user->setEntiti($Entiti);
-                $em = $this->getDoctrine()->getManager();
+                $user->setEnabled(true);
+                $user->setEntity($this->getUser()->getEntity());
                 $em->persist($user);
                 $em->flush();
+
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
-                return $this->redirect($this->generateUrl('MasterStaff'));
+                return $this->redirect($this->generateUrl('hello_di_master_setting_staff_index'));
             }
         }
-        return $this->render('HelloDiDiDistributorsBundle:Setting:StaffAdd.html.twig', array(
-            'Entiti' => $Entiti,
-            'form' => $form->createView(),
-        ));
+        return $this->render('HelloDiMasterBundle:setting:StaffAdd.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
 
-    public function staffeditAction(Request $req, $id)
+    public function staffEditAction(Request $request, $user_id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new NewUserType('HelloDiDiDistributorsBundle\Entity\User', 1), $user, array('cascade_validation' => true));
 
-        if ($req->isMethod('POST')) {
-            $form->handleRequest($req);
+        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
+        if(!$user || !in_array($user->getRole(), array('ROLE_MASTER_ADMIN', 'ROLE_MASTER')))
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'user'),'message'));
+
+        $languages = $this->container->getParameter('languages');
+
+        $form = $this->createForm(new RegistrationFormType($languages, Account::PROVIDER), $user)
+            ->remove('plainPassword')
+            ->add('update','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_setting_staff_index').'")','last-button')
+                ))
+        ;
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
             if ($form->isValid()) {
                 $em->flush();
+
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
-                return $this->redirect($this->generateUrl('MasterStaff'));
+                return $this->redirect($this->generateUrl('hello_di_master_setting_staff_index'));
             }
         }
 
-        return $this->render('HelloDiDiDistributorsBundle:Setting:StaffEdit.html.twig', array(
-            'Entiti' => $user->getEntiti(),
-            'userid' => $id,
-            'form' => $form->createView()));
+        return $this->render('HelloDiMasterBundle:setting:StaffEdit.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
 }
