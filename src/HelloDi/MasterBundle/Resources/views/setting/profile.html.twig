@@ -1,0 +1,24 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Profile' | trans ({}, "entity") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-user"></i>{{ 'Profile' | trans ({}, "entity") }}{% endblock %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'EntityInfo' | trans ({}, "entity") }}</span>
+{% endblock Site_Map %}
+
+{% set MU = 'setting' %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="widget-header">
+                <h3>{{ 'EntityInfo' | trans ({}, "entity") }}</h3>
+            </div>
+
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

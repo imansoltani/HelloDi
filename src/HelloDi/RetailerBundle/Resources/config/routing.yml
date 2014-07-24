@@ -1,3 +1,7 @@
 hello_di_retailer_homepage:
     pattern:  /
     defaults: { _controller: HelloDiRetailerBundle:Default:dashboard }
+
+hello_di_retailer_setting:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing/setting.yml"
+    prefix:   /setting

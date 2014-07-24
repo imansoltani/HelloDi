@@ -1,0 +1,3 @@
+hello_di_master_setting_profile:
+    pattern:  /profile
+    defaults: { _controller: "HelloDiMasterBundle:Setting:profile" }

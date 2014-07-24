@@ -441,6 +441,7 @@ class ProviderController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $languages = $this->container->getParameter('languages');
+        $languages = array_combine($languages, $languages);
 
         $form = $this->createFormBuilder(array(
                 'terms' => $provider->getAccount()->getTerms(),

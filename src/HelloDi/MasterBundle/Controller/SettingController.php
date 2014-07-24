@@ -1,14 +1,43 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Controller;
+namespace HelloDi\MasterBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DiDistributorsBundle\Form\User\NewUserType;
+use HelloDi\MasterBundle\Form\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SettingController extends Controller
 {
+    public function profileAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $this->getUser()->getEntity();
+
+        $form = $this->createForm(new EntityType(), $entity)
+            ->add('update','submit', array(
+                'label'=>'Update','translation_domain'=>'common',
+                'attr'=>array('first-button','last-button')
+            ))
+        ;
+
+        if ($request->isMethod('post')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
+            }
+        }
+
+        return $this->render('HelloDiMasterBundle:setting:profile.html.twig', array(
+                'form' => $form->createView()
+            ));
+    }
+
     public function staffAction()
     {
         $User = $this->get('security.context')->getToken()->getUser();
@@ -19,7 +48,6 @@ class SettingController extends Controller
             'users' => $Users
         ));
     }
-
 
     public function staffaddAction(Request $req)
     {

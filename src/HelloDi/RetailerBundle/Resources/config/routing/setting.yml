@@ -1,0 +1,3 @@
+hello_di_retailer_setting_profile:
+    pattern:  /profile
+    defaults: { _controller: "HelloDiRetailerBundle:Setting:profile" }

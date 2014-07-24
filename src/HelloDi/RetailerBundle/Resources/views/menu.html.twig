@@ -74,11 +74,11 @@
         <li class=" {% if MU == 'setting' %}active{% endif %} dropdown">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-wrench"></i>
-                <span id="user_pc_menu">{{ 'AccountSetting' | trans ({}, "accounts") }}</span>
+                <span id="user_pc_menu">{{ 'Setting' | trans ({}, "accounts") }}</span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="{{ path('RetailerProfile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
+                <li><a href="{{ path('hello_di_retailer_setting_profile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
                 <li><a href="{{ path('RetailerStaff') }}">{{ 'Stuff' | trans ({}, "user") }}</a></li>
             </ul>
         </li>

@@ -1,0 +1,206 @@
+{% extends 'HelloDiRetailerBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Profile' | trans ({}, "common") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-check"></i>{{ 'Profile' | trans ({}, "common") }}{% endblock %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Profile' | trans ({}, "common") }}</span>
+{% endblock Site_Map %}
+
+{% set hornav = '40px' %}
+
+{% block Tabs %}
+    <li class="active">
+        <a href="#account" data-toggle="tab" >
+            <input type="submit" value="{{ 'Account' | trans ({}, "accounts") }}" >
+        </a>
+    </li>
+    <li>
+        <a href="#company" data-toggle="tab">
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
+        </a>
+    </li>
+    <li>
+        <a href="#address" data-toggle="tab">
+            <input type="submit" value="{{ 'Address' | trans ({}, "entity") }}" >
+        </a>
+    </li>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget-content">
+        <div class="tab-content">
+            <div id="account" class="tab-pane active">
+                <div class="widget-header">
+                    <h3>{{ 'Account' | trans ({}, "accounts") }}</h3>
+                </div>
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="acc_name">{{ 'AccountName' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_name" class="input-large" disabled="" type="text" value="{{ retailer.account.name }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_credit_limit">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_credit_limit" class="input-large" disabled="" type="text" value="{{ retailer.account.creditLimitAmount }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_balance">{{ 'Balance' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_balance" class="input-large" disabled="" type="text" value="{{ retailer.account.balance }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_currency">{{ 'Currency' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_currency" class="input-large" disabled="" type="text" value="{{ retailer.distributor.currency }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_type">{{ 'Type' | trans ({}, "common") }}</label>
+                        <div class="controls">
+                            <input id="acc_type" class="input-large" disabled="" type="text" value="{{ 'Retailer' | trans ({}, "accounts") }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_timezone">{{ 'TimeZone' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_timezone" class="input-large" disabled="" type="text" value="{{ retailer.distributor.timeZone }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_terms">{{ 'Terms' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_terms" class="input-large" disabled="" type="text" value="{{ retailer.account.terms }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="acc_lang">{{ 'DefaultLanguage' | trans ({}, "accounts") }}</label>
+                        <div class="controls">
+                            <input id="acc_lang" class="input-large" disabled="" type="text" value="{{ retailer.account.defaultLanguage }}"/>
+                        </div>
+                    </div>
+                </form>
+                <div class="form-actions">
+                    <a class="btn btn-primary" href="{{ path('RetailerTicketsNew',{'data':4}) }}">{{ 'Request' | trans ({}, "ticket") }}</a>
+                </div>
+            </div>
+
+            <div id="company" class="tab-pane ">
+                <div class="widget-header">
+                    <h3>{{ 'Entity' | trans ({}, "entity") }}</h3>
+                </div>
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="ent_name">{{ 'Name' | trans ({}, "common") }}</label>
+                        <div class="controls">
+                            <input id="ent_name" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.name }}"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="ent_vat">{{ 'VatNumber' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_vat" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.vatNumber }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_tel1">{{ 'Tel1' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_tel1" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.tel1 }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_tel2">{{ 'Tel2' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_tel2" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.tel2 }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_fax">{{ 'Fax' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_fax" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.fax }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_website">{{ 'WebSite' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_website" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.website }}"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="address" class="tab-pane ">
+                <div class="widget-header">
+                    <h3>{{ 'Address' | trans ({}, "entity") }}</h3>
+                </div>
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="ent_np">{{ 'Np' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_np" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.NP }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_city">{{ 'City' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_city" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.city }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_country">{{ 'Country' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_country" class="input-large" disabled="" type="text"
+                                   value="{{ retailer.account.entity.country.name }} ({{ retailer.account.entity.country.iso }})"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_address1">{{ 'Address1' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_address1" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.address1 }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_address2">{{ 'Address2' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_address2" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.address2 }}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ent_address3">{{ 'Address3' | trans ({}, "entity") }}</label>
+                        <div class="controls">
+                            <input id="ent_address3" class="input-large" disabled="" type="text" value="{{ retailer.account.entity.address3 }}"/>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <a class="btn btn-primary" href="{{ path('RetailerTicketsNew',{'data':3}) }}">{{ 'Change_Address_Or_Detail' | trans ({}, "ticket") }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
