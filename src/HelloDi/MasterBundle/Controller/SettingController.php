@@ -81,7 +81,7 @@ class SettingController extends Controller
                 return $this->redirect($this->generateUrl('hello_di_master_setting_staff_index'));
             }
         }
-        return $this->render('HelloDiMasterBundle:setting:StaffAdd.html.twig', array(
+        return $this->render('HelloDiMasterBundle:setting:staffAdd.html.twig', array(
                 'form' => $form->createView()
             ));
     }
@@ -120,7 +120,7 @@ class SettingController extends Controller
             }
         }
 
-        return $this->render('HelloDiMasterBundle:setting:StaffEdit.html.twig', array(
+        return $this->render('HelloDiMasterBundle:setting:staffEdit.html.twig', array(
                 'form' => $form->createView()
             ));
     }

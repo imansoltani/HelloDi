@@ -15,7 +15,7 @@ class SettingController extends Controller
                 'account' => $this->getUser()->getAccount()
             ));
 
-        return $this->render('HelloDiDistributorBundle:setting:Profile.html.twig', array(
+        return $this->render('HelloDiDistributorBundle:setting:profile.html.twig', array(
                 'distributor' => $distributor
             ));
     }
