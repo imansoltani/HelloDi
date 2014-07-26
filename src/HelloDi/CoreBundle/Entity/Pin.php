@@ -50,6 +50,7 @@ class Pin
 
     /**
      * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", inversedBy="pins")
+     * @ORM\JoinTable(name="pin_code")
      */
     private $codes;
 
