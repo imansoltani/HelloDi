@@ -110,6 +110,12 @@ class B2BLog
     private $commissionerTransaction;
 
     /**
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
+     * @ORM\JoinColumn(name="prov_trans_id", referencedColumnName="id", nullable=true)
+     */
+    private $providerTransaction;
+
+    /**
      * Get id
      *
      * @return integer
@@ -416,5 +422,28 @@ class B2BLog
     public function getCommissionerTransaction()
     {
         return $this->commissionerTransaction;
+    }
+
+    /**
+     * Set providerTransaction
+     *
+     * @param Transaction $providerTransaction
+     * @return B2BLog
+     */
+    public function setProviderTransaction(Transaction $providerTransaction = null)
+    {
+        $this->providerTransaction = $providerTransaction;
+    
+        return $this;
+    }
+
+    /**
+     * Get providerTransaction
+     *
+     * @return Transaction
+     */
+    public function getProviderTransaction()
+    {
+        return $this->providerTransaction;
     }
 }

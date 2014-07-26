@@ -2,6 +2,7 @@
 
 namespace HelloDi\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Transaction;
 
@@ -37,9 +38,9 @@ class Pin
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
-     * @ORM\JoinColumn(name="sell_trans_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="trans_id", referencedColumnName="id", nullable=false)
      */
-    private $sellerTransaction;
+    private $transaction;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
@@ -48,16 +49,17 @@ class Pin
     private $commissionerTransaction;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Code", inversedBy="pins")
-     * @ORM\JoinColumn(name="code_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", inversedBy="pins")
      */
-    private $code;
+    private $codes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\OrderCode", inversedBy="pins")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
+     * Constructor
      */
-    private $orderCode;
+    public function __construct()
+    {
+        $this->codes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -116,26 +118,26 @@ class Pin
     }
 
     /**
-     * Set sellerTransaction
+     * Set transaction
      *
-     * @param Transaction $sellerTransaction
+     * @param Transaction $transaction
      * @return Pin
      */
-    public function setSellerTransaction(Transaction $sellerTransaction)
+    public function setTransaction(Transaction $transaction)
     {
-        $this->sellerTransaction = $sellerTransaction;
+        $this->transaction = $transaction;
 
         return $this;
     }
 
     /**
-     * Get sellerTransaction
+     * Get transaction
      *
      * @return Transaction
      */
-    public function getSellerTransaction()
+    public function getTransaction()
     {
-        return $this->sellerTransaction;
+        return $this->transaction;
     }
 
     /**
@@ -160,50 +162,37 @@ class Pin
     {
         return $this->commissionerTransaction;
     }
-
+    
     /**
-     * Set code
+     * Add codes
      *
-     * @param Code $code
+     * @param Code $codes
      * @return Pin
      */
-    public function setCode(Code $code = null)
+    public function addCode(Code $codes)
     {
-        $this->code = $code;
-
+        $this->codes[] = $codes;
+    
         return $this;
     }
 
     /**
-     * Get code
+     * Remove codes
      *
-     * @return Code
+     * @param Code $codes
      */
-    public function getCode()
+    public function removeCode(Code $codes)
     {
-        return $this->code;
+        $this->codes->removeElement($codes);
     }
 
     /**
-     * Set orderCode
+     * Get codes
      *
-     * @param OrderCode $orderCode
-     * @return Pin
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setOrderCode(OrderCode $orderCode = null)
+    public function getCodes()
     {
-        $this->orderCode = $orderCode;
-
-        return $this;
-    }
-
-    /**
-     * Get orderCode
-     *
-     * @return OrderCode
-     */
-    public function getOrderCode()
-    {
-        return $this->orderCode;
+        return $this->codes;
     }
 }

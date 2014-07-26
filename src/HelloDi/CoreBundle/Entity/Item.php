@@ -92,11 +92,6 @@ class Item
     private $b2bLogs;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Denomination", mappedBy="item", cascade={"persist"})
-     */
-    private $denominations;
-
-    /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
      */
@@ -112,7 +107,6 @@ class Item
         $this->descriptions = new ArrayCollection();
         $this->prices = new ArrayCollection();
         $this->b2bLogs = new ArrayCollection();
-        $this->denominations = new ArrayCollection();
     }
 
     /**
@@ -475,40 +469,6 @@ class Item
     }
 
     /**
-     * Add denominations
-     *
-     * @param Denomination $denominations
-     * @return Item
-     */
-    public function addDenomination(Denomination $denominations)
-    {
-        $denominations->setItem($this);
-        $this->denominations[] = $denominations;
-
-        return $this;
-    }
-
-    /**
-     * Remove denominations
-     *
-     * @param Denomination $denominations
-     */
-    public function removeDenomination(Denomination $denominations)
-    {
-        $this->denominations->removeElement($denominations);
-    }
-
-    /**
-     * Get denominations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDenominations()
-    {
-        return $this->denominations;
-    }
-
-    /**
      * Set country
      *
      * @param Country $country
@@ -529,19 +489,5 @@ class Item
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * @param $currency
-     * @return float
-     */
-    public function getDenominationByCurrency($currency)
-    {
-        foreach ($this->denominations as $denomination)
-            /** @var Denomination $denomination */
-            if ($denomination->getCurrency() == $currency)
-                return $denomination->getDenomination();
-
-        return null;
     }
 }

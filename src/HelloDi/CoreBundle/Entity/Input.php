@@ -3,6 +3,7 @@ namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\AccountingBundle\Entity\Transaction;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -66,6 +67,12 @@ class Input
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
+     * @ORM\JoinColumn(name="prov_trans_id", referencedColumnName="id", nullable=false)
+     */
+    private $providerTransaction;
 
     /**
      * @Assert\File(maxSize="6000000")
@@ -373,5 +380,28 @@ class Input
         );
         $this->fileName = $this->getFile()->getClientOriginalName();
         $this->file = null;
+    }
+
+    /**
+     * Set providerTransaction
+     *
+     * @param Transaction $providerTransaction
+     * @return Input
+     */
+    public function setProviderTransaction(Transaction $providerTransaction)
+    {
+        $this->providerTransaction = $providerTransaction;
+    
+        return $this;
+    }
+
+    /**
+     * Get providerTransaction
+     *
+     * @return Transaction
+     */
+    public function getProviderTransaction()
+    {
+        return $this->providerTransaction;
     }
 }

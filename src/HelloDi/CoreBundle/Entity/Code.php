@@ -36,7 +36,7 @@ class Code
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="code")
+     * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="codes")
      */
     private $pins;
 
