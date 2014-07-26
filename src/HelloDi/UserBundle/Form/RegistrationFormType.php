@@ -1,20 +1,10 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace HelloDi\UserBundle\Form;
 
 use HelloDi\AccountingBundle\Entity\Account;
 use Symfony\Component\Form\FormBuilderInterface;
 use HelloDi\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RegistrationFormType extends BaseType
 {

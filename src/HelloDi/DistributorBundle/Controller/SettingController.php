@@ -2,6 +2,9 @@
 namespace HelloDi\DistributorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\CoreBundle\Entity\User;
+use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,70 +28,85 @@ class SettingController extends Controller
     {
         $users = $this->getUser()->getAccount()->getUsers();
 
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:Staff.html.twig', array(
+        return $this->render('HelloDiDistributorBundle:setting:staff.html.twig', array(
                 'users' => $users
             ));
     }
 
     public function staffAddAction(Request $request)
     {
-        $user = new User();
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $Account = $this->get('security.context')->getToken()->getUser()->getAccount();
-        $Entiti = $Account->getEntiti();
 
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User'), $user);
-        $formrole = $this->createFormBuilder()
-            ->add('roles', 'choice', array('choices' => array('ROLE_DISTRIBUTOR' => 'ROLE_DISTRIBUTOR', 'ROLE_DISTRIBUTOR_ADMIN' => 'ROLE_DISTRIBUTOR_ADMIN')))->getForm();
+        $user = new User();
+
+        $languages = $this->container->getParameter('languages');
+
+        $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
+            ->add('add','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_distributor_setting_staff_index').'")','last-button')
+                ))
+        ;
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            $formrole->handleRequest($request);
-            $data = $formrole->getData();
-            $user->addRole(($data['roles']));
-            $user->setAccount($Account);
-            $user->setEntiti($Entiti);
-            $user->setStatus(1);
+
             if ($form->isValid()) {
+                $user->setEntity($this->getUser()->getEntity());
+                $user->setAccount($this->getUser()->getAccount());
                 $em->persist($user);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-
-                return $this->redirect($this->generateUrl('DistStaff', array('id' => $Account->getId())));
-
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
+                return $this->redirect($this->generateUrl('hello_di_distributor_setting_staff_index'));
             }
-
         }
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:StaffAdd.html.twig',
-            array(
-                'Entiti' => $Account->getEntiti(),
-                'Account' => $Account,
-                'form' => $form->createView(),
-                'formrole' => $formrole->createView()));
-
+        return $this->render('HelloDiDistributorBundle:setting:staffAdd.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
 
     public function staffEditAction(Request $request, $user_id)
     {
-        $this->check_User($id);
-
-
-        $user = new User();
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiDiDistributorsBundle:User')->find($id);
-        $form = $this->createForm(new \HelloDi\DiDistributorsBundle\Form\User\NewUserType('HelloDiDiDistributorsBundle\Entity\User',0), $user, array('cascade_validation' => true));
+
+        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
+        if(!$user || $user->getAccount() != $this->getUser()->getAccount())
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'user'),'message'));
+
+        $languages = $this->container->getParameter('languages');
+
+        $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
+            ->remove('plainPassword')
+            ->add('update','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
+            ->add('cancel','button',array(
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_distributor_setting_staff_index').'")','last-button')
+                ))
+        ;
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('DistStaff', array('id' => $user->getAccount()->getId())));
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
+                return $this->redirect($this->generateUrl('hello_di_distributor_setting_staff_index'));
             }
-
         }
-        return $this->render('HelloDiDiDistributorsBundle:Distributors:StaffEdit.html.twig', array('Account' => $user->getAccount(), 'Entiti' => $user->getEntiti(), 'userid' => $id, 'form' => $form->createView()));
 
+        return $this->render('HelloDiDistributorBundle:setting:staffEdit.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
 }
