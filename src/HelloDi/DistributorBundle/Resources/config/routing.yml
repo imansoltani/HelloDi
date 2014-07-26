@@ -12,4 +12,4 @@ hello_di_distributor_item:
 
 hello_di_distributor_setting:
     resource: "@HelloDiDistributorBundle/Resources/config/routing/setting.yml"
-    prefix:   /setting
+    prefix:   /admin/setting

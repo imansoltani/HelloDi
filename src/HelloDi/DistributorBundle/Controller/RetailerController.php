@@ -408,8 +408,7 @@ class RetailerController extends Controller
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if ($form->isValid())
-            {
+            if ($form->isValid()) {
                 $user->setAccount($retailer->getAccount());
                 $user->setEntity($retailer->getAccount()->getEntity());
                 $em->persist($user);

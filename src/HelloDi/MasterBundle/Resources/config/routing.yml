@@ -32,4 +32,4 @@ hello_di_master_entity:
 
 hello_di_master_setting:
     resource: "@HelloDiMasterBundle/Resources/config/routing/setting.yml"
-    prefix:   /setting
+    prefix:   /admin/setting

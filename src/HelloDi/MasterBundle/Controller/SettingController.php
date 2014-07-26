@@ -72,7 +72,6 @@ class SettingController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $user->setEnabled(true);
                 $user->setEntity($this->getUser()->getEntity());
                 $em->persist($user);
                 $em->flush();
