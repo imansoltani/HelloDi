@@ -1,4 +1,4 @@
-{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
+{% extends 'HelloDiRetailerBundle::menu.html.twig' %}
 
 {% block title %}{{ 'EditUser' | trans ({}, "user") }}{% endblock title %}
 
@@ -7,8 +7,8 @@
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <a class="link" href="{{ path('hello_di_distributor_setting_staff_index') }}">{{ 'Staff' | trans ({}, "user") }}</a>
+    <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_retailer_setting_staff_index') }}">{{ 'Staff' | trans ({}, "user") }}</a>
     <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 

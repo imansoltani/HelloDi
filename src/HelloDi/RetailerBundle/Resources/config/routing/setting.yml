@@ -1,3 +1,15 @@
 hello_di_retailer_setting_profile:
     pattern:  /profile
     defaults: { _controller: "HelloDiRetailerBundle:Setting:profile" }
+
+hello_di_retailer_setting_staff_index:
+    pattern:  /staff
+    defaults: { _controller: "HelloDiRetailerBundle:Setting:staff" }
+
+hello_di_retailer_setting_staff_add:
+    pattern:  /staff/add
+    defaults: { _controller: "HelloDiRetailerBundle:Setting:staffAdd" }
+
+hello_di_retailer_setting_staff_edit:
+    pattern:  /staff/{user_id}/edit
+    defaults: { _controller: "HelloDiRetailerBundle:Setting:staffEdit" }

@@ -1,4 +1,4 @@
-{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
+{% extends 'HelloDiRetailerBundle::menu.html.twig' %}
 
 {% block title %}{{ 'Staff' | trans ({}, "user") }}{% endblock title %}
 
@@ -7,7 +7,7 @@
 {% set MU = 'setting' %}
 
 {% block Site_Map %}
-    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
     <span class="link">{{ 'Staff' | trans ({}, "user") }}</span>
 {% endblock Site_Map %}
 
@@ -25,7 +25,7 @@
 {% block Body %}
     <div class="widget stacked">
         <div class="widget-content">
-            <a class="btn-large button btn btn-primary " href="{{ path('hello_di_distributor_setting_staff_add') }}">
+            <a class="btn-large button btn btn-primary " href="{{ path('hello_di_retailer_setting_staff_add') }}">
                 {{ 'AddNewUser' | trans ({}, "user") }}
             </a>
             <div style="margin-top: 5px" class="tablediv">
@@ -58,7 +58,7 @@
                                 <td>{{ (user.enabled ? 'Active' : 'InActive')| trans ({}, "user") }}</td>
                                 <td>{{ user.role }}</td>
                                 <td class="td-actions">
-                                    <a class="btn_actions" href="{{ path('hello_di_distributor_setting_staff_edit',{'user_id':user.id }) }}">{{ 'Edit' | trans ({}, "common") }}</a>
+                                    <a class="btn_actions" href="{{ path('hello_di_retailer_setting_staff_edit',{'user_id':user.id }) }}">{{ 'Edit' | trans ({}, "common") }}</a>
                                 </td>
                             </tr>
                         {% endfor %}

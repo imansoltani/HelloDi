@@ -5,7 +5,7 @@
 {% block Main_Menu %}
 
     <li class=" {% if MU == 'home' %}active{% endif %} dropdown">
-        <a href="{{ path('retailers_dashboard') }}">
+        <a href="{{ path('hello_di_retailer_homepage') }}">
             <i class="icon-home"></i>
             <span id="user_pc_menu">{{ 'Home' | trans ({}, "menu") }}</span>
         </a>
@@ -79,7 +79,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a href="{{ path('hello_di_retailer_setting_profile') }}">{{ 'Profile' | trans ({}, "user") }}</a></li>
-                <li><a href="{{ path('RetailerStaff') }}">{{ 'Stuff' | trans ({}, "user") }}</a></li>
+                <li><a href="{{ path('hello_di_retailer_setting_staff_index') }}">{{ 'Staff' | trans ({}, "user") }}</a></li>
             </ul>
         </li>
     {% endif %}
