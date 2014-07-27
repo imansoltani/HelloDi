@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new HelloDi\RetailerBundle\HelloDiRetailerBundle(),
             new HelloDi\CoreBundle\HelloDiCoreBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new HelloDi\AggregatorBundle\HelloDiAggregatorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

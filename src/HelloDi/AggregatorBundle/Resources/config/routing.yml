@@ -1,0 +1,3 @@
+hello_di_aggregator_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HelloDiAggregatorBundle:Default:index }
