@@ -181,7 +181,7 @@ class Model
     }
 
     /**
-     * @ORM\postPersist
+     * @ORM\PostPersist
      */
     public function createJsonFile()
     {
