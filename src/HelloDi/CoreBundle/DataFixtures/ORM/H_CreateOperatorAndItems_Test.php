@@ -1,14 +1,15 @@
 <?php
 namespace HelloDi\CoreBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\Operator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class H_CreateOperatorAndItems_Test implements FixtureInterface, ContainerAwareInterface
+class H_CreateOperatorAndItems_Test  extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface

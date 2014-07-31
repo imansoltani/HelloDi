@@ -1,12 +1,13 @@
 <?php
 namespace HelloDi\CoreBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Tax;
 use HelloDi\CoreBundle\Entity\TaxHistory;
 
-class B_InsertZeroTax implements FixtureInterface
+class B_InsertZeroTax extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}

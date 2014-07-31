@@ -1,12 +1,13 @@
 <?php
 namespace HelloDi\CoreBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\User;
 
-class C_CreateFirstMasterAdmin implements FixtureInterface
+class C_CreateFirstMasterAdmin extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
