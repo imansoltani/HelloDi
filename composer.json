@@ -24,7 +24,7 @@
         "phpunit/phpunit": "*",
         "knplabs/knp-snappy-bundle": "dev-master",
         "gregwar/captcha-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "v2.2.0"
+        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev"
     },
     "scripts": {
         "post-install-cmd": [
