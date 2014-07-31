@@ -190,7 +190,7 @@ class Model
     }
 
     /**
-     * @ORM\preRemove
+     * @ORM\PreRemove
      */
     public function removeJsonFile()
     {
