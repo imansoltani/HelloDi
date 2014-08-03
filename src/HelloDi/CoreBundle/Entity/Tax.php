@@ -16,28 +16,28 @@ class Tax
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="float", nullable=false, name="tax",nullable=true)
      */
-    private $tax;
+    protected $tax;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="taxes")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
-    private $country;
+    protected $country;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="tax")
      */
-    private $prices;
+    protected $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\TaxHistory", mappedBy="tax")
      */
-    private $taxHistories;
+    protected $taxHistories;
 
     /**
      * Constructor

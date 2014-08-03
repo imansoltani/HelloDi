@@ -19,25 +19,25 @@ class Transfer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="transfers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="origin_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $originTransaction;
+    protected $originTransaction;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="destination_trans_id", referencedColumnName="id", nullable=false)
      */
-    private $destinationTransaction;
+    protected $destinationTransaction;
 
     /**
      * Get id

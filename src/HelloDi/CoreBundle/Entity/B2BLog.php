@@ -20,100 +20,100 @@ class B2BLog
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="client_transaction_id", type="string", length=50)
      */
-    private $clientTransactionID;
+    protected $clientTransactionID;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
      */
-    private $date;
+    protected $date;
 
     /**
      * @var float
      *
      * @ORM\Column(name="amount", type="decimal", scale=2)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mobile_number", type="string", length=20)
      */
-    private $mobileNumber;
+    protected $mobileNumber;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sender_mobile_number", type="string", length=20, nullable=true)
      */
-    private $senderMobileNumber;
+    protected $senderMobileNumber;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sender_email", type="string", length=50, nullable=true)
      */
-    private $senderEmail;
+    protected $senderEmail;
 
     /**
      * @var string
      *
      * @ORM\Column(name="Transaction_id", type="string", length=20, nullable=true)
      */
-    private $transactionID;
+    protected $transactionID;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="status", type="smallint", nullable=true)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="status_code", type="string", length=20, nullable=true)
      */
-    private $statusCode;
+    protected $statusCode;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="b2bLogs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="b2bLogs")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $item;
+    protected $item;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="sell_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $sellerTransaction;
+    protected $sellerTransaction;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="comm_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $commissionerTransaction;
+    protected $commissionerTransaction;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="prov_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $providerTransaction;
+    protected $providerTransaction;
 
     /**
      * Get id

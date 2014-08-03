@@ -22,35 +22,35 @@ class Model
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=true, name="currency")
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="models")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=true)
      */
-    private $account;
+    protected $account;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="model")
      */
-    private $accounts;
+    protected $accounts;
 
     /**
      * @var String
      */
-    private $json;
+    protected $json;
 
     /**
      * Constructor

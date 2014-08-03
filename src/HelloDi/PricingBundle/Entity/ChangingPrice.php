@@ -14,23 +14,23 @@ class ChangingPrice
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, scale=2)
      */
-    private $price;
+    protected $price;
 
     /**
      * @ORM\Column(type="date", nullable=false)
      */
-    private $changeDate;
+    protected $changeDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Price", inversedBy="changingPrices")
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id", nullable=false)
      */
-    private $prices;
+    protected $prices;
 
     /**
      * Get id

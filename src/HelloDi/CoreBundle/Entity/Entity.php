@@ -16,78 +16,78 @@ class Entity
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="vat_number")
      */
-    private $vatNumber;
+    protected $vatNumber;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true, name="tel1")
      */
-    private $tel1;
+    protected $tel1;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true, name="tel2")
      */
-    private $tel2;
+    protected $tel2;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true, name="fax")
      */
-    private $fax;
+    protected $fax;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="website")
      */
-    private $website;
+    protected $website;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
-    private $address1;
+    protected $address1;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private $address2;
+    protected $address2;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private $address3;
+    protected $address3;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
-    private $NP;
+    protected $NP;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false)
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Account", mappedBy="entity")
      */
-    private $accounts;
+    protected $accounts;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\User", mappedBy="entity")
      */
-    private $users;
+    protected $users;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="entities")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
-    private $country;
+    protected $country;
 
     /**
      * Constructor

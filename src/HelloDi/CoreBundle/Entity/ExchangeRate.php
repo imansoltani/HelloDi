@@ -14,27 +14,27 @@ class ExchangeRate
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="CHF", scale=2)
      */
-    private $CHF;
+    protected $CHF;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="EUR", scale=2)
      */
-    private $EUR;
+    protected $EUR;
 
     /**
      * @ORM\Column(type="datetime", nullable=false, name="date")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="description")
      */
-    private $description;
+    protected $description;
 
     /**
      * Get id

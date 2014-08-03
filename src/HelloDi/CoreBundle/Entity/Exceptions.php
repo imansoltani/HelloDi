@@ -14,25 +14,25 @@ class Exceptions
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
 
     /**
      * @ORM\Column(type="date", nullable=false, name="date")
      */
-    private $Date;
+    protected $Date;
 
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * Get id

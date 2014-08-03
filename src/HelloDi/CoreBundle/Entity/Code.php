@@ -18,39 +18,39 @@ class Code
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="bigint", nullable=false, name="serial_number")
      */
-    private $serialNumber;
+    protected $serialNumber;
 
     /**
      * @ORM\Column(type="bigint", nullable=false, name="pin")
      */
-    private $pin;
+    protected $pin;
 
     /**
      * @ORM\Column(type="boolean", nullable=false, name="status")
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="codes")
      */
-    private $pins;
+    protected $pins;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="codes")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $item;
+    protected $item;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Input", inversedBy="codes")
      * @ORM\JoinColumn(name="input_id", referencedColumnName="id", nullable=false)
      */
-    private $input;
+    protected $input;
 
     /**
      * Constructor

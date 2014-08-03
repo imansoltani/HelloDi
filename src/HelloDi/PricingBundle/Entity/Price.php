@@ -18,40 +18,40 @@ class Price
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="price", scale=2)
      */
-    private $price;
+    protected $price;
 
     /**
      * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
      */
-    private $isFavourite = 0;
+    protected $isFavourite = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")
      */
-    private $changingPrices;
+    protected $changingPrices;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Tax", inversedBy="prices")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
-    private $tax;
+    protected $tax;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="prices")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $item;
+    protected $item;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="prices")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * Constructor

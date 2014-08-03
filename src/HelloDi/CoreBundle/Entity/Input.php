@@ -18,66 +18,66 @@ class Input
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false, name="file_name")
      */
-    private $fileName;
+    protected $fileName;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="date_insert")
      */
-    private $dateInsert;
+    protected $dateInsert;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="batch")
      */
-    private $batch;
+    protected $batch;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="date_production")
      */
-    private $dateProduction;
+    protected $dateProduction;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="date_expiry")
      */
-    private $dateExpiry;
+    protected $dateExpiry;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", mappedBy="input")
      */
-    private $codes;
+    protected $codes;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="inputs")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $item;
+    protected $item;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Provider", inversedBy="inputs")
      * @ORM\JoinColumn(name="provider_id", referencedColumnName="id", nullable=false)
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="inputs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="prov_trans_id", referencedColumnName="id", nullable=false)
      */
-    private $providerTransaction;
+    protected $providerTransaction;
 
     /**
      * @Assert\File(maxSize="6000000")
      */
-    private $file;
+    protected $file;
 
     /**
      * Constructor

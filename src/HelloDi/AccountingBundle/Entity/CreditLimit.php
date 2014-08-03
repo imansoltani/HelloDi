@@ -21,39 +21,39 @@ class CreditLimit
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
-    private $date;
+    protected $date;
 
     /**
      * @var float
      *
      * @ORM\Column(name="amount", type="decimal", nullable=false, precision=6, scale=2)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="creditLimits")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
      */
-    private $transaction;
+    protected $transaction;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="creditLimits")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * Constructor

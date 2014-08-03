@@ -17,60 +17,60 @@ class Ticket
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="subject")
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @ORM\Column(type="datetime", nullable=false, name="start")
      */
-    private $start;
+    protected $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true, name="end")
      */
-    private $end;
+    protected $end;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $inChange;
+    protected $inChange;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\TicketNote", mappedBy="ticket")
      */
-    private $ticketNotes;
+    protected $ticketNotes;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="tickets")
      * @ORM\JoinColumn(name="distributor_id", referencedColumnName="id", nullable=true)
      */
-    private $distributor;
+    protected $distributor;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", inversedBy="tickets")
      * @ORM\JoinColumn(name="retailer_id", referencedColumnName="id", nullable=true)
      */
-    private $retailer;
+    protected $retailer;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="tickets")
      * @ORM\JoinColumn(name="last_user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * Constructor

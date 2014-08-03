@@ -15,28 +15,28 @@ class Notification
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime", nullable=false, name="date")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $value;
+    protected $value;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id",nullable=true)
      */
-    private $account;
+    protected $account;
 
     /**
      * Get id

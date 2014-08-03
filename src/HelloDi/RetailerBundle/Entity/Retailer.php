@@ -23,24 +23,24 @@ class Retailer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", inversedBy="retailers")
      * @ORM\JoinColumn(name="distributor_id", referencedColumnName="id", nullable=false)
      */
-    private $distributor;
+    protected $distributor;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="retailer")
      */
-    private $tickets;
+    protected $tickets;
 
     /**
      * Constructor

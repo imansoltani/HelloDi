@@ -25,74 +25,74 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="first_name")
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="last_name")
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="mobile")
      */
-    private $mobile;
+    protected $mobile;
 
     /**
      * @ORM\Column(type="string", length=2, nullable=false, name="language")
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="user")
      */
-    private $inputs;
+    protected $inputs;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="user")
      */
-    private $tickets;
+    protected $tickets;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\TicketNote", mappedBy="user")
      */
-    private $ticketNotes;
+    protected $ticketNotes;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transfer", mappedBy="user")
      */
-    private $transfers;
+    protected $transfers;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Entity", inversedBy="users")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", nullable=false)
      */
-    private $entity;
+    protected $entity;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="users")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=true)
      */
-    private $account;
+    protected $account;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\OgonePayment", mappedBy="user")
      */
-    private $ogonePayment;
+    protected $ogonePayment;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\B2BLog", mappedBy="user")
      */
-    private $b2bLogs;
+    protected $b2bLogs;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="user")
      */
-    private $creditLimits;
+    protected $creditLimits;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="user")
      */
-    private $pins;
+    protected $pins;
 
     /**
      * Constructor

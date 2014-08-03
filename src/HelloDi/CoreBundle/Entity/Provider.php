@@ -21,32 +21,32 @@ class Provider
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="currency", type="string", length=3)
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var string
      *
      * @ORM\Column(name="timezone", type="string", length=45, nullable=true)
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="provider")
      */
-    private $inputs;
+    protected $inputs;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * Constructor

@@ -24,43 +24,43 @@ class Distributor
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="currency", type="string", length=3)
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var string
      *
      * @ORM\Column(name="timeZone", type="string", length=45)
      */
-    private $timeZone;
+    protected $timeZone;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\TaxHistory", inversedBy="distributors")
      * @ORM\JoinColumn(name="tax_history_id", referencedColumnName="id", nullable=true)
      */
-    private $taxHistory;
+    protected $taxHistory;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", mappedBy="distributor")
      */
-    private $retailers;
+    protected $retailers;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="distributor")
      */
-    private $tickets;
+    protected $tickets;
 
     /**
      * Constructor

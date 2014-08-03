@@ -19,23 +19,23 @@ class ItemDesc
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="text", nullable=false, name="description")
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type="string", length=2, nullable=false, name="language")
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="descriptions")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
-    private $item;
+    protected $item;
 
     /**
      * Get id

@@ -21,38 +21,38 @@ class Pin
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="pins")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="trans_id", referencedColumnName="id", nullable=false)
      */
-    private $transaction;
+    protected $transaction;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="comm_trans_id", referencedColumnName="id", nullable=true)
      */
-    private $commissionerTransaction;
+    protected $commissionerTransaction;
 
     /**
      * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", inversedBy="pins")
      * @ORM\JoinTable(name="pin_code")
      */
-    private $codes;
+    protected $codes;
 
     /**
      * Constructor

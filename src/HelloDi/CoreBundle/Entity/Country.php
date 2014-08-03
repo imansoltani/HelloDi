@@ -14,27 +14,27 @@ class Country
      * @ORM\Id
      * @ORM\Column(type="integer", name="id", nullable=false)
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=false, name="iso")
      */
-    private $iso;
+    protected $iso;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Entity", mappedBy="country")
      */
-    private $entities;
+    protected $entities;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Tax", mappedBy="country")
      */
-    private $taxes;
+    protected $taxes;
 
     /**
      * Constructor

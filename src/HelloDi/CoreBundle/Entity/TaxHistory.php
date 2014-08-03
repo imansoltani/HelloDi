@@ -16,28 +16,28 @@ class TaxHistory
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime",nullable=true, name="Tax_end")
      */
-    private $taxEnd;
+    protected $taxEnd;
 
     /**
      * @ORM\Column(type="float", nullable=false, name="vax")
      */
-    private $vat;
+    protected $vat;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Tax", inversedBy="taxHistories")
      * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
      */
-    private $tax;
+    protected $tax;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\DistributorBundle\Entity\Distributor", mappedBy="taxHistory")
      */
-    private $distributors;
+    protected $distributors;
 
     /**
      * Constructor

@@ -15,38 +15,38 @@ class Transaction
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="decimal", nullable=true, precision=6, scale=2, name="booking_value")
      */
-    private $bookingValue;
+    protected $bookingValue;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="amount", precision=6, scale=2)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="fees", precision=6, scale=2)
      */
-    private $fees = 0.0;
+    protected $fees = 0.0;
 
     /**
      * @ORM\Column(type="datetime", nullable=false, name="date")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="description")
      */
-    private $description = "";
+    protected $description = "";
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\AccountingBundle\Entity\Account", inversedBy="transactions")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * Construct

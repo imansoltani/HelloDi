@@ -23,79 +23,79 @@ class Item
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="decimal", scale=2, nullable=false, name="face_value")
      */
-    private $faceValue;
+    protected $faceValue;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=false, name="currency")
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=false, name="type")
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="integer", nullable=false, name="alert_min_stock")
      */
-    private $alertMinStock;
+    protected $alertMinStock;
 
     /**
      * @ORM\Column(type="string", length=100, name="code", unique = true)
      */
-    private $code;
+    protected $code;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="date_insert")
      */
-    private $dateInsert;
+    protected $dateInsert;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Operator", inversedBy="item")
      * @ORM\JoinColumn(name="Operator_id", referencedColumnName="id", nullable=false)
      */
-    private $operator;
+    protected $operator;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", mappedBy="item")
      */
-    private $codes;
+    protected $codes;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="item")
      */
-    private $inputs;
+    protected $inputs;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\ItemDesc", mappedBy="item")
      */
-    private $descriptions;
+    protected $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="item")
      */
-    private $prices;
+    protected $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\B2BLog", mappedBy="item")
      */
-    private $b2bLogs;
+    protected $b2bLogs;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country")
      * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
      */
-    private $country;
+    protected $country;
 
     /**
      * Constructor

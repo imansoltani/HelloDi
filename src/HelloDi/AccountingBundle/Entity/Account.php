@@ -24,84 +24,84 @@ class Account
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=2, nullable=true, name="default_language")
      */
-    private $defaultLanguage;
+    protected $defaultLanguage;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="balance", precision=6, scale=2)
      */
-    private $balance = 0.0;
+    protected $balance = 0.0;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="credit_limit_amount", precision=6, scale=2)
      */
-    private $creditLimitAmount = 0.0;
+    protected $creditLimitAmount = 0.0;
 
     /**
      * @ORM\Column(type="decimal", nullable=false, name="reserve", precision=6, scale=2)
      */
-    private $reserve = 0.0;
+    protected $reserve = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=false, name="type")
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="date", nullable=false, name="creation_date")
      */
-    private $creationDate;
+    protected $creationDate;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="terms")
      */
-    private $terms = 0;
+    protected $terms = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="account")
      */
-    private $prices;
+    protected $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\Transaction", mappedBy="account")
      */
-    private $transactions;
+    protected $transactions;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\User", mappedBy="account")
      */
-    private $users;
+    protected $users;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Entity", inversedBy="accounts")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", nullable=true)
      */
-    private $entity;
+    protected $entity;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="account")
      */
-    private $creditLimits;
+    protected $creditLimits;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Model", mappedBy="account")
      */
-    private $models;
+    protected $models;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\PricingBundle\Entity\Model", inversedBy="accounts")
      * @ORM\JoinColumn(name="model_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    private $model;
+    protected $model;
 
     /**
      * Constructor

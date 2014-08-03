@@ -20,33 +20,33 @@ class Operator
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=false, name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="carrier_code", unique = true)
      */
-    private $carrierCode;
+    protected $carrierCode;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true, name="logo_extension")
      */
-    private $logoExtension;
+    protected $logoExtension;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Item", mappedBy="operator")
      */
-    private $item;
+    protected $item;
 
     /**
      * @var UploadedFile
      * @Assert\File(maxSize="6000000")
      */
-    private $file;
+    protected $file;
 
     /**
      * Constructor

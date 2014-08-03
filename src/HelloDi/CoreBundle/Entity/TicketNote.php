@@ -14,34 +14,34 @@ class TicketNote
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="text", nullable=true, name="description")
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type="datetime", nullable=false, name="date")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(type="smallint", nullable=false, name="view")
      */
-    private $view;
+    protected $view;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Ticket", inversedBy="ticketNotes")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id", nullable=false)
      */
-    private $ticket;
+    protected $ticket;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="ticketNotes")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * Get id

@@ -28,48 +28,48 @@ class OgonePayment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="amount", type="float")
      * @Assert\Range(min=100)
      * @Assert\NotBlank
      */
-    private $paymentAmount;
+    protected $paymentAmount;
 
     /**
      * @ORM\Column(name="currency_iso", type="string", length=3)
      * @Assert\NotBlank
      */
-    private $paymentCurrencyISO;
+    protected $paymentCurrencyISO;
 
     /**
      * @ORM\Column(name="status", type="string")
      * @Assert\NotBlank
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\Column(name="ogone_ref", type="string", length=10, nullable=true)
      */
-    private $ogoneRef;
+    protected $ogoneRef;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="ogonePayment")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="HelloDi\AccountingBundle\Entity\Transaction")
      * @ORM\JoinColumn(name="transaction_id", referencedColumnName="id", nullable=true)
      */
-    private $transaction;
+    protected $transaction;
 
     /**
      * Constructor
