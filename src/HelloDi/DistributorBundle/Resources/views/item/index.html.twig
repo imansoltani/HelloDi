@@ -37,7 +37,6 @@
                             <th>{{ 'Name' | trans ({}, "item") }}</th>
                             <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
                             <th>{{ 'ItemType' | trans ({}, "item") }}</th>
-                            <th>{{ 'denomination' | trans ({}, "price") }} ({{ distributor.currency }})</th>
                             <th>{{ 'Price' | trans ({}, "price") }} ({{ distributor.currency }})</th>
                             <th>{{ 'commission' | trans ({}, "price") }}</th>
                             <th>{{ 'Operation' | trans ({}, "common") }}</th>
@@ -50,7 +49,6 @@
                             <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                             <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                             <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
-                            <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init" /></label></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,15 +58,8 @@
                                 <td>{{ price.item.name }}</td>
                                 <td>{{ price.item.faceValue }} {{ price.item.currency }}</td>
                                 <td>{{ price.item.type|upper }}</td>
-                                <td>{{ price.item.DenominationByCurrency(distributor.currency) }}</td>
                                 <td>{{ price.price }}</td>
-                                <td>
-                                    {% if price.item.DenominationByCurrency(distributor.currency) %}
-                                        {{ '%.2f'|format((1 - price.price/price.item.DenominationByCurrency(distributor.currency))*100) }} %
-                                    {% else %}
-                                        NaN
-                                    {% endif %}
-                                </td>
+                                <td>{{ '%.2f'|format(1 - price.price/price.item.faceValue) }} %</td>
                                 <td>
                                     <a class="btn_actions" href="{{ path('items_item_per_retailers',{'itemid': price.item.id}) }}">
                                         {{ 'ItemPerRetailer' | trans ({}, "item") }}

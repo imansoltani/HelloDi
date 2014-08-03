@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\ItemDesc;
-use HelloDi\MasterBundle\Form\ItemDenominationType;
 use HelloDi\MasterBundle\Form\ItemType;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\MasterBundle\Form\ItemDescType;
@@ -424,66 +423,5 @@ class ItemController extends Controller
                     'Content-Disposition'   => 'attachment; filename="TestPrintCodes.pdf"'
                 )
             );
-    }
-
-    //denomination
-    public function denominationIndexAction(Request $request,$id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
-        if (!$item)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
-
-        $currencies = $this->container->getParameter('currencies.account');
-
-        $form = $this->createForm(new ItemDenominationType($currencies), $item, array(
-                'cascade_validation' => true,
-            ))
-            ->add('apply','submit', array(
-                    'label' => 'Apply', 'translation_domain' => 'common',
-                    'attr' => array(
-                        'first-button', 'last-button',
-                        'onmousedown' => "removeLastRowIfEmpty()"
-                    )
-                ))
-        ;
-
-        if($request->isMethod('post'))
-        {
-            $form->handleRequest($request);
-//            $accountCurrencies=$this->container->getParameter('currencies.account');
-//            $usedCurrencies = array();
-//            $data = $form->getData();
-//            foreach($data["Denominations"] as $key=>$denomination)
-//            {
-//                /** @var Denomination $denomination */
-//                if(in_array(strtoupper($denomination->getCurrency()),$usedCurrencies))
-//                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Denomination for this currency already exist."));
-//                elseif (!in_array(strtoupper($denomination->getCurrency()),$accountCurrencies))
-//                    $form->get("Denominations")[$key]->get("currency")->addError(new FormError("Currency is no valid or not allowed."));
-//                else
-//                    $usedCurrencies[] = $denomination->getCurrency();
-//            }
-
-            if($form->isValid())
-            {
-//                foreach($data["Denominations"] as $denomination)
-//                {
-//                    $denomination->setCurrency(strtoupper($denomination->getCurrency()));
-//                    $denomination->setItem($item);
-//                    $em->persist($denomination);
-//                }
-                $em->persist($item);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-            }
-        }
-
-        return $this->render('HelloDiMasterBundle:item:denominationIndex.html.twig', array(
-                'item'      => $item,
-                'form'      =>$form->createView()
-            ));
     }
 }

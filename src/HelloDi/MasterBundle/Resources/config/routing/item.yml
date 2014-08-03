@@ -39,8 +39,3 @@ hello_di_master_item_desc_edit:
 hello_di_master_item_desc_print:
     pattern:  /{id}/descriptions/{desc_id}/printsample/{print}
     defaults: { _controller: "HelloDiMasterBundle:Item:descPrint" , print: 'web' }
-
-#denomination
-hello_di_master_item_denomination:
-    pattern:  /{id}/denominations
-    defaults: { _controller: "HelloDiMasterBundle:Item:denominationIndex" }

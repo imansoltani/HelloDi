@@ -24,13 +24,6 @@
             <input type="submit" value="{{ 'ItemPerDist' | trans ({}, "item") }}" >
         </a>
     </li>
-    {% if item.type == 'imtu' %}
-    <li {% if tab == '4' %}class="active"{% endif %} >
-        <a href="{{ path('hello_di_master_item_denomination',{'id':item.id}) }}"  >
-            <input type="submit" value="{{ 'denomination' | trans ({}, "price") }}" >
-        </a>
-    </li>
-    {% endif %}
 {% endblock Tabs %}
 
 {% block Body %}
