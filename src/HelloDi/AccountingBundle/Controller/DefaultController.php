@@ -168,7 +168,7 @@ class DefaultController extends Controller
 
     /**
      * @param TransactionContainer[] $array
-     * @return bool
+     * @return array|bool
      */
     public function processTransaction($array)
     {
@@ -205,10 +205,12 @@ class DefaultController extends Controller
         if($sum<0 && !$this->checkAvailableBalance(-$sum,$lastAccount))
             return false;
 
+        $result = array();
+
         foreach($array as $transactionContainer)
         {
             /** @var TransactionContainer $transactionContainer */
-            $this->createTransaction(
+            $result []= $this->createTransaction(
                 $transactionContainer->getAmount(),
                 $transactionContainer->getAccount(),
                 $transactionContainer->getDescription(),
@@ -217,6 +219,6 @@ class DefaultController extends Controller
         }
 
         $this->em->flush();
-        return true;
+        return $result;
     }
 }

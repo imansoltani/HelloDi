@@ -236,7 +236,7 @@ class DefaultControllerTest extends WebTestCase
 
         $result1 = $this->accounting->processTransaction($array1);
 
-        $this->assertTrue($result1);
+        $this->assertNotFalse($result1);
         $this->assertEquals(2000+1000,$Account1->getBalance());
 
         //-----------------------------------------------------------------
@@ -248,7 +248,7 @@ class DefaultControllerTest extends WebTestCase
 
         $result2 = $this->accounting->processTransaction($array2);
 
-        $this->assertTrue($result2);
+        $this->assertNotFalse($result2);
         $this->assertEquals(2000-1000,$Account2->getBalance());
 
         //-----------------------------------------------------------------
@@ -278,7 +278,7 @@ class DefaultControllerTest extends WebTestCase
 
         $result3 = $this->accounting->processTransaction($array3);
 
-        $this->assertTrue($result3);
+        $this->assertNotFalse($result3);
         $this->assertEquals(2000+1000+500-400,$Account1->getBalance());
         $this->assertEquals(0+500-500+500,$Account2->getBalance());
 
