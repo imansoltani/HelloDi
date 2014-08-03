@@ -1,0 +1,33 @@
+{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_items',{id:account.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Upload' | trans ({}, "code") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Upload' | trans ({}, "code") }}</h3>
+    </div>
+
+    <p style="border: 1px solid #ddd; background-color: #eee; border-radius: 5px; padding: 5px; margin: 5px">
+        <span style="color: #ff0000">Warning: File must have this features: </span><br>
+        - First column must be headers. <br>
+        - This headers must be exist: "SerialNumber", "PinCode".<br>
+    </p>
+
+    {{ form_start(form) }}
+        <div class="control-group">
+            <label class="control-label required" for="item_name">{{ 'Item' | trans ({}, "item") }}</label>
+            <span class="icon-certificate"></span>
+            <div class="controls">
+                <input class="input-large" id="item_name" type="text" value="{{ price.item.name }}" disabled/>
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

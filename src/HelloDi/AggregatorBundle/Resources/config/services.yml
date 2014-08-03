@@ -5,3 +5,6 @@ services:
 #    hello_di_aggregator.example:
 #        class: %hello_di_aggregator.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    aggregator:
+        class: HelloDi\AggregatorBundle\Controller\ServiceController
+        arguments: [@doctrine.orm.default_entity_manager, @accounting]

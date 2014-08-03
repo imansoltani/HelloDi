@@ -194,8 +194,8 @@ class Model
      */
     public function removeJsonFile()
     {
-        if (!unlink($this->getUploadRootDir() . $this->id . ".json"))
-            throw new \Exception('unable to delete model file.');
+        if(file_exists($this->getUploadRootDir() . $this->id . ".json"))
+            unlink($this->getUploadRootDir() . $this->id . ".json");
     }
     
     /**

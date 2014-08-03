@@ -24,6 +24,14 @@ hello_di_master_provider_items:
     pattern:  /{id}/items
     defaults: { _controller: "HelloDiMasterBundle:Provider:items" }
 
+hello_di_master_provider_items_upload:
+    pattern:  /{id}/items/{price_id}/upload
+    defaults: { _controller: "HelloDiMasterBundle:Provider:upload" }
+
+hello_di_master_provider_items_upload_accepted:
+    pattern:  /{id}/items/{price_id}/upload/accept
+    defaults: { _controller: "HelloDiMasterBundle:Provider:uploadAccepted" }
+
 #info
 hello_di_master_provider_info:
     pattern:  /{id}/info

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="input", indexes={@ORM\Index(name="fileNameIDX", columns={"file_name"})})
+ * @ORM\Table(name="input")
  */
 class Input
 {

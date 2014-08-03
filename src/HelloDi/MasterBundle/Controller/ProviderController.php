@@ -2,19 +2,21 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\Entity;
+use HelloDi\CoreBundle\Entity\Input;
 use HelloDi\CoreBundle\Entity\Provider;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\EntityType;
+use HelloDi\MasterBundle\Form\InputType;
 use HelloDi\MasterBundle\Form\ProviderAccountUserType;
 use HelloDi\MasterBundle\Form\TransactionType;
 use HelloDi\MasterBundle\Form\TransferType;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProviderController extends Controller
@@ -307,69 +309,7 @@ class ProviderController extends Controller
             ));
     }
 
-    public function itemsAddAction(Request $request, $id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::PROVIDER)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
-
-        $price = new Price();
-        $price->setIsFavourite(false);
-        $price->setAccount($account);
-
-        $form = $this->createFormBuilder($price)
-            ->add('item', 'entity', array(
-                    'class' => 'HelloDiCoreBundle:Item',
-                    'property' => 'name',
-                    'query_builder' => function (EntityRepository $er) use ($account) {
-                            return $er->createQueryBuilder('u')
-                                ->where('u.id NOT IN (
-                                    SELECT DISTINCT ii.id
-                                    FROM HelloDiCoreBundle:Item ii
-                                    JOIN ii.prices pp
-                                    JOIN pp.account aa
-                                    WHERE aa = :aaid
-                                )')
-                                ->setParameter('aaid', $account);
-                        },
-                    'label' => 'Item','translation_domain' => 'item'
-                ))
-            ->add('price','number',array(
-                    'label' => 'Price','translation_domain' => 'price',
-                    'attr'=> array('class'=>'float_validation'),
-                ))
-            ->add('add','submit', array(
-                    'label'=>'Add','translation_domain'=>'common',
-                    'attr'=>array('first-button')
-                ))
-            ->add('cancel','button',array(
-                    'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_provider_items', array('id' => $id)).'")','last-button')
-                ))
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em->persist($price);
-
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->forward('HelloDiMasterBundle:Provider:items', array('id' => $id));
-            }
-        }
-
-        return $this->render('HelloDiMasterBundle:provider:itemsAdd.html.twig', array(
-                'account' => $account,
-                'form' => $form->createView()
-            ));
-    }
-
-    public function itemsEditAction(Request $request, $price_id)
+    public function uploadAction(Request $request, $price_id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -378,56 +318,104 @@ class ProviderController extends Controller
         if(!$price)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'item'),'message'));
 
-        $account = $price->getAccount();
+        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('account'=>$price->getAccount()));
 
-        $form = $this->createFormBuilder($price)
-            ->add('item', 'entity', array(
-                    'class' => 'HelloDiCoreBundle:Item',
-                    'property' => 'name',
-                    'query_builder' => function (EntityRepository $er) use ($account, $price) {
-                            return $er->createQueryBuilder('u')
-                                ->where('u.id NOT IN (
-                                    SELECT DISTINCT ii.id
-                                    FROM HelloDiCoreBundle:Item ii
-                                    JOIN ii.prices pp
-                                    JOIN pp.account aa
-                                    WHERE aa = :aaid
-                                    AND pp != :this_pp
-                                )')
-                                ->setParameter('aaid', $account)
-                                ->setParameter('this_pp', $price);
-                        },
-                    'label' => 'Item','translation_domain' => 'item'
-                ))
-            ->add('price','number',array(
-                    'label' => 'Price','translation_domain' => 'price',
-                    'attr'=> array('class'=>'float_validation'),
-                ))
+        $input = new Input();
+        $input->setItem($price->getItem());
+        $input->setDateProduction(new \DateTime());
+        $input->setDateExpiry(new \DateTime());
+
+        $form = $this->createForm(new InputType(), $input,array('attr'=>array(
+                'class' => 'YesNoMessage',
+                'header' => $this->get('translator')->trans('Upload',array(),'code'),
+                'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
+            )))
             ->add('update','submit', array(
-                    'label'=>'Update','translation_domain'=>'common',
+                    'label'=>'Upload','translation_domain'=>'code',
                     'attr'=>array('first-button')
                 ))
             ->add('cancel','button',array(
                     'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_provider_items', array('id' => $account->getId())).'")','last-button')
-                ))
-            ->getForm();
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_provider_items', array('id' => $price->getAccount()->getId())).'")','last-button')
+                ));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->forward('HelloDiMasterBundle:Provider:items', array('id' => $account->getId()));
+            if ($form->isValid()) {
+                $input->setDateInsert(new \DateTime());
+                $input->setProvider($provider);
+                $input->setUser($this->getUser());
+                $input->upload();
+
+                try {
+                    $delimiter = $form->get('delimiter')->getData();
+                    $count = $this->get('aggregator')->testFileCodes($input, $delimiter);
+                    $this->get("session")->set('last_upload', $input);
+                    $this->get("session")->set('last_upload_delimiter', $delimiter);
+
+                    return $this->render('HelloDiMasterBundle:provider:uploadSubmit.html.twig', array(
+                            'account' => $price->getAccount(),
+                            'input' => $input,
+                            'count' => $count,
+                            'price_id' => $price_id
+                        ));
+
+                } catch(\Exception $e) {
+                    $form->get('file')->addError(new FormError($e->getMessage()));
+                }
             }
         }
 
-        return $this->render('HelloDiMasterBundle:provider:itemsEdit.html.twig', array(
-                'account' => $account,
+        return $this->render('HelloDiMasterBundle:provider:upload.html.twig', array(
+                'account' => $price->getAccount(),
                 'price' => $price,
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ));
+    }
+
+    public function uploadAcceptedAction(Request $request, $price_id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Input $input */
+        $input = $this->get("session")->get('last_upload');
+        if(!$input)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'upload'),'message'));
+
+        $input->setItem($em->getRepository('HelloDiCoreBundle:Item')->find($input->getItem()->getId()));
+        $input->setUser($em->getRepository('HelloDiCoreBundle:User')->find($input->getUser()->getId()));
+        $input->setProvider($em->getRepository('HelloDiCoreBundle:Provider')->find($input->getProvider()->getId()));
+
+        $delimiter = $this->get("session")->get('last_upload_delimiter');
+
+        if($input->getUser() != $this->getUser()) {
+            $request->getSession()->remove('last_upload');
+            $request->getSession()->remove('last_upload_delimiter');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'upload'),'message'));
+        }
+
+        try {
+            $this->get('aggregator')->buyingCodes($input, $delimiter);
+
+            $request->getSession()->remove('last_upload');
+            $request->getSession()->remove('last_upload_delimiter');
+
+            $this->get('session')->getFlashBag()->add('success', 'this operation done success!');
+            return $this->redirect($this->generateUrl('hello_di_master_provider_items',array(
+                        'id'=>$input->getProvider()->getAccount()->getId()
+                    )));
+        }catch (\Exception $e){
+            $request->getSession()->remove('last_upload');
+            $request->getSession()->remove('last_upload_delimiter');
+
+            $this->get('session')->getFlashBag()->add('error', 'this operation has error: '.$e->getMessage());
+            return $this->redirect($this->generateUrl('hello_di_master_provider_items_upload',array(
+                        'id' => $input->getProvider()->getAccount()->getId(),
+                        'price_id' => $price_id
+                    )));
+        }
     }
 
     //info

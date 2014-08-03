@@ -1,0 +1,66 @@
+{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+
+{% set tab = '1' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_items',{id:account.id}) }}">{{ 'Items' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Upload' | trans ({}, "code") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Upload' | trans ({}, "code") }}</h3>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="item_name">{{ 'Name' | trans ({}, "item") }}</label>
+            <div class="controls">
+                <input id="item_name" type="text" value="{{ input.item.name }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="item_face_value">{{ 'FaceValue' | trans ({}, "item") }}</label>
+            <div class="controls">
+                <input id="item_face_value" type="text" value="{{ input.item.faceValue }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="count">{{ 'Quantity' | trans ({}, "code") }}</label>
+            <div class="controls">
+                <input id="count" type="text" value="{{ count }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="batch">{{ 'Batch' | trans ({}, "code") }}</label>
+            <div class="controls">
+                <input id="batch" type="text" value="{{ input.batch }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="date_production">{{ 'DateProduction' | trans ({}, "code") }}</label>
+            <div class="controls">
+                <input id="date_production" type="text" value="{{ input.dateProduction|date('Y/m/d') }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="date_expiry">{{ 'DateExpiry' | trans ({}, "code") }}</label>
+            <div class="controls">
+                <input id="date_expiry" type="text" value="{{ input.dateExpiry|date('Y/m/d') }}" class="input-large" disabled="" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="file_name">{{ 'FileName' | trans ({}, "code") }}</label>
+            <div class="controls">
+                <input id="file_name" type="text" value="{{ input.fileName }}" class="input-large" disabled="" >
+            </div>
+        </div>
+
+        <div class="form-actions" style="margin-bottom: 0">
+            <a href="{{ path('hello_di_master_provider_items_upload_accepted',{'id':account.id,'price_id':price_id}) }}" class="btn btn-primary">{{ 'Accept' | trans ({}, "common") }}</a>
+            <a href="{{ path('hello_di_master_provider_items',{'id':account.id}) }}" class="btn btn-warning">{{ 'Cancel' | trans ({}, "common") }}</a>
+        </div>
+    </div>
+{% endblock %}

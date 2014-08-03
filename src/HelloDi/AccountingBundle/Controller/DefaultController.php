@@ -168,9 +168,10 @@ class DefaultController extends Controller
 
     /**
      * @param TransactionContainer[] $array
+     * @param bool $doFlush
      * @return array|bool
      */
-    public function processTransaction($array)
+    public function processTransaction($array, $doFlush = true)
     {
         usort($array, function (TransactionContainer $a, TransactionContainer $b) {
             if ($a->getAccount()->getId() == $b->getAccount()->getId()) {
@@ -218,7 +219,7 @@ class DefaultController extends Controller
             );
         }
 
-        $this->em->flush();
+        if($doFlush) $this->em->flush();
         return $result;
     }
 }
