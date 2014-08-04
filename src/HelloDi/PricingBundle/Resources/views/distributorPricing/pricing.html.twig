@@ -27,6 +27,7 @@
                     { "mData": "name" },
                     { "mData": "code" },
                     { "mData": "faceValue", "sType": "numeric"},
+                    { "mData": "priceProvider", "sType": "numeric"},
                     { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
                         if(data == null) data = "";
                         if(type === 'display') {
@@ -42,7 +43,7 @@
 
             $(".price-input").live('blur',function(){
                 var row = oTable.fnGetPosition($(this).closest('tr')[0]);
-                oTable.fnUpdate( $(this).val(), row, 4);
+                oTable.fnUpdate( $(this).val(), row, 5);
                 var rowData = oTable.fnGetData(row);
 
                 var input = $(oTable.fnGetNodes(row)).find('input');
@@ -113,6 +114,7 @@
                     <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
                     <th>{{ 'Name' | trans ({}, "item") }}</th>
                     <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                    <th>{{ 'ProviderPrice' | trans ({}, "price") }}</th>
                     <th>{{ 'Price' | trans ({}, "price") }}</th>
                 </tr>
 
@@ -121,6 +123,7 @@
                     <td><label><input type="text" class="search_init" name="search_Name" value="Search Name" /></label></td>
                     <td><label><input type="text" class="search_init" name="search_ItemCode" value="Search ItemCode" /></label></td>
                     <td><label><input type="text" class="search_init" name="search_FaceValue" value="Search FaceValue" /></label></td>
+                    <td><label><input type="text" class="search_init" name="search_ProviderPrice" value="Search ProviderPrice" /></label></td>
                     <td><label><input type="text" class="search_init" name="search_Price" value="Search Price" /></label></td>
                 </tr>
                 </thead>

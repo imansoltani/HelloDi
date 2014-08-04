@@ -60,11 +60,7 @@ class ProviderModelControllerTest extends WebTestCase
 
         $this->assertTrue($this->client->getResponse()->isSuccessful(), 'Error in opening page.');
 
-        $items_count = count($this->em->createQueryBuilder()
-            ->select('item', 'denominations')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->LeftJoin('item.denominations', 'denominations')
-            ->getQuery()->getResult());
+        $items_count = count($this->em->getRepository('HelloDiCoreBundle:Item')->findAll());
 
         $tr_tags = $crawler->filter('table#example tbody tr');
 
@@ -104,7 +100,7 @@ class ProviderModelControllerTest extends WebTestCase
 
         $this->client->submit($form);
 
-        $this->assertFalse($this->client->getResponse()->isRedirect('/app/m/provider/model/'), 'currency of item is deference.');
+        $this->assertFalse($this->client->getResponse()->isRedirect('/app/m/provider/model/'), 'currency of item is different.');
 
         //-------------
         $models_count_before = count($this->em->getRepository("HelloDiPricingBundle:Model")->findBy(array("account" => null)));
@@ -159,11 +155,7 @@ class ProviderModelControllerTest extends WebTestCase
 
         $this->assertTrue($this->client->getResponse()->isSuccessful(), 'Error in opening page. error:'.$this->client->getResponse()->getStatusCode());
 
-        $items_count = count($this->em->createQueryBuilder()
-                ->select('item', 'denominations')
-                ->from('HelloDiCoreBundle:Item','item')
-                ->LeftJoin('item.denominations', 'denominations')
-                ->getQuery()->getResult());
+        $items_count = count($this->em->getRepository('HelloDiCoreBundle:Item')->findAll());
 
         $tr_tags = $crawler->filter('table#example tbody tr');
 
@@ -203,7 +195,7 @@ class ProviderModelControllerTest extends WebTestCase
 
         $this->client->submit($form);
 
-        $this->assertFalse($this->client->getResponse()->isRedirect('/app/m/provider/model/'), 'currency of item is deference.');
+        $this->assertFalse($this->client->getResponse()->isRedirect('/app/m/provider/model/'), 'currency of item is different.');
 
         //-------------
 

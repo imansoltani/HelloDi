@@ -23,11 +23,12 @@ class DistributorPricingController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $items = $em->createQueryBuilder()
-            ->select('item.id as item_id','item.code','item.name','item.faceValue','priceDist.price')
+            ->select('item.id as item_id','item.code','item.name','item.faceValue','priceProv.price as priceProvider','priceDist.price')
             ->from('HelloDiCoreBundle:Item','item')
+            ->where('item.currency = :currency')->setParameter('currency', $distributor->getCurrency())
             ->innerJoin('item.prices','priceProv')
             ->innerJoin('priceProv.account','accProv')
-            ->where('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
+            ->andWhere('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
             ->leftJoin('item.prices','priceDist','WITH','priceDist.account = :accDist')->setParameter('accDist',$distributor->getAccount())
             ->getQuery()->getArrayResult();
 
@@ -54,6 +55,7 @@ class DistributorPricingController extends Controller
 
         $item = $em->getRepository('HelloDiCoreBundle:Item')->find($itemId);
         if(!$item) return new Response("0-Couldn't find the Item.");
+        if($item->getCurrency() != $distributor->getCurrency()) return new Response("0-Item currency isn't equal to distributor currency.");
 
         $info = "";
 

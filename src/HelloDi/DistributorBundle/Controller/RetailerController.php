@@ -2,7 +2,6 @@
 namespace HelloDi\DistributorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
@@ -355,7 +354,14 @@ class RetailerController extends Controller
         if(!$retailer || $retailer->getDistributor()->getAccount() != $this->getUser()->getAccount())
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $prices = $retailer->getAccount()->getPrices();
+        $prices = $em->createQueryBuilder()
+            ->select('item.id', 'item.name', 'item.faceValue', 'item.type', 'price.price', 'price_dist.price as price_distributor')
+            ->from('HelloDiPricingBundle:Price', 'price')
+            ->where('price.account = :ret_acc')->setParameter('ret_acc', $retailer->getAccount())
+            ->innerJoin('price.item', 'item')
+            ->innerJoin('item.prices', 'price_dist')
+            ->andWhere('price_dist.account = :dist_acc')->setParameter('dist_acc', $retailer->getDistributor()->getAccount())
+            ->getQuery()->getResult();
 
         return $this->render('HelloDiDistributorBundle:retailer:item.html.twig', array(
                 'retailerAccount' => $retailer->getAccount(),

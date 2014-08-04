@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use HelloDi\AccountingBundle\Entity\Account;
-use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\PricingBundle\Entity\Model;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\PricingBundle\Form\ModelType;

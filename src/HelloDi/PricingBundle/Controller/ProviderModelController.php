@@ -61,17 +61,14 @@ class ProviderModelController extends Controller
                 try {
                     foreach($amounts as $key=>$value) {
                         $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
-                        if(!$item) throw new \Exception("Item doesn't exist.");
+                        if(!$item)
+                            throw new \Exception("Item doesn't exist.");
 
-                        if($item->getCurrency() != $model->getCurrency()) {
-                            if(!$em->getRepository('HelloDiCoreBundle:Denomination')->findOneBy(array(
-                                    'item' => $item,
-                                    'currency' => $model->getCurrency()
-                                )))
-                                $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
-                        }
+                        if($item->getCurrency() != $model->getCurrency())
+                            throw new \Exception("Currency of an Item not equal to selected Currency.");
 
-                        if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
+                        if(!is_numeric($value))
+                            throw new \Exception('amount must be numeric.');
                     }
                 }
                 catch(\Exception $ex) {
@@ -91,11 +88,7 @@ class ProviderModelController extends Controller
             }
         }
 
-        $items = $em->createQueryBuilder()
-            ->select('item', 'denominations')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->LeftJoin('item.denominations', 'denominations')
-            ->getQuery()->getResult();
+        $items = $em->getRepository('HelloDiCoreBundle:Item')->findAll();
 
         return $this->render("HelloDiPricingBundle:providerModel:new.html.twig",array(
                 'items' => $items,
@@ -145,17 +138,14 @@ class ProviderModelController extends Controller
                 try {
                     foreach($amounts as $key=>$value) {
                         $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
-                        if(!$item) throw new \Exception("Item doesn't exist.");
+                        if(!$item)
+                            throw new \Exception("Item doesn't exist.");
 
-                        if($item->getCurrency() != $model->getCurrency()) {
-                            if(!$em->getRepository('HelloDiCoreBundle:Denomination')->findOneBy(array(
-                                    'item' => $item,
-                                    'currency' => $model->getCurrency()
-                                )))
-                                $form->addError(new FormError("Currency of an Item not equal to selected Currency or An Item hasn't denomination with selected currency."));
-                        }
+                        if($item->getCurrency() != $model->getCurrency())
+                            throw new \Exception("Currency of an Item not equal to selected Currency.");
 
-                        if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
+                        if(!is_numeric($value))
+                            throw new \Exception('amount must be numeric.');
                     }
                 }
                 catch(\Exception $ex) {
@@ -178,11 +168,7 @@ class ProviderModelController extends Controller
             }
         }
 
-        $items = $em->createQueryBuilder()
-            ->select('item', 'denominations')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->LeftJoin('item.denominations', 'denominations')
-            ->getQuery()->getResult();
+        $items = $em->getRepository('HelloDiCoreBundle:Item')->findAll();
 
         return $this->render("HelloDiPricingBundle:providerModel:edit.html.twig",array(
                 'items' => $items,
