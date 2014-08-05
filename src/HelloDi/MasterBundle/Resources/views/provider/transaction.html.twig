@@ -60,6 +60,6 @@
     </div>
 
     <div class="navigation" style="text-align: center">
-        {{ knp_pagination_render(transactions) }}
+        {{ knp_pagination_render(transactions, null, {}, {'method':'post'}) }}
     </div>
 {% endblock %}

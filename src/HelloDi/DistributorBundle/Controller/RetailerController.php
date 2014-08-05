@@ -168,6 +168,7 @@ class RetailerController extends Controller
                     'aamdt' => 'debit_provider,s_account',
                     'tran' => 'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
                 )))
+            ->add('page', 'hidden', array('required' => false, 'attr'=>array('id'=>'search_page')))
             ->setMethod('post')
             ->add('search','submit')
             ->getForm();
@@ -217,7 +218,7 @@ class RetailerController extends Controller
 
         $transactions = $this->get('knp_paginator')->paginate(
             $qb,
-            $request->get('page', 1),
+            $form->get('page')->getData()?:1,
             10
         );
 

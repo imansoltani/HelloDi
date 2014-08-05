@@ -50,8 +50,9 @@ class CodeController extends Controller
                     'label'=>'Search','translation_domain'=>'common',
                 ));
 
+        $page = $request->get('page', 1);
         $fields = $request->query->all();
-        unset($fields['last_search'], $fields['csv']);
+        unset($fields['last_search'], $fields['csv'], $fields['page']);
         $form->submit($fields);
 
         $codes = array();
@@ -103,7 +104,7 @@ class CodeController extends Controller
                 ?
                 $qb->getQuery()->getResult()
                 :
-                $this->get('knp_paginator')->paginate($qb, $request->get('page', 1), 20);
+                $this->get('knp_paginator')->paginate($qb, $page, 20);
 
             $request->getSession()->set('code_search', $request->query->all());
         }

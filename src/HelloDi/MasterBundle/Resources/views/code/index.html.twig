@@ -33,7 +33,7 @@
                 <div class="form_search">
                     <h5 style="cursor:pointer;" class="TitleShow1">
                         <span>
-                            <i id="search_logo" class="icon-search"></i><p class="title_search"></p>
+                            <i id="search_logo" class="icon-search"></i><span class="title_search"></span>
                         </span>
                     </h5>
                     {{ form(form) }}
@@ -43,7 +43,7 @@
                 <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a><br/><br/>
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>{{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes|length }})</h4>
+                        <h4>{{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes.getTotalItemCount }})</h4>
                     </div>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">

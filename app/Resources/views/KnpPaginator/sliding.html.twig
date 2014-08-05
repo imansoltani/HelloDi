@@ -1,0 +1,81 @@
+{# default Sliding pagination control implementation #}
+
+{% if pageCount > 1 %}
+<div class="pagination">
+
+    {#first#}
+    <span><a
+                {% if first is defined and current != first %}
+                    href="{{ path(route, query|merge({(pageParameterName): first})) }}"
+                    class=" btn"
+                    onclick="PagingAction(event, {{ first }});"
+                {% endif %}
+                class="btn dis">
+            <span>{{ 'First' | trans ({}, "pagination") }}</span>
+            <i class="icon-step-backward"></i>
+        </a></span>
+
+    {#prev#}
+    <span><a
+                {% if previous is defined %} class=" btn"
+                    href="{{ path(route, query|merge({(pageParameterName): previous})) }}"
+                    onclick="PagingAction(event, {{ previous }});"
+                {% endif %}
+                class="btn dis"
+                >
+            <span>{{ 'Prev' | trans ({}, "pagination") }}</span>
+            <i class="icon-backward"></i>
+        </a></span>
+
+    {#numbers#}
+    {% for page in pagesInRange %}
+        <span>
+            <a
+                    {% if page != current %}
+                        href="{{ path(route, query|merge({(pageParameterName): page})) }}"
+                        onclick="PagingAction(event, {{ page }});"
+                        class="btn"
+                    {% else %}
+                        class="btn btn-primary current"
+                    {% endif %}
+                    >{{ page }}</a>
+        </span>
+    {% endfor %}
+
+    {#next#}
+    <span><a
+                {% if next is defined %}
+                    href="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                    onclick="PagingAction(event, {{ next }});"
+                    class="btn"
+                {% endif %}
+                class="btn dis"
+                >
+            <span>{{ 'Next' | trans ({}, "pagination") }}</span>
+            <i class="icon-forward"></i>
+        </a></span>
+
+    {#last#}
+    <span><a
+                {% if last is defined and current != last %}
+                    href="{{ path(route, query|merge({(pageParameterName): last})) }}"
+                    onclick="PagingAction(event, {{ last }});"
+                    class="btn"
+                {% endif %}
+                class="btn dis"
+                >
+            <span>{{ 'Last' | trans ({}, "pagination") }}</span>
+            <i class="icon-step-forward"></i>
+        </a></span>
+</div>
+
+<script type="text/javascript">
+    function PagingAction(e, x) {
+        {% if method is defined and method|lower == 'post' %}
+            e.preventDefault();
+            $('input.search_page').val(x);
+            $('form.SearchForm').submit();
+        {% endif %}
+    }
+</script>
+{% endif %}
