@@ -8,6 +8,7 @@ use HelloDi\AccountingBundle\Controller\DefaultController;
 use HelloDi\CoreBundle\Entity\Code;
 use HelloDi\CoreBundle\Entity\Input;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class ServiceController
@@ -119,5 +120,22 @@ class ServiceController extends Controller
         $this->em->flush();
 
         return $input;
+    }
+
+    public function clearUploadInSession(Session $session)
+    {
+        /** @var Input $input */
+        $input = $session->get('last_upload');
+
+        if(!$input || !$input->getFileName())
+            return;
+
+        $input_db = $this->em->getRepository('HelloDiCoreBundle:Input')->findOneBy(array('fileName'=>$input->getFileName()));
+
+        if(!$input_db && file_exists($input->getAbsolutePath()))
+            unlink($input->getAbsolutePath());
+
+        $session->remove('last_upload');
+        $session->remove('last_upload_delimiter');
     }
 }

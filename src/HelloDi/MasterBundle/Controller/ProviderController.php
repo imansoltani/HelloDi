@@ -352,6 +352,8 @@ class ProviderController extends Controller
                 try {
                     $delimiter = $form->get('delimiter')->getData();
                     $count = $this->get('aggregator')->testFileCodes($input, $delimiter);
+
+                    $this->get('aggregator')->clearUploadInSession($this->get("session"));
                     $this->get("session")->set('last_upload', $input);
                     $this->get("session")->set('last_upload_delimiter', $delimiter);
 
@@ -375,7 +377,7 @@ class ProviderController extends Controller
             ));
     }
 
-    public function uploadAcceptedAction(Request $request, $price_id)
+    public function uploadAcceptedAction($price_id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -392,24 +394,21 @@ class ProviderController extends Controller
         $delimiter = $this->get("session")->get('last_upload_delimiter');
 
         if($input->getUser() != $this->getUser()) {
-            $request->getSession()->remove('last_upload');
-            $request->getSession()->remove('last_upload_delimiter');
+            $this->get('aggregator')->clearUploadInSession($this->get("session"));
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'upload'),'message'));
         }
 
         try {
             $this->get('aggregator')->buyingCodes($input, $delimiter);
 
-            $request->getSession()->remove('last_upload');
-            $request->getSession()->remove('last_upload_delimiter');
+            $this->get('aggregator')->clearUploadInSession($this->get("session"));
 
             $this->get('session')->getFlashBag()->add('success', 'this operation done success!');
             return $this->redirect($this->generateUrl('hello_di_master_provider_items',array(
                         'id'=>$input->getProvider()->getAccount()->getId()
                     )));
         }catch (\Exception $e){
-            $request->getSession()->remove('last_upload');
-            $request->getSession()->remove('last_upload_delimiter');
+            $this->get('aggregator')->clearUploadInSession($this->get("session"));
 
             $this->get('session')->getFlashBag()->add('error', 'this operation has error: '.$e->getMessage());
             return $this->redirect($this->generateUrl('hello_di_master_provider_items_upload',array(
