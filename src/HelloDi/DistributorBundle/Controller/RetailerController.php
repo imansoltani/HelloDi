@@ -74,7 +74,7 @@ class RetailerController extends Controller
 
         $account = new Account();
         $account->setCreationDate(new \DateTime('now'));
-        $account->setType(Account::DISTRIBUTOR);
+        $account->setType(Account::RETAILER);
         $retailer->setAccount($account);
 
         $entity = new Entity();
