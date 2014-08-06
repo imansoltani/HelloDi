@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-actions" style="margin-bottom: 0">
-            <a href="{{ path('hello_di_master_provider_items_upload_accepted',{'id':account.id,'price_id':price_id}) }}" class="btn btn-primary">{{ 'Accept' | trans ({}, "common") }}</a>
+            <a href="{{ path('hello_di_master_provider_items_upload_accepted',{'id':account.id,'price_id':price_id}) }}" header="{{ 'Upload' | trans ({}, "code") }}" message="{{ 'Are_you_sure_you_perform_this_operation?' | trans ({}, "message") }}" class="YesNoMessage btn btn-primary">{{ 'Accept' | trans ({}, "common") }}</a>
             <a href="{{ path('hello_di_master_provider_items',{'id':account.id}) }}" class="btn btn-warning">{{ 'Cancel' | trans ({}, "common") }}</a>
         </div>
     </div>
