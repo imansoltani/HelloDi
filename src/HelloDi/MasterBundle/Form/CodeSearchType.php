@@ -12,6 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CodeSearchType extends AbstractType
 {
+    private $count_per_page;
+
+    public function __construct($count_per_page)
+    {
+        $this->count_per_page = $count_per_page;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -80,6 +87,18 @@ class CodeSearchType extends AbstractType
                     'required'=> false,
                     'widget' => 'single_text','format' => 'yyyy-MM-dd',
                     'label' => 'ToExpireDate','translation_domain' => 'code'
+            ))
+            ->add('count_per_page', 'choice', array(
+                    'required'=> false,
+                    'choices' => array_unique(array(
+                            $this->count_per_page => $this->count_per_page,
+                            null => 20,
+                            50 => 50,
+                            100 => 100,
+                            200 => 200,
+                        )),
+                    'preferred_choices' => array($this->count_per_page),
+                    'empty_value' => false,
             ));
     }
 

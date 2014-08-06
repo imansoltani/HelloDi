@@ -43,7 +43,10 @@
                 <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a><br/><br/>
                 <div class="tablediv">
                     <div class="contenttitle">
-                        <h4>{{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes.getTotalItemCount }})</h4>
+                        <h4>
+                            {{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes?codes.getTotalItemCount:0 }})<br>
+                            ss
+                        </h4>
                     </div>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">

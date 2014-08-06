@@ -25,7 +25,7 @@ class CodeController extends Controller
         if($request->query->count()>0)
             return $this->redirect($this->generateUrl('hello_di_master_code_search',$request->query->all()));
 
-        $form = $this->createForm(new CodeSearchType(), null, array(
+        $form = $this->createForm(new CodeSearchType(20), null, array(
                 'attr' => array('class' => 'SearchForm'),
                 'action' => $this->generateUrl('hello_di_master_code_search'),
                 'method' => 'get',
@@ -42,7 +42,9 @@ class CodeController extends Controller
 
     public function searchAction(Request $request)
     {
-        $form = $this->createForm(new CodeSearchType(), null, array(
+        $count_per_page = is_numeric($request->get('count_per_page'))?$request->get('count_per_page'):20;
+
+        $form = $this->createForm(new CodeSearchType($count_per_page), null, array(
                 'attr' => array('class' => 'SearchForm'),
                 'method' => 'get',
             ))
@@ -104,7 +106,7 @@ class CodeController extends Controller
                 ?
                 $qb->getQuery()->getResult()
                 :
-                $this->get('knp_paginator')->paginate($qb, $page, 20);
+                $this->get('knp_paginator')->paginate($qb, $page, $count_per_page);
 
             $request->getSession()->set('code_search', $request->query->all());
         }
