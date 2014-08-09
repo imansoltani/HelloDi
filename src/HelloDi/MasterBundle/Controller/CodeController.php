@@ -4,7 +4,9 @@ namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\AggregatorBundle\Form\PinType;
 use HelloDi\CoreBundle\Entity\Code;
+use HelloDi\CoreBundle\Entity\Pin;
 use HelloDi\MasterBundle\Form\CodeSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,6 +44,8 @@ class CodeController extends Controller
 
     public function searchAction(Request $request)
     {
+        $form_select = $this->createForm(new PinType(), new Pin());
+
         $count_per_page = is_numeric($request->get('count_per_page'))?$request->get('count_per_page'):20;
 
         $form = $this->createForm(new CodeSearchType($count_per_page), null, array(
@@ -130,7 +134,8 @@ class CodeController extends Controller
         else
             return $this->render('HelloDiMasterBundle:code:index.html.twig', array(
                     'form' => $form->createView(),
-                    'codes' => $codes
+                    'codes' => $codes,
+                    'form_select' => $form_select
                 ));
     }
 
@@ -151,117 +156,91 @@ class CodeController extends Controller
         ));
     }
 
-    public function DeadBeatAction($id)
+    public function DeadBeatAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
-        if (!$code) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
-        }
-        if($code->getStatus()==1)
-        {
-            try
-            {
-                $user= $this->get('security.context')->getToken()->getUser();
-                $tranadd = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'add'),array('id'=>'desc'));
+        $pin = new Pin();
+        $pin->setUser($this->getUser());
+        $form_select = $this->createForm(new PinType(), $pin);
 
-                $code->setStatus(0);
+        $form_select->handleRequest($request);
+        if ($form_select->isValid()) {
+            try {
+            $pin = $this->get('aggregator')->deadBeatCodes($pin);
 
-                $tranrmv = new Transaction();
-                $tranrmv->setAccount($tranadd->getAccount());
-                $tranrmv->setTranAmount(-($tranadd->getTranAmount()));
-                $tranrmv->setTranFees(0);
-                $tranrmv->setTranDescription('Code id is: ' . $code->getId());
-                $tranrmv->setTranCurrency($tranadd->getAccount()->getAccCurrency());
-                $tranrmv->setTranDate(new \DateTime('now'));
-                $tranrmv->setTranInsert(new \DateTime('now'));
-                $tranrmv->setCode($code);
-                $tranrmv->setTranAction('rmv');
-                $tranrmv->setTranType(0);
-                $tranrmv->setUser($user);
-                $tranrmv->setTranBookingValue(null);
-                $tranrmv->setTranBalance($tranadd->getAccount()->getAccBalance());
-                $em->persist($tranrmv);
-                $em->flush();
-
-                if($tranadd->getAccount()->getAccBalance()<=15000)
-                    $this->forward('hello_di_di_notification:NewAction',array('id'=>null,'type'=>12,'value'=>'15000 '.$tranadd->getAccount()->getAccCurrency().'   ('.$tranadd->getAccount()->getAccName().')'));
-
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-            }
-            catch(\Exception $e)
-            {
-                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully. '.$pin->getCount(). " codes deadbeat by ".-$pin->getTransaction()->getAmount().".", array(), 'message'));
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($e->getMessage(), array(), 'message'));
             }
         }
         else
-        {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Active',array(),'message'));
-        }
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed', array(), 'message'));
+
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
-    public function CreditNoteAction($id)
+    public function CreditNoteAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
-        if (!$code) {
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
-        }
-        if($code->getStatus()==0)
-        {
-            try
-            {
-                $user= $this->getUser();
-                $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
-                $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
 
-                $code->setStatus(1);
-
-                $trancrntsale = new Transaction();
-                $trancrntsale->setAccount($transale->getAccount());
-                $trancrntsale->setTranAmount(-($transale->getTranAmount()));
-                $trancrntsale->setTranFees(0);
-                $trancrntsale->setTranDescription('Code id is: ' . $code->getId());
-                $trancrntsale->setTranCurrency($transale->getAccount()->getAccCurrency());
-                $trancrntsale->setTranDate(new \DateTime('now'));
-                $trancrntsale->setTranInsert(new \DateTime('now'));
-                $trancrntsale->setCode($code);
-                $trancrntsale->setTranAction('crnt');
-                $trancrntsale->setTranType(1);
-                $trancrntsale->setUser($user);
-                $trancrntsale->setTranBookingValue(null);
-                $trancrntsale->setTranBalance($transale->getAccount()->getAccBalance());
-                $em->persist($trancrntsale);
-
-                $trancrntcom = new Transaction();
-                $trancrntcom->setAccount($trancom->getAccount());
-                $trancrntcom->setTranAmount(-($trancom->getTranAmount()));
-                $trancrntcom->setTranFees(0);
-                $trancrntcom->setTranDescription('Code id is: ' . $code->getId());
-                $trancrntcom->setTranCurrency($trancom->getAccount()->getAccCurrency());
-                $trancrntcom->setTranDate(new \DateTime('now'));
-                $trancrntcom->setTranInsert(new \DateTime('now'));
-                $trancrntcom->setCode($code);
-                $trancrntcom->setTranAction('crnt');
-                $trancrntcom->setTranType(0);
-                $trancrntcom->setUser($user);
-                $trancrntcom->setTranBookingValue(null);
-                $trancrntcom->setTranBalance($trancom->getAccount()->getAccBalance());
-                $em->persist($trancrntcom);
-
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-            }
-            catch(\Exception $e)
-            {
-                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
-            }
-        }
-        else
-        {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Inactive',array(),'message'));
-        }
+        die('--CreditNote--');
+//        $code = $em->getRepository('HelloDiDiDistributorsBundle:Code')->find($id);
+//        if (!$code) {
+//            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
+//        }
+//        if($code->getStatus()==0)
+//        {
+//            try
+//            {
+//                $user= $this->getUser();
+//                $transale = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'sale'),array('id'=>'desc'));
+//                $trancom = $em->getRepository('HelloDiAccountingBundle:Transaction')->findOneBy(array('Code'=>$code,'tranAction'=>'com'),array('id'=>'desc'));
+//
+//                $code->setStatus(1);
+//
+//                $trancrntsale = new Transaction();
+//                $trancrntsale->setAccount($transale->getAccount());
+//                $trancrntsale->setTranAmount(-($transale->getTranAmount()));
+//                $trancrntsale->setTranFees(0);
+//                $trancrntsale->setTranDescription('Code id is: ' . $code->getId());
+//                $trancrntsale->setTranCurrency($transale->getAccount()->getAccCurrency());
+//                $trancrntsale->setTranDate(new \DateTime('now'));
+//                $trancrntsale->setTranInsert(new \DateTime('now'));
+//                $trancrntsale->setCode($code);
+//                $trancrntsale->setTranAction('crnt');
+//                $trancrntsale->setTranType(1);
+//                $trancrntsale->setUser($user);
+//                $trancrntsale->setTranBookingValue(null);
+//                $trancrntsale->setTranBalance($transale->getAccount()->getAccBalance());
+//                $em->persist($trancrntsale);
+//
+//                $trancrntcom = new Transaction();
+//                $trancrntcom->setAccount($trancom->getAccount());
+//                $trancrntcom->setTranAmount(-($trancom->getTranAmount()));
+//                $trancrntcom->setTranFees(0);
+//                $trancrntcom->setTranDescription('Code id is: ' . $code->getId());
+//                $trancrntcom->setTranCurrency($trancom->getAccount()->getAccCurrency());
+//                $trancrntcom->setTranDate(new \DateTime('now'));
+//                $trancrntcom->setTranInsert(new \DateTime('now'));
+//                $trancrntcom->setCode($code);
+//                $trancrntcom->setTranAction('crnt');
+//                $trancrntcom->setTranType(0);
+//                $trancrntcom->setUser($user);
+//                $trancrntcom->setTranBookingValue(null);
+//                $trancrntcom->setTranBalance($trancom->getAccount()->getAccBalance());
+//                $em->persist($trancrntcom);
+//
+//                $em->flush();
+//                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+//            }
+//            catch(\Exception $e)
+//            {
+//                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed',array(),'message'));
+//            }
+//        }
+//        else
+//        {
+//            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('code_must_be_Inactive',array(),'message'));
+//        }
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 

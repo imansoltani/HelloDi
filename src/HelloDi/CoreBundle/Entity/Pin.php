@@ -55,6 +55,11 @@ class Pin
     protected $codes;
 
     /**
+     * @ORM\Column(type="integer", nullable=false, name="`count`")
+     */
+    protected $count;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -195,5 +200,28 @@ class Pin
     public function getCodes()
     {
         return $this->codes;
+    }
+
+    /**
+     * Set count
+     *
+     * @param integer $count
+     * @return Pin
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+    
+        return $this;
+    }
+
+    /**
+     * Get count
+     *
+     * @return integer 
+     */
+    public function getCount()
+    {
+        return $this->count;
     }
 }

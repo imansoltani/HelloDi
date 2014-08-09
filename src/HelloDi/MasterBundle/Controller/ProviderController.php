@@ -361,7 +361,7 @@ class ProviderController extends Controller
                             'account' => $price->getAccount(),
                             'input' => $input,
                             'count' => $count,
-                            'price_id' => $price_id
+                            'price' => $price
                         ));
 
                 } catch(\Exception $e) {

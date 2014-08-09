@@ -40,18 +40,24 @@
                 </div>
 
                 {% if codes is not null %}
-                <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a><br/><br/>
+                <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a>
+                <a class="btn btn-danger" href="#" onclick="if($('input.checkbox_select:checked').length>0)$('#form_select').attr('action', '{{ path('hello_di_master_code_dead_beat') }}').submit();return false;">{{ 'DeadBeat Checked Codes' | trans ({}, "code") }}</a>
+                <a class="btn btn-danger" href="#" onclick="if($('input.checkbox_select:checked').length>0)$('#form_select').attr('action', '{{ path('hello_di_master_code_credit_note') }}').submit();return false;">{{ 'CreditNote Checked Codes' | trans ({}, "code") }}</a>
+                <br/><br/>
+
+                <form id="form_select" action="" method="post">
                 <div class="tablediv">
                     <div class="contenttitle">
                         <h4>
                             {{ 'Codes' | trans ({}, "code") }} ({{ 'Quantity' | trans ({}, "code") }}: {{ codes?codes.getTotalItemCount:0 }})<br>
-                            ss
+                            <label><input type="checkbox" class="main_check" onclick="if($(this).prop('checked'))$('input.checkbox_select').prop('checked',true)" value="1"> Check in all pages</label>
                         </h4>
                     </div>
                     <div class="tab-content">
                         <table style="margin-top: 20px" class="table table-bordered table-striped table-highlight postsend">
                             <thead>
                             <tr>
+                                <th><label><input class="main_check checkbox_select" type="checkbox" onclick="$('input.checkbox_select').prop('checked',$(this).prop('checked'))" style="width: 90%" title="Check all in this page"></label></th>
                                 <th>{{ 'Name' | trans ({}, "item") }}</th>
                                 <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
                                 <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
@@ -63,6 +69,7 @@
                             <tbody>
                                 {% for code in codes %}
                                     <tr>
+                                        <td><label><input class="checkbox_select" type="checkbox" value="{{ code.id }}" name="{{ form_select.name }}[codes][]" onclick="if(!$(this).prop('checked'))$('input.main_check').prop('checked',false)"></label></td>
                                         <td>{{ code.item.name }}</td>
                                         <td>{{ code.serialNumber }}</td>
                                         <td>{{ code.input.dateExpiry|date('Y/m/d') }}</td>
@@ -79,6 +86,7 @@
                         </table>
                     </div>
                 </div>
+                </form>
 
                 <div class="navigation" style="text-align: center">
                     {{ codes ? knp_pagination_render(codes) : "" }}

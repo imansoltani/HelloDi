@@ -75,6 +75,11 @@ class Input
     protected $providerTransaction;
 
     /**
+     * @ORM\Column(type="integer", nullable=false, name="`count`")
+     */
+    protected $count;
+
+    /**
      * @Assert\File(maxSize="6000000")
      */
     protected $file;
@@ -403,5 +408,28 @@ class Input
     public function getProviderTransaction()
     {
         return $this->providerTransaction;
+    }
+
+    /**
+     * Set count
+     *
+     * @param integer $count
+     * @return Input
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+    
+        return $this;
+    }
+
+    /**
+     * Get count
+     *
+     * @return integer 
+     */
+    public function getCount()
+    {
+        return $this->count;
     }
 }

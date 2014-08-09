@@ -11,12 +11,14 @@ hello_di_master_code_history:
     defaults: { _controller: "HelloDiMasterBundle:Code:history" }
 
 hello_di_master_code_dead_beat:
-    pattern:  /{id}/dead_beat
+    pattern:  /dead_beat
     defaults: { _controller: "HelloDiMasterBundle:Code:DeadBeat" }
+    methods: post
 
 hello_di_master_code_credit_note:
-    pattern:  /{id}/credit_note
+    pattern:  /credit_note
     defaults: { _controller: "HelloDiMasterBundle:Code:CreditNote" }
+    methods: post
 
 hello_di_master_code_credit_note_and_dead_beat:
     pattern:  /{id}/credit_note_and_deat_beat

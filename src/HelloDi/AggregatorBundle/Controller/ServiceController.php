@@ -7,6 +7,8 @@ use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Controller\DefaultController;
 use HelloDi\CoreBundle\Entity\Code;
 use HelloDi\CoreBundle\Entity\Input;
+use HelloDi\CoreBundle\Entity\Pin;
+use HelloDi\CoreBundle\Entity\Provider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -34,6 +36,12 @@ class ServiceController extends Controller
         $this->accounting = $accounting;
     }
 
+    /**
+     * @param Input $input
+     * @param string $delimiter
+     * @return int count
+     * @throws \Exception
+     */
     public function testFileCodes(Input $input, $delimiter = ';')
     {
         $codes = array_map('current', $this->em->createQueryBuilder()
@@ -76,6 +84,12 @@ class ServiceController extends Controller
         return $count;
     }
 
+    /**
+     * @param Input $input
+     * @param string $delimiter
+     * @return Input
+     * @throws \Exception
+     */
     public function buyingCodes(Input $input, $delimiter = ';')
     {
         $price = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
@@ -95,7 +109,11 @@ class ServiceController extends Controller
                 'buy batch codes.'
             )), false);
 
+        if($result == false)
+            throw new \Exception("Account hasn't enough Balance.");
+
         $input->setProviderTransaction($result[0]);
+        $input->setCount($count);
         $this->em->persist($input);
 
         $file = fopen($input->getAbsolutePath(), 'r');
@@ -122,6 +140,9 @@ class ServiceController extends Controller
         return $input;
     }
 
+    /**
+     * @param Session $session
+     */
     public function clearUploadInSession(Session $session)
     {
         /** @var Input $input */
@@ -137,5 +158,60 @@ class ServiceController extends Controller
 
         $session->remove('last_upload');
         $session->remove('last_upload_delimiter');
+    }
+
+    /**
+     * @param Pin $pin
+     * @return Pin
+     * @throws \Exception
+     */
+    public function deadBeatCodes(Pin $pin)
+    {
+        $count = 0;
+        $sum_price = 0;
+
+        /** @var Provider $provider */
+        $provider = null;
+
+        foreach($pin->getCodes() as $code) {
+            /** @var Code $code */
+            if($code->getStatus() != Code::AVAILABLE)
+                throw new \Exception("All Codes must be Available.");
+
+            if(!$provider)
+                $provider = $code->getInput()->getProvider();
+            elseif($provider != $code->getInput()->getProvider())
+                throw new \Exception("All Codes must have same Provider.");
+
+            $code->setStatus(Code::UNAVAILABLE);
+
+            $sum_price += $code->getInput()->getProviderTransaction()->getAmount() / $code->getInput()->getCount();
+
+            $count++;
+        }
+
+        $result = $this->accounting->processTransaction(array(new TransactionContainer(
+                $provider->getAccount(),
+                -$sum_price,
+                'deadbeat batch codes.'
+            )), false);
+
+        if($result == false)
+            throw new \Exception("Account hasn't enough Balance.");
+
+        $pin->setTransaction($result[0]);
+
+        $pin->setCount($count);
+        $pin->setDate(new \DateTime());
+        $this->em->persist($pin);
+
+        $this->em->flush();
+
+        return $pin;
+    }
+
+    public function creditNoteCodes(Pin $pin)
+    {
+
     }
 }
