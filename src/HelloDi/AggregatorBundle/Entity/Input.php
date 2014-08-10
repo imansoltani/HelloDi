@@ -346,7 +346,7 @@ class Input
      */
     public function getAbsolutePath()
     {
-        return null === $this->fileName ? null : $this->getUploadRootDir() . '/' . $this->fileName;
+        return null === $this->fileName ? null : $this->getUploadRootDir() . '/' . $this->getUploadedFileName();
     }
 
     /**
@@ -354,7 +354,7 @@ class Input
      */
     public function getWebPath()
     {
-        return null === $this->fileName ? null : $this->getUploadDir() . '/' . $this->fileName;
+        return null === $this->fileName ? null : $this->getUploadDir() . '/' . $this->getUploadedFileName();
     }
 
     /**
@@ -381,11 +381,12 @@ class Input
         if (null === $this->getFile())
             return;
 
+        $this->fileName = $this->getFile()->getClientOriginalName();
+
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
+            $this->getUploadedFileName()
         );
-        $this->fileName = $this->getFile()->getClientOriginalName();
         $this->file = null;
     }
 
@@ -433,5 +434,25 @@ class Input
     public function getCount()
     {
         return $this->count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUploadedFileName()
+    {
+        return ($this->getUser()?$this->getUser()->getId()."-":"").
+        ($this->getBatch()?$this->batch."-":"").
+        ($this->getDateInsert()?$this->getDateInsert()->getTimestamp()."-":"").
+        $this->getFileName();
+    }
+
+    /**
+     * remove Upload File
+     */
+    public function removeUpload()
+    {
+        if(file_exists($this->getAbsolutePath()))
+            unlink($this->getAbsolutePath());
     }
 }

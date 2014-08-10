@@ -148,13 +148,7 @@ class ServiceController extends Controller
         /** @var Input $input */
         $input = $session->get('last_upload');
 
-        if(!$input || !$input->getFileName())
-            return;
-
-        $input_db = $this->em->getRepository('HelloDiAggregatorBundle:Input')->findOneBy(array('fileName'=>$input->getFileName()));
-
-        if(!$input_db && file_exists($input->getAbsolutePath()))
-            unlink($input->getAbsolutePath());
+        if($input) $input->removeUpload();
 
         $session->remove('last_upload');
         $session->remove('last_upload_delimiter');

@@ -366,6 +366,7 @@ class ProviderController extends Controller
 
                 } catch(\Exception $e) {
                     $form->get('file')->addError(new FormError($e->getMessage()));
+                    $input->removeUpload();
                 }
             }
         }
