@@ -3,7 +3,7 @@
 namespace HelloDi\MasterBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\CoreBundle\Entity\Code;
+use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\CoreBundle\Entity\Item;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class CodeSearchType extends AbstractType
             ->add('provider','entity',array(
                     'required' => false,
                     'empty_value' => 'All',
-                    'class' => 'HelloDiCoreBundle:Provider',
+                    'class' => 'HelloDiAggregatorBundle:Provider',
                     'property' => 'name',
                     'label' => 'Provider', 'translation_domain' => 'accounts'
             ))
@@ -42,7 +42,7 @@ class CodeSearchType extends AbstractType
             ->add('input', 'entity', array(
                     'required'=> false,
                     'empty_value' => 'All',
-                    'class' => 'HelloDiCoreBundle:Input',
+                    'class' => 'HelloDiAggregatorBundle:Input',
                     'property' => 'fileName',
                     'label' => 'FileName', 'translation_domain' => 'code'
             ))

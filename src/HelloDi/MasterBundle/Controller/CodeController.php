@@ -5,8 +5,8 @@ namespace HelloDi\MasterBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\AggregatorBundle\Form\PinType;
-use HelloDi\CoreBundle\Entity\Code;
-use HelloDi\CoreBundle\Entity\Pin;
+use HelloDi\AggregatorBundle\Entity\Code;
+use HelloDi\AggregatorBundle\Entity\Pin;
 use HelloDi\MasterBundle\Form\CodeSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,7 +72,7 @@ class CodeController extends Controller
 
             $qb = $em->createQueryBuilder()
                 ->select('code')
-                ->from('HelloDiCoreBundle:Code','code')
+                ->from('HelloDiAggregatorBundle:Code','code')
                 ->join('code.input','input')
             ;
 
@@ -144,7 +144,7 @@ class CodeController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $code = $em->getRepository('HelloDiCoreBundle:Code')->find($id);
+        $code = $em->getRepository('HelloDiAggregatorBundle:Code')->find($id);
         if (!$code)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
 

@@ -6,8 +6,8 @@ use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\Entity;
-use HelloDi\CoreBundle\Entity\Input;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Input;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\EntityType;
 use HelloDi\MasterBundle\Form\InputType;
@@ -25,7 +25,7 @@ class ProviderController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $providers = $em->getRepository('HelloDiCoreBundle:Provider')->findAll();
+        $providers = $em->getRepository('HelloDiAggregatorBundle:Provider')->findAll();
 
         return $this->render('HelloDiMasterBundle:provider:index.html.twig', array(
             'providers' => $providers
@@ -166,7 +166,7 @@ class ProviderController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
 
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Provider'),'message'));
@@ -225,7 +225,7 @@ class ProviderController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
 
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Provider'),'message'));
@@ -319,7 +319,7 @@ class ProviderController extends Controller
         if(!$price)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'item'),'message'));
 
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('account'=>$price->getAccount()));
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findOneBy(array('account'=>$price->getAccount()));
 
         $input = new Input();
         $input->setItem($price->getItem());
@@ -389,7 +389,7 @@ class ProviderController extends Controller
 
         $input->setItem($em->getRepository('HelloDiCoreBundle:Item')->find($input->getItem()->getId()));
         $input->setUser($em->getRepository('HelloDiCoreBundle:User')->find($input->getUser()->getId()));
-        $input->setProvider($em->getRepository('HelloDiCoreBundle:Provider')->find($input->getProvider()->getId()));
+        $input->setProvider($em->getRepository('HelloDiAggregatorBundle:Provider')->find($input->getProvider()->getId()));
 
         $delimiter = $this->get("session")->get('last_upload_delimiter');
 
@@ -424,7 +424,7 @@ class ProviderController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 

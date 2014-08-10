@@ -200,7 +200,7 @@ class ProviderModelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findByAccountId($id);
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 

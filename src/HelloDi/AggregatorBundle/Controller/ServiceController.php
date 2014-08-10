@@ -5,10 +5,10 @@ namespace HelloDi\AggregatorBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Controller\DefaultController;
-use HelloDi\CoreBundle\Entity\Code;
-use HelloDi\CoreBundle\Entity\Input;
-use HelloDi\CoreBundle\Entity\Pin;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Code;
+use HelloDi\AggregatorBundle\Entity\Input;
+use HelloDi\AggregatorBundle\Entity\Pin;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -46,7 +46,7 @@ class ServiceController extends Controller
     {
         $codes = array_map('current', $this->em->createQueryBuilder()
             ->select('code.serialNumber')
-            ->from('HelloDiCoreBundle:Code', 'code')
+            ->from('HelloDiAggregatorBundle:Code', 'code')
             ->innerJoin('code.input', 'input')
             ->where('input.provider = :provider')->setParameter('provider', $input->getProvider())
             ->andWhere('code.item = :item')->setParameter('item', $input->getItem())
@@ -151,7 +151,7 @@ class ServiceController extends Controller
         if(!$input || !$input->getFileName())
             return;
 
-        $input_db = $this->em->getRepository('HelloDiCoreBundle:Input')->findOneBy(array('fileName'=>$input->getFileName()));
+        $input_db = $this->em->getRepository('HelloDiAggregatorBundle:Input')->findOneBy(array('fileName'=>$input->getFileName()));
 
         if(!$input_db && file_exists($input->getAbsolutePath()))
             unlink($input->getAbsolutePath());

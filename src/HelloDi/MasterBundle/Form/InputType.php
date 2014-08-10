@@ -42,7 +42,7 @@ class InputType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'HelloDi\CoreBundle\Entity\Input'
+            'data_class' => 'HelloDi\AggregatorBundle\Entity\Input'
         ));
     }
 

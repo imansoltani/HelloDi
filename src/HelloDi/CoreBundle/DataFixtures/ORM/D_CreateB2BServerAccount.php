@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Provider;
 
 class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixtureInterface
 {

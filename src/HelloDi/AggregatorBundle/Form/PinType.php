@@ -14,7 +14,7 @@ class PinType extends AbstractType
             ->add('codes','entity',array(
                     'multiple' => true,
                     'expanded' => true,
-                    'class' => 'HelloDiCoreBundle:Code',
+                    'class' => 'HelloDiAggregatorBundle:Code',
                     'property' => 'serialNumber',
                 ))
             ->add('check_all', 'checkbox', array(
@@ -29,7 +29,7 @@ class PinType extends AbstractType
     {
         $resolver->setDefaults(array(
                 'csrf_protection' => false,
-                'data_class' => 'HelloDi\CoreBundle\Entity\Pin'
+                'data_class' => 'HelloDi\AggregatorBundle\Entity\Pin'
         ));
     }
 

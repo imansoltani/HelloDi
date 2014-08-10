@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
 use HelloDi\CoreBundle\Entity\Item;
 
 /**
- * @ORM\Entity(repositoryClass="HelloDi\AggregatorBundle\Entity\CodeRepository")
+ * @ORM\Entity
  * @ORM\Table(name="code", indexes={@ORM\Index(name="SerialNumberIDX", columns={"serial_number"})})
  */
 class Code

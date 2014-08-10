@@ -3,7 +3,7 @@
 namespace HelloDi\MasterBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;

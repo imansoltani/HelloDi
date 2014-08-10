@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\MasterBundle\Form\DistributorAccountUserType;
@@ -103,7 +103,7 @@ class EntityController extends Controller
 
         $providers = $em->createQueryBuilder()
             ->select('provider')
-            ->from('HelloDiCoreBundle:Provider', 'provider')
+            ->from('HelloDiAggregatorBundle:Provider', 'provider')
             ->innerJoin('provider.account', 'account')
             ->where('account.entity = :entity')->setParameter('entity', $entity)
             ->getQuery()->getResult();

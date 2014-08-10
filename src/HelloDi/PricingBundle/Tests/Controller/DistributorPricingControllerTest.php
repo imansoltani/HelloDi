@@ -68,7 +68,7 @@ class DistributorPricingControllerTest extends WebTestCase
         $item = $this->em->getRepository('HelloDiCoreBundle:Item')->findOneBy(array('currency'=>'usd'));
         $this->assertNotNull($item);
 
-        $provider = $this->em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('currency'=>'usd'));
+        $provider = $this->em->getRepository('HelloDiAggregatorBundle:Provider')->findOneBy(array('currency'=>'usd'));
         $this->assertNotNull($provider);
 
         //-------------

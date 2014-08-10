@@ -3,7 +3,7 @@
 namespace HelloDi\PricingBundle\Tests\Controller;
 
 use Doctrine\ORM\EntityManager;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -246,7 +246,7 @@ class ProviderModelControllerTest extends WebTestCase
 
     public function testSetModel()
     {
-        $provider = $this->em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('currency'=>'usd'));
+        $provider = $this->em->getRepository('HelloDiAggregatorBundle:Provider')->findOneBy(array('currency'=>'usd'));
         $this->assertNotNull($provider);
 
         $crawler =  $this->client->request('GET', '/app/m/provider/model/set_model/'.$provider->getAccount()->getId());
@@ -283,7 +283,7 @@ class ProviderModelControllerTest extends WebTestCase
 
     public function testUpdatePricesFromModel()
     {
-        $provider = $this->em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('currency'=>'usd'));
+        $provider = $this->em->getRepository('HelloDiAggregatorBundle:Provider')->findOneBy(array('currency'=>'usd'));
         $this->assertNotNull($provider);
 
         $model = $this->em->getRepository('HelloDiPricingBundle:Model')->findOneBy(array('currency'=>'usd'));
@@ -318,7 +318,7 @@ class ProviderModelControllerTest extends WebTestCase
 
         //--------------------
         /** @var Provider[] $providers */
-        $providers = $this->em->getRepository('HelloDiCoreBundle:Provider')->findBy(array('currency'=>'usd'),null, 2);
+        $providers = $this->em->getRepository('HelloDiAggregatorBundle:Provider')->findBy(array('currency'=>'usd'),null, 2);
 
         foreach($providers as $provider) {
             $provider->getAccount()->setModel($model);

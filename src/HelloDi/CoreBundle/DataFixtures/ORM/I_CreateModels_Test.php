@@ -43,7 +43,7 @@ class I_CreateModels_Test  extends AbstractFixture implements OrderedFixtureInte
 
         //-------------
 
-        $provider = $em->getRepository('HelloDiCoreBundle:Provider')->findOneBy(array('currency'=>'USD'));
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findOneBy(array('currency'=>'USD'));
 
         $user = $em->getRepository('HelloDiCoreBundle:User')->findOneBy(array('username' => 'dist_admin1'));
         $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array('account'=>$user->getAccount()));
