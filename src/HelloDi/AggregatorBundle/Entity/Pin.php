@@ -1,10 +1,11 @@
 <?php
 
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\CoreBundle\Entity\User;
 
 /**
  * Pin
@@ -49,7 +50,7 @@ class Pin
     protected $commissionerTransaction;
 
     /**
-     * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", inversedBy="pins")
+     * @ORM\ManyToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Code", inversedBy="pins")
      * @ORM\JoinTable(name="pin_code")
      */
     protected $codes;

@@ -7,6 +7,9 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\OgonePayment;
 use HelloDi\AccountingBundle\Entity\Transfer;
+use HelloDi\AggregatorBundle\Entity\B2BLog;
+use HelloDi\AggregatorBundle\Entity\Input;
+use HelloDi\AggregatorBundle\Entity\Pin;
 use HelloDi\UserBundle\Model\User as BaseUser;
 
 /**
@@ -43,7 +46,7 @@ class User extends BaseUser
     protected $language;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Input", mappedBy="user")
      */
     protected $inputs;
 
@@ -80,7 +83,7 @@ class User extends BaseUser
     protected $ogonePayment;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\B2BLog", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\B2BLog", mappedBy="user")
      */
     protected $b2bLogs;
 
@@ -90,7 +93,7 @@ class User extends BaseUser
     protected $creditLimits;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Pin", mappedBy="user")
      */
     protected $pins;
 

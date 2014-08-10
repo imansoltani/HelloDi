@@ -1,11 +1,11 @@
 <?php
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Class ProviderRepository
- * @package HelloDi\CoreBundle\Entity
+ * @package HelloDi\AggregatorBundle\Entity
  */
 class ProviderRepository extends EntityRepository
 {

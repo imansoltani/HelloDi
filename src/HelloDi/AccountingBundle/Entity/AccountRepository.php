@@ -3,7 +3,7 @@ namespace HelloDi\AccountingBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use HelloDi\CoreBundle\Entity\Api;
-use HelloDi\CoreBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\Provider;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\RetailerBundle\Entity\Retailer;
 
@@ -28,7 +28,7 @@ class AccountRepository extends EntityRepository
                     ->findOneBy(array("account" => $account));
 
             case Account::PROVIDER:
-                return $this->getEntityManager()->getRepository("HelloDiCoreBundle:Provider")
+                return $this->getEntityManager()->getRepository("HelloDiAggregatorBundle:Provider")
                     ->findOneBy(array("account" => $account));
 
             case Account::DISTRIBUTOR:

@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +10,7 @@ use HelloDi\AccountingBundle\Entity\Account;
  * Provider
  *
  * @ORM\Table(name="provider")
- * @ORM\Entity(repositoryClass="HelloDi\CoreBundle\Entity\ProviderRepository")
+ * @ORM\Entity(repositoryClass="HelloDi\AggregatorBundle\Entity\ProviderRepository")
  */
 class Provider
 {
@@ -38,7 +38,7 @@ class Provider
     protected $timezone;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="provider")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Input", mappedBy="provider")
      */
     protected $inputs;
 

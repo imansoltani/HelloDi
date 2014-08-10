@@ -3,6 +3,9 @@ namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\AggregatorBundle\Entity\B2BLog;
+use HelloDi\AggregatorBundle\Entity\Code;
+use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
@@ -67,12 +70,12 @@ class Item
     protected $operator;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Code", mappedBy="item")
      */
     protected $codes;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Input", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Input", mappedBy="item")
      */
     protected $inputs;
 
@@ -87,7 +90,7 @@ class Item
     protected $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\B2BLog", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\B2BLog", mappedBy="item")
      */
     protected $b2bLogs;
 

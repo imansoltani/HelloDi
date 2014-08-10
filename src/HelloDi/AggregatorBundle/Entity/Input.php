@@ -1,9 +1,11 @@
 <?php
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\CoreBundle\Entity\Item;
+use HelloDi\UserBundle\Model\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -46,7 +48,7 @@ class Input
     protected $dateExpiry;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Code", mappedBy="input")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Code", mappedBy="input")
      */
     protected $codes;
 
@@ -57,7 +59,7 @@ class Input
     protected $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Provider", inversedBy="inputs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AggregatorBundle\Entity\Provider", inversedBy="inputs")
      * @ORM\JoinColumn(name="provider_id", referencedColumnName="id", nullable=false)
      */
     protected $provider;

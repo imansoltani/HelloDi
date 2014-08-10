@@ -1,9 +1,11 @@
 <?php
 
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\CoreBundle\Entity\Item;
+use HelloDi\CoreBundle\Entity\User;
 
 /**
  * b2blog

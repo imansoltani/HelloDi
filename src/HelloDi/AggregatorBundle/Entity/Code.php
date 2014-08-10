@@ -1,11 +1,12 @@
 <?php
-namespace HelloDi\CoreBundle\Entity;
+namespace HelloDi\AggregatorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use HelloDi\CoreBundle\Entity\Item;
 
 /**
- * @ORM\Entity(repositoryClass="HelloDi\CoreBundle\Entity\CodeRepository")
+ * @ORM\Entity(repositoryClass="HelloDi\AggregatorBundle\Entity\CodeRepository")
  * @ORM\Table(name="code", indexes={@ORM\Index(name="SerialNumberIDX", columns={"serial_number"})})
  */
 class Code
@@ -36,7 +37,7 @@ class Code
     protected $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity="HelloDi\CoreBundle\Entity\Pin", mappedBy="codes")
+     * @ORM\ManyToMany(targetEntity="HelloDi\AggregatorBundle\Entity\Pin", mappedBy="codes")
      */
     protected $pins;
 
@@ -47,7 +48,7 @@ class Code
     protected $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Input", inversedBy="codes")
+     * @ORM\ManyToOne(targetEntity="HelloDi\AggregatorBundle\Entity\Input", inversedBy="codes")
      * @ORM\JoinColumn(name="input_id", referencedColumnName="id", nullable=false)
      */
     protected $input;
