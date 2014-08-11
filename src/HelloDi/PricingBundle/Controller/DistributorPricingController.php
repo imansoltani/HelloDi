@@ -23,18 +23,18 @@ class DistributorPricingController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $items = $em->createQueryBuilder()
-            ->select('item.id as item_id','item.code','item.name','item.faceValue','priceProv.price as priceProvider','priceDist.price')
-            ->from('HelloDiCoreBundle:Item','item')
-            ->where('item.currency = :currency')->setParameter('currency', $distributor->getCurrency())
-            ->innerJoin('item.prices','priceProv')
-            ->innerJoin('priceProv.account','accProv')
-            ->andWhere('accProv.type = :accType')->setParameter('accType',Account::PROVIDER)
-            ->leftJoin('item.prices','priceDist','WITH','priceDist.account = :accDist')->setParameter('accDist',$distributor->getAccount())
+            ->select('item.id as item_id','item.code','item.name','item.faceValue','item.currency as item_currency','providerPrice.price as price_provider','provider.currency as price_currency','distPrice.price')
+            ->from("HelloDiAggregatorBundle:Provider", "provider")
+            ->innerJoin("provider.account", "providerAccount")
+            ->innerJoin("providerAccount.prices", "providerPrice")
+            ->innerJoin("providerPrice.item", "item")
+            ->leftJoin('item.prices','distPrice','WITH','distPrice.account = :distAccount')->setParameter('distAccount',$distributor->getAccount())
             ->getQuery()->getArrayResult();
 
         return $this->render("HelloDiPricingBundle:distributorPricing:pricing.html.twig",array(
                 'json_data'=>json_encode($items),
-                'account' => $distributor->getAccount()
+                'account' => $distributor->getAccount(),
+                'distributor' => $distributor
         ));
     }
 
@@ -55,7 +55,6 @@ class DistributorPricingController extends Controller
 
         $item = $em->getRepository('HelloDiCoreBundle:Item')->find($itemId);
         if(!$item) return new Response("0-Couldn't find the Item.");
-        if($item->getCurrency() != $distributor->getCurrency()) return new Response("0-Item currency isn't equal to distributor currency.");
 
         $info = "";
 

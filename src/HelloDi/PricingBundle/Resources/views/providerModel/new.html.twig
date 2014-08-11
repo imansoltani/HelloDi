@@ -37,12 +37,6 @@
             $(".price-input").live('blur',function(){
                 oTable.fnUpdate( $(this).val(), oTable.fnGetPosition($(this).closest('tr')[0]), 4 , false , false );
             });
-
-//            $("#currency").change(function(){
-//                oTable.fnFilter($(this).val(),3);
-//            });
-//
-//            oTable.fnFilter($("#currency").val(),3);
         } );
 
         function getJson() {
@@ -91,7 +85,7 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.code }}</td>
-                                <td>{{ item.faceValue }} ({{ item.currency }})</td>
+                                <td>{{ item.faceValue }} {{ item.currency }}</td>
                                 <td>{{ amounts[item.id] is defined ? amounts[item.id] : "" }}</td>
                             </tr>
                         {% endfor %}

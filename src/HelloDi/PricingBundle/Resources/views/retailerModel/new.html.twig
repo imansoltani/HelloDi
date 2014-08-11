@@ -70,7 +70,7 @@
                             <th>{{ 'Name' | trans ({}, "item") }}</th>
                             <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
                             <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
-                            <th>{{ 'Price' | trans ({}, "price") }}</th>
+                            <th>{{ 'Price' | trans ({}, "price") }} ({{ AccountTypeFinder.currency(app.user.account) }})</th>
                             <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
                         </tr>
                         <tr class="input" >
@@ -88,7 +88,7 @@
                                 <td>{{ price.id }}</td>
                                 <td>{{ price.item.name }}</td>
                                 <td>{{ price.item.code }}</td>
-                                <td>{{ price.item.faceValue }} ({{ price.item.currency }})</td>
+                                <td>{{ price.item.faceValue }} {{ price.item.currency }}</td>
                                 <td>{{ price.price }}</td>
                                 <td>{{ amounts[price.id] is defined ? amounts[price.id] : "" }}</td>
                             </tr>

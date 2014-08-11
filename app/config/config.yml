@@ -28,7 +28,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         CalcVatFormula: "@calc_vat_formula"
-        AccountCurrency:   "@account_currency"
+        AccountTypeFinder:   "@account_type_finder"
         NotificationHandler:   "@notification_handler"
     form:
         resources:

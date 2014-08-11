@@ -26,8 +26,12 @@
                     { "mData": "item_id", "sType": "numeric", "bVisible": false },
                     { "mData": "name" },
                     { "mData": "code" },
-                    { "mData": "faceValue", "sType": "numeric"},
-                    { "mData": "priceProvider", "sType": "numeric"},
+                    { "mData": "faceValue", "sType": "numeric", "mRender": function ( data, type, row ) {
+                        return data + " " + row['item_currency'];
+                    } },
+                    { "mData": "price_provider", "sType": "numeric", "mRender": function ( data, type, row ) {
+                        return data + " " + row['price_currency'];
+                    } },
                     { "mData": "price", "sType": "numeric", "mRender": function ( data, type ) {
                         if(data == null) data = "";
                         if(type === 'display') {
@@ -115,7 +119,7 @@
                     <th>{{ 'Name' | trans ({}, "item") }}</th>
                     <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
                     <th>{{ 'ProviderPrice' | trans ({}, "price") }}</th>
-                    <th>{{ 'Price' | trans ({}, "price") }}</th>
+                    <th>{{ 'Price' | trans ({}, "price") }} ({{ distributor.currency }})</th>
                 </tr>
 
                 <tr class="input" >

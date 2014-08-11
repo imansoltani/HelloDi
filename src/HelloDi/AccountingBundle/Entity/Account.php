@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity(repositoryClass="HelloDi\AccountingBundle\Entity\AccountRepository")
+ * @ORM\Entity
  * @ORM\Table(name="account")
  */
 class Account

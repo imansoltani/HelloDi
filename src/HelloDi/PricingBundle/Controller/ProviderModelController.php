@@ -64,9 +64,6 @@ class ProviderModelController extends Controller
                         if(!$item)
                             throw new \Exception("Item doesn't exist.");
 
-                        if($item->getCurrency() != $model->getCurrency())
-                            throw new \Exception("Currency of an Item not equal to selected Currency.");
-
                         if(!is_numeric($value))
                             throw new \Exception('amount must be numeric.');
                     }
@@ -140,9 +137,6 @@ class ProviderModelController extends Controller
                         $item = $em->getRepository("HelloDiCoreBundle:Item")->find($key);
                         if(!$item)
                             throw new \Exception("Item doesn't exist.");
-
-                        if($item->getCurrency() != $model->getCurrency())
-                            throw new \Exception("Currency of an Item not equal to selected Currency.");
 
                         if(!is_numeric($value))
                             throw new \Exception('amount must be numeric.');

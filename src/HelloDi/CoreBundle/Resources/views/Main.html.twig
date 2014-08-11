@@ -49,7 +49,7 @@
             <ul class="nav pull-right">
                 {% if app.user.account is not null %}
                 <li class="dropdown" style="text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);padding: 5px 10px;font-size: 16px;color: #0e5c92;">
-                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.account.balance }} {{ AccountCurrency.get(app.user.account) }}</b>
+                    {{ 'Balance' | trans ({}, "accounts") }}: <b>{{ app.user.account.balance }} {{ AccountTypeFinder.currency(app.user.account) }}</b>
                 </li>
                 {% endif %}
 

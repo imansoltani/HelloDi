@@ -25,6 +25,6 @@ services:
         class: HelloDi\CoreBundle\Listener\CalcVatFormula
         arguments: [%VatFormula%]
 
-    account_currency:
-        class: HelloDi\CoreBundle\Listener\AccountCurrency
+    account_type_finder:
+        class: HelloDi\CoreBundle\Listener\AccountTypeFinder
         arguments: [@doctrine.orm.default_entity_manager]

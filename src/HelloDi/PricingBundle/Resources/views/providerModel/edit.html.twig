@@ -85,7 +85,7 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.code }}</td>
-                                <td>{{ item.faceValue }} ({{ item.currency }})</td>
+                                <td>{{ item.faceValue }} {{ item.currency }}</td>
                                 <td>{{ amounts[item.id] is defined ? amounts[item.id] : "" }}</td>
                             </tr>
                         {% endfor %}

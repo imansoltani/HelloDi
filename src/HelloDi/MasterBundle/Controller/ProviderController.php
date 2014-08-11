@@ -300,13 +300,14 @@ class ProviderController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::PROVIDER)
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
+        if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         return $this->render('HelloDiMasterBundle:provider:items.html.twig', array(
-                'account' => $account,
-                'prices' => $account->getPrices()
+                'account' => $provider->getAccount(),
+                'provider' => $provider,
+                'prices' => $provider->getAccount()->getPrices()
             ));
     }
 
