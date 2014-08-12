@@ -40,12 +40,11 @@
                 </div>
 
                 {% if codes is not null %}
+                <form id="form_select" method="post" action="{{ path('hello_di_master_code_dead_beat') }}" class="YesNoMessage" message="Are you sure you perform this operation?" header="DeadBeat">
                 <a class="btn btn-success" href="{{ path('hello_di_master_code_index',{'last_search':'','csv':''}) }}">{{ 'ExportCSV' | trans ({}, "code") }}</a>
-                <a class="btn btn-danger" href="#" onclick="if($('input.checkbox_select:checked').length>0)$('#form_select').attr('action', '{{ path('hello_di_master_code_dead_beat') }}').submit();return false;">{{ 'DeadBeat Checked Codes' | trans ({}, "code") }}</a>
-                <a class="btn btn-danger" href="#" onclick="if($('input.checkbox_select:checked').length>0)$('#form_select').attr('action', '{{ path('hello_di_master_code_credit_note') }}').submit();return false;">{{ 'CreditNote Checked Codes' | trans ({}, "code") }}</a>
+                <input class="btn btn-danger" type="submit" onclick="if($('input.checkbox_select:checked').length == 0) {alert('Please select at least one code.'); return false;}" value="{{ 'DeadBeat Checked Codes' | trans ({}, "code") }}" />
                 <br/><br/>
 
-                <form id="form_select" action="" method="post">
                 <div class="tablediv">
                     <div class="contenttitle">
                         <h4>

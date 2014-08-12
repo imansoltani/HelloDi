@@ -13,107 +13,88 @@
 {% endblock Site_Map %}
 
 {% block Body %}
-        <div class="widget stacked ">
-            <div class="widget-content">
-                {% if code.status==1 %}
-                    <a href="{{ path('code_deadbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Dead_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'DeadBeat' | trans ({}, "code") }}</a><br/><br/>
-                {% elseif not removed %}
-                    <a href="{{ path('code_creditnote',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNote' | trans ({}, "code") }}</a>
-                    <a href="{{ path('code_creditnoteanddeatbeat',{'id':code.id}) }}" header="{{ 'Alert' | trans ({}, "common") }}" message="{{ 'Are_you_sure_to_Credit_Node_And_Deat_Beat' | trans ({}, "message") }}" class="YesNoMessage btn btn-danger">{{ 'CreditNoteAndDeadBeat' | trans ({}, "code") }}</a><br/><br/>
-                {% endif %}
-
-                <div class="tablediv">
-                    <div class="contenttitle">
-                        <h4>{{ 'Info' | trans ({}, "code") }}</h4>
-                    </div>
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>{{ 'Item' | trans ({}, "item") }}</th>
-                                <th>{{ 'ItemType' | trans ({}, "item") }}</th>
-                                <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
-                                <th>{{ 'Status' | trans ({}, "code") }}</th>
-                                <th>{{ 'DateProduction' | trans ({}, "code") }}</th>
-                                <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
-                                <th>{{ 'Operator' | trans ({}, "operator") }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td style="font-weight: bold">{{ code.item.name }}</td>
-                                <td style="font-weight: bold">
-                                    {% if code.item.type == constant("DMTU",code.item) %}
-                                        {{ 'Mobile' | trans ({}, "item") }}
-                                    {% elseif code.item.type == constant("CLCD",code.item) %}
-                                        {{ 'Calling_Card' | trans ({}, "item") }}
-                                    {% elseif code.item.type == constant("EPMT",code.item) %}
-                                        {{ 'E-payment' | trans ({}, "item") }}
-                                    {% endif %}
-                                </td>
-                                <td style="font-weight: bold">{{ code.serialNumber }}</td>
-                                <td style="font-weight: bold">{% if code.status==1 %}{{ 'Available' | trans ({}, "code") }}{% else %}{{ 'Unavailable' | trans ({}, "code") }}{% endif %}</td>
-                                <td style="font-weight: bold">{{ code.input.dateProduction|date('Y/m/d') }}</td>
-                                <td style="font-weight: bold">{{ code.input.dateExpiry|date('Y/m/d') }}</td>
-                                <td style="font-weight: bold">{{ code.item.operator.name }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="tablediv">
+                <div class="contenttitle">
+                    <h4>{{ 'Info' | trans ({}, "code") }}</h4>
                 </div>
-
-                <hr>
-
-                <div class="tablediv">
-                    <div class="contenttitle">
-                        <h4>{{ 'History' | trans ({}, "code") }}</h4>
-                    </div>
-                    <div class="tab-content">
-                        <table style="margin-top: 20px" class="table postsend">
-                            <thead>
-                            <tr>
-                                <th>{{ 'Date' | trans ({}, "transaction") }}</th>
-                                <th>{{ 'Account' | trans ({}, "accounts") }}<br/>({{ 'Name' | trans ({}, "accounts") }}/{{ 'Type' | trans ({}, "accounts") }})</th>
-                                <th>{{ 'User' | trans ({}, "user") }}</th>
-                                <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for pin in code.pins %}
-                                <tr>
-                                    <td>{{ pin.date|date('Y/m/d') }}</td>
-                                    <td>{{ pin.sellerTransaction.account.name }} /
-                                        {% if pin.commissionerTransaction.account.accType == constant("DISTRIBUTOR",pin.commissionerTransaction.account) %}
-                                            {{ 'Distributor' | trans ({}, "accounts") }}
-                                        {% elseif pin.commissionerTransaction.account.accType == constant("PROVIDER",pin.commissionerTransaction.account) %}
-                                            {{ 'Provider' | trans ({}, "accounts") }}
-                                        {% elseif pin.commissionerTransaction.account.accType == constant("RETAILER",pin.commissionerTransaction.account) %}
-                                            {{ 'Retailer' | trans ({}, "accounts") }}
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ pin.user.firstName }} {{ pin.user.lastName }}</td>
-                                    <td>{{ pin.sellerTransaction.amount }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ pin.date|date('Y/m/d') }}</td>
-                                    <td>{{ pin.commissionerTransaction.account.name }} /
-                                        {% if pin.commissionerTransaction.account.accType == constant("DISTRIBUTOR",pin.commissionerTransaction.account) %}
-                                            {{ 'Distributor' | trans ({}, "accounts") }}
-                                        {% elseif pin.commissionerTransaction.account.accType == constant("PROVIDER",pin.commissionerTransaction.account) %}
-                                            {{ 'Provider' | trans ({}, "accounts") }}
-                                        {% elseif pin.commissionerTransaction.account.accType == constant("RETAILER",pin.commissionerTransaction.account) %}
-                                            {{ 'Retailer' | trans ({}, "accounts") }}
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ pin.user.firstName }} {{ pin.user.lastName }}</td>
-                                    <td>{{ pin.commissionerTransaction.amount }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
+                <div class="tab-content">
+                    <table style="margin-top: 20px" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Item' | trans ({}, "item") }}</th>
+                            <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                            <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                            <th>{{ 'Status' | trans ({}, "code") }}</th>
+                            <th>{{ 'DateProduction' | trans ({}, "code") }}</th>
+                            <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                            <th>{{ 'Operator' | trans ({}, "operator") }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="font-weight: bold">{{ code.item.name }}</td>
+                            <td style="font-weight: bold">
+                                {% if code.item.type == constant("DMTU",code.item) %}
+                                    {{ 'Mobile' | trans ({}, "item") }}
+                                {% elseif code.item.type == constant("CLCD",code.item) %}
+                                    {{ 'Calling_Card' | trans ({}, "item") }}
+                                {% elseif code.item.type == constant("EPMT",code.item) %}
+                                    {{ 'E-payment' | trans ({}, "item") }}
+                                {% endif %}
+                            </td>
+                            <td style="font-weight: bold">{{ code.serialNumber }}</td>
+                            <td style="font-weight: bold">{% if code.status==1 %}{{ 'Available' | trans ({}, "code") }}{% else %}{{ 'Unavailable' | trans ({}, "code") }}{% endif %}</td>
+                            <td style="font-weight: bold">{{ code.input.dateProduction|date('Y/m/d') }}</td>
+                            <td style="font-weight: bold">{{ code.input.dateExpiry|date('Y/m/d') }}</td>
+                            <td style="font-weight: bold">{{ code.item.operator.name }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            <hr>
+
+            <div class="tablediv">
+                <div class="contenttitle">
+                    <h4>{{ 'History' | trans ({}, "code") }}</h4>
+                </div>
+                <div class="tab-content">
+                    <table style="margin-top: 20px" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                            <th>{{ 'Account' | trans ({}, "accounts") }}<br/>({{ 'Name' | trans ({}, "accounts") }}/{{ 'Type' | trans ({}, "accounts") }})</th>
+                            <th>{{ 'User' | trans ({}, "user") }}</th>
+                            <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
+                            <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.date|date('Y/m/d') }}</td>
+                                <td>{{ transaction.name }} /
+                                    {% if transaction.type == constant("HelloDi\\AccountingBundle\\Entity\\Account::DISTRIBUTOR") %}
+                                        {{ 'Distributor' | trans ({}, "accounts") }}
+                                    {% elseif transaction.type == constant("HelloDi\\AccountingBundle\\Entity\\Account::PROVIDER") %}
+                                        {{ 'Provider' | trans ({}, "accounts") }}
+                                    {% elseif transaction.type == constant("HelloDi\\AccountingBundle\\Entity\\Account::RETAILER") %}
+                                        {{ 'Retailer' | trans ({}, "accounts") }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ transaction.firstName }} {{ transaction.lastName }}</td>
+                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.description }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
+    </div>
 {% endblock %}
