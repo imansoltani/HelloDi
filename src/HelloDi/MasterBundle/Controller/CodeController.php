@@ -18,7 +18,7 @@ class CodeController extends Controller
     {
         if($request->query->has('last_search'))
         {
-            $parameters = $request->getSession()->get('code_search');
+            $parameters = $request->getSession()->get('code_search', array());
             if($request->query->has('csv'))
                 $parameters ['csv'] = '';
             return $this->redirect($this->generateUrl('hello_di_master_code_search',$parameters));
