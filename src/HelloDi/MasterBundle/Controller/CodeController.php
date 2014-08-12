@@ -71,16 +71,17 @@ class CodeController extends Controller
             $form_data = $form->getData();
 
             $qb = $em->createQueryBuilder()
-                ->select('code')
+                ->select('code','input','item')
                 ->from('HelloDiAggregatorBundle:Code','code')
                 ->join('code.input','input')
+                ->join('code.item','item')
             ;
 
             if(isset($form_data['provider']))
                 $qb->andWhere('input.provider = :provider')->setParameter('provider', $form_data['provider']);
 
             if(isset($form_data['item']))
-                $qb->andWhere('code.item = :item')->setParameter('item', $form_data['item']);
+                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
 
             if(isset($form_data['input']))
                 $qb->andWhere('input = :input')->setParameter('input', $form_data['input']);
@@ -160,6 +161,7 @@ class CodeController extends Controller
     {
         $pin = new Pin();
         $pin->setUser($this->getUser());
+
         $form_select = $this->createForm(new PinType(), $pin);
 
         $form_select->handleRequest($request);

@@ -20,12 +20,12 @@
         </a>
     </li>
     <li {% if tab == '3' %}class="active"{% endif %} >
-        <a href="{{ path('ManageInputsProv',{id:account.id}) }}">
+        <a href="{{ path('hello_di_master_provider_inputs',{id:account.id}) }}">
             <input type="submit" value="{{ 'Inputs' | trans ({}, "code") }}"/>
         </a>
     </li>
     <li {% if tab == '6' %}class="active"{% endif %} >
-        <a href="{{ path('MasterProvRemoved',{id:account.id}) }}">
+        <a href="{{ path('hello_di_master_provider_removed',{id:account.id}) }}">
             <input type="submit" value="{{ 'Removed' | trans ({}, "transaction") }}"/>
         </a>
     </li>

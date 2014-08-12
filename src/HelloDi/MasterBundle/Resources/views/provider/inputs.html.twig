@@ -1,0 +1,66 @@
+{% extends 'HelloDiMasterBundle:provider:tab.html.twig' %}
+
+{% set tab = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_provider_index') }}">{{ 'Providers' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Input' | trans ({}, "code") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i><span class="title_search">{{ 'Search' | trans ({}, "common") }}</span>
+            </span>
+        </h5>
+
+        {{ form(form) }}
+
+        <script type="text/javascript">
+            $(function () {
+                Form_Search(0,"{{ 'Search' | trans ({}, "common") }}");
+                $('form').submit(function() {
+                    $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+                });
+            });
+        </script>
+    </div>
+
+    <div class="tablediv" >
+        <div class="contenttitle"><h4>{{ 'Inputs' | trans ({}, "code") }}</h4></div>
+        <div class="tab-content" >
+            <table style="margin-top: 20px" class="table postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'Item' | trans ({}, "item") }}</th>
+                    <th>{{ 'Batch' | trans ({}, "code") }}</th>
+                    <th>{{ 'DateInsert' | trans ({}, "code") }}</th>
+                    <th>{{ 'DateProduction' | trans ({}, "code") }}</th>
+                    <th>{{ 'DateExpiry' | trans ({}, "code") }}</th>
+                    <th>{{ 'Quantity' | trans ({}, "code") }}</th>
+                    <th>{{ 'Value' | trans ({}, "code") }} ({{ provider.currency }})</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for input in inputs %}
+                    <tr>
+                        <td>{{ input.item.name }}</td>
+                        <td>{{ input.batch }}</td>
+                        <td>{{ input.dateInsert|date('Y-m-d') }}</td>
+                        <td>{{ input.dateProduction|date('Y-m-d') }}</td>
+                        <td>{{ input.dateExpiry|date('Y-m-d') }}</td>
+                        <td>{{ input.count }}</td>
+                        <td>{{ input.providerTransaction.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation" style="text-align: center">
+                {{ knp_pagination_render(inputs) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\AggregatorBundle\Form\InputSearchType;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Provider;
@@ -418,6 +419,111 @@ class ProviderController extends Controller
                         'price_id' => $price_id
                     )));
         }
+    }
+
+    //inputs
+    public function inputsAction(Request $request, $id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
+        if(!$provider)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $form = $this->createForm(new InputSearchType($provider->getAccount()), null, array(
+                'attr' => array('class' => 'SearchForm'),
+                'method' => 'get',
+            ))
+            ->add('search','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        $form->handleRequest($request);
+
+        $qb = $em->createQueryBuilder()
+            ->select('input', 'item', 'provider_transaction')
+            ->from('HelloDiAggregatorBundle:Input', 'input')
+            ->where('input.provider = :provider')->setParameter('provider', $provider)
+            ->innerJoin('input.item', 'item')
+            ->innerJoin('input.providerTransaction', 'provider_transaction')
+            ->orderBy('input.id', 'desc');
+
+        if($form->isValid())
+        {
+            $form_data = $form->getData();
+
+            if(isset($form_data['from']))
+                $qb->andWhere('input.dateInsert >= :from')->setParameter('from', $form_data['from']);
+
+            if(isset($form_data['to']))
+                $qb->andWhere('input.dateInsert <= :to')->setParameter('to', $form_data['to']);
+
+            if(isset($form_data['item']))
+                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
+        }
+
+        $inputs = $this->get('knp_paginator')->paginate($qb->getQuery(), $request->get('page', 1), 20);
+
+        return $this->render('HelloDiMasterBundle:provider:inputs.html.twig', array(
+                'account' => $provider->getAccount(),
+                'provider' => $provider,
+                'inputs' => $inputs,
+                'form' => $form->createView()
+            ));
+    }
+
+    //removed
+    public function removedAction(Request $request, $id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $provider = $em->getRepository('HelloDiAggregatorBundle:Provider')->findByAccountId($id);
+        if(!$provider)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $form = $this->createForm(new InputSearchType($provider->getAccount()), null, array(
+                'attr' => array('class' => 'SearchForm'),
+                'method' => 'get',
+            ))
+            ->add('search','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        $form->handleRequest($request);
+
+        $qb = $em->createQueryBuilder()
+            ->select('code', 'pin', 'item')
+            ->from('HelloDiAggregatorBundle:Code', 'code')
+            ->innerJoin('code.pins', 'pin')
+            ->innerJoin('pin.transaction', 'transaction')
+            ->where('transaction.account = :provider_account')->setParameter('provider_account', $provider->getAccount())
+            ->innerJoin('code.item', 'item')
+            ->orderBy('pin.id', 'desc');
+
+        if($form->isValid())
+        {
+            $form_data = $form->getData();
+
+            if(isset($form_data['from']))
+                $qb->andWhere('pin.date >= :from')->setParameter('from', $form_data['from']);
+
+            if(isset($form_data['to']))
+                $qb->andWhere('pin.date <= :to')->setParameter('to', $form_data['to']);
+
+            if(isset($form_data['item']))
+                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
+        }
+
+        $removed_codes = $this->get('knp_paginator')->paginate($qb->getQuery(), $request->get('page', 1), 20);
+
+        return $this->render('HelloDiMasterBundle:provider:removed.html.twig', array(
+                'account' => $provider->getAccount(),
+                'provider' => $provider,
+                'removed_codes' => $removed_codes,
+                'form' => $form->createView()
+            ));
     }
 
     //info
