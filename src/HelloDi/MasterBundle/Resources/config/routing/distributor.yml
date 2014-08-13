@@ -15,6 +15,11 @@ hello_di_master_distributor_transaction_funding:
     pattern:  /{id}/transactions/funding
     defaults: { _controller: "HelloDiMasterBundle:Distributor:funding"}
 
+#sales
+hello_di_master_distributor_sales:
+    pattern:  /{id}/sales
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:sales"}
+
 #purchases
 hello_di_master_distributor_purchases:
     pattern:  /{id}/purchases

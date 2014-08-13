@@ -5,6 +5,7 @@ namespace HelloDi\AggregatorBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Container\TransactionContainer;
 use HelloDi\AccountingBundle\Controller\DefaultController;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Pin;
@@ -204,8 +205,84 @@ class ServiceController extends Controller
         return $pin;
     }
 
-    public function creditNoteCodes(Pin $pin)
+    public function creditNoteCodes(Pin $pin, Account $distributorAccount)
     {
+        $count = 0;
+        $sum_price_retailer = 0;
+        $sum_price_distributor = 0;
 
+        /** @var Account $retailerAccount */
+        $retailerAccount = null;
+
+        foreach($pin->getCodes() as $code) {
+            /** @var Code $code */
+            if($code->getStatus() != Code::UNAVAILABLE)
+                throw new \Exception("All Codes must be Unavailable.");
+
+            $last_pin_for_code_id = $this->em->createQueryBuilder()
+                ->select('pin.id')
+                ->from('HelloDiAggregatorBundle:Pin', 'pin')
+                ->innerJoin('pin.codes', 'code')
+                ->where('code = :code')->setParameter('code', $code)
+                ->orderBy('pin.id', 'desc')
+                ->setMaxResults(1)
+                ->getQuery()->getSingleScalarResult();
+
+            /** @var Pin $last_pin_for_code */
+            $last_pin_for_code = $this->em->createQueryBuilder()
+                ->select('pin')
+                ->from('HelloDiAggregatorBundle:Pin', 'pin')
+                ->where('pin.id = :id')->setParameter('id', $last_pin_for_code_id)
+                ->innerJoin('pin.commissionerTransaction', 'dist_transaction')
+                ->andWhere('dist_transaction.account = :dist_acc')->setParameter('dist_acc', $distributorAccount)
+                ->andWhere('dist_transaction.amount >= 0')
+                ->innerJoin('pin.transaction', 'ret_transaction')
+                ->andWhere('ret_transaction.amount <= 0')
+                ->getQuery()->getOneOrNullResult();
+
+            if(!$last_pin_for_code)
+                throw new \Exception("A code is not sell or sell is not for this distributor.");
+            else {
+                if(!$retailerAccount) {
+                    $retailerAccount = $last_pin_for_code->getTransaction()->getAccount();
+                }
+                elseif($retailerAccount != $last_pin_for_code->getTransaction()->getAccount())
+                    throw new \Exception("All Codes must have same Retailer.");
+            }
+
+            $code->setStatus(Code::AVAILABLE);
+
+            $sum_price_retailer += $last_pin_for_code->getTransaction()->getAmount() / $last_pin_for_code->getCount();
+            $sum_price_distributor += $last_pin_for_code->getCommissionerTransaction()->getAmount() / $last_pin_for_code->getCount();
+
+            $count++;
+        }
+
+        $result = $this->accounting->processTransaction(array(
+                new TransactionContainer(
+                    $retailerAccount,
+                    -$sum_price_retailer,
+                    'creditNote batch codes.'
+                ),
+                new TransactionContainer(
+                    $distributorAccount,
+                    -$sum_price_distributor,
+                    'creditNote batch codes commission.'
+                )
+            ), false);
+
+        if($result == false)
+            throw new \Exception("Account hasn't enough Balance.");
+
+        $pin->setTransaction($result[0]);
+        $pin->setCommissionerTransaction($result[1]);
+
+        $pin->setCount($count);
+        $pin->setDate(new \DateTime());
+        $this->em->persist($pin);
+
+        $this->em->flush();
+
+        return $pin;
     }
 }

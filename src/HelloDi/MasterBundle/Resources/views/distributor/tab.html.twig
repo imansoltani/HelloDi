@@ -20,7 +20,7 @@
         </a>
     </li>
     <li {% if tab == '1' %}class="active"{% endif %} >
-        <a href="{{ path('MasterDistSale',{'id':account.id}) }}">
+        <a href="{{ path('hello_di_master_distributor_sales',{'id':account.id}) }}">
             <input type="submit" value="{{ 'Sale' | trans ({}, "code") }}" >
         </a>
     </li>

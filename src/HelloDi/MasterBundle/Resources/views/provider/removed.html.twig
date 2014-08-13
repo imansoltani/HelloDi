@@ -49,7 +49,7 @@
                         <td>{{ removed_code.pins[0].date|date('Y-m-d') }}</td>
                         <td>{{ removed_code.pins[0].user.firstName }} {{ removed_code.pins[0].user.lastName }} ({{ removed_code.pins[0].user.username }})</td>
                         <td class="td-actions" >
-                            <a href="{{ path('code_history',{id:removed_code.id}) }}" class="btn_actions" >{{ 'History' | trans ({}, "transaction") }}</a>
+                            <a href="{{ path('hello_di_master_code_history',{id:removed_code.id}) }}" class="btn_actions" >{{ 'History' | trans ({}, "transaction") }}</a>
                         </td>
                     </tr>
                 {% endfor %}
