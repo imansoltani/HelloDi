@@ -149,7 +149,7 @@ class CodeController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
 
         $input_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount, transaction.description')
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / input.count as amount, transaction.description, account.id as account_id')
             ->from('HelloDiAggregatorBundle:Input', 'input')
             ->innerJoin('input.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)
@@ -158,27 +158,41 @@ class CodeController extends Controller
             ->innerJoin('input.user', 'user')
             ->getQuery()->getArrayResult();
 
-        $pin_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount, transaction.description')
-            ->from('HelloDiAggregatorBundle:Pin', 'pin')
-            ->innerJoin('pin.codes', 'code')
+        $deadbeat_pin_transactions = $em->createQueryBuilder()
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, - input_transaction.amount / input.count as amount, transaction.description, account.id as account_id')
+            ->from('HelloDiAggregatorBundle:Input', 'input')
+            ->innerJoin('input.providerTransaction', 'input_transaction')
+            ->innerJoin('input.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)
+            ->innerJoin('code.pins', 'pin')
             ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('transaction.account', 'account')
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
 
-        $pin_comm_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount, transaction.description')
+        $pin_transactions = $em->createQueryBuilder()
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / pin.count as amount, transaction.description, account.id as account_id')
             ->from('HelloDiAggregatorBundle:Pin', 'pin')
             ->innerJoin('pin.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)
-            ->innerJoin('pin.commissionerTransaction', 'transaction')
+            ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('transaction.account', 'account')
+            ->innerJoin('pin.commissionerTransaction', 'com_transaction')
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
 
-        $transactions = array_merge($input_transactions, $pin_transactions, $pin_comm_transactions);
+        $pin_comm_transactions = $em->createQueryBuilder()
+            ->select('com_transaction.date, account.name, account.type, user.firstName, user.lastName, com_transaction.amount / pin.count as amount, com_transaction.description, account.id as account_id')
+            ->from('HelloDiAggregatorBundle:Pin', 'pin')
+            ->innerJoin('pin.codes', 'code')
+            ->where('code = :code')->setParameter('code', $code)
+            ->innerJoin('pin.transaction', 'transaction')
+            ->innerJoin('pin.commissionerTransaction', 'com_transaction')
+            ->innerJoin('com_transaction.account', 'account')
+            ->innerJoin('pin.user', 'user')
+            ->getQuery()->getArrayResult();
+
+        $transactions = array_merge( $input_transactions, $deadbeat_pin_transactions, $pin_transactions, $pin_comm_transactions);
 
         usort($transactions, function(array $a, array $b) {
                 if ($a['date'] == $b['date']) return 0;

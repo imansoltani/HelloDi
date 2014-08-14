@@ -72,4 +72,24 @@ class AccountTypeFinder {
                 ? $accountType->getDistributor()->getCurrency()
                 : $accountType->getCurrency();
     }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function getCurrencyById($id)
+    {
+        $account = $this->em->getRepository('HelloDiAccountingBundle:Account')->find($id);
+        if(!$account)
+            return "";
+
+        $accountType = $this->getType($account);
+
+        if(!$accountType)
+            return "";
+        else
+            return $account->getType() == Account::RETAILER
+                ? $accountType->getDistributor()->getCurrency()
+                : $accountType->getCurrency();
+    }
 }

@@ -86,7 +86,7 @@
                                     {% endif %}
                                 </td>
                                 <td>{{ transaction.firstName }} {{ transaction.lastName }}</td>
-                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.amount|number_format(2, '.') }} {{ AccountTypeFinder.currencyById(transaction.account_id is defined ? transaction.account_id : 0) }}</td>
                                 <td>{{ transaction.description }}</td>
                             </tr>
                         {% endfor %}

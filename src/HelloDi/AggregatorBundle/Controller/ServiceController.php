@@ -10,6 +10,7 @@ use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Pin;
 use HelloDi\AggregatorBundle\Entity\Provider;
+use HelloDi\CoreBundle\Entity\Item;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -214,10 +215,19 @@ class ServiceController extends Controller
         /** @var Account $retailerAccount */
         $retailerAccount = null;
 
+        /** @var Item $item */
+        $item = null;
+
         foreach($pin->getCodes() as $code) {
             /** @var Code $code */
             if($code->getStatus() != Code::UNAVAILABLE)
                 throw new \Exception("All Codes must be Unavailable.");
+
+            if(!$item) {
+                $item = $code->getItem();
+            }
+            elseif($item != $code->getItem())
+                throw new \Exception("All Codes must have same item.");
 
             $last_pin_for_code_id = $this->em->createQueryBuilder()
                 ->select('pin.id')
