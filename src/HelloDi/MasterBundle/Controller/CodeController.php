@@ -3,7 +3,6 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\AggregatorBundle\Form\PinType;
 use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Entity\Pin;

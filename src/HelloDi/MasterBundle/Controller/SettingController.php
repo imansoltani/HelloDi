@@ -90,8 +90,8 @@ class SettingController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
-        if(!$user || $user->getEntity() != $this->getUser()->getEntity())
+        $user = $em->getRepository('HelloDiCoreBundle:User')->findOneBy(array('id'=>$user_id,'entity'=>$this->getUser()->getEntity()));
+        if(!$user)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'user'),'message'));
 
         $languages = $this->container->getParameter('languages');

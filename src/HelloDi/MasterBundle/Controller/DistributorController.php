@@ -89,8 +89,8 @@ class DistributorController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('id'=>$id,'type'=>Account::DISTRIBUTOR));
+        if(!$account)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $form = $this->createFormBuilder(null,array('attr'=>array('class'=>'SearchForm')))
@@ -458,8 +458,8 @@ class DistributorController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('id'=>$id, 'type'=>Account::DISTRIBUTOR));
+        if(!$account)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $users = $account->getUsers();
@@ -475,8 +475,8 @@ class DistributorController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('id'=>$id, 'type'=>Account::DISTRIBUTOR));
+        if(!$account)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $user = new User();
@@ -622,7 +622,7 @@ class DistributorController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
+        $account = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('id'=>$id, 'type'=>Account::DISTRIBUTOR));
         if(!$account)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 

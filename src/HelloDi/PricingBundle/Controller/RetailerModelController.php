@@ -63,8 +63,8 @@ class RetailerModelController extends Controller
             {
                 try {
                     foreach($amounts as $key=>$value) {
-                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($key);
-                        if(!$price || $price->getAccount() != $distAccount) throw new \Exception('Account has not this item.');
+                        $price = $em->getRepository("HelloDiPricingBundle:Price")->findOneBy(array('id'=>$key, 'account'=>$distAccount));
+                        if(!$price) throw new \Exception('Account has not this item.');
 
                         if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
 
@@ -110,11 +110,9 @@ class RetailerModelController extends Controller
         /** @var Account $distAccount */
         $distAccount = $this->getUser()->getAccount();
 
-        $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
-
-        if (!$model || $model->getAccount() != $distAccount) {
+        $model = $em->getRepository("HelloDiPricingBundle:Model")->findOneBy(array('id'=>$id, 'account'=> $distAccount));
+        if (!$model)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
-        }
 
         $form = $this->createForm(new ModelType(),$model,array('attr'=>array(
                 'class' => 'YesNoMessage',
@@ -143,8 +141,8 @@ class RetailerModelController extends Controller
             {
                 try {
                     foreach($amounts as $key=>$value) {
-                        $price = $em->getRepository("HelloDiPricingBundle:Price")->find($key);
-                        if(!$price || $price->getAccount() != $distAccount) throw new \Exception('Account has not this item.');
+                        $price = $em->getRepository("HelloDiPricingBundle:Price")->findOneBy(array('id'=>$key, 'account'=>$distAccount));
+                        if(!$price) throw new \Exception('Account has not this item.');
 
                         if(!is_numeric($value)) throw new \Exception('amount must be numeric.');
 
@@ -192,11 +190,9 @@ class RetailerModelController extends Controller
         /** @var Account $account */
         $account = $this->getUser()->getAccount();
 
-        $model = $em->getRepository("HelloDiPricingBundle:Model")->find($id);
-
-        if (!$model || $model->getAccount() != $account) {
+        $model = $em->getRepository("HelloDiPricingBundle:Model")->findOneBy(array('id'=>$id, 'account'=> $account));
+        if (!$model)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'model'),'message'));
-        }
 
         $em->remove($model);
         $em->flush();

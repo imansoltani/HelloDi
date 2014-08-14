@@ -71,7 +71,7 @@
                             <th>{{ 'ItemCode' | trans ({}, "item") }}</th>
                             <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
                             <th>{{ 'Price' | trans ({}, "price") }} ({{ AccountTypeFinder.currency(app.user.account) }})</th>
-                            <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
+                            <th>{{ 'Amount' | trans ({}, "transaction") }} ({{ AccountTypeFinder.currency(app.user.account) }})</th>
                         </tr>
                         <tr class="input" >
                             <td><label><input type="text" class="search_init" name="search_Id" value="Search Id"/></label></td>
