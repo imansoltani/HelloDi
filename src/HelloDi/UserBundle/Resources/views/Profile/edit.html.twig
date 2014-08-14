@@ -6,12 +6,11 @@
 {% elseif is_granted('ROLE_RETAILER') %}
     {% set parent = 'HelloDiRetailerBundle::menu.html.twig' %}
 {% endif %}
-
 {% extends parent %}
 
-{% block title %}
-      {{ 'Profile'|trans({},'user') }}
-{% endblock title %}
+{% block title %}{{ 'Profile'|trans({},'user') }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-user"></i>{{ 'Profile'|trans({},'user') }}{% endblock %}
 
 {% set MU = 'home' %}
 
@@ -28,86 +27,19 @@
     <span class="link"> {{ 'Profile'|trans({},'user') }}</span>
 {% endblock Site_Map %}
 
-
-{% block PageTitle %}
-    <i class="icon-user"></i>
-    {{ 'Profile'|trans({},'user') }}
-{% endblock %}
-
-
 {% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
 
-    <div class="span">
-        <div class="widget stacked ">
+                {{ form_widget(form) }}
 
-            <div class="widget-content">
-                <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST"
-                      id="edit-profile" class="form-horizontal">
-                    <fieldset>
-
-                        <div class="control-group">
-                            {{ form_label(form.username) }}
-                            {{ form_widget(form.username) }}
-                            {{ form_errors(form.username) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.email) }}
-                            {{ form_widget(form.email) }}
-                            {{ form_errors(form.email) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.current_password) }}
-                            {{ form_widget(form.current_password) }}
-                            {{ form_errors(form.current_password) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.first_name) }}
-                            {{ form_widget(form.first_name) }}
-                            {{ form_errors(form.first_name) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.last_name) }}
-                            {{ form_widget(form.last_name) }}
-                            {{ form_errors(form.last_name) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.mobile) }}
-                            {{ form_widget(form.mobile) }}
-                            {{ form_errors(form.mobile) }}
-                        </div>
-
-                        <div class="control-group">
-                            {{ form_label(form.language) }}
-                            <div class="controls">
-                                {{ form_widget(form.language) }}
-                            </div>
-                            {{ form_errors(form.language) }}
-                        </div>
-
-                        {{ form_rest(form) }}
-
-                        <div class="form-actions">
-                            <input class="btn btn-primary" type="submit"
-                                   value="{{ 'Save'|trans({}, 'common') }}"/>
-                            <a href="javascript:history.go(-1)" class="btn" >{{ 'Cancel'|trans({},'common') }}</a>
-                            <a href="{{ path('fos_user_change_password') }}" class="btn">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
+                <div class="form-actions">
+                    <input class="btn btn-primary" type="submit" value="{{ 'Update'|trans({}, 'common') }}"/>
+                    <a href="{{ path('fos_user_change_password') }}" class="btn">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <script type="text/javascript">
-        $(function(){
-            $('* #fos_user_profile_form>div').attr('class','control-group');
-        });
-    </script>
-
 {% endblock %}
 

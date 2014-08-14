@@ -1,23 +1,17 @@
 {% extends "HelloDiCoreBundle::Main0.html.twig" %}
 
-{% block title %}
-    Remind Passowrd
-{% endblock title %}
+{% block title %}Remind Passowrd{% endblock title %}
 
 {% block bodywidth %}login{% endblock %}
 
 {% block header %}Reminder{% endblock %}
 
 {% block fos_user_content %}
-
     <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-
-
         <div class="login-fields">
             <div class="field" style="opacity: 1" >
-
                 <input style="width: 450px" type="text" id="username" name="username"  placeholder="Username or Email Address" class="login username-field" value="" required="required" />
-            </div> <!-- /field -->
+            </div>
         </div>
 
         {% if invalid_username is defined %}
@@ -29,7 +23,5 @@
         <div class="login-actions">
             <input class="button btn btn-primary btn-large" type="submit" id="_submit" name="_submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
         </div>
-
     </form>
-
 {% endblock fos_user_content %}

@@ -1,20 +1,14 @@
 {% extends "HelloDiCoreBundle::Main0.html.twig" %}
 
-{% block title %}
-    Reset Password
-{% endblock title %}
+{% block title %}Reset Password{% endblock title %}
 
 {% block bodywidth %}login{% endblock %}
 
 {% block header %}Reset Password{% endblock %}
 
 {% block fos_user_content %}
-
     <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-
         <div class="login-fields">
-
-
             <div class="field Peyment">
                 {{ form_label(form.new.first) }}
                 {{ form_widget(form.new.first) }}
@@ -23,9 +17,6 @@
                 {{ form_label(form.new.second) }}
                 {{ form_widget(form.new.second) }}
             </div>
-
-            <!-- /field -->
-
             {% if form_errors(form) is not null %}
                 <div class="Login_error" >
                     <span>
@@ -33,23 +24,13 @@
                     </span>
                 </div>
             {% endif %}
-
             {{ form_widget(form._token) }}
-
         </div>
-
-
 
         <div class="login-actions">
-
-				<span class="login-checkbox">
-
-				</span>
-            <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
-                   value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+				<span class="login-checkbox"></span>
+                <input class="button btn btn-primary btn-large" type="submit" id="submit" name="submit"
+                       value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
         </div>
-        <!-- .actions -->
-
-
     </form>
 {% endblock %}
