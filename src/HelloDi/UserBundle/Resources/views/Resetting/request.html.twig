@@ -7,10 +7,11 @@
 {% block header %}Reminder{% endblock %}
 
 {% block fos_user_content %}
-    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST">
         <div class="login-fields">
-            <div class="field" style="opacity: 1" >
-                <input style="width: 450px" type="text" id="username" name="username"  placeholder="Username or Email Address" class="login username-field" value="" required="required" />
+            <div class="field" style="opacity: 1; padding: 3px; display: block;" >
+                <input type="text" id="username" name="username"  placeholder="Username or Email Address" class="login username-field"
+                       value="" required="required" style="width: 100%; margin: 0; padding: 2px 0;"/>
             </div>
         </div>
 
