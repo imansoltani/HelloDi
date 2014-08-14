@@ -82,7 +82,7 @@
                         <td>{{ provider.account.balance }}|<b>{{ provider.currency }}</b></td>
                         <td>{{ provider.account.creditLimitAmount }}</td>
                         <td class="td-actions">
-                            <a class="btn_actions" href="{{ path('MasterProvTransaction',{'id': provider.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a><br/>
+                            <a class="btn_actions" href="{{ path('hello_di_master_provider_transaction',{'id': provider.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a><br/>
                             <a class="btn_actions" href="{{ path('hello_di_master_provider_info', {'id': provider.account.id}) }}">{{ 'Account' | trans ({}, "accounts") }}</a>
                         </td>
                     </tr>
@@ -96,7 +96,7 @@
                         <td>{{ distributor.account.balance }}|<b>{{ distributor.currency }}</b></td>
                         <td>{{ distributor.account.creditLimitAmount }}</td>
                         <td class="td-actions">
-                            <a class="btn_actions" href="{{ path('MasterDistTransaction',{'id': distributor.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a><br/>
+                            <a class="btn_actions" href="{{ path('hello_di_master_distributor_transaction',{'id': distributor.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a><br/>
                             <a class="btn_actions" href="{{ path('hello_di_master_distributor_info', {'id': distributor.account.id}) }}">{{ 'Account' | trans ({}, "accounts") }}</a>
                         </td>
                     </tr>
