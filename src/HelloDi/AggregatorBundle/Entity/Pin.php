@@ -61,6 +61,11 @@ class Pin
     protected $count;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false, name="printed")
+     */
+    protected $printed;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -224,5 +229,28 @@ class Pin
     public function getCount()
     {
         return $this->count;
+    }
+
+    /**
+     * Set printed
+     *
+     * @param boolean $printed
+     * @return Pin
+     */
+    public function setPrinted($printed)
+    {
+        $this->printed = $printed;
+    
+        return $this;
+    }
+
+    /**
+     * Get printed
+     *
+     * @return boolean 
+     */
+    public function getPrinted()
+    {
+        return $this->printed;
     }
 }

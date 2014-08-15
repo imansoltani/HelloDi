@@ -1,0 +1,7 @@
+hello_di_retailer_sell_code_dmtu:
+    pattern:  /dmtu
+    defaults: { _controller: "HelloDiRetailerBundle:SellCode:DMTU" }
+
+hello_di_retailer_sell_code_print:
+    pattern:  /print/{print}/
+    defaults: { _controller: HelloDiDiDistributorsBundle:Retailers:Print , print: 'web' }

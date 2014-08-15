@@ -53,16 +53,16 @@ function AlertShow(message, fname, event) {
 
     if (flag) {
         event.preventDefault();
-        var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
-        body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>';
+        var body = '<div class="bodypopup poptop"  ><div class="modal-header container_pop">';
+        body += '<button type="button" class="close" onclick="PopupTopClose(event)">X</button>';
         body += '<h3 id="myModalLabel">Alert</h3></div>';
-        body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">';
+        body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body container_pop">';
         body += '<div>' + message + '</div>';
-        body += '</div><div class="containerpop form-actions " style="padding-left: 0px">';
+        body += '</div><div class="container_pop form-actions " style="padding-left: 0px">';
         body += '<input type="submit" style="margin-right:5px" class="btn btn-primary" value="Yes" onclick="SubmitForm(\'.' + fname + '\');" >';
-        body += '<input type="submit" class="btn" value="No" onclick="PopuptopClose(event)" >';
+        body += '<input type="submit" class="btn" value="No" onclick="PopupTopClose(event)" >';
         body += '</div></form>';
-        body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
+        body += '</div><div class="closedoor poptop" onclick="PopupTopClose(event)" ></div>';
         $('.popupshow').html(body);
         $('.bodypopup').hide();
         $('.popupshow').fadeIn();
@@ -86,16 +86,16 @@ $(document).ready(function () {
 });
 
 function PopuptopOpen(header, message, action) {
-    var body = '<div class="bodypopup poptop"  ><div class="modal-header containerpop">';
-    body += '<button type="button" class="close" onclick="PopuptopClose(event)">X</button>';
+    var body = '<div class="bodypopup poptop"  ><div class="modal-header container_pop">';
+    body += '<button type="button" class="close" onclick="PopupTopClose(event)">X</button>';
     body += '<h3 id="myModalLabel">' + header + '</h3></div>';
-    body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body containerpop">';
+    body += '<form class="form-horizontal" action="" method="POST"><div class="modal-body container_pop">';
     body += '<div>' + message + '</div>';
-    body += '</div><div class="containerpop form-actions " style="padding-left: 0px">';
+    body += '</div><div class="container_pop form-actions " style="padding-left: 0px">';
     body += '<a href="' + action + '" style="margin-right:5px" class="btn btn-primary">Yes</a>';
-    body += '<a href="javascript:;" class="btn" onclick="PopuptopClose(event);" >No</a>';
+    body += '<a href="javascript:;" class="btn" onclick="PopupTopClose(event);" >No</a>';
     body += '</div></form>';
-    body += '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
+    body += '</div><div class="closedoor poptop" onclick="PopupTopClose(event)" ></div>';
     $('.popupshow').html(body);
     $('.bodypopup').hide();
     $('.popupshow').fadeIn();
@@ -136,7 +136,7 @@ function Popuptop(text) {
     if (name = "popuptop") {
 
         var body = '<div class="bodypopup poptop"  >';
-        body += $(element).html() + '</div><div class="closedoor poptop" onclick="PopuptopClose(event)" ></div>';
+        body += $(element).html() + '</div><div class="closedoor poptop" onclick="PopupTopClose(event)" ></div>';
 
         $('.popupshow').html(body);
         $('.bodypopup').hide();
@@ -145,7 +145,7 @@ function Popuptop(text) {
     }
 }
 
-function PopuptopClose(e) {
+function PopupTopClose(e) {
     e.preventDefault();
     $('.popupshow').fadeOut('fast', function () {
         $('.popupshow').html('');

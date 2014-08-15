@@ -11,6 +11,7 @@ use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Pin;
 use HelloDi\AggregatorBundle\Entity\Provider;
 use HelloDi\CoreBundle\Entity\Item;
+use HelloDi\CoreBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -206,6 +207,12 @@ class ServiceController extends Controller
         return $pin;
     }
 
+    /**
+     * @param Pin $pin
+     * @param Account $distributorAccount
+     * @return Pin
+     * @throws \Exception
+     */
     public function creditNoteCodes(Pin $pin, Account $distributorAccount)
     {
         $count = 0;
@@ -291,6 +298,80 @@ class ServiceController extends Controller
         $pin->setDate(new \DateTime());
         $this->em->persist($pin);
 
+        $this->em->flush();
+
+        return $pin;
+    }
+
+    /**
+     * @param User $user
+     * @param Item $item
+     * @param $count
+     * @return Pin
+     * @throws \Exception
+     */
+    public function sellCodes(User $user, Item $item, $count)
+    {
+        $retailer = $this->em->getRepository('HelloDiRetailerBundle:Retailer')->findOneBy(array('account'=> $user->getAccount()));
+        if(!$retailer)
+            throw new \Exception("Retailer not found for user.");
+
+        $distributor = $retailer->getDistributor();
+
+        $price_retailer = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array('account'=>$retailer->getAccount(), 'item'=>$item));
+        if(!$price_retailer)
+            throw new \Exception("Distributor hasn't this item.");
+
+        $price_distributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array('account'=>$distributor->getAccount(), 'item'=>$item));
+        if(!$price_distributor)
+            throw new \Exception("Retailer hasn't this item.");
+
+        $commission = $price_retailer->getPrice() - $price_distributor->getPrice();
+
+//        $tax_history = $this->em->getRepository('HelloDiCoreBundle:TaxHistory')->findOneBy(array('tax'=>$price_distributor->getTax(),'taxEnd'=>null));
+
+        $pin = new Pin();
+        $pin->setCount($count);
+        $pin->setDate(new \DateTime());
+        $pin->setUser($user);
+
+        $result = $this->accounting->processTransaction(array(
+                new TransactionContainer(
+                    $retailer->getAccount(),
+                    -$count * $price_retailer->getPrice(),
+                    'sell batch codes.'
+                ),
+                new TransactionContainer(
+                    $distributor->getAccount(),
+                    $count * $commission,
+                    'sell batch codes commission.'
+                )
+            ), false);
+
+        if($result == false)
+            throw new \Exception("Retailer hasn't enough balance.");
+
+        $pin->setTransaction($result[0]);
+        $pin->setCommissionerTransaction($result[1]);
+
+        $codes = $this->em->createQueryBuilder()
+            ->select('code')
+            ->from('HelloDiAggregatorBundle:Code', 'code')
+            ->where('code.status = :status')->setParameter('status', Code::AVAILABLE)
+            ->andWhere('code.item = :item')->setParameter('item', $item)
+            ->setMaxResults($count)
+            ->getQuery()->getResult();
+
+        if(count($codes) < $count)
+            throw new \Exception("There is no enough Code for the Item.");
+
+        foreach($codes as $code) {
+            /** @var Code $code */
+            $code->setStatus(Code::UNAVAILABLE);
+            $pin->addCode($code);
+        }
+
+        $this->em->persist($pin);
         $this->em->flush();
 
         return $pin;

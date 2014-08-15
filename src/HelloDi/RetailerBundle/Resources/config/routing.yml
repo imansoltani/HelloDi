@@ -2,10 +2,14 @@ hello_di_retailer_homepage:
     pattern:  /
     defaults: { _controller: HelloDiRetailerBundle:Default:dashboard }
 
-hello_di_retailer_setting:
-    resource: "@HelloDiRetailerBundle/Resources/config/routing/setting.yml"
-    prefix:   /setting
+hello_di_retailer_sell_code:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing/sell_code.yml"
+    prefix:   /shop
 
 hello_di_retailer_items:
     resource: "@HelloDiRetailerBundle/Resources/config/routing/item.yml"
     prefix:   /items
+
+hello_di_retailer_setting:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing/setting.yml"
+    prefix:   /setting

@@ -1,0 +1,98 @@
+{% extends 'HelloDiRetailerBundle::menu.html.twig' %}
+
+{% block title %}{{ 'ShopDmtu' | trans ({}, "item") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-mobile-phone"></i>{{ 'ShopDmtu' | trans ({}, "item") }}{% endblock %}
+
+{% set MU = 'dmtu' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'ShopDmtu' | trans ({}, "item") }} </span>
+{% endblock Site_Map %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content itemshow">
+
+            <div class="filter_Div filter_item" id="operatorslist">
+                <div class="filter" data-filter="all">{{ 'AllOperators' | trans ({}, "operator") }}</div>
+            </div>
+
+            <div class="list_items">
+                <ul id="Grid" class="itemulshow">
+                    {% for price in prices %}
+                        <li id="item_buy" class="mix {{ price.item.operator.name }}">
+                            <a><div style="background-image: url('{{ asset(price.item.operator.webPath) }}')" class="item_show">
+                                <div class="header">{{ price.item.name }}</div>
+                                <div class="body">
+                                    <div class="price">{{ price.item.faceValue }}</div>
+                                    <div class="type">{{ price.Item.currency }}</div>
+                                </div>
+                                <input type="hidden" id="item_id" value="{{ price.item.id }}">
+                                    <input type="hidden" id="operator" value="{{ price.item.operator.name }}">
+                                <input type="hidden" id="item_name" value="{{ price.item.name }}">
+                                <input type="hidden" id="item_type" value="{{ 'Mobile' | trans ({}, "item") }}">
+                                <input type="hidden" id="face_value" value="{{ price.item.faceValue }}">
+                                <input type="hidden" id="currency" value="{{ price.item.currency }}">
+                                {% for description in price.item.descriptions %}
+                                    <input type="hidden" id="lang" value="{{ description.language }}">
+                                {% endfor %}
+                            </div></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="popuptop" class="modal">
+        <div class="modal-header container_pop">
+            <button type="button" class="close" onclick="PopupTopClose(event)">X</button>
+            <h3 id="myModalLabel">{{ 'BuyCard' | trans ({}, "item") }}</h3>
+        </div>
+
+        {{ form(form) }}
+    </div>
+
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Slide/jquery.mixitup.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            var grid = $('#Grid');
+
+            var operators = [];
+            grid.find('li').each(function (){
+                var operator_name = $(this).find('input#operator').val();
+                if($.inArray(operator_name, operators) === -1) {
+                    operators.push(operator_name);
+                    $('#operatorslist').append('<div class="filter" data-filter="'+operator_name+'">'+operator_name+'</div>');
+                }
+            });
+
+            grid.mixitup({effects: ['fade', 'scale', 'blur']});
+
+            $("* #item_buy").click(function () {
+                Popuptop('modal');
+                $('.popupshow #item_id').val($("#item_id", this).val());
+                $('.popupshow #operator').val($("#operator", this).val());
+                $('.popupshow #itemName').val($("#item_name", this).val());
+                $('.popupshow #itemType').val($("#item_type", this).val());
+                $('.popupshow #faceValue').val($("#face_value", this).val());
+                $('.popupshow #count').val(1);
+                $('.popupshow #sum').val($("#face_value", this).val());
+                $('.popupshow #language').html('');
+                $("#lang", this).each(function(){
+                    $('.popupshow #language').append('<option>'+ $(this).val() +'</option>');
+                });
+            });
+        });
+
+        function calc_sum() {
+            var sum = $('.popupshow #faceValue').val() * $('.popupshow #count').val();
+            $('#sum').val(sum.toFixed(2));
+        }
+    </script>
+{% endblock %}
+
