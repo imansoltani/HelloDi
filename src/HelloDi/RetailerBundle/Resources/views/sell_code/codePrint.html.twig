@@ -49,39 +49,34 @@
 {% if print == 'web' %}
 <div id="notPrint" style="text-align: center;margin: 20px">
     <a type="button" class="btn" href="#" onclick="window.print();$('.duplicate').html('Duplicate Print Code');">Print</a>
-    <a type="button" class="btn" href="{{ path('Retailer_Shop_print',{'print':'pdf'}) }}">Print As PDF</a>
+    <a type="button" class="btn" href="{{ path('hello_di_retailer_sell_code_print',{'pin_id':pin.id, 'print':'pdf'}) }}">Print As PDF</a>
     <a href="#" onclick="window.close()" class="btn">Close</a>
 </div>
 {% endif %}
 <div class="print">
-    {% for tran in trans %}
-
+    {% for code in pin.codes %}
         <div class="item">
-
             {% if description is not null %}
                 {{ include(template_from_string(description),{
-                    "pin":tran.Code.pin,
-                    "serial":tran.Code.serialNumber,
-                    "expire":tran.Code.Input.dateExpiry|date('Y/m/d'),
-                    "printdate":tran.tranInsert|date('Y/m/d H:s:i'),
+                    "pin": code.pin,
+                    "serial": code.serialNumber,
+                    "expire": code.input.dateExpiry|date('Y/m/d'),
+                    "print_date": pin.date|date('Y/m/d H:s:i'),
                     "duplicate": duplicateText,
-                    "entityname":tran.Account.Entiti.entName,
-                    "operator":tran.Code.Item.operator.name,
-                    "entityadrs1":tran.Account.Entiti.entAdrs1,
-                    "entityadrs2":tran.Account.Entiti.entAdrs2,
-                    "entityadrs3":tran.Account.Entiti.entAdrs3
+                    "entity_name": pin.user.entity.name,
+                    "operator": code.item.operator.name,
+                    "entity_address1": pin.user.entity.address1,
+                    "entity_address2": pin.user.entity.address2,
+                    "entity_address3": pin.user.entity.address3
                 }) }}
             {% else %}
-
-                SerialNumber:{{ tran.Code.serialNumber }}<br><br>
-                Code Secret:{{ tran.Code.pin }}<br><br>
-                expire:{{ tran.Code.Input.dateExpiry|date('Y/m/d') }}<br><br>
-                printdate:{{ tran.tranInsert|date('Y/m/d H:s:i') }}<br><br>
+                SerialNumber: {{ code.serialNumber }}<br><br>
+                Code Secret: {{ code.pin }}<br><br>
+                expire: {{ code.input.dateExpiry|date('Y/m/d') }}<br><br>
+                print date: {{ pin.date|date('Y/m/d H:s:i') }}<br><br>
                 duplicate: duplicateText<br><br>
-                entityname:{{ tran.Account.Entiti.entName }}<br><br>
-
+                entity name: {{ pin.user.entity.name }}<br><br>
             {% endif %}
-
         </div>
     {% endfor %}
 </div>

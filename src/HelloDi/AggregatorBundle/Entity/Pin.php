@@ -63,7 +63,7 @@ class Pin
     /**
      * @ORM\Column(type="boolean", nullable=false, name="printed")
      */
-    protected $printed;
+    protected $printed = false;
 
     /**
      * Constructor

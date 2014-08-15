@@ -2,10 +2,10 @@
 namespace HelloDi\RetailerBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Form\SellCodeType;
 use HelloDi\CoreBundle\Entity\Item;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,6 +46,7 @@ class SellCodeController extends Controller
             else {
                 try {
                     $pin = $this->get('aggregator')->sellCodes($this->getUser(), $item, $form->get('count')->getData());
+                    return $this->redirect($this->generateUrl('hello_di_retailer_sell_code_print', array('pin_id'=> $pin->getId())));
                 } catch (\Exception $e){
                     $this->get('session')->getFlashBag()->add('error', $e->getMessage());
                     return $this->forward('HelloDiRetailerBundle:SellCode:errorPrint');
@@ -67,8 +68,11 @@ class SellCodeController extends Controller
             ));
     }
 
-    public function PrintCodeAction($pin_id, $print)
+    public function PrintCodeAction($pin_id)
     {
+        $print = $this->getRequest()->get('print', 'web');
+        $lang = $this->getRequest()->get('lang', $this->getUser()->getLanguage());
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -78,14 +82,20 @@ class SellCodeController extends Controller
             return $this->forward('HelloDiRetailerBundle:SellCode:errorPrint');
         }
 
-        $duplicate = !$pin->getPrinted();
+        $duplicate = $pin->getPrinted();
         $pin->setPrinted(true);
         $em->flush();
 
-        $html = $this->render('HelloDiDiDistributorsBundle:Retailers:CodePrint.html.twig',array(
-                'trans'=>$trans,
-                'description'=>str_replace('{{duplicate}}','{{duplicate|raw}}',$description),
-                'duplicate'=>$duplicate,
+        $codes = $pin->getCodes();
+        /** @var Code $first_code */
+        $first_code = $codes[0];
+
+        $description = $em->getRepository('HelloDiCoreBundle:ItemDesc')->findOneBy(array('language'=>$lang, 'item'=>$first_code->getItem()));
+
+        $html = $this->render('HelloDiRetailerBundle:sell_code:codePrint.html.twig', array(
+                'pin' => $pin,
+                'description' => $description ? str_replace('{{duplicate}}','{{duplicate|raw}}', $description->getDescription()) : null,
+                'duplicate' => $duplicate,
                 'print' => $print
             ));
 
