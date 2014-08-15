@@ -31,7 +31,7 @@
     </li>
     <li {% if tab == '5' %}class="active"{% endif %} >
         <a href="{{ path('hello_di_distributor_retailer_entity',{'id':retailerAccount.id}) }}"  >
-            <input type="submit" value="{{ 'Details' | trans ({}, "common") }}" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
     </li>
 {% endblock Tabs %}

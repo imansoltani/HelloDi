@@ -1,0 +1,8 @@
+hello_di_retailer_item_index:
+    pattern:  /
+    defaults: { _controller: "HelloDiRetailerBundle:Item:index" }
+
+hello_di_retailer_item_switch_favorite:
+    pattern:  /switch_favorite
+    defaults: { _controller: "HelloDiRetailerBundle:Item:switchFavorite" }
+    methods: post

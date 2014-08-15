@@ -5,3 +5,7 @@ hello_di_retailer_homepage:
 hello_di_retailer_setting:
     resource: "@HelloDiRetailerBundle/Resources/config/routing/setting.yml"
     prefix:   /setting
+
+hello_di_retailer_items:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing/item.yml"
+    prefix:   /items

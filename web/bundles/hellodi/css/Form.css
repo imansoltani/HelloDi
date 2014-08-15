@@ -218,33 +218,40 @@ body .tablediv table.table tr td:last-child{
 
 }
 
-.favorite.unfav{
-    color:rgb(249, 249, 249);
+.favorite.loading .icon-star{
+    display: none;
+}
+.favorite.loading .icon-load{
+    display: block;
+}
+
+.favorite .icon-load{
+    display: none;
+    position: relative;
+    top: -5px;
+    width:30px;
+    height: 30px;
+    padding: 0;
+    margin: 0 auto;
 }
 
 .favorite.fav{
-    color:  #003399;
+    color:  #003399 !important;
 }
 
 .favorite{
     font-size: 20px;
     margin: 0 auto;
-    margin-left: auto;
-    margin-right: auto;
     display: block;
     text-align: center;
-    text-shadow: 0px 0px 1px  #003399;
-    transition : font-size 0.2s ;
-    -webkit-transition : font-size 0.2s ;
+    text-shadow: 0 0 1px  #003399;
+    color:rgb(249, 249, 249) !important;
+    cursor: pointer;
+    height: 20px;
 }
 
 .favorite:hover,.favorite:focus{
     text-decoration: none;
-}
-
-.favorite:hover{
-
-    font-size: 30px;
 }
 
 .tablediv table.table tr td.td-actions input ,.btn_actions{
