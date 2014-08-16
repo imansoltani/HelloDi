@@ -3,6 +3,7 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AggregatorBundle\Form\PinType;
 use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Entity\Pin;
@@ -167,6 +168,8 @@ class CodeController extends Controller
             ->innerJoin('code.pins', 'pin')
             ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('transaction.account', 'account')
+            ->andWhere('account.type = :type')->setParameter('type', Account::PROVIDER)
+            ->andWhere('pin.commissionerTransaction = :null')->setParameter('null', null)
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
 
@@ -177,6 +180,7 @@ class CodeController extends Controller
             ->where('code = :code')->setParameter('code', $code)
             ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('transaction.account', 'account')
+            ->andWhere('account.type = :type')->setParameter('type', Account::RETAILER)
             ->innerJoin('pin.commissionerTransaction', 'com_transaction')
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
@@ -189,6 +193,7 @@ class CodeController extends Controller
             ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('pin.commissionerTransaction', 'com_transaction')
             ->innerJoin('com_transaction.account', 'account')
+            ->andWhere('account.type = :type')->setParameter('type', Account::DISTRIBUTOR)
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
 

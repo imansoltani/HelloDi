@@ -173,7 +173,8 @@ class DefaultController extends Controller
      */
     public function processTransaction($array, $doFlush = true)
     {
-        usort($array, function (TransactionContainer $a, TransactionContainer $b) {
+        $sortedArray = $array;
+        usort($sortedArray, function (TransactionContainer $a, TransactionContainer $b) {
             if ($a->getAccount()->getId() == $b->getAccount()->getId()) {
                 return 0;
             }
@@ -184,7 +185,7 @@ class DefaultController extends Controller
         $lastAccount = null;
         $sum = 0;
 
-        foreach($array as $transactionContainer)
+        foreach($sortedArray as $transactionContainer)
         {
             /** @var TransactionContainer $transactionContainer */
             if($lastAccount && $lastAccount->getId() != $transactionContainer->getAccount()->getId())

@@ -28,7 +28,7 @@
                                     <div class="type">{{ price.Item.currency }}</div>
                                 </div>
                                 <input type="hidden" id="item_id" value="{{ price.item.id }}">
-                                    <input type="hidden" id="operator" value="{{ price.item.operator.name }}">
+                                <input type="hidden" id="operator" value="{{ price.item.operator.name }}">
                                 <input type="hidden" id="item_name" value="{{ price.item.name }}">
                                 <input type="hidden" id="item_type"
                                     {% if     price.item.type == constant('DMTU',price.item) %} value="{{ 'Mobile' | trans ({}, 'item') }}"
@@ -99,4 +99,3 @@
         }
     </script>
 {% endblock %}
-
