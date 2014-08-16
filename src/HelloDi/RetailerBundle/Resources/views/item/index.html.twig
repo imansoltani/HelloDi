@@ -75,7 +75,7 @@
                             <tr>
                                 <td>{{ price.item.id }}</td>
                                 <td>
-                                    <a class="{{ price.isFavourite ? 'fav' : '' }} favorite" onclick="switch_favorite(this,{{ price.id }})">
+                                    <a class="{{ price.favourite ? 'fav' : '' }} favorite" onclick="switch_favorite(this,{{ price.id }})">
                                         <i class="icon-star"></i>
                                         <img class="icon-load" src="{{ asset('bundles/hellodi/img/refresh/loading.gif') }}">
                                     </a>

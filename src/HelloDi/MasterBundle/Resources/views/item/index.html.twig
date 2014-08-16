@@ -65,14 +65,10 @@
                                 <td>{{ item.faceValue }} {{ item.currency }}</td>
                                 <td>{{ item.code }}</td>
                                 <td>
-                                    {% if item.type == constant("DMTU",item) %}
-                                        {{ 'Mobile' | trans ({}, "item") }}
-                                    {% elseif item.type == constant("IMTU",item) %}
-                                        {{ 'IMTU' | trans ({}, "item") }}
-                                    {% elseif item.type == constant("CLCD",item) %}
-                                        {{ 'Calling_Card' | trans ({}, "item") }}
-                                    {% elseif item.type == constant("EPMT",item) %}
-                                        {{ 'E-payment' | trans ({}, "item") }}
+                                    {%     if item.type == constant("DMTU",item) %} {{ 'Mobile' | trans ({}, "item") }}
+                                    {% elseif item.type == constant("IMTU",item) %} {{ 'IMTU' | trans ({}, "item") }}
+                                    {% elseif item.type == constant("CLCD",item) %} {{ 'Calling_Card' | trans ({}, "item") }}
+                                    {% elseif item.type == constant("EPMT",item) %} {{ 'E-payment' | trans ({}, "item") }}
                                     {% endif %}
                                 </td>
                                 <td>{{ item.alertMinStock }}</td>

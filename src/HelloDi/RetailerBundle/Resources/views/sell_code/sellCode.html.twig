@@ -1,14 +1,12 @@
 {% extends 'HelloDiRetailerBundle::menu.html.twig' %}
 
-{% block title %}{{ 'ShopDmtu' | trans ({}, "item") }}{% endblock title %}
+{% block title %}{{ title | trans ({}, "item") }}{% endblock title %}
 
-{% block PageTitle %}<i class="icon-mobile-phone"></i>{{ 'ShopDmtu' | trans ({}, "item") }}{% endblock %}
-
-{% set MU = 'dmtu' %}
+{% block PageTitle %}{{ title | trans ({}, "item") }}{% endblock %}
 
 {% block Site_Map %}
     <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
-    <span class="link">{{ 'ShopDmtu' | trans ({}, "item") }} </span>
+    <span class="link">{{ title | trans ({}, "item") }} </span>
 {% endblock Site_Map %}
 
 {% block Body %}
@@ -32,7 +30,13 @@
                                 <input type="hidden" id="item_id" value="{{ price.item.id }}">
                                     <input type="hidden" id="operator" value="{{ price.item.operator.name }}">
                                 <input type="hidden" id="item_name" value="{{ price.item.name }}">
-                                <input type="hidden" id="item_type" value="{{ 'Mobile' | trans ({}, "item") }}">
+                                <input type="hidden" id="item_type"
+                                    {% if     price.item.type == constant('DMTU',price.item) %} value="{{ 'Mobile' | trans ({}, 'item') }}"
+                                    {% elseif price.item.type == constant('IMTU',price.item) %} value="{{ 'IMTU' | trans ({}, "item") }}"
+                                    {% elseif price.item.type == constant('EPMT',price.item) %} value="{{ 'E-payment' | trans ({}, "item") }}"
+                                    {% elseif price.item.type == constant('CLCD',price.item) %} value="{{ 'Calling_Card' | trans ({}, 'item') }}"
+                                    {% endif %}
+                                    >
                                 <input type="hidden" id="face_value" value="{{ price.item.faceValue }}">
                                 <input type="hidden" id="currency" value="{{ price.item.currency }}">
                                 {% for description in price.item.descriptions %}
@@ -51,7 +55,7 @@
     <div id="popuptop" class="modal">
         <div class="modal-header container_pop">
             <button type="button" class="close" onclick="PopupTopClose(event)">X</button>
-            <h3 id="myModalLabel">{{ 'BuyCard' | trans ({}, "item") }}</h3>
+            <h3 id="myModalLabel">{{ 'BuyCode' | trans ({}, "item") }}</h3>
         </div>
 
         {{ form(form) }}

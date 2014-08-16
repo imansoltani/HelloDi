@@ -26,9 +26,9 @@ class Price
     protected $price;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, name="isFavourite")
+     * @ORM\Column(type="boolean", nullable=false, name="favourite")
      */
-    protected $isFavourite = 0;
+    protected $favourite = false;
 
     /**
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")
@@ -95,26 +95,26 @@ class Price
     }
 
     /**
-     * Set isFavourite
+     * Set favourite
      *
-     * @param boolean $isFavourite
+     * @param boolean $favourite
      * @return Price
      */
-    public function setIsFavourite($isFavourite)
+    public function setFavourite($favourite)
     {
-        $this->isFavourite = $isFavourite;
+        $this->favourite = $favourite;
 
         return $this;
     }
 
     /**
-     * Get isFavourite
+     * Get favourite
      *
      * @return boolean
      */
-    public function getIsFavourite()
+    public function getFavourite()
     {
-        return $this->isFavourite;
+        return $this->favourite;
     }
 
     /**

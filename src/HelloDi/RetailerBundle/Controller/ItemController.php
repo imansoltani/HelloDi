@@ -33,9 +33,9 @@ class ItemController extends Controller
         if(!$price)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'item'),'message'));
 
-        $price->setIsFavourite(!$price->getIsFavourite());
+        $price->setFavourite(!$price->getFavourite());
         $em->flush();
 
-        return new Response($price->getIsFavourite()? '1' : '0');
+        return new Response($price->getFavourite()? '1' : '0');
     }
 }

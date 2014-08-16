@@ -13,6 +13,26 @@ class SellCodeController extends Controller
 {
     public function DMTUAction(Request $request)
     {
+        return $this->sellCode($request, Item::DMTU, 'Mobile', 'dmtu');
+    }
+
+    public function CLCDAction(Request $request)
+    {
+        return $this->sellCode($request, Item::CLCD, 'Calling_Card', 'clcd');
+    }
+
+    public function EPMTAction(Request $request)
+    {
+        return $this->sellCode($request, Item::EPMT, 'E-payment', 'epmt');
+    }
+
+    public function favoriteAction(Request $request)
+    {
+        return $this->sellCode($request, null, 'Favourites', 'fav');
+    }
+
+    private function sellCode(Request $request, $type, $title, $MU)
+    {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -54,15 +74,24 @@ class SellCodeController extends Controller
             }
         }
 
-        $prices = $em->createQueryBuilder()
+        $qb = $em->createQueryBuilder()
             ->select('price')
             ->from('HelloDiPricingBundle:Price', 'price')
             ->innerJoin('price.item', 'item')
-            ->where('item.type = :type')->setParameter('type', Item::DMTU)
-            ->andWhere('price.account = :account')->setParameter('account', $this->getUser()->getAccount())
-            ->getQuery()->getResult();
+            ->where('price.account = :account')->setParameter('account', $this->getUser()->getAccount());
 
-        return $this->render('HelloDiRetailerBundle:sell_code:dmtu.html.twig', array(
+        if($type)
+            $qb ->andWhere('item.type = :type')->setParameter('type', $type);
+        else
+            $qb ->andWhere('price.favourite = :favorite')->setParameter('favorite', true)
+                ->andWhere('item.type != :type')->setParameter('type', Item::IMTU)
+        ;
+
+        $prices = $qb->getQuery()->getResult();
+
+        return $this->render('HelloDiRetailerBundle:sell_code:sellCode.html.twig', array(
+                'title' => $title,
+                'MU' => $MU,
                 'prices' => $prices,
                 'form' => $form->createView()
             ));

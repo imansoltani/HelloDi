@@ -90,7 +90,7 @@ class DistributorPricingController extends Controller
                 $priceDist->setAccount($distributor->getAccount());
                 $priceDist->setPrice($priceAmount);
                 $priceDist->setItem($item);
-                $priceDist->setIsFavourite(false);
+                $priceDist->setFavourite(false);
                 $em->persist($priceDist);
                 $info = 'created';
             }

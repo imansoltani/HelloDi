@@ -2,6 +2,18 @@ hello_di_retailer_sell_code_dmtu:
     pattern:  /dmtu
     defaults: { _controller: "HelloDiRetailerBundle:SellCode:DMTU" }
 
+hello_di_retailer_sell_code_clcd:
+    pattern:  /clcd
+    defaults: { _controller: "HelloDiRetailerBundle:SellCode:CLCD" }
+
+hello_di_retailer_sell_code_epmt:
+    pattern:  /epmt
+    defaults: { _controller: "HelloDiRetailerBundle:SellCode:EPMT" }
+
+hello_di_retailer_sell_code_favorite:
+    pattern:  /favorite
+    defaults: { _controller: "HelloDiRetailerBundle:SellCode:favorite" }
+
 hello_di_retailer_sell_code_print:
     pattern:  /print/{pin_id}
     defaults: { _controller: "HelloDiRetailerBundle:SellCode:PrintCode" }

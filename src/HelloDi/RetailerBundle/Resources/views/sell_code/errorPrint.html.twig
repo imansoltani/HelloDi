@@ -14,11 +14,11 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
-<body style="width:700px;margin: 50px auto">
-<div style="color: red; border: 1px solid #bbbbbb; border-radius: 5px;padding: 10px">
+<body style="max-width:700px;margin: 50px auto">
+<div style="color: red; border: 1px solid #bbbbbb; border-radius: 5px;padding: 10px;line-height: 40px">
     error on print: <br/>
     {% for flashMessage in app.session.flashbag.get('error') %}
-        <h5>- {{ flashMessage }}</h5><br>
+        <b>- {{ flashMessage }}</b><br>
     {% endfor %}
 </div>
 
