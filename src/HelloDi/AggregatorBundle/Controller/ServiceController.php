@@ -251,15 +251,14 @@ class ServiceController extends Controller
                 ->select('pin')
                 ->from('HelloDiAggregatorBundle:Pin', 'pin')
                 ->where('pin.id = :id')->setParameter('id', $last_pin_for_code_id)
+                ->andWhere('pin.type = :type')->setParameter('type', Pin::SALE)
                 ->innerJoin('pin.commissionerTransaction', 'dist_transaction')
                 ->andWhere('dist_transaction.account = :dist_acc')->setParameter('dist_acc', $distributorAccount)
-                ->andWhere('dist_transaction.amount >= 0')
                 ->innerJoin('pin.transaction', 'ret_transaction')
-                ->andWhere('ret_transaction.amount <= 0')
                 ->getQuery()->getOneOrNullResult();
 
             if(!$last_pin_for_code)
-                throw new \Exception("A code is not sell or sell is not for this distributor.");
+                throw new \Exception("A code is not sell or sale is not for this distributor.");
             else {
                 if(!$retailerAccount) {
                     $retailerAccount = $last_pin_for_code->getTransaction()->getAccount();
