@@ -2,36 +2,74 @@
 namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\AccountingBundle\Entity\CreditLimit;
+use HelloDi\AccountingBundle\Entity\Transaction;
+use HelloDi\CoreBundle\Entity\User;
+use HelloDi\DistributorBundle\Form\RetailerSearchType;
+use HelloDi\MasterBundle\Form\CreditLimitType;
+use HelloDi\MasterBundle\Form\EntityType;
+use HelloDi\MasterBundle\Form\TransactionType;
+use HelloDi\RetailerBundle\Entity\Retailer;
+use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class RetailerController extends Controller
 {
-    public function distributorindexAction($id)
+    public function indexAction(Request $request, $dist_id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
+        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($dist_id);
         if(!$distributor)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $retailers = $distributor->getRetailers();
+        $qb = $em->createQueryBuilder()
+            ->select('retailer')
+            ->from('HelloDiRetailerBundle:Retailer', 'retailer')
+            ->where('retailer.distributor = :distributor')->setParameter('distributor', $distributor);
+
+        $form = $this->createForm(new RetailerSearchType($distributor, $em),null,array(
+                'attr' => array('class'=>'SearchForm'),
+                'method' => 'get'
+            ))
+            ->add('search','submit');
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            $data = $form->getData();
+
+            $qb ->innerJoin('retailer.account', 'account')
+                ->innerJoin('account.entity', 'entity');
+
+            if(isset($data['city']))
+                $qb->andWhere('entity.city = :city')->setParameter('city', $data['city']);
+
+            if(isset($data['balanceValue']))
+                $qb->andWhere('account.balance '.$data['balanceType'].' :balance')
+                    ->setParameter('balance', $data['balanceValue']);
+        }
+
+        $retailers = $qb->getQuery()->getResult();
 
         return $this->render('HelloDiMasterBundle:retailer:index.html.twig', array(
                 'account' => $distributor->getAccount(),
                 'retailers' => $retailers,
+                'form' => $form->createView(),
             ));
     }
-    //TODO this file copied from MasterBundle:DistributorController. EDIT IT.
+
     //transactions
-    public function transactionsAction(Request $request, $id)
+    public function transactionAction(Request $request, $dist_id, $id)
     {//TODO must be edit
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $dist_id);
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $form = $this->createFormBuilder(null,array('attr'=>array('class'=>'SearchForm')))
@@ -78,22 +116,49 @@ class RetailerController extends Controller
                     'aamdt' => 'debit_provider,s_account',
                     'tran' => 'transfer_credit_from_provider,s_account_to_a_distributor,s_account',
                 )))
+            ->add('page', 'hidden', array('required' => false, 'attr'=>array('id'=>'search_page')))
             ->setMethod('post')
             ->add('search','submit')
             ->getForm();
 
         $qb = array();
 
-        if ($request->isMethod('post')) {
+        if($request->isMethod('POST'))
+        {
             $form->handleRequest($request);
 
             if($form->isValid())
             {
 //                $data = $form->getData();
+
+//                $qb=$em->createQueryBuilder();
+//                $qb->select('Tran')
+//                    ->from('HelloDiAccountingBundle:Transaction','Tran')
+//                    ->where('Tran.Account = :Acc')->setParameter('Acc',$Account);
+//
+//                if($data['TypeDate']==1)$typedate=1; else $typedate=0;
+//
+//                if($data['DateStart']!='')
+//                    $qb->andwhere('Tran.tranInsert >= :DateStart')->setParameter('DateStart',$data['DateStart']);
+//                if($data['DateEnd']!='')
+//                    $qb->andwhere('Tran.tranInsert <= :DateEnd')->setParameter('DateEnd',$data['DateEnd']);
+//
+//                if ($data['Type'] != 2)
+//                    $qb->andWhere($qb->expr()->eq('Tran.tranType',$data['Type']));
+//
+//                if($data['Action']!='All')
+//                    $qb->andWhere($qb->expr()->like('Tran.tranAction',$qb->expr()->literal($data['Action'])));
+//
+//                $qb->addOrderBy('Tran.tranInsert','desc')->addOrderBy('Tran.id','desc');;
+//
+//                $qb=$qb->getQuery();
+//                $count = count($qb->getResult());
+//                $qb->setHint('knp_paginator.count', $count);
+
                 $qb = $em->createQueryBuilder()
                     ->select('transaction')
                     ->from('HelloDiAccountingBundle:Transaction', 'transaction')
-                    ->where('transaction.account = :account')->setParameter('account', $account)
+                    ->where('transaction.account = :account')->setParameter('account', $retailer->getAccount())
                     ->orderBy('transaction.date', 'desc')->addOrderBy('transaction.id', 'desc')
                     ->getQuery();
             }
@@ -101,14 +166,15 @@ class RetailerController extends Controller
 
         $transactions = $this->get('knp_paginator')->paginate(
             $qb,
-            $request->get('page', 1),
+            $form->get('page')->getData()?:1,
             10
         );
 
-        return $this->render('HelloDiMasterBundle:distributor:transaction.html.twig', array(
+        return $this->render('HelloDiMasterBundle:retailer:transaction.html.twig', array(
                 'transactions' => $transactions,
-                'account' => $account,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'retailerAccount' => $retailer->getAccount(),
+                'account' => $retailer->getDistributor()->getAccount()
             ));
     }
 
@@ -117,14 +183,14 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
-        if(!$distributor)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $transaction = new Transaction();
-        $balanceForm = $this->createForm(new TransactionType($distributor->getCurrency()), $transaction, array('attr'=>array(
+        $balanceForm = $this->createForm(new TransactionType($retailer->getDistributor()->getCurrency()), $transaction, array('attr'=>array(
                 'class' => 'YesNoMessage',
-                'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
+                'header' => $this->get('translator')->trans('Fund_retailer',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
             )))
             ->add('apply','submit', array(
@@ -138,19 +204,19 @@ class RetailerController extends Controller
         ;
 
         $creditLimit = new CreditLimit();
-        $creditLimitForm = $this->createForm(new CreditLimitType($distributor->getCurrency()), $creditLimit, array('attr'=>array(
+        $creditLimitForm = $this->createForm(new CreditLimitType($retailer->getDistributor()->getCurrency()), $creditLimit, array('attr'=>array(
                 'class' => 'YesNoMessage',
-                'header' => $this->get('translator')->trans('Fund_distributor',array(),'message'),
+                'header' => $this->get('translator')->trans('Fund_retailer',array(),'message'),
                 'message' => $this->get('translator')->trans('Are_you_sure_you_perform_this_operation?',array(),'message'),
             )))
             ->add('update','submit', array(
-                'label'=>'Update','translation_domain'=>'common',
-                'attr'=>array('first-button')
-            ))
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button')
+                ))
             ->add('cancel','button',array(
-                'label'=>'Cancel','translation_domain'=>'common',
-                'attr'=>array('onclick'=>'history.go(-1)','last-button')
-            ))
+                    'label'=>'Cancel','translation_domain'=>'common',
+                    'attr'=>array('onclick'=>'history.go(-1)','last-button')
+                ))
         ;
 
         if($request->isMethod('POST')) {
@@ -159,22 +225,31 @@ class RetailerController extends Controller
 
             if($balanceForm->isValid())
             {
-                $beforeBalance = $distributor->getAccount()->getBalance();
+                $beforeRetailerBalance = $retailer->getAccount()->getBalance();
+                $beforeDistributorBalance = $retailer->getDistributor()->getAccount()->getBalance();
 
-                $result = $this->get('accounting')->processTransaction(array(new TransactionContainer(
-                        $distributor->getAccount(),
-                        $transaction->getAmount(),
-                        $transaction->getDescription(),
-                        $transaction->getFees()
-                    )));
+                $result = $this->get('accounting')->processTransfer(
+                    $transaction->getAmount(),
+                    $this->getUser(),
+                    $retailer->getAccount(),
+                    'sender transfer - '.$transaction->getDescription(),
+                    'receiver transfer - '.$transaction->getDescription()
+                );
 
                 if($result) {
                     $this->get('session')->getFlashBag()->add('success',
-                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
-                            array('alredydist'=>$beforeBalance,'currentdist'=>$distributor->getAccount()->getBalance()),
+                        $this->get('translator')->trans('Retailer_account_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                            array('alredyretailer'=>$beforeRetailerBalance,'currentretailer'=>$retailer->getAccount()->getBalance()),
                             'message')
                     );
-                    return $this->redirect($this->generateUrl('hello_di_master_distributor_transaction_funding', array('id' => $id)));
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$beforeDistributorBalance,'currentdist'=>$retailer->getDistributor()->getAccount()->getBalance()),
+                            'message')
+                    );
+
+                    return $this->redirect($this->generateUrl('hello_di_distributor_retailer_transaction_funding', array('id' => $id)));
                 }
                 else
                     $this->get('session')->getFlashBag()->add('error', 'this account has not enough balance!');
@@ -182,218 +257,107 @@ class RetailerController extends Controller
 
             if($creditLimitForm->isValid())
             {
-                $beforeCreditLimit = $distributor->getAccount()->getCreditLimitAmount();
+                $beforeCreditLimit = $retailer->getAccount()->getCreditLimitAmount();
+                $beforeDistributorBalance = $retailer->getDistributor()->getAccount()->getBalance();
 
                 $result = $this->get('accounting')->newCreditLimit(
                     $creditLimit->getAmount(),
                     $this->getUser(),
-                    $distributor->getAccount()
+                    $retailer->getAccount()
                 );
 
                 if($result) {
                     $this->get('session')->getFlashBag()->add('success',
-                        $this->get('translator')->trans('Distributor_creditlimit_was_changed_from_%alredydist%_to_%currentdist%',
-                            array('alredydist'=>$beforeCreditLimit,'currentdist'=>$distributor->getAccount()->getCreditLimitAmount()),
+                        $this->get('translator')->trans('Retailer_creditlimit_was_changed_from_%alredyretailer%_to_%currentretailer%',
+                            array('alredydist'=>$beforeCreditLimit,'currentdist'=>$retailer->getAccount()->getCreditLimitAmount()),
                             'message')
                     );
-                    return $this->redirect($this->generateUrl('hello_di_master_distributor_transaction_funding', array('id' => $id)));
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('Distributor_account_was_changed_from_%alredydist%_to_%currentdist%',
+                            array('alredydist'=>$beforeDistributorBalance,'currentdist'=>$retailer->getDistributor()->getAccount()->getBalance()),
+                            'message')
+                    );
+
+                    return $this->redirect($this->generateUrl('hello_di_distributor_retailer_transaction_funding', array('id' => $id)));
                 }
                 else
                     $this->get('session')->getFlashBag()->add('error', 'this account has not enough balance!');
             }
         }
 
-        return $this->render('HelloDiMasterBundle:distributor:funding.html.twig',
-            array(
-                'distributor' => $distributor,
-                'account' => $distributor->getAccount(),
+        return $this->render('HelloDiDistributorBundle:retailer:funding.html.twig', array(
+                'retailer' => $retailer,
+                'retailerAccount' => $retailer->getAccount(),
                 'balanceForm' => $balanceForm->createView(),
                 'creditLimitForm' => $creditLimitForm->createView(),
-
             ));
     }
 
     //items
-    public function itemsAction($id)
+    public function itemAction($id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
-        if(!$distributor)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        return $this->render('HelloDiMasterBundle:distributor:item.html.twig', array(
-                'account' => $distributor->getAccount(),
-                'distributor' => $distributor
+        $prices = $em->createQueryBuilder()
+            ->select('item.id', 'item.name', 'item.faceValue', 'item.type', 'price.price', 'price_dist.price as price_distributor')
+            ->from('HelloDiPricingBundle:Price', 'price')
+            ->where('price.account = :ret_acc')->setParameter('ret_acc', $retailer->getAccount())
+            ->innerJoin('price.item', 'item')
+            ->innerJoin('item.prices', 'price_dist')
+            ->andWhere('price_dist.account = :dist_acc')->setParameter('dist_acc', $retailer->getDistributor()->getAccount())
+            ->getQuery()->getResult();
+
+        return $this->render('HelloDiDistributorBundle:retailer:item.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
+                'prices' => $prices
             ));
-    }
-
-    //purchases
-    public function purchasesAction(Request $request, $id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
-        if(!$distributor)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
-
-        $form = $this->createFormBuilder(null,array('attr'=>array('class'=>'SearchForm')))
-            ->add('dateFrom', 'date', array(
-                    'format'=>'yyyy/MM/dd',
-                    'widget'=>'single_text',
-                    'data'=>((new \DateTime('now'))->sub(new \DateInterval('P7D'))),
-                    'required' => false,
-                    'label' => 'From', 'translation_domain'=>'transaction'
-                ))
-            ->add('dateTo', 'date', array(
-                    'format'=>'yyyy/MM/dd',
-                    'widget'=>'single_text',
-                    'data'=>(new \DateTime('now')),
-                    'required' => false,
-                    'label' => 'To','translation_domain'=>'transaction'
-                ))
-            ->add('itemType', 'choice', array(
-                    'label' => 'ItemType','translation_domain'=>'item',
-                    'required' => false,
-                    'empty_value' => 'All',
-                    'choices' => array(
-                        Item::DMTU => 'Mobile',
-                        Item::CLCD => 'Calling_Card',
-                        Item::EPMT => 'E-payment',
-                        Item::IMTU => 'IMTU',
-                    )
-                ))
-            ->add('itemName', 'entity', array(
-                    'label' => 'Item','translation_domain'=>'item',
-                    'empty_value' => 'All',
-                    'required' => false,
-                    'class' => 'HelloDiCoreBundle:Item',
-                    'property' => 'name',
-                    'query_builder' => function (EntityRepository $er) use ($distributor) {
-                            return $er->createQueryBuilder('item')
-                                ->innerJoin('item.prices', 'price')
-                                ->andWhere('price.account = :account')->setParameter('account', $distributor->getAccount());
-                        }
-                ))
-            ->add('search','submit', array(
-                    'label'=>'Search','translation_domain'=>'common',
-                ))
-            ->getForm();
-
-        $transactions = array();
-
-        if($request->isMethod('POST'))
-        {
-            $form->handleRequest($request);
-
-            if($form->isValid()) {
-                $data = $form->getData();
-
-                $qb =  $em->createQueryBuilder()
-                    ->select('Tr as TR, count(Tr.Code) as Quantity')
-                    ->from('HelloDiAccountingBundle:Transaction','Tr')
-                    ->innerJoin('Tr.Account', 'TrAcc')
-                    ->innerJoin('Tr.Code', 'TrCo')
-                    ->innerJoin('TrCo.Item', 'TrCoIt')
-                    ->innerJoin('Tr.TaxHistory', 'TrTh')
-                    ->where('Tr.Account = :Acc')->setParameter('Acc',$distributor->getAccount())
-                    ->andWhere('Tr.tranAction like :action')->setParameter('action','com')
-                    ->groupBy('TrCoIt', 'Tr.BuyingPrice', 'TrTh')
-                    ->orderBy('Tr.tranInsert', 'desc')
-                ;
-                if (isset($data['dateFrom']))
-                    $qb->andWhere('Tr.tranDate >= :DateStart')->setParameter('DateStart', $data['DateStart']);
-                if (isset($data['dateTo']))
-                    $qb->andWhere('Tr.tranDate <= :DateEnd')->setParameter('DateEnd', $data['DateEnd']);
-                if (isset($data['itemName']))
-                    $qb->andWhere('TrCoIt = :Item')->setParameter('Item',$data['ItemName']);
-                if (isset($data['itemType']))
-                    $qb->andWhere($qb->expr()->like('TrCoIt.itemType', $qb->expr()->literal($data['ItemType'])));
-
-                $transactions = $qb->getQuery()->getResult();
-            }
-        }
-
-        if($request->query->has('print')) {
-            $html = $this->render('HelloDiMasterBundle:distributor:purchasesPrint.html.twig', array(
-                    'transactions' => $transactions
-                ));
-
-            return new Response(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent(),array(
-                        'header-html'=>'
-                            <div style="font-size:14px;float:left;border:1px solid #999;width:7cm;padding:3px">
-                                <b>Distributor Details</b><br/>
-                                Account Name: '.$distributor->getAccount()->getName().'<br/>
-                                Account Balance: '.$distributor->getAccount()->getBalance().'<br/>
-                                Account Currency: '.$distributor->getCurrency().'<br/>
-                            </div>
-                            <div style="float: right;font-weight: bold;width: 8cm;border-bottom: 2px solid black;text-align:right">
-                                Purchases Print
-                            </div>
-                            ',
-                        'margin-top'=>35,
-                        'header-spacing'=>25,
-                        'footer-right'=>'Page: [page]/[toPage]',
-                        'footer-left'=>'Date: [date]'
-                    )),
-                200,
-                array(
-                    'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'attachment; filename="Purchases.pdf"'
-                )
-            );
-        }
-        else {
-            return $this->render('HelloDiMasterBundle:distributor:purchases.html.twig', array(
-                    'transactions' => $transactions,
-                    'account' => $distributor->getAccount(),
-                    'form' => $form->createView()
-                ));
-        }
     }
 
     //users
-    public function usersAction($id)
+    public function userAction($id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $users = $account->getUsers();
+        $users = $retailer->getAccount()->getUsers();
 
-        return $this->render('HelloDiMasterBundle:distributor:users.html.twig', array(
-                'account' => $account,
-                'users' => $users,
+        return $this->render('HelloDiDistributorBundle:retailer:user.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
+                'users' => $users
             ));
     }
 
-    public function usersAddAction(Request $request, $id)
+    public function userAddAction(Request $request, $id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account || $account->getType() != Account::DISTRIBUTOR)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
         $user = new User();
 
         $languages = $this->container->getParameter('languages');
 
-        $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
+        $form = $this->createForm(new RegistrationFormType($languages, Account::RETAILER), $user)
             ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
                 ))
             ->add('cancel','button',array(
                     'label'=>'Cancel','translation_domain'=>'common',
-                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_master_distributor_users', array('id' => $id)).'")','last-button')
+                    'attr'=>array('onclick'=>'window.location.assign("'.$this->generateUrl('hello_di_distributor_retailer_user', array('id' => $id)).'")','last-button')
                 ))
         ;
 
@@ -401,36 +365,39 @@ class RetailerController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $user->setEntity($account->getEntity());
-                $user->setAccount($account);
-                $user->setEnabled(1);
+                $user->setAccount($retailer->getAccount());
+                $user->setEntity($retailer->getAccount()->getEntity());
                 $em->persist($user);
                 $em->flush();
-//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$account->getId(),'type'=>21,'value'=>$user->getUsername()));
 
+//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>37,'value'=>$user->getUsername()));
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('hello_di_master_distributor_users', array('id' => $id)));
+                return $this->redirect($this->generateUrl('hello_di_distributor_retailer_user', array('id' => $retailer->getAccount()->getId())));
             }
         }
 
-        return $this->render('HelloDiMasterBundle:distributor:usersAdd.html.twig', array(
-                'account' => $account,
+        return $this->render('HelloDiDistributorBundle:retailer:userAdd.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
                 'form' => $form->createView(),
             ));
     }
 
-    public function usersEditAction(Request $request, $user_id)
+    public function userEditAction(Request $request, $id, $user_id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('HelloDiCoreBundle:User')->find($user_id);
 
-        if(!$user || $user->getAccount()->getType() != Account::DISTRIBUTOR)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountId($id, $this->getUser()->getAccount());
+        if(!$retailer)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $user = $em->getRepository('HelloDiCoreBundle:User')->findOneBy(array('id'=>$user_id, 'account' => $retailer->getAccount()));
+        if(!$user)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'user'),'message'));
 
         $languages = $this->container->getParameter('languages');
 
-        $form = $this->createForm(new RegistrationFormType($languages, Account::DISTRIBUTOR), $user)
+        $form = $this->createForm(new RegistrationFormType($languages, Account::RETAILER), $user)
             ->remove('plainPassword')
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -449,12 +416,12 @@ class RetailerController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                return $this->redirect($this->generateUrl('hello_di_master_distributor_users', array('id' => $user->getAccount()->getId())));
+                return $this->redirect($this->generateUrl('hello_di_distributor_retailer_user', array('id' => $user->getAccount()->getId())));
             }
         }
 
-        return $this->render('HelloDiMasterBundle:distributor:usersEdit.html.twig', array(
-                'account' => $user->getAccount(),
+        return $this->render('HelloDiDistributorBundle:retailer:userEdit.html.twig', array(
+                'retailerAccount' => $user->getAccount(),
                 'form' => $form->createView()
             ));
     }
@@ -465,21 +432,25 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
-        if(!$distributor)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
+        $languages = $this->container->getParameter('languages');
+        $languages = array_combine($languages, $languages);
+
         $form = $this->createFormBuilder(array(
-                'terms' => $distributor->getAccount()->getTerms(),
-                'timezone' => $distributor->getTimezone(),
+                'terms' => $retailer->getAccount()->getTerms(),
+                'defaultLanguage' => $retailer->getAccount()->getDefaultLanguage(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
                     'required'=>false,
                     'attr'=> array('class'=>'integer_validation'),
                 ))
-            ->add('timezone','timezone',array(
-                    'label' => 'TimeZone','translation_domain' => 'accounts',
+            ->add('defaultLanguage','choice',array(
+                    'label' => 'DefaultLanguage','translation_domain' => 'accounts',
+                    'choices'=>$languages,
                     'required'=>true,
                 ))
             ->add('update','submit', array(
@@ -488,42 +459,59 @@ class RetailerController extends Controller
                 ))
             ->getForm();
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                $distributor->setTimezone($data['timezone']);
-                $distributor->getAccount()->setTerms($data['terms']);
+                $retailer->getAccount()->setTerms($data['terms']);
+                $retailer->getAccount()->setDefaultLanguage($data['defaultLanguage']);
 
                 $em->flush();
-//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>26));
-                $this->get('session')->getFlashBag()->add('success', 'this operation done success!');
+//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>35));
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
             }
         }
 
-        return $this->render('HelloDiMasterBundle:distributor:info.html.twig', array(
+        return $this->render('HelloDiDistributorBundle:retailer:info.html.twig', array(
+                'retailerAccount' => $retailer->getAccount(),
                 'form' => $form->createView(),
-                'account' => $distributor->getAccount(),
-                'distributor' => $distributor,
+                'retailer' => $retailer
             ));
     }
 
     //entity
-    public function entityAction($id)
+    public function entityAction(Request $request, $id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $account = $em->getRepository('HelloDiAccountingBundle:Account')->find($id);
-        if(!$account)
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
+        if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        return $this->render('HelloDiMasterBundle:distributor:entity.html.twig', array(
-                'account' => $account,
-                'entity' => $account->getEntity()
-            ));
+        $form = $this->createForm(new EntityType(), $retailer->getAccount()->getEntity())
+            ->add('update','submit', array(
+                    'label'=>'Update','translation_domain'=>'common',
+                    'attr'=>array('first-button','last-button')
+                ))
+        ;
 
+        if($request->isMethod('post')) {
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+                $em->flush();
+
+//                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>36));
+                $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
+            }
+        }
+
+        return $this->render('HelloDiDistributorBundle:retailer:entity.html.twig', array(
+                'form' => $form->createView(),
+                'retailerAccount' => $retailer->getAccount(),
+            ));
     }
 }

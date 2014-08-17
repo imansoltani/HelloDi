@@ -40,7 +40,7 @@
         </a>
     </li>
     <li {% if tab == '2' %}class="active"{% endif %} >
-        <a href="{{ path('hello_di_master_retailer_index',{'id':account.id}) }}">
+        <a href="{{ path('hello_di_master_retailer_index',{'dist_id':account.id}) }}">
             <input type="submit" value="{{ 'Retailers' | trans ({}, "accounts") }}" >
         </a>
     </li>

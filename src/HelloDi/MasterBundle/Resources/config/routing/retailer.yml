@@ -2,63 +2,39 @@ hello_di_master_retailer_index:
     pattern:  /
     defaults: { _controller: "HelloDiMasterBundle:Retailer:index"}
 
-##transactions--------------
-#Master_Retailer_Transaction:
-#    pattern:  /{id}/transactions
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailersTransaction }
-#
-#Master_Retailer_DetailsTransaction:
-#    pattern:  /{id}/transactions/{tranid}/details
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterDetailsRetailerTransaction }
-#
-#Master_RetailerFunding:
-#    pattern:  /{id}/transactions/transfer
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFunding"}
-#
-#Master_RetailerTransferFunding:
-#    pattern:  /{id}/transactions/transfermoney
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFundingTransfer"}
-#
-#Master_RetailerUpdateFunding:
-#    pattern:  /{id}/transactions/transfer/update
-#    defaults: { _controller: "HelloDiDiDistributorsBundle:Account:MasterRetailerFundingUpdate"}
-#
-##users----------------------
-#Master_RetailerUser:
-#    pattern:  /{id}/users
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUser }
-#
-#Master_RetailerUserAdd:
-#    pattern:  /{id}/users/add
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUserAdd }
-#
-#Master_RetailerUserEdit:
-#    pattern:  /{id}/users/{userid}/edit
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerUserEdit }
-#
-##setting-------------------
-#Master_RetailerSetting:
-#    pattern:  /{id}/settings
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerSetting }
-#
-##details-------------------
-#Master_Retailer_details:
-#    pattern:  /{id}/details
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerDetails }
-#
-#MasterLoadActionRetailer:
-#    pattern:  /loadaction
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterLoadActionRetailer }
-#
-##items---------------------
-#Master_RetailerItem:
-#    pattern:  /{id}/items
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItems }
-#
-#Master_RetailerItemAdd:
-#    pattern:  /{id}/items/add
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItemsAdd }
-#
-#Master_RetailerItemEdit:
-#    pattern:  /{id}/items/{priceid}/edit
-#    defaults: { _controller: HelloDiDiDistributorsBundle:Account:MasterRetailerItemsEdit }
+#transaction
+hello_di_master_retailer_transaction:
+    pattern:  /{id}/transactions
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:transaction"}
+
+hello_di_master_retailer_transaction_funding:
+    pattern:  /{id}/transactions/funding
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:funding"}
+
+#items
+hello_di_master_retailer_item:
+    pattern:  /{id}/items
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:item" }
+
+#users
+hello_di_master_retailer_user:
+    pattern:  /{id}/users
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:user" }
+
+hello_di_master_retailer_user_add:
+    pattern:  /{id}/users/add
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:userAdd" }
+
+hello_di_master_retailer_user_edit:
+    pattern:  /{id}/users/{user_id}/edit
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:userEdit" }
+
+#info
+hello_di_master_retailer_info:
+    pattern:  /{id}/info
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:info" }
+
+#entity
+hello_di_master_retailer_entity:
+    pattern:  /{id}/entity
+    defaults: { _controller: "HelloDiMasterBundle:Retailer:entity" }

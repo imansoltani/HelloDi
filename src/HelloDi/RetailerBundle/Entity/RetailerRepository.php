@@ -2,7 +2,6 @@
 namespace HelloDi\RetailerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use HelloDi\AccountingBundle\Entity\Account;
 
 /**
  * Class RetailerRepository
@@ -25,16 +24,17 @@ class RetailerRepository extends EntityRepository
 
     /**
      * @param $id
-     * @param Account $distributorAccount
+     * @param $dist_id
      * @return Retailer|null
      */
-    public function findByAccountIdAndDistributorAccount($id, Account $distributorAccount)
+    public function findByAccountIdAndDistributorAccountId($id, $dist_id)
     {
         return $this->createQueryBuilder('this')
             ->innerJoin('this.account', 'account')
             ->where('account.id = :id')->setParameter('id', $id)
             ->innerJoin('this.distributor', 'distributor')
-            ->andWhere('distributor.account = :dist_account')->setParameter('dist_account', $distributorAccount)
+            ->innerJoin('distributor.account', 'distAccount')
+            ->andWhere('distAccount.id = :dist_id')->setParameter('dist_id', $dist_id)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }

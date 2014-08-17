@@ -120,7 +120,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -234,7 +234,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -351,7 +351,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -376,7 +376,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -393,7 +393,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -483,7 +483,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
@@ -538,7 +538,7 @@ class RetailerController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccount($id, $this->getUser()->getAccount());
+        $retailer = $em->getRepository('HelloDiRetailerBundle:Retailer')->findByAccountIdAndDistributorAccountId($id, $this->getUser()->getAccount()->getId());
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 

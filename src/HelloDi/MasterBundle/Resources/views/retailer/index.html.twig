@@ -10,16 +10,31 @@
 
 {% block Link_Head %}
     <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             Fix_Size();
+            $('form').submit(function() {
+                $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+            });
         });
     </script>
 {% endblock %}
 
 {% block Tab %}
-    <div class="widget-header">
-        <h3>{{ 'Retailers' | trans ({}, "accounts") }}</h3>
+    <div class="form_search">
+        <h5 style="cursor:pointer;" class="TitleShow1">
+            <span><i id="search_logo" class="icon-search"></i><span class="title_search">Search Retailer</span></span>
+        </h5>
+
+        {{ form(form) }}
+
+        <script type="text/javascript">
+            $(function () {
+                Form_Search(0,"{{'Filter_List'|trans({},'js')  }}");
+            });
+        </script>
     </div>
 
     <div style="margin-top: 5px" class="tablediv">
@@ -27,24 +42,32 @@
             <table id="example" class="table postsend">
                 <thead>
                 <tr>
-                    <th> {{ 'Id' | trans ({}, "common") }}</th>
-                    <th> {{ 'Name' | trans ({}, "accounts") }}</th>
-                    <th> {{ 'Entity' | trans ({}, "entity") }}</th>
-                    <th> {{ 'Balance' | trans ({}, "accounts") }}</th>
-                    <th> {{ 'CreditLimit' | trans ({}, "accounts") }}</th>
-                    <th> {{ 'Operation' | trans ({}, "common") }}</th>
+                    <th>{{ 'Id' | trans ({}, "common") }}</th>
+                    <th>{{ 'Name' | trans ({}, "common") }}</th>
+                    <th>{{ 'Entity' | trans ({}, "entity") }}</th>
+                    <th>{{ 'Balance' | trans ({}, "accounts") }}</th>
+                    <th>{{ 'CreditLimit' | trans ({}, "accounts") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                </tr>
+                <tr class="input">
+                    <td><label><input type="text" name="search_Id" value="Search Id" class="search_init"/></label></td>
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init"/></label></td>
+                    <td><label><input type="text" name="search_Entity_Name" value="Search Entity Name" class="search_init"/></label></td>
+                    <td><label><input type="text" name="search_Balance" value="Search Balance" class="search_init"/></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init"/></label></td>
+                    <td><label><input type="text" disabled="" name="search_Operation" value="" class="search_init"/></label></td>
                 </tr>
                 </thead>
                 <tbody>
                 {% for retailer in retailers %}
                     <tr>
-                        <td>{{ retailer.account.id }}</td>
+                        <td style="font-weight: bold">{{ retailer.account.id }}</td>
                         <td>{{ retailer.account.name }}</td>
-                        <td>{{ retailer.entity.name }}</td>
-                        <td>{{ retailer.account.balance }}</td>
-                        <td>{{ retailer.account.creditLimitAmount }}</td>
+                        <td>{{ retailer.account.entity.name }}</td>
+                        <td>{{ retailer.account.balance }}|<b>{{ retailer.distributor.currency }}</b></td>
+                        <td>{{ retailer.account.creditLimitAmount }}|<b>{{ retailer.distributor.currency }}</b></td>
                         <td class="td-actions">
-                            <a class="btn_actions"  href="{{ path('Master_Retailer_Transaction',{'distid':account.id,'id':retailer.account.id}) }}"> {{ 'Manage' | trans ({}, "common") }}</a>
+                            <a class="btn_actions" href="{{ path('hello_di_master_retailer_transaction',{'dist_id':account.id, 'id':retailer.account.id}) }}">{{ 'Manage' | trans ({}, "common") }}</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -53,6 +76,3 @@
         </div>
     </div>
 {% endblock %}
-
-
-
