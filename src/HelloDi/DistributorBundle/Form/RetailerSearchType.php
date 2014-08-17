@@ -3,10 +3,10 @@
 namespace HelloDi\DistributorBundle\Form;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use HelloDi\DistributorBundle\Entity\Distributor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RetailerSearchType extends AbstractType
 {
@@ -53,8 +53,15 @@ class RetailerSearchType extends AbstractType
                 ));
     }
 
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'csrf_protection' => false,
+            ));
+    }
+
     public function getName()
     {
-        return 'hellodi_distributor_bundle_retailer_search_type';
+        return '';
     }
 }

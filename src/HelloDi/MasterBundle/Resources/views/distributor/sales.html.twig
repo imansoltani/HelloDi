@@ -88,7 +88,7 @@
                                     <td rowspan="{{ loop.length }}">
                                         {% if loop.first and pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::SALE") %}
                                             <label><input class="checkbox_select" type="checkbox" value="{{ sale.code_row.id }}" name="{{ form_select.name }}[codes][]" onclick="if(!$(this).prop('checked'))$('input.main_check').prop('checked',false)"></label>
-                                        {% endif %}{{ sale.code_row.id }}
+                                        {% endif %}
                                     </td>
                                     <td rowspan="{{ loop.length }}">{{ group ? "--" : sale.code_row.serialNumber }}</td>
                                 {% endif %}

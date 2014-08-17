@@ -31,26 +31,26 @@ class RetailerController extends Controller
             ->from('HelloDiRetailerBundle:Retailer', 'retailer')
             ->where('retailer.distributor = :distributor')->setParameter('distributor', $distributor);
 
-        $form = $this->createForm(new RetailerSearchType($distributor, $em),null,array('attr'=>array('class'=>'SearchForm')))
+        $form = $this->createForm(new RetailerSearchType($distributor, $em),null,array(
+                'attr' => array('class'=>'SearchForm'),
+                'method' => 'get'
+            ))
             ->add('search','submit');
 
-        if($request->isMethod('post'))
-        {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
-                $data = $form->getData();
+        if($form->isValid()) {
+            $data = $form->getData();
 
-                $qb ->innerJoin('retailer.account', 'account')
-                    ->innerJoin('account.entity', 'entity');
+            $qb ->innerJoin('retailer.account', 'account')
+                ->innerJoin('account.entity', 'entity');
 
-                if(isset($data['city']))
-                    $qb->andWhere('entity.city = :city')->setParameter('city', $data['city']);
+            if(isset($data['city']))
+                $qb->andWhere('entity.city = :city')->setParameter('city', $data['city']);
 
-                if(isset($data['balanceValue']))
-                    $qb->andWhere('account.balance '.$data['balanceType'].' :balance')
-                        ->setParameter('balance', $data['balanceValue']);
-            }
+            if(isset($data['balanceValue']))
+                $qb->andWhere('account.balance '.$data['balanceType'].' :balance')
+                    ->setParameter('balance', $data['balanceValue']);
         }
 
         $retailers = $qb->getQuery()->getResult();

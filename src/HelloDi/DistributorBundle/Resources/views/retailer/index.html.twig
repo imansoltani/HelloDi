@@ -18,6 +18,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             Fix_Size();
+            $('form').submit(function() {
+                $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+            });
         });
     </script>
 {% endblock %}
