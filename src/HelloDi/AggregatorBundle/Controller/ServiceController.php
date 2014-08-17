@@ -199,6 +199,7 @@ class ServiceController extends Controller
         $pin->setTransaction($result[0]);
 
         $pin->setCount($count);
+        $pin->setType(Pin::DEAD_BEAT);
         $pin->setDate(new \DateTime());
         $this->em->persist($pin);
 
@@ -295,6 +296,7 @@ class ServiceController extends Controller
         $pin->setCommissionerTransaction($result[1]);
 
         $pin->setCount($count);
+        $pin->setType(Pin::CREDIT_NOTE);
         $pin->setDate(new \DateTime());
         $this->em->persist($pin);
 
@@ -333,6 +335,7 @@ class ServiceController extends Controller
         $pin = new Pin();
         $pin->setCount($count);
         $pin->setDate(new \DateTime());
+        $pin->setType(Pin::SALE);
         $pin->setUser($user);
 
         $result = $this->accounting->processTransaction(array(

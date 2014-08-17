@@ -15,6 +15,10 @@ use HelloDi\CoreBundle\Entity\User;
  */
 class Pin
 {
+    const SALE = 1;
+    const CREDIT_NOTE = 2;
+    const DEAD_BEAT = 3;
+
     /**
      * @var integer
      *
@@ -64,6 +68,11 @@ class Pin
      * @ORM\Column(type="boolean", nullable=false, name="printed")
      */
     protected $printed = false;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false, name="type")
+     */
+    protected $type;
 
     /**
      * Constructor
@@ -252,5 +261,28 @@ class Pin
     public function getPrinted()
     {
         return $this->printed;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Pin
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

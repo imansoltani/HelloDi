@@ -70,6 +70,7 @@
                             <th>{{ 'User' | trans ({}, "user") }}</th>
                             <th>{{ 'Amount' | trans ({}, "transaction") }}</th>
                             <th>{{ 'Description' | trans ({}, "transaction") }}</th>
+                            <th>{{ 'TypeAction' | trans ({}, "transaction") }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -88,6 +89,17 @@
                                 <td>{{ transaction.firstName }} {{ transaction.lastName }}</td>
                                 <td>{{ transaction.amount|number_format(2, '.') }} {{ AccountTypeFinder.currencyById(transaction.account_id is defined ? transaction.account_id : 0) }}</td>
                                 <td>{{ transaction.description }}</td>
+                                <td>
+                                    {% if transaction.actionType == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::DEAD_BEAT") %}
+                                        {{ 'DeadBeat' | trans ({}, "code") }}
+                                    {% elseif transaction.actionType == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::SALE") %}
+                                        {{ 'Sale' | trans ({}, "code") }}
+                                    {% elseif transaction.actionType == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::CREDIT_NOTE") %}
+                                        {{ 'CreditNote' | trans ({}, "code") }}
+                                    {% elseif transaction.actionType == 0 %}
+                                        {{ 'Input' | trans ({}, "code") }}
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

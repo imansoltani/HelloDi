@@ -9,11 +9,6 @@
 {% endblock Site_Map %}
 
 {% block Tab %}
-    <div class="widget-header">
-        <h3>{{ 'SalesReport' | trans ({}, "transaction") }}</h3>
-    </div>
-    <br>
-
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
             <span>
@@ -59,182 +54,208 @@
     {#<input type="submit" value="{{ 'PrintToPDF' | trans ({}, "accounts") }}" class="btn btn-primary" onclick="copyFormElements()"/>#}
     {#</form>#}
     {#{% endif %}#}
+    <form id="form_select" method="post" action="{{ path('hello_di_master_distributor_sales_credit_note', {'id': account.id}) }}" class="YesNoMessage" message="Are you sure you perform this operation?" header="CreditNote">
+        <input class="btn btn-danger" type="submit" onclick="if($('input.checkbox_select:checked').length == 0) {alert('Please select at least one code.'); return false;}" value="{{ 'CreditNote Checked Codes' | trans ({}, "code") }}" />
+        <br/><br/>
 
-    <div class="tablediv">
-        <div class="contenttitle"><h4>{{ 'History' | trans ({}, "transaction") }}</h4></div>
-        <div class="tab-content">
-            <table style="margin-top: 20px" class="table postsend">
-                <thead>
-                <tr>
-                    <th>{{ 'Date' | trans ({}, "transaction") }}</th>
-                    <th>{{ 'Item' | trans ({}, "item") }}</th>
-                    <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
-                    <th>{{ 'Retailers' | trans ({}, "accounts") }} ({{ 'Entity' | trans ({}, "entity") }})</th>
-                    <th>{{ 'SellingPrice' | trans ({}, "transaction") }}</th>
-                    <th>{{ 'Vat' | trans ({}, "vat") }}</th>
-                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for Tr in sales %}
-
+        <div class="tablediv">
+            <div class="contenttitle"><h4>{{ 'History' | trans ({}, "transaction") }}</h4></div>
+            <div class="tab-content">
+                <table style="margin-top: 20px" class="table postsend">
+                    <thead>
                     <tr>
-                        <td>
-                            {% if group==0 %}{{ Tr.TR.id}}{% else %}----{% endif %}
-                        </td>
-                        <td>
-                            {{ Tr.TR.tranDate|date('Y/m/d') }}
-                        </td>
-                        <td>
-                            {{ Tr.TR.Code.Item.itemName}}
-                        </td>
-                        <td>
-                            {% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}
-                        </td>
-                        <td>
-                            {{ Tr.TR.Account.accName }}({{ Tr.TR.Account.Entiti.entName }})
-                        </td>
-                        <td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>
-                        <td>
-                            <span id='vat'>{{ CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) }}</span>
-                        </td>
-
-                        <td class="td-actions" >
-
-                            {% if group==0 %}
-
-                                <a class="btn_actions showDetails">
-                                    {{ 'Details' | trans ({}, "common") }}
-                                    <span>
-
-                                <fieldset>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Id' | trans ({}, "common") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.id}}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Date' | trans ({}, "transaction") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.tranInsert|date('Y/m/d H:m:s') }}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'BuyingPrice' | trans ({}, "price") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text"
-
-                                                    {% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}
-
-                                                    {% set Buying=-Tr.TR.tranAmount-com %}
-                                                   value="{{ Buying }}"
-                                                   disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'SellingPrice' | trans ({}, "transaction") }}
-                                        </label>
-                                        <div class="controls">
-
-                                            <input type="text" value="{{ -Tr.TR.tranAmount}}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Benefit' | trans ({}, "transaction") }}
-                                        </label>
-                                        <div class="controls">
-
-                                            <input type="text" value="{{ com }}" disabled="" >
-                                        </div>
-                                    </div>
-
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Vat_Rate' | trans ({}, "vat") }}
-                                        </label>
-                                        <div class="controls">
-
-                                            <input type="text" value="{{  Tr.TR.TaxHistory.vat}}" disabled="" >
-                                        </div>
-                                    </div>
-
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'RetailerAccount' | trans ({}, "account") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.Account.accName }}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'User' | trans ({}, "user") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.User.username }}" disabled="" >
-                                        </div>
-                                    </div>
-
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Code' | trans ({}, "code") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.Code.id }}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">
-                                            {{ 'Item' | trans ({}, "item") }}
-                                        </label>
-                                        <div class="controls">
-                                            <input type="text" value="{{ Tr.TR.Code.Item.itemName }}" disabled="" >
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-
-                               </span>
-
-                                </a>
-
-
-                            {% else %}
-                                ----
-                            {% endif %}
-
-                        </td>
-
+                        <th><label><input class="main_check checkbox_select" type="checkbox" onclick="$('input.checkbox_select').prop('checked',$(this).prop('checked'))" style="width: 90%" title="Check all in this page"></label></th>
+                        <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                        <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Item' | trans ({}, "item") }}</th>
+                        <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+                        <th>{{ 'Retailers' | trans ({}, "accounts") }} ({{ 'Entity' | trans ({}, "entity") }})</th>
+                        <th>{{ 'SellingPrice' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
+                        <th>{{ 'Commission' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
+                        <th>{{ 'Status' | trans ({}, "code") }}</th>
+                        <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+                        <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    {% for sale in sales %}
+                        <tr>
+                            <td><label><input class="checkbox_select" type="checkbox" value="{{ sale.code_row.id }}" name="{{ form_select.name }}[codes][]" onclick="if(!$(this).prop('checked'))$('input.main_check').prop('checked',false)"></label></td>
+                            <td>{{ group ? "--" : sale.code_row.serialNumber }}</td>
+                            <td>{{ group ? sale.groupDate|date('Y/m/d') : sale.code_row.pins[0].date|date('Y/m/d H:m:s') }}</td>
+                            <td>{{ sale.code_row.item.name }}</td>
+                            <td>{{ group ? sale.quantity : 1 }}</td>
+                            <td>{{ sale.code_row.pins[0].transaction.account.name }}</td>
+                            <td>{{ group ? sale.sum_retailer : sale.code_row.pins[0].transaction.amount }}</td>
+                            <td>{{ group ? sale.sum_distributor : sale.code_row.pins[0].commissionerTransaction.amount }}</td>
+                            <td>{{ sale.code_row.pins|length }} - {{ sale.code_row.status ? "Av" : "UnAv" }}</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    {% endfor %}
 
-                {% endfor %}
 
-                </tbody>
-            </table>
+                    {#{% for Tr in sales %}#}
+
+                        {#<tr>#}
+                            {#<td>#}
+                                {#{% if group==0 %}{{ Tr.TR.id}}{% else %}----{% endif %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ Tr.TR.tranDate|date('Y/m/d') }}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ Tr.TR.Code.Item.itemName}}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ Tr.TR.Account.accName }}({{ Tr.TR.Account.Entiti.entName }})#}
+                            {#</td>#}
+                            {#<td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>#}
+                            {#<td>#}
+                                {#<span id='vat'>{{ CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) }}</span>#}
+                            {#</td>#}
+
+                            {#<td class="td-actions" >#}
+
+                                {#{% if group==0 %}#}
+
+                                    {#<a class="btn_actions showDetails">#}
+                                        {#{{ 'Details' | trans ({}, "common") }}#}
+                                        {#<span>#}
+
+                                    {#<fieldset>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Id' | trans ({}, "common") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.id}}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Date' | trans ({}, "transaction") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.tranInsert|date('Y/m/d H:m:s') }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'BuyingPrice' | trans ({}, "price") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text"#}
+
+                                                        {#{% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}#}
+
+                                                        {#{% set Buying=-Tr.TR.tranAmount-com %}#}
+                                                       {#value="{{ Buying }}"#}
+                                                       {#disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'SellingPrice' | trans ({}, "transaction") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+
+                                                {#<input type="text" value="{{ -Tr.TR.tranAmount}}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Benefit' | trans ({}, "transaction") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+
+                                                {#<input type="text" value="{{ com }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Vat_Rate' | trans ({}, "vat") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+
+                                                {#<input type="text" value="{{  Tr.TR.TaxHistory.vat}}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'RetailerAccount' | trans ({}, "account") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.Account.accName }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'User' | trans ({}, "user") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.User.username }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Code' | trans ({}, "code") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.Code.id }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {#<div class="control-group">#}
+                                            {#<label class="control-label">#}
+                                                {#{{ 'Item' | trans ({}, "item") }}#}
+                                            {#</label>#}
+                                            {#<div class="controls">#}
+                                                {#<input type="text" value="{{ Tr.TR.Code.Item.itemName }}" disabled="" >#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                    {#</fieldset>#}
+
+                                   {#</span>#}
+
+                                    {#</a>#}
+
+
+                                {#{% else %}#}
+                                    {#----#}
+                                {#{% endif %}#}
+
+                            {#</td>#}
+
+                        {#</tr>#}
+
+                    {#{% endfor %}#}
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </form>
     <div class="navigation">
-        {#{% if group==0 %}{{ knp_pagination_render(pagination) }}{% endif %}#}
+        {#{% if group==0 %}#}
+            {{ knp_pagination_render(sales) }}
+        {#{% endif %}#}
     </div>
 
     {#<script type="text/javascript">#}

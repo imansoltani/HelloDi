@@ -20,6 +20,11 @@ hello_di_master_distributor_sales:
     pattern:  /{id}/sales
     defaults: { _controller: "HelloDiMasterBundle:Distributor:sales"}
 
+hello_di_master_distributor_sales_credit_note:
+    pattern:  /{id}/sales/credit_note
+    defaults: { _controller: "HelloDiMasterBundle:Distributor:CreditNote" }
+    methods: post
+
 #purchases
 hello_di_master_distributor_purchases:
     pattern:  /{id}/purchases

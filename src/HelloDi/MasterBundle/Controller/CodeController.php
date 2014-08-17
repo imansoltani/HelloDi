@@ -150,7 +150,7 @@ class CodeController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Code'),'message'));
 
         $input_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / input.count as amount, transaction.description, account.id as account_id')
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / input.count as amount, transaction.description, account.id as account_id, 0 as actionType')
             ->from('HelloDiAggregatorBundle:Input', 'input')
             ->innerJoin('input.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)
@@ -160,7 +160,7 @@ class CodeController extends Controller
             ->getQuery()->getArrayResult();
 
         $deadbeat_pin_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, - input_transaction.amount / input.count as amount, transaction.description, account.id as account_id')
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, - input_transaction.amount / input.count as amount, transaction.description, account.id as account_id, pin.type as actionType')
             ->from('HelloDiAggregatorBundle:Input', 'input')
             ->innerJoin('input.providerTransaction', 'input_transaction')
             ->innerJoin('input.codes', 'code')
@@ -169,12 +169,12 @@ class CodeController extends Controller
             ->innerJoin('pin.transaction', 'transaction')
             ->innerJoin('transaction.account', 'account')
             ->andWhere('account.type = :type')->setParameter('type', Account::PROVIDER)
-            ->andWhere('pin.commissionerTransaction = :null')->setParameter('null', null)
+            ->andWhere('pin.commissionerTransaction is null')
             ->innerJoin('pin.user', 'user')
             ->getQuery()->getArrayResult();
 
         $pin_transactions = $em->createQueryBuilder()
-            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / pin.count as amount, transaction.description, account.id as account_id')
+            ->select('transaction.date, account.name, account.type, user.firstName, user.lastName, transaction.amount / pin.count as amount, transaction.description, account.id as account_id, pin.type as actionType')
             ->from('HelloDiAggregatorBundle:Pin', 'pin')
             ->innerJoin('pin.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)
@@ -186,7 +186,7 @@ class CodeController extends Controller
             ->getQuery()->getArrayResult();
 
         $pin_comm_transactions = $em->createQueryBuilder()
-            ->select('com_transaction.date, account.name, account.type, user.firstName, user.lastName, com_transaction.amount / pin.count as amount, com_transaction.description, account.id as account_id')
+            ->select('com_transaction.date, account.name, account.type, user.firstName, user.lastName, com_transaction.amount / pin.count as amount, com_transaction.description, account.id as account_id, pin.type as actionType')
             ->from('HelloDiAggregatorBundle:Pin', 'pin')
             ->innerJoin('pin.codes', 'code')
             ->where('code = :code')->setParameter('code', $code)

@@ -8,6 +8,8 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\AggregatorBundle\Entity\Code;
+use HelloDi\AggregatorBundle\Entity\Pin;
+use HelloDi\AggregatorBundle\Form\PinType;
 use HelloDi\AggregatorBundle\Form\SaleSearchType;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\CoreBundle\Entity\Item;
@@ -17,6 +19,7 @@ use HelloDi\MasterBundle\Form\CreditLimitType;
 use HelloDi\MasterBundle\Form\DistributorAccountUserType;
 use HelloDi\MasterBundle\Form\EntityType;
 use HelloDi\MasterBundle\Form\TransactionType;
+use HelloDi\RetailerBundle\Entity\Retailer;
 use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -283,6 +286,8 @@ class DistributorController extends Controller
         if(!$distributor)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
+        $form_select = $this->createForm(new PinType(), new Pin());
+
         $form = $this->createForm(new SaleSearchType($distributor->getAccount()), null, array(
                 'attr' => array('class' => 'SearchForm'),
                 'method' => 'get',
@@ -294,36 +299,97 @@ class DistributorController extends Controller
         $form->handleRequest($request);
 
         $qb = $em->createQueryBuilder()
-            ->select('code')
+            ->select('code as code_row, pin, item, transaction, commissioner_transaction, ret_account, dist_account')
             ->from('HelloDiAggregatorBundle:Code', 'code')
+            ->innerJoin('code.item', 'item')
             ->innerJoin('code.pins', 'pin')
+            ->innerJoin('pin.transaction', 'transaction')
+            ->innerJoin('transaction.account', 'ret_account')
             ->innerJoin('pin.commissionerTransaction', 'commissioner_transaction')
-            ->where('commissioner_transaction.account = :dist_account')->setParameter('dist_account', $distributor->getAccount())
-            ->andWhere('code.status = :unavailable')->setParameter('unavailable', Code::UNAVAILABLE)
+            ->innerJoin('commissioner_transaction.account', 'dist_account')
+            ->where('dist_account = :dist_account')->setParameter('dist_account', $distributor->getAccount())
+//            ->andWhere('pin.type = :type')->setParameter('type', Pin::SALE)
+//            ->orderBy('code.id asc, pin.date desc')
+
+//            ->leftJoin('code.pins', 'pin_credit_note','with','pin_credit_note.type = :type1')
+//            ->setParameter('type1', Pin::CREDIT_NOTE)
+//            ->leftJoin('pin_credit_note.transaction', 'transaction_credit_note', 'with', 'transaction_credit_note.account = transaction.account')
+//
+//            ->having('count(pin) > count (pin_credit_note)')
+
             ->orderBy('pin.id', 'desc');
+
+        $group = false;
 
         if($form->isValid())
         {
-//            $form_data = $form->getData();
-//
-//            if(isset($form_data['from']))
-//                $qb->andWhere('input.dateInsert >= :from')->setParameter('from', $form_data['from']);
-//
-//            if(isset($form_data['to']))
-//                $qb->andWhere('input.dateInsert <= :to')->setParameter('to', $form_data['to']);
-//
-//            if(isset($form_data['item']))
-//                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
+            $form_data = $form->getData();
+
+            $group = in_array(1, $form_data['group_by']);
+
+            if(isset($form_data['itemType']))
+                $qb->andWhere('item.type = :item_type')->setParameter('item_type', $form_data['itemType']);
+
+            if(isset($form_data['item']))
+                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
+
+            if(isset($form_data['retailer'])) {
+                /** @var Retailer $retailer */
+                $retailer = $form_data['retailer'];
+                $qb->andWhere('ret_account = :ret_account')->setParameter('ret_account', $retailer->getAccount());
+            }
+
+            if(isset($form_data['from']))
+                $qb->andWhere('pin.date >= :from')->setParameter('from', $form_data['from']);
+
+            if(isset($form_data['to']))
+                $qb->andWhere('pin.date <= :to')->setParameter('to', $form_data['to']);
+
+            if($group)
+                $qb ->addSelect('count(code.id) as quantity, DATE(pin.date) AS groupDate, sum(transaction.amount) as sum_retailer, sum(commissioner_transaction.amount) as sum_distributor')
+                    ->groupBy('groupDate, item, ret_account');
         }
 
-        $sales = $this->get('knp_paginator')->paginate($qb->getQuery(), $request->get('page', 1), 20);
+        $sales = $this->get('knp_paginator')->paginate($qb->getQuery()->getResult(), $request->get('page', 1), 20);
 
         return $this->render('HelloDiMasterBundle:distributor:sales.html.twig', array(
                 'account' => $distributor->getAccount(),
                 'distributor' => $distributor,
                 'sales' => $sales,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'group' => $group,
+                'form_select' => $form_select
             ));
+    }
+
+    public function CreditNoteAction(Request $request, $id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findByAccountId($id);
+        if(!$distributor)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
+
+        $pin = new Pin();
+        $pin->setUser($this->getUser());
+
+        $form_select = $this->createForm(new PinType(), $pin);
+
+        $form_select->handleRequest($request);
+        if ($form_select->isValid()) {
+            try {
+                $pin = $this->get('aggregator')->creditNoteCodes($pin, $distributor->getAccount());
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully. '.$pin->getCount(). " codes credit noted by ".$pin->getTransaction()->getAmount().".", array(), 'message'));
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($e->getMessage(), array(), 'message'));
+            }
+        }
+        else
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('the_operation_failed', array(), 'message'));
+
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     //purchases
