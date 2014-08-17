@@ -64,34 +64,51 @@
                 <table style="margin-top: 20px" class="table postsend">
                     <thead>
                     <tr>
+                        {% if not group %}
                         <th><label><input class="main_check checkbox_select" type="checkbox" onclick="$('input.checkbox_select').prop('checked',$(this).prop('checked'))" style="width: 90%" title="Check all in this page"></label></th>
                         <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                        <th>{{ 'TypeAction' | trans ({}, "transaction") }}</th>
+                        {% endif %}
                         <th>{{ 'Date' | trans ({}, "transaction") }}</th>
                         <th>{{ 'Item' | trans ({}, "item") }}</th>
                         <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
                         <th>{{ 'Retailers' | trans ({}, "accounts") }} ({{ 'Entity' | trans ({}, "entity") }})</th>
                         <th>{{ 'SellingPrice' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
                         <th>{{ 'Commission' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
-                        <th>{{ 'Status' | trans ({}, "code") }}</th>
                         <th>{{ 'Vat' | trans ({}, "vat") }}</th>
                         <th>{{ 'Operation' | trans ({}, "common") }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for sale in sales %}
+                        {% for pin in sale.code_row.pins %}
                         <tr>
-                            <td><label><input class="checkbox_select" type="checkbox" value="{{ sale.code_row.id }}" name="{{ form_select.name }}[codes][]" onclick="if(!$(this).prop('checked'))$('input.main_check').prop('checked',false)"></label></td>
-                            <td>{{ group ? "--" : sale.code_row.serialNumber }}</td>
-                            <td>{{ group ? sale.groupDate|date('Y/m/d') : sale.code_row.pins[0].date|date('Y/m/d H:m:s') }}</td>
-                            <td>{{ sale.code_row.item.name }}</td>
-                            <td>{{ group ? sale.quantity : 1 }}</td>
-                            <td>{{ sale.code_row.pins[0].transaction.account.name }}</td>
-                            <td>{{ group ? sale.sum_retailer : sale.code_row.pins[0].transaction.amount }}</td>
-                            <td>{{ group ? sale.sum_distributor : sale.code_row.pins[0].commissionerTransaction.amount }}</td>
-                            <td>{{ sale.code_row.pins|length }} - {{ sale.code_row.status ? "Av" : "UnAv" }}</td>
+                            {% if not group %}
+                            {% if loop.first %}
+                                <td rowspan="{{ loop.length }}">
+                                {% if loop.first and pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::SALE") %}
+                                    <label><input class="checkbox_select" type="checkbox" value="{{ sale.code_row.id }}" name="{{ form_select.name }}[codes][]" onclick="if(!$(this).prop('checked'))$('input.main_check').prop('checked',false)"></label>
+                                {% endif %}
+                            {% endif %}
+                            </td>
+                            {% if loop.first %}<td rowspan="{{ loop.length }}">{{ group ? "--" : sale.code_row.serialNumber }}</td>{% endif %}<td>
+                            {% if pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::SALE") %}
+                                {{ 'Sale' | trans ({}, "code") }}
+                            {% elseif pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::CREDIT_NOTE") %}
+                                {{ 'CreditNote' | trans ({}, "code") }}
+                            {% endif %}
+                            </td>
+                            {% endif %}
+                            <td>{{ group ? sale.groupDate|date('Y/m/d') : pin.date|date('Y/m/d H:m:s') }}</td>
+                            {% if loop.first %}<td rowspan="{{ loop.length }}">{{ sale.code_row.item.name }}</td>{% endif %}
+                            {% if loop.first %}<td rowspan="{{ loop.length }}">{{ group ? sale.quantity : 1 }}</td>{% endif %}
+                            {% if loop.first %}<td rowspan="{{ loop.length }}">{{ pin.transaction.account.name }}</td>{% endif %}
+                            <td>{{ group ? sale.sum_retailer : pin.transaction.amount }}</td>
+                            <td>{{ group ? sale.sum_distributor : pin.commissionerTransaction.amount }}</td>
                             <td>--</td>
                             <td>--</td>
                         </tr>
+                        {% endfor %}
                     {% endfor %}
 
 

@@ -308,16 +308,7 @@ class DistributorController extends Controller
             ->innerJoin('pin.commissionerTransaction', 'commissioner_transaction')
             ->innerJoin('commissioner_transaction.account', 'dist_account')
             ->where('dist_account = :dist_account')->setParameter('dist_account', $distributor->getAccount())
-//            ->andWhere('pin.type = :type')->setParameter('type', Pin::SALE)
-//            ->orderBy('code.id asc, pin.date desc')
-
-//            ->leftJoin('code.pins', 'pin_credit_note','with','pin_credit_note.type = :type1')
-//            ->setParameter('type1', Pin::CREDIT_NOTE)
-//            ->leftJoin('pin_credit_note.transaction', 'transaction_credit_note', 'with', 'transaction_credit_note.account = transaction.account')
-//
-//            ->having('count(pin) > count (pin_credit_note)')
-
-            ->orderBy('pin.id', 'desc');
+            ->orderBy('pin.date', 'desc');
 
         $group = false;
 
