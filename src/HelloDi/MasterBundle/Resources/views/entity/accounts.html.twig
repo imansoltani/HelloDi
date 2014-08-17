@@ -110,7 +110,8 @@
                         <td>{{ retailer.account.balance }}|<b>{{ retailer.distributor.currency }}</b></td>
                         <td>{{ retailer.account.creditLimitAmount }}</td>
                         <td class="td-actions">
-                            <a class="btn_actions" href="{{ path('Master_Retailer_Transaction',{'id': retailer.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a>
+                            <a class="btn_actions" href="{{ path('hello_di_master_retailer_transaction',{'dist_id': retailer.distributor.account.id, 'id': retailer.account.id }) }}">{{'Manage' | trans ({}, "common")}}</a><br/>
+                            <a class="btn_actions" href="{{ path('hello_di_master_retailer_info', {'dist_id': retailer.distributor.account.id, 'id': retailer.account.id}) }}">{{ 'Account' | trans ({}, "accounts") }}</a>
                         </td>
                     </tr>
                 {% endfor %}

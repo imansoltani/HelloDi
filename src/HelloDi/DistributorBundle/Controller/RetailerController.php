@@ -306,7 +306,7 @@ class RetailerController extends Controller
                     $this->get('session')->getFlashBag()->add('error', 'this account has not enough balance!');
             }
 
-            if($creditLimitForm->isValid())
+            if($creditLimitForm->isValid() && $this->get('security.context')->isGranted('ROLE_DISTRIBUTOR_ADMIN'))
             {
                 $beforeCreditLimit = $retailer->getAccount()->getCreditLimitAmount();
                 $beforeDistributorBalance = $retailer->getDistributor()->getAccount()->getBalance();

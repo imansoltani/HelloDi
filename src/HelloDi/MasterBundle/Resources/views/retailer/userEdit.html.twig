@@ -1,0 +1,19 @@
+{% extends 'HelloDiMasterBundle:retailer:tab.html.twig' %}
+
+{% set tab2 = '3' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_retailer_index',{'dist_id':account.id}) }}">{{ 'Retailers' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_retailer_user',{'dist_id':account.id, 'id':retailerAccount.id}) }}">{{ 'Users' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'EditUser' | trans ({}, "user") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'EditUser' | trans ({}, "user") }}</h3>
+    </div>
+
+    {{ form(form) }}
+{% endblock %}

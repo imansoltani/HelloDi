@@ -7,10 +7,6 @@ hello_di_master_retailer_transaction:
     pattern:  /{id}/transactions
     defaults: { _controller: "HelloDiMasterBundle:Retailer:transaction"}
 
-hello_di_master_retailer_transaction_funding:
-    pattern:  /{id}/transactions/funding
-    defaults: { _controller: "HelloDiMasterBundle:Retailer:funding"}
-
 #items
 hello_di_master_retailer_item:
     pattern:  /{id}/items

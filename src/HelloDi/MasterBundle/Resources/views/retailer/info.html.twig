@@ -1,0 +1,61 @@
+{% extends 'HelloDiMasterBundle:retailer:tab.html.twig' %}
+
+{% set tab2 = '4' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_retailer_index',{'dist_id':account.id}) }}">{{ 'Retailer' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Setting' | trans ({}, "common") }}</span>
+{% endblock Site_Map %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Info' | trans ({}, "accounts") }}</h3>
+    </div>
+
+    {{ form_start(form) }}
+    <div class="control-group">
+        <label class="control-label" for="name">{{ 'Name' | trans ({}, "common") }}</label>
+        <div class="controls">
+            <input id="name" type="text" disabled class="input-large" value="{{ retailer.account.name }}" >
+        </div>
+    </div>
+
+    {{ form_row(form.terms) }}
+
+    <div class="control-group">
+        <label class="control-label" for="balance">{{ 'Balance' | trans ({}, "accounts") }}</label>
+        <div class="controls">
+            <input id="balance" type="text" disabled class="input-large" value="{{ retailer.account.balance}}" >
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="currency">{{ 'Currency' | trans ({}, "accounts") }}</label>
+        <div class="controls">
+            <input id="currency" type="text" disabled class="input-large" value="{{ retailer.distributor.currency }}" >
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="creditLimit">{{ 'CreditLimit' | trans ({}, "accounts") }}</label>
+        <div class="controls">
+            <input id="creditLimit" type="text" disabled class="input-large" value="{{ retailer.account.creditLimitAmount }}" >
+        </div>
+    </div>
+
+    {{ form_row(form.defaultLanguage) }}
+
+    <div class="control-group">
+        <label class="control-label" for="timeZone">{{ 'TimeZone' | trans ({}, "accounts") }}</label>
+        <div class="controls">
+            <input id="timeZone" type="text" disabled class="input-large" value="{{ retailer.distributor.timeZone }}" >
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="type">{{ 'Type' | trans ({}, "common") }}</label>
+        <div class="controls">
+            <input id="type" type="text" disabled class="input-large" value="{{ 'Retailer' | trans ({}, 'accounts') }}" >
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

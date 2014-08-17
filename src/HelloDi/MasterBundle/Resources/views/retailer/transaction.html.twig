@@ -14,9 +14,6 @@
         <h3>{{ 'Transactions' | trans ({}, "transaction") }}</h3>
     </div>
 
-    <br>
-    <a class="btn btn-primary btn-large" href="{{ path('hello_di_master_retailer_transaction_funding',{'dist_id':account.id, 'id':retailerAccount.id}) }}">{{ 'FundRetailers' | trans ({}, "accounts") }}</a>
-
     <div class="form_search">
         <h5 style="cursor:pointer;" class="TitleShow1">
             <span><i id="search_logo" class="icon-search"></i><span class="title_search">Search Transactions</span></span>

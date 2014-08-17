@@ -1,0 +1,74 @@
+{% extends 'HelloDiMasterBundle:retailer:tab.html.twig' %}
+
+{% set tab2 = '2' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_distributor_index') }}">{{ 'Distributor' | trans ({}, "accounts") }}</a>
+    <a class="link" href="{{ path('hello_di_master_retailer_index',{'dist_id':account.id}) }}">{{ 'Retailer' | trans ({}, "accounts") }}</a>
+    <span class="link">{{ 'Items' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Fix_Size();
+        });
+    </script>
+{% endblock %}
+
+{% block Tab %}
+    <div class="widget-header">
+        <h3>{{ 'Items' | trans ({}, "item") }}</h3>
+    </div>
+
+    <div style="margin-top: 5px" class="tablediv">
+        <div class="tab-content datatable">
+            <table id="example" class="table postsend">
+                <thead>
+                <tr>
+                    <th>{{ 'Id' | trans ({}, "item") }}</th>
+                    <th>{{ 'Name' | trans ({}, "item") }}</th>
+                    <th>{{ 'ItemType' | trans ({}, "item") }}</th>
+                    <th>{{ 'FaceValue' | trans ({}, "item") }}</th>
+                    <th>{{ 'DistributorPrice' | trans ({}, "price") }}</th>
+                    <th>{{ 'RetailerPrice' | trans ({}, "price") }}</th>
+                </tr>
+                <tr class="input" >
+                    <td><label><input type="text" name="search_Id" value="Search Id" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Name" value="Search Name" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_Type" value="Search Type" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_FaceValue" value="Search FaceValue" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_DistributorPrice" value="Search DistributorPrice" class="search_init" /></label></td>
+                    <td><label><input type="text" name="search_RetailerPrice" value="Search RetailerPrice" class="search_init" /></label></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for price in prices %}
+                    <tr>
+                        <td>{{ price.id }}</td>
+                        <td>{{ price.name }}</td>
+                        <td>
+                            {% if     price.type == constant("HelloDi\\CoreBundle\\Entity\\Item::DMTU") %}
+                                {{ 'Mobile' | trans ({}, "item") }}
+                            {% elseif price.type == constant("HelloDi\\CoreBundle\\Entity\\Item::IMTU") %}
+                                {{ 'IMTU' | trans ({}, "item") }}
+                            {% elseif price.type == constant("HelloDi\\CoreBundle\\Entity\\Item::CLCD") %}
+                                {{ 'Calling_Card' | trans ({}, "item") }}
+                            {% elseif price.type == constant("HelloDi\\CoreBundle\\Entity\\Item::EPMT") %}
+                                {{ 'E-payment' | trans ({}, "item") }}
+                            {% endif %}
+                        </td>
+                        <td>{{ price.faceValue }}</td>
+                        <td>{{ price.price_distributor }}</td>
+                        <td>{{ price.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
