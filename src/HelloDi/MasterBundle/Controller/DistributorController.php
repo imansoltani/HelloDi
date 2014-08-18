@@ -337,7 +337,7 @@ class DistributorController extends Controller
                 $qb->andWhere('pin.date <= :to')->setParameter('to', $form_data['to']);
 
             if($group)
-                $qb ->addSelect('count(code.id) as quantity, DATE(pin.date) AS groupDate, sum(transaction.amount) as sum_retailer, sum(commissioner_transaction.amount) as sum_distributor')
+                $qb ->addSelect('count(code.id) as quantity, DATE(pin.date) AS groupDate, sum(transaction.amount / pin.count) as sum_retailer, sum(commissioner_transaction.amount / pin.count) as sum_distributor')
                     ->groupBy('groupDate, item, ret_account');
         }
 

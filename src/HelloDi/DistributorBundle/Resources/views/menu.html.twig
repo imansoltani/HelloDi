@@ -39,7 +39,7 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('DistSale') }}">{{ 'Sales' | trans ({}, "code") }}</a></li>
+            <li><a href="{{ path('hello_di_distributor_report_sale') }}">{{ 'Sales' | trans ({}, "code") }}</a></li>
         </ul>
     </li>
     {% if is_granted('ROLE_DISTRIBUTOR_ADMIN') %}

@@ -1,0 +1,291 @@
+{% extends 'HelloDiDistributorBundle::menu.html.twig' %}
+
+{% block title %}{{ 'SalesReport' | trans ({}, "transaction") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-list-alt"></i>{{ 'SalesReport' | trans ({}, "transaction") }}{% endblock %}
+
+{% set MU = 'report' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_distributor_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'SalesReport' | trans ({}, "transaction") }}</span>
+{% endblock Site_Map %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+        <div class="form_search">
+            <h5 style="cursor:pointer;" class="TitleShow1">
+            <span>
+                <i id="search_logo" class="icon-search"></i><span class="title_search">{{ 'Search' | trans ({}, "common") }}</span>
+            </span>
+            </h5>
+
+            {{ form(form) }}
+
+            <script type="text/javascript">
+                $(function () {
+                    Form_Search(0,"{{ 'Search' | trans ({}, "common") }}");
+                    $('form').submit(function() {
+                        $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+                    });
+                });
+            </script>
+
+        </div>
+
+        {#{% if pagination|length != 0 and group == 1 %}#}
+        {#<form id="printsale" action="#" method="POST" class="form-horizontal" target="_blank" style="padding: 10px;border: 1px solid rgb(221, 221,221);background: none repeat scroll 0% 0% rgb(252, 252, 252);">#}
+
+        {#<div class="control-group">#}
+        {#<label class="control-label" for="print_1">#}
+        {#{{ 'RetailerRevenues' | trans ({}, "accounts") }}#}
+        {#</label>#}
+        {#<div class="controls">#}
+        {#<input type="radio" id="print_1" name="print" value="0" checked />#}
+        {#</div>#}
+        {#</div>#}
+
+        {#<div class="control-group">#}
+        {#<label class="control-label" for="print_2">#}
+        {#{{ 'RetailerStatements' | trans ({}, "accounts") }}#}
+
+        {#</label>#}
+        {#<div class="controls">#}
+        {#<input type="radio" id="print_2" name="print" value="1" />#}
+        {#</div>#}
+        {#</div>#}
+
+        {#<input type="submit" value="{{ 'PrintToPDF' | trans ({}, "accounts") }}" class="btn btn-primary" onclick="copyFormElements()"/>#}
+        {#</form>#}
+        {#{% endif %}#}
+        <div class="tablediv">
+            <div class="contenttitle"><h4>{{ 'History' | trans ({}, "transaction") }}</h4></div>
+            <div class="tab-content">
+                <table style="margin-top: 20px" class="table postsend">
+                <thead>
+                <tr>
+                    {% if not group %}
+                        <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
+                        <th>{{ 'TypeAction' | trans ({}, "transaction") }}</th>
+                    {% endif %}
+                    <th>{{ 'Item' | trans ({}, "item") }}</th>
+                    <th>{{ 'Quantity' | trans ({}, "transaction") }}</th>
+                    <th>{{ 'Date' | trans ({}, "transaction") }}</th>
+                    <th>{{ 'Retailers' | trans ({}, "accounts") }} ({{ 'Entity' | trans ({}, "entity") }})</th>
+                    <th>{{ 'SellingPrice' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
+                    <th>{{ 'Commission' | trans ({}, "transaction") }} ({{ distributor.currency }})</th>
+                    <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+                    <th>{{ 'Operation' | trans ({}, "common") }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sale in sales %}
+                    {% for pin in sale.code_row.pins %}
+                        <tr>
+                            {% if not group %}
+                                {% if loop.first %}
+                                    <td rowspan="{{ loop.length }}">{{ group ? "--" : sale.code_row.serialNumber }}</td>
+                                {% endif %}
+                                <td>
+                                    {% if pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::SALE") %}
+                                        {{ 'Sale' | trans ({}, "code") }}
+                                    {% elseif pin.type == constant("HelloDi\\AggregatorBundle\\Entity\\Pin::CREDIT_NOTE") %}
+                                        {{ 'CreditNote' | trans ({}, "code") }}
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            {% if loop.first %}
+                                <td rowspan="{{ loop.length }}">{{ sale.code_row.item.name }}</td>
+                                <td rowspan="{{ loop.length }}">{{ group ? sale.quantity : 1 }}</td>
+                            {% endif %}
+                            <td>{{ group ? sale.groupDate|date('Y/m/d') : pin.date|date('Y/m/d H:m:s') }}</td>
+                            <td>{{ pin.transaction.account.name }}</td>
+                            <td>{{ (group ? sale.sum_retailer : pin.transaction.amount / pin.count)|number_format(2, '.') }}</td>
+                            <td>{{ (group ? sale.sum_distributor : pin.commissionerTransaction.amount / pin.count)|number_format(2, '.') }}</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+
+
+                {#{% for Tr in sales %}#}
+
+                {#<tr>#}
+                {#<td>#}
+                {#{% if group==0 %}{{ Tr.TR.id}}{% else %}----{% endif %}#}
+                {#</td>#}
+                {#<td>#}
+                {#{{ Tr.TR.tranDate|date('Y/m/d') }}#}
+                {#</td>#}
+                {#<td>#}
+                {#{{ Tr.TR.Code.Item.itemName}}#}
+                {#</td>#}
+                {#<td>#}
+                {#{% if group==0 %}1{% else %}{{ Tr.Quantity }}{% endif %}#}
+                {#</td>#}
+                {#<td>#}
+                {#{{ Tr.TR.Account.accName }}({{ Tr.TR.Account.Entiti.entName }})#}
+                {#</td>#}
+                {#<td>{{  Tr.TR.tranAmount|abs }} | {{Account.accCurrency}}</td>#}
+                {#<td>#}
+                {#<span id='vat'>{{ CalcVatFormula.Calc(Tr.TR.tranAmount|abs,Tr.TR.TaxHistory.vat) }}</span>#}
+                {#</td>#}
+
+                {#<td class="td-actions" >#}
+
+                {#{% if group==0 %}#}
+
+                {#<a class="btn_actions showDetails">#}
+                {#{{ 'Details' | trans ({}, "common") }}#}
+                {#<span>#}
+
+                {#<fieldset>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Id' | trans ({}, "common") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.id}}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Date' | trans ({}, "transaction") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.tranInsert|date('Y/m/d H:m:s') }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'BuyingPrice' | trans ({}, "price") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text"#}
+
+                {#{% set com=render(controller('HelloDiDiDistributorsBundle:Account:GetCom', { 'id':Tr.TR.id  }))   %}#}
+
+                {#{% set Buying=-Tr.TR.tranAmount-com %}#}
+                {#value="{{ Buying }}"#}
+                {#disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'SellingPrice' | trans ({}, "transaction") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+
+                {#<input type="text" value="{{ -Tr.TR.tranAmount}}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Benefit' | trans ({}, "transaction") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+
+                {#<input type="text" value="{{ com }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Vat_Rate' | trans ({}, "vat") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+
+                {#<input type="text" value="{{  Tr.TR.TaxHistory.vat}}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'RetailerAccount' | trans ({}, "account") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.Account.accName }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'User' | trans ({}, "user") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.User.username }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Code' | trans ({}, "code") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.Code.id }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#<div class="control-group">#}
+                {#<label class="control-label">#}
+                {#{{ 'Item' | trans ({}, "item") }}#}
+                {#</label>#}
+                {#<div class="controls">#}
+                {#<input type="text" value="{{ Tr.TR.Code.Item.itemName }}" disabled="" >#}
+                {#</div>#}
+                {#</div>#}
+
+                {#</fieldset>#}
+
+                {#</span>#}
+
+                {#</a>#}
+
+
+                {#{% else %}#}
+                {#----#}
+                {#{% endif %}#}
+
+                {#</td>#}
+
+                {#</tr>#}
+
+                {#{% endfor %}#}
+
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="navigation">
+            {#{% if group==0 %}#}
+            {{ knp_pagination_render(sales) }}
+            {#{% endif %}#}
+        </div>
+
+        {#<script type="text/javascript">#}
+        {#function copyFormElements()#}
+        {#{#}
+        {#$("#searchsale :input").each(function(){#}
+        {#if($(this).attr('name') != undefined)#}
+        {#{#}
+        {#if($(this).attr('type') == 'checkbox')#}
+        {#$('#printsale').append('<input type="hidden" name="'+$(this).attr('name')+'" value="'+($(this).is(':checked')?'1':'0')+'" />');#}
+        {#else#}
+        {#$('#printsale').append('<input type="hidden" name="'+$(this).attr('name')+'" value="'+$(this).val()+'"/>');#}
+        {#}#}
+        {#});#}
+        {#}#}
+        {#</script>#}
+        </div>
+    </div>
+{% endblock %}

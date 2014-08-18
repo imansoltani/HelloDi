@@ -10,6 +10,10 @@ hello_di_distributor_item:
     resource: "@HelloDiDistributorBundle/Resources/config/routing/item.yml"
     prefix:   /item
 
+hello_di_distributor_report:
+    resource: "@HelloDiDistributorBundle/Resources/config/routing/report.yml"
+    prefix:   /report
+
 hello_di_distributor_setting:
     resource: "@HelloDiDistributorBundle/Resources/config/routing/setting.yml"
     prefix:   /admin/setting

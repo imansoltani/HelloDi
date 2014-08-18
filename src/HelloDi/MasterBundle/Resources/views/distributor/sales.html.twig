@@ -65,7 +65,7 @@
                     <thead>
                     <tr>
                         {% if not group %}
-                        <th><label><input class="main_check checkbox_select" type="checkbox" onclick="$('input.checkbox_select').prop('checked',$(this).prop('checked'))" style="width: 90%" title="Check all in this page"></label></th>
+                        <th><label><input class="main_check checkbox_select" type="checkbox" onclick="$('input.checkbox_select').prop('checked',$(this).prop('checked'))" title="Check all in this page"></label></th>
                         <th>{{ 'SerialNumber' | trans ({}, "code") }}</th>
                         <th>{{ 'TypeAction' | trans ({}, "transaction") }}</th>
                         {% endif %}
@@ -106,8 +106,8 @@
                             {% endif %}
                             <td>{{ group ? sale.groupDate|date('Y/m/d') : pin.date|date('Y/m/d H:m:s') }}</td>
                             <td>{{ pin.transaction.account.name }}</td>
-                            <td>{{ group ? sale.sum_retailer : pin.transaction.amount }}</td>
-                            <td>{{ group ? sale.sum_distributor : pin.commissionerTransaction.amount }}</td>
+                            <td>{{ (group ? sale.sum_retailer : pin.transaction.amount / pin.count)|number_format(2, '.') }}</td>
+                            <td>{{ (group ? sale.sum_distributor : pin.commissionerTransaction.amount / pin.count)|number_format(2, '.') }}</td>
                             <td>--</td>
                             <td>--</td>
                         </tr>
