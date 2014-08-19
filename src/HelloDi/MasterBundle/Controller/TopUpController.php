@@ -101,7 +101,7 @@ class TopUpController extends Controller
 
                 /** @var UploadedFile $uploaded_file */
                 $uploaded_file = $data['file'];
-                $file = $uploaded_file->move('./uploads/temp');
+                $file = $uploaded_file->move(__DIR__.'/../../../../web/uploads/temp');
 
                 $result = null;
                 try {

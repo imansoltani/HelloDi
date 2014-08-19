@@ -40,6 +40,13 @@
                 <h3>  {{ 'TopUpImport' | trans ({}, "user") }}</h3>
             </div>
 
+            <p style="border: 1px solid #ddd; background-color: #eee; border-radius: 5px; padding: 5px; margin: 5px">
+                <span style="color: #ff0000">Warning: File must have this features: </span><br>
+                - First column must be headers. <br>
+                - This headers must be exist: 'CARRIER CODE', 'COUNTRY CODE', 'DENOMINATION', 'DISCOUNT', 'TOP UP CURRENCY', 'TOP UP VALUE'.<br>
+                - All TOP UP VALUES must be Fixed.
+            </p>
+
             {{ form(form) }}
 
             <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
