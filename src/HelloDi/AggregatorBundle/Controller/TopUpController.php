@@ -176,7 +176,6 @@ class TopUpController extends Controller
             $this->em->flush();
             $count++;
         }
-        unset($file);
 
         return $log;
     }

@@ -101,16 +101,20 @@ class TopUpController extends Controller
 
                 /** @var UploadedFile $uploaded_file */
                 $uploaded_file = $data['file'];
-                $file = $uploaded_file->move('/');
+                $file = $uploaded_file->move('./uploads/temp');
 
                 $result = null;
                 try {
                     $result = $this->get('topup')->importItemsAndPricesFromFile($file, $data['delimiter'], $data['provider'], $data['descriptions']);
 
+                    unlink($file->getRealPath());
+
                     return $this->render('HelloDiMasterBundle:topup:importResult.html.twig' , array(
                             'result' => $result
                         ));
                 } catch (\Exception $e) {
+                    unlink($file->getRealPath());
+
                     $form->get('file')->addError(new FormError($e->getMessage()));
                 }
             }
