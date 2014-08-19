@@ -43,6 +43,18 @@
             <span id="user_pc_menu">{{ 'Operators' | trans ({}, "operator") }}</span>
         </a>
     </li>
+    <li class=" {% if MU == 'topup' %}active{% endif %} dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-topup"></i>
+            <span id="user_pc_menu">{{ 'TopUp' | trans ({}, "topup") }}</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="javascript:;">{{ 'Report' | trans ({}, "transaction") }}</a></li>
+            <li><a href="{{ path('hello_di_master_topup_import') }}">{{ 'Import' | trans ({}, "code") }}</a></li>
+            <li><a href="javascript:;">{{ 'Setting' | trans ({}, "user") }}</a></li>
+        </ul>
+    </li>
     <li class=" {% if MU == 'report' %}active{% endif %} dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-list-alt"></i>

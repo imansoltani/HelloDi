@@ -10,6 +10,7 @@ web/uploads/documents/*
 web/uploads/logos/*
 web/uploads/models/*
 !web/uploads/logos/0.png
+!web/uploads/logos/predefined_logos
 
 # phpstorm
 .idea/workspace.xml

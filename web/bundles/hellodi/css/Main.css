@@ -1594,3 +1594,26 @@ margin-top:5px ;
 [class*="span"] {
     float: left;
 }
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('../font/my_font.eot?pgvko3');
+    src: url('../font/my_font.eot?#iefixpgvko3') format('embedded-opentype'),
+    url('../font/my_font.woff?pgvko3') format('woff'),
+    url('../font/my_font.ttf?pgvko3') format('truetype'),
+    url('../font/my_font.svg?pgvko3#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-topup:before{
+    content: "\e600";
+}
+
+.icon-topup{
+    font-family: 'MyFont' !important;
+}
+
+.SearchForm .SearchForm{
+    border: none !important;
+}

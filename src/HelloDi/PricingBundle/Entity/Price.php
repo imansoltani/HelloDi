@@ -54,6 +54,16 @@ class Price
     protected $account;
 
     /**
+     * @ORM\Column(type="decimal", nullable=true, name="denomination", scale=2)
+     */
+    protected $denomination;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true, name="priority")
+     */
+    protected $priority;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -225,5 +235,51 @@ class Price
     public function __toString()
     {
         return $this->getItem()->getName() . " - " . $this->getPrice();
+    }
+
+    /**
+     * Set denomination
+     *
+     * @param float $denomination
+     * @return Price
+     */
+    public function setDenomination($denomination)
+    {
+        $this->denomination = $denomination;
+    
+        return $this;
+    }
+
+    /**
+     * Get denomination
+     *
+     * @return float
+     */
+    public function getDenomination()
+    {
+        return $this->denomination;
+    }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return Price
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
     }
 }

@@ -1,0 +1,75 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'TopUpImport' | trans ({}, "user") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-topup"></i>{{ 'TopUpImport' | trans ({}, "user") }}{% endblock %}
+
+{% set MU = 'topup' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'TopUpImport' | trans ({}, "user") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu.css') }}' rel='stylesheet' type='text/css'>
+    <style>
+        .descriptions > div {
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .descriptions .desc-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content" >
+            <div class="widget-header">
+                <h3>  {{ 'TopUpImport' | trans ({}, "user") }}</h3>
+            </div>
+
+            {{ form(form) }}
+
+            <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea-0.7.5.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/libs/Editor/jHtmlArea.ColorPickerMenu-0.7.0.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('bundles/hellodi/js/more/editor.js') }}"></script>
+            <script type="text/javascript">
+                $(function (){
+                    var count = '{{ form.descriptions|length }}';
+                    var description = $('.descriptions');
+                    var prototype = description.attr('data-prototype');
+
+                    $('.jHtmlArea .notIMTU').hide();
+                    $('.jHtmlArea .IMTU').show();
+                    description.children().append("<a class='desc-close'>X</a>");
+
+                    $('.desc-close').live('click',function(){
+                       $(this).parent().remove();
+                    });
+
+                    $("button.btn.addTranslate").click(function(){
+                        var newDescription = $(prototype.replace(/__name__/g, count++))
+                                .append("<a class='desc-close'>X</a>");
+                        description.append(newDescription);
+
+                        initHtmlArea();
+                        $('.jHtmlArea .notIMTU').hide();
+                        $('.jHtmlArea .IMTU').show();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+{% endblock %}

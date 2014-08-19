@@ -8,3 +8,7 @@ services:
     aggregator:
         class: HelloDi\AggregatorBundle\Controller\ServiceController
         arguments: [@doctrine.orm.default_entity_manager, @accounting]
+
+    topup:
+        class: HelloDi\AggregatorBundle\Controller\TopUpController
+        arguments: [@doctrine.orm.default_entity_manager]

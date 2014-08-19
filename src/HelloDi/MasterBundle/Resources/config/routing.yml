@@ -30,6 +30,10 @@ hello_di_master_entity:
     resource: "@HelloDiMasterBundle/Resources/config/routing/entity.yml"
     prefix:   /entity
 
+hello_di_master_topup:
+    resource: "@HelloDiMasterBundle/Resources/config/routing/topup.yml"
+    prefix:   /topup
+
 hello_di_master_setting:
     resource: "@HelloDiMasterBundle/Resources/config/routing/setting.yml"
     prefix:   /admin/setting

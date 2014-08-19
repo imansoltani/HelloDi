@@ -1,4 +1,4 @@
-$(function () {
+function initHtmlArea() {
     $('.text_editor').htmlarea({
         toolbar: [
             ["bold", "italic", "underline", "strikethrough"],
@@ -198,4 +198,6 @@ $(function () {
     $('.jHtmlArea .valuesentButton').html('Value Sent').hide();
     $('.jHtmlArea .valuepaidButton').html('Value Paid').hide();
     $('.jHtmlArea .tranidButton').html('Transaction ID').hide();
-});
+}
+
+$(function(){initHtmlArea();});

@@ -118,7 +118,9 @@ class ItemDesc
 
     public function isDescriptionValid(ExecutionContextInterface $context)
     {
-        $tags = $this->getItem()->getType() == "imtu" ?
+        $type = $this->getItem() ? $this->getItem()->getType() : Item::IMTU;
+
+        $tags = $type == Item::IMTU ?
             array("tran_id", "receiver_number", "print_date") :
             array("pin", "serial", "expire", "duplicate", "print_date")
         ;
@@ -132,7 +134,7 @@ class ItemDesc
 
         $twig = new \Twig_Environment(new \Twig_Loader_String());
         try{
-            if($this->getItem()->getType() == "imtu")
+            if($type == Item::IMTU)
                 $twig->render($this->getDescription(),array(
                         "print_date"=>"2013/13/13",
                         "entity_name"=>'Entity Name',
@@ -146,7 +148,7 @@ class ItemDesc
                         "value_paid"=>'2 USD',
                     ));
             else
-                $twig->render($this->getItem()->getType(),array(
+                $twig->render($type,array(
                         "pin"=>1234,
                         "serial"=>4321,
                         "expire"=>"2012/12/12",

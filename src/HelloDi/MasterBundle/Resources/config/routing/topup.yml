@@ -1,0 +1,3 @@
+hello_di_master_topup_import:
+    pattern:  /import
+    defaults: { _controller: "HelloDiMasterBundle:TopUp:import" }

@@ -1,0 +1,30 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'TopUpImport' | trans ({}, "user") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-topup"></i>{{ 'TopUpImport' | trans ({}, "user") }}{% endblock %}
+
+{% set MU = 'topup' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link" href="{{ path('hello_di_master_topup_import') }}">{{ 'TopUpImport' | trans ({}, "user") }}</a>
+    <span class="link">{{ 'Result' | trans ({}, "user") }}</span>
+{% endblock Site_Map %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content" >
+            <div class="widget-header">
+                <h3>{{ 'Result' | trans ({}, "user") }}</h3>
+            </div><br><br>
+
+            <a href="{{ path('hello_di_master_topup_import') }}" class="btn">{{ 'Back' | trans ({}, "common") }}</a>
+            <br>
+
+            <div style="border: 1px solid #ddd; padding: 5px; margin: 5px; border-radius: 5px;">
+                {{ result|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
