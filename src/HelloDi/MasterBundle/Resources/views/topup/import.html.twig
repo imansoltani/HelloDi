@@ -44,7 +44,8 @@
                 <span style="color: #ff0000">Warning: File must have this features: </span><br>
                 - First column must be headers. <br>
                 - This headers must be exist: 'CARRIER CODE', 'COUNTRY CODE', 'DENOMINATION', 'DISCOUNT', 'TOP UP CURRENCY', 'TOP UP VALUE'.<br>
-                - All TOP UP VALUES must be Fixed.
+                - All TOP UP VALUES must be Fixed.<br>
+                - Currency of Values in the File must be same in selected Provider.
             </p>
 
             {{ form(form) }}
@@ -63,17 +64,22 @@
                     description.children().append("<a class='desc-close'>X</a>");
 
                     $('.desc-close').live('click',function(){
-                       $(this).parent().remove();
+                       $(this).parent().slideUp(400, function(){$(this).remove()});
                     });
 
                     $("button.btn.addTranslate").click(function(){
                         var newDescription = $(prototype.replace(/__name__/g, count++))
-                                .append("<a class='desc-close'>X</a>");
+                                .append("<a class='desc-close'>X</a>").css({'display':'none'});
                         description.append(newDescription);
+                        $(newDescription).slideDown();
 
                         initHtmlArea();
                         $('.jHtmlArea .notIMTU').hide();
                         $('.jHtmlArea .IMTU').show();
+
+                        $('body,html').animate({
+                            scrollTop: $(newDescription).offset().top - 20
+                        }, 800);
                     });
                 });
             </script>

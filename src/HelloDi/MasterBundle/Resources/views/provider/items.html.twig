@@ -73,7 +73,7 @@
                             <a class="btn_actions" href="{{ path('hello_di_master_item_details',{'id':price.item.id}) }}">{{ 'View' | trans ({}, "common") }}</a>
                             <br/>
                             {% if price.item.type != constant("IMTU",price.item) %}
-                            <a class="btn_actions" href="{{ path('hello_di_master_provider_items_upload',{'id':price.account.id,'price_id':price.id}) }}">{{ 'Upload' | trans ({}, "code") }}</a>
+                            <a class="btn_actions" href="{{ path('hello_di_master_provider_items_upload',{'id':account.id,'price_id':price.id}) }}">{{ 'Upload' | trans ({}, "code") }}</a>
                             {% endif %}
                         </td>
                     </tr>

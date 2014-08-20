@@ -85,16 +85,18 @@ class TopUpController extends Controller
         if($request->isMethod('post')) {
             $form->handleRequest($request);
 
-            $used_languages = array();
-            foreach($form->get('descriptions') as $descriptionForm) {
-                /** @var FormInterface $descriptionForm */
-                $lang = $descriptionForm->get('language')->getData();
-                if(in_array($lang, $used_languages) || !in_array($lang, $languages)){
-                    $descriptionForm->get('language')->addError(new FormError('Languages must be unique.'));
-                    break;
+            if(count($form->get('descriptions')) > 0) {
+                $used_languages = array();
+                foreach($form->get('descriptions') as $descriptionForm) {
+                    /** @var FormInterface $descriptionForm */
+                    $lang = $descriptionForm->get('language')->getData();
+                    if(in_array($lang, $used_languages))
+                        $descriptionForm->get('language')->addError(new FormError('Language must be unique.'));
+                    else
+                        $used_languages[]= $lang;
                 }
-                $used_languages[]= $lang;
-            }
+            } else
+                $form->get('delimiter')->addError(new FormError('Add one description at least.'));
 
             if($form->isValid()) {
                 $data = $form->getData();

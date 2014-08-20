@@ -311,10 +311,18 @@ class ProviderController extends Controller
         if(!$provider)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
+        $prices = $em->createQueryBuilder()
+            ->select('price', 'item', 'operator')
+            ->from('HelloDiPricingBundle:Price', 'price')
+            ->where('price.account = :account')->setParameter('account', $provider->getAccount())
+            ->innerJoin('price.item', 'item')
+            ->innerJoin('item.operator', 'operator')
+            ->getQuery()->getResult();
+
         return $this->render('HelloDiMasterBundle:provider:items.html.twig', array(
                 'account' => $provider->getAccount(),
                 'provider' => $provider,
-                'prices' => $provider->getAccount()->getPrices()
+                'prices' => $prices
             ));
     }
 
