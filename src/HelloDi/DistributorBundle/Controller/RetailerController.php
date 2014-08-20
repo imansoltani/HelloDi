@@ -88,9 +88,10 @@ class RetailerController extends Controller
         $entity->addUser($user);
 
         $languages = $this->container->getParameter('languages');
+        $countries = $this->container->getParameter('countries');
 
         $form = $this->createForm(new RetailerAccountUserType($languages), $retailer, array('cascade_validation' => true));
-        $form->get('account')->add('entity',new EntityType());
+        $form->get('account')->add('entity',new EntityType($countries));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -542,7 +543,9 @@ class RetailerController extends Controller
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $form = $this->createForm(new EntityType(), $retailer->getAccount()->getEntity())
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new EntityType($countries), $retailer->getAccount()->getEntity())
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')

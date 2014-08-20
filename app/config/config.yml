@@ -30,6 +30,7 @@ twig:
         CalcVatFormula: "@calc_vat_formula"
         AccountTypeFinder:   "@account_type_finder"
         NotificationHandler:   "@notification_handler"
+        countries: "%countries%"
     form:
         resources:
             - '::form_div_layout_override.html.twig'

@@ -22,9 +22,8 @@ class ItemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $items = $em->createQueryBuilder()
-            ->select("item", "code", "country", "description")
+            ->select("item", "code", "description")
             ->from("HelloDiCoreBundle:Item","item")
-            ->innerJoin('item.country', 'country')
             ->innerJoin('item.descriptions', 'description')
             ->LeftJoin("item.codes","code",'WITH',"code.status = 1")
             ->getQuery()
@@ -43,10 +42,14 @@ class ItemController extends Controller
         $itemDesc->setItem($item);
         $item->addDescription($itemDesc);
 
-        $form = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item, array(
+        $languages = $this->container->getParameter('languages');
+        $currencies = $this->container->getParameter('currencies.topup');
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new ItemType($currencies, $countries), $item, array(
                 'cascade_validation' => true,
             ))
-            ->add('descriptions', 'collection', array('type' => new ItemDescType($this->container->getParameter('languages'))))
+            ->add('descriptions', 'collection', array('type' => new ItemDescType($languages)))
             ->add('add','submit', array(
                     'label'=>'Add','translation_domain'=>'common',
                     'attr'=>array('first-button')
@@ -78,16 +81,15 @@ class ItemController extends Controller
     {
         try
         {
-            $country_id = $request->get('country_id');
+            $country_iso = $request->get('country_iso');
             $item_type = $request->get('item_type');
             $operator_id = $request->get('operator_id');
             $item_name = $request->get('item_name');
 
             $em = $this->getDoctrine()->getManager();
 
-            $country_code = $em->getRepository('HelloDiCoreBundle:Country')->find($country_id)->getIso();
             $operator_name = $em->getRepository('HelloDiCoreBundle:Operator')->find($operator_id)->getName();
-            $item_code = $country_code.'/'.$item_type.'/'.$operator_name.'/'.str_replace(' ','_',$item_name);
+            $item_code = $country_iso.'/'.$item_type.'/'.$operator_name.'/'.str_replace(' ','_',$item_name);
             return new Response($item_code);
         }
         catch(\Exception $e)
@@ -117,7 +119,10 @@ class ItemController extends Controller
         if (!$item)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Item'),'message'));
 
-        $form = $this->createForm(new ItemType($this->container->getParameter('languages'),$this->container->getParameter('Currencies.TopUp')), $item)
+        $currencies = $this->container->getParameter('currencies.topup');
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new ItemType($currencies,$countries), $item)
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button')
@@ -146,7 +151,7 @@ class ItemController extends Controller
 
     public function itemPerDistAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $item = $em->getRepository('HelloDiCoreBundle:Item')->find($id);
         if (!$item)

@@ -34,8 +34,6 @@ class G_CreateARetailer_Test  extends AbstractFixture implements OrderedFixtureI
     {
         if("test" != $this->container->get('kernel')->getEnvironment()) return;
 
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
-
         $distributor = $em->getRepository('HelloDiDistributorBundle:Distributor')->findOneBy(array());
 
         for($i=1; $i<=2; $i++) {
@@ -45,7 +43,7 @@ class G_CreateARetailer_Test  extends AbstractFixture implements OrderedFixtureI
             $entity->setAddress1('');
             $entity->setNP(1);
             $entity->setCity('');
-            $entity->setCountry($country);
+            $entity->setCountry('US');
             $em->persist($entity);
 
             $account = new Account();

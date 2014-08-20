@@ -69,7 +69,7 @@ class TopUp
     /**
      * @var string
      *
-     * @ORM\Column(name="Transaction_id", type="string", length=20, nullable=true)
+     * @ORM\Column(name="transaction_id", type="string", length=20, nullable=true)
      */
     protected $transactionID;
 

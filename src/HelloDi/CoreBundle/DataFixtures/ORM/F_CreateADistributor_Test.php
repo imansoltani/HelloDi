@@ -33,8 +33,6 @@ class F_CreateADistributor_Test  extends AbstractFixture implements OrderedFixtu
     {
         if("test" != $this->container->get('kernel')->getEnvironment()) return;
 
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
-
         for($i=1; $i<=2; $i++) {
             $entity = new Entity();
             $entity->setName('dist'.$i);
@@ -42,7 +40,7 @@ class F_CreateADistributor_Test  extends AbstractFixture implements OrderedFixtu
             $entity->setAddress1('');
             $entity->setNP(1);
             $entity->setCity('');
-            $entity->setCountry($country);
+            $entity->setCountry('US');
             $em->persist($entity);
 
             $account = new Account();

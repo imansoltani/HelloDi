@@ -21,7 +21,9 @@ class EntityController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new EntitySearchType(), null, array(
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new EntitySearchType($countries), null, array(
                 'attr' => array('class' => 'SearchForm'),
                 'method' => 'get',
             ))
@@ -33,18 +35,18 @@ class EntityController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em->createQueryBuilder()
-            ->select('entity')
+            ->select('entity', 'account')
             ->from('HelloDiCoreBundle:Entity','entity')
             ->LeftJoin('entity.accounts','account')
             ->where('entity != :my_entity')->setParameter('my_entity', $this->getUser()->getEntity())
         ;
 
-        $form->submit($request->query->all());
-
-        $data = $form->getData();
+        $form->handleRequest($request);
 
         if($form->isValid())
         {
+            $data = $form->getData();
+
             if (isset($data['country']))
                 $qb->andwhere('entity.country = :country')->setParameter('country', $data['country']);
 
@@ -392,7 +394,9 @@ class EntityController extends Controller
         if (!$entity || $entity == $this->getUser()->getEntity())
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>$this->get('translator')->trans('Entity',array(),'entity')),'message'));
 
-        $form = $this->createForm(new EntityType(), $entity)
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new EntityType($countries), $entity)
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')

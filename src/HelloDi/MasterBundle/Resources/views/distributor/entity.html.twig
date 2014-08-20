@@ -68,7 +68,7 @@
         <div class="control-group">
             <label class="control-label" for="country">{{ 'Country' | trans ({}, "entity") }}</label>
             <div class="controls">
-                <input id="country" type="text" disabled="" value="{{ entity.country.name}}({{ entity.country.iso }})">
+                <input id="country" type="text" disabled="" value="{{ countries[entity.country] }}({{ entity.country }})">
             </div>
         </div>
         <div class="control-group">

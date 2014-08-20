@@ -8,6 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EntityType extends AbstractType
 {
+    private $countries;
+
+    public function __construct (array $countries)
+    {
+        $this->countries = $countries;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -42,9 +49,10 @@ class EntityType extends AbstractType
                 'attr'=> array('class'=>'integer_validation'),
             ))
             ->add('city',null,array('required'=>true,'label' => 'City','translation_domain' => 'entity'))
-            ->add('country','entity',array(
+            ->add('country', 'choice', array(
+                    'required'=>true,
                     'label' => 'Country','translation_domain' => 'entity',
-                    'class'=>'HelloDi\CoreBundle\Entity\Country','property'=>'name'
+                    'choices' => $this->countries
                 ))
         ;
     }

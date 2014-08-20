@@ -73,7 +73,7 @@
                                 </td>
                                 <td>{{ item.alertMinStock }}</td>
                                 <td>{{ item.codes.count }}</td>
-                                <td>{{ item.country.name }}</td>
+                                <td>{{ countries[item.country] }}</td>
                                 <td>
                                     {% for description in item.descriptions %}
                                         {{ description.language }}

@@ -22,6 +22,6 @@ parameters:
     B2BServer.IP: 46.20.242.182
     B2BServer.StoreID: 309511
     B2BServer.ServiceNumber: 1179989351
-    Currencies.Account: [CHF, USD, EUR]
-    Currencies.TopUp:   [CHF, USD, EUR, BDT, BOB, BRL, COP, DOP, NGN, PEN, PHP, PKR, PLN, RUB, XAF]
+    currencies.account: [CHF, USD, EUR]
+    currencies.topup:   [CHF, USD, EUR, BDT, BOB, BRL, COP, DOP, NGN, PEN, PHP, PKR, PLN, RUB, XAF]
     VatFormula: "(x/(100+vat)*vat)"

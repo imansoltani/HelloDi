@@ -15,15 +15,13 @@ class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixture
      */
     public function load(ObjectManager $em)
     {
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
-
         $entity = new Entity();
         $entity->setName('B2B Server');
         $entity->setVatNumber(1);
         $entity->setAddress1('');
         $entity->setNP(1);
         $entity->setCity('');
-        $entity->setCountry($country);
+        $entity->setCountry('US');
         $em->persist($entity);
 
         $account = new Account();

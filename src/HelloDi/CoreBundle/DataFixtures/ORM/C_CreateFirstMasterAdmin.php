@@ -14,15 +14,13 @@ class C_CreateFirstMasterAdmin extends AbstractFixture implements OrderedFixture
      */
     public function load(ObjectManager $em)
     {
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'SZ'));
-
         $entity = new Entity();
         $entity->setName('MasterAdmin');
         $entity->setVatNumber(1);
         $entity->setAddress1('');
         $entity->setNP(1);
         $entity->setCity('');
-        $entity->setCountry($country);
+        $entity->setCountry('SZ');
         $em->persist($entity);
 
         $user_admin = new User();

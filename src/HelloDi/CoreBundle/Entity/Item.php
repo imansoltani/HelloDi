@@ -65,7 +65,7 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Operator", inversedBy="item")
-     * @ORM\JoinColumn(name="Operator_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="operator_id", referencedColumnName="id", nullable=false)
      */
     protected $operator;
 
@@ -95,8 +95,7 @@ class Item
     protected $topUps;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country")
-     * @ORM\JoinColumn(name="Country_id", referencedColumnName="id", nullable=false)
+     * @ORM\Column(type="string", length=2, nullable=false)
      */
     protected $country;
 
@@ -474,20 +473,20 @@ class Item
     /**
      * Set country
      *
-     * @param Country $country
+     * @param string $country
      * @return Item
      */
-    public function setCountry(Country $country)
+    public function setCountry($country)
     {
-        $this->country = $country;
-
+        $this->country = strtoupper($country);
+    
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return Country
+     * @return string 
      */
     public function getCountry()
     {

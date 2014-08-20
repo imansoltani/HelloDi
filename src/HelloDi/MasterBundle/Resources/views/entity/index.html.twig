@@ -58,7 +58,7 @@
                             <tr>
                                 <td style="font-weight: bold">{{ entity_row.entity.id }}</td>
                                 <td>{{ entity_row.entity.name }}</td>
-                                <td>{{ entity_row.entity.country.iso }}|{{ entity_row.entity.country.Name }}</td>
+                                <td>{{ entity_row.entity.country }} | {{ countries[entity_row.entity.country] }}</td>
                                 <td>{{ entity_row.entity.city }}</td>
                                 <td>{{ entity_row.api_count }}</td>
                                 <td>{{ entity_row.provider_count }}</td>

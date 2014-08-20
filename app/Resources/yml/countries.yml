@@ -1,1002 +1,251 @@
 parameters:
     countries:
-        -
-          id: 1
-          Iso: "AF"
-          Name: "Afghanistan"
-        -
-          id: 2
-          Iso: "AL"
-          Name: "Albania"
-        -
-          id: 3
-          Iso: "DZ"
-          Name: "Algeria"
-        -
-          id: 4
-          Iso: "AS"
-          Name: "American Samoa"
-        -
-          id: 5
-          Iso: "AD"
-          Name: "Andorra"
-        -
-          id: 6
-          Iso: "AO"
-          Name: "Angola"
-        -
-          id: 7
-          Iso: "AI"
-          Name: "Anguilla"
-        -
-          id: 8
-          Iso: "AQ"
-          Name: "Antarctica"
-        -
-          id: 9
-          Iso: "AG"
-          Name: "Antigua and Barbuda"
-        -
-          id: 10
-          Iso: "AR"
-          Name: "Argentina"
-        -
-          id: 11
-          Iso: "AM"
-          Name: "Armenia"
-        -
-          id: 12
-          Iso: "AW"
-          Name: "Aruba"
-        -
-          id: 13
-          Iso: "AU"
-          Name: "Australia"
-        -
-          id: 14
-          Iso: "AT"
-          Name: "Austria"
-        -
-          id: 15
-          Iso: "AZ"
-          Name: "Azerbaijan"
-        -
-          id: 16
-          Iso: "BS"
-          Name: "Bahamas"
-        -
-          id: 17
-          Iso: "BH"
-          Name: "Bahrain"
-        -
-          id: 18
-          Iso: "BD"
-          Name: "Bangladesh"
-        -
-          id: 19
-          Iso: "BB"
-          Name: "Barbados"
-        -
-          id: 20
-          Iso: "BY"
-          Name: "Belarus"
-        -
-          id: 21
-          Iso: "BE"
-          Name: "Belgium"
-        -
-          id: 22
-          Iso: "BZ"
-          Name: "Belize"
-        -
-          id: 23
-          Iso: "BJ"
-          Name: "Benin"
-        -
-          id: 24
-          Iso: "BM"
-          Name: "Bermuda"
-        -
-          id: 25
-          Iso: "BT"
-          Name: "Bhutan"
-        -
-          id: 26
-          Iso: "BO"
-          Name: "Bolivia"
-        -
-          id: 27
-          Iso: "BA"
-          Name: "Bosnia and Herzegovina"
-        -
-          id: 28
-          Iso: "BW"
-          Name: "Botswana"
-        -
-          id: 29
-          Iso: "BV"
-          Name: "Bouvet Island"
-        -
-          id: 30
-          Iso: "BR"
-          Name: "Brazil"
-        -
-          id: 31
-          Iso: "IO"
-          Name: "British Indian Ocean Territory"
-        -
-          id: 32
-          Iso: "BN"
-          Name: "Brunei Darussalam"
-        -
-          id: 33
-          Iso: "BG"
-          Name: "Bulgaria"
-        -
-          id: 34
-          Iso: "BF"
-          Name: "Burkina Faso"
-        -
-          id: 35
-          Iso: "BI"
-          Name: "Burundi"
-        -
-          id: 36
-          Iso: "KH"
-          Name: "Cambodia"
-        -
-          id: 37
-          Iso: "CM"
-          Name: "Cameroon"
-        -
-          id: 38
-          Iso: "CA"
-          Name: "Canada"
-        -
-          id: 39
-          Iso: "CV"
-          Name: "Cape Verde"
-        -
-          id: 40
-          Iso: "BQ"
-          Name: "Caribbean Netherlands "
-        -
-          id: 41
-          Iso: "KY"
-          Name: "Cayman Islands"
-        -
-          id: 42
-          Iso: "CF"
-          Name: "Central African Republic"
-        -
-          id: 43
-          Iso: "TD"
-          Name: "Chad"
-        -
-          id: 44
-          Iso: "CL"
-          Name: "Chile"
-        -
-          id: 45
-          Iso: "CN"
-          Name: "China"
-        -
-          id: 46
-          Iso: "CX"
-          Name: "Christmas Island"
-        -
-          id: 47
-          Iso: "CC"
-          Name: "Cocos (Keeling) Islands"
-        -
-          id: 48
-          Iso: "CO"
-          Name: "Colombia"
-        -
-          id: 49
-          Iso: "KM"
-          Name: "Comoros"
-        -
-          id: 50
-          Iso: "CG"
-          Name: "Congo"
-        -
-          id: 51
-          Iso: "CD"
-          Name: "Congo, Democratic Republic of"
-        -
-          id: 52
-          Iso: "CK"
-          Name: "Cook Islands"
-        -
-          id: 53
-          Iso: "CR"
-          Name: "Costa Rica"
-        -
-          id: 54
-          Iso: "CI"
-          Name: "Côte D’Ivoire"
-        -
-          id: 55
-          Iso: "HR"
-          Name: "Croatia"
-        -
-          id: 56
-          Iso: "CU"
-          Name: "Cuba"
-        -
-          id: 57
-          Iso: "CW"
-          Name: "Curaçao"
-        -
-          id: 58
-          Iso: "CY"
-          Name: "Cyprus"
-        -
-          id: 59
-          Iso: "CZ"
-          Name: "Czech Republic"
-        -
-          id: 60
-          Iso: "DK"
-          Name: "Denmark"
-        -
-          id: 61
-          Iso: "DJ"
-          Name: "Djibouti"
-        -
-          id: 62
-          Iso: "DM"
-          Name: "Dominica"
-        -
-          id: 63
-          Iso: "DO"
-          Name: "Dominican Republic"
-        -
-          id: 64
-          Iso: "EC"
-          Name: "Ecuador"
-        -
-          id: 65
-          Iso: "EG"
-          Name: "Egypt"
-        -
-          id: 66
-          Iso: "SV"
-          Name: "El Salvador"
-        -
-          id: 67
-          Iso: "GQ"
-          Name: "Equatorial Guinea"
-        -
-          id: 68
-          Iso: "ER"
-          Name: "Eritrea"
-        -
-          id: 69
-          Iso: "EE"
-          Name: "Estonia"
-        -
-          id: 70
-          Iso: "ET"
-          Name: "Ethiopia"
-        -
-          id: 71
-          Iso: "FK"
-          Name: "Falkland Islands"
-        -
-          id: 72
-          Iso: "FO"
-          Name: "Faroe Islands"
-        -
-          id: 73
-          Iso: "FJ"
-          Name: "Fiji"
-        -
-          id: 74
-          Iso: "FI"
-          Name: "Finland"
-        -
-          id: 75
-          Iso: "FR"
-          Name: "France"
-        -
-          id: 76
-          Iso: "GF"
-          Name: "French Guiana"
-        -
-          id: 77
-          Iso: "PF"
-          Name: "French Polynesia"
-        -
-          id: 78
-          Iso: "TF"
-          Name: "French Southern Territories"
-        -
-          id: 79
-          Iso: "GA"
-          Name: "Gabon"
-        -
-          id: 80
-          Iso: "GM"
-          Name: "Gambia"
-        -
-          id: 81
-          Iso: "GE"
-          Name: "Georgia"
-        -
-          id: 82
-          Iso: "DE"
-          Name: "Germany"
-        -
-          id: 83
-          Iso: "GH"
-          Name: "Ghana"
-        -
-          id: 84
-          Iso: "GI"
-          Name: "Gibraltar"
-        -
-          id: 85
-          Iso: "GR"
-          Name: "Greece"
-        -
-          id: 86
-          Iso: "GL"
-          Name: "Greenland"
-        -
-          id: 87
-          Iso: "GD"
-          Name: "Grenada"
-        -
-          id: 88
-          Iso: "GP"
-          Name: "Guadeloupe"
-        -
-          id: 89
-          Iso: "GU"
-          Name: "Guam"
-        -
-          id: 90
-          Iso: "GT"
-          Name: "Guatemala"
-        -
-          id: 91
-          Iso: "GG"
-          Name: "Guernsey"
-        -
-          id: 92
-          Iso: "GN"
-          Name: "Guinea"
-        -
-          id: 93
-          Iso: "GW"
-          Name: "Guinea-Bissau"
-        -
-          id: 94
-          Iso: "GY"
-          Name: "Guyana"
-        -
-          id: 95
-          Iso: "HT"
-          Name: "Haiti"
-        -
-          id: 96
-          Iso: "HM"
-          Name: "Heard and McDonald Islands"
-        -
-          id: 97
-          Iso: "HN"
-          Name: "Honduras"
-        -
-          id: 98
-          Iso: "HK"
-          Name: "Hong Kong"
-        -
-          id: 99
-          Iso: "HU"
-          Name: "Hungary"
-        -
-          id: 100
-          Iso: "IS"
-          Name: "Iceland"
-        -
-          id: 101
-          Iso: "IN"
-          Name: "India"
-        -
-          id: 102
-          Iso: "ID"
-          Name: "Indonesia"
-        -
-          id: 103
-          Iso: "IR"
-          Name: "Iran"
-        -
-          id: 104
-          Iso: "IQ"
-          Name: "Iraq"
-        -
-          id: 105
-          Iso: "IE"
-          Name: "Ireland"
-        -
-          id: 106
-          Iso: "IM"
-          Name: "Isle of Man"
-        -
-          id: 107
-          Iso: "IL"
-          Name: "Israel"
-        -
-          id: 108
-          Iso: "IT"
-          Name: "Italy"
-        -
-          id: 109
-          Iso: "JM"
-          Name: "Jamaica"
-        -
-          id: 110
-          Iso: "JP"
-          Name: "Japan"
-        -
-          id: 111
-          Iso: "JE"
-          Name: "Jersey"
-        -
-          id: 112
-          Iso: "JO"
-          Name: "Jordan"
-        -
-          id: 113
-          Iso: "KZ"
-          Name: "Kazakhstan"
-        -
-          id: 114
-          Iso: "KE"
-          Name: "Kenya"
-        -
-          id: 115
-          Iso: "KI"
-          Name: "Kiribati"
-        -
-          id: 116
-          Iso: "KW"
-          Name: "Kuwait"
-        -
-          id: 117
-          Iso: "KG"
-          Name: "Kyrgyzstan"
-        -
-          id: 118
-          Iso: "LA"
-          Name: "Lao People’s Democratic Republic"
-        -
-          id: 119
-          Iso: "LV"
-          Name: "Latvia"
-        -
-          id: 120
-          Iso: "LB"
-          Name: "Lebanon"
-        -
-          id: 121
-          Iso: "LS"
-          Name: "Lesotho"
-        -
-          id: 122
-          Iso: "LR"
-          Name: "Liberia"
-        -
-          id: 123
-          Iso: "LY"
-          Name: "Libya"
-        -
-          id: 124
-          Iso: "LI"
-          Name: "Liechtenstein"
-        -
-          id: 125
-          Iso: "LT"
-          Name: "Lithuania"
-        -
-          id: 126
-          Iso: "LU"
-          Name: "Luxembourg"
-        -
-          id: 127
-          Iso: "MO"
-          Name: "Macau"
-        -
-          id: 128
-          Iso: "MK"
-          Name: "Macedonia"
-        -
-          id: 129
-          Iso: "MG"
-          Name: "Madagascar"
-        -
-          id: 130
-          Iso: "MW"
-          Name: "Malawi"
-        -
-          id: 131
-          Iso: "MY"
-          Name: "Malaysia"
-        -
-          id: 132
-          Iso: "MV"
-          Name: "Maldives"
-        -
-          id: 133
-          Iso: "ML"
-          Name: "Mali"
-        -
-          id: 134
-          Iso: "MT"
-          Name: "Malta"
-        -
-          id: 135
-          Iso: "MH"
-          Name: "Marshall Islands"
-        -
-          id: 136
-          Iso: "MQ"
-          Name: "Martinique"
-        -
-          id: 137
-          Iso: "MR"
-          Name: "Mauritania"
-        -
-          id: 138
-          Iso: "MU"
-          Name: "Mauritius"
-        -
-          id: 139
-          Iso: "YT"
-          Name: "Mayotte"
-        -
-          id: 140
-          Iso: "MX"
-          Name: "Mexico"
-        -
-          id: 141
-          Iso: "FM"
-          Name: "Micronesia, Federated States of"
-        -
-          id: 142
-          Iso: "MD"
-          Name: "Moldova"
-        -
-          id: 143
-          Iso: "MC"
-          Name: "Monaco"
-        -
-          id: 144
-          Iso: "MN"
-          Name: "Mongolia"
-        -
-          id: 145
-          Iso: "ME"
-          Name: "Montenegro"
-        -
-          id: 146
-          Iso: "MS"
-          Name: "Montserrat"
-        -
-          id: 147
-          Iso: "MA"
-          Name: "Morocco"
-        -
-          id: 148
-          Iso: "MZ"
-          Name: "Mozambique"
-        -
-          id: 149
-          Iso: "MM"
-          Name: "Myanmar"
-        -
-          id: 150
-          Iso: "NA"
-          Name: "Namibia"
-        -
-          id: 151
-          Iso: "NR"
-          Name: "Nauru"
-        -
-          id: 152
-          Iso: "NP"
-          Name: "Nepal"
-        -
-          id: 153
-          Iso: "NC"
-          Name: "New Caledonia"
-        -
-          id: 154
-          Iso: "NZ"
-          Name: "New Zealand"
-        -
-          id: 155
-          Iso: "NI"
-          Name: "Nicaragua"
-        -
-          id: 156
-          Iso: "NE"
-          Name: "Niger"
-        -
-          id: 157
-          Iso: "NG"
-          Name: "Nigeria"
-        -
-          id: 158
-          Iso: "NU"
-          Name: "Niue"
-        -
-          id: 159
-          Iso: "NF"
-          Name: "Norfolk Island"
-        -
-          id: 160
-          Iso: "KP"
-          Name: "North Korea"
-        -
-          id: 161
-          Iso: "MP"
-          Name: "Northern Mariana Islands"
-        -
-          id: 162
-          Iso: "NO"
-          Name: "Norway"
-        -
-          id: 163
-          Iso: "OM"
-          Name: "Oman"
-        -
-          id: 164
-          Iso: "PK"
-          Name: "Pakistan"
-        -
-          id: 165
-          Iso: "PW"
-          Name: "Palau"
-        -
-          id: 166
-          Iso: "PS"
-          Name: "Palestinian Territory, Occupied"
-        -
-          id: 167
-          Iso: "PA"
-          Name: "Panama"
-        -
-          id: 168
-          Iso: "PG"
-          Name: "Papua New Guinea"
-        -
-          id: 169
-          Iso: "PY"
-          Name: "Paraguay"
-        -
-          id: 170
-          Iso: "PE"
-          Name: "Peru"
-        -
-          id: 171
-          Iso: "PH"
-          Name: "Philippines"
-        -
-          id: 172
-          Iso: "PN"
-          Name: "Pitcairn"
-        -
-          id: 173
-          Iso: "PL"
-          Name: "Poland"
-        -
-          id: 174
-          Iso: "PT"
-          Name: "Portugal"
-        -
-          id: 175
-          Iso: "PR"
-          Name: "Puerto Rico"
-        -
-          id: 176
-          Iso: "QA"
-          Name: "Qatar"
-        -
-          id: 177
-          Iso: "RE"
-          Name: "Reunion"
-        -
-          id: 178
-          Iso: "RO"
-          Name: "Romania"
-        -
-          id: 179
-          Iso: "RU"
-          Name: "Russian Federation"
-        -
-          id: 180
-          Iso: "RW"
-          Name: "Rwanda"
-        -
-          id: 181
-          Iso: "BL"
-          Name: "Saint Barthélemy"
-        -
-          id: 182
-          Iso: "SH"
-          Name: "Saint Helena"
-        -
-          id: 183
-          Iso: "KN"
-          Name: "Saint Kitts and Nevis"
-        -
-          id: 184
-          Iso: "LC"
-          Name: "Saint Lucia"
-        -
-          id: 185
-          Iso: "VC"
-          Name: "Saint Vincent and the Grenadines"
-        -
-          id: 186
-          Iso: "MF"
-          Name: "Saint-Martin (France)"
-        -
-          id: 187
-          Iso: "SX"
-          Name: "Saint-Martin (Pays-Bas)"
-        -
-          id: 188
-          Iso: "WS"
-          Name: "Samoa"
-        -
-          id: 189
-          Iso: "SM"
-          Name: "San Marino"
-        -
-          id: 190
-          Iso: "ST"
-          Name: "Sao Tome and Principe"
-        -
-          id: 191
-          Iso: "SA"
-          Name: "Saudi Arabia"
-        -
-          id: 192
-          Iso: "SN"
-          Name: "Senegal"
-        -
-          id: 193
-          Iso: "RS"
-          Name: "Serbia"
-        -
-          id: 194
-          Iso: "SC"
-          Name: "Seychelles"
-        -
-          id: 195
-          Iso: "SL"
-          Name: "Sierra Leone"
-        -
-          id: 196
-          Iso: "SG"
-          Name: "Singapore"
-        -
-          id: 197
-          Iso: "SK"
-          Name: "Slovakia (Slovak Republic)"
-        -
-          id: 198
-          Iso: "SI"
-          Name: "Slovenia"
-        -
-          id: 199
-          Iso: "SB"
-          Name: "Solomon Islands"
-        -
-          id: 200
-          Iso: "SO"
-          Name: "Somalia"
-        -
-          id: 201
-          Iso: "ZA"
-          Name: "South Africa"
-        -
-          id: 202
-          Iso: "GS"
-          Name: "South Georgia and the South Sandwich Islands"
-        -
-          id: 203
-          Iso: "KR"
-          Name: "South Korea"
-        -
-          id: 204
-          Iso: "SS"
-          Name: "South Sudan"
-        -
-          id: 205
-          Iso: "ES"
-          Name: "Spain"
-        -
-          id: 206
-          Iso: "LK"
-          Name: "Sri Lanka"
-        -
-          id: 207
-          Iso: "PM"
-          Name: "St. Pierre and Miquelon"
-        -
-          id: 208
-          Iso: "SD"
-          Name: "Sudan"
-        -
-          id: 209
-          Iso: "SR"
-          Name: "Suriname"
-        -
-          id: 210
-          Iso: "SJ"
-          Name: "Svalbard and Jan Mayen Islands"
-        -
-          id: 211
-          Iso: "SZ"
-          Name: "Swaziland"
-        -
-          id: 212
-          Iso: "SE"
-          Name: "Sweden"
-        -
-          id: 213
-          Iso: "CH"
-          Name: "Switzerland"
-        -
-          id: 214
-          Iso: "SY"
-          Name: "Syria"
-        -
-          id: 215
-          Iso: "TW"
-          Name: "Taiwan"
-        -
-          id: 216
-          Iso: "TJ"
-          Name: "Tajikistan"
-        -
-          id: 217
-          Iso: "TZ"
-          Name: "Tanzania"
-        -
-          id: 218
-          Iso: "TH"
-          Name: "Thailand"
-        -
-          id: 219
-          Iso: "NL"
-          Name: "The Netherlands"
-        -
-          id: 220
-          Iso: "TL"
-          Name: "Timor-Leste"
-        -
-          id: 221
-          Iso: "TG"
-          Name: "Togo"
-        -
-          id: 222
-          Iso: "TK"
-          Name: "Tokelau"
-        -
-          id: 223
-          Iso: "TO"
-          Name: "Tonga"
-        -
-          id: 224
-          Iso: "TT"
-          Name: "Trinidad and Tobago"
-        -
-          id: 225
-          Iso: "TN"
-          Name: "Tunisia"
-        -
-          id: 226
-          Iso: "TR"
-          Name: "Turkey"
-        -
-          id: 227
-          Iso: "TM"
-          Name: "Turkmenistan"
-        -
-          id: 228
-          Iso: "TC"
-          Name: "Turks and Caicos Islands"
-        -
-          id: 229
-          Iso: "TV"
-          Name: "Tuvalu"
-        -
-          id: 230
-          Iso: "UG"
-          Name: "Uganda"
-        -
-          id: 231
-          Iso: "UA"
-          Name: "Ukraine"
-        -
-          id: 232
-          Iso: "AE"
-          Name: "United Arab Emirates"
-        -
-          id: 233
-          Iso: "GB"
-          Name: "United Kingdom"
-        -
-          id: 234
-          Iso: "US"
-          Name: "United States"
-        -
-          id: 235
-          Iso: "UM"
-          Name: "United States Minor Outlying Islands"
-        -
-          id: 236
-          Iso: "UY"
-          Name: "Uruguay"
-        -
-          id: 237
-          Iso: "UZ"
-          Name: "Uzbekistan"
-        -
-          id: 238
-          Iso: "VU"
-          Name: "Vanuatu"
-        -
-          id: 239
-          Iso: "VA"
-          Name: "Vatican"
-        -
-          id: 240
-          Iso: "VE"
-          Name: "Venezuela"
-        -
-          id: 241
-          Iso: "VN"
-          Name: "Vietnam"
-        -
-          id: 242
-          Iso: "VG"
-          Name: "Virgin Islands (British)"
-        -
-          id: 243
-          Iso: "VI"
-          Name: "Virgin Islands (U.S.)"
-        -
-          id: 244
-          Iso: "WF"
-          Name: "Wallis and Futuna Islands"
-        -
-          id: 245
-          Iso: "EH"
-          Name: "Western Sahara"
-        -
-          id: 246
-          Iso: "YE"
-          Name: "Yemen"
-        -
-          id: 247
-          Iso: "ZM"
-          Name: "Zambia"
-        -
-          id: 248
-          Iso: "ZW"
-          Name: "Zimbabwe"
-        -
-          id: 249
-          Iso: "AX"
-          Name: "Åland Islands"
-        -
-          id: 250
-          Iso: "All"
-          Name: "All"
+        AF: Afghanistan
+        AL: Albania
+        DZ: Algeria
+        AS: 'American Samoa'
+        AD: Andorra
+        AO: Angola
+        AI: Anguilla
+        AQ: Antarctica
+        AG: 'Antigua and Barbuda'
+        AR: Argentina
+        AM: Armenia
+        AW: Aruba
+        AU: Australia
+        AT: Austria
+        AZ: Azerbaijan
+        BS: Bahamas
+        BH: Bahrain
+        BD: Bangladesh
+        BB: Barbados
+        BY: Belarus
+        BE: Belgium
+        BZ: Belize
+        BJ: Benin
+        BM: Bermuda
+        BT: Bhutan
+        BO: Bolivia
+        BA: 'Bosnia and Herzegovina'
+        BW: Botswana
+        BV: 'Bouvet Island'
+        BR: Brazil
+        IO: 'British Indian Ocean Territory'
+        BN: 'Brunei Darussalam'
+        BG: Bulgaria
+        BF: 'Burkina Faso'
+        BI: Burundi
+        KH: Cambodia
+        CM: Cameroon
+        CA: Canada
+        CV: 'Cape Verde'
+        BQ: 'Caribbean Netherlands '
+        KY: 'Cayman Islands'
+        CF: 'Central African Republic'
+        TD: Chad
+        CL: Chile
+        CN: China
+        CX: 'Christmas Island'
+        CC: 'Cocos (Keeling) Islands'
+        CO: Colombia
+        KM: Comoros
+        CG: Congo
+        CD: 'Congo, Democratic Republic of'
+        CK: 'Cook Islands'
+        CR: 'Costa Rica'
+        CI: 'Côte D’Ivoire'
+        HR: Croatia
+        CU: Cuba
+        CW: 'Curaçao'
+        CY: Cyprus
+        CZ: 'Czech Republic'
+        DK: Denmark
+        DJ: Djibouti
+        DM: Dominica
+        DO: 'Dominican Republic'
+        EC: Ecuador
+        EG: Egypt
+        SV: 'El Salvador'
+        GQ: 'Equatorial Guinea'
+        ER: Eritrea
+        EE: Estonia
+        ET: Ethiopia
+        FK: 'Falkland Islands'
+        FO: 'Faroe Islands'
+        FJ: Fiji
+        FI: Finland
+        FR: France
+        GF: 'French Guiana'
+        PF: 'French Polynesia'
+        TF: 'French Southern Territories'
+        GA: Gabon
+        GM: Gambia
+        GE: Georgia
+        DE: Germany
+        GH: Ghana
+        GI: Gibraltar
+        GR: Greece
+        GL: Greenland
+        GD: Grenada
+        GP: Guadeloupe
+        GU: Guam
+        GT: Guatemala
+        GG: Guernsey
+        GN: Guinea
+        GW: Guinea-Bissau
+        GY: Guyana
+        HT: Haiti
+        HM: 'Heard and McDonald Islands'
+        HN: Honduras
+        HK: 'Hong Kong'
+        HU: Hungary
+        IS: Iceland
+        IN: India
+        ID: Indonesia
+        IR: Iran
+        IQ: Iraq
+        IE: Ireland
+        IM: 'Isle of Man'
+        IL: Israel
+        IT: Italy
+        JM: Jamaica
+        JP: Japan
+        JE: Jersey
+        JO: Jordan
+        KZ: Kazakhstan
+        KE: Kenya
+        KI: Kiribati
+        KW: Kuwait
+        KG: Kyrgyzstan
+        LA: 'Lao People’s Democratic Republic'
+        LV: Latvia
+        LB: Lebanon
+        LS: Lesotho
+        LR: Liberia
+        LY: Libya
+        LI: Liechtenstein
+        LT: Lithuania
+        LU: Luxembourg
+        MO: Macau
+        MK: Macedonia
+        MG: Madagascar
+        MW: Malawi
+        MY: Malaysia
+        MV: Maldives
+        ML: Mali
+        MT: Malta
+        MH: 'Marshall Islands'
+        MQ: Martinique
+        MR: Mauritania
+        MU: Mauritius
+        YT: Mayotte
+        MX: Mexico
+        FM: 'Micronesia, Federated States of'
+        MD: Moldova
+        MC: Monaco
+        MN: Mongolia
+        ME: Montenegro
+        MS: Montserrat
+        MA: Morocco
+        MZ: Mozambique
+        MM: Myanmar
+        NA: Namibia
+        NR: Nauru
+        NP: Nepal
+        NC: 'New Caledonia'
+        NZ: 'New Zealand'
+        NI: Nicaragua
+        NE: Niger
+        NG: Nigeria
+        NU: Niue
+        NF: 'Norfolk Island'
+        KP: 'North Korea'
+        MP: 'Northern Mariana Islands'
+        NO: Norway
+        OM: Oman
+        PK: Pakistan
+        PW: Palau
+        PS: 'Palestinian Territory, Occupied'
+        PA: Panama
+        PG: 'Papua New Guinea'
+        PY: Paraguay
+        PE: Peru
+        PH: Philippines
+        PN: Pitcairn
+        PL: Poland
+        PT: Portugal
+        PR: 'Puerto Rico'
+        QA: Qatar
+        RE: Reunion
+        RO: Romania
+        RU: 'Russian Federation'
+        RW: Rwanda
+        BL: 'Saint Barthélemy'
+        SH: 'Saint Helena'
+        KN: 'Saint Kitts and Nevis'
+        LC: 'Saint Lucia'
+        VC: 'Saint Vincent and the Grenadines'
+        MF: 'Saint-Martin (France)'
+        SX: 'Saint-Martin (Pays-Bas)'
+        WS: Samoa
+        SM: 'San Marino'
+        ST: 'Sao Tome and Principe'
+        SA: 'Saudi Arabia'
+        SN: Senegal
+        RS: Serbia
+        SC: Seychelles
+        SL: 'Sierra Leone'
+        SG: Singapore
+        SK: 'Slovakia (Slovak Republic)'
+        SI: Slovenia
+        SB: 'Solomon Islands'
+        SO: Somalia
+        ZA: 'South Africa'
+        GS: 'South Georgia and the South Sandwich Islands'
+        KR: 'South Korea'
+        SS: 'South Sudan'
+        ES: Spain
+        LK: 'Sri Lanka'
+        PM: 'St. Pierre and Miquelon'
+        SD: Sudan
+        SR: Suriname
+        SJ: 'Svalbard and Jan Mayen Islands'
+        SZ: Swaziland
+        SE: Sweden
+        CH: Switzerland
+        SY: Syria
+        TW: Taiwan
+        TJ: Tajikistan
+        TZ: Tanzania
+        TH: Thailand
+        NL: 'The Netherlands'
+        TL: Timor-Leste
+        TG: Togo
+        TK: Tokelau
+        TO: Tonga
+        TT: 'Trinidad and Tobago'
+        TN: Tunisia
+        TR: Turkey
+        TM: Turkmenistan
+        TC: 'Turks and Caicos Islands'
+        TV: Tuvalu
+        UG: Uganda
+        UA: Ukraine
+        AE: 'United Arab Emirates'
+        GB: 'United Kingdom'
+        US: 'United States'
+        UM: 'United States Minor Outlying Islands'
+        UY: Uruguay
+        UZ: Uzbekistan
+        VU: Vanuatu
+        VA: Vatican
+        VE: Venezuela
+        VN: Vietnam
+        VG: 'Virgin Islands (British)'
+        VI: 'Virgin Islands (U.S.)'
+        WF: 'Wallis and Futuna Islands'
+        EH: 'Western Sahara'
+        YE: Yemen
+        ZM: Zambia
+        ZW: Zimbabwe
+        AX: 'Åland Islands'

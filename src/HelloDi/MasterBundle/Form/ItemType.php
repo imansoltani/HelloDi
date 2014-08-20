@@ -7,13 +7,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemType extends AbstractType
 {
-    private $languages;
     private $currencies;
+    private $countries;
 
-    public function __construct ($languages, $currencies)
+    public function __construct ($currencies, $countries)
     {
-        $this->languages = $languages;
         $this->currencies = array_combine($currencies, $currencies);
+        $this->countries = $countries;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -44,11 +44,11 @@ class ItemType extends AbstractType
                     'property'=>'NameCarrier',
                     'label' => 'Operator','translation_domain' => 'operator',
             ))
-            ->add('country', 'entity', array(
+            ->add('country', 'choice', array(
                     'empty_value' => '--',
-                    'class'=>'HelloDi\CoreBundle\Entity\Country',
-                    'property'=>'name',
+                    'required'=>true,
                     'label' => 'Country','translation_domain' => 'item',
+                    'choices' => $this->countries
                 ))
             ->add('code', null, array(
                     'attr' => array(

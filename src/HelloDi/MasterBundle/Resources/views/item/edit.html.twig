@@ -28,15 +28,15 @@
             var item__name = $("#"+"{{ form.name.vars.id }}").val();
             var item__type = $("#"+"{{ form.type.vars.id }}").val();
             var operator__id = $("#"+"{{ form.operator.vars.id }}").val();
-            var country__id = $("#"+"{{ form.country.vars.id }}").val();
+            var country__iso = $("#"+"{{ form.country.vars.id }}").val();
 
-            if(country__id != "" && item__type != "" && operator__id != "" && item__name != "") {
+            if(country__iso != "" && item__type != "" && operator__id != "" && item__name != "") {
                 code_refresh.addClass('refresh');
                 $.ajax({
                     type: "post",
                     url: "{{ path("hello_di_master_item_generate_item_code") }}",
                     data: {
-                        country_id: country__id,
+                        country_iso: country__iso,
                         item_type: item__type,
                         operator_id: operator__id,
                         item_name: item__name

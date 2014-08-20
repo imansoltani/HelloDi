@@ -55,11 +55,12 @@ class ProviderController extends Controller
         $account->setEntity($entity);
         $entity->addAccount($account);
 
-        $currencies = $this->container->getParameter('Currencies.Account');
+        $currencies = $this->container->getParameter('currencies.account');
         $languages = $this->container->getParameter('languages');
+        $countries = $this->container->getParameter('countries');
 
         $form = $this->createForm(new ProviderAccountUserType($currencies,$languages), $provider, array('cascade_validation' => true));
-        $form->get('account')->add('entity',new EntityType());
+        $form->get('account')->add('entity',new EntityType($countries));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

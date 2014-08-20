@@ -24,8 +24,7 @@ class Tax
     protected $tax;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="taxes")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     * @ORM\Column(type="string", length=2, nullable=true)
      */
     protected $country;
 
@@ -84,20 +83,20 @@ class Tax
     /**
      * Set country
      *
-     * @param Country $country
+     * @param string $country
      * @return Tax
      */
-    public function setCountry(Country $country = null)
+    public function setCountry($country)
     {
-        $this->country = $country;
-    
+        $this->country = strtoupper($country);
+
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return Country
+     * @return string
      */
     public function getCountry()
     {

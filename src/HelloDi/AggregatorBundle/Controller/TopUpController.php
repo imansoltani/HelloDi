@@ -4,7 +4,6 @@ namespace HelloDi\AggregatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use HelloDi\AggregatorBundle\Entity\Provider;
-use HelloDi\CoreBundle\Entity\Country;
 use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\ItemDesc;
 use HelloDi\CoreBundle\Entity\Operator;
@@ -58,16 +57,6 @@ class TopUpController extends Controller
             'TOP UP VALUE' => -1
         );
 
-        /** @var Country[] $countriesArray */
-        $countriesArray = $this->em->createQueryBuilder()
-            ->select('country')
-            ->from('HelloDiCoreBundle:Country', 'country')
-            ->getQuery()->getResult();
-
-        $countries = array();
-        foreach ($countriesArray as $row)
-            $countries [$row->getIso()] = $row;
-
         foreach ($col_num as $name => $num) {
             if (!$col_num[$name] = array_search($name, $headers))
                 throw new \Exception($name." not exist in header.");
@@ -108,9 +97,9 @@ class TopUpController extends Controller
 
             //----------------item-----------------
             // item_name = carrier_code country_cde topup_value currency
-            $item_name = $row[$col_num['CARRIER CODE']]." ".$row[$col_num['COUNTRY CODE']]." ".$row[$col_num['TOP UP VALUE']].$row[$col_num['TOP UP CURRENCY']];
+            $item_name = $row[$col_num['CARRIER CODE']]." ".strtoupper($row[$col_num['COUNTRY CODE']])." ".$row[$col_num['TOP UP VALUE']].$row[$col_num['TOP UP CURRENCY']];
             // item_code = country_code/item_type/operator_name/item_name(_)
-            $item_code = $row[$col_num['COUNTRY CODE']].'/imtu/'.$row[$col_num['CARRIER CODE']].'/'.str_replace(' ','_',$item_name);
+            $item_code = strtoupper($row[$col_num['COUNTRY CODE']]).'/imtu/'.$row[$col_num['CARRIER CODE']].'/'.str_replace(' ','_',$item_name);
 
             $item = $this->em->getRepository('HelloDiCoreBundle:Item')->findOneBy(array('code'=>$item_code));
             if(!$item) {
@@ -123,7 +112,7 @@ class TopUpController extends Controller
                 $new_item->setCode($item_code);
                 $new_item->setDateInsert(new \DateTime('now'));
                 $new_item->setOperator($operator);
-                $new_item->setCountry($countries[$row[$col_num['COUNTRY CODE']]]);
+                $new_item->setCountry($row[$col_num['COUNTRY CODE']]);
                 $this->em->persist($new_item);
 
                 $log .= "item '".$item_name."' created.<br>";

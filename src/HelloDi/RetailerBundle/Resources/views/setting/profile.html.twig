@@ -171,7 +171,7 @@
                         <label class="control-label" for="ent_country">{{ 'Country' | trans ({}, "entity") }}</label>
                         <div class="controls">
                             <input id="ent_country" class="input-large" disabled="" type="text"
-                                   value="{{ retailer.account.entity.country.name }} ({{ retailer.account.entity.country.iso }})"/>
+                                   value="{{ countries[retailer.account.entity.country] }} ({{ retailer.account.entity.country }})"/>
                         </div>
                     </div>
 

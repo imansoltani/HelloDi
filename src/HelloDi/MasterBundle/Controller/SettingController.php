@@ -19,7 +19,9 @@ class SettingController extends Controller
 
         $entity = $this->getUser()->getEntity();
 
-        $form = $this->createForm(new EntityType(), $entity)
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new EntityType($countries), $entity)
             ->add('update','submit', array(
                 'label'=>'Update','translation_domain'=>'common',
                 'attr'=>array('first-button','last-button')

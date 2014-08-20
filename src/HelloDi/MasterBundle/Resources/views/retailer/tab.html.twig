@@ -26,12 +26,12 @@
     </li>
     <li {% if tab2 == '4' %}class="active"{% endif %} >
         <a href="{{ path('hello_di_master_retailer_info',{'dist_id':account.id,'id':retailerAccount.id}) }}"  >
-            <input type="submit" value="{{ 'Setting' | trans ({}, "common") }}" >
+            <input type="submit" value="{{ 'Info' | trans ({}, "common") }}" >
         </a>
     </li>
     <li {% if tab2 == '5' %}class="active"{% endif %} >
         <a href="{{ path('hello_di_master_retailer_entity',{'dist_id':account.id,'id':retailerAccount.id}) }}"  >
-            <input type="submit" value="{{ 'Details' | trans ({}, "common") }}" >
+            <input type="submit" value="{{ 'Entity' | trans ({}, "entity") }}" >
         </a>
     </li>
 {% endblock Tabs2 %}

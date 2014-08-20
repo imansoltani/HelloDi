@@ -31,8 +31,6 @@ class H_CreateOperatorAndItems_Test  extends AbstractFixture implements OrderedF
     {
         if("test" != $this->container->get('kernel')->getEnvironment()) return;
 
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
-
         $currencies = array('USD', 'CHF');
 
         $operator = new Operator();
@@ -44,7 +42,7 @@ class H_CreateOperatorAndItems_Test  extends AbstractFixture implements OrderedF
             $item = new Item();
             $item->setName('item'.$i);
             $item->setAlertMinStock(0);
-            $item->setCountry($country);
+            $item->setCountry('US');
             $item->setCurrency($currencies[$i%2]);
             $item->setType(Item::DMTU);
             $item->setFaceValue(10+$i);

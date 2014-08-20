@@ -60,11 +60,12 @@ class DistributorController extends Controller
         $account->addUser($user);
         $entity->addUser($user);
 
-        $currencies = $this->container->getParameter('Currencies.Account');
+        $currencies = $this->container->getParameter('currencies.account');
         $languages = $this->container->getParameter('languages');
+        $countries = $this->container->getParameter('countries');
 
         $form = $this->createForm(new DistributorAccountUserType($currencies,$languages), $distributor, array('cascade_validation' => true));
-        $form->get('account')->add('entity',new EntityType());
+        $form->get('account')->add('entity',new EntityType($countries));
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

@@ -10,6 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class EntitySearchType extends AbstractType
 {
+    private $countries;
+
+    public function __construct (array $countries)
+    {
+        $this->countries = $countries;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -17,10 +24,9 @@ class EntitySearchType extends AbstractType
                     'label' => 'EntityName', 'translation_domain' => 'entity',
                     'required' => false,
                 ))
-            ->add('country', 'entity', array(
+            ->add('country', 'choice', array(
                     'label' => 'Country', 'translation_domain' => 'entity',
-                    'class' => 'HelloDi\CoreBundle\Entity\Country',
-                    'property' => 'name',
+                    'choices' => $this->countries,
                     'empty_value' => 'All',
                     'required' => false,
                 ))

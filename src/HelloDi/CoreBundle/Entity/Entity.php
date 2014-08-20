@@ -64,7 +64,7 @@ class Entity
     protected $address3;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false)
+     * @ORM\Column(type="string", length=45, nullable=false, name="np")
      */
     protected $NP;
 
@@ -84,8 +84,7 @@ class Entity
     protected $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country", inversedBy="entities")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
+     * @ORM\Column(type="string", length=2, nullable=false)
      */
     protected $country;
 
@@ -430,20 +429,20 @@ class Entity
     /**
      * Set country
      *
-     * @param Country $country
+     * @param string $country
      * @return Entity
      */
-    public function setCountry(Country $country = null)
+    public function setCountry($country)
     {
-        $this->country = $country;
-
+        $this->country = strtoupper($country);
+    
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return Country
+     * @return string 
      */
     public function getCountry()
     {

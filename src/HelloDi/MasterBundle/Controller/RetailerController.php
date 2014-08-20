@@ -3,13 +3,10 @@ namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Account;
-use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\Transaction;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\DistributorBundle\Form\RetailerSearchType;
-use HelloDi\MasterBundle\Form\CreditLimitType;
 use HelloDi\MasterBundle\Form\EntityType;
-use HelloDi\MasterBundle\Form\TransactionType;
 use HelloDi\RetailerBundle\Entity\Retailer;
 use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -380,7 +377,9 @@ class RetailerController extends Controller
         if(!$retailer)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'account'),'message'));
 
-        $form = $this->createForm(new EntityType(), $retailer->getAccount()->getEntity())
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new EntityType($countries), $retailer->getAccount()->getEntity())
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')

@@ -32,15 +32,13 @@ class E_CreateAProvider_Test  extends AbstractFixture implements OrderedFixtureI
     {
         if("test" != $this->container->get('kernel')->getEnvironment()) return;
 
-        $country = $em->getRepository('HelloDiCoreBundle:Country')->findOneBy(array('iso'=>'US'));
-
         $entity = new Entity();
         $entity->setName('prov1');
         $entity->setVatNumber(1);
         $entity->setAddress1('');
         $entity->setNP(1);
         $entity->setCity('');
-        $entity->setCountry($country);
+        $entity->setCountry('US');
         $em->persist($entity);
 
         $account = new Account();
