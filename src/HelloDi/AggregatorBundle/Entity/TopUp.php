@@ -8,12 +8,12 @@ use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\User;
 
 /**
- * b2blog
+ * TopUp
  *
- * @ORM\Table(name="b2b_log")
+ * @ORM\Table(name="topup")
  * @ORM\Entity
  */
-class B2BLog
+class TopUp
 {
     /**
      * @var integer
@@ -88,13 +88,13 @@ class B2BLog
     protected $statusCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="b2bLogs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="b2bLogs")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="topUps")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     protected $item;
@@ -131,7 +131,7 @@ class B2BLog
      * Set clientTransactionID
      *
      * @param string $clientTransactionID
-     * @return B2BLog
+     * @return TopUp
      */
     public function setClientTransactionID($clientTransactionID)
     {
@@ -154,7 +154,7 @@ class B2BLog
      * Set date
      *
      * @param \DateTime $date
-     * @return B2BLog
+     * @return TopUp
      */
     public function setDate($date)
     {
@@ -177,7 +177,7 @@ class B2BLog
      * Set amount
      *
      * @param float $amount
-     * @return B2BLog
+     * @return TopUp
      */
     public function setAmount($amount)
     {
@@ -200,7 +200,7 @@ class B2BLog
      * Set mobileNumber
      *
      * @param string $mobileNumber
-     * @return B2BLog
+     * @return TopUp
      */
     public function setMobileNumber($mobileNumber)
     {
@@ -223,7 +223,7 @@ class B2BLog
      * Set senderMobileNumber
      *
      * @param string $senderMobileNumber
-     * @return B2BLog
+     * @return TopUp
      */
     public function setSenderMobileNumber($senderMobileNumber)
     {
@@ -246,7 +246,7 @@ class B2BLog
      * Set senderEmail
      *
      * @param string $senderEmail
-     * @return B2BLog
+     * @return TopUp
      */
     public function setSenderEmail($senderEmail)
     {
@@ -269,7 +269,7 @@ class B2BLog
      * Set transactionID
      *
      * @param string $transactionID
-     * @return B2BLog
+     * @return TopUp
      */
     public function setTransactionID($transactionID)
     {
@@ -292,7 +292,7 @@ class B2BLog
      * Set status
      *
      * @param integer $status
-     * @return B2BLog
+     * @return TopUp
      */
     public function setStatus($status)
     {
@@ -315,7 +315,7 @@ class B2BLog
      * Set statusCode
      *
      * @param string $statusCode
-     * @return B2BLog
+     * @return TopUp
      */
     public function setStatusCode($statusCode)
     {
@@ -338,7 +338,7 @@ class B2BLog
      * Set user
      *
      * @param User $user
-     * @return B2BLog
+     * @return TopUp
      */
     public function setUser(User $user)
     {
@@ -361,7 +361,7 @@ class B2BLog
      * Set item
      *
      * @param Item $item
-     * @return B2BLog
+     * @return TopUp
      */
     public function setItem(Item $item)
     {
@@ -384,7 +384,7 @@ class B2BLog
      * Set sellerTransaction
      *
      * @param Transaction $sellerTransaction
-     * @return B2BLog
+     * @return TopUp
      */
     public function setSellerTransaction(Transaction $sellerTransaction = null)
     {
@@ -407,7 +407,7 @@ class B2BLog
      * Set commissionerTransaction
      *
      * @param Transaction $commissionerTransaction
-     * @return B2BLog
+     * @return TopUp
      */
     public function setCommissionerTransaction(Transaction $commissionerTransaction = null)
     {
@@ -430,7 +430,7 @@ class B2BLog
      * Set providerTransaction
      *
      * @param Transaction $providerTransaction
-     * @return B2BLog
+     * @return TopUp
      */
     public function setProviderTransaction(Transaction $providerTransaction = null)
     {

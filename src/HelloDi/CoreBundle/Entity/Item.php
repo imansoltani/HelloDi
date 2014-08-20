@@ -3,9 +3,9 @@ namespace HelloDi\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
-use HelloDi\AggregatorBundle\Entity\B2BLog;
 use HelloDi\AggregatorBundle\Entity\Code;
 use HelloDi\AggregatorBundle\Entity\Input;
+use HelloDi\AggregatorBundle\Entity\TopUp;
 use HelloDi\PricingBundle\Entity\Price;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
@@ -90,9 +90,9 @@ class Item
     protected $prices;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\B2BLog", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\TopUp", mappedBy="item")
      */
-    protected $b2bLogs;
+    protected $topUps;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Country")
@@ -109,7 +109,7 @@ class Item
         $this->inputs = new ArrayCollection();
         $this->descriptions = new ArrayCollection();
         $this->prices = new ArrayCollection();
-        $this->b2bLogs = new ArrayCollection();
+        $this->topUps = new ArrayCollection();
     }
 
     /**
@@ -439,36 +439,36 @@ class Item
     }
 
     /**
-     * Add b2bLogs
+     * Add topUps
      *
-     * @param B2BLog $b2bLogs
+     * @param TopUp $topUps
      * @return Item
      */
-    public function addB2bLog(B2BLog $b2bLogs)
+    public function addTopUp(TopUp $topUps)
     {
-        $this->b2bLogs[] = $b2bLogs;
+        $this->topUps[] = $topUps;
 
         return $this;
     }
 
     /**
-     * Remove b2bLogs
+     * Remove topUps
      *
-     * @param B2BLog $b2bLogs
+     * @param TopUp $topUps
      */
-    public function removeB2bLog(B2BLog $b2bLogs)
+    public function removeTopUp(TopUp $topUps)
     {
-        $this->b2bLogs->removeElement($b2bLogs);
+        $this->topUps->removeElement($topUps);
     }
 
     /**
-     * Get b2bLogs
+     * Get topUps
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getB2bLogs()
+    public function getTopUps()
     {
-        return $this->b2bLogs;
+        return $this->topUps;
     }
 
     /**

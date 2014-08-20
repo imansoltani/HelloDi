@@ -7,7 +7,6 @@ use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\AccountingBundle\Entity\CreditLimit;
 use HelloDi\AccountingBundle\Entity\OgonePayment;
 use HelloDi\AccountingBundle\Entity\Transfer;
-use HelloDi\AggregatorBundle\Entity\B2BLog;
 use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Pin;
 use HelloDi\UserBundle\Model\User as BaseUser;
@@ -83,11 +82,6 @@ class User extends BaseUser
     protected $ogonePayment;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\B2BLog", mappedBy="user")
-     */
-    protected $b2bLogs;
-
-    /**
      * @ORM\OneToMany(targetEntity="HelloDi\AccountingBundle\Entity\CreditLimit", mappedBy="user")
      */
     protected $creditLimits;
@@ -109,7 +103,6 @@ class User extends BaseUser
         $this->ticketNotes = new ArrayCollection();
         $this->transfers = new ArrayCollection();
         $this->ogonePayment = new ArrayCollection();
-        $this->b2bLogs = new ArrayCollection();
         $this->creditLimits = new ArrayCollection();
         $this->pins = new ArrayCollection();
     }
@@ -425,39 +418,6 @@ class User extends BaseUser
     public function getOgonePayment()
     {
         return $this->ogonePayment;
-    }
-
-    /**
-     * Add b2bLogs
-     *
-     * @param B2BLog $b2bLogs
-     * @return User
-     */
-    public function addB2bLog(B2BLog $b2bLogs)
-    {
-        $this->b2bLogs[] = $b2bLogs;
-
-        return $this;
-    }
-
-    /**
-     * Remove b2bLogs
-     *
-     * @param B2BLog $b2bLogs
-     */
-    public function removeB2bLog(B2BLog $b2bLogs)
-    {
-        $this->b2bLogs->removeElement($b2bLogs);
-    }
-
-    /**
-     * Get b2bLogs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getB2bLogs()
-    {
-        return $this->b2bLogs;
     }
 
     /**

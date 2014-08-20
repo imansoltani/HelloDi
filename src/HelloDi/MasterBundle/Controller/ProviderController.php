@@ -26,7 +26,13 @@ class ProviderController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $providers = $em->getRepository('HelloDiAggregatorBundle:Provider')->findAll();
+        $providers = $em->createQueryBuilder()
+            ->select('provider', 'account', 'entity')
+            ->from('HelloDiAggregatorBundle:Provider', 'provider')
+            ->innerJoin('provider.account', 'account')
+            ->innerJoin('account.entity', 'entity')
+            ->getQuery()->getResult();
+        ;
 
         return $this->render('HelloDiMasterBundle:provider:index.html.twig', array(
             'providers' => $providers

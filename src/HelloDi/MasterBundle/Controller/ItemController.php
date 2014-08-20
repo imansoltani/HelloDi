@@ -18,11 +18,14 @@ class ItemController extends Controller
 {
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $items = $em->createQueryBuilder()
-            ->select("item",'code')
+            ->select("item", "code", "country", "description")
             ->from("HelloDiCoreBundle:Item","item")
+            ->innerJoin('item.country', 'country')
+            ->innerJoin('item.descriptions', 'description')
             ->LeftJoin("item.codes","code",'WITH',"code.status = 1")
             ->getQuery()
             ->getResult();
