@@ -148,8 +148,8 @@ class TopUpController extends Controller
         $qb = $em->createQueryBuilder()
             ->select('topup, item, user, provider_transaction, provider_account')
             ->from('HelloDiAggregatorBundle:TopUp', 'topup')
-            ->innerJoin('topup.providerTransaction', 'provider_transaction')
-            ->innerJoin('provider_transaction.account', 'provider_account')
+            ->leftJoin('topup.providerTransaction', 'provider_transaction')
+            ->leftJoin('provider_transaction.account', 'provider_account')
             ->innerJoin('topup.item', 'item')
             ->innerJoin('topup.user', 'user')
         ;

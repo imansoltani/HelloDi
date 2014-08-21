@@ -57,24 +57,24 @@
                         <tbody>
                         {% for topup in topup_s %}
                             <tr>
-                                <td>{{ topup.providerTransaction.account.name }}</td>
+                                <td>{{ topup.providerTransaction ? topup.providerTransaction.account.name : "--" }}</td>
                                 <td>{{ topup.item.name }}</td>
                                 <td>{{ topup.user.username }}</td>
                                 <td>{{ topup.clientTransactionID }}</td>
                                 <td>{{ topup.transactionID }}</td>
                                 <td>
-                                    {% if log.status is null %}
+                                    {% if topup.status is null %}
                                         Null
-                                    {% elseif log.status == 1 %}
+                                    {% elseif topup.status == 1 %}
                                         Done
                                     {% else %}
                                         Error
                                     {% endif %}
                                 </td>
-                                <td>{{ log.statusCode }}</td>
-                                <td>{{ log.mobileNumber }}</td>
-                                <td>{{ log.date|date('Y/m/d') }}</td>
-                                <td>{{ log.amount }}</td>
+                                <td>{{ topup.statusCode }}</td>
+                                <td>{{ topup.mobileNumber }}</td>
+                                <td>{{ topup.date|date('Y/m/d') }}</td>
+                                <td>{{ topup.amount }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

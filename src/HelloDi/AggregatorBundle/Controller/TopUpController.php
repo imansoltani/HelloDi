@@ -204,7 +204,7 @@ class TopUpController extends Controller
         $lastStatusNull = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>null),array('id'=>'desc'));
 
         if($firstStatusNull == null || $lastStatusNull == null)
-            return;
+            throw new \Exception("There is no row with null status.");
 
         $from = clone $firstStatusNull->getDate();
         $from->modify('-1 day');
@@ -242,7 +242,7 @@ class TopUpController extends Controller
             $response = $result->QueryAccountResponse;
         }
         catch(\Exception $e) {
-            throw new \Exception('Unable connect B2B server.');
+            throw new \Exception('Unable connect B2B server: '.$e->getMessage());
         }
 
         //if response returned and failed
