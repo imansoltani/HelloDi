@@ -76,7 +76,7 @@ class TopUp
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="smallint", nullable=true)
+     * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     protected $status;
 
@@ -88,7 +88,7 @@ class TopUp
     protected $statusCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\User", inversedBy="topUps")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
@@ -291,7 +291,7 @@ class TopUp
     /**
      * Set status
      *
-     * @param integer $status
+     * @param boolean $status
      * @return TopUp
      */
     public function setStatus($status)
@@ -304,7 +304,7 @@ class TopUp
     /**
      * Get status
      *
-     * @return integer
+     * @return boolean
      */
     public function getStatus()
     {

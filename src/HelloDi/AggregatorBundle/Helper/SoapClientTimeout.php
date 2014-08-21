@@ -1,12 +1,22 @@
 <?php
 
-namespace HelloDi\DiDistributorsBundle\Helper;
+namespace HelloDi\AggregatorBundle\Helper;
 
-
+/**
+ * Class SoapClientTimeout
+ * @package HelloDi\AggregatorBundle\Helper
+ */
 class SoapClientTimeout extends \SoapClient
 {
+    /**
+     * @var int
+     */
     private $timeout;
 
+    /**
+     * @param int $timeout
+     * @throws \Exception
+     */
     public function __setTimeout($timeout)
     {
         if (!is_int($timeout) && !is_null($timeout))
@@ -17,6 +27,15 @@ class SoapClientTimeout extends \SoapClient
         $this->timeout = $timeout;
     }
 
+    /**
+     * @param string $request
+     * @param string $location
+     * @param string $action
+     * @param int $version
+     * @param bool $one_way
+     * @return mixed|string
+     * @throws \Exception
+     */
     public function __doRequest($request, $location, $action, $version, $one_way = FALSE)
     {
         if (!$this->timeout)

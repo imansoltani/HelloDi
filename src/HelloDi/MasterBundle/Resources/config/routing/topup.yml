@@ -1,3 +1,11 @@
 hello_di_master_topup_import:
     pattern:  /import
     defaults: { _controller: "HelloDiMasterBundle:TopUp:import" }
+
+hello_di_master_topup_report:
+    pattern:  /report
+    defaults: { _controller: "HelloDiMasterBundle:TopUp:report" }
+
+hello_di_master_topup_report_update:
+    pattern:  /report/update
+    defaults: { _controller: "HelloDiMasterBundle:TopUp:updateReport" }

@@ -1,6 +1,9 @@
 <?php
 namespace HelloDi\MasterBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use HelloDi\AggregatorBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Form\TopUpSearchType;
 use HelloDi\CoreBundle\Entity\ItemDesc;
 use HelloDi\MasterBundle\Form\ItemDescType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -125,5 +128,77 @@ class TopUpController extends Controller
         return $this->render('HelloDiMasterBundle:topup:import.html.twig' , array(
                 'form' => $form->createView()
             ));
+    }
+
+    public function reportAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new TopUpSearchType(), null, array(
+                'attr' => array('class' => 'SearchForm'),
+                'method' => 'get',
+            ))
+            ->add('search','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        $form->handleRequest($request);
+
+        $qb = $em->createQueryBuilder()
+            ->select('topup, item, user, provider_transaction, provider_account')
+            ->from('HelloDiAggregatorBundle:TopUp', 'topup')
+            ->innerJoin('topup.providerTransaction', 'provider_transaction')
+            ->innerJoin('provider_transaction.account', 'provider_account')
+            ->innerJoin('topup.item', 'item')
+            ->innerJoin('topup.user', 'user')
+        ;
+
+        if($form->isValid()) {
+            $form_data = $form->getData();
+
+            if(isset($form_data['provider'])) {
+                /** @var Provider $provider */
+                $provider = $form_data['provider'];
+                $qb->andWhere('provider_account = :provider')->setParameter('provider', $provider->getAccount());
+            }
+
+            if(isset($form_data['item']))
+                $qb->andWhere('item = :item')->setParameter('item', $form_data['item']);
+
+            if(isset($form_data['user']))
+                $qb->andWhere('user = :user')->setParameter('user', $form_data['user']);
+
+            if(isset($form_data['from']))
+                $qb->andWhere('topup.date >= :from')->setParameter('from', $form_data['from']);
+
+            if(isset($form_data['to']))
+                $qb->andWhere('topup.date <= :to')->setParameter('to', $form_data['to']);
+
+            if(isset($form_data['status'])) {
+                if($form_data['status'] == 2)
+                    $qb->andWhere('topup.status is null');
+                else
+                    $qb->andWhere('topup.status = :status')->setParameter('status', $form_data['status'] == '1');
+            }
+        }
+
+        $topup_s = $this->get('knp_paginator')->paginate($qb->getQuery(), $request->get('page', 1), 20);
+
+        return $this->render('HelloDiMasterBundle:topup:report.html.twig', array(
+                'topup_s' => $topup_s,
+                'form' => $form->createView()
+            ));
+    }
+
+    public function updateReportAction()
+    {
+        try {
+            $this->get('topup')->updateReportB2BServer();
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
+        } catch (\Exception $e) {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($e->getMessage(), array(), 'message'));
+        }
+        return $this->redirect($this->generateUrl('hello_di_master_topup_report'));
     }
 }

@@ -16,12 +16,13 @@ parameters:
     ogone_sha_out: 'MySha-ouT@Key79?'
     ogone_submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
     languages: [en, fr, de, it]
-    B2BServer.WSDL: https://b2bapi.idt.net/b2bapi/b2bsvc.asmx?wsdl
-    B2BServer.UserName: hellobell
-    B2BServer.Password: hellobell
-    B2BServer.IP: 46.20.242.182
-    B2BServer.StoreID: 309511
-    B2BServer.ServiceNumber: 1179989351
+    B2BServer:
+        WSDL: 'https://b2bapi.idt.net/b2bapi/b2bsvc.asmx?wsdl'
+        UserName: hellobell
+        Password: hellobell
+        IP: 46.20.242.182
+        StoreID: 309511
+        ServiceNumber: 1179989351
     currencies.account: [CHF, USD, EUR]
     currencies.topup:   [CHF, USD, EUR, BDT, BOB, BRL, COP, DOP, NGN, PEN, PHP, PKR, PLN, RUB, XAF]
     VatFormula: "(x/(100+vat)*vat)"

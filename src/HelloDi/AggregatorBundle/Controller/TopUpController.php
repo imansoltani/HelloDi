@@ -3,11 +3,16 @@
 namespace HelloDi\AggregatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AccountingBundle\Container\TransactionContainer;
+use HelloDi\AccountingBundle\Controller\DefaultController;
 use HelloDi\AggregatorBundle\Entity\Provider;
+use HelloDi\AggregatorBundle\Entity\TopUp;
+use HelloDi\AggregatorBundle\Helper\SoapClientTimeout;
 use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\ItemDesc;
 use HelloDi\CoreBundle\Entity\Operator;
 use HelloDi\PricingBundle\Entity\Price;
+use HelloDi\RetailerBundle\Entity\Retailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -23,11 +28,23 @@ class TopUpController extends Controller
     private $em;
 
     /**
+     * @var array
+     */
+    private $b2b_settings;
+
+    /**
+     * @var DefaultController
+     */
+    private $accounting;
+
+    /**
      * constructor
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, DefaultController $accounting, array $b2b_setting)
     {
         $this->em = $em;
+        $this->accounting = $accounting;
+        $this->b2b_settings = $b2b_setting;
     }
 
     /**
@@ -167,5 +184,177 @@ class TopUpController extends Controller
         }
 
         return $log;
+    }
+
+    public function updateReportB2BServer()
+    {
+        ini_set('max_execution_time', 80);
+
+        //find provider
+        /** @var Provider $provider */
+        $provider = $this->em->createQueryBuilder()
+            ->select('provider, account')
+            ->from('HelloDiAggregatorBundle:Provider', 'provider')
+            ->innerJoin('provider.account', 'account')
+            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
+            ->getQuery()->getSingleResult();
+
+        //get range for log
+        $firstStatusNull = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>null),array('id'=>'asc'));
+        $lastStatusNull = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>null),array('id'=>'desc'));
+
+        if($firstStatusNull == null || $lastStatusNull == null)
+            return;
+
+        $from = clone $firstStatusNull->getDate();
+        $from->modify('-1 day');
+
+        $to = clone $lastStatusNull->getDate();
+        $to->modify('+1 day');
+
+        //sending request and get response
+        try {
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
+            $client->__setTimeout(60);
+            $result = $client->__call('QueryAccount', array(
+                    'Request' => array(
+                        'UserInfo' => array(
+                            'UserName'=>$this->b2b_settings['UserName'],
+                            'Password'=>$this->b2b_settings['Password']
+                        ),
+                        'ClientReferenceData' => array(),
+                        'Parameters' => array(
+                            'ReturnBillingHistory' => 'Y',
+                            'DateFrom' => date_format($from,'Y-m-d'),
+                            'DateTo' => date_format($to,'Y-m-d')
+                        ),
+                    )
+                ));
+
+            $topup_s = $this->em->createQueryBuilder()
+                ->select('topup, item, user')
+                ->from('HelloDiAggregatorBundle:TopUp', 'topup')
+                ->innerJoin('topup.item', 'item')
+                ->innerJoin('topup.user', 'user')
+                ->where('topup.status is null')
+                ->getQuery()->getResult();
+
+            $response = $result->QueryAccountResponse;
+        }
+        catch(\Exception $e) {
+            throw new \Exception('Unable connect B2B server.');
+        }
+
+        //if response returned and failed
+        if($response->ResponseReferenceData->Success == 'N')
+            throw new \Exception($this->convertErrorMessagesToString($response->ResponseReferenceData->MessageList));
+
+        //data of request
+        $report = $response->BillDataList->Data;
+
+        //search all buying with 'null status'
+        $row_num_viewed = 0;
+        foreach($topup_s as $topup) {
+            /** @var TopUp $topup */
+            if (!$row_num_viewed = $this->findDatainB2BLog($topup->getClientTransactionID(),$report,$row_num_viewed))
+                break;
+            //if not found left null.
+
+            //founded data
+            $data = is_array($report)?$report[$row_num_viewed]:$report;
+
+            $topup->setStatus($data->Description=="Success");
+            $topup->setTransactionID('Update_Log');
+
+            //collect needed data
+            /** @var Retailer $retailer */
+            $retailer = $this->em->createQueryBuilder()
+                ->select('retailer', 'account')
+                ->from('HelloDiRetailerBundle:Retailer', 'retailer')
+                ->innerJoin('retailer.account', 'account')
+                ->innerJoin('account.users', 'user')
+                ->where('user = :user')->setParameter('user', $topup->getUser())
+                ->getQuery()->getSingleResult();
+
+            $distributor = $retailer->getDistributor();
+
+            $priceProvider = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+                    'item' => $topup->getItem(),
+                    'account' => $provider->getAccount()
+                ));
+
+            $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+                    'item' => $topup->getItem(),
+                    'account' => $distributor->getAccount()
+                ));
+
+            $priceRetailer = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+                    'item' => $topup->getItem(),
+                    'account' => $retailer->getAccount()
+                ));
+
+            $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
+
+            //if status of transaction is success update transaction else just release reserved amount.
+            if($topup->getStatus() == true) {
+                $result = $this->accounting->processTransaction(array(
+                        new TransactionContainer(
+                            $provider->getAccount(),
+                            $priceProvider->getPrice(),
+                            'provider b2b topup buy.'
+                        ),
+                        new TransactionContainer(
+                            $distributor->getAccount(),
+                            $commission,
+                            'distributor b2b topup buy.'
+                        ),
+                        new TransactionContainer(
+                            $retailer->getAccount(),
+                            -$priceRetailer->getPrice(),
+                            'retailer b2b topup buy.'
+                        ),
+                    ), false);
+
+                if($result == false)
+                    throw new \Exception("Retailer '".$retailer->getAccount()->getName()."' hasn't enough balance. (error in reserved Amount)");
+
+                $topup->setProviderTransaction($result[0]);
+                $topup->setCommissionerTransaction($result[1]);
+                $topup->setSellerTransaction($result[2]);
+            }
+
+            $this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), false);
+        }
+
+        $this->em->flush();
+    }
+
+    private function findDataInB2BLog($MyClientId, $dataList, $i)
+    {
+        if (is_array($dataList)) {
+            while ($dataList[$i]->BillTransactionID != $MyClientId) {
+                $i++;
+                if ($i == count($dataList))
+                    return false;
+            }
+            return $i;
+        } else {
+            if ($dataList->BillTransactionID == $MyClientId)
+                return 0;
+            else
+                return false;
+        }
+    }
+
+    private function convertErrorMessagesToString($messages, $joiner = "<br>")
+    {
+        $result = "";
+        if(isset($messages->StatusText))
+            $result = $messages->StatusText;
+        else
+            foreach($messages as $message)
+                $result .= $message->StatusText . $joiner;
+
+        return $result;
     }
 }

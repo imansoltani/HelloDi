@@ -11,4 +11,4 @@ services:
 
     topup:
         class: HelloDi\AggregatorBundle\Controller\TopUpController
-        arguments: [@doctrine.orm.default_entity_manager]
+        arguments: [@doctrine.orm.default_entity_manager, @accounting, %b2bserver%]

@@ -9,6 +9,7 @@ use HelloDi\AccountingBundle\Entity\OgonePayment;
 use HelloDi\AccountingBundle\Entity\Transfer;
 use HelloDi\AggregatorBundle\Entity\Input;
 use HelloDi\AggregatorBundle\Entity\Pin;
+use HelloDi\AggregatorBundle\Entity\TopUp;
 use HelloDi\UserBundle\Model\User as BaseUser;
 
 /**
@@ -92,6 +93,11 @@ class User extends BaseUser
     protected $pins;
 
     /**
+     * @ORM\OneToMany(targetEntity="HelloDi\AggregatorBundle\Entity\TopUp", mappedBy="user")
+     */
+    protected $topUps;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -105,6 +111,7 @@ class User extends BaseUser
         $this->ogonePayment = new ArrayCollection();
         $this->creditLimits = new ArrayCollection();
         $this->pins = new ArrayCollection();
+        $this->$topUps = new ArrayCollection();
     }
 
     /**
@@ -507,5 +514,38 @@ class User extends BaseUser
     public function getRole()
     {
         return $this->getRoles()[0];
+    }
+
+    /**
+     * Add topUps
+     *
+     * @param TopUp $topUps
+     * @return User
+     */
+    public function addTopUp(TopUp $topUps)
+    {
+        $this->topUps[] = $topUps;
+    
+        return $this;
+    }
+
+    /**
+     * Remove topUps
+     *
+     * @param TopUp $topUps
+     */
+    public function removeTopUp(TopUp $topUps)
+    {
+        $this->topUps->removeElement($topUps);
+    }
+
+    /**
+     * Get topUps
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTopUps()
+    {
+        return $this->topUps;
     }
 }

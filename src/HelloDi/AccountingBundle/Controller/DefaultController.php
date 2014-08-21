@@ -137,7 +137,7 @@ class DefaultController extends Controller
     /**
      * @param float $amount
      * @param Account $account
-     * @param boolean $freeze
+     * @param boolean $freeze If True do Freeze and if False do Unfreeze.
      * @throws \Exception
      * @return boolean
      */
