@@ -11,6 +11,8 @@ use HelloDi\AggregatorBundle\Helper\SoapClientTimeout;
 use HelloDi\CoreBundle\Entity\Item;
 use HelloDi\CoreBundle\Entity\ItemDesc;
 use HelloDi\CoreBundle\Entity\Operator;
+use HelloDi\CoreBundle\Entity\User;
+use HelloDi\DistributorBundle\Entity\Distributor;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\RetailerBundle\Entity\Retailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -357,4 +359,71 @@ class TopUpController extends Controller
 
         return $result;
     }
+
+//    private function CreateRandomClientTransactionId($user_id)
+//    {
+//        return "HD-".sprintf("%05s", $user_id).'-'.round(microtime(true));
+//    }
+//
+//    public function buyImtu(User $user, Item $item, $senderMobileNumber, $receiverMobileNumber, $senderEmail)
+//    {
+//        ini_set('max_execution_time', 80);
+//
+//        //find accounts
+//        /** @var Retailer $retailer */
+//        $retailer = $this->em->createQueryBuilder()
+//            ->select('retailer', 'account')
+//            ->from('HelloDiRetailerBundle:Retailer', 'retailer')
+//            ->innerJoin('retailer.account', 'account')
+//            ->innerJoin('account.users', 'user')
+//            ->where('user = :user')->setParameter('user', $user)
+//            ->getQuery()->getSingleResult();
+//
+//        if(!$retailer)
+//            throw new \Exception('Unable find Retailer Account.');
+//
+//
+//        /** @var Distributor $distributor */
+//        $distributor = $retailer->getDistributor();
+//
+//        /** @var Provider $provider */
+//        $provider = $this->em->createQueryBuilder()
+//            ->select('provider, account')
+//            ->from('HelloDiAggregatorBundle:Provider', 'provider')
+//            ->innerJoin('provider.account', 'account')
+//            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
+//            ->getQuery()->getSingleResult();
+//
+//        if(!$provider)
+//            throw new \Exception('Unable find Provider Account.');
+//
+//        //find prices
+//        $priceProvider = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+//                'item' => $item,
+//                'account' => $provider->getAccount()
+//            ));
+//
+//        $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+//                'item' => $item,
+//                'account' => $distributor->getAccount()
+//            ));
+//
+//        $priceRetailer = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+//                'item' => $item,
+//                'account' => $retailer->getAccount()
+//            ));
+//
+//        if(!$priceProvider || !$priceDistributor || !$priceRetailer)
+//            throw new \Exception('Unable find Prices for Accounts.');
+//
+//        $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
+//
+//        $clientTransactionId = $this->CreateRandomClientTransactionId($user->getId());
+//
+//        if(!$this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), true))
+//            throw new \Exception("Retailer hasn't enough balance.");
+//
+//
+//
+//    }
 }
