@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<framework xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/frameworkDescriptionVersion1.1.3.xsd" frameworkId="org.getcomposer" name="Composer_5/12/14 11:19 PM_c" invoke="&quot;$PhpExecutable$&quot; C:\xampp\htdocs\HelloDi\composer.phar" alias="c" enabled="true" version="2">
+<framework xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/frameworkDescriptionVersion1.1.3.xsd" frameworkId="org.getcomposer" name="Composer_5/12/14 11:19 PM_c" invoke="php C:\xampp\htdocs\HelloDi\composer.phar" alias="c" enabled="true" version="2">
   <command>
     <name>about</name>
     <help><![CDATA[<b>php composer.phar about</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
@@ -44,6 +44,146 @@
       <option name="--dir" shortcut="" pattern="equals">
         <help><![CDATA[Write the archive to this directory]]></help>
       </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message.]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message.]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version.]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output.]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output.]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question.]]></help>
+      </option>
+      <option name="--profile" shortcut="">
+        <help><![CDATA[Display timing and memory usage information]]></help>
+      </option>
+      <option name="--working-dir" shortcut="-d" pattern="equals">
+        <help><![CDATA[If specified, use the given directory as working directory.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>browse</name>
+    <help><![CDATA[The home command opens a package's repository URL or<br> homepage in your default browser.<br> <br> To open the homepage by default, use -H or --homepage.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--homepage</td><td>(-H)</td><td>Open the homepage instead of the repository URL.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
+    <params>packages</params>
+    <optionsBefore>
+      <option name="--homepage" shortcut="-H">
+        <help><![CDATA[Open the homepage instead of the repository URL.]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message.]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message.]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version.]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output.]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output.]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question.]]></help>
+      </option>
+      <option name="--profile" shortcut="">
+        <help><![CDATA[Display timing and memory usage information]]></help>
+      </option>
+      <option name="--working-dir" shortcut="-d" pattern="equals">
+        <help><![CDATA[If specified, use the given directory as working directory.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>home</name>
+    <help><![CDATA[The home command opens a package's repository URL or<br> homepage in your default browser.<br> <br> To open the homepage by default, use -H or --homepage.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--homepage</td><td>(-H)</td><td>Open the homepage instead of the repository URL.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
+    <params>packages</params>
+    <optionsBefore>
+      <option name="--homepage" shortcut="-H">
+        <help><![CDATA[Open the homepage instead of the repository URL.]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message.]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message.]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version.]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output.]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output.]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question.]]></help>
+      </option>
+      <option name="--profile" shortcut="">
+        <help><![CDATA[Display timing and memory usage information]]></help>
+      </option>
+      <option name="--working-dir" shortcut="-d" pattern="equals">
+        <help><![CDATA[If specified, use the given directory as working directory.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>clear-cache</name>
+    <help><![CDATA[The <b>clear-cache</b> deletes all cached packages from composer's<br> cache directory.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message.]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message.]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version.]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output.]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output.]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question.]]></help>
+      </option>
+      <option name="--profile" shortcut="">
+        <help><![CDATA[Display timing and memory usage information]]></help>
+      </option>
+      <option name="--working-dir" shortcut="-d" pattern="equals">
+        <help><![CDATA[If specified, use the given directory as working directory.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>clearcache</name>
+    <help><![CDATA[The <b>clear-cache</b> deletes all cached packages from composer's<br> cache directory.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
       <option name="--help" shortcut="-h">
         <help><![CDATA[Display this help message.]]></help>
       </option>
@@ -594,6 +734,55 @@
     </optionsBefore>
   </command>
   <command>
+    <name>remove</name>
+    <help><![CDATA[The <b>remove</b> command removes a package from the current<br> list of installed packages<br> <br> <b>php composer.phar remove</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--dev</td><td></td><td>Removes a package from the require-dev section.</td></tr> <tr><td>--no-progress</td><td></td><td>Do not output download progress.</td></tr> <tr><td>--no-update</td><td></td><td>Disables the automatic update of the dependencies.</td></tr> <tr><td>--update-no-dev</td><td></td><td>Run the dependency update with the --no-dev option.</td></tr> <tr><td>--update-with-dependencies</td><td></td><td>Allows inherited dependencies to be updated with explicit dependencies.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
+    <params>packages[=null]</params>
+    <optionsBefore>
+      <option name="--dev" shortcut="">
+        <help><![CDATA[Removes a package from the require-dev section.]]></help>
+      </option>
+      <option name="--no-progress" shortcut="">
+        <help><![CDATA[Do not output download progress.]]></help>
+      </option>
+      <option name="--no-update" shortcut="">
+        <help><![CDATA[Disables the automatic update of the dependencies.]]></help>
+      </option>
+      <option name="--update-no-dev" shortcut="">
+        <help><![CDATA[Run the dependency update with the --no-dev option.]]></help>
+      </option>
+      <option name="--update-with-dependencies" shortcut="">
+        <help><![CDATA[Allows inherited dependencies to be updated with explicit dependencies.]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message.]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message.]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version.]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output.]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output.]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question.]]></help>
+      </option>
+      <option name="--profile" shortcut="">
+        <help><![CDATA[Display timing and memory usage information]]></help>
+      </option>
+      <option name="--working-dir" shortcut="-d" pattern="equals">
+        <help><![CDATA[If specified, use the given directory as working directory.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
     <name>require</name>
     <help><![CDATA[The require command adds required packages to your composer.json and installs them<br> <br> If you do not want to install the new dependencies immediately you can call it with --no-update<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--dev</td><td></td><td>Add requirement to require-dev.</td></tr> <tr><td>--prefer-source</td><td></td><td>Forces installation from package sources when possible, including VCS information.</td></tr> <tr><td>--prefer-dist</td><td></td><td>Forces installation from package dist even for dev versions.</td></tr> <tr><td>--no-progress</td><td></td><td>Do not output download progress.</td></tr> <tr><td>--no-update</td><td></td><td>Disables the automatic update of the dependencies.</td></tr> <tr><td>--update-no-dev</td><td></td><td>Run the dependency update with the --no-dev option.</td></tr> <tr><td>--update-with-dependencies</td><td></td><td>Allows inherited dependencies to be updated with explicit dependencies.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
     <params>packages[=null]</params>
@@ -651,7 +840,7 @@
   <command>
     <name>run-script</name>
     <help><![CDATA[The <b>run-script</b> command runs scripts defined in composer.json:<br> <br> <b>php composer.phar run-script post-update-cmd</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--dev</td><td></td><td>Sets the dev mode.</td></tr> <tr><td>--no-dev</td><td></td><td>Disables the dev mode.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> </table> <br/>]]></help>
-    <params>script</params>
+    <params>script args[=null]</params>
     <optionsBefore>
       <option name="--dev" shortcut="">
         <help><![CDATA[Sets the dev mode.]]></help>
@@ -997,6 +1186,6 @@
       </option>
     </optionsBefore>
   </command>
-  <help><![CDATA[<p>Usage:<br> [options] command [arguments] </p><br> <table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> </table> <br/> <table> <tr><td><strong>Available commands:</strong></td></tr> <tr><td>about</td><td>Short information about Composer</td></tr> <tr><td>archive</td><td>Create an archive of this composer package</td></tr> <tr><td>config</td><td>Set config options</td></tr> <tr><td>create-project</td><td>Create new project from a package into given directory.</td></tr> <tr><td>depends</td><td>Shows which packages depend on the given package</td></tr> <tr><td>diagnose</td><td>Diagnoses the system to identify common errors.</td></tr> <tr><td>dump-autoload</td><td>Dumps the autoloader</td></tr> <tr><td>dumpautoload</td><td>Dumps the autoloader</td></tr> <tr><td>global</td><td>Allows running commands in the global composer dir ($COMPOSER_HOME).</td></tr> <tr><td>help</td><td>Displays help for a command</td></tr> <tr><td>init</td><td>Creates a basic composer.json file in current directory.</td></tr> <tr><td>install</td><td>Installs the project dependencies from the composer.lock file if present, or falls back on the composer.json.</td></tr> <tr><td>licenses</td><td>Show information about licenses of dependencies</td></tr> <tr><td>list</td><td>Lists commands</td></tr> <tr><td>require</td><td>Adds required packages to your composer.json and installs them</td></tr> <tr><td>run-script</td><td>Run the scripts defined in composer.json.</td></tr> <tr><td>search</td><td>Search for packages</td></tr> <tr><td>self-update</td><td>Updates composer.phar to the latest version.</td></tr> <tr><td>selfupdate</td><td>Updates composer.phar to the latest version.</td></tr> <tr><td>show</td><td>Show information about packages</td></tr> <tr><td>status</td><td>Show a list of locally modified packages</td></tr> <tr><td>update</td><td>Updates your dependencies to the latest version according to composer.json, and updates the composer.lock file.</td></tr> <tr><td>validate</td><td>Validates a composer.json</td></tr> </table> <br/>]]></help>
+  <help><![CDATA[<p>Usage:<br> [options] command [arguments] </p><br> <table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--profile</td><td></td><td>Display timing and memory usage information</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version.</td></tr> <tr><td>--working-dir</td><td>(-d)</td><td>If specified, use the given directory as working directory.</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question.</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message.</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output.</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output.</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message.</td></tr> </table> <br/> <table> <tr><td><strong>Available commands:</strong></td></tr> <tr><td>about</td><td>Short information about Composer</td></tr> <tr><td>archive</td><td>Create an archive of this composer package</td></tr> <tr><td>browse</td><td>Opens the package's repository URL or homepage in your browser.</td></tr> <tr><td>home</td><td>Opens the package's repository URL or homepage in your browser.</td></tr> <tr><td>clear-cache</td><td>Clears composer's internal package cache.</td></tr> <tr><td>clearcache</td><td>Clears composer's internal package cache.</td></tr> <tr><td>config</td><td>Set config options</td></tr> <tr><td>create-project</td><td>Create new project from a package into given directory.</td></tr> <tr><td>depends</td><td>Shows which packages depend on the given package</td></tr> <tr><td>diagnose</td><td>Diagnoses the system to identify common errors.</td></tr> <tr><td>dump-autoload</td><td>Dumps the autoloader</td></tr> <tr><td>dumpautoload</td><td>Dumps the autoloader</td></tr> <tr><td>global</td><td>Allows running commands in the global composer dir ($COMPOSER_HOME).</td></tr> <tr><td>help</td><td>Displays help for a command</td></tr> <tr><td>init</td><td>Creates a basic composer.json file in current directory.</td></tr> <tr><td>install</td><td>Installs the project dependencies from the composer.lock file if present, or falls back on the composer.json.</td></tr> <tr><td>licenses</td><td>Show information about licenses of dependencies</td></tr> <tr><td>list</td><td>Lists commands</td></tr> <tr><td>remove</td><td>Removes a package from the require or require-dev</td></tr> <tr><td>require</td><td>Adds required packages to your composer.json and installs them</td></tr> <tr><td>run-script</td><td>Run the scripts defined in composer.json.</td></tr> <tr><td>search</td><td>Search for packages</td></tr> <tr><td>self-update</td><td>Updates composer.phar to the latest version.</td></tr> <tr><td>selfupdate</td><td>Updates composer.phar to the latest version.</td></tr> <tr><td>show</td><td>Show information about packages</td></tr> <tr><td>status</td><td>Show a list of locally modified packages</td></tr> <tr><td>update</td><td>Updates your dependencies to the latest version according to composer.json, and updates the composer.lock file.</td></tr> <tr><td>validate</td><td>Validates a composer.json</td></tr> </table> <br/>]]></help>
 </framework>
 
