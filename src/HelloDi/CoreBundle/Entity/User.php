@@ -111,7 +111,7 @@ class User extends BaseUser
         $this->ogonePayment = new ArrayCollection();
         $this->creditLimits = new ArrayCollection();
         $this->pins = new ArrayCollection();
-        $this->$topUps = new ArrayCollection();
+        $this->topUps = new ArrayCollection();
     }
 
     /**

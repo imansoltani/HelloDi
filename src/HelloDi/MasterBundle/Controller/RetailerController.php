@@ -327,6 +327,7 @@ class RetailerController extends Controller
         $form = $this->createFormBuilder(array(
                 'terms' => $retailer->getAccount()->getTerms(),
                 'defaultLanguage' => $retailer->getAccount()->getDefaultLanguage(),
+                'vat' => $retailer->getVat(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -337,6 +338,11 @@ class RetailerController extends Controller
                     'label' => 'DefaultLanguage','translation_domain' => 'accounts',
                     'choices'=>$languages,
                     'required'=>true,
+                ))
+            ->add('vat', 'choice', array(
+                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
+                    'required'  => true,
+                    'expanded' => true
                 ))
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -352,6 +358,7 @@ class RetailerController extends Controller
 
                 $retailer->getAccount()->setTerms($data['terms']);
                 $retailer->getAccount()->setDefaultLanguage($data['defaultLanguage']);
+                $retailer->setVat($data['vat']);
 
                 $em->flush();
 //                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>35));

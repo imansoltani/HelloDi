@@ -24,6 +24,11 @@ class ProviderAccountUserType extends AbstractType
             ->add('account',new AccountUserType($this->languages, Account::PROVIDER))
             ->add('timezone','timezone',array('label' => 'TimeZone','translation_domain' => 'accounts'))
             ->add('currency','choice',array('label' => 'Currency','translation_domain' => 'accounts','choices'=>$this->currencies))
+            ->add('vat', 'choice', array(
+                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
+                    'required'  => true,
+                    'expanded' => true
+                ))
         ;
     }
 

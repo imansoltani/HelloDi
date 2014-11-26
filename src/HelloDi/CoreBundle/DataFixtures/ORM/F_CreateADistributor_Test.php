@@ -55,6 +55,7 @@ class F_CreateADistributor_Test  extends AbstractFixture implements OrderedFixtu
             $distributor->setCurrency('USD');
             $distributor->setTimeZone("Asia/Tehran");
             $distributor->setAccount($account);
+            $distributor->setVat(true);
             $em->persist($distributor);
 
             $dist_admin = new User();

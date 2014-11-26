@@ -52,6 +52,7 @@ class E_CreateAProvider_Test  extends AbstractFixture implements OrderedFixtureI
         $provider = new Provider();
         $provider->setCurrency('USD');
         $provider->setAccount($account);
+        $provider->setVat(true);
         $em->persist($provider);
 
         $em->flush();

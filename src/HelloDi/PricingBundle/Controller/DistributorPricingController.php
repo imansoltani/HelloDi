@@ -175,7 +175,6 @@ class DistributorPricingController extends Controller
                 $priceTo->setAccount($to->getAccount());
                 $to->getAccount()->addPrice($priceTo);
                 $priceTo->setPrice($priceFrom->getPrice());
-                $priceTo->setTax($priceFrom->getTax());
 
                 $em->persist($priceTo);
             }
