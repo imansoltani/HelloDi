@@ -1,9 +1,7 @@
 <?php
 namespace HelloDi\CoreBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
-use HelloDi\PricingBundle\Entity\Price;
 
 /**
  * @ORM\Entity
@@ -19,33 +17,19 @@ class Tax
     protected $id;
 
     /**
-     * @ORM\Column(type="float", nullable=false, name="tax",nullable=true)
-     */
-    protected $tax;
-
-    /**
-     * @ORM\Column(type="string", length=2, nullable=true)
+     * @ORM\Column(type="string", length=2)
      */
     protected $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\Price", mappedBy="tax")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $prices;
+    protected $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\TaxHistory", mappedBy="tax")
+     * @ORM\Column(type="decimal", precision=4, scale=2)
      */
-    protected $taxHistories;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->taxHistories = new ArrayCollection();
-        $this->prices = new ArrayCollection();
-    }
+    protected $vat;
 
     /**
      * Get id
@@ -58,29 +42,6 @@ class Tax
     }
 
     /**
-     * Set tax
-     *
-     * @param float $tax
-     * @return Tax
-     */
-    public function setTax($tax)
-    {
-        $this->tax = $tax;
-    
-        return $this;
-    }
-
-    /**
-     * Get tax
-     *
-     * @return float 
-     */
-    public function getTax()
-    {
-        return $this->tax;
-    }
-
-    /**
      * Set country
      *
      * @param string $country
@@ -88,15 +49,15 @@ class Tax
      */
     public function setCountry($country)
     {
-        $this->country = strtoupper($country);
-
+        $this->country = $country;
+    
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return string
+     * @return string 
      */
     public function getCountry()
     {
@@ -104,68 +65,48 @@ class Tax
     }
 
     /**
-     * Add prices
+     * Set dateEnd
      *
-     * @param Price $prices
+     * @param \DateTime $dateEnd
      * @return Tax
      */
-    public function addPrice(Price $prices)
+    public function setDateEnd($dateEnd)
     {
-        $this->prices[] = $prices;
+        $this->dateEnd = $dateEnd;
     
         return $this;
     }
 
     /**
-     * Remove prices
+     * Get dateEnd
      *
-     * @param Price $prices
+     * @return \DateTime 
      */
-    public function removePrice(Price $prices)
+    public function getDateEnd()
     {
-        $this->prices->removeElement($prices);
+        return $this->dateEnd;
     }
 
     /**
-     * Get prices
+     * Set vat
      *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPrices()
-    {
-        return $this->prices;
-    }
-
-    /**
-     * Add taxHistories
-     *
-     * @param TaxHistory $taxHistories
+     * @param float $vat
      * @return Tax
      */
-    public function addTaxHistorie(TaxHistory $taxHistories)
+    public function setVat($vat)
     {
-        $this->taxHistories[] = $taxHistories;
+        $this->vat = $vat;
     
         return $this;
     }
 
     /**
-     * Remove taxHistories
+     * Get vat
      *
-     * @param TaxHistory $taxHistories
+     * @return float
      */
-    public function removeTaxHistorie(TaxHistory $taxHistories)
+    public function getVat()
     {
-        $this->taxHistories->removeElement($taxHistories);
-    }
-
-    /**
-     * Get taxHistories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTaxHistories()
-    {
-        return $this->taxHistories;
+        return $this->vat;
     }
 }

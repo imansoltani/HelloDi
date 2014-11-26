@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Ticket;
 use HelloDi\RetailerBundle\Entity\Retailer;
-use HelloDi\CoreBundle\Entity\TaxHistory;
 
 /**
  * Distributor
@@ -41,12 +40,6 @@ class Distributor
     protected $timeZone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\TaxHistory", inversedBy="distributors")
-     * @ORM\JoinColumn(name="tax_history_id", referencedColumnName="id", nullable=true)
-     */
-    protected $taxHistory;
-
-    /**
      * @ORM\OneToMany(targetEntity="HelloDi\RetailerBundle\Entity\Retailer", mappedBy="distributor")
      */
     protected $retailers;
@@ -61,6 +54,11 @@ class Distributor
      * @ORM\OneToMany(targetEntity="HelloDi\CoreBundle\Entity\Ticket", mappedBy="distributor")
      */
     protected $tickets;
+
+    /**
+     * @ORM\Column(type="boolean", name="vat")
+     */
+    protected $vat = true;
 
     /**
      * Constructor
@@ -125,29 +123,6 @@ class Distributor
     public function getTimeZone()
     {
         return $this->timeZone;
-    }
-
-    /**
-     * Set taxHistory
-     *
-     * @param TaxHistory $taxHistory
-     * @return Distributor
-     */
-    public function setTaxHistory(TaxHistory $taxHistory = null)
-    {
-        $this->taxHistory = $taxHistory;
-
-        return $this;
-    }
-
-    /**
-     * Get taxHistory
-     *
-     * @return TaxHistory
-     */
-    public function getTaxHistory()
-    {
-        return $this->taxHistory;
     }
 
     /**
@@ -253,5 +228,28 @@ class Distributor
     public function getNameWithEntity()
     {
         return $this->getAccount()->getName() . ' - ' . $this->getAccount()->getEntity()->getName();
+    }
+
+    /**
+     * Set vat
+     *
+     * @param boolean $vat
+     * @return Distributor
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return boolean 
+     */
+    public function getVat()
+    {
+        return $this->vat;
     }
 }

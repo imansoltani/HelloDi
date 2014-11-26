@@ -5,7 +5,6 @@ use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Item;
-use HelloDi\CoreBundle\Entity\Tax;
 
 /**
  * @ORM\Entity
@@ -34,12 +33,6 @@ class Price
      * @ORM\OneToMany(targetEntity="HelloDi\PricingBundle\Entity\ChangingPrice", mappedBy="prices")
      */
     protected $changingPrices;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Tax", inversedBy="prices")
-     * @ORM\JoinColumn(name="tax_id", referencedColumnName="id", nullable=true)
-     */
-    protected $tax;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelloDi\CoreBundle\Entity\Item", inversedBy="prices")
@@ -158,29 +151,6 @@ class Price
     public function getChangingPrices()
     {
         return $this->changingPrices;
-    }
-
-    /**
-     * Set Tax
-     *
-     * @param Tax $tax
-     * @return Price
-     */
-    public function setTax(Tax $tax = null)
-    {
-        $this->tax = $tax;
-
-        return $this;
-    }
-
-    /**
-     * Get Tax
-     *
-     * @return Tax
-     */
-    public function getTax()
-    {
-        return $this->tax;
     }
 
     /**
