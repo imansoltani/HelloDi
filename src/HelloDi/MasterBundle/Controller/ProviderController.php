@@ -206,6 +206,7 @@ class ProviderController extends Controller
                         $provider->getAccount(),
                         $transaction->getAmount(),
                         $transaction->getDescription(),
+                        0.0,
                         $transaction->getFees()
                 )));
 

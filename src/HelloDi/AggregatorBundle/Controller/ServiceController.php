@@ -32,6 +32,8 @@ class ServiceController extends Controller
 
     /**
      * constructor
+     * @param EntityManager $em
+     * @param DefaultController $accounting
      */
     public function __construct(EntityManager $em, DefaultController $accounting)
     {

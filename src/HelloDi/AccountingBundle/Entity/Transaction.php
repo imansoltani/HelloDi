@@ -49,6 +49,11 @@ class Transaction
     protected $account;
 
     /**
+     * @ORM\Column(type="decimal", nullable=false, name="vat", precision=4, scale=2)
+     */
+    protected $vat = 0;
+
+    /**
      * Construct
      */
     public function __construct()
@@ -214,5 +219,28 @@ class Transaction
         /** @var float $amount */
         /** @var float $currentBalance */
         $this->getAccount()->setBalance($currentBalance + $amount);
+    }
+
+    /**
+     * Set vat
+     *
+     * @param string $vat
+     * @return Transaction
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return string 
+     */
+    public function getVat()
+    {
+        return $this->vat;
     }
 }

@@ -24,19 +24,26 @@ class TransactionContainer {
     /**
      * @var float
      */
+    private $vat = 0.0;
+    /**
+     * @var float
+     */
     private $fees = 0.0;
 
     /**
      * @param Account $account
      * @param float $amount
      * @param string $description
+     * @param float $vat
      * @param float $fees
+     * @throws \Exception
      */
-    public function __construct(Account $account, $amount, $description, $fees = 0.0)
+    public function __construct(Account $account, $amount, $description, $vat = 0.0, $fees = 0.0)
     {
         $this->setAccount($account);
         $this->setAmount($amount);
         $this->setDescription($description);
+        $this->setVat($vat);
         $this->setFees($fees);
     }
 
@@ -98,6 +105,26 @@ class TransactionContainer {
             throw new \Exception("It's must be string.");
 
         $this->description = $description;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param float $vat
+     * @throws \Exception
+     */
+    public function setVat($vat)
+    {
+        if(!is_numeric($vat) && $vat >= 0)
+            throw new \Exception("It's must be larger than zero.");
+
+        $this->vat = $vat;
     }
 
     /**

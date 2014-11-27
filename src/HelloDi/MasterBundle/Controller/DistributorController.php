@@ -229,6 +229,7 @@ class DistributorController extends Controller
                         $distributor->getAccount(),
                         $transaction->getAmount(),
                         $transaction->getDescription(),
+                        0.0,
                         $transaction->getFees()
                     )));
 
