@@ -1,0 +1,90 @@
+{% extends 'HelloDiMasterBundle::menu.html.twig' %}
+
+{% block title %}{{ 'Tax' | trans ({}, "vat") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-check"></i>{{ 'Tax' | trans ({}, "vat") }}{% endblock %}
+
+{% set MU = 'setting' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_master_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <span class="link">{{ 'Tax' | trans ({}, "vat") }}</span>
+{% endblock Site_Map %}
+
+{% block Link_Head %}
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColReorder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hellodi/js/libs/DataTable/ColVis.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('div.form_search form').submit(function() {
+                if($("div.form_search input[name='type']:checked").val() == 1)
+                    $("div.form_search select[name='country']").attr('name', '');
+                $("div.form_search input[name='type']").removeAttr('required').attr('name', '');
+
+                $('form input, form select, form button').filter(function() {return $(this).val() == ""}).attr('name', '');
+            });
+            $(function () {Form_Search(0, "Search Vat");});
+        });
+
+        function update_form_search(){
+            if($("div.form_search input[name='type']:checked").val() == 1)
+                $("div.form_search select[name='country']").attr('disabled', '');
+            else
+                $("div.form_search select[name='country']").removeAttr('disabled');
+        }
+
+        $(document).ready(function() {
+            Fix_Size();
+
+            update_form_search();
+            $("div.form_search input[name='type']").change(function(){update_form_search()});
+        });
+    </script>
+{% endblock %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+            <div class="form_search">
+                <h5 style="cursor:pointer;" class="TitleShow1">
+                    <span>
+                        <i id="search_logo" class="icon-search"></i><i class="title_search"></i>
+                    </span>
+                </h5>
+                {{ form(form_search) }}
+            </div>
+
+            <div class="widget-header">
+                <h3>  {{ 'Add Vat' | trans ({}, "vat") }}</h3>
+            </div>
+
+            {{ form(form) }}
+
+            <div style="margin-top: 5px" class="tablediv">
+                <div class="tab-content datatable">
+                    <table id="example" class="table postsend">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Id' | trans ({}, "common") }}</th>
+                            <th>{{ 'Vat' | trans ({}, "vat") }}</th>
+                            <th>{{ 'Country' | trans ({}, "entity") }}</th>
+                            <th>{{ 'DateEnd' | trans ({}, "vat") }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tx in taxes %}
+                            <tr>
+                                <td>{{ tx.id }}</td>
+                                <td>{{ tx.vat }}</td>
+                                <td>{{ tx.Country }}</td>
+                                <td>{{ tx.dateEnd ? tx.dateEnd|date('Y/m/d') : "--" }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -13,3 +13,7 @@ hello_di_master_setting_staff_add:
 hello_di_master_setting_staff_edit:
     pattern:  /staff/{user_id}/edit
     defaults: { _controller: "HelloDiMasterBundle:Setting:staffEdit" }
+
+hello_di_master_setting_tax:
+    pattern:  /tax
+    defaults: { _controller: "HelloDiMasterBundle:Setting:tax"}

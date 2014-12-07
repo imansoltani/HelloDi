@@ -4,8 +4,11 @@ namespace HelloDi\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use HelloDi\AccountingBundle\Entity\Account;
+use HelloDi\CoreBundle\Entity\Tax;
 use HelloDi\CoreBundle\Entity\User;
 use HelloDi\MasterBundle\Form\EntityType;
+use HelloDi\MasterBundle\Form\TaxSearchType;
+use HelloDi\MasterBundle\Form\TaxType;
 use HelloDi\UserBundle\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -123,6 +126,65 @@ class SettingController extends Controller
 
         return $this->render('HelloDiMasterBundle:setting:staffEdit.html.twig', array(
                 'form' => $form->createView()
+            ));
+    }
+
+    public function taxAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $countries = $this->container->getParameter('countries');
+
+        $search_country = $request->query->get('country');
+
+        //form search
+        $form_search = $this->createForm(new TaxSearchType($countries),
+            $search_country ? array("country" => $search_country, 'type'=>2) : array('type'=>1),
+            array(
+                'attr' => array('class' => 'SearchForm'),
+                'method' => 'get',
+            ))
+            ->add('search','submit', array(
+                    'label'=>'Search','translation_domain'=>'common',
+                ));
+
+        //form add
+        $tax = new Tax();
+
+        $form = $this->createForm(new TaxType($countries), $tax)
+            ->add('add','submit', array(
+                    'label'=>'Add','translation_domain'=>'common',
+                    'attr'=>array('first-button', 'last-button')
+                ));
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $last_tax = $em->getRepository('HelloDiCoreBundle:Tax')->findOneBy(array('country'=>$tax->getCountry(), 'dateEnd'=>null));
+                if($last_tax)
+                    $last_tax->setDateEnd(new \DateTime());
+
+                $em->persist($tax);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
+            }
+        }
+
+        $qb = $em->createQueryBuilder()
+            ->select('tax')
+            ->from('HelloDiCoreBundle:Tax', 'tax');
+        if($search_country == null)
+            $qb->where('tax.dateEnd is null');
+        else
+            $qb->where('tax.country = :country')->setParameter('country', $search_country);
+        $taxes = $qb->getQuery()->getResult();
+
+        return $this->render('HelloDiMasterBundle:setting:tax.html.twig', array(
+                'form' => $form->createView(),
+                'form_search' => $form_search->createView(),
+                'taxes' => $taxes
             ));
     }
 }

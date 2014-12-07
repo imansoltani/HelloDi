@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * @ORM\Entity(repositoryClass="HelloDi\CoreBundle\Entity\TaxRepository")
- * @ORM\Table(name="tax")
+ * @ORM\Table(name="tax", indexes={@ORM\Index(name="CountryIDX", columns={"country"})})
  */
 class Tax
 {
