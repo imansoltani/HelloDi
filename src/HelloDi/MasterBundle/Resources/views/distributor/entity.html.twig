@@ -77,5 +77,11 @@
                 <input id="website" type="text" disabled="" value="{{ entity.website }}">
             </div>
         </div>
+        <div class="control-group">
+            <label class="control-label" for="website">{{ 'Vat' | trans ({}, "vat") }}</label>
+            <div class="controls">
+                <input id="website" type="text" disabled="" value="{{ entity.vat?'by Country':'is Zero' }}">
+            </div>
+        </div>
     </form>
 {% endblock Tab %}

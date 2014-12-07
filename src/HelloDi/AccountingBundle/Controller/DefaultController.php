@@ -57,17 +57,15 @@ class DefaultController extends Controller
      * @param float $amount
      * @param Account $account
      * @param string $description
-     * @param float $vat
      * @param float $fees
      * @return Transaction
      */
-    private function createTransaction($amount, Account $account, $description, $vat = 0.0, $fees = 0.0)
+    private function createTransaction($amount, Account $account, $description, $fees = 0.0)
     {
         $transaction = new Transaction();
         $transaction->setAmount($amount);
         $transaction->setAccount($account);
         $transaction->setDescription($description);
-        $transaction->setVat($vat);
         $transaction->setFees($fees);
         $account->addTransaction($transaction);
         $this->em->persist($transaction);
@@ -219,7 +217,6 @@ class DefaultController extends Controller
                 $transactionContainer->getAmount(),
                 $transactionContainer->getAccount(),
                 $transactionContainer->getDescription(),
-                $transactionContainer->getVat(),
                 $transactionContainer->getFees()
             );
         }

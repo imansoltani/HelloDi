@@ -35,7 +35,6 @@ class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixture
         $provider = new Provider();
         $provider->setCurrency('USD');
         $provider->setAccount($account);
-        $provider->setVat(true);
         $em->persist($provider);
 
         $em->flush();

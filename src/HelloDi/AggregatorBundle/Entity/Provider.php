@@ -49,11 +49,6 @@ class Provider
     protected $account;
 
     /**
-     * @ORM\Column(type="boolean", name="vat")
-     */
-    protected $vat = true;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -187,28 +182,5 @@ class Provider
     public function getNameWithCurrency()
     {
         return $this->getAccount()->getName() . ' | ' . $this->getAccount()->getBalance() . ' ( ' . $this->getCurrency() . ' )';
-    }
-
-    /**
-     * Set vat
-     *
-     * @param boolean $vat
-     * @return Provider
-     */
-    public function setVat($vat)
-    {
-        $this->vat = $vat;
-    
-        return $this;
-    }
-
-    /**
-     * Get vat
-     *
-     * @return boolean 
-     */
-    public function getVat()
-    {
-        return $this->vat;
     }
 }

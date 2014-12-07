@@ -145,6 +145,13 @@
                             <input id="ent_website" class="input-large" disabled="" type="text" value="{{ distributor.account.entity.website }}"/>
                         </div>
                     </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="website">{{ 'Vat' | trans ({}, "vat") }}</label>
+                        <div class="controls">
+                            <input id="website" type="text" disabled="" value="{{ distributor.account.entity.vat?'by Country':'is Zero' }}">
+                        </div>
+                    </div>
                 </form>
             </div>
 

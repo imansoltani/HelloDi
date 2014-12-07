@@ -229,7 +229,6 @@ class DistributorController extends Controller
                         $distributor->getAccount(),
                         $transaction->getAmount(),
                         $transaction->getDescription(),
-                        0.0,
                         $transaction->getFees()
                     )));
 
@@ -631,7 +630,6 @@ class DistributorController extends Controller
                 'terms' => $distributor->getAccount()->getTerms(),
                 'timezone' => $distributor->getTimezone(),
                 'defaultLanguage' => $distributor->getAccount()->getDefaultLanguage(),
-                'vat' => $distributor->getVat(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -646,11 +644,6 @@ class DistributorController extends Controller
                     'label' => 'DefaultLanguage','translation_domain' => 'accounts',
                     'choices'=>$languages,
                     'required'=>true,
-                ))
-            ->add('vat', 'choice', array(
-                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
-                    'required'  => true,
-                    'expanded' => true
                 ))
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -667,7 +660,6 @@ class DistributorController extends Controller
                 $distributor->setTimezone($data['timezone']);
                 $distributor->getAccount()->setTerms($data['terms']);
                 $distributor->getAccount()->setDefaultLanguage($data['defaultLanguage']);
-                $distributor->setVat($data['vat']);
 
                 $em->flush();
 //                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>26));

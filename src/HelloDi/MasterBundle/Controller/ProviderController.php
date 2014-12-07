@@ -206,7 +206,6 @@ class ProviderController extends Controller
                         $provider->getAccount(),
                         $transaction->getAmount(),
                         $transaction->getDescription(),
-                        0.0,
                         $transaction->getFees()
                 )));
 
@@ -559,7 +558,6 @@ class ProviderController extends Controller
                 'terms' => $provider->getAccount()->getTerms(),
                 'timezone' => $provider->getTimezone(),
                 'defaultLanguage' => $provider->getAccount()->getDefaultLanguage(),
-                'vat' => $provider->getVat(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -579,11 +577,6 @@ class ProviderController extends Controller
                     'label'=>'Update','translation_domain'=>'common',
                     'attr'=>array('first-button','last-button')
                 ))
-            ->add('vat', 'choice', array(
-                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
-                    'required'  => true,
-                    'expanded' => true
-                ))
             ->getForm();
 
         if ($request->isMethod('post')) {
@@ -595,7 +588,6 @@ class ProviderController extends Controller
                 $provider->setTimezone($data['timezone']);
                 $provider->getAccount()->setTerms($data['terms']);
                 $provider->getAccount()->setDefaultLanguage($data['defaultLanguage']);
-                $provider->setVat($data['vat']);
 
                 $em->flush();
 

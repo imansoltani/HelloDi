@@ -4,7 +4,7 @@ namespace HelloDi\CoreBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="HelloDi\CoreBundle\Entity\TaxRepository")
  * @ORM\Table(name="tax")
  */
 class Tax

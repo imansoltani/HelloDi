@@ -78,6 +78,7 @@ class RetailerController extends Controller
         $retailer->setAccount($account);
 
         $entity = new Entity();
+        $entity->setVat(true);
         $account->setEntity($entity);
         $entity->addAccount($account);
 
@@ -92,6 +93,7 @@ class RetailerController extends Controller
 
         $form = $this->createForm(new RetailerAccountUserType($languages), $retailer, array('cascade_validation' => true));
         $form->get('account')->add('entity',new EntityType($countries));
+        $form->get('account')->get('entity')->remove('vat');
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -494,7 +496,6 @@ class RetailerController extends Controller
         $form = $this->createFormBuilder(array(
                 'terms' => $retailer->getAccount()->getTerms(),
                 'defaultLanguage' => $retailer->getAccount()->getDefaultLanguage(),
-                'vat' => $retailer->getVat(),
             ))
             ->add('terms','text',array(
                     'label' => 'Terms','translation_domain' => 'accounts',
@@ -505,11 +506,6 @@ class RetailerController extends Controller
                     'label' => 'DefaultLanguage','translation_domain' => 'accounts',
                     'choices'=>$languages,
                     'required'=>true,
-                ))
-            ->add('vat', 'choice', array(
-                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
-                    'required'  => true,
-                    'expanded' => true
                 ))
             ->add('update','submit', array(
                     'label'=>'Update','translation_domain'=>'common',
@@ -525,7 +521,6 @@ class RetailerController extends Controller
 
                 $retailer->getAccount()->setTerms($data['terms']);
                 $retailer->getAccount()->setDefaultLanguage($data['defaultLanguage']);
-                $retailer->setVat($data['vat']);
 
                 $em->flush();
 //                $this->forward('hello_di_di_notification:NewAction',array('id'=>$Account->getId(),'type'=>35));
@@ -558,6 +553,7 @@ class RetailerController extends Controller
                     'attr'=>array('first-button','last-button')
                 ))
         ;
+        $form->remove('vat');
 
         if($request->isMethod('post')) {
             $form->handleRequest($request);

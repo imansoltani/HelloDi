@@ -89,6 +89,11 @@ class Entity
     protected $country;
 
     /**
+     * @ORM\Column(type="boolean", name="vat")
+     */
+    protected $vat = true;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -447,5 +452,28 @@ class Entity
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set vat
+     *
+     * @param boolean $vat
+     * @return Entity
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return boolean 
+     */
+    public function getVat()
+    {
+        return $this->vat;
     }
 }

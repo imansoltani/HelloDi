@@ -21,11 +21,6 @@ class RetailerAccountUserType extends AbstractType
     {
         $builder
             ->add('account',new AccountUserType($this->languages, Account::RETAILER))
-            ->add('vat', 'choice', array(
-                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
-                    'required'  => true,
-                    'expanded' => true
-                ))
         ;
     }
 

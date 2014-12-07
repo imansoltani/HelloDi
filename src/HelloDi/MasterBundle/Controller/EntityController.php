@@ -403,6 +403,16 @@ class EntityController extends Controller
                 ))
         ;
 
+        $countRetailers = $em->createQueryBuilder()
+            ->select('count(account.id)')
+            ->from('HelloDiAccountingBundle:Account', 'account')
+            ->where('account.entity = :entity')->setParameter('entity', $entity)
+            ->andWhere('account.type = :type')->setParameter('type', Account::RETAILER)
+            ->getQuery()->getSingleScalarResult();
+
+        if($countRetailers > 0)
+            $form->remove("vat");
+
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 

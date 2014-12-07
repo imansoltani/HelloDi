@@ -57,7 +57,6 @@ class G_CreateARetailer_Test  extends AbstractFixture implements OrderedFixtureI
             $retailer = new Retailer();
             $retailer->setDistributor($distributor);
             $retailer->setAccount($account);
-            $retailer->setVat(true);
             $em->persist($retailer);
 
             $dist_admin = new User();

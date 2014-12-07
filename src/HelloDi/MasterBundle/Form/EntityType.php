@@ -54,6 +54,11 @@ class EntityType extends AbstractType
                     'label' => 'Country','translation_domain' => 'entity',
                     'choices' => $this->countries
                 ))
+            ->add('vat', 'choice', array(
+                    'choices'   => array(1 => 'By Country', 0 => 'Set Zero'),
+                    'required'  => true,
+                    'expanded' => true
+                ))
         ;
     }
 

@@ -7,10 +7,12 @@ use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\CoreBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Unique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="account")
+ * @Unique\UniqueEntity(fields="name", message="This_account_name_already_exist")
  */
 class Account
 {
@@ -32,7 +34,7 @@ class Account
     protected $defaultLanguage;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=false, name="name")
+     * @ORM\Column(type="string", length=45, nullable=false, name="name", unique=true)
      */
     protected $name;
 

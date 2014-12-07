@@ -56,11 +56,6 @@ class Distributor
     protected $tickets;
 
     /**
-     * @ORM\Column(type="boolean", name="vat")
-     */
-    protected $vat = true;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -228,28 +223,5 @@ class Distributor
     public function getNameWithEntity()
     {
         return $this->getAccount()->getName() . ' - ' . $this->getAccount()->getEntity()->getName();
-    }
-
-    /**
-     * Set vat
-     *
-     * @param boolean $vat
-     * @return Distributor
-     */
-    public function setVat($vat)
-    {
-        $this->vat = $vat;
-    
-        return $this;
-    }
-
-    /**
-     * Get vat
-     *
-     * @return boolean 
-     */
-    public function getVat()
-    {
-        return $this->vat;
     }
 }
