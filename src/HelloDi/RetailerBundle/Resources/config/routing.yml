@@ -6,6 +6,10 @@ hello_di_retailer_sell_code:
     resource: "@HelloDiRetailerBundle/Resources/config/routing/sell_code.yml"
     prefix:   /shop
 
+hello_di_retailer_topup:
+    resource: "@HelloDiRetailerBundle/Resources/config/routing/topup.yml"
+    prefix:   /shop/imtu
+
 hello_di_retailer_items:
     resource: "@HelloDiRetailerBundle/Resources/config/routing/item.yml"
     prefix:   /items

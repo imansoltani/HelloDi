@@ -136,10 +136,17 @@ class SettingController extends Controller
 
         $countries = $this->container->getParameter('countries');
 
+        //form search
         $search_country = $request->query->get('country');
 
-        //form search
-        $form_search = $this->createForm(new TaxSearchType($countries),
+        $qb = $em->createQueryBuilder()
+            ->select('DISTINCT tax.country')
+            ->from('HelloDiCoreBundle:Tax', 'tax')
+            ->getQuery()->getResult();
+        $used_countries = iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($qb)), false);
+        $used_countries_with_name = array_intersect_key($countries, array_flip($used_countries));
+
+        $form_search = $this->createForm(new TaxSearchType($used_countries_with_name),
             $search_country ? array("country" => $search_country, 'type'=>2) : array('type'=>1),
             array(
                 'attr' => array('class' => 'SearchForm'),

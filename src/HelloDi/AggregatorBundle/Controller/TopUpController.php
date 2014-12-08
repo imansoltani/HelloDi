@@ -41,6 +41,9 @@ class TopUpController extends Controller
 
     /**
      * constructor
+     * @param EntityManager $em
+     * @param DefaultController $accounting
+     * @param array $b2b_setting
      */
     public function __construct(EntityManager $em, DefaultController $accounting, array $b2b_setting)
     {
@@ -202,16 +205,16 @@ class TopUpController extends Controller
             ->getQuery()->getSingleResult();
 
         //get range for log
-        $firstStatusNull = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>null),array('id'=>'asc'));
-        $lastStatusNull = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>null),array('id'=>'desc'));
+        $firstTimeOver = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>TopUp::TIME_OVER),array('id'=>'asc'));
+        $lastTimeOver = $this->em->getRepository('HelloDiAggregatorBundle:TopUp')->findOneBy(array('status'=>TopUp::TIME_OVER),array('id'=>'desc'));
 
-        if($firstStatusNull == null || $lastStatusNull == null)
+        if($firstTimeOver == null || $lastTimeOver == null)
             throw new \Exception("There is no row with null status.");
 
-        $from = clone $firstStatusNull->getDate();
+        $from = clone $firstTimeOver->getDate();
         $from->modify('-1 day');
 
-        $to = clone $lastStatusNull->getDate();
+        $to = clone $lastTimeOver->getDate();
         $to->modify('+1 day');
 
         //sending request and get response
@@ -238,7 +241,7 @@ class TopUpController extends Controller
                 ->from('HelloDiAggregatorBundle:TopUp', 'topup')
                 ->innerJoin('topup.item', 'item')
                 ->innerJoin('topup.user', 'user')
-                ->where('topup.status is null')
+                ->where('topup.status = :status')->setParameter('status', TopUp::TIME_OVER)
                 ->getQuery()->getResult();
 
             $response = $result->QueryAccountResponse;
@@ -265,7 +268,7 @@ class TopUpController extends Controller
             //founded data
             $data = is_array($report)?$report[$row_num_viewed]:$report;
 
-            $topup->setStatus($data->Description=="Success");
+            $topup->setStatus($data->Description == "Success" ? TopUp::SUCCESS : TopUp::FAILED);
             $topup->setTransactionID('Update_Log');
 
             //collect needed data
@@ -298,7 +301,7 @@ class TopUpController extends Controller
             $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
 
             //if status of transaction is success update transaction else just release reserved amount.
-            if($topup->getStatus() == true) {
+            if($topup->getStatus() == TopUp::SUCCESS) {
                 $result = $this->accounting->processTransaction(array(
                         new TransactionContainer(
                             $provider->getAccount(),
@@ -360,70 +363,205 @@ class TopUpController extends Controller
         return $result;
     }
 
-//    private function CreateRandomClientTransactionId($user_id)
-//    {
-//        return "HD-".sprintf("%05s", $user_id).'-'.round(microtime(true));
-//    }
-//
-//    public function buyImtu(User $user, Item $item, $senderMobileNumber, $receiverMobileNumber, $senderEmail)
-//    {
-//        ini_set('max_execution_time', 80);
-//
-//        //find accounts
-//        /** @var Retailer $retailer */
-//        $retailer = $this->em->createQueryBuilder()
-//            ->select('retailer', 'account')
-//            ->from('HelloDiRetailerBundle:Retailer', 'retailer')
-//            ->innerJoin('retailer.account', 'account')
-//            ->innerJoin('account.users', 'user')
-//            ->where('user = :user')->setParameter('user', $user)
-//            ->getQuery()->getSingleResult();
-//
-//        if(!$retailer)
-//            throw new \Exception('Unable find Retailer Account.');
-//
-//
-//        /** @var Distributor $distributor */
-//        $distributor = $retailer->getDistributor();
-//
-//        /** @var Provider $provider */
-//        $provider = $this->em->createQueryBuilder()
-//            ->select('provider, account')
-//            ->from('HelloDiAggregatorBundle:Provider', 'provider')
-//            ->innerJoin('provider.account', 'account')
-//            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
-//            ->getQuery()->getSingleResult();
-//
-//        if(!$provider)
-//            throw new \Exception('Unable find Provider Account.');
-//
-//        //find prices
-//        $priceProvider = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
-//                'item' => $item,
-//                'account' => $provider->getAccount()
-//            ));
-//
-//        $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
-//                'item' => $item,
-//                'account' => $distributor->getAccount()
-//            ));
-//
-//        $priceRetailer = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
-//                'item' => $item,
-//                'account' => $retailer->getAccount()
-//            ));
-//
-//        if(!$priceProvider || !$priceDistributor || !$priceRetailer)
-//            throw new \Exception('Unable find Prices for Accounts.');
-//
-//        $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
-//
-//        $clientTransactionId = $this->CreateRandomClientTransactionId($user->getId());
-//
-//        if(!$this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), true))
-//            throw new \Exception("Retailer hasn't enough balance.");
-//
-//
-//
-//    }
+    private function CreateRandomClientTransactionId($user_id)
+    {
+        return "HD-".sprintf("%05s", $user_id).'-'.round(microtime(true));
+    }
+
+    /**
+     * @param User $user
+     * @param Item $item
+     * @param string $senderMobileNumber
+     * @param string $receiverMobileNumber
+     * @param string $senderEmail
+     * @return array
+     */
+    public function buyImtu(User $user, Item $item, $receiverMobileNumber, $senderMobileNumber, $senderEmail)
+    {
+        ini_set('max_execution_time', 80);
+
+        //find accounts
+        /** @var Retailer $retailer */
+        $retailer = $this->em->createQueryBuilder()
+            ->select('retailer', 'account')
+            ->from('HelloDiRetailerBundle:Retailer', 'retailer')
+            ->innerJoin('retailer.account', 'account')
+            ->innerJoin('account.users', 'user')
+            ->where('user = :user')->setParameter('user', $user)
+            ->getQuery()->getSingleResult();
+
+        if (!$retailer) {
+            return array(0, null, 'Unable to find Retailer Account.');
+        }
+
+        /** @var Distributor $distributor */
+        $distributor = $retailer->getDistributor();
+
+        /** @var Provider $provider */
+        $provider = $this->em->createQueryBuilder()
+            ->select('provider, account')
+            ->from('HelloDiAggregatorBundle:Provider', 'provider')
+            ->innerJoin('provider.account', 'account')
+            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
+            ->getQuery()->getSingleResult();
+
+        if (!$provider) {
+            return array(0, null, 'Unable to find Provider Account.');
+        }
+
+        //find prices
+        $priceProvider = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(
+            array(
+                'item' => $item,
+                'account' => $provider->getAccount()
+            )
+        );
+
+        $priceDistributor = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(
+            array(
+                'item' => $item,
+                'account' => $distributor->getAccount()
+            )
+        );
+
+        $priceRetailer = $this->em->getRepository('HelloDiPricingBundle:Price')->findOneBy(
+            array(
+                'item' => $item,
+                'account' => $retailer->getAccount()
+            )
+        );
+
+        if (!$priceProvider || !$priceDistributor || !$priceRetailer) {
+            return array(0, null, 'Unable to find Prices for Accounts.');
+        }
+
+        $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
+
+        $clientTransactionId = $this->CreateRandomClientTransactionId($user->getId());
+
+        if (!$this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), true)) {
+            return array(0, null, "Retailer hasn't enough balance.");
+        }
+
+        $topUp = new TopUp();
+        $topUp->setAmount($priceProvider->getDenomination());
+        $topUp->setClientTransactionID($clientTransactionId);
+        $topUp->setDate(new \DateTime());
+        $topUp->setItem($item);
+        $topUp->setMobileNumber($receiverMobileNumber);
+        $topUp->setSenderEmail($senderEmail);
+        $topUp->setSenderMobileNumber($senderMobileNumber);
+        $topUp->setUser($user);
+        $topUp->setStatus(TopUp::PENDING);
+        $this->em->persist($topUp);
+        $this->em->flush();
+
+        try {
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
+            $client->__setTimeout(60);
+            $result = $client->__soapCall("CreateAccount",
+                array(
+                    'CreateAccountRequest' => array(
+                        'UserInfo' => array(
+                            'UserName' => $this->b2b_settings['UserName'],
+                            'Password' => $this->b2b_settings['Password']
+                        ),
+                        'ClientReferenceData' => array(
+                            'Service' => 'imtu',
+                            'ClientTransactionID' => $clientTransactionId,
+                            'IP' => $this->b2b_settings['IP'],
+                            'TimeStamp' => date_format(new \DateTime(), DATE_ATOM)
+                        ),
+                        'Parameters' => array(
+                            'CarrierCode' => $item->getOperator()->getName(),
+                            'CountryCode' => $item->getCountry(),
+                            'Amount' => $priceProvider->getDenomination() * 100,
+                            'MobileNumber' => $receiverMobileNumber,
+                            'StoreID' => $this->b2b_settings['StoreID'],
+                            'ChargeType' => 'transfer',
+                            'Recharge' => 'Y',
+                            'SendSMS' => ($senderMobileNumber != "" ? "Y" : "N"),
+                            'SenderNumber' => $senderMobileNumber,
+                            'NotificationMobile' => $senderMobileNumber,
+                            'SendEmail' => ($senderEmail != "" ? "Y" : "N"),
+                            'NotificationEmail' => $senderEmail,
+                        ),
+                    )
+                )
+            );
+
+            $CreateAccountResponse = $result->CreateAccountResponse;
+            $topUp->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+
+            if ($CreateAccountResponse->ResponseReferenceData->Success == 'N') {
+                $topUp->setStatus(TopUp::FAILED);
+                $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
+                $error_codes = "";
+                $error_texts = "";
+                foreach ($messages as $message) {
+                    $error_codes .= $message->StatusCode . ',';
+                    $error_texts .= $message->StatusText . ',';
+                }
+                $topUp->setStatusCode($error_codes);
+
+                $this->em->flush();
+//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
+//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
+//                    die($s);
+                return array(-1, $topUp->getId(), $error_texts);
+            } else {
+                $topUp->setStatus(TopUp::SUCCESS);
+
+                $result = $this->accounting->processTransaction(array(
+                        new TransactionContainer(
+                            $provider->getAccount(),
+                            $priceProvider->getPrice(),
+                            'provider b2b topup buy.'
+                        ),
+                        new TransactionContainer(
+                            $distributor->getAccount(),
+                            $commission,
+                            'distributor b2b topup buy.'
+                        ),
+                        new TransactionContainer(
+                            $retailer->getAccount(),
+                            -$priceRetailer->getPrice(),
+                            'retailer b2b topup buy.'
+                        ),
+                    ), false);
+
+                if($result == false)
+                    return array(-2, $topUp->getId(), "Retailer '".$retailer->getAccount()->getName()."' hasn't enough balance. (error in reserved Amount)");
+
+                $topUp->setProviderTransaction($result[0]);
+                $topUp->setCommissionerTransaction($result[1]);
+                $topUp->setSellerTransaction($result[2]);
+
+                $this->em->flush();
+//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
+//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
+//                    die($s);
+                return array(1, $topUp->getId(), null);
+            }
+
+        } catch (\Exception $e) {
+//            die("---".$e->getMessage()."---");
+//            if ($e->getCode() == -99) {
+                $topUp->setStatus(TopUp::TIME_OVER);
+                $this->em->flush();
+
+//                return array(-3, $topUp->getId(), 'server_no_response');
+//                $this->get('session')->getFlashBag()->add(
+//                    'error',
+//                    $this->get('translator')->trans('server_no_response', array(), 'message')
+//                );
+//            } else {
+                return array(-3, $topUp->getId(), "Server Error: ".$e->getMessage());
+//                $this->get('session')->getFlashBag()->add(
+//                    'error',
+//                    $this->get('translator')->trans('error_b2b', array(), 'message')
+//                );
+//            }
+        }
+    }
 }

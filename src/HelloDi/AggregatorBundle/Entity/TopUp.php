@@ -15,6 +15,11 @@ use HelloDi\CoreBundle\Entity\User;
  */
 class TopUp
 {
+    const SUCCESS = 1;
+    const FAILED = 2;
+    const PENDING = 3;
+    const TIME_OVER = 4;
+
     /**
      * @var integer
      *
@@ -76,7 +81,7 @@ class TopUp
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="boolean", nullable=true)
+     * @ORM\Column(name="status", type="smallint", nullable=false)
      */
     protected $status;
 

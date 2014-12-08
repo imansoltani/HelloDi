@@ -1,0 +1,15 @@
+hello_di_retailer_topup_imtu:
+    pattern:  /
+    defaults: { _controller: "HelloDiRetailerBundle:TopUp:IMTU" }
+
+hello_di_retailer_topup_read_number:
+    pattern:  /read_number
+    defaults: { _controller: "HelloDiRetailerBundle:TopUp:readNumber" }
+
+hello_di_retailer_topup_get_prices:
+    pattern:  /get_prices
+    defaults: { _controller: "HelloDiRetailerBundle:TopUp:getPrices" }
+
+hello_di_retailer_topup_print:
+    pattern:  /printimtu/{id}/{print}/
+    defaults: { _controller: HelloDiRetailerBundle:Retailers:PrintImtu , print: 'web' }
