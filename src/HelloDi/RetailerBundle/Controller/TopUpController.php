@@ -6,7 +6,6 @@ use HelloDi\CoreBundle\Entity\Operator;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\RetailerBundle\Form\BuyImtuType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,16 +16,13 @@ class TopUpController extends Controller
         $form = $this->createForm(new BuyImtuType())
             ->add('buy','submit', array(
                     'label'=>'Buy','translation_domain'=>'common',
-                    'attr'=>array('first-button')
+                    'attr'=>array('first-button', 'last-button')
                 ))
             ;
 
         $B2B_ID = null;
 
         if($request->isMethod('post')) {
-            $operator_id = $request->request->get("operator");
-            $denomination = $request->request->get("denomination");
-
             $form->handleRequest($request);
 
             if($form->isValid()) {
@@ -38,10 +34,10 @@ class TopUpController extends Controller
                 $item = $em->createQueryBuilder()
                     ->select('item')
                     ->from('HelloDiCoreBundle:Item', 'item')
-                    ->where('item.id = :item_id')->setParameter('item_id', $denomination)
+                    ->where('item.id = :item_id')->setParameter('item_id', $data['denomination'])
                     ->andWhere('item.country = :country')->setParameter('country', $data['countryIso'])
                     ->innerJoin('item.operator', 'operator')
-                    ->andWhere('operator.id = :operator_id')->setParameter('operator_id', $operator_id)
+                    ->andWhere('operator.id = :operator_id')->setParameter('operator_id', $data['operator'])
                     ->innerJoin('item.prices', 'priceRet')
                     ->andWhere('priceRet.account = :accountRet')->setParameter('accountRet', $this->getUser()->getAccount())
                     ->getQuery()->getOneOrNullResult();
@@ -69,8 +65,7 @@ class TopUpController extends Controller
                             break;
 
                         case -3: $this->get('session')->getFlashBag()->add('error', $result[2]);
-                            $B2B_ID = -1*$result[1];
-                            break;
+                            return $this->redirect($this->generateUrl('hello_di_retailer_topup_retry', array('id'=>$result[1])));
                     }
                 }
             }
@@ -88,6 +83,7 @@ class TopUpController extends Controller
         if(!$number || !is_numeric($number)) return new Response("  <option value=''>Invalid Mobile Number</option>");
         $number = ltrim($number,"0+-");
         if(strlen($number)<6) return new Response("  <option value=''>Invalid Mobile Number</option>");
+        $old_operator = $request->get("old_operator", 0);
 
         $mobile_country_roles = $this->container->getParameter('mobile_country_roles');
 
@@ -117,7 +113,7 @@ class TopUpController extends Controller
 
         $result = "";
         foreach($operators as $operator)
-            $result .= "<option value='".$operator->getId()."'>".$operator->getName()."</option>";
+            $result .= "<option value='".$operator->getId()."' ".($old_operator==$operator->getId()?"selected":"").">".$operator->getName()."</option>";
 
 //        $file = file("../app/Resources/phones_rules/phones_rules.csv");
 //
@@ -152,30 +148,85 @@ class TopUpController extends Controller
     {
         $operatorID = $request->get("operatorID");
         $country = $request->get("country");
+        $old_denomination = $request->get("old_denomination");
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //provider
+        $b2bAccountName = $this->container->getParameter('B2BServer')['AccountName'];
+        $providerAccount = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('name'=>$b2bAccountName));
+        if (!$providerAccount)
+            return array(0, null, 'Unable to find Provider Account.');
+
+        $currency = $this->get('account_type_finder')->getCurrency($providerAccount);
 
         /** @var Price[] $prices */
         $prices = $em->createQueryBuilder()
             ->select('price', 'item')
             ->from("HelloDiPricingBundle:Price","price")
-            ->where('price.account = :account')->setParameter("account",$this->getUser()->getAccount())
+            ->where('price.account = :account')->setParameter("account", $providerAccount)
             ->innerJoin("price.item","item")
             ->innerJoin("item.operator","operator")
             ->andWhere("operator.id = :operator_id")->setParameter("operator_id",$operatorID)
             ->andWhere('item.country = :country')->setParameter('country',$country)
             ->getQuery()->getResult();
 
-        $currency = $this->get('account_type_finder')->getCurrency($this->getUser()->getAccount());
-
         $result = "";
         foreach($prices as $price)
-            $result .= "<option value='".$price->getItem()->getId()."'>"
+            $result .= "<option value='".$price->getItem()->getId()."' ".($old_denomination==$price->getItem()->getId()?"selected":"").">"
                 .$price->getDenomination()." ".$currency
                 ." (".$price->getItem()->getFaceValue()." ".$price->getItem()->getCurrency().")"
                 ."</option>";
 
         return  new Response($result?:"<option value=''>Not found Denomination.</option>");
+    }
+
+    public function retryAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $topup = $em->createQueryBuilder()
+            ->select('topup', 'item', 'operator')
+            ->from('HelloDiAggregatorBundle:TopUp', 'topup')
+            ->where('topup.id = :id')->setParameter('id', $id)
+            ->innerJoin('topup.item', 'item')
+            ->innerJoin('item.operator', 'operator')
+            ->getQuery()->getOneOrNullResult();
+        if(!$topup)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'TopUp'),'message'));
+
+        $countries = $this->container->getParameter('countries');
+
+        //provider
+        $b2bAccountName = $this->container->getParameter('B2BServer')['AccountName'];
+        $providerAccount = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('name'=>$b2bAccountName));
+        if (!$providerAccount)
+            return array(0, null, 'Unable to find Provider Account.');
+
+        $currency = $this->get('account_type_finder')->getCurrency($providerAccount);
+
+        $priceProvider = $em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
+                'account'=>$providerAccount,
+                'item'=>$topup->getItem()
+            ));
+
+        $form = $this->createForm(new BuyImtuType(), array(
+                'receiverMobileNumber' => $topup->getMobileNumber(),
+                'country' => $countries[$topup->getItem()->getCountry()],
+                'operator' => $topup->getItem()->getOperator()->getName(),
+                'denomination' => $priceProvider->getDenomination()." ".$currency
+                    ." (".$topup->getItem()->getFaceValue()." ".$topup->getItem()->getCurrency().")",
+                'senderMobileNumber' => $topup->getSenderMobileNumber()?:"--",
+                'senderEmail' => $topup->getSenderEmail()?:"--",
+            ), array(
+                'disabled' => true
+            ));
+
+        return $this->render('HelloDiRetailerBundle:topup:retry.html.twig',array(
+                'form' => $form->createView(),
+                'topup_id' => $topup->getId()
+            ));
     }
 }

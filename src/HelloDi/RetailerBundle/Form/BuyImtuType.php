@@ -4,6 +4,7 @@ namespace HelloDi\RetailerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BuyImtuType extends AbstractType
 {
@@ -17,6 +18,10 @@ class BuyImtuType extends AbstractType
                         'class'=>'tel_validation',
                         'onblur' => 'readNumber($(this).val())'
                     ),
+                    'constraints' => array(
+                        new Assert\NotNull(),
+                        new Assert\Regex(array('pattern' => '/^\+?\d{5,}$/', 'match'=>true))
+                    )
                 ))
             ->add('country','text',array(
                     'required'=>true,
@@ -24,21 +29,33 @@ class BuyImtuType extends AbstractType
                     'disabled' => true,
                 ))
             ->add('countryIso','hidden')
-            ->add('operator','choice',array(
+            ->add('operator','text',array(
                     'required'=>true,
                     'label' => 'Operator','translation_domain' => 'operator',
-                    'disabled' => true,
-                    'attr'=> array('onchange' => 'getItem($(this).val())'),
+                    'attr'=> array(
+                        'onchange' => 'getItem($(this).val(), $(\'#denomination\').val())',
+                        'ajax-dropdown',
+                        'on_refresh_click' => 'readNumber($(\'#receiverMobileNumber\').val())'
+                    ),
+                    'constraints' => array(
+                        new Assert\NotNull()
+                    )
                 ))
-            ->add('denomination','choice',array(
+            ->add('denomination','text',array(
                     'required'=>true,
                     'label' => 'denomination','translation_domain' => 'price',
-                    'disabled' => true,
+                    'attr'=> array('ajax-dropdown', 'on_refresh_click' => 'getItem($(\'#operator\').val(), $(\'#denomination\').val())'),
+                    'constraints' => array(
+                        new Assert\NotNull()
+                    )
                 ))
             ->add('senderMobileNumber','text',array(
                     'required'=>false,
                     'label' => 'Sender Mobile Number','translation_domain' => 'item',
                     'attr'=> array('class'=>'tel_validation'),
+                    'constraints' => array(
+                        new Assert\Regex(array('pattern' => '/^\+?\d{5,}$/', 'match'=>true))
+                    )
                 ))
             ->add('senderEmail','email',array(
                     'required'=>false,

@@ -201,7 +201,7 @@ class TopUpController extends Controller
             ->select('provider, account')
             ->from('HelloDiAggregatorBundle:Provider', 'provider')
             ->innerJoin('provider.account', 'account')
-            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
+            ->where('account.name = :account_name')->setParameter('account_name', $this->b2b_settings['AccountName'])
             ->getQuery()->getSingleResult();
 
         //get range for log
@@ -402,7 +402,7 @@ class TopUpController extends Controller
             ->select('provider, account')
             ->from('HelloDiAggregatorBundle:Provider', 'provider')
             ->innerJoin('provider.account', 'account')
-            ->where('account.name = :account_name')->setParameter('account_name', 'B2B Server')
+            ->where('account.name = :account_name')->setParameter('account_name', $this->b2b_settings['AccountName'])
             ->getQuery()->getSingleResult();
 
         if (!$provider) {

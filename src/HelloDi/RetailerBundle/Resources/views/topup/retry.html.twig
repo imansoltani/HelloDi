@@ -1,0 +1,33 @@
+{% extends 'HelloDiRetailerBundle::menu.html.twig' %}
+
+{% block title %}{{ 'IMTU' | trans ({}, "item") }}{% endblock title %}
+
+{% block PageTitle %}<i class="icon-mobile-phone"></i>{{ 'IMTU' | trans ({}, "item") }}{% endblock %}
+
+{% set MU = 'imtu' %}
+
+{% block Site_Map %}
+    <a class="link" href="{{ path('hello_di_retailer_homepage') }}">{{ 'Home' | trans ({}, "menu") }}</a>
+    <a class="link">{{ 'IMTU' | trans ({}, "item") }}</a>
+    <span class="link">{{ 'Retry' | trans ({}, "item") }}</span>
+{% endblock Site_Map %}
+
+{% block Body %}
+    <div class="widget stacked">
+        <div class="widget-content">
+                {{ form_start(form) }}
+                    <div class="widget-header"><h3>{{ 'Item' | trans ({}, "item") }}</h3></div>
+                    {{ form_row(form.receiverMobileNumber) }}
+                    {{ form_row(form.country) }}
+                    {{ form_row(form.operator) }}
+                    {{ form_row(form.denomination) }}
+                    <div class="widget-header"><h3>{{ 'Info' | trans ({}, "item") }}</h3></div>
+                    {{ form_row(form.senderMobileNumber) }}
+                    {{ form_row(form.senderEmail) }}
+                {{ form_end(form) }}
+            <div class="form-actions">
+                <a target="_blank" href="{{ path("hello_di_retailer_topup_retry",{"id":topup_id}) }}" class="btn btn-primary" style="margin-left: 100px">{{ 'Retry'|trans({},'item') }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

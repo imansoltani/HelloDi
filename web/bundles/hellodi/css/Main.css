@@ -1267,7 +1267,7 @@ display: none;
 
 .Noti .dropdown-menu{
     min-width: 300px;
-    white-space:normal:
+    white-space:normal;
 }
 
 .Noti .dropdown-menu li a {
@@ -1559,6 +1559,10 @@ margin-top:5px ;
     top: -15px;
     overflow: visible;
     vertical-align: middle;
+}
+
+.div_refresh_button.dropdown {
+    right: 50px;
 }
 
 .div_refresh_button .refresh_button {

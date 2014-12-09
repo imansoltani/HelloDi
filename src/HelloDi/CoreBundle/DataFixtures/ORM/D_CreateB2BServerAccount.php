@@ -7,9 +7,24 @@ use Doctrine\Common\Persistence\ObjectManager;
 use HelloDi\AccountingBundle\Entity\Account;
 use HelloDi\CoreBundle\Entity\Entity;
 use HelloDi\AggregatorBundle\Entity\Provider;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixtureInterface
+class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -26,7 +41,7 @@ class D_CreateB2BServerAccount extends AbstractFixture implements OrderedFixture
 
         $account = new Account();
         $account->setDefaultLanguage('en');
-        $account->setName('B2B Server');
+        $account->setName($this->container->getParameter('B2BServer')['AccountName']);
         $account->setType(Account::PROVIDER);
         $account->setEntity($entity);
         $account->setCreationDate(new \DateTime());
