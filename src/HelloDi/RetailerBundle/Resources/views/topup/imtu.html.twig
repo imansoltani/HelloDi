@@ -14,104 +14,96 @@
 {% block Body %}
     <div class="widget stacked">
         <div class="widget-content">
-            {% if B2B_ID is not null %}
-                <div>
-                    {% if B2B_ID>0 %}
-                        <a target="_blank" href="{{ path("Retailer_Shop_imtu_print",{"id":B2B_ID,"print":"web"}) }}" class="btn btn-success" style="margin-left: 100px">{{ 'Print'|trans({},'item') }}</a>
-                        <a target="_blank" href="{{ path("Retailer_Shop_imtu_print",{"id":B2B_ID,"print":"pdf"}) }}" class="btn btn-success" style="">{{ 'PDF'|trans({},'item') }}</a>
-                    {% else %}
-                        <a target="_blank" href="{{ path("Retailer_Shop_imtu_print",{"id":-1*B2B_ID,"print":"web"}) }}" class="btn btn-warning" style="margin-left: 100px">{{ 'Retry'|trans({},'item') }}</a>
-                    {% endif %}
-                </div>
-            {% else %}
-                {{ form_start(form) }}
-                    <div class="widget-header"><h3>{{ 'Item' | trans ({}, "item") }}</h3></div>
-                    {{ form_row(form.receiverMobileNumber) }}
-                    {{ form_row(form.country) }}
-                    {{ form_row(form.operator) }}
-                    {{ form_row(form.denomination) }}
-                    <div class="widget-header"><h3>{{ 'Info' | trans ({}, "item") }}</h3></div>
-                    {{ form_row(form.senderMobileNumber) }}
-                    {{ form_row(form.senderEmail) }}
-                {{ form_end(form) }}
+            {{ form_start(form) }}
+                <div class="widget-header"><h3>{{ 'Item' | trans ({}, "item") }}</h3></div>
+                {{ form_row(form.receiverMobileNumber) }}
+                {{ form_row(form.country) }}
+                {{ form_row(form.operator) }}
+                {{ form_row(form.denomination) }}
+                <div class="widget-header"><h3>{{ 'Info' | trans ({}, "item") }}</h3></div>
+                {{ form_row(form.senderMobileNumber) }}
+                {{ form_row(form.senderEmail) }}
+            {{ form_end(form) }}
 
-                <script type="text/javascript">
-                    function readNumber(number)
+            <script type="text/javascript">
+                function readNumber(number)
+                {
+                    var operator = $("#operator");
+                    var denomination = $("#denomination");
+                    var operator_refresh = operator.next('.div_refresh_button');
+                    if(number.length>6)
                     {
-                        var operator = $("#operator");
-                        var denomination = $("#denomination");
-                        if(number.length>6)
-                        {
-                            var operator_refresh = operator.next('.div_refresh_button');
-                            operator_refresh.addClass('refresh');
-                            denomination.next('.div_refresh_button').addClass('refresh');
+                        operator_refresh.addClass('refresh');
+                        denomination.next('.div_refresh_button').addClass('refresh');
 
-                            var old_operator = operator.val();
-                            var old_denomination = denomination.val();
+                        var old_operator = operator.val();
+                        var old_denomination = denomination.val();
 
-                            $("#country").val("Waiting...");
-                            operator.html("<option value=''>Waiting...</option>").prop('disabled', true);
-                            denomination.html("<option value=''>Waiting...</option>").prop('disabled', true);
-                            $.ajax({
-                                type: "Post",
-                                url: "{{ path("hello_di_retailer_topup_read_number") }}",
-                                data: {"receiver": number, "old_operator": old_operator},
-                                cache: false,
-                                success: function (result) {
-                                    var index = result.indexOf("<");
-                                    $("#countryIso").val(result.slice(0, 2));
-                                    $("#country").val(result.slice(2, index));
-                                    operator.html(result.slice(index)).prop('disabled', false);
-                                    operator_refresh.removeClass('refresh');
-                                    getItem(operator.val(), old_denomination);
-                                }
-                            });
-                        }
-                        else
-                        {
-                            $("#countryIso").val("");
-                            $("#country").val("Invalid Mobile Number");
-                            operator.html("<option value=''>Invalid Mobile Number</option>");
-                            denomination.html("<option value=''>Invalid Mobile Number</option>");
-                            operator_refresh.removeClass('refresh');
-                            denomination.next('.div_refresh_button').removeClass('refresh');
-                        }
+                        $("#country").val("Waiting...");
+                        operator.html("<option value=''>Waiting...</option>").prop('disabled', true);
+                        denomination.html("<option value=''>Waiting...</option>").prop('disabled', true);
+                        $.ajax({
+                            type: "Post",
+                            url: "{{ path("hello_di_retailer_topup_read_number") }}",
+                            data: {"receiver": number, "old_operator": old_operator},
+                            cache: false,
+                            success: function (result) {
+                                var index = result.indexOf("<");
+                                $("#countryIso").val(result.slice(0, 2));
+                                $("#country").val(result.slice(2, index));
+                                operator.html(result.slice(index)).prop('disabled', false);
+                                operator_refresh.removeClass('refresh');
+                                getItem(operator.val(), old_denomination);
+                            }
+                        });
                     }
-
-                    function getItem(operatorID, old_denomination)
+                    else
                     {
-                        var denomination = $("#denomination");
-
-                        if(operatorID != "") {
-                            var denomination_refresh = denomination.next('.div_refresh_button');
-                            denomination_refresh.addClass('refresh');
-
-                            denomination.html("<option value=''>Waiting...</option>").prop('disabled', true);
-                            var country = $("#countryIso").val();
-                            $.ajax({
-                                type: "Post",
-                                url: "{{ path("hello_di_retailer_topup_get_prices") }}",
-                                data: {"operatorID": operatorID, "country": country, "old_denomination": old_denomination},
-                                cache: false,
-                                success: function (result) {
-                                    denomination.html(result).prop('disabled', false);
-                                    denomination_refresh.removeClass('refresh');
-                                }
-                            });
-                        }
-                        else
-                            denomination.html("<option value=''>Not found Denomination.</option>");
+                        $("#countryIso").val("");
+                        $("#country").val("Invalid Mobile Number");
+                        operator.html("<option value=''>Invalid Mobile Number</option>");
+                        denomination.html("<option value=''>Invalid Mobile Number</option>");
+                        operator_refresh.removeClass('refresh');
+                        denomination.next('.div_refresh_button').removeClass('refresh');
                     }
+                }
 
-                    $(document).ready(function(){
-                        $("#country").prop('disabled', true);
-                        $("#operator").prop('disabled', true);
-                        $("#denomination").prop('disabled', true);
-                        var receiverMobileNumber = $("#receiverMobileNumber").val();
-                        if(receiverMobileNumber != "") readNumber(receiverMobileNumber);
-                    });
-                </script>
-            {% endif %}
+                function getItem(operatorID, old_denomination)
+                {
+                    var denomination = $("#denomination");
+                    var denomination_refresh = denomination.next('.div_refresh_button');
+
+                    if(operatorID != "") {
+                        denomination_refresh.addClass('refresh');
+
+                        denomination.html("<option value=''>Waiting...</option>").prop('disabled', true);
+                        var country = $("#countryIso").val();
+                        $.ajax({
+                            type: "Post",
+                            url: "{{ path("hello_di_retailer_topup_get_prices") }}",
+                            data: {"operatorID": operatorID, "country": country, "old_denomination": old_denomination},
+                            cache: false,
+                            success: function (result) {
+                                denomination.html(result).prop('disabled', false);
+                                denomination_refresh.removeClass('refresh');
+                            }
+                        });
+                    }
+                    else
+                    {
+                        denomination.html("<option value=''>Not found Denomination.</option>");
+                        denomination_refresh.removeClass('refresh');
+                    }
+                }
+
+                $(document).ready(function(){
+                    $("#country").prop('disabled', true);
+                    $("#operator").prop('disabled', true);
+                    $("#denomination").prop('disabled', true);
+                    var receiverMobileNumber = $("#receiverMobileNumber").val();
+                    if(receiverMobileNumber != "") readNumber(receiverMobileNumber);
+                });
+            </script>
         </div>
     </div>
 {% endblock %}
