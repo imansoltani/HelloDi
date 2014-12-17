@@ -2,6 +2,7 @@
 namespace HelloDi\RetailerBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use HelloDi\AggregatorBundle\Entity\TopUp;
 use HelloDi\CoreBundle\Entity\Operator;
 use HelloDi\PricingBundle\Entity\Price;
 use HelloDi\RetailerBundle\Form\BuyImtuType;
@@ -19,8 +20,6 @@ class TopUpController extends Controller
                     'attr'=>array('first-button', 'last-button')
                 ))
             ;
-
-        $B2B_ID = null;
 
         if($request->isMethod('post')) {
             $form->handleRequest($request);
@@ -54,14 +53,13 @@ class TopUpController extends Controller
                     );
 
                     switch($result[0]) {
-                        case 1: $this->get('session')->getFlashBag()->add('success',$this->get('translator')->trans('the_operation_done_successfully',array(),'message'));
-                            $B2B_ID = $result[1];
+                        case 1:
+                            return $this->redirect($this->generateUrl('hello_di_retailer_topup_print', array('id'=>$result[1])));
                             break;
 
                         case 0:
                         case -1:
                         case -2: $this->get('session')->getFlashBag()->add('error', $result[2]);
-                            $B2B_ID = null;
                             break;
 
                         case -3: $this->get('session')->getFlashBag()->add('error', $result[2]);
@@ -72,8 +70,7 @@ class TopUpController extends Controller
         }
 
         return $this->render('HelloDiRetailerBundle:topup:imtu.html.twig',array(
-                'form' => $form->createView(),
-                'B2B_ID' => $B2B_ID
+                'form' => $form->createView()
             ));
     }
 
@@ -115,30 +112,6 @@ class TopUpController extends Controller
         foreach($operators as $operator)
             $result .= "<option value='".$operator->getId()."' ".($old_operator==$operator->getId()?"selected":"").">".$operator->getName()."</option>";
 
-//        $file = file("../app/Resources/phones_rules/phones_rules.csv");
-//
-//        $array = array();
-//
-//        foreach($file as $line)
-//        {
-//            $row = str_getcsv($line,",");
-//            $length = strlen($row[2]);
-//            if(!isset($array[$length])) $array[$length] = array();
-//            $array[$length] []= array(
-//                "country_iso"=>$row[1],
-//                "number_min_length"=>(int)$row[3],
-//                "number_max_length"=>(int)$row[4],
-//                "operator_code"=>(int)$row[2],
-//                "operator_name"=>$row[5],
-//            );
-//        }
-//
-//        $dumper = new Dumper();
-//
-//        $yaml = $dumper->dump($array,2);
-//
-//        file_put_contents('phones_rules.yml', $yaml);
-
         $countries = $this->container->getParameter('countries');
 
         return  new Response($result?$role['country_iso'].$countries[$role['country_iso']].$result:"  <option value=''>Not found Operator</option>");
@@ -163,13 +136,15 @@ class TopUpController extends Controller
 
         /** @var Price[] $prices */
         $prices = $em->createQueryBuilder()
-            ->select('price', 'item')
-            ->from("HelloDiPricingBundle:Price","price")
-            ->where('price.account = :account')->setParameter("account", $providerAccount)
-            ->innerJoin("price.item","item")
+            ->select('priceProvider', 'item')
+            ->from("HelloDiPricingBundle:Price","priceProvider")
+            ->where('priceProvider.account = :accountProvider')->setParameter("accountProvider", $providerAccount)
+            ->innerJoin("priceProvider.item","item")
             ->innerJoin("item.operator","operator")
             ->andWhere("operator.id = :operator_id")->setParameter("operator_id",$operatorID)
             ->andWhere('item.country = :country')->setParameter('country',$country)
+            ->innerJoin('item.prices', 'priceRetailer')
+            ->andWhere('priceRetailer.account = :accountRetailer')->setParameter("accountRetailer", $this->getUser()->getAccount())
             ->getQuery()->getResult();
 
         $result = "";
@@ -193,6 +168,7 @@ class TopUpController extends Controller
             ->where('topup.id = :id')->setParameter('id', $id)
             ->innerJoin('topup.item', 'item')
             ->innerJoin('item.operator', 'operator')
+            ->andWhere('topup.user = :user')->setParameter('user', $this->getUser())
             ->getQuery()->getOneOrNullResult();
         if(!$topup)
             throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'TopUp'),'message'));
@@ -203,7 +179,7 @@ class TopUpController extends Controller
         $b2bAccountName = $this->container->getParameter('B2BServer')['AccountName'];
         $providerAccount = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('name'=>$b2bAccountName));
         if (!$providerAccount)
-            return array(0, null, 'Unable to find Provider Account.');
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Account'),'message'));
 
         $currency = $this->get('account_type_finder')->getCurrency($providerAccount);
 
@@ -228,5 +204,65 @@ class TopUpController extends Controller
                 'form' => $form->createView(),
                 'topup_id' => $topup->getId()
             ));
+    }
+
+    public function printAction(Request $request, $id)
+    {
+        $print = $request->query->get('print', 'web');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var TopUp $topup */
+        $topup = $em->createQueryBuilder()
+            ->select('topup', 'item', 'operator', 'user')
+            ->from('HelloDiAggregatorBundle:TopUp', 'topup')
+            ->where('topup.id = :id')->setParameter('id', $id)
+            ->innerJoin('topup.item', 'item')
+            ->innerJoin('item.operator', 'operator')
+            ->innerJoin('topup.user', 'user')
+            ->andWhere('user = :user_entity')->setParameter('user_entity', $this->getUser())
+            ->getQuery()->getOneOrNullResult();
+        if(!$topup)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'TopUp'),'message'));
+
+        if($topup->getStatus() != TopUp::SUCCESS) throw $this->createNotFoundException("TOPUP is not success.");
+
+        $descriptionEntity = $em->getRepository('HelloDiCoreBundle:ItemDesc')->findOneBy(array('item'=>$topup->getItem(), 'language'=>$this->getUser()->getLanguage()));
+        if(!$descriptionEntity) $descriptionEntity = $em->getRepository('HelloDiDiDistributorsBundle:ItemDesc')->findOneBy(array('Item'=>$topup->getItem()));
+        $description = $descriptionEntity ? $descriptionEntity->getDescription() : null;
+
+        //provider
+        $b2bAccountName = $this->container->getParameter('B2BServer')['AccountName'];
+        $providerAccount = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('name'=>$b2bAccountName));
+        if (!$providerAccount)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Account'),'message'));
+
+        $currency = $this->get('account_type_finder')->getCurrency($providerAccount);
+
+        $priceProvider = $em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array('account' => $providerAccount, 'item' => $topup->getItem()));
+        if(!$priceProvider)
+            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Price'),'message'));
+
+        $denomination = $priceProvider->getDenomination();
+
+        $html = $this->render('HelloDiRetailerBundle:topup:print.html.twig',array(
+                'topup'=>$topup,
+                'description'=>$description,
+                'denomination' => $denomination." ".$currency,
+                'print' => $print
+            ));
+
+        if($print == 'web')
+            return $html;
+        else
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html->getContent()),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Imtu.pdf"'
+                )
+            );
     }
 }

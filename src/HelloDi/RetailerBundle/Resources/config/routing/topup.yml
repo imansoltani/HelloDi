@@ -15,5 +15,5 @@ hello_di_retailer_topup_retry:
     defaults: { _controller: "HelloDiRetailerBundle:TopUp:retry" }
 
 hello_di_retailer_topup_print:
-    pattern:  /printimtu/{id}/{print}/
-    defaults: { _controller: HelloDiRetailerBundle:Retailers:PrintImtu , print: 'web' }
+    pattern:  /print/{id}
+    defaults: { _controller: "HelloDiRetailerBundle:TopUp:print" }
