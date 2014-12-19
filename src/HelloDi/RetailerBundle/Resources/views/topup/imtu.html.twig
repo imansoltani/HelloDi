@@ -14,7 +14,7 @@
 {% block Body %}
     <div class="widget stacked">
         <div class="widget-content">
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr': {'id':'imtu'} }) }}
                 <div class="widget-header"><h3>{{ 'Item' | trans ({}, "item") }}</h3></div>
                 {{ form_row(form.receiverMobileNumber) }}
                 {{ form_row(form.country) }}
@@ -25,14 +25,14 @@
                 {{ form_row(form.senderEmail) }}
             {{ form_end(form) }}
 
-            <a onclick="$('.popupshow').html($('#loading_modal').html()).fadeIn()">ddddd</a>
             <!-- Modal -->
             <div id="loading_modal" style="display: none">
                 <div id="loading_popup" style="position: absolute; width: 100%; height: 100%; text-align: center">
                     <span style="text-align: left; display: inline-block;position: relative; top: 40%; background: #ffffff; z-index:2000; border: 1px solid #777; border-radius: 5px; padding: 20px">
                         <img style="vertical-align: top; display: inline" src="{{ asset('bundles/hellodi/img/refresh/loading-l.gif') }}"/>
                         <span id="modal_message" style="display: inline-block; max-height: 100px; width: 200px; overflow-y: auto">
-                            Loading... <br/>
+                            Loading... <span id="modal_message_timer"></span><br/>
+                            <span id="modal_message_text"></span>
                         </span>
                     </span>
                 </div>
@@ -110,12 +110,31 @@
                     }
                 }
 
+                $("form#imtu").submit(function (){
+                    $('.popupshow').fadeIn();
+                    var seconds = 0;
+                    setTimeout(function () {
+                        $("#modal_message_timer").html("(00:00)");
+                        $("#modal_message_text").html("Request was sent. Waiting...");
+                        setInterval(function () {
+                            seconds++;
+                            var minute = Math.floor(seconds / 60);
+                            var second = seconds % 60;
+                            $("#modal_message_timer").html( "("+(minute<10?"0"+minute:minute) +":"+ (second<10?"0"+second:second)+")" );
+
+                            if(seconds == 60)
+                                $("#modal_message_text").html("Request was not answered.<br>Check Request was sent.");
+                        }, 1000);
+                    }, 2000);
+                });
+
                 $(document).ready(function(){
                     $("#country").prop('disabled', true);
                     $("#operator").prop('disabled', true);
                     $("#denomination").prop('disabled', true);
                     var receiverMobileNumber = $("#receiverMobileNumber").val();
                     if(receiverMobileNumber != "") readNumber(receiverMobileNumber);
+                    $('.popupshow').html($('#loading_modal').html());
                 });
             </script>
         </div>

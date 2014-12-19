@@ -44,7 +44,7 @@ class TopUpController extends Controller
                 if(!$item)
                     $this->get('session')->getFlashBag()->add('error', "Error in form fields.");
                 else {
-                    $result = $this->get('topup')->buyImtu(
+                    $result = $this->get('topup')->startBuy(
                         $this->getUser(),
                         $item,
                         $data['receiverMobileNumber'],
@@ -61,9 +61,6 @@ class TopUpController extends Controller
                         case -1:
                         case -2: $this->get('session')->getFlashBag()->add('error', $result[2]);
                             break;
-
-                        case -3: $this->get('session')->getFlashBag()->add('error', $result[2]);
-                            return $this->redirect($this->generateUrl('hello_di_retailer_topup_retry', array('id'=>$result[1])));
                     }
                 }
             }
@@ -155,55 +152,6 @@ class TopUpController extends Controller
                 ."</option>";
 
         return  new Response($result?:"<option value=''>Not found Denomination.</option>");
-    }
-
-    public function retryAction($id)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $topup = $em->createQueryBuilder()
-            ->select('topup', 'item', 'operator')
-            ->from('HelloDiAggregatorBundle:TopUp', 'topup')
-            ->where('topup.id = :id')->setParameter('id', $id)
-            ->innerJoin('topup.item', 'item')
-            ->innerJoin('item.operator', 'operator')
-            ->andWhere('topup.user = :user')->setParameter('user', $this->getUser())
-            ->getQuery()->getOneOrNullResult();
-        if(!$topup)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'TopUp'),'message'));
-
-        $countries = $this->container->getParameter('countries');
-
-        //provider
-        $b2bAccountName = $this->container->getParameter('B2BServer')['AccountName'];
-        $providerAccount = $em->getRepository('HelloDiAccountingBundle:Account')->findOneBy(array('name'=>$b2bAccountName));
-        if (!$providerAccount)
-            throw $this->createNotFoundException($this->get('translator')->trans('Unable_to_find_%object%',array('object'=>'Account'),'message'));
-
-        $currency = $this->get('account_type_finder')->getCurrency($providerAccount);
-
-        $priceProvider = $em->getRepository('HelloDiPricingBundle:Price')->findOneBy(array(
-                'account'=>$providerAccount,
-                'item'=>$topup->getItem()
-            ));
-
-        $form = $this->createForm(new BuyImtuType(), array(
-                'receiverMobileNumber' => $topup->getMobileNumber(),
-                'country' => $countries[$topup->getItem()->getCountry()],
-                'operator' => $topup->getItem()->getOperator()->getName(),
-                'denomination' => $priceProvider->getDenomination()." ".$currency
-                    ." (".$topup->getItem()->getFaceValue()." ".$topup->getItem()->getCurrency().")",
-                'senderMobileNumber' => $topup->getSenderMobileNumber()?:"--",
-                'senderEmail' => $topup->getSenderEmail()?:"--",
-            ), array(
-                'disabled' => true
-            ));
-
-        return $this->render('HelloDiRetailerBundle:topup:retry.html.twig',array(
-                'form' => $form->createView(),
-                'topup_id' => $topup->getId()
-            ));
     }
 
     public function printAction(Request $request, $id)

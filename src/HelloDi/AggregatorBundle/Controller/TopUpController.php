@@ -191,6 +191,11 @@ class TopUpController extends Controller
         return $log;
     }
 
+    /**
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
+     */
     public function updateReportB2BServer()
     {
         ini_set('max_execution_time', 80);
@@ -363,6 +368,10 @@ class TopUpController extends Controller
         return $result;
     }
 
+    /**
+     * @param int $user_id
+     * @return string
+     */
     private function CreateRandomClientTransactionId($user_id)
     {
         return "HD-".sprintf("%05s", $user_id).'-'.round(microtime(true));
@@ -371,14 +380,17 @@ class TopUpController extends Controller
     /**
      * @param User $user
      * @param Item $item
-     * @param string $senderMobileNumber
      * @param string $receiverMobileNumber
+     * @param string $senderMobileNumber
      * @param string $senderEmail
      * @return array
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
-    public function buyImtu(User $user, Item $item, $receiverMobileNumber, $senderMobileNumber, $senderEmail)
+    public function startBuy(User $user, Item $item, $receiverMobileNumber, $senderMobileNumber, $senderEmail)
     {
-        ini_set('max_execution_time', 80);
+        ini_set('max_execution_time', 140);
 
         //find accounts
         /** @var Retailer $retailer */
@@ -435,8 +447,6 @@ class TopUpController extends Controller
             return array(0, null, 'Unable to find Prices for Accounts.');
         }
 
-        $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
-
         $clientTransactionId = $this->CreateRandomClientTransactionId($user->getId());
 
         if (!$this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), true)) {
@@ -456,6 +466,21 @@ class TopUpController extends Controller
         $this->em->persist($topUp);
         $this->em->flush();
 
+        return $this->buyImtu($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
+    }
+
+    /**
+     * @param TopUp $topUp
+     * @param Provider $provider
+     * @param Distributor $distributor
+     * @param Retailer $retailer
+     * @param Price $priceProvider
+     * @param Price $priceDistributor
+     * @param Price $priceRetailer
+     * @return array
+     */
+    private function buyImtu(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
+    {
         try {
             $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
             $client->__setTimeout(60);
@@ -468,23 +493,23 @@ class TopUpController extends Controller
                         ),
                         'ClientReferenceData' => array(
                             'Service' => 'imtu',
-                            'ClientTransactionID' => $clientTransactionId,
+                            'ClientTransactionID' => $topUp->getClientTransactionID(),
                             'IP' => $this->b2b_settings['IP'],
                             'TimeStamp' => date_format(new \DateTime(), DATE_ATOM)
                         ),
                         'Parameters' => array(
-                            'CarrierCode' => $item->getOperator()->getName(),
-                            'CountryCode' => $item->getCountry(),
+                            'CarrierCode' => $topUp->getItem()->getOperator()->getName(),
+                            'CountryCode' => $topUp->getItem()->getCountry(),
                             'Amount' => $priceProvider->getDenomination() * 100,
-                            'MobileNumber' => $receiverMobileNumber,
+                            'MobileNumber' => $topUp->getMobileNumber(),
                             'StoreID' => $this->b2b_settings['StoreID'],
                             'ChargeType' => 'transfer',
                             'Recharge' => 'Y',
-                            'SendSMS' => ($senderMobileNumber != "" ? "Y" : "N"),
-                            'SenderNumber' => $senderMobileNumber,
-                            'NotificationMobile' => $senderMobileNumber,
-                            'SendEmail' => ($senderEmail != "" ? "Y" : "N"),
-                            'NotificationEmail' => $senderEmail,
+                            'SendSMS' => ($topUp->getSenderMobileNumber() ? "Y" : "N"),
+                            'SenderNumber' => $topUp->getSenderMobileNumber(),
+                            'NotificationMobile' => $topUp->getSenderMobileNumber(),
+                            'SendEmail' => ($topUp->getSenderEmail() ? "Y" : "N"),
+                            'NotificationEmail' => $topUp->getSenderEmail(),
                         ),
                     )
                 )
@@ -494,7 +519,6 @@ class TopUpController extends Controller
             $topUp->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
 
             if ($CreateAccountResponse->ResponseReferenceData->Success == 'N') {
-                $topUp->setStatus(TopUp::FAILED);
                 $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
                 $error_codes = "";
                 $error_texts = "";
@@ -502,66 +526,147 @@ class TopUpController extends Controller
                     $error_codes .= $message->StatusCode . ',';
                     $error_texts .= $message->StatusText . ',';
                 }
-                $topUp->setStatusCode($error_codes);
-
-                $this->em->flush();
-//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
-//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
-//                    die($s);
-                return array(-1, $topUp->getId(), $error_texts);
+                return $this->finishFailedBuy($topUp, $error_codes, $error_texts);
             } else {
-                $topUp->setStatus(TopUp::SUCCESS);
-
-                $result = $this->accounting->processTransaction(array(
-                        new TransactionContainer(
-                            $provider->getAccount(),
-                            $priceProvider->getPrice(),
-                            'provider b2b topup buy.'
-                        ),
-                        new TransactionContainer(
-                            $distributor->getAccount(),
-                            $commission,
-                            'distributor b2b topup buy.'
-                        ),
-                        new TransactionContainer(
-                            $retailer->getAccount(),
-                            -$priceRetailer->getPrice(),
-                            'retailer b2b topup buy.'
-                        ),
-                    ), false);
-
-                if($result == false)
-                    return array(-2, $topUp->getId(), "Retailer '".$retailer->getAccount()->getName()."' hasn't enough balance. (error in reserved Amount)");
-
-                $topUp->setProviderTransaction($result[0]);
-                $topUp->setCommissionerTransaction($result[1]);
-                $topUp->setSellerTransaction($result[2]);
-
-                $this->em->flush();
-//                    $s  = "request: ".$client->__getLastRequest() . "<br/>";
-//                    $s .= "response: ".$client->__getLastResponse() . "<br/>";
-//                    die($s);
-                return array(1, $topUp->getId(), null);
+                return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             }
 
         } catch (\Exception $e) {
-//            die("---".$e->getMessage()."---");
-//            if ($e->getCode() == -99) {
+            if ($e->getCode() == -99) {
                 $topUp->setStatus(TopUp::TIME_OVER);
                 $this->em->flush();
 
-//                return array(-3, $topUp->getId(), 'server_no_response');
-//                $this->get('session')->getFlashBag()->add(
-//                    'error',
-//                    $this->get('translator')->trans('server_no_response', array(), 'message')
-//                );
-//            } else {
-                return array(-3, $topUp->getId(), "Server Error: ".$e->getMessage());
-//                $this->get('session')->getFlashBag()->add(
-//                    'error',
-//                    $this->get('translator')->trans('error_b2b', array(), 'message')
-//                );
-//            }
+                return $this->checkBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
+            } else {
+                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage());
+            }
         }
+    }
+
+    /**
+     * @param TopUp $topUp
+     * @param Provider $provider
+     * @param Distributor $distributor
+     * @param Retailer $retailer
+     * @param Price $priceProvider
+     * @param Price $priceDistributor
+     * @param Price $priceRetailer
+     * @return array
+     */
+    private function checkBuy(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
+    {
+        try {
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);
+            $client->__setTimeout(60);
+            $result = $client->__soapCall("CreateAccount",
+                array(
+                    'CreateAccountRequest' => array(
+                        'UserInfo' => array(
+                            'UserName' => $this->b2b_settings['UserName'],
+                            'Password' => $this->b2b_settings['Password']
+                        ),
+                        'ClientReferenceData' => array(
+                            'Service' => 'imtu',
+                            'ClientTransactionID' => $topUp->getClientTransactionID(),
+                            'IP' => $this->b2b_settings['IP'],
+                            'TimeStamp' => date_format(new \DateTime(), DATE_ATOM)
+                        ),
+                        'Parameters' => array(
+                            'CarrierCode' => $topUp->getItem()->getOperator()->getName(),
+                            'CountryCode' => $topUp->getItem()->getCountry(),
+                            'Amount' => $priceProvider->getDenomination() * 100,
+                            'MobileNumber' => $topUp->getMobileNumber(),
+                            'StoreID' => $this->b2b_settings['StoreID'],
+                            'ChargeType' => 'transfer',
+                            'Recharge' => 'Y',
+                            'SendSMS' => ($topUp->getSenderMobileNumber() ? "Y" : "N"),
+                            'SenderNumber' => $topUp->getSenderMobileNumber(),
+                            'NotificationMobile' => $topUp->getSenderMobileNumber(),
+                            'SendEmail' => ($topUp->getSenderEmail() ? "Y" : "N"),
+                            'NotificationEmail' => $topUp->getSenderEmail(),
+                        ),
+                    )
+                )
+            );
+
+            $CreateAccountResponse = $result->CreateAccountResponse;
+            $topUp->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+
+            if ($CreateAccountResponse->ResponseReferenceData->Success == 'N') {
+                $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
+                $error_codes = "";
+                $error_texts = "";
+                foreach ($messages as $message) {
+                    $error_codes .= $message->StatusCode . ',';
+                    $error_texts .= $message->StatusText . ',';
+                }
+                return $this->finishFailedBuy($topUp, $error_codes, $error_texts);
+            } else {
+                return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
+            }
+
+        } catch (\Exception $e) {
+            return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage());
+        }
+    }
+
+    /**
+     * @param TopUp $topUp
+     * @param Provider $provider
+     * @param Distributor $distributor
+     * @param Retailer $retailer
+     * @param Price $priceProvider
+     * @param Price $priceDistributor
+     * @param Price $priceRetailer
+     * @return array
+     */
+    private function finishSuccessBuy(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
+    {
+        $topUp->setStatus(TopUp::SUCCESS);
+
+        $commission = $priceRetailer->getPrice() - $priceDistributor->getPrice();
+
+        $result = $this->accounting->processTransaction(array(
+                new TransactionContainer(
+                    $provider->getAccount(),
+                    $priceProvider->getPrice(),
+                    'provider b2b topup buy.'
+                ),
+                new TransactionContainer(
+                    $distributor->getAccount(),
+                    $commission,
+                    'distributor b2b topup buy.'
+                ),
+                new TransactionContainer(
+                    $retailer->getAccount(),
+                    -$priceRetailer->getPrice(),
+                    'retailer b2b topup buy.'
+                ),
+            ), false);
+
+        if($result == false)
+            return array(-2, $topUp->getId(), "Retailer '".$retailer->getAccount()->getName()."' hasn't enough balance. (error in reserved Amount)");
+
+        $topUp->setProviderTransaction($result[0]);
+        $topUp->setCommissionerTransaction($result[1]);
+        $topUp->setSellerTransaction($result[2]);
+
+        $this->em->flush();
+        return array(1, $topUp->getId(), null);
+    }
+
+    /**
+     * @param TopUp $topUp
+     * @param string $error_codes
+     * @param string $error_texts
+     * @return array
+     */
+    private function finishFailedBuy(TopUp $topUp, $error_codes, $error_texts)
+    {
+        $topUp->setStatus(TopUp::FAILED);
+        $topUp->setStatusCode($error_codes);
+
+        $this->em->flush();
+        return array(-1, $topUp->getId(), $error_texts);
     }
 }

@@ -55,12 +55,13 @@ class SoapClientTimeout extends \SoapClient
             curl_setopt($curl, CURLOPT_HEADER, FALSE);
             curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
             curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
             $response = curl_exec($curl);
 
             if (curl_errno($curl))
             {
-                throw new \Exception(curl_error($curl),-99);
+                throw new \Exception("timeout",-99);
             }
 
             curl_close($curl);

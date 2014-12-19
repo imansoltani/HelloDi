@@ -10,10 +10,6 @@ hello_di_retailer_topup_get_prices:
     pattern:  /get_prices
     defaults: { _controller: "HelloDiRetailerBundle:TopUp:getPrices" }
 
-hello_di_retailer_topup_retry:
-    pattern:  /retry/{id}
-    defaults: { _controller: "HelloDiRetailerBundle:TopUp:retry" }
-
 hello_di_retailer_topup_print:
     pattern:  /print/{id}
     defaults: { _controller: "HelloDiRetailerBundle:TopUp:print" }
