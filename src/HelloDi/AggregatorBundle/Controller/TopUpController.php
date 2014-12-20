@@ -274,7 +274,7 @@ class TopUpController extends Controller
             $data = is_array($report)?$report[$row_num_viewed]:$report;
 
             $topup->setStatus($data->Description == "Success" ? TopUp::SUCCESS : TopUp::FAILED);
-            $topup->setTransactionID('Update_Log');
+            $topup->setTransactionID("R". $response->ResponseReferenceData->TransactionID);
 
             //collect needed data
             /** @var Retailer $retailer */
@@ -526,7 +526,7 @@ class TopUpController extends Controller
                     $error_codes .= $message->StatusCode . ',';
                     $error_texts .= $message->StatusText . ',';
                 }
-                return $this->finishFailedBuy($topUp, $error_codes, $error_texts);
+                return $this->finishFailedBuy($topUp, $error_codes, $error_texts, $retailer, $priceRetailer);
             } else {
                 return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             }
@@ -538,7 +538,7 @@ class TopUpController extends Controller
 
                 return $this->checkBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             } else {
-                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage());
+                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage(), $retailer, $priceRetailer);
             }
         }
     }
@@ -555,58 +555,58 @@ class TopUpController extends Controller
      */
     private function checkBuy(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
     {
+        $from = clone $topUp->getDate();
+        $from->modify('-1 minute');
+
+        $to = clone $topUp->getDate();
+        $to->modify('+5 minutes');
+
         try {
-            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
             $client->__setTimeout(60);
-            $result = $client->__soapCall("CreateAccount",
-                array(
-                    'CreateAccountRequest' => array(
+            $result = $client->__call('QueryAccount', array(
+                    'Request' => array(
                         'UserInfo' => array(
-                            'UserName' => $this->b2b_settings['UserName'],
-                            'Password' => $this->b2b_settings['Password']
+                            'UserName'=>$this->b2b_settings['UserName'],
+                            'Password'=>$this->b2b_settings['Password']
                         ),
-                        'ClientReferenceData' => array(
-                            'Service' => 'imtu',
-                            'ClientTransactionID' => $topUp->getClientTransactionID(),
-                            'IP' => $this->b2b_settings['IP'],
-                            'TimeStamp' => date_format(new \DateTime(), DATE_ATOM)
-                        ),
+                        'ClientReferenceData' => array(),
                         'Parameters' => array(
-                            'CarrierCode' => $topUp->getItem()->getOperator()->getName(),
-                            'CountryCode' => $topUp->getItem()->getCountry(),
-                            'Amount' => $priceProvider->getDenomination() * 100,
-                            'MobileNumber' => $topUp->getMobileNumber(),
-                            'StoreID' => $this->b2b_settings['StoreID'],
-                            'ChargeType' => 'transfer',
-                            'Recharge' => 'Y',
-                            'SendSMS' => ($topUp->getSenderMobileNumber() ? "Y" : "N"),
-                            'SenderNumber' => $topUp->getSenderMobileNumber(),
-                            'NotificationMobile' => $topUp->getSenderMobileNumber(),
-                            'SendEmail' => ($topUp->getSenderEmail() ? "Y" : "N"),
-                            'NotificationEmail' => $topUp->getSenderEmail(),
+                            'ReturnBillingHistory' => 'Y',
+                            'DateFrom' => date_format($from,'Y-m-d'),
+                            'DateTo' => date_format($to,'Y-m-d')
                         ),
                     )
-                )
-            );
+                ));
 
-            $CreateAccountResponse = $result->CreateAccountResponse;
-            $topUp->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+            $QueryAccountResponse = $result->QueryAccountResponse;
 
-            if ($CreateAccountResponse->ResponseReferenceData->Success == 'N') {
-                $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
+            $topUp->setTransactionID("R". $QueryAccountResponse->ResponseReferenceData->TransactionID);
+
+            if ($QueryAccountResponse->ResponseReferenceData->Success == 'N') {
+                $messages = $QueryAccountResponse->ResponseReferenceData->MessageList;
                 $error_codes = "";
                 $error_texts = "";
                 foreach ($messages as $message) {
                     $error_codes .= $message->StatusCode . ',';
                     $error_texts .= $message->StatusText . ',';
                 }
-                return $this->finishFailedBuy($topUp, $error_codes, $error_texts);
+                throw new \Exception("Error in Retry: ".$error_texts. " (".$error_codes.")");
             } else {
-                return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
+                //data of request
+                $report = $QueryAccountResponse->BillDataList->Data;
+                if (!$row_num_viewed = $this->findDatainB2BLog($topUp->getClientTransactionID(),$report,0))
+                    throw new \Exception("Unable to find Buy in received report.");
+
+                $data = is_array($report)?$report[$row_num_viewed]:$report;
+                if($data->Description == "Success")
+                    return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
+                else
+                    return $this->finishFailedBuy($topUp, "R", "Unknown problem. (in second request) Please contact the admin.", $retailer, $priceRetailer);
             }
 
         } catch (\Exception $e) {
-            return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage());
+            return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage(), $retailer, $priceRetailer);
         }
     }
 
@@ -651,6 +651,8 @@ class TopUpController extends Controller
         $topUp->setCommissionerTransaction($result[1]);
         $topUp->setSellerTransaction($result[2]);
 
+        $this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), false);
+
         $this->em->flush();
         return array(1, $topUp->getId(), null);
     }
@@ -659,12 +661,17 @@ class TopUpController extends Controller
      * @param TopUp $topUp
      * @param string $error_codes
      * @param string $error_texts
+     * @param Retailer $retailer
+     * @param Price $priceRetailer
      * @return array
+     * @throws \Exception
      */
-    private function finishFailedBuy(TopUp $topUp, $error_codes, $error_texts)
+    private function finishFailedBuy(TopUp $topUp, $error_codes, $error_texts, Retailer $retailer, Price $priceRetailer)
     {
         $topUp->setStatus(TopUp::FAILED);
         $topUp->setStatusCode($error_codes);
+
+        $this->accounting->reserveAmount($priceRetailer->getPrice(), $retailer->getAccount(), false);
 
         $this->em->flush();
         return array(-1, $topUp->getId(), $error_texts);
