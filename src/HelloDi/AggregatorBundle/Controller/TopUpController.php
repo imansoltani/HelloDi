@@ -482,7 +482,7 @@ class TopUpController extends Controller
     private function buyImtu(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
     {
         try {
-            $client = new SoapClientTimeout($this->b2b_settings['WSDL'],array('trace'=>true));
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
             $client->__setTimeout(60);
             $result = $client->__soapCall("CreateAccount",
                 array(
