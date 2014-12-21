@@ -257,7 +257,7 @@ class TopUpController extends Controller
 
         //if response returned and failed
         if($response->ResponseReferenceData->Success == 'N')
-            throw new \Exception($this->convertErrorMessagesToString($response->ResponseReferenceData->MessageList));
+            throw new \Exception("B2B Server Error: ".$this->convertErrorMessagesToString($response->ResponseReferenceData->MessageList));
 
         //data of request
         $report = $response->BillDataList->Data;
@@ -482,7 +482,7 @@ class TopUpController extends Controller
     private function buyImtu(TopUp $topUp, Provider $provider, Distributor $distributor, Retailer $retailer, Price $priceProvider, Price $priceDistributor, Price $priceRetailer)
     {
         try {
-            $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
+            $client = new SoapClientTimeout($this->b2b_settings['WSDL'],array('trace'=>true));
             $client->__setTimeout(60);
             $result = $client->__soapCall("CreateAccount",
                 array(
@@ -516,7 +516,8 @@ class TopUpController extends Controller
             );
 
             $CreateAccountResponse = $result->CreateAccountResponse;
-            $topUp->setTransactionID($CreateAccountResponse->ResponseReferenceData->TransactionID);
+
+            $topUp->setTransactionID(isset($CreateAccountResponse->ResponseReferenceData->TransactionID)?$CreateAccountResponse->ResponseReferenceData->TransactionID:"");
 
             if ($CreateAccountResponse->ResponseReferenceData->Success == 'N') {
                 $messages = $CreateAccountResponse->ResponseReferenceData->MessageList;
@@ -526,7 +527,7 @@ class TopUpController extends Controller
                     $error_codes .= $message->StatusCode . ',';
                     $error_texts .= $message->StatusText . ',';
                 }
-                return $this->finishFailedBuy($topUp, $error_codes, $error_texts, $retailer, $priceRetailer);
+                return $this->finishFailedBuy($topUp, rtrim($error_codes,","), "B2B Server Error: ".rtrim($error_texts,","), $retailer, $priceRetailer);
             } else {
                 return $this->finishSuccessBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             }
@@ -538,7 +539,7 @@ class TopUpController extends Controller
 
                 return $this->checkBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             } else {
-                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), strip_tags($e->getMessage()), $retailer, $priceRetailer);
+                return $this->finishFailedBuy($topUp, "Server Error: ".$e->getCode(), strip_tags($e->getMessage()), $retailer, $priceRetailer);
             }
         }
     }
@@ -591,7 +592,7 @@ class TopUpController extends Controller
                     $error_codes .= $message->StatusCode . ',';
                     $error_texts .= $message->StatusText . ',';
                 }
-                throw new \Exception("Error in Retry: ".$error_texts. " (".$error_codes.")");
+                throw new \Exception("B2B Server Error in Retry: ".rtrim($error_texts,","). " (".rtrim($error_codes,",").")");
             } else {
                 //data of request
                 $report = $QueryAccountResponse->BillDataList->Data;
