@@ -28,13 +28,15 @@ class SoapClientTimeout extends \SoapClient
     }
 
     /**
-     * @param string $request
-     * @param string $location
-     * @param string $action
-     * @param int $version
-     * @param bool $one_way
-     * @return mixed|string
-     * @throws \Exception
+     * {@inheritdoc }
+     */
+    public function __soapCall($function_name, $arguments, $options = NULL, $input_headers = NULL, &$output_headers = NULL)
+    {
+        return parent::__soapCall($function_name, array($arguments), $options, $input_headers, $output_headers);
+    }
+
+    /**
+     * {@inheritdoc }
      */
     public function __doRequest($request, $location, $action, $version, $one_way = FALSE)
     {

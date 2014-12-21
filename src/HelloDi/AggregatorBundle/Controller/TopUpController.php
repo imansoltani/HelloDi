@@ -226,7 +226,7 @@ class TopUpController extends Controller
         try {
             $client = new SoapClientTimeout($this->b2b_settings['WSDL']);//,array('trace'=>true));
             $client->__setTimeout(60);
-            $result = $client->__call('QueryAccount', array(
+            $result = $client->__soapCall('QueryAccount', array(
                     'Request' => array(
                         'UserInfo' => array(
                             'UserName'=>$this->b2b_settings['UserName'],
@@ -538,7 +538,7 @@ class TopUpController extends Controller
 
                 return $this->checkBuy($topUp, $provider, $distributor, $retailer, $priceProvider, $priceDistributor, $priceRetailer);
             } else {
-                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage(), $retailer, $priceRetailer);
+                return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), strip_tags($e->getMessage()), $retailer, $priceRetailer);
             }
         }
     }
@@ -606,7 +606,7 @@ class TopUpController extends Controller
             }
 
         } catch (\Exception $e) {
-            return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), $e->getMessage(), $retailer, $priceRetailer);
+            return $this->finishFailedBuy($topUp, "server error: ".$e->getCode(), strip_tags($e->getMessage()), $retailer, $priceRetailer);
         }
     }
 

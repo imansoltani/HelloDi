@@ -197,7 +197,7 @@ class TopUpController extends Controller
             $this->get('topup')->updateReportB2BServer();
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('the_operation_done_successfully', array(), 'message'));
         } catch (\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans($e->getMessage(), array(), 'message'));
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans(strip_tags($e->getMessage()), array(), 'message'));
         }
         return $this->redirect($this->generateUrl('hello_di_master_topup_report'));
     }
